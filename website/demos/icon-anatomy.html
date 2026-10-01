@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>图标几何标注 · DSH 设计资源</title>
+<style>
+/* ── 兜底 token：嵌入时跟随页面主题，双击打开时用兜底值 ─────────────── */
+:root {
+  --dm-bg: var(--site-bg, light-dark(#ffffff, #0c0c0d));
+  --dm-raised: var(--site-bg-raised, light-dark(#ffffff, #1c1c1f));
+  --dm-subtle: var(--site-bg-subtle, light-dark(#f4f4f6, #1a1a1c));
+  --dm-sunken: var(--site-bg-sunken, light-dark(#f7f7f9, #131315));
+  --dm-label: var(--site-label, light-dark(#1d1d1f, #f2f2f4));
+  --dm-label-2: var(--site-label-2, light-dark(#5f6062, #a8a8ae));
+  --dm-label-3: var(--site-label-3, light-dark(#86868b, #8a8a90));
+  --dm-line: var(--site-line, light-dark(#d6d6db, #3a3a3f));
+  --dm-line-soft: var(--site-line-soft, light-dark(#ebebef, #26262a));
+  --dm-accent: var(--site-accent, light-dark(#4d6bfe, #8296ff));
+  --dm-accent-soft: var(--site-accent-soft, light-dark(#edf0ff, #1a1f3d));
+  --dm-mono: var(--site-font-mono, ui-monospace, Consolas, monospace);
+  --dm-font: var(--site-font, system-ui, -apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif);
+  --dm-dur-fast: var(--site-dur-fast, 120ms);
+  --dm-ease: var(--site-ease, cubic-bezier(0.4, 0, 0.2, 1));
+}
+body { margin: 0; }
+.dm {
+  padding: 16px 0 4px;
+  font-family: var(--dm-font);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--dm-label);
+}
+.dm * { box-sizing: border-box; }
+.dm__lede {
+  margin: 0 0 14px;
+  max-width: 74ch;
+  font-size: 11.5px;
+  line-height: 1.7;
+  color: var(--dm-label-3);
+}
+.dm__lede code { font-family: var(--dm-mono); font-size: 10.5px; }
+.vh {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ── 上：图标清单 + 放大标注 ────────────────────────────────────────── */
+.top {
+  display: grid;
+  grid-template-columns: minmax(0, 232px) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+@media (max-width: 700px) { .top { grid-template-columns: minmax(0, 1fr); } }
+
+.list__title {
+  margin: 0 0 8px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--dm-label-3);
+}
+.pick {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 8px;
+  margin-bottom: 4px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background var(--dm-dur-fast) var(--dm-ease), border-color var(--dm-dur-fast) var(--dm-ease);
+}
+.pick:hover { background: var(--dm-subtle); }
+.pick__icon { flex: none; display: block; width: 16px; height: 16px; color: var(--dm-label); }
+.pick__icon svg { display: block; width: 100%; height: 100%; }
+.pick__body { min-width: 0; }
+.pick__name {
+  display: block;
+  font-family: var(--dm-mono);
+  font-size: 10.5px;
+  color: var(--dm-label);
+}
+.pick__meta {
+  display: block;
+  font-size: 9.5px;
+  line-height: 1.5;
+  color: var(--dm-label-3);
+}
+#s-play:checked ~ .top label[for="s-play"],
+#s-close:checked ~ .top label[for="s-close"],
+#s-clip:checked ~ .top label[for="s-clip"] {
+  background: var(--dm-accent-soft);
+  border-color: var(--dm-accent);
+}
+#s-play:focus-visible ~ .top label[for="s-play"],
+#s-close:focus-visible ~ .top label[for="s-close"],
+#s-clip:focus-visible ~ .top label[for="s-clip"] { outline: 2px solid var(--dm-accent); }
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 5px 8px;
+  border-radius: 7px;
+  font-size: 11px;
+  color: var(--dm-label-2);
+  cursor: pointer;
+}
+.toggle:hover { background: var(--dm-subtle); }
+.toggle__box {
+  flex: none;
+  width: 26px; height: 15px;
+  border-radius: 8px;
+  background: var(--dm-line);
+  position: relative;
+  transition: background var(--dm-dur-fast) var(--dm-ease);
+}
+.toggle__box::after {
+  content: '';
+  position: absolute;
+  top: 2px; left: 2px;
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  background: var(--dm-raised);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 25%);
+  transition: transform var(--dm-dur-fast) var(--dm-ease);
+}
+#anno:checked ~ .top .toggle__box { background: var(--dm-accent); }
+#anno:checked ~ .top .toggle__box::after { transform: translateX(11px); }
+#anno:focus-visible ~ .top .toggle { outline: 2px solid var(--dm-accent); }
+
+.panels { min-width: 0; }
+.panel { display: none; margin: 0; }
+#s-play:checked ~ .top .panel--play,
+#s-close:checked ~ .top .panel--close,
+#s-clip:checked ~ .top .panel--clip { display: block; }
+.panel figcaption {
+  margin-top: 6px;
+  font-size: 10px;
+  line-height: 1.65;
+  color: var(--dm-label-3);
+}
+.panel figcaption code { font-family: var(--dm-mono); font-size: 9.5px; }
+
+/* ── 标注图：16 单位的画板按 8 倍放大成 288px ──────────────────────── */
+.anatomy {
+  display: block;
+  width: 288px;
+  height: 288px;
+  max-width: 100%;
+  color: var(--dm-label);
+}
+.anatomy .icon { fill: currentColor; }
+.anatomy .a-canvas { fill: none; stroke: var(--dm-label-3); stroke-width: 0.125; }
+.anatomy .a-ref { fill: none; stroke: var(--dm-label-3); stroke-width: 0.09; stroke-dasharray: 0.2 0.5; opacity: 0.85; }
+.anatomy .a-bbox { fill: none; stroke: var(--dm-accent); stroke-width: 0.125; stroke-dasharray: 0.9 0.55; }
+.anatomy .a-circle { fill: none; stroke: var(--dm-accent); stroke-width: 0.1; stroke-dasharray: 0.3 0.45; opacity: 0.9; }
+.anatomy .a-axis { fill: none; stroke: var(--dm-label-3); stroke-width: 0.09; stroke-dasharray: 0.15 0.4; }
+.anatomy .a-dim { fill: none; stroke: var(--dm-label-2); stroke-width: 0.11; }
+.anatomy .a-lead { fill: none; stroke: var(--dm-label-3); stroke-width: 0.08; }
+.anatomy .a-node { fill: var(--dm-accent); }
+.anatomy text {
+  font-family: var(--dm-mono);
+  font-size: 1.15px;
+  fill: var(--dm-label-2);
+}
+.anatomy text.cjk { font-family: var(--dm-font); }
+.anatomy text.sm { font-size: 0.95px; fill: var(--dm-label-3); }
+.anatomy text.acc { fill: var(--dm-accent); }
+.anatomy .anno { transition: opacity var(--dm-dur-fast) var(--dm-ease); }
+#anno:not(:checked) ~ .top .anatomy .anno { opacity: 0; }
+
+/* ── 下：尺寸族对照 ─────────────────────────────────────────────────── */
+.sizes {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--dm-line-soft);
+}
+.sizes__title {
+  margin: 0 0 10px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--dm-label-3);
+}
+.sizes__row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+@media (max-width: 700px) { .sizes__row { grid-template-columns: minmax(0, 1fr); } }
+.family {
+  padding: 10px 12px;
+  border: 1px solid var(--dm-line-soft);
+  border-radius: 10px;
+  background: var(--dm-bg);
+}
+.family__head {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 8px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.family__head span { font-family: var(--dm-mono); font-size: 10px; font-weight: 400; color: var(--dm-label-3); }
+.family__pair { display: flex; align-items: flex-end; gap: 14px; }
+.family__cell { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.family__cell span { font-family: var(--dm-mono); font-size: 9.5px; color: var(--dm-label-3); }
+.family__pair svg { display: block; color: var(--dm-label); }
+.family__note { margin: 8px 0 0; font-size: 10px; line-height: 1.65; color: var(--dm-label-3); }
+.family__note code { font-family: var(--dm-mono); font-size: 9.5px; }
+
+/* ── 事实条 ─────────────────────────────────────────────────────────── */
+.facts {
+  margin-top: 14px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--dm-sunken);
+  font-size: 10.5px;
+  line-height: 1.75;
+  color: var(--dm-label-2);
+}
+.facts p { margin: 0; }
+.facts p + p { margin-top: 4px; }
+.facts code { font-family: var(--dm-mono); font-size: 10px; color: var(--dm-label-3); }
+.facts b { font-weight: 600; color: var(--dm-label); }
+
+@media (prefers-reduced-motion: reduce) {
+  .pick, .toggle__box, .toggle__box::after, .anatomy .anno { transition: none; }
+}
+</style>
+</head>
+<body>
+<div class="dm">
+  <p class="dm__lede">左边的图标都来自 <code>icons/*.svg</code>，SVG 原样内联。右边把选中的那个放大 8 倍（16 → 128px），叠上画板、实测外接框与外接圆。所有数值由 <code>icons/*.svg</code> 的路径数据现算：直线取端点、曲线按 1/64 采样后求外接框。</p>
+
+  <input type="radio" name="subject" id="s-play" class="vh" checked>
+  <input type="radio" name="subject" id="s-close" class="vh">
+  <input type="radio" name="subject" id="s-clip" class="vh">
+  <input type="checkbox" id="anno" class="vh" checked>
+
+  <div class="top">
+
+    <div class="list">
+      <p class="list__title">官方图标 · 点一个放大</p>
+
+      <label class="pick" for="s-play">
+        <span class="pick__icon"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M14.1446 8C14.1446 4.6062 11.3938 1.85539 8 1.85539C4.6062 1.85539 1.85539 4.6062 1.85539 8C1.85539 11.3938 4.6062 14.1446 8 14.1446C11.3938 14.1446 14.1446 11.3938 14.1446 8ZM15.511 8C15.511 12.148 12.148 15.511 8 15.511C3.85202 15.511 0.489014 12.148 0.489014 8C0.489014 3.85202 3.85202 0.489014 8 0.489014C12.148 0.489014 15.511 3.85202 15.511 8Z" fill="currentColor"/><path d="M10.5617 8.42578C10.852 8.21614 10.852 7.78386 10.5617 7.57422L7.25708 5.18751C6.90974 4.93666 6.42436 5.18484 6.42436 5.61329V10.3867C6.42436 10.8152 6.90974 11.0633 7.25708 10.8125L10.5617 8.42578Z" fill="currentColor"/></svg></span>
+        <span class="pick__body">
+          <span class="pick__name">play-outline-16</span>
+          <span class="pick__meta">外接框 15.022² · 四边内缩 0.489</span>
+        </span>
+      </label>
+
+      <label class="pick" for="s-close">
+        <span class="pick__icon"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M14.1168 13.197L13.197 14.1167L1.8833 2.80303L2.80309 1.88324L14.1168 13.197Z" fill="currentColor"/><path d="M13.197 1.88326L14.1168 2.80305L2.80309 14.1168L1.8833 13.197L13.197 1.88326Z" fill="currentColor"/></svg></span>
+        <span class="pick__body">
+          <span class="pick__name">close-outline-16</span>
+          <span class="pick__meta">视觉描边 1.301 · 外接框 12.233 × 12.234</span>
+        </span>
+      </label>
+
+      <label class="pick" for="s-clip">
+        <span class="pick__icon"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5498 9.75V5H6.9502V9.75C6.9502 10.3299 7.4201 10.7998 8 10.7998C8.5799 10.7998 9.0498 10.3299 9.0498 9.75V4.5C9.0498 2.9536 7.7964 1.7002 6.25 1.7002C4.7036 1.7002 3.4502 2.9536 3.4502 4.5V9.75C3.4502 12.2629 5.4871 14.2998 8 14.2998C10.5129 14.2998 12.5498 12.2629 12.5498 9.75V4H13.9502V9.75C13.9502 13.0361 11.2861 15.7002 8 15.7002C4.71391 15.7002 2.0498 13.0361 2.0498 9.75V4.5C2.04981 2.1804 3.9304 0.299806 6.25 0.299805C8.5696 0.299805 10.4502 2.1804 10.4502 4.5V9.75C10.4502 11.1031 9.3531 12.2002 8 12.2002C6.6469 12.2002 5.5498 11.1031 5.5498 9.75Z" fill="currentColor"/></svg></span>
+        <span class="pick__body">
+          <span class="pick__name">paperclip-outline-16</span>
+          <span class="pick__meta">内缩 2.050 / 0.300 · 单条路径 24 段</span>
+        </span>
+      </label>
+
+      <label class="toggle" for="anno"><span class="toggle__box"></span>显示几何标注</label>
+    </div>
+
+    <div class="panels">
+
+      <!-- ── play-outline-16 ─────────────────────────────────────────── -->
+      <figure class="panel panel--play">
+        <svg class="anatomy" viewBox="-10 -10 36 36" width="288" height="288" role="img"
+             aria-label="play-outline-16 放大 8 倍并标注画板、外接框与外接圆">
+          <g class="icon">
+            <path d="M14.1446 8C14.1446 4.6062 11.3938 1.85539 8 1.85539C4.6062 1.85539 1.85539 4.6062 1.85539 8C1.85539 11.3938 4.6062 14.1446 8 14.1446C11.3938 14.1446 14.1446 11.3938 14.1446 8ZM15.511 8C15.511 12.148 12.148 15.511 8 15.511C3.85202 15.511 0.489014 12.148 0.489014 8C0.489014 3.85202 3.85202 0.489014 8 0.489014C12.148 0.489014 15.511 3.85202 15.511 8Z"/>
+            <path d="M10.5617 8.42578C10.852 8.21614 10.852 7.78386 10.5617 7.57422L7.25708 5.18751C6.90974 4.93666 6.42436 5.18484 6.42436 5.61329V10.3867C6.42436 10.8152 6.90974 11.0633 7.25708 10.8125L10.5617 8.42578Z"/>
+          </g>
+          <g class="anno">
+            <rect class="a-canvas" x="0" y="0" width="16" height="16"/>
+            <rect class="a-ref" x="0.546" y="0.546" width="14.908" height="14.908"/>
+            <rect class="a-bbox" x="0.489" y="0.489" width="15.022" height="15.022"/>
+            <circle class="a-circle" cx="8" cy="8" r="7.511"/>
+            <!-- 内缩：画板左边界 → 内容左边界 -->
+            <path class="a-dim" d="M0 -0.5H0.489M0 -0.85V-0.15M0.489 -0.85V-0.15"/>
+            <path class="a-lead" d="M-0.6 -0.5H-4.2"/>
+            <!-- 外接圆引线 -->
+            <path class="a-lead" d="M0.489 8H-1.2"/>
+            <!-- 环厚：外半径 7.511 − 内半径 6.145 -->
+            <path class="a-dim" d="M8 14.145V15.511M7.65 14.145H8.35M7.65 15.511H8.35"/>
+            <path class="a-lead" d="M8 15.511V16.5"/>
+            <!-- 三角外接框中心（8.635, 7.959） -->
+            <circle class="a-node" cx="8.635" cy="7.959" r="0.42"/>
+            <path class="a-lead" d="M9.02 8.19L11.5 9.7H16.1"/>
+            <text class="cjk" x="8" y="-1.6" text-anchor="middle">画板 16 × 16</text>
+            <text class="sm" x="8" y="-0.5" text-anchor="middle">viewBox 0 0 16 16</text>
+            <text class="cjk" x="0.4" y="-0.95" text-anchor="end">内缩 0.489</text>
+            <text class="cjk" x="-1.5" y="7.7" text-anchor="end">外接圆</text>
+            <text class="sm" x="-1.5" y="8.95" text-anchor="end">r 7.511</text>
+            <text class="cjk" x="17.2" y="11.5">外接方框</text>
+            <text class="sm" x="17.2" y="12.75">15.022 × 15.022</text>
+            <text class="cjk" x="8.6" y="17.4">环厚 1.366</text>
+            <text class="sm" x="16.3" y="9.4">三角中心 x 8.635</text>
+          </g>
+        </svg>
+        <figcaption><code>play-outline-16</code> · 外接框 15.022 × 15.022 · 四边内缩 0.489 · 环厚 1.366 · 2 条路径 20 段。三角外接框中心在 x 8.635，比画板中心右移 0.635（IC-MF-09 要求不对称图形做光学居中，建议补偿不超过 1px）。点线为 16 族实测内缩中位数 0.546 的参考线。</figcaption>
+      </figure>
+
+      <!-- ── close-outline-16 ────────────────────────────────────────── -->
+      <figure class="panel panel--close">
+        <svg class="anatomy" viewBox="-10 -10 36 36" width="288" height="288" role="img"
+             aria-label="close-outline-16 放大 8 倍并标注视觉描边、外接框与外接圆">
+          <g class="icon">
+            <path d="M14.1168 13.197L13.197 14.1167L1.8833 2.80303L2.80309 1.88324L14.1168 13.197Z"/>
+            <path d="M13.197 1.88326L14.1168 2.80305L2.80309 14.1168L1.8833 13.197L13.197 1.88326Z"/>
+          </g>
+          <g class="anno">
+            <rect class="a-canvas" x="0" y="0" width="16" height="16"/>
+            <rect class="a-ref" x="0.546" y="0.546" width="14.908" height="14.908"/>
+            <rect class="a-bbox" x="1.883" y="1.883" width="12.233" height="12.234"/>
+            <circle class="a-circle" cx="8" cy="8" r="6.117"/>
+            <!-- 内缩 -->
+            <path class="a-dim" d="M-0.4 0V1.883M-0.75 0H-0.05M-0.75 1.883H-0.05"/>
+            <path class="a-lead" d="M-0.4 0.94H-3.4"/>
+            <!-- 视觉描边：端点短边 = 两条平行长边的间距 -->
+            <path class="a-dim" d="M13.197 1.883L14.117 2.803"/>
+            <path class="a-dim" d="M12.843 1.529L13.551 2.237M13.763 2.449L14.471 3.157"/>
+            <path class="a-lead" d="M13.657 2.343L16.0 0.9"/>
+            <!-- 外接圆引线 -->
+            <path class="a-lead" d="M3.675 12.325L0.6 16.35"/>
+            <text class="cjk" x="8" y="-1.6" text-anchor="middle">画板 16 × 16</text>
+            <text class="sm" x="8" y="-0.5" text-anchor="middle">viewBox 0 0 16 16</text>
+            <text class="cjk" x="-3.6" y="0.94" text-anchor="end">内缩 1.883</text>
+            <text class="cjk" x="16.3" y="0.55">视觉描边</text>
+            <text class="sm" x="16.3" y="1.7">1.301</text>
+            <text class="cjk" x="16.8" y="11.3">外接方框</text>
+            <text class="sm" x="16.8" y="12.55">12.233 × 12.234</text>
+            <text class="cjk" x="0.2" y="17.4">外接圆 r 6.117</text>
+          </g>
+        </svg>
+        <figcaption><code>close-outline-16</code> · 外接框 12.233 × 12.234 · 四边内缩 1.883 · 视觉描边 1.301（两条平行长边的最小垂直间距）· 2 条路径 12 段。官方图标没有 <code>stroke</code> 属性，这条「描边」是填充形状的厚度。</figcaption>
+      </figure>
+
+      <!-- ── paperclip-outline-16 ────────────────────────────────────── -->
+      <figure class="panel panel--clip">
+        <svg class="anatomy" viewBox="-10 -10 36 36" width="288" height="288" role="img"
+             aria-label="paperclip-outline-16 放大 8 倍并标注内缩与外接圆">
+          <g class="icon">
+            <path d="M5.5498 9.75V5H6.9502V9.75C6.9502 10.3299 7.4201 10.7998 8 10.7998C8.5799 10.7998 9.0498 10.3299 9.0498 9.75V4.5C9.0498 2.9536 7.7964 1.7002 6.25 1.7002C4.7036 1.7002 3.4502 2.9536 3.4502 4.5V9.75C3.4502 12.2629 5.4871 14.2998 8 14.2998C10.5129 14.2998 12.5498 12.2629 12.5498 9.75V4H13.9502V9.75C13.9502 13.0361 11.2861 15.7002 8 15.7002C4.71391 15.7002 2.0498 13.0361 2.0498 9.75V4.5C2.04981 2.1804 3.9304 0.299806 6.25 0.299805C8.5696 0.299805 10.4502 2.1804 10.4502 4.5V9.75C10.4502 11.1031 9.3531 12.2002 8 12.2002C6.6469 12.2002 5.5498 11.1031 5.5498 9.75Z"/>
+          </g>
+          <g class="anno">
+            <rect class="a-canvas" x="0" y="0" width="16" height="16"/>
+            <rect class="a-ref" x="0.546" y="0.546" width="14.908" height="14.908"/>
+            <rect class="a-bbox" x="2.05" y="0.3" width="11.9" height="15.4"/>
+            <circle class="a-circle" cx="8" cy="8" r="7.7"/>
+            <!-- 横向内缩 2.050 -->
+            <path class="a-dim" d="M0 -0.55H2.05M0 -0.9V-0.2M2.05 -0.9V-0.2"/>
+            <!-- 纵向内缩 0.300 -->
+            <path class="a-dim" d="M-0.4 0V0.3M-0.75 0H-0.05M-0.75 0.3H-0.05"/>
+            <!-- 外接圆引线 -->
+            <path class="a-lead" d="M0.3 8H-1.4"/>
+            <text class="cjk" x="8" y="-2.9" text-anchor="middle">画板 16 × 16</text>
+            <text class="sm" x="8" y="-1.8" text-anchor="middle">viewBox 0 0 16 16</text>
+            <text class="cjk" x="-0.6" y="-1.1" text-anchor="end">内缩 2.050</text>
+            <text class="sm" x="-0.9" y="0.45" text-anchor="end">0.300</text>
+            <text class="cjk" x="-1.7" y="7.6" text-anchor="end">外接圆</text>
+            <text class="sm" x="-1.7" y="8.75" text-anchor="end">r 7.700</text>
+            <text class="cjk" x="16.8" y="11.3">外接方框</text>
+            <text class="sm" x="16.8" y="12.55">11.900 × 15.400</text>
+            <text class="sm" x="-9.7" y="17.4">平行边最小间距 1.400（n=13 对）</text>
+          </g>
+        </svg>
+        <figcaption><code>paperclip-outline-16</code> · 外接框 11.900 × 15.400 · 左右内缩 2.050、上下 0.300 · 单条路径 24 段 · 平行边最小间距 1.400。左右内缩是上下内缩的 6.8 倍——同一个画板里，两个方向的呼吸量并不相等。</figcaption>
+      </figure>
+
+    </div>
+  </div>
+
+  <div class="sizes">
+    <p class="sizes__title">尺寸族对照 · 同一个母题在 16 与 14 族之间如何简化</p>
+    <div class="sizes__row">
+
+      <div class="family">
+        <p class="family__head">16 族 <span>link-outline-16</span></p>
+        <div class="family__pair">
+          <div class="family__cell">
+            <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M9.94133 6.50173C11.3218 7.99603 11.3218 10.3011 9.94128 11.7954C9.88691 11.8542 9.82125 11.9196 9.72099 12.0198L7.75707 13.9838C7.65709 14.0838 7.592 14.1491 7.53334 14.2034C6.03906 15.5843 3.7327 15.5854 2.23827 14.2048C2.17933 14.1503 2.11374 14.0844 2.01315 13.9838C1.91318 13.8839 1.84922 13.8188 1.79495 13.7601C0.413857 12.2657 0.413909 9.95948 1.795 8.46503C1.84923 8.4064 1.91335 8.34115 2.01321 8.24129L3.79275 6.46313C3.71814 7.08101 3.75236 7.71445 3.90115 8.33518L3.00344 9.23151C2.89398 9.34097 2.8535 9.38307 2.82251 9.41658C1.93771 10.3744 1.93704 11.8514 2.82179 12.8092C2.85279 12.8427 2.89383 12.884 3.0034 12.9936C3.11272 13.1029 3.15429 13.1442 3.18777 13.1752C4.14561 14.0603 5.62381 14.0608 6.58178 13.1758C6.61532 13.1448 6.65722 13.1032 6.76685 12.9935L8.73077 11.0296C8.83999 10.9204 8.88142 10.8787 8.91238 10.8452C9.79744 9.88728 9.7969 8.40911 8.91173 7.45124C8.88074 7.41775 8.83944 7.3762 8.73011 7.26687C8.62082 7.15757 8.58061 7.11623 8.54712 7.08526C8.37347 6.92477 8.18243 6.79361 7.98088 6.69165L9.00289 5.66964C9.17506 5.78373 9.34035 5.91265 9.49663 6.05703C9.55538 6.11135 9.62026 6.17652 9.72036 6.27662C9.82094 6.3772 9.88686 6.4428 9.94133 6.50173Z" fill="currentColor"/><path d="M6.06816 9.49196C4.68626 7.99724 4.68667 5.68942 6.06885 4.19487C6.12268 4.13671 6.18789 4.07306 6.28706 3.9739L8.24541 2.01416C8.34478 1.91479 8.41018 1.85055 8.46845 1.79665C9.96301 0.414902 12.2689 0.414922 13.7635 1.79665C13.8217 1.85051 13.8866 1.91559 13.9858 2.01486C14.0849 2.11394 14.1502 2.17769 14.204 2.23583C15.5861 3.7304 15.5866 6.03823 14.2047 7.53291C14.1508 7.59125 14.0854 7.65638 13.9858 7.75595L12.1994 9.54098C12.2614 8.92982 12.2185 8.30587 12.0634 7.69657L12.9956 6.76573C13.1044 6.65692 13.1458 6.61529 13.1765 6.58205C14.0621 5.62404 14.0621 4.1454 13.1765 3.18738C13.1458 3.15419 13.104 3.1135 12.9956 3.00508C12.8877 2.89716 12.8471 2.85551 12.814 2.82485C11.8559 1.9389 10.376 1.93886 9.41794 2.82485C9.38479 2.85554 9.34381 2.89622 9.23564 3.00439L7.27728 4.96413C7.16875 5.07265 7.12708 5.11322 7.09636 5.14643C6.21074 6.10441 6.21153 7.58236 7.09705 8.5404C7.12775 8.57357 7.16826 8.61575 7.27659 8.72408C7.38456 8.83205 7.42647 8.87227 7.45958 8.90293C7.62849 9.0591 7.81309 9.1881 8.00856 9.28894L6.98795 10.3095C6.82111 10.1978 6.66052 10.0715 6.50872 9.93114C6.45057 9.87733 6.38547 9.81341 6.28637 9.71431C6.1871 9.61504 6.12202 9.55018 6.06816 9.49196Z" fill="currentColor"/></svg>
+            <span>16px</span>
+          </div>
+          <div class="family__cell">
+            <svg viewBox="0 0 16 16" width="64" height="64" aria-hidden="true"><path d="M9.94133 6.50173C11.3218 7.99603 11.3218 10.3011 9.94128 11.7954C9.88691 11.8542 9.82125 11.9196 9.72099 12.0198L7.75707 13.9838C7.65709 14.0838 7.592 14.1491 7.53334 14.2034C6.03906 15.5843 3.7327 15.5854 2.23827 14.2048C2.17933 14.1503 2.11374 14.0844 2.01315 13.9838C1.91318 13.8839 1.84922 13.8188 1.79495 13.7601C0.413857 12.2657 0.413909 9.95948 1.795 8.46503C1.84923 8.4064 1.91335 8.34115 2.01321 8.24129L3.79275 6.46313C3.71814 7.08101 3.75236 7.71445 3.90115 8.33518L3.00344 9.23151C2.89398 9.34097 2.8535 9.38307 2.82251 9.41658C1.93771 10.3744 1.93704 11.8514 2.82179 12.8092C2.85279 12.8427 2.89383 12.884 3.0034 12.9936C3.11272 13.1029 3.15429 13.1442 3.18777 13.1752C4.14561 14.0603 5.62381 14.0608 6.58178 13.1758C6.61532 13.1448 6.65722 13.1032 6.76685 12.9935L8.73077 11.0296C8.83999 10.9204 8.88142 10.8787 8.91238 10.8452C9.79744 9.88728 9.7969 8.40911 8.91173 7.45124C8.88074 7.41775 8.83944 7.3762 8.73011 7.26687C8.62082 7.15757 8.58061 7.11623 8.54712 7.08526C8.37347 6.92477 8.18243 6.79361 7.98088 6.69165L9.00289 5.66964C9.17506 5.78373 9.34035 5.91265 9.49663 6.05703C9.55538 6.11135 9.62026 6.17652 9.72036 6.27662C9.82094 6.3772 9.88686 6.4428 9.94133 6.50173Z" fill="currentColor"/><path d="M6.06816 9.49196C4.68626 7.99724 4.68667 5.68942 6.06885 4.19487C6.12268 4.13671 6.18789 4.07306 6.28706 3.9739L8.24541 2.01416C8.34478 1.91479 8.41018 1.85055 8.46845 1.79665C9.96301 0.414902 12.2689 0.414922 13.7635 1.79665C13.8217 1.85051 13.8866 1.91559 13.9858 2.01486C14.0849 2.11394 14.1502 2.17769 14.204 2.23583C15.5861 3.7304 15.5866 6.03823 14.2047 7.53291C14.1508 7.59125 14.0854 7.65638 13.9858 7.75595L12.1994 9.54098C12.2614 8.92982 12.2185 8.30587 12.0634 7.69657L12.9956 6.76573C13.1044 6.65692 13.1458 6.61529 13.1765 6.58205C14.0621 5.62404 14.0621 4.1454 13.1765 3.18738C13.1458 3.15419 13.104 3.1135 12.9956 3.00508C12.8877 2.89716 12.8471 2.85551 12.814 2.82485C11.8559 1.9389 10.376 1.93886 9.41794 2.82485C9.38479 2.85554 9.34381 2.89622 9.23564 3.00439L7.27728 4.96413C7.16875 5.07265 7.12708 5.11322 7.09636 5.14643C6.21074 6.10441 6.21153 7.58236 7.09705 8.5404C7.12775 8.57357 7.16826 8.61575 7.27659 8.72408C7.38456 8.83205 7.42647 8.87227 7.45958 8.90293C7.62849 9.0591 7.81309 9.1881 8.00856 9.28894L6.98795 10.3095C6.82111 10.1978 6.66052 10.0715 6.50872 9.93114C6.45057 9.87733 6.38547 9.81341 6.28637 9.71431C6.1871 9.61504 6.12202 9.55018 6.06816 9.49196Z" fill="currentColor"/></svg>
+            <span>×4</span>
+          </div>
+        </div>
+        <p class="family__note">路径命令 <b>60</b> 段 · 外接框 15.112 × 15.109 · 内缩 0.444</p>
+      </div>
+
+      <div class="family">
+        <p class="family__head">14 族 <span>link-outline-14</span></p>
+        <div class="family__pair">
+          <div class="family__cell">
+            <svg viewBox="0 0 14 14" width="14" height="14" aria-hidden="true"><path d="M8.19727 5.86969C9.2092 6.90067 9.20969 8.55271 8.19727 9.58338L6.88871 10.8919C5.85801 11.9039 4.20584 11.9037 3.17502 10.8919L3.10873 10.8243C2.09622 9.7934 2.09626 8.14148 3.10873 7.11058L4.36757 5.85174C4.28261 6.33758 4.30355 6.84354 4.44077 7.33362L3.89249 7.88053C3.30043 8.48348 3.30108 9.4507 3.89318 10.0536L3.94566 10.1061C4.54861 10.698 5.51521 10.6981 6.11808 10.1061L7.41283 8.81275C8.00484 8.21002 8.00504 7.24267 7.41352 6.63964L7.35966 6.58716C7.21975 6.44976 7.05995 6.34434 6.89009 6.27089L7.70009 5.4609C7.85176 5.55768 7.99607 5.67091 8.1296 5.80202L8.19727 5.86969Z" fill="currentColor"/><path d="M5.80913 8.12648C4.79584 7.09547 4.79591 5.44245 5.80913 4.41141C5.81733 4.40304 5.82707 4.39209 5.8409 4.37826L7.07833 3.14082C7.09224 3.12693 7.10311 3.11729 7.11148 3.10906C8.14253 2.09591 9.79557 2.09579 10.8266 3.10906L10.8908 3.17328C11.9041 4.20425 11.9039 5.85727 10.8908 6.88835L9.63193 8.14581C9.70566 7.66581 9.67564 7.16895 9.53456 6.68948L10.1063 6.11772C10.6989 5.51458 10.6992 4.54691 10.1063 3.94391L10.0552 3.8942C9.45215 3.30157 8.48446 3.30151 7.88142 3.8942L6.59358 5.18204C6.00081 5.78507 6.00092 6.75274 6.59358 7.35584L6.6433 7.40694C6.77998 7.54132 6.93555 7.64528 7.10112 7.71837L6.29251 8.52699C6.14446 8.43127 6.00395 8.31906 5.87335 8.1907L5.80913 8.12648Z" fill="currentColor"/></svg>
+            <span>14px</span>
+          </div>
+          <div class="family__cell">
+            <svg viewBox="0 0 14 14" width="56" height="56" aria-hidden="true"><path d="M8.19727 5.86969C9.2092 6.90067 9.20969 8.55271 8.19727 9.58338L6.88871 10.8919C5.85801 11.9039 4.20584 11.9037 3.17502 10.8919L3.10873 10.8243C2.09622 9.7934 2.09626 8.14148 3.10873 7.11058L4.36757 5.85174C4.28261 6.33758 4.30355 6.84354 4.44077 7.33362L3.89249 7.88053C3.30043 8.48348 3.30108 9.4507 3.89318 10.0536L3.94566 10.1061C4.54861 10.698 5.51521 10.6981 6.11808 10.1061L7.41283 8.81275C8.00484 8.21002 8.00504 7.24267 7.41352 6.63964L7.35966 6.58716C7.21975 6.44976 7.05995 6.34434 6.89009 6.27089L7.70009 5.4609C7.85176 5.55768 7.99607 5.67091 8.1296 5.80202L8.19727 5.86969Z" fill="currentColor"/><path d="M5.80913 8.12648C4.79584 7.09547 4.79591 5.44245 5.80913 4.41141C5.81733 4.40304 5.82707 4.39209 5.8409 4.37826L7.07833 3.14082C7.09224 3.12693 7.10311 3.11729 7.11148 3.10906C8.14253 2.09591 9.79557 2.09579 10.8266 3.10906L10.8908 3.17328C11.9041 4.20425 11.9039 5.85727 10.8908 6.88835L9.63193 8.14581C9.70566 7.66581 9.67564 7.16895 9.53456 6.68948L10.1063 6.11772C10.6989 5.51458 10.6992 4.54691 10.1063 3.94391L10.0552 3.8942C9.45215 3.30157 8.48446 3.30151 7.88142 3.8942L6.59358 5.18204C6.00081 5.78507 6.00092 6.75274 6.59358 7.35584L6.6433 7.40694C6.77998 7.54132 6.93555 7.64528 7.10112 7.71837L6.29251 8.52699C6.14446 8.43127 6.00395 8.31906 5.87335 8.1907L5.80913 8.12648Z" fill="currentColor"/></svg>
+            <span>×4</span>
+          </div>
+        </div>
+        <p class="family__note">路径命令 <b>42</b> 段 · 外接框 9.763 × 9.763 · 内缩 2.118</p>
+      </div>
+
+      <div class="family">
+        <p class="family__head">20 族 <span>IconArchiveOutline20</span></p>
+        <div class="family__pair">
+          <div class="family__cell">
+            <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path d="M15.8659 2.05975C17.2603 2.05995 18.3913 3.19096 18.3914 4.58527V5.4874C18.3914 6.02747 18.2192 6.52672 17.9303 6.93735C17.9336 6.96524 17.9388 6.99318 17.9388 7.02195V12.8884C17.9388 13.6345 17.9395 14.2379 17.8996 14.7254C17.8642 15.1593 17.7936 15.5499 17.6373 15.9141L17.5654 16.0685C17.278 16.6328 16.8405 17.1046 16.3038 17.434L16.0679 17.5661C15.66 17.7739 15.2196 17.8598 14.7237 17.9003C14.2362 17.9401 13.6327 17.9405 12.8867 17.9405H7.11122C6.36511 17.9405 5.76171 17.9401 5.27418 17.9003C4.84051 17.8649 4.44949 17.7952 4.08545 17.6391L3.93104 17.5661C3.36673 17.2785 2.89392 16.8414 2.56465 16.3044L2.43245 16.0685C2.22473 15.6608 2.13878 15.2211 2.09825 14.7254C2.05841 14.2379 2.05912 13.6345 2.05912 12.8884V7.02195C2.05912 6.99284 2.06422 6.96449 2.06758 6.93629C1.77931 6.52592 1.60858 6.02687 1.60858 5.4874V4.58527C1.60876 3.19084 2.73962 2.05975 4.1341 2.05975H15.8659ZM16.4984 7.92936C16.296 7.98169 16.0847 8.01288 15.8659 8.01291H4.1341C3.91478 8.01291 3.70246 7.98194 3.49955 7.92936V12.8884C3.49955 13.6582 3.50053 14.1927 3.53445 14.608C3.56769 15.0146 3.62923 15.244 3.71635 15.415L3.7925 15.5514C3.98339 15.8627 4.25749 16.1165 4.58464 16.2833L4.72529 16.3435C4.88095 16.3993 5.08638 16.4402 5.39158 16.4651C5.80685 16.4991 6.34138 16.5001 7.11122 16.5001H12.8867C13.6564 16.5001 14.1911 16.499 14.6063 16.4651C15.0128 16.432 15.2423 16.3703 15.4133 16.2833L15.5508 16.2061C15.8618 16.0152 16.116 15.7419 16.2827 15.415L16.3429 15.2732C16.3985 15.1177 16.4396 14.9128 16.4645 14.608C16.4985 14.1927 16.4984 13.6583 16.4984 12.8884V7.92936ZM4.1341 3.50019C3.53511 3.50019 3.0492 3.98631 3.04902 4.58527V5.4874C3.04902 6.08649 3.535 6.57248 4.1341 6.57248H15.8659C16.4648 6.57228 16.951 6.08638 16.951 5.4874V4.58527C16.9509 3.98644 16.4647 3.50038 15.8659 3.50019H4.1341Z" fill="currentColor"/><path d="M12.7962 12.5661V11.0832H7.20548V12.5661L12.7962 12.5661Z" fill="currentColor"/></svg>
+            <span>20px</span>
+          </div>
+          <div class="family__cell">
+            <svg viewBox="0 0 20 20" width="80" height="80" aria-hidden="true"><path d="M15.8659 2.05975C17.2603 2.05995 18.3913 3.19096 18.3914 4.58527V5.4874C18.3914 6.02747 18.2192 6.52672 17.9303 6.93735C17.9336 6.96524 17.9388 6.99318 17.9388 7.02195V12.8884C17.9388 13.6345 17.9395 14.2379 17.8996 14.7254C17.8642 15.1593 17.7936 15.5499 17.6373 15.9141L17.5654 16.0685C17.278 16.6328 16.8405 17.1046 16.3038 17.434L16.0679 17.5661C15.66 17.7739 15.2196 17.8598 14.7237 17.9003C14.2362 17.9401 13.6327 17.9405 12.8867 17.9405H7.11122C6.36511 17.9405 5.76171 17.9401 5.27418 17.9003C4.84051 17.8649 4.44949 17.7952 4.08545 17.6391L3.93104 17.5661C3.36673 17.2785 2.89392 16.8414 2.56465 16.3044L2.43245 16.0685C2.22473 15.6608 2.13878 15.2211 2.09825 14.7254C2.05841 14.2379 2.05912 13.6345 2.05912 12.8884V7.02195C2.05912 6.99284 2.06422 6.96449 2.06758 6.93629C1.77931 6.52592 1.60858 6.02687 1.60858 5.4874V4.58527C1.60876 3.19084 2.73962 2.05975 4.1341 2.05975H15.8659ZM16.4984 7.92936C16.296 7.98169 16.0847 8.01288 15.8659 8.01291H4.1341C3.91478 8.01291 3.70246 7.98194 3.49955 7.92936V12.8884C3.49955 13.6582 3.50053 14.1927 3.53445 14.608C3.56769 15.0146 3.62923 15.244 3.71635 15.415L3.7925 15.5514C3.98339 15.8627 4.25749 16.1165 4.58464 16.2833L4.72529 16.3435C4.88095 16.3993 5.08638 16.4402 5.39158 16.4651C5.80685 16.4991 6.34138 16.5001 7.11122 16.5001H12.8867C13.6564 16.5001 14.1911 16.499 14.6063 16.4651C15.0128 16.432 15.2423 16.3703 15.4133 16.2833L15.5508 16.2061C15.8618 16.0152 16.116 15.7419 16.2827 15.415L16.3429 15.2732C16.3985 15.1177 16.4396 14.9128 16.4645 14.608C16.4985 14.1927 16.4984 13.6583 16.4984 12.8884V7.92936ZM4.1341 3.50019C3.53511 3.50019 3.0492 3.98631 3.04902 4.58527V5.4874C3.04902 6.08649 3.535 6.57248 4.1341 6.57248H15.8659C16.4648 6.57228 16.951 6.08638 16.951 5.4874V4.58527C16.9509 3.98644 16.4647 3.50038 15.8659 3.50019H4.1341Z" fill="currentColor"/><path d="M12.7962 12.5661V11.0832H7.20548V12.5661L12.7962 12.5661Z" fill="currentColor"/></svg>
+            <span>×4</span>
+          </div>
+        </div>
+        <p class="family__note">路径命令 <b>66</b> 段 · 外接框 16.783 × 15.881 · 内缩 1.609 / 2.060。20 族在官方资产里只有这 1 个样本。</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="facts">
+    <p><b>官方图标集</b>：75 个文件，53 个 16×16、19 个 14×14、1 个 20×20、各 1 个 8×14 与 8.5×10.5（<code>spec/50-icons.md</code> 实测；本仓库按文件名复核一致）。</p>
+    <p><b>实现方式</b>：75/75 全部是填充路径 <code>fill="currentColor"</code>；扫描 <code>icons/*.svg</code> 得到 <code>stroke=</code> 出现 <b>0</b> 次，<code>fill</code> 取值只有 <code>none</code>（svg 根）与 <code>currentColor</code>（path）。所以「官方图标描边 1.5」这类说法没有依据。</p>
+    <p><b>视觉描边</b>：16 族中位数 1.301（<code>spec/50-icons.md</code>，取路径全为直线段的样本 n=6）。本仓库复核这 6 个样本（branch / browse / close / light / plus / skill）的平行边最小垂直间距为 1.2994–1.3008，中位数 1.3008，与规范值一致；建议 16 族自绘取 1.25–1.5，14 族取 1.1–1.3。</p>
+    <p><b>内缩</b>：53 个 16 族图标按「单个图标四边里最小的内缩」统计——中位数 0.546，四分位 0.314 与 1.006，最小 −0.650（有图形越出画板）。官方未定义安全区数值，也没有一条统一的安全区线；标注图里的点线只是这条中位参考线。</p>
+    <p><b>居中</b>：53 个 16 族图标中 23 个的外接框中心与画板中心完全重合，偏移中位数 0.026，最大 2.848（不对称图形按 <code>IC-MF-09</code> 做光学居中，建议补偿不超过 1px）。</p>
+  </div>
+</div>
+</body>
+</html>

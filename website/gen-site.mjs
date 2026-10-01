@@ -97,6 +97,18 @@ function mdToHtml(md) {
       continue
     }
 
+    /* An embedded live demo: `<!-- demo: name | caption -->`. The stage becomes
+     * a shadow root the page fills at render time, so a document can carry real
+     * operable UI instead of a screenshot of one. */
+    const demoRef = /^<!--\s*demo:\s*([\w-]+)\s*(?:\|\s*(.*?))?\s*-->$/u.exec(line.trim())
+    if (demoRef !== null) {
+      html.push('<figure class="demo"><div class="demo__stage" data-inline-demo="' + esc(demoRef[1]) + '"></div>'
+        + (demoRef[2] === undefined || demoRef[2] === '' ? '' : '<figcaption>' + inline(demoRef[2]) + '</figcaption>')
+        + '</figure>')
+      i++
+      continue
+    }
+
     const heading = /^(#{1,4})\s+(.*)$/u.exec(line)
     if (heading !== null) {
       const level = heading[1].length
@@ -203,6 +215,12 @@ function loadComponents() {
   const manifest = readJson('components/index.json', null)
   if (manifest === null || !Array.isArray(manifest.components)) return { manifestMissing: true, items: [] }
 
+  /* Which components mirror something the product actually ships, and which are
+   * this repository's own proposals. Showing both as if they were the same
+   * thing is how a design resource starts inventing UI. */
+  const origins = readJson('components/origins.json', { official: [], proposed: [] })
+  const official = new Set(origins.official ?? [])
+
   const items = manifest.components.map(entry => {
     const dir = entry.path ?? ''
     const base = dir === '' ? '' : `${dir.replace(/\/$/u, '')}/`
@@ -222,6 +240,7 @@ function loadComponents() {
 
     return {
       ...entry,
+      origin: official.has(entry.id) ? 'official' : 'proposed',
       summary,
       whenToUse: whenToUse.length > 0 ? whenToUse : entry.whenToUse,
       whenNotToUse: whenNotToUse.length > 0 ? whenNotToUse : entry.whenNotToUse,
@@ -275,17 +294,35 @@ function loadSpecs() {
       const md = readFileSync(join(dir, f), 'utf8')
       const id = basename(f, '.md')
       const meta = SPEC_META[id] ?? { group: 'basics', short: id, shortEn: id }
+      /* The `60` in `60 可访问性` is a filing number, not part of the title the
+       * reader is looking for — it belongs in the filename. */
+      const html = mdToHtml(md).replace(/<h1([^>]*)>\s*\d+\s*/u, '<h1$1>')
       return {
         id,
         file: `spec/${f}`,
-        title: titleOf(md, id),
+        title: titleOf(md, id).replace(/^\d+\s*/u, ''),
         short: meta.short,
         shortEn: meta.shortEn,
         group: meta.group,
-        html: mdToHtml(md),
+        html,
         chars: md.length,
       }
     })
+}
+
+/**
+ * Load every embedded demo document.
+ * @returns demo name → html.
+ */
+function loadDemos() {
+  const dir = join(ROOT, 'website', 'demos')
+  if (!existsSync(dir)) return {}
+  const out = {}
+  for (const f of readdirSync(dir)) {
+    if (!f.endsWith('.html')) continue
+    out[basename(f, '.html')] = readFileSync(join(dir, f), 'utf8')
+  }
+  return out
 }
 
 /**
@@ -332,6 +369,7 @@ const data = {
     slots: slots.source ?? null,
   },
   i18n,
+  demos: loadDemos(),
   icons: iconItems,
   brand: {
     fish: readText('icons/brand/fish.svg'),

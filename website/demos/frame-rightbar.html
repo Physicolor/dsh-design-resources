@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>右栏的存在方式 · DSH 设计资源</title>
+<style>
+/* ── 兜底 token：嵌入时跟随页面主题，双击打开时用兜底值 ─────────────── */
+:root {
+  --dm-bg: var(--site-bg, light-dark(#ffffff, #0c0c0d));
+  --dm-raised: var(--site-bg-raised, light-dark(#ffffff, #1c1c1f));
+  --dm-sunken: var(--site-bg-sunken, light-dark(#f7f7f9, #131315));
+  --dm-label: var(--site-label, light-dark(#1d1d1f, #f2f2f4));
+  --dm-label-2: var(--site-label-2, light-dark(#5f6062, #a8a8ae));
+  --dm-label-3: var(--site-label-3, light-dark(#86868b, #8a8a90));
+  --dm-line: var(--site-line, light-dark(#d6d6db, #3a3a3f));
+  --dm-line-soft: var(--site-line-soft, light-dark(#ebebef, #26262a));
+  --dm-accent: var(--site-accent, light-dark(#4d6bfe, #8296ff));
+  --dm-accent-soft: var(--site-accent-soft, light-dark(#edf0ff, #1a1f3d));
+  --dm-good: var(--site-good, light-dark(#14663c, #5fd39a));
+  --dm-bad: var(--site-bad, light-dark(#b3271f, #f5827a));
+  --dm-mono: var(--site-font-mono, ui-monospace, Consolas, monospace);
+  --dm-font: var(--site-font, system-ui, -apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif);
+  --dm-dur-fast: var(--site-dur-fast, 120ms);
+  /* 面板开合的真实时长与曲线，逐条取自 website/css/site.css 的
+     --site-dur-slow / --site-ease（.shell 的 grid-template-columns 过渡） */
+  --dm-dur-slow: var(--site-dur-slow, 340ms);
+  --dm-ease: var(--site-ease, cubic-bezier(0.4, 0, 0.2, 1));
+  --dm-nav-fill: var(--dsw-specific-sidebar-fill, light-dark(#f9fafb, #1b1b1c));
+  --dm-main-fill: var(--dsw-alias-bg-base, light-dark(#ffffff, #151517));
+  --dm-border: var(--dsw-alias-border-l2, light-dark(#0000001a, #ffffff1f));
+}
+body { margin: 0; }
+.dm {
+  padding: 16px 0 4px;
+  font-family: var(--dm-font);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--dm-label);
+}
+.dm * { box-sizing: border-box; }
+.dm__lede {
+  margin: 0 0 12px;
+  max-width: 70ch;
+  font-size: 11.5px;
+  line-height: 1.7;
+  color: var(--dm-label-3);
+}
+.dm__lede code { font-family: var(--dm-mono); font-size: 10.5px; }
+.vh {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ── 控制条 ─────────────────────────────────────────────────────────── */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  height: 26px;
+  padding: 0 12px;
+  border: 1px solid var(--dm-line);
+  border-radius: 13px;
+  background: var(--dm-raised);
+  font-size: 12px;
+  color: var(--dm-label);
+  cursor: pointer;
+  transition: background var(--dm-dur-fast) var(--dm-ease);
+}
+.btn:hover { background: var(--dm-accent-soft); }
+.controls__hint { font-size: 10.5px; color: var(--dm-label-3); }
+.controls__state { font-family: var(--dm-mono); font-size: 10.5px; color: var(--dm-label-2); }
+
+/* ── 对比：同一个中栏画两遍 ─────────────────────────────────────────── */
+.pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+@media (max-width: 640px) { .pair { grid-template-columns: minmax(0, 1fr); } }
+.cmp { margin: 0; min-width: 0; }
+.ruler {
+  display: grid;
+  margin-bottom: 5px;
+  font-family: var(--dm-mono);
+  font-size: 9.5px;
+  color: var(--dm-label-3);
+}
+.ruler span { padding: 0 4px; }
+.ruler--closed { grid-template-columns: 22.7% minmax(0, 1fr); }
+.ruler--open { grid-template-columns: 22.7% minmax(0, 1fr) 29.5%; }
+.ruler span:not(:first-child) { border-left: 1px dashed var(--dm-line); }
+.ruler--closed span:last-child { text-align: right; }
+
+.frame {
+  position: relative;
+  display: grid;
+  grid-template-columns: 22.7% minmax(0, 1fr) 29.5%;
+  height: 210px;
+  border: 1px solid var(--dm-line);
+  border-radius: 10px;
+  background: var(--dm-raised);
+  overflow: hidden;
+  transition: grid-template-columns var(--dm-dur-slow) var(--dm-ease);
+}
+.frame--closed { grid-template-columns: 22.7% minmax(0, 1fr) 0%; }
+
+/* 收起态：中栏占满，虚线停在右栏原来的左边界上 */
+.mark {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 29.5%;
+  border-left: 1px dashed var(--dm-accent);
+}
+.mark b {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--dm-accent-soft);
+  font-family: var(--dm-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--dm-label-2);
+  white-space: nowrap;
+}
+
+.col { min-width: 0; display: flex; flex-direction: column; padding: 8px; overflow: hidden; }
+.col--nav { background: var(--dm-nav-fill); border-right: 1px solid var(--dm-border); }
+.col--main { background: var(--dm-main-fill); }
+.col--aside {
+  background: var(--dm-nav-fill);
+  border-left: 1px solid var(--dm-border);
+  transition: background var(--dm-dur-fast) var(--dm-ease);
+}
+.col__name {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.col__id {
+  margin: 0;
+  font-family: var(--dm-mono);
+  font-size: 9.5px;
+  line-height: 1.4;
+  color: var(--dm-label-3);
+  word-break: break-all;
+}
+.ph { display: flex; flex-direction: column; gap: 5px; margin-top: 8px; }
+.ph i {
+  display: block;
+  height: 7px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--dm-label) 12%, transparent);
+}
+.ph i:nth-child(1) { width: 76%; }
+.ph i:nth-child(2) { width: 54%; }
+.ph i:nth-child(3) { width: 66%; }
+
+/* 右栏：可点，hover 高亮 */
+.col--aside { cursor: pointer; }
+.col--aside:hover { background: var(--dm-accent-soft); box-shadow: inset 0 0 0 2px var(--dm-accent); }
+#rb:focus-visible ~ .pair .col--aside { box-shadow: inset 0 0 0 2px var(--dm-accent); }
+#rb:checked ~ .pair .frame--open { grid-template-columns: 22.7% minmax(0, 1fr) 0%; }
+#rb:checked ~ .pair .frame--open .col--aside { box-shadow: inset 0 0 0 2px transparent; }
+
+.cmp figcaption {
+  margin-top: 6px;
+  font-size: 10.5px;
+  line-height: 1.6;
+  color: var(--dm-label-3);
+}
+
+/* ── 标注：适合 / 不适合 ───────────────────────────────────────────── */
+.notes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 16px;
+  margin-top: 14px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--dm-sunken);
+  transition: box-shadow var(--dm-dur-fast) var(--dm-ease);
+}
+@media (max-width: 640px) { .notes { grid-template-columns: minmax(0, 1fr); } }
+.pair:has(.col--aside:hover) ~ .notes { box-shadow: inset 0 0 0 1px var(--dm-accent); }
+.notes__group { min-width: 0; }
+.notes__title {
+  margin: 0 0 3px;
+  font-family: var(--dm-mono);
+  font-size: 10px;
+  font-weight: 600;
+}
+.notes__title--yes { color: var(--dm-good); }
+.notes__title--no { color: var(--dm-bad); }
+.notes__line {
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.7;
+  color: var(--dm-label-2);
+}
+.notes__dur {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding-top: 6px;
+  border-top: 1px solid var(--dm-line-soft);
+  font-size: 10.5px;
+  color: var(--dm-label-3);
+}
+.notes__dur code { font-family: var(--dm-mono); font-size: 10px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .frame, .col--aside, .btn, .notes { transition: none; }
+}
+</style>
+</head>
+<body>
+<div class="dm">
+  <p class="dm__lede">右栏不是「第三个中栏」：它常驻、可比中栏更强，但随时可折叠。下图的宽度按 1180px 视口折算，左栏 <code>268px</code> 固定，右栏 <code>348px</code> 固定，其余归中栏。</p>
+
+  <input type="checkbox" id="rb" class="vh">
+
+  <div class="controls">
+    <label class="btn" for="rb">开合右栏</label>
+    <span class="controls__hint">也可以直接点右图里的右栏</span>
+  </div>
+
+  <div class="pair">
+
+    <figure class="cmp">
+      <div class="ruler ruler--closed"><span>268 固定</span><span>自适应 · 912（原右栏并入）</span></div>
+      <div class="frame frame--closed">
+        <div class="col col--nav">
+          <p class="col__name">左栏</p>
+          <p class="col__id">sidebar</p>
+        </div>
+        <div class="col col--main">
+          <p class="col__name">中栏 main.conversation</p>
+          <p class="col__id">conversation.view</p>
+          <div class="ph"><i></i><i></i><i></i></div>
+          <span class="mark"><b>折叠线 · 348px 归中栏</b></span>
+        </div>
+      </div>
+      <figcaption>右栏收起时：中栏占满，主流程必须仍然走得完（FL-MF-02）。</figcaption>
+    </figure>
+
+    <figure class="cmp">
+      <div class="ruler ruler--open"><span>268 固定</span><span>自适应 · 564</span><span>348 固定</span></div>
+      <div class="frame frame--open">
+        <div class="col col--nav">
+          <p class="col__name">左栏</p>
+          <p class="col__id">sidebar</p>
+        </div>
+        <div class="col col--main">
+          <p class="col__name">中栏 main.conversation</p>
+          <p class="col__id">conversation.view</p>
+          <div class="ph"><i></i><i></i><i></i></div>
+        </div>
+        <label class="col col--aside" for="rb">
+          <p class="col__name">右栏</p>
+          <p class="col__id">rightbar</p>
+          <div class="ph"><i></i><i></i></div>
+        </label>
+      </div>
+      <figcaption>右图可点：让出或收回这 348px 的是中栏的宽度，过渡 340ms，不是跳变。</figcaption>
+    </figure>
+
+  </div>
+
+  <div class="notes">
+    <div class="notes__group">
+      <p class="notes__title notes__title--yes">适合放</p>
+      <p class="notes__line">临时查看类：上下文、检查器、预览、引用来源。常驻可见，与当前会话弱相关。</p>
+    </div>
+    <div class="notes__group">
+      <p class="notes__title notes__title--no">不适合放</p>
+      <p class="notes__line">主流程必经操作——不点它就完不成任务的操作；也不放与会话强相关的长期信息（FL-MF-06）。</p>
+    </div>
+    <p class="notes__dur">过渡：<code>grid-template-columns 340ms cubic-bezier(0.4, 0, 0.2, 1)</code>，与站点 <code>.shell</code> 的取值一致。</p>
+  </div>
+</div>
+</body>
+</html>

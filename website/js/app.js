@@ -224,6 +224,34 @@
         return spec.short || spec.title
     }
 
+    /**
+     * Localised display name for a component.
+     *
+     * The component's own name is English (`EmptyState`), which tells a designer
+     * nothing. In Chinese the dictionary carries a plain-language name; the code
+     * name is still shown on the page for whoever has to type it.
+     * @param c - component record.
+     * @returns label.
+     */
+    function componentLabel(c) {
+        if (LANG !== 'zh') return c.name
+        var key = 'componentNames.' + c.id
+        var label = t(key)
+        return label === key ? c.name : label
+    }
+
+    /**
+     * The badge and one-line explanation for where a component comes from.
+     * @param c - component record.
+     * @returns html.
+     */
+    function originNote(c) {
+        var kind = c.origin === 'official' ? 'official' : 'proposed'
+        return '<p class="origin-note">'
+            + badge(t('origin.' + kind), kind === 'official' ? 'safe' : 'warn')
+            + '<span>' + esc(t('origin.' + kind + 'Note')) + '</span></p>'
+    }
+
     /* ── theme ─────────────────────────────────────────────────────── */
 
     var THEME_ICON = { light: 'light', dark: 'dark' }
@@ -411,7 +439,6 @@
             var componentLinks = [{
                 href: href('/components'),
                 label: t('index.allComponents'),
-                count: COMPONENTS.length,
                 active: path === '/components',
             }].concat(categories.map(function (cat) {
                 var holdsOpen = openId !== null && byCategory[cat].some(function (c) { return c.id === openId })
@@ -426,14 +453,13 @@
                     key: key,
                     href: href('/components/' + cat),
                     label: categoryLabel(cat),
-                    count: byCategory[cat].length,
                     /* the branch itself is never lit: exactly one row carries the
                      * current position, and it is the row actually opened */
                     active: path === '/components/' + cat,
                     collapsible: true,
                     open: open,
                     children: byCategory[cat].map(function (c) {
-                        return { href: href('/component/' + c.id), label: c.name, active: path === '/component/' + c.id, sub: true }
+                        return { href: href('/component/' + c.id), label: componentLabel(c), active: path === '/component/' + c.id, sub: true }
                     }),
                 }
             }))
@@ -444,9 +470,9 @@
             id: 'resources',
             title: t('index.resources'),
             links: [
-                { href: href('/seats'), label: t('index.seats'), count: SEATS.length, active: path === '/seats' },
-                { href: href('/icons'), label: t('index.icons'), count: ICONS.length, active: path === '/icons' },
-                { href: href('/tokens'), label: t('index.tokens'), count: Object.keys(TOKENS.light).length, active: path === '/tokens' },
+                { href: href('/seats'), label: t('index.seats'), active: path === '/seats' },
+                { href: href('/icons'), label: t('index.icons'), active: path === '/icons' },
+                { href: href('/tokens'), label: t('index.tokens'), active: path === '/tokens' },
             ],
         })
 
@@ -625,11 +651,13 @@
      * @returns markup suitable for `shadowRoot.innerHTML`.
      */
     function toShadowMarkup(demoHtml) {
-        /* The boundary guard `[^\w<>/-]` matters: without it the tag name in
-         * `<html lang="zh-CN">` is rewritten too, and the demo then renders a
-         * literal `<:host lang="zh-CN">` line above its content. A selector is
-         * only a selector when it is followed by `{` or `,`. */
-        return String(demoHtml).replace(/(^|[^\w<>/-])(:root|html|body)(?=\s*[,{])/gu, function (_m, prefix) {
+        /* The prefix guard excludes `.`, `#` and `-` as well as word characters:
+         * `.body {` is a class selector, and rewriting it to `.:host {` yields an
+         * invalid selector that the CSS parser **drops silently** — the rule
+         * disappears and the demo quietly loses its geometry. Measured: four
+         * demos were losing padding and min-width that way. A selector only
+         * counts when it is followed by `{` or `,`. */
+        return String(demoHtml).replace(/(^|[^\w<>/#.-])(:root|html|body)(?=\s*[,{])/gu, function (_m, prefix) {
             return prefix + ':host'
         })
     }
@@ -658,25 +686,57 @@
     }
 
     /**
+     * The style every shadow-hosted document starts from.
+     *
+     * Appended AFTER the embedded document so it wins the tie: the document
+     * still owns its canvas colour, while the page owns the type and the text
+     * colour, and no extra frame is wrapped around it.
+     */
+    var SHADOW_RESET = '<style>'
+        + ':host{display:block;font-family:var(--site-font);font-size:var(--site-text-body);color:var(--site-label)}'
+        + ':host *{box-sizing:border-box}'
+        + '</style>'
+
+    /**
      * Mount every staged demo into its own shadow root.
+     *
+     * Two kinds share this path: the component specimens collected from each
+     * component's own demo.html, and the demos a spec document embeds with a
+     * `demo:` marker comment. (The marker is never spelled out literally here:
+     * an HTML comment opener inside a classic script is parsed as a comment
+     * start, which silently truncates the file.)
      * @param root - subtree to scan.
      */
     function mountDemos(root) {
+        /**
+         * Fill one host with its document.
+         * @param host - the stage element.
+         * @param html - the embedded document.
+         */
+        var mount = function (host, html) {
+            var shadow = host.attachShadow({ mode: 'open' })
+            shadow.innerHTML = toShadowMarkup(html) + SHADOW_RESET
+            /* `innerHTML` never executes a `<script>`, so an embedded demo would
+             * be a picture of an interaction rather than an interaction. The
+             * nodes are rebuilt so the demo can actually be operated. */
+            Array.prototype.forEach.call(shadow.querySelectorAll('script'), function (old) {
+                var fresh = document.createElement('script')
+                for (var i = 0; i < old.attributes.length; i++) {
+                    fresh.setAttribute(old.attributes[i].name, old.attributes[i].value)
+                }
+                fresh.textContent = old.textContent
+                old.parentNode.replaceChild(fresh, old)
+            })
+        }
+
         Array.prototype.forEach.call(root.querySelectorAll('[data-demo-id]'), function (host) {
             var html = DEMOS[host.getAttribute('data-demo-id')]
-            if (html === undefined) return
-            var shadow = host.attachShadow({ mode: 'open' })
-            /* The first rule is the site's, the rest is the demo's own document:
-             * both themes are already resolved into `--dsw-*` on the page, so the
-             * specimen follows the page theme without a second token set. */
-            shadow.innerHTML = toShadowMarkup(html)
-                + '<style>'
-                /* Appended AFTER the demo's own document so it wins the tie: the
-                 * demo still owns its canvas colour, but the page owns the type
-                 * and the text colour, and no extra frame is added around it. */
-                + ':host{display:block;font-family:var(--site-font);font-size:var(--site-text-body);color:var(--site-label)}'
-                + ':host *{box-sizing:border-box}'
-                + '</style>'
+            if (html !== undefined) mount(host, html)
+        })
+
+        Array.prototype.forEach.call(root.querySelectorAll('[data-inline-demo]'), function (host) {
+            var html = (D.demos || {})[host.getAttribute('data-inline-demo')]
+            if (html !== undefined) mount(host, html)
         })
     }
 
@@ -1026,10 +1086,12 @@
             + crumbs([
                 { label: t('components.title'), hash: '/components' },
                 { label: categoryLabel(c.category), hash: '/components/' + (c.category || 'uncategorized') },
-                { label: c.name },
+                { label: componentLabel(c) },
             ], '/components/' + (c.category || 'uncategorized'))
-            + '<div class="hero"><h1 class="hero__title">' + esc(c.name) + '</h1>'
-            + '<p class="hero__lede">' + esc(toPlain(c.summary)) + '</p></div>'
+            + '<div class="hero"><h1 class="hero__title">' + esc(componentLabel(c))
+            + '<span class="hero__code">' + esc(c.name) + '</span></h1>'
+            + '<p class="hero__lede">' + esc(toPlain(c.summary)) + '</p>'
+            + originNote(c) + '</div>'
             + (LANG === 'en' ? '<div class="callout"><span class="callout__mark">i</span><div><p>' + esc(t('components.chineseOnly')) + '</p></div></div>' : '')
             + specimen(t('components.preview'), c.demo)
             + (c.hasSpec === true ? docSwitch() : '')
@@ -1054,9 +1116,11 @@
      */
     function componentCard(c) {
         return '<a class="card" href="' + esc(href('/component/' + c.id)) + '">'
-            + '<p class="card__title">' + esc(c.name) + '</p>'
+            + '<p class="card__title">' + esc(componentLabel(c)) + '<span class="card__code">' + esc(c.name) + '</span></p>'
             + '<p class="card__body">' + esc(toPlain(c.summary)) + '</p>'
-            + '<p class="card__meta">' + esc(categoryLabel(c.category)) + '</p>'
+            + '<p class="card__meta">'
+            + badge(t('origin.' + (c.origin === 'official' ? 'official' : 'proposed')), c.origin === 'official' ? 'safe' : 'warn')
+            + '</p>'
             + '</a>'
     }
 
@@ -1325,7 +1389,14 @@
         SPECS.forEach(function (s) {
             out.push({ kind: t('index.spec'), name: LANG === 'en' ? (s.shortEn || s.title) : s.title, desc: s.id, hash: '/spec/' + s.id })
         })
-        COMPONENTS.forEach(function (c) { out.push({ kind: t('topnav.components'), name: c.name, desc: toPlain(c.summary).slice(0, 70), hash: '/component/' + c.id }) })
+        COMPONENTS.forEach(function (c) {
+            out.push({
+                kind: t('topnav.components'),
+                name: componentLabel(c),
+                desc: c.name + ' · ' + toPlain(c.summary).slice(0, 46),
+                hash: '/component/' + c.id,
+            })
+        })
         SEATS.forEach(function (s) { out.push({ kind: t('topnav.seats'), name: s.name, desc: s.purpose.slice(0, 70), hash: '/seats?q=' + encodeURIComponent(s.name) }) })
         ICONS.forEach(function (i) { out.push({ kind: t('topnav.icons'), name: i.name, desc: i.component, hash: '/icons?q=' + encodeURIComponent(i.name) }) })
         Object.keys(TOKENS.light).forEach(function (n) { out.push({ kind: t('topnav.tokens'), name: n, desc: '', hash: '/tokens?q=' + encodeURIComponent(n) }) })

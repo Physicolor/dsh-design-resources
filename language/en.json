@@ -32,14 +32,20 @@
     },
     "groups": { "basics": "Foundations", "visual": "Visual language", "quality": "Quality" },
     "categories": {
-        "layout": "Layout",
-        "controls": "Controls",
-        "surfaces": "Surfaces",
-        "feedback": "Feedback",
-        "data-display": "Data display",
-        "patterns": "Patterns",
+        "layout": "Layout and organization",
+        "controls": "Actions and input",
+        "surfaces": "Presentation",
+        "feedback": "Status and feedback",
+        "data-display": "Content",
+        "patterns": "Page skeletons",
         "brand": "Brand",
         "uncategorized": "Uncategorised"
+    },
+    "origin": {
+        "official": "Ships with the product",
+        "proposed": "Proposed here",
+        "officialNote": "This component mirrors an interface element the product actually ships — you will meet it in the app.",
+        "proposedNote": "The product has no such component. This is an implementation proposal from this repository: every number is anchored to an official selector, but it is not UI the product ships — do not read it as what DSH looks like."
     },
     "home": {
         "eyebrow": "DeepSeek Design Resources",

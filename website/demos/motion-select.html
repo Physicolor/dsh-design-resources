@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>选择器箭头动效 · DSH 设计资源</title>
+<style>
+/* ── 兜底 token：嵌入时跟随页面主题，双击打开时用兜底值 ─────────────── */
+:root {
+  --dm-bg: var(--site-bg, light-dark(#ffffff, #0c0c0d));
+  --dm-raised: var(--site-bg-raised, light-dark(#ffffff, #1c1c1f));
+  --dm-subtle: var(--site-bg-subtle, light-dark(#f4f4f6, #1a1a1c));
+  --dm-sunken: var(--site-bg-sunken, light-dark(#f7f7f9, #131315));
+  --dm-label: var(--site-label, light-dark(#1d1d1f, #f2f2f4));
+  --dm-label-2: var(--site-label-2, light-dark(#5f6062, #a8a8ae));
+  --dm-label-3: var(--site-label-3, light-dark(#86868b, #8a8a90));
+  --dm-line: var(--site-line, light-dark(#d6d6db, #3a3a3f));
+  --dm-line-soft: var(--site-line-soft, light-dark(#ebebef, #26262a));
+  --dm-accent: var(--site-accent, light-dark(#4d6bfe, #8296ff));
+  --dm-accent-soft: var(--site-accent-soft, light-dark(#edf0ff, #1a1f3d));
+  --dm-bad: var(--site-bad, light-dark(#b3271f, #f5827a));
+  --dm-bad-soft: var(--site-bad-soft, light-dark(#fdeae8, #2b1715));
+  --dm-good: var(--site-good, light-dark(#14663c, #5fd39a));
+  --dm-good-soft: var(--site-good-soft, light-dark(#e6f4ec, #10261a));
+  --dm-mono: var(--site-font-mono, ui-monospace, Consolas, monospace);
+  --dm-font: var(--site-font, system-ui, -apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif);
+  --dm-dur-fast: var(--site-dur-fast, 120ms);
+  /* 箭头翻转的时长取站点自身的折叠箭头：.index__chevron 用 --site-dur（200ms） */
+  --dm-dur: var(--site-dur, 200ms);
+  --dm-ease: var(--site-ease, cubic-bezier(0.4, 0, 0.2, 1));
+  --dm-selector-fill: var(--dsw-specific-selector, light-dark(#f9fafb, #2c2c2e));
+  --dm-border: var(--dsw-alias-border-l2, light-dark(#0000001a, #ffffff1f));
+  --dm-shadow: var(--site-shadow, 0 1px 2px rgb(0 0 0 / 10%));
+  --dm-shadow-lift: var(--site-shadow-lift, 0 8px 20px rgb(0 0 0 / 12%));
+}
+body { margin: 0; }
+.dm {
+  padding: 16px 0 4px;
+  font-family: var(--dm-font);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--dm-label);
+}
+.dm * { box-sizing: border-box; }
+.dm__lede {
+  margin: 0 0 12px;
+  max-width: 72ch;
+  font-size: 11.5px;
+  line-height: 1.7;
+  color: var(--dm-label-3);
+}
+.vh {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ── 三个入口：自动播放 / 暂停 / 手动点一下 ─────────────────────────── */
+.entries {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  margin-bottom: 14px;
+  border-radius: 9px;
+  background: var(--dm-subtle);
+}
+.entries label {
+  height: 24px;
+  padding: 0 10px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--dm-label-2);
+  cursor: pointer;
+  transition: background var(--dm-dur-fast) var(--dm-ease), color var(--dm-dur-fast) var(--dm-ease);
+}
+.entries label:hover { color: var(--dm-label); }
+#e-auto:checked ~ .entries label[for="e-auto"],
+#e-pause:checked ~ .entries label[for="e-pause"],
+#e-manual:checked ~ .entries label[for="e-manual"] {
+  background: var(--dm-raised);
+  color: var(--dm-label);
+  box-shadow: var(--dm-shadow);
+}
+#e-auto:focus-visible ~ .entries label[for="e-auto"],
+#e-pause:focus-visible ~ .entries label[for="e-pause"],
+#e-manual:focus-visible ~ .entries label[for="e-manual"] { outline: 2px solid var(--dm-accent); outline-offset: 1px; }
+
+/* ── 三个对照格 ─────────────────────────────────────────────────────── */
+.bench {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+@media (max-width: 720px) { .bench { grid-template-columns: minmax(0, 1fr); } }
+.case {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--dm-line-soft);
+  border-radius: 10px;
+  background: var(--dm-bg);
+}
+.case--bad { border-color: color-mix(in srgb, var(--dm-bad) 40%, var(--dm-line-soft)); }
+.case__label {
+  margin: 0 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--dm-label-2);
+}
+.case__badge {
+  padding: 0 5px;
+  border-radius: 4px;
+  font-size: 9.5px;
+  font-weight: 600;
+}
+.case__badge--bad { background: var(--dm-bad-soft); color: var(--dm-bad); }
+.case__badge--good { background: var(--dm-good-soft); color: var(--dm-good); }
+.case__prop {
+  margin: 0 0 4px;
+  font-family: var(--dm-mono);
+  font-size: 10px;
+  color: var(--dm-label-3);
+}
+.case__meta {
+  margin: 10px 0 0;
+  font-family: var(--dm-mono);
+  font-size: 10px;
+  line-height: 1.6;
+  color: var(--dm-label-3);
+}
+.case__note {
+  margin: 6px 0 0;
+  font-size: 10.5px;
+  line-height: 1.65;
+  color: var(--dm-label-2);
+}
+
+/* ── 案例一：选择器右侧的箭头 ───────────────────────────────────────── */
+.picker { position: relative; height: 104px; }
+.picker__face {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 32px;
+  padding: 0 8px 0 10px;
+  border: 1px solid var(--dm-line);
+  border-radius: 8px;
+  background: var(--dm-selector-fill);
+  font-size: 12px;
+  color: var(--dm-label);
+  cursor: pointer;
+}
+.picker__face:hover { border-color: var(--dm-accent); }
+.chev {
+  display: block;
+  flex: none;
+  width: 14px;
+  height: 14px;
+  color: var(--dm-label-2);
+  transform: rotate(0deg);
+  transform-origin: 50% 50%;
+  transition: transform var(--dm-dur) var(--dm-ease);
+}
+.chev svg { display: block; width: 100%; height: 100%; }
+.menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 38px;
+  padding: 4px;
+  border: 1px solid var(--dm-line);
+  border-radius: 8px;
+  background: var(--dm-raised);
+  box-shadow: var(--dm-shadow-lift);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity var(--dm-dur) var(--dm-ease), transform var(--dm-dur) var(--dm-ease);
+}
+.menu__item {
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  color: var(--dm-label-2);
+}
+.menu__item:first-child { background: var(--dm-accent-soft); color: var(--dm-label); }
+
+/* 手动模式：由 checkbox 驱动（自动 / 暂停模式下动画优先，见下） */
+#sel:checked ~ .bench .chev { transform: rotate(180deg); }
+#sel:checked ~ .bench .menu { opacity: 1; transform: translateY(0); }
+#sel:focus-visible ~ .bench .picker__face { outline: 2px solid var(--dm-accent); outline-offset: 2px; }
+
+/* 自动播放 / 暂停：同一组关键帧，只切换 animation-play-state，暂停时停在当前位置。
+   周期 3s；每段移动占 6.667%（= 200ms），其余时间是停留，所以看到的仍是 200ms 的翻动。 */
+@keyframes dm-chev {
+  0%, 26.667% { transform: rotate(0deg); }
+  33.333%, 60% { transform: rotate(180deg); }
+  66.667%, 100% { transform: rotate(0deg); }
+}
+@keyframes dm-menu {
+  0%, 26.667% { opacity: 0; transform: translateY(-4px); }
+  33.333%, 60% { opacity: 1; transform: translateY(0); }
+  66.667%, 100% { opacity: 0; transform: translateY(-4px); }
+}
+#e-auto:checked ~ .bench .chev { animation: dm-chev 3s var(--dm-ease) infinite; }
+#e-auto:checked ~ .bench .menu { animation: dm-menu 3s var(--dm-ease) infinite; }
+#e-pause:checked ~ .bench .chev { animation: dm-chev 3s var(--dm-ease) infinite; animation-play-state: paused; }
+#e-pause:checked ~ .bench .menu { animation: dm-menu 3s var(--dm-ease) infinite; animation-play-state: paused; }
+
+/* ── 案例二 / 三：width+height 与 transform 的对照 ──────────────────── */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+}
+.box {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: var(--dm-accent);
+}
+.chip {
+  flex: none;
+  padding: 2px 8px;
+  border: 1px solid var(--dm-line);
+  border-radius: 6px;
+  background: var(--dm-subtle);
+  font-size: 10.5px;
+  color: var(--dm-label-2);
+  white-space: nowrap;
+}
+@keyframes dm-bad {
+  0%, 26.667% { width: 11px; height: 11px; }
+  33.333%, 60% { width: 26px; height: 26px; }
+  66.667%, 100% { width: 11px; height: 11px; }
+}
+@keyframes dm-good {
+  0%, 26.667% { transform: scale(0.4231); }
+  33.333%, 60% { transform: scale(1); }
+  66.667%, 100% { transform: scale(0.4231); }
+}
+.box--bad { animation: dm-bad 3s var(--dm-ease) infinite; }
+.box--good { transform-origin: left center; animation: dm-good 3s var(--dm-ease) infinite; }
+#e-pause:checked ~ .bench .box--bad,
+#e-pause:checked ~ .bench .box--good { animation-play-state: paused; }
+
+.footnote {
+  margin: 12px 0 0;
+  font-size: 10.5px;
+  line-height: 1.7;
+  color: var(--dm-label-3);
+}
+.footnote code { font-family: var(--dm-mono); font-size: 10px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .chev, .menu, .entries label { transition: none; }
+  .chev, .menu, .box--bad, .box--good { animation: none; }
+}
+</style>
+</head>
+<body>
+<div class="dm">
+  <p class="dm__lede">选择器右边的那个箭头也是动效：展开时旋转 180°，<b>200ms</b>、标准曲线。右边两格是把同一段位移分别交给 <code>width/height</code> 与 <code>transform</code> 的结果。</p>
+
+  <input type="radio" name="entry" id="e-auto" class="vh">
+  <input type="radio" name="entry" id="e-pause" class="vh">
+  <input type="radio" name="entry" id="e-manual" class="vh" checked>
+  <input type="checkbox" id="sel" class="vh">
+
+  <div class="entries">
+    <label for="e-auto">自动播放</label>
+    <label for="e-pause">暂停</label>
+    <label for="e-manual">手动点一下</label>
+  </div>
+
+  <div class="bench">
+
+    <div class="case">
+      <p class="case__label">选择器箭头<span class="case__badge case__badge--good">正确</span></p>
+      <p class="case__prop">transform: rotate(0 → 180deg)</p>
+      <div class="picker">
+        <label class="picker__face" for="sel">
+          <span>模型 · V3</span>
+          <span class="chev">
+            <!-- 官方图标 ic_ds_chevron_down_outline_14（chevron-down-outline-14.svg），
+                 填充路径，fill="currentColor" -->
+            <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M11.8486 5.5L11.4238 5.92383L8.69727 8.65137C8.44157 8.90706 8.21562 9.13382 8.01172 9.29785C7.79912 9.46883 7.55595 9.61756 7.25 9.66602C7.08435 9.69222 6.91565 9.69222 6.75 9.66602C6.44405 9.61756 6.20088 9.46883 5.98828 9.29785C5.78438 9.13382 5.55843 8.90706 5.30273 8.65137L2.57617 5.92383L2.15137 5.5L3 4.65137L3.42383 5.07617L6.15137 7.80273C6.42595 8.07732 6.59876 8.24849 6.74023 8.3623C6.87291 8.46904 6.92272 8.47813 6.9375 8.48047C6.97895 8.48703 7.02105 8.48703 7.0625 8.48047C7.07728 8.47813 7.12709 8.46904 7.25977 8.3623C7.40124 8.24849 7.57405 8.07732 7.84863 7.80273L10.5762 5.07617L11 4.65137L11.8486 5.5Z" fill="currentColor"/></svg>
+          </span>
+        </label>
+        <div class="menu">
+          <div class="menu__item">选项一</div>
+          <div class="menu__item">选项二</div>
+        </div>
+      </div>
+      <p class="case__meta">200ms · cubic-bezier(0.4, 0, 0.2, 1)<br>取站点 .index__chevron 的现值</p>
+    </div>
+
+    <div class="case case--bad">
+      <p class="case__label">width / height<span class="case__badge case__badge--bad">违规</span></p>
+      <p class="case__prop">width: 11px → 26px（每帧重排）</p>
+      <div class="row">
+        <span class="box box--bad"></span>
+        <span class="chip">旁边的元素</span>
+      </div>
+      <p class="case__note">方块变宽，旁边的胶囊被推开——动画每帧都要重新算布局（MO-MF-08 禁止）。</p>
+    </div>
+
+    <div class="case">
+      <p class="case__label">transform<span class="case__badge case__badge--good">正确</span></p>
+      <p class="case__prop">transform: scale(0.42 → 1)</p>
+      <div class="row">
+        <span class="box box--good"></span>
+        <span class="chip">旁边的元素</span>
+      </div>
+      <p class="case__note">同样的视觉变化，旁边的胶囊纹丝不动——只在合成层上改，不触发布局。</p>
+    </div>
+
+  </div>
+
+  <p class="footnote">循环只属于这页演示本身：<code>MO-MF-07</code> 禁止在产品里做与进程无关的无限循环动画。<code>prefers-reduced-motion: reduce</code> 下本演示的全部位移与旋转即时完成。</p>
+</div>
+</body>
+</html>

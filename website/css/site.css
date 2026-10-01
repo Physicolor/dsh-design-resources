@@ -376,6 +376,16 @@ body[data-resizing] { cursor: col-resize; user-select: none; }
 }
 .index__link[aria-current='page'] .index__count { color: var(--site-accent-ink); }
 
+/* The fold control is part of the row, so the highlight wraps it too — a pill
+ * that stops short of the affordance reads as if the arrow belonged to
+ * something else. */
+.index__row:has(.index__link[aria-current='page']) {
+    background: var(--site-accent-soft);
+    border-radius: 7px;
+}
+.index__row:has(.index__link[aria-current='page']) .index__link[aria-current='page'] { background: transparent; }
+.index__row:has(.index__link[aria-current='page']) .index__disclosure { color: var(--site-accent-ink); }
+
 /* ── main ──────────────────────────────────────────────────────────── */
 
 .main-inner { max-width: 920px; margin: 0 auto; }
@@ -423,6 +433,32 @@ body[data-resizing] { cursor: col-resize; user-select: none; }
 }
 a.card:hover { transform: translateY(-2px); box-shadow: var(--site-shadow); border-color: var(--site-line); }
 .card__title { margin: 0; font-size: var(--site-text-card); font-weight: 600; }
+.card__code {
+    margin-left: var(--site-s2);
+    font-family: var(--site-font-mono);
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--site-label-3);
+}
+.hero__code {
+    margin-left: var(--site-s3);
+    font-family: var(--site-font-mono);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--site-label-3);
+    vertical-align: middle;
+}
+
+/* Where a component comes from — the product, or this repository. */
+.origin-note {
+    display: flex;
+    align-items: center;
+    gap: var(--site-s2);
+    margin: var(--site-s3) 0 0;
+    font-size: var(--site-text-note);
+    color: var(--site-label-2);
+}
+.origin-note .badge { flex: none; }
 .card__body { margin: 0; font-size: var(--site-text-note); color: var(--site-label-2); }
 .card__meta { margin: auto 0 0; padding-top: var(--site-s2); font-size: var(--site-text-micro); color: var(--site-label-3); }
 
@@ -666,6 +702,24 @@ code, .mono { font-family: var(--site-font-mono); font-size: 12px; }
     max-width: 46%;
 }
 .results__empty { padding: var(--site-s5); text-align: center; color: var(--site-label-3); font-size: var(--site-text-note); }
+
+/* ── embedded live demos: a document's figures ─────────────────────── */
+
+.demo { margin: 0 0 var(--site-s5); }
+.demo__stage {
+    display: block;
+    border: 1px solid var(--site-line-soft);
+    border-radius: var(--site-radius-m);
+    overflow: hidden;
+    background: var(--site-bg-sunken);
+}
+.demo figcaption {
+    margin-top: var(--site-s2);
+    font-size: var(--site-text-note);
+    line-height: 1.5;
+    color: var(--site-label-3);
+    text-align: center;
+}
 
 /* ── motion bench (an interactive clause of the motion spec) ───────── */
 

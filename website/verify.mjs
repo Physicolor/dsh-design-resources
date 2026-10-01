@@ -16,10 +16,10 @@
 
 import { createServer } from 'node:http'
 import { readFile, stat, mkdir, writeFile, rm } from 'node:fs/promises'
-import { existsSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { join, extname, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { spawn } from 'node:child_process'
+import { spawn, spawnSync } from 'node:child_process'
 import { tmpdir } from 'node:os'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
@@ -103,7 +103,7 @@ const browserPath = findBrowser()
 if (browserPath === null) {
   check('browser available', false, 'no Edge/Chrome found — browser pass skipped')
 } else {
-  const PORT = 4189
+  const PREFERRED_PORT = 4189
   const server = createServer(async (req, res) => {
     const url = new URL(req.url ?? '/', 'http://127.0.0.1')
     let path = decodeURIComponent(url.pathname)
@@ -115,23 +115,53 @@ if (browserPath === null) {
       res.writeHead(404).end('not found')
     }
   })
-  await new Promise(resolve => server.listen(PORT, '127.0.0.1', resolve))
+  /* A previous run's socket may still be in TIME_WAIT; falling back to an
+   * ephemeral port keeps the check runnable instead of failing on EADDRINUSE. */
+  await new Promise((resolve, reject) => {
+    server.once('error', error => {
+      if (error.code === 'EADDRINUSE') { server.listen(0, '127.0.0.1', resolve); return }
+      reject(error)
+    })
+    server.listen(PREFERRED_PORT, '127.0.0.1', resolve)
+  })
+  const PORT = server.address().port
 
   const profile = join(tmpdir(), `dshdr-verify-${Date.now()}`)
+  /* Port 0 lets the browser pick a free port and write it to
+   * `<profile>/DevToolsActivePort`. A fixed port is a trap: a browser left over
+   * from an earlier run answers first, this process then drives *that* browser
+   * and every check reads an empty page. */
   const proc = spawn(browserPath, [
     '--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check',
     '--hide-scrollbars', '--window-size=1600,1200',
-    `--user-data-dir=${profile}`, '--remote-debugging-port=9345', 'about:blank',
+    `--user-data-dir=${profile}`, '--remote-debugging-port=0', 'about:blank',
   ], { stdio: 'ignore' })
 
   /**
+   * Read the DevTools port the browser actually chose.
+   * @returns the port.
+   */
+  async function devtoolsPort() {
+    const file = join(profile, 'DevToolsActivePort')
+    for (let i = 0; i < 150; i++) {
+      try {
+        const port = Number(readFileSync(file, 'utf8').split('\n')[0])
+        if (Number.isFinite(port) && port > 0) return port
+      } catch { /* not written yet */ }
+      await new Promise(r => setTimeout(r, 100))
+    }
+    throw new Error('DevToolsActivePort was never written')
+  }
+
+  /**
    * Poll the DevTools endpoint until it answers.
+   * @param port - the port to ask.
    * @returns the list of targets.
    */
-  async function devtools() {
+  async function devtools(port) {
     for (let i = 0; i < 60; i++) {
       try {
-        const res = await fetch('http://127.0.0.1:9345/json/list')
+        const res = await fetch(`http://127.0.0.1:${port}/json/list`)
         const list = await res.json()
         if (Array.isArray(list) && list.some(t => t.type === 'page')) return list
       } catch { /* not up yet */ }
@@ -141,7 +171,7 @@ if (browserPath === null) {
   }
 
   try {
-    const list = await devtools()
+    const list = await devtools(await devtoolsPort())
     const page = list.find(t => t.type === 'page')
     check('browser launched', page !== undefined)
 
@@ -301,6 +331,13 @@ if (browserPath === null) {
     await goto(base + '#/spec/70-checklist')
     check('spec renders tables', await evaluate(`document.querySelectorAll('.prose table').length > 0`), String(await evaluate(`document.querySelectorAll('.prose table').length`)))
     check('spec carries an on-this-page outline', await evaluate(`document.querySelectorAll('.aside .outline__item').length > 2`), String(await evaluate(`document.querySelectorAll('.aside .outline__item').length`)))
+
+    // embedded live demos: a figure in the prose that is real, operable UI
+    await goto(base + '#/spec/10-frame-layout')
+    const demoCount = await evaluate(`document.querySelectorAll('[data-inline-demo]').length`)
+    check('layout doc embeds live demos', demoCount === 3, String(demoCount))
+    check('embedded demos mount into shadow roots', await evaluate(`(function(){var h=document.querySelectorAll('[data-inline-demo]');if(h.length===0)return false;var ok=0;Array.prototype.forEach.call(h,function(n){if(n.shadowRoot&&n.shadowRoot.querySelectorAll('*').length>3)ok++});return ok===h.length})()`))
+    check('embedded demos carry a caption', await evaluate(`document.querySelectorAll('.demo figcaption').length === document.querySelectorAll('[data-inline-demo]').length`))
     await evaluate(`(function(){var a=document.querySelector('.aside .outline__item a');if(a)a.click();return 1})()`)
     /* smooth scrolling is animated, so give it time before measuring */
     await new Promise(resolve => setTimeout(resolve, 900))
@@ -338,6 +375,9 @@ if (browserPath === null) {
     /* `textContent` would include the shadow root's own <style> text, where
      * `:host` legitimately appears — so only non-style subtrees are searched. */
     check('no selector text leaks into the specimen', await evaluate('(function(){var h=document.querySelector(".specimen__stage");if(!h||!h.shadowRoot)return false;var parts=h.shadowRoot.querySelectorAll(":scope > *:not(style)");var text="";Array.prototype.forEach.call(parts,function(n){text+=n.textContent||""});return text.indexOf(":host")===-1&&text.indexOf("lang=")===-1})()'))
+    /* `.body {` rewritten as `.:host {` is an invalid selector the parser drops
+     * without a word, so the demo silently loses that rule. */
+    check('no selector was rewritten into an invalid one', await evaluate('(function(){var bad=0;Array.prototype.forEach.call(document.querySelectorAll("[data-demo-id],[data-inline-demo]"),function(host){if(!host.shadowRoot)return;Array.prototype.forEach.call(host.shadowRoot.querySelectorAll("style"),function(sheet){if(/[\\w#.-]:host/u.test(sheet.textContent))bad++})});return bad===0})()'))
     check('breadcrumb with a back control', await evaluate(`document.querySelectorAll('.crumbs__back').length === 1 && document.querySelectorAll('.crumbs a').length >= 1`))
     check('index marks the open component', await evaluate(`document.querySelector('.index__link--sub[aria-current="page"]') !== null`))
     check('exactly one row is current', await evaluate(`document.querySelectorAll('.index__link[aria-current="page"]').length === 1`), String(await evaluate(`document.querySelectorAll('.index__link[aria-current="page"]').length`)))
@@ -383,7 +423,7 @@ if (browserPath === null) {
       }
     }
 
-    for (const [name, route] of [['home', '#/'], ['components', '#/components'], ['component', '#/component/button'], ['icons', '#/icons'], ['seats', '#/seats'], ['spec', '#/spec'], ['tokens', '#/tokens']]) {
+    for (const [name, route] of [['home', '#/'], ['components', '#/components'], ['component', '#/component/button'], ['icons', '#/icons'], ['seats', '#/seats'], ['spec', '#/spec'], ['frame-layout', '#/spec/10-frame-layout'], ['icon-anatomy', '#/spec/50-icons'], ['tokens', '#/tokens']]) {
       await shoot(name, route)
     }
 
@@ -404,7 +444,13 @@ if (browserPath === null) {
   } catch (error) {
     check('browser pass completed', false, error.message)
   } finally {
-    proc.kill()
+    /* `proc.kill()` leaves the renderer children alive on Windows, and those
+     * orphans are what poison the next run. Kill the tree. */
+    if (process.platform === 'win32') {
+      spawnSync('taskkill', ['/pid', String(proc.pid), '/T', '/F'], { stdio: 'ignore' })
+    } else {
+      proc.kill('SIGKILL')
+    }
     server.close()
     await rm(profile, { recursive: true, force: true }).catch(() => {})
   }

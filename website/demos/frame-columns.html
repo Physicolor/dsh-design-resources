@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>三列布局示意 · DSH 设计资源</title>
+<style>
+/* ── 兜底 token ────────────────────────────────────────────────────────
+   嵌入规范文档时本文件被注入 shadow root，:root 会被改写成 :host；
+   页面上的 --site-* / --dsw-* 会继承进来，所以这里一律写成
+   var(页面 token, 兜底值)：嵌入时跟随页面主题，双击打开时用兜底值。
+   兜底值分深浅两套，逐条取自 website/css/tokens.css 与 dsh-tokens.css。 */
+:root {
+  --dm-raised: var(--site-bg-raised, light-dark(#ffffff, #1c1c1f));
+  --dm-sunken: var(--site-bg-sunken, light-dark(#f7f7f9, #131315));
+  --dm-label: var(--site-label, light-dark(#1d1d1f, #f2f2f4));
+  --dm-label-2: var(--site-label-2, light-dark(#5f6062, #a8a8ae));
+  --dm-label-3: var(--site-label-3, light-dark(#86868b, #8a8a90));
+  --dm-line: var(--site-line, light-dark(#d6d6db, #3a3a3f));
+  --dm-line-soft: var(--site-line-soft, light-dark(#ebebef, #26262a));
+  --dm-accent: var(--site-accent, light-dark(#4d6bfe, #8296ff));
+  --dm-accent-soft: var(--site-accent-soft, light-dark(#edf0ff, #1a1f3d));
+  --dm-good: var(--site-good, light-dark(#14663c, #5fd39a));
+  --dm-bad: var(--site-bad, light-dark(#b3271f, #f5827a));
+  --dm-mono: var(--site-font-mono, ui-monospace, Consolas, monospace);
+  --dm-font: var(--site-font, system-ui, -apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif);
+  --dm-dur-fast: var(--site-dur-fast, 120ms);
+  --dm-ease: var(--site-ease, cubic-bezier(0.4, 0, 0.2, 1));
+  /* 分区底色取产品 token：这张图示意的是真实界面的分区 */
+  --dm-nav-fill: var(--dsw-specific-sidebar-fill, light-dark(#f9fafb, #1b1b1c));
+  --dm-main-fill: var(--dsw-alias-bg-base, light-dark(#ffffff, #151517));
+  --dm-border: var(--dsw-alias-border-l2, light-dark(#0000001a, #ffffff1f));
+}
+body { margin: 0; }
+.dm {
+  padding: 16px 0 4px;
+  font-family: var(--dm-font);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--dm-label);
+}
+.dm * { box-sizing: border-box; }
+.dm__scale {
+  margin: 0 0 10px;
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--dm-label-3);
+}
+.dm__scale code { font-family: var(--dm-mono); font-size: 10.5px; }
+
+/* ── 画框 ───────────────────────────────────────────────────────────── */
+.frame {
+  border: 1px solid var(--dm-line);
+  border-radius: 10px;
+  background: var(--dm-raised);
+  overflow: hidden;
+}
+.canvas {
+  display: grid;
+  /* 真实比例：左右两栏是固定宽度，中栏吃掉剩下的宽度。
+     按 1180px 宽视口折算成百分比，任何容器宽度下比例都不变。 */
+  grid-template-columns: 22.7% minmax(0, 1fr) 29.5%;
+  aspect-ratio: 1180 / 560;
+  min-height: 236px;
+}
+.col { min-width: 0; display: flex; flex-direction: column; }
+.col--nav { background: var(--dm-nav-fill); border-right: 1px solid var(--dm-border); }
+.col--main { background: var(--dm-main-fill); }
+.col--aside { background: var(--dm-nav-fill); border-left: 1px solid var(--dm-border); }
+
+/* 中栏三段：顶部 / 对话记录 / 输入区。记录段吃掉弹性高度 */
+.col--main > .seg--header { flex: none; }
+.col--main > .seg--view { flex: 1 1 auto; min-height: 0; }
+.col--main > .seg--composer { flex: none; }
+
+.seg, .slot {
+  padding: 10px 12px;
+  min-width: 0;
+}
+.col--main > .seg + .seg { border-top: 1px dashed var(--dm-line); }
+
+.slot__name {
+  margin: 0 0 6px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--dm-label);
+}
+.slot__name span {
+  font-family: var(--dm-mono);
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--dm-label-3);
+  white-space: nowrap;
+}
+.slot__id {
+  margin: 0 0 8px;
+  font-family: var(--dm-mono);
+  font-size: 10px;
+  line-height: 1.5;
+  color: var(--dm-label-3);
+  word-break: break-all;
+}
+
+/* 占位内容：只用灰条，不假装是界面截图 */
+.ph { display: flex; flex-direction: column; gap: 6px; }
+.ph i {
+  display: block;
+  height: 8px;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--dm-label) 12%, transparent);
+}
+.ph i:nth-child(1) { width: 74%; }
+.ph i:nth-child(2) { width: 52%; }
+.ph i:nth-child(3) { width: 64%; }
+.ph--msg i { height: 20px; border-radius: 6px; }
+.ph--msg i:nth-child(1) { width: 58%; }
+.ph--msg i:nth-child(2) { width: 82%; }
+.ph--input i { height: 28px; border-radius: 8px; width: 100%; }
+
+/* ── hover 高亮 ─────────────────────────────────────────────────────── */
+.slot:hover, .seg:hover {
+  background: var(--dm-accent-soft);
+  box-shadow: inset 0 0 0 2px var(--dm-accent);
+}
+
+/* ── 说明条：一栏一条，谁被 hover 谁浮现（:has 在站点样式里已在用） ── */
+/* 说明条叠在同一个网格单元里：容器高度取最高的那一条，hover 切换不会跳动 */
+.notes {
+  display: grid;
+  margin-top: 10px;
+}
+.note {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transition: opacity var(--dm-dur-fast) var(--dm-ease);
+  pointer-events: none;
+}
+.note--default { opacity: 1; }
+.stage:has(.canvas:hover) .note--default { opacity: 0; }
+.stage:has(.col--nav:hover) .note--nav,
+.stage:has(.seg--header:hover) .note--header,
+.stage:has(.seg--view:hover) .note--view,
+.stage:has(.seg--composer:hover) .note--composer,
+.stage:has(.col--aside:hover) .note--aside { opacity: 1; }
+
+.note__title {
+  margin: 0 0 2px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--dm-label);
+}
+.note__title span {
+  font-family: var(--dm-mono);
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--dm-label-3);
+}
+.note__line {
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.7;
+  color: var(--dm-label-2);
+}
+.note__line b {
+  display: inline-block;
+  margin-right: 5px;
+  font-family: var(--dm-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--dm-good);
+}
+.note__line--no b { color: var(--dm-bad); }
+
+@media (prefers-reduced-motion: reduce) {
+  .note { transition: none; }
+}
+</style>
+</head>
+<body>
+<div class="dm">
+  <p class="dm__scale">宽度按站点真实比例：左栏 <code>268px</code> 固定 · 中栏自适应 · 右栏 <code>348px</code> 固定。本图按 1180px 宽视口折算为 22.7% / 47.8% / 29.5%，所以中栏永远是最大的一块。</p>
+
+  <div class="stage">
+    <div class="frame">
+      <div class="canvas">
+
+        <section class="col col--nav slot">
+          <p class="slot__name">左栏 sidebar<span>268px 固定</span></p>
+          <p class="slot__id">sidebar.footer.action</p>
+          <div class="ph"><i></i><i></i><i></i></div>
+        </section>
+
+        <section class="col col--main">
+          <div class="seg seg--header">
+            <p class="slot__name">顶部 conversation.header<span>会话身份</span></p>
+            <p class="slot__id">conversation.session.header.utilities</p>
+            <div class="ph"><i style="width:42%"></i></div>
+          </div>
+          <div class="seg seg--view">
+            <p class="slot__name">对话记录 conversation.view<span>主体</span></p>
+            <p class="slot__id">conversation.view → conversation.session</p>
+            <div class="ph ph--msg"><i></i><i></i></div>
+          </div>
+          <div class="seg seg--composer">
+            <p class="slot__name">输入区 conversation.composer.bar<span>输入卡与工具行</span></p>
+            <div class="ph ph--input"><i></i></div>
+          </div>
+        </section>
+
+        <section class="col col--aside slot">
+          <p class="slot__name">右栏 rightbar<span>348px 固定</span></p>
+          <p class="slot__id">rightbar</p>
+          <div class="ph"><i></i><i></i></div>
+        </section>
+
+      </div>
+    </div>
+
+    <div class="notes">
+      <div class="note note--default">
+        <p class="note__title">中栏 main.conversation <span>主体 · 自适应宽度</span></p>
+        <p class="note__line"><b>放</b>当前会话的全部内容与交互：会话记录、输入、会话级工具与状态</p>
+        <p class="note__line note__line--no"><b>不放</b>与任何会话无关的全局设置入口</p>
+      </div>
+      <div class="note note--nav">
+        <p class="note__title">左栏 sidebar <span>轨道 · 268px 固定</span></p>
+        <p class="note__line"><b>放</b>全局导航与对象列表：会话切换、列表、插件侧栏入口</p>
+        <p class="note__line note__line--no"><b>不放</b>当前会话的消息内容、临时详情面板</p>
+      </div>
+      <div class="note note--header">
+        <p class="note__title">顶部 conversation.header <span>中栏第 1 段</span></p>
+        <p class="note__line"><b>放</b>会话身份与全局作用于本次会话的操作、工具行</p>
+        <p class="note__line note__line--no"><b>不放</b>与本次会话无关的全局设置入口</p>
+      </div>
+      <div class="note note--view">
+        <p class="note__title">对话记录 conversation.view <span>中栏第 2 段</span></p>
+        <p class="note__line"><b>放</b>消息流本体及其内联附件</p>
+        <p class="note__line note__line--no"><b>不放</b>常驻工具行与输入控件——它们属于上下两段</p>
+      </div>
+      <div class="note note--composer">
+        <p class="note__title">输入区 conversation.composer.bar <span>中栏第 3 段</span></p>
+        <p class="note__line"><b>放</b>输入卡与工具行 conversation.input.left / .right，加 .plan / .model 等 single 座位</p>
+        <p class="note__line note__line--no"><b>不放</b>全局开关——放 conversation.header 或右栏</p>
+      </div>
+      <div class="note note--aside">
+        <p class="note__title">右栏 rightbar <span>轨道 · 348px 固定</span></p>
+        <p class="note__line"><b>放</b>临时查看类：上下文、检查器、预览、引用来源</p>
+        <p class="note__line note__line--no"><b>不放</b>主流程必经操作——右栏可折叠，折叠后主流程仍须可完成</p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

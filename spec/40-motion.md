@@ -43,6 +43,10 @@ DSH 官方未公开动效时长与缓动曲线数值。Apple HIG 同样没有公
 - `MO-MF-07`：禁止无限循环动画，除非它表达正在进行的进程（loading、生成中）。其余循环动画判违规。
 - `MO-MF-08`：禁止对触发布局的属性做动画（width、height、top、left、margin、padding）。应使用 `transform` 与 `opacity`。理由：[OH] 要求交互类动画强制 60FPS；只有 `transform` / `opacity` 能在不触发布局重排的前提下稳定达成。判定：扫描 transition 属性列表。
 
+<!-- demo: motion-select | 小到选择器右边的那个箭头，也是动效。左边是正确做法，右边是拿布局属性做动画的反面例子。点「自动播放」看它循环。 -->
+
+<!-- demo: motion-panels | 大到左右栏开合时整个页面的位移。点按钮手动开合，或让它自己循环播放。 -->
+
 ## 4. prefers-reduced-motion（强制）
 
 - `MO-MF-09`：必须响应 `prefers-reduced-motion: reduce`。在该模式下，所有非必要的位移、缩放、旋转改为即时（0ms）；允许保留透明度变化与加载指示器，但加载指示器不得有大幅位移。
