@@ -1,11 +1,13 @@
 {
-  "$comment": "清单里的每个身份在规范/组件语料里有没有位置。covered = 人工锚点命中；referenced = 语料里出现过这个词（要复核）；missing = 待办。",
-  "generatedAt": "2026-10-01T17:24:47.138Z",
+  "$comment": "清单里的每个身份在规范/组件语料里有没有位置。covered = 人工锚点命中（described 表示目标文件里写下了它的实测尺寸）；referenced = 语料里出现过这个词（要复核）；missing = 待办。",
+  "generatedAt": "2026-10-01T17:41:13.367Z",
   "counts": {
     "identities": 355,
-    "covered": 258,
-    "referenced": 53,
-    "missing": 44,
+    "covered": 251,
+    "described": 42,
+    "coveredNotDescribed": 209,
+    "referenced": 54,
+    "missing": 50,
     "pluginOwned": 119
   },
   "coverage": [
@@ -27,6 +29,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/30-tokens.md",
@@ -67,6 +70,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -99,6 +103,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/30-tokens.md",
@@ -149,6 +154,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "components/patterns/SettingsPage/SPEC.md",
@@ -181,6 +187,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "components/controls/Input/SPEC.md",
@@ -231,6 +238,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "components/layout/SidebarRow",
@@ -258,6 +266,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -285,6 +294,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "components/layout/SidebarRow",
@@ -312,6 +322,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -343,12 +354,13 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "components/layout/SettingsRow",
+          "where": "components/layout/SidebarRow",
           "token": "trigger|button|",
           "kind": "anchor",
-          "id": "左栏底部「设置」行（triggerRow 去掉哈希后的身份）"
+          "id": "左栏底部「设置」行（260 × 34 · 圆角 12）"
         }
       ]
     },
@@ -370,6 +382,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "components/layout/SidebarRow",
@@ -400,9 +413,10 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "spec/10-frame-layout.md",
+          "where": "components/layout/SidebarRow",
           "token": "panelRow",
           "kind": "anchor",
           "id": "左栏面板导航行（插件 / 自动化任务）"
@@ -432,6 +446,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -462,6 +477,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -507,6 +523,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -556,6 +573,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/controls/Pill",
@@ -583,6 +601,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/30-tokens.md",
@@ -633,6 +652,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -681,12 +701,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "components/layout/PanelHeader",
+          "where": "components/layout/SidebarRow",
           "token": "panelTitle",
           "kind": "anchor",
-          "id": "面板标题（含分组标题行）"
+          "id": "左栏面板标题（28 × 22 · 14/22）"
         }
       ]
     },
@@ -708,6 +729,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -757,6 +779,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "components/layout/SidebarRow",
@@ -784,12 +807,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "components/surfaces/Card",
-          "token": "card",
+          "where": "spec/10-frame-layout.md",
+          "token": "RlGAzG_card",
           "kind": "anchor",
-          "id": "卡片容器"
+          "id": "输入卡（hero 780 × 114，会话里单行时 98）"
         }
       ]
     },
@@ -810,6 +834,7 @@
       ],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -835,6 +860,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -866,6 +892,7 @@
       ],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "components/controls/Input/SPEC.md",
@@ -911,6 +938,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -956,6 +984,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -983,6 +1012,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/11-slot-seats.md",
@@ -1030,12 +1060,13 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "spec/20-controls.md",
-          "token": "iconButton",
+          "where": "components/layout/SidebarRow",
+          "token": "iconButton toggle",
           "kind": "anchor",
-          "id": "28×28 图标按钮"
+          "id": "左栏折叠按钮（28 × 28 · 圆角 8）"
         }
       ]
     },
@@ -1057,6 +1088,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -1086,12 +1118,13 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "spec/20-controls.md",
+          "where": "components/layout/SidebarRow",
           "token": "newSession",
           "kind": "anchor",
-          "id": "新会话按钮"
+          "id": "新会话按钮（252 × 38 · 圆角 12）"
         }
       ]
     },
@@ -1115,6 +1148,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "components/layout/SidebarRow",
@@ -1144,6 +1178,7 @@
       ],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -1173,6 +1208,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -1202,6 +1238,7 @@
       ],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -1229,6 +1266,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -1258,6 +1296,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -1287,9 +1326,10 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "components/layout/SettingsRow",
+          "where": "components/layout/SidebarRow",
           "token": "-ngf_W_triggerLabel",
           "kind": "anchor",
           "id": "左栏底部「设置」行的标签（14/22）"
@@ -1321,6 +1361,7 @@
       ],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -1366,6 +1407,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/11-slot-seats.md",
@@ -1414,6 +1456,7 @@
       ],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -1462,6 +1505,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "components/controls/Input/input.module.css",
@@ -1497,6 +1541,7 @@
       ],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -1544,6 +1589,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -1574,6 +1620,7 @@
       ],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -1621,6 +1668,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -1650,6 +1698,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "components/controls/Button",
@@ -1677,6 +1726,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-widgets",
@@ -1704,6 +1754,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -1752,6 +1803,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -1781,6 +1833,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -1810,6 +1863,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -1837,6 +1891,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -1866,6 +1921,7 @@
       ],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -1895,6 +1951,7 @@
       ],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "components/data-display/DisclosureRow/disclosure-row.module.css",
@@ -1930,6 +1987,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "components/controls/Button",
@@ -1959,6 +2017,7 @@
       ],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-widgets",
@@ -1986,6 +2045,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -2009,6 +2069,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -2036,6 +2097,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -2055,6 +2117,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -2082,6 +2145,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -2109,6 +2173,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/40-motion.md",
@@ -2141,6 +2206,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "components/data-display/KeyValueList/key-value-list.module.css",
@@ -2185,6 +2251,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -2212,6 +2279,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -2241,6 +2309,7 @@
       ],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -2288,12 +2357,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
-          "where": "spec/20-controls.md",
+          "where": "components/layout/SidebarRow",
           "token": "newSession",
           "kind": "anchor",
-          "id": "新会话按钮"
+          "id": "新会话按钮（252 × 38 · 圆角 12）"
         }
       ]
     },
@@ -2317,6 +2387,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/layout/SidebarRow",
@@ -2346,6 +2417,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/layout/SidebarRow",
@@ -2373,6 +2445,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/layout/SidebarRow",
@@ -2400,6 +2473,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -2429,6 +2503,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/layout/SidebarRow",
@@ -2458,6 +2533,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "components/layout/SidebarRow",
@@ -2485,6 +2561,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "components/layout/SidebarRow",
@@ -2513,6 +2590,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/30-tokens.md",
@@ -2558,6 +2636,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -2585,6 +2664,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -2607,6 +2687,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -2634,6 +2715,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -2661,6 +2743,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -2688,6 +2771,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -2714,6 +2798,7 @@
       ],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -2735,15 +2820,9 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "covered",
-      "hits": [
-        {
-          "where": "components/surfaces/Card",
-          "token": "card",
-          "kind": "anchor",
-          "id": "卡片容器"
-        }
-      ]
+      "coverage": "missing",
+      "described": null,
+      "hits": []
     },
     {
       "key": "cardTitle cardOpen|button|",
@@ -2766,13 +2845,14 @@
         "查看 自动化任务"
       ],
       "pluginOwned": false,
-      "coverage": "covered",
+      "coverage": "referenced",
+      "described": null,
       "hits": [
         {
-          "where": "components/surfaces/Card",
-          "token": "card",
-          "kind": "anchor",
-          "id": "卡片容器"
+          "where": "components/surfaces/Card/SPEC.md",
+          "token": "cardtitle",
+          "kind": "component",
+          "id": "card"
         }
       ]
     },
@@ -2791,6 +2871,7 @@
       ],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-widgets",
@@ -2818,6 +2899,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -2845,15 +2927,9 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "covered",
-      "hits": [
-        {
-          "where": "components/surfaces/Card",
-          "token": "card",
-          "kind": "anchor",
-          "id": "卡片容器"
-        }
-      ]
+      "coverage": "missing",
+      "described": null,
+      "hits": []
     },
     {
       "key": "button outline sm|button|",
@@ -2875,6 +2951,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "components/controls/Button",
@@ -2904,6 +2981,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/controls/Tag",
@@ -2932,6 +3010,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "components/controls/Switch",
@@ -2956,6 +3035,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "components/controls/Switch",
@@ -2983,6 +3063,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -3028,6 +3109,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -3073,6 +3155,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -3118,6 +3201,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -3145,6 +3229,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/50-icons.md",
@@ -3191,6 +3276,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "components/controls/Input/SPEC.md",
@@ -3236,6 +3322,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -3263,6 +3350,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -3286,6 +3374,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "components/surfaces/Modal/SPEC.md",
@@ -3315,6 +3404,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -3342,6 +3432,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/controls/Pill",
@@ -3368,6 +3459,7 @@
       ],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -3383,6 +3475,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -3398,6 +3491,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "components/brand/FishMark/SPEC.md",
@@ -3431,6 +3525,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "components/controls/Button/SPEC.md",
@@ -3458,6 +3553,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "components/controls/Input/SPEC.md",
@@ -3498,6 +3594,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -3513,6 +3610,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -3533,6 +3631,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -3548,6 +3647,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -3575,6 +3675,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -3602,6 +3703,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -3624,6 +3726,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -3646,6 +3749,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -3668,6 +3772,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -3690,6 +3795,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -3712,6 +3818,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -3739,6 +3846,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -3766,6 +3874,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -3811,6 +3920,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -3838,6 +3948,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -3860,6 +3971,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -3886,6 +3998,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -3906,6 +4019,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -3925,6 +4039,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -3942,6 +4057,7 @@
       ],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -3959,6 +4075,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -3977,15 +4094,9 @@
         "更多"
       ],
       "pluginOwned": false,
-      "coverage": "covered",
-      "hits": [
-        {
-          "where": "components/surfaces/Card",
-          "token": "card",
-          "kind": "anchor",
-          "id": "卡片容器"
-        }
-      ]
+      "coverage": "missing",
+      "described": null,
+      "hits": []
     },
     {
       "key": "button primary sm installBtn|button|",
@@ -4002,6 +4113,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/controls/Button",
@@ -4029,6 +4141,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4056,6 +4169,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4078,6 +4192,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4105,6 +4220,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4132,6 +4248,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4159,6 +4276,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4181,6 +4299,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4203,6 +4322,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4230,6 +4350,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4257,6 +4378,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/layout/SidebarRow",
@@ -4282,6 +4404,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4306,6 +4429,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -4328,6 +4452,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4352,6 +4477,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4379,6 +4505,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4406,6 +4533,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -4427,15 +4555,9 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "covered",
-      "hits": [
-        {
-          "where": "components/surfaces/Card",
-          "token": "card",
-          "kind": "anchor",
-          "id": "卡片容器"
-        }
-      ]
+      "coverage": "missing",
+      "described": null,
+      "hits": []
     },
     {
       "key": "lc-heat-cell lc-heat-3|button|",
@@ -4454,6 +4576,7 @@
       ],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4476,6 +4599,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4500,6 +4624,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/controls/Tag",
@@ -4523,6 +4648,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -4546,6 +4672,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -4565,6 +4692,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -4583,6 +4711,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -4603,6 +4732,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -4623,6 +4753,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -4642,6 +4773,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -4669,6 +4801,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -4696,6 +4829,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -4718,6 +4852,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -4744,15 +4879,9 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "covered",
-      "hits": [
-        {
-          "where": "components/surfaces/Card",
-          "token": "card",
-          "kind": "anchor",
-          "id": "卡片容器"
-        }
-      ]
+      "coverage": "missing",
+      "described": null,
+      "hits": []
     },
     {
       "key": "lc-card-title-text|span|",
@@ -4772,12 +4901,13 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
-          "where": "components/surfaces/Card",
-          "token": "card",
+          "where": "plugins/dsh-usage-center",
+          "token": "lc-",
           "kind": "anchor",
-          "id": "卡片容器"
+          "id": "插件 dsh-usage-center 的界面"
         }
       ]
     },
@@ -4799,6 +4929,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4822,6 +4953,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -4848,6 +4980,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -4874,6 +5007,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -4897,6 +5031,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -4924,6 +5059,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/40-motion.md",
@@ -4969,6 +5105,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "components/patterns/SettingsPage/SPEC.md",
@@ -4996,6 +5133,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "components/patterns/SettingsPage/SPEC.md",
@@ -5024,6 +5162,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -5046,6 +5185,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -5072,6 +5212,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -5100,6 +5241,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -5126,6 +5268,7 @@
       ],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -5145,6 +5288,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -5160,6 +5304,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "components/controls/Switch",
@@ -5186,6 +5331,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -5212,6 +5358,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -5230,15 +5377,9 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "covered",
-      "hits": [
-        {
-          "where": "components/surfaces/Card",
-          "token": "card",
-          "kind": "anchor",
-          "id": "卡片容器"
-        }
-      ]
+      "coverage": "missing",
+      "described": null,
+      "hits": []
     },
     {
       "key": "lc-gran-btn lc-gran-on|button|",
@@ -5257,6 +5398,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -5283,6 +5425,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -5309,6 +5452,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -5335,6 +5479,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -5359,6 +5504,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -5383,6 +5529,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -5409,6 +5556,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -5435,6 +5583,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "components/controls/Tag",
@@ -5461,6 +5610,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -5484,6 +5634,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -5506,6 +5657,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -5532,6 +5684,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "components/layout/SidebarRow/sidebarrow.module.css",
@@ -5572,6 +5725,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -5595,6 +5749,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-widgets",
@@ -5618,6 +5773,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -5643,6 +5799,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -5668,6 +5825,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -5693,6 +5851,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -5718,6 +5877,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/ListRowGroup",
@@ -5743,6 +5903,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/layout/SettingsRow",
@@ -5766,6 +5927,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/layout/SettingsRow",
@@ -5789,6 +5951,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/layout/SettingsRow",
@@ -5812,6 +5975,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -5835,6 +5999,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/layout/SettingsRow",
@@ -5860,6 +6025,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/layout/SettingsRow",
@@ -5885,6 +6051,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/layout/SettingsRow",
@@ -5910,6 +6077,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "components/feedback/EmptyState/empty-state.module.css",
@@ -5953,6 +6121,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/layout/SettingsRow",
@@ -5978,6 +6147,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/layout/SettingsRow",
@@ -6005,6 +6175,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/layout/SettingsRow",
@@ -6031,6 +6202,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -6055,6 +6227,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -6080,6 +6253,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -6095,6 +6269,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -6113,6 +6288,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -6131,6 +6307,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -6148,6 +6325,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -6166,6 +6344,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -6191,6 +6370,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -6216,6 +6396,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -6234,6 +6415,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/controls/Button",
@@ -6258,6 +6440,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -6276,6 +6459,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -6294,6 +6478,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -6312,6 +6497,7 @@
       ],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -6334,6 +6520,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -6359,6 +6546,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -6384,12 +6572,13 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
-          "where": "components/surfaces/Card",
-          "token": "card",
+          "where": "plugins/dsh-usage-center",
+          "token": "duc-",
           "kind": "anchor",
-          "id": "卡片容器"
+          "id": "插件 dsh-usage-center 的热力图"
         }
       ]
     },
@@ -6409,6 +6598,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -6434,6 +6624,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -6459,6 +6650,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -6481,12 +6673,13 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
-          "where": "components/surfaces/Card",
-          "token": "card",
+          "where": "plugins/dsh-usage-center",
+          "token": "lc-",
           "kind": "anchor",
-          "id": "卡片容器"
+          "id": "插件 dsh-usage-center 的界面"
         }
       ]
     },
@@ -6506,6 +6699,7 @@
       ],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -6531,6 +6725,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -6553,6 +6748,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/40-motion.md",
@@ -6578,6 +6774,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -6600,6 +6797,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -6640,6 +6838,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -6664,6 +6863,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -6688,6 +6888,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -6710,6 +6911,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -6734,6 +6936,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -6756,6 +6959,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -6778,6 +6982,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -6802,6 +7007,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -6824,6 +7030,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/layout/SidebarRow",
@@ -6846,6 +7053,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/layout/SidebarRow",
@@ -6870,6 +7078,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/layout/SidebarRow",
@@ -6894,9 +7103,10 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "spec/10-frame-layout.md",
+          "where": "components/layout/SidebarRow",
           "token": "panelRow",
           "kind": "anchor",
           "id": "左栏面板导航行（插件 / 自动化任务）"
@@ -6918,6 +7128,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "components/patterns/SettingsPage/settings-page.module.css",
@@ -6948,6 +7159,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/controls/Button",
@@ -6970,6 +7182,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "components/controls/Button",
@@ -6992,6 +7205,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -7032,6 +7246,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -7056,6 +7271,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "components/patterns/SettingsPage/SPEC.md",
@@ -7080,6 +7296,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "components/patterns/SettingsPage/SPEC.md",
@@ -7104,6 +7321,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -7119,6 +7337,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -7134,6 +7353,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -7158,6 +7378,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -7173,6 +7394,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -7188,6 +7410,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -7205,6 +7428,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -7245,6 +7469,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -7262,6 +7487,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -7279,6 +7505,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "components/layout/PanelHeader/panelheader.module.css",
@@ -7319,6 +7546,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -7341,6 +7569,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -7365,6 +7594,7 @@
       ],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -7405,6 +7635,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -7429,6 +7660,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -7453,6 +7685,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -7477,6 +7710,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -7499,6 +7733,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -7521,6 +7756,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
@@ -7545,6 +7781,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-widgets",
@@ -7569,6 +7806,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-widgets",
@@ -7593,6 +7831,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -7610,6 +7849,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/feedback/EmptyState",
@@ -7634,6 +7874,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/30-tokens.md",
@@ -7676,6 +7917,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -7693,6 +7935,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -7710,6 +7953,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/controls/Button",
@@ -7734,6 +7978,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -7749,6 +7994,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/controls/Button",
@@ -7773,6 +8019,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -7797,6 +8044,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -7812,6 +8060,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -7827,6 +8076,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -7867,6 +8117,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -7909,6 +8160,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/controls/Pill",
@@ -7933,6 +8185,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/controls/Button",
@@ -7957,6 +8210,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -7974,6 +8228,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -7991,6 +8246,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "missing",
+      "described": null,
       "hits": []
     },
     {
@@ -8008,6 +8264,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/feedback/EmptyState",
@@ -8030,6 +8287,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8052,6 +8310,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8076,6 +8335,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8098,6 +8358,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8122,6 +8383,7 @@
       ],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8146,6 +8408,7 @@
       ],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8170,6 +8433,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8194,6 +8458,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8218,6 +8483,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8242,6 +8508,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8264,6 +8531,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8286,6 +8554,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8308,6 +8577,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8330,6 +8600,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8352,6 +8623,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8374,6 +8646,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8396,6 +8669,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8418,6 +8692,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8440,6 +8715,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8462,12 +8738,13 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
-          "where": "components/surfaces/Card",
-          "token": "card",
+          "where": "plugins/dsh-usage-center",
+          "token": "lc-",
           "kind": "anchor",
-          "id": "卡片容器"
+          "id": "插件 dsh-usage-center 的界面"
         }
       ]
     },
@@ -8484,6 +8761,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8508,6 +8786,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8532,6 +8811,7 @@
       ],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8558,6 +8838,7 @@
       ],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8580,12 +8861,13 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
-          "where": "components/surfaces/Card",
-          "token": "card",
+          "where": "plugins/dsh-usage-center",
+          "token": "lc-",
           "kind": "anchor",
-          "id": "卡片容器"
+          "id": "插件 dsh-usage-center 的界面"
         }
       ]
     },
@@ -8604,6 +8886,7 @@
       ],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8626,6 +8909,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8648,6 +8932,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8672,6 +8957,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8694,12 +8980,13 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
-          "where": "components/surfaces/Card",
-          "token": "card",
+          "where": "plugins/dsh-usage-center",
+          "token": "lc-",
           "kind": "anchor",
-          "id": "卡片容器"
+          "id": "插件 dsh-usage-center 的界面"
         }
       ]
     },
@@ -8718,12 +9005,13 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
-          "where": "components/surfaces/Card",
-          "token": "card",
+          "where": "plugins/dsh-usage-center",
+          "token": "lc-",
           "kind": "anchor",
-          "id": "卡片容器"
+          "id": "插件 dsh-usage-center 的界面"
         }
       ]
     },
@@ -8742,6 +9030,7 @@
       ],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8766,6 +9055,7 @@
       ],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8788,6 +9078,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8810,6 +9101,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8832,6 +9124,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8854,6 +9147,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8876,6 +9170,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8900,6 +9195,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8924,6 +9220,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8948,6 +9245,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8972,6 +9270,7 @@
       ],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8996,6 +9295,7 @@
       ],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -9018,6 +9318,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -9040,6 +9341,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -9062,6 +9364,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "components/data-display/MiniBar/SPEC.md",
@@ -9090,6 +9393,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -9112,6 +9416,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -9154,6 +9459,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -9178,6 +9484,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -9200,6 +9507,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -9222,6 +9530,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -9244,6 +9553,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -9266,6 +9576,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -9288,6 +9599,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -9310,6 +9622,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -9332,6 +9645,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "referenced",
+      "described": null,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -9374,6 +9688,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "components/controls/Button",

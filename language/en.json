@@ -200,7 +200,7 @@
     },
     "inventory": {
         "title": "Element inventory",
-        "lede": "Scanning the running interface turns up {identities} identities: {official} belong to the product itself (the table below), {third} come from third-party plugins (parked at the end), and {missing} of them have no place in the spec yet. This list starts from the interface, not from the component directory.",
+        "lede": "Scanning the running interface turns up {identities} identities: {official} belong to the product itself (the table below) and {third} come from third-party plugins (parked at the end). Of the product's own, {described} have their measured size written into the spec, while {notDescribed} are only placed — the file they belong to is known, but it does not state their size yet.",
         "empty": "Not scanned yet. Run node scripts/scan-ui.mjs on this machine: it opens the product, walks every state, and registers each element it can see.",
         "note": "\"Covered\" only means some file in this repository happened to contain the word; it is not a review. \"Gap\" is the to-do list — and each of those still needs a human call: it may be something the product really has and the spec missed, or it may just be a one-off container. Third-party elements are all parked: they are not DSH's interface language, and the product's own side comes first.",
         "tableTitle": "{n} identities that belong to the product",
@@ -210,14 +210,16 @@
         "order": "By how often it appears",
         "columns": { "identity": "Identity", "where": "Seen in", "size": "Size", "state": "State", "source": "Where the spec mentions it" },
         "stateMissing": "Gap",
-        "stateCovered": "Covered",
+        "stateCovered": "Referenced",
+        "stateDescribed": "Documented",
+        "stateNotDescribed": "Placed only",
         "statePlugin": "Plugin-only",
         "stateParked": "Parked",
         "pluginUnknown": "Unidentified plugin",
         "howTitle": "Where this page comes from",
         "how": "scripts/scan-ui.mjs drives the product with the same credentials the screenshot script uses, walks it state by state, and registers every element that occupies space under an identity with the CSS Modules hash stripped off: tag, role, box, computed styles, seat, and the screens it showed up on. It is machine output, so its unit is \"things you can see\", not \"components\".",
         "stateTitle": "Three states",
-        "stateNote": "Covered: some spec or component text mentions it. Plugin-only: an installed plugin draws it (anything under dsx-, for instance), so the product itself has no such element. Gap: neither side mentions it — decide whether it belongs in the spec or is merely a container."
+        "stateNote": "Documented: the file the anchor points at really contains this element's measured size (a `50 × 50` style pair, units optional). Placed only: it knows which file it belongs to, but that file does not state its size yet — this is the main to-do. Referenced: some text merely happened to contain the word; needs review. Plugin-only: an installed plugin draws it (anything under dsx-, for instance), so the product itself has no such element. Gap: neither side mentions it."
     },
     "footer": {
         "name": "DeepSeek Design Resources",

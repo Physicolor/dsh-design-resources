@@ -1394,7 +1394,11 @@
                 ? '<span class="badge badge--neutral">' + esc(t('inventory.stateParked')) + '</span>'
                 : (row.coverage === 'missing'
                     ? '<span class="badge badge--warn">' + esc(t('inventory.stateMissing')) + '</span>'
-                    : '<span class="badge badge--safe">' + esc(t('inventory.stateCovered')) + '</span>')
+                    : (row.coverage === 'covered'
+                        ? (row.described === true
+                            ? '<span class="badge badge--safe">' + esc(t('inventory.stateDescribed')) + '</span>'
+                            : '<span class="badge badge--warn">' + esc(t('inventory.stateNotDescribed')) + '</span>')
+                        : '<span class="badge badge--neutral">' + esc(t('inventory.stateCovered')) + '</span>'))
             var where = (row.hits || []).slice(0, 2).map(function (hit) {
                 return '<code class="mono">' + esc(hit.where.replace(/^components\//u, '').replace(/^spec\//u, 'spec/')) + '</code>'
             }).join('<br>') || '<span style="color:var(--site-label-3)">—</span>'
@@ -1427,7 +1431,8 @@
         mainEl.innerHTML = '<div class="main-inner">'
             + '<div class="hero"><h1 class="hero__title">' + esc(t('inventory.title')) + '</h1>'
             + '<p class="hero__lede">' + esc(t('inventory.lede', {
-                identities: counts.identities || 0, official: official.length, third: thirdParty.length, missing: counts.missing || 0,
+                identities: counts.identities || 0, official: official.length, third: thirdParty.length,
+                described: counts.described || 0, notDescribed: counts.coveredNotDescribed || 0,
             })) + '</p></div>'
             + '<div class="callout"><span class="callout__mark">i</span><div><p>' + esc(t('inventory.note')) + '</p></div></div>'
             + head(t('inventory.tableTitle', { n: rows.length }), query === '' ? t('inventory.order') : t('seats.filter') + '：' + query)

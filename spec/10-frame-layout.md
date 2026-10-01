@@ -29,6 +29,23 @@
 
 输入区还有三个纵向插入点：`conversation.input.dock`（输入卡上方）、`conversation.composer.dock`（输入卡下方）、`conversation.input.overlay`（输入卡内部浮层）。
 
+### 实测尺寸（1570 × 905 视口）
+
+规范正文此前只讲职责、不讲尺寸，量出来的数都留在 `docs/reference/`；这里把与本篇有关的几条写进来，改版时对着它核。
+
+| 部位 | 实测 | 出处 |
+| --- | --- | --- |
+| 左栏 | **280 × 905**（拖拽手柄 8px 宽 @ x = 276） | `geometry.json` |
+| 中栏 | 1290 × 905 @ x = 280（无插件右栏时） | 同上 |
+| 会话头部 | 高 **50**；标题左沿 = 中栏 + 28；顶栏工具右沿 = 视口 − 12 | `top-strip.json` |
+| 会话头部页签 | 每枚 **26 × 26**（宽随文字，实测「对话」26 × 26），三枚共 **139 × 26**，间距 25 | `top-strip.json` |
+| 折叠角 | chip 上 10 × 10；工作区行上 12 × 12 | `top-strip.json`、`composer-geometry.json` |
+| 输入区座位 | 中栏宽 × **128** 高（卡 114 + dock 26 及间距；会话里卡单行时座位随之变矮） | `conversation-geometry.json` |
+| 会话头部 chip | 高 **28**（图标 14、标签 12/16） | `top-strip.json`，规范见 20-controls §7.1 |
+| 阅读列 | **748 宽居中**，左右各 32 内边距 | `conversation-geometry.json` |
+| 输入卡 | **780 × 114**（hero；会话里单行时 780 × 98），圆角 28 | `composer-geometry.json` |
+| 卡下 dock | 高 **26**（padding-top 4 + 内容 22） | `status-line.json` |
+
 - `FL-MF-03`：工具行（`conversation.input.left` / `.right` / `.plan` / `.model` / `.activity`）只放「作用于本次输入或本次发送」的控件；全局开关放 `conversation.header` 或右栏。[本仓库建议]
 - `FL-MF-04`：`conversation.input.dock` / `composer.dock` 用于扩展本次输入的能力列表（附件、参数、预设）；`conversation.input.overlay` 只用于必须盖在输入卡之上的瞬时 UI（补全、下拉、提示），不得常驻。[本仓库建议]
 - `FL-RC-05`：同一段内可见控件不超过 6 个。无权威数值，本仓库建议 6，理由：官方同类工具行样本 `conversation.session.header.utilities` 为 4 项；超过 6 项后，28×28 命中区与视觉密度难以同时满足。超出时收进菜单（依据 [HIG]：功能不随空间变化，只改变可见量）。

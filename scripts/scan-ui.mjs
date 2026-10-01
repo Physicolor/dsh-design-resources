@@ -219,16 +219,49 @@ const INVENTORY_PROBE = `(() => {
 })()`
 
 /**
- * 给清单打分：每个身份在规范/组件语料里有没有位置。
+ * 目标文件里有没有写下这件东西的实测尺寸。
+ *
+ * 「命中锚点」只说明「它该归到哪个文件」，不等于那个文件真的描述了它。这一道检查
+ * 拿元素实测尺寸去目标文档里找（`50 × 50` / `50×50` / `50x50` 都算），把「归位」
+ * 升级成「已描述」。
+ * @param textByFile - 文件路径 → 小写正文。
+ * @param where - 锚点给的目标路径（可能是目录前缀，如 `components/controls/Button`）。
+ * @param size - 实测尺寸，形如 `50x50`。
+ * @returns 找到返回 true，尺寸无法解析返回 null，没找到返回 false。
+ */
+function describedIn(textByFile, where, size) {
+  const match = /^(\d+)x(\d+)$/u.exec(String(size ?? ''))
+  if (match === null) return null
+  const [, w, h] = match
+  /* 文档里写尺寸的花样不少：`280 × 905`、`280px × 905px`、`780x114`、`50 × 50`。
+   * 单位可有可无，位置在数字与分隔符之间。 */
+  const unit = '\\s*(?:px|dp|pt|vp)?\\s*'
+  const sep = `${unit}[×xX*]${unit}`
+  const forward = new RegExp(`${w}${sep}${h}`, 'u')
+  const reverse = new RegExp(`${h}${sep}${w}`, 'u')
+  for (const [file, text] of textByFile) {
+    if (!file.startsWith(where)) continue
+    if (forward.test(text) || reverse.test(text)) return true
+  }
+  return false
+}
+
+/**
+ * 给清单打分：每个身份在规范/组件语料里有没有位置，位子上有没有写下它的尺寸。
  *
  * 先问人工锚点（产品叫什么 ↔ 仓库里叫什么），再去语料里做包含判断。包含判断只能
  * 给线索——命中的可能是真覆盖，也可能是碰巧同名——所以命中处一并写进结果，留给人复核。
+ * 锚点命中的再走一次深度检查（`described`）。
  * @param elements - 清单条目（data/ui-inventory.json 的 elements）。
  * @returns 对照结果。
  */
 function scoreCoverage(elements) {
   const corpus = readCorpus()
   const anchors = readAnchors()
+  const textByFile = new Map()
+  for (const item of corpus) {
+    if (!textByFile.has(item.file)) textByFile.set(item.file, item.text)
+  }
   return elements.map(el => {
     const tokens = keyTokens(el.key)
     const pluginOwned = /dsx-|lc-|duc-|dye-|mrat-|_6nhg2/i.test(el.cls)
@@ -242,14 +275,20 @@ function scoreCoverage(elements) {
       pluginOwned,
     }
     if (anchor !== undefined) {
-      return { ...base, coverage: 'covered', hits: [{ where: anchor.where, token: anchor.match, kind: 'anchor', id: anchor.note }] }
+      const described = describedIn(textByFile, anchor.where, el.style?.size)
+      return {
+        ...base,
+        coverage: 'covered',
+        described,
+        hits: [{ where: anchor.where, token: anchor.match, kind: 'anchor', id: anchor.note }],
+      }
     }
     const hits = []
     for (const item of corpus) {
       const token = tokens.find(t => item.text.includes(t))
       if (token !== undefined && hits.length < 4) hits.push({ where: item.file, token, kind: item.kind, id: item.id })
     }
-    return { ...base, coverage: hits.length === 0 ? 'missing' : 'referenced', hits }
+    return { ...base, coverage: hits.length === 0 ? 'missing' : 'referenced', described: null, hits }
   })
 }
 
@@ -261,11 +300,13 @@ async function writeCoverage(elements) {
   const coverage = scoreCoverage(elements)
   await mkdir(OUT, { recursive: true })
   await writeFile(join(OUT, 'ui-coverage.json'), `${JSON.stringify({
-    $comment: '清单里的每个身份在规范/组件语料里有没有位置。covered = 人工锚点命中；referenced = 语料里出现过这个词（要复核）；missing = 待办。',
+    $comment: '清单里的每个身份在规范/组件语料里有没有位置。covered = 人工锚点命中（described 表示目标文件里写下了它的实测尺寸）；referenced = 语料里出现过这个词（要复核）；missing = 待办。',
     generatedAt: new Date().toISOString(),
     counts: {
       identities: coverage.length,
       covered: coverage.filter(c => c.coverage === 'covered').length,
+      described: coverage.filter(c => c.described === true).length,
+      coveredNotDescribed: coverage.filter(c => c.coverage === 'covered' && c.described === false).length,
       referenced: coverage.filter(c => c.coverage === 'referenced').length,
       missing: coverage.filter(c => c.coverage === 'missing').length,
       pluginOwned: coverage.filter(c => c.pluginOwned).length,
@@ -273,7 +314,9 @@ async function writeCoverage(elements) {
     coverage,
   }, null, 2)}\n`, 'utf8')
   const count = kind => coverage.filter(c => c.coverage === kind).length
-  console.log(`coverage  identities=${coverage.length}  covered=${count('covered')}  referenced=${count('referenced')}  missing=${count('missing')}`)
+  const described = coverage.filter(c => c.described === true).length
+  const notDescribed = coverage.filter(c => c.coverage === 'covered' && c.described === false).length
+  console.log(`coverage  identities=${coverage.length}  covered=${count('covered')}（已写清 ${described} / 未写清 ${notDescribed}）  referenced=${count('referenced')}  missing=${count('missing')}`)
 }
 
 /* `--coverage-only`：只重算对照，不开浏览器。

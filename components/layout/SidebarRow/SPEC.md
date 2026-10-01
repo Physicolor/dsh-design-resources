@@ -6,6 +6,24 @@
 - official-counterpart: 官方没有这个组件；几何逐条锚定 `@deepseek-ai/dsh-client-ui-primitives/lib/Menu.module.css` 的 `.item` 家族
 - human-doc: `README.md`（判断与取舍；本文件只放事实）
 
+## 产品里的左栏行（实测）
+
+**先说清一件事**：本组件是从官方 `Menu.module.css` 的 `.item` 借几何拼出来的**提案**（40 高、圆角 10、padding 8px 10px），而产品自己左栏那几行并不是这个尺寸——它们出自各自的客户端 CSS 模块，量出来是这样（`docs/reference/geometry.json` 与元素清单）：
+
+| 行 | 实测 | 出处 |
+| --- | --- | --- |
+| 新会话按钮 `newSession` | **252 × 38** · 圆角 **12** · 14px 文字（行尾快捷键见 20-controls §6） | `docs/reference/README.md` 的骨架表 |
+| 折叠按钮 `iconButton toggle` | **28 × 28** · 圆角 **8**（品牌行右端） | 同上 |
+| 会话行 `sessionRow` | **256 × 32** · 圆角 **12** · padding `0 8px` · gap 0 · 14px 文字 | 客户端模块哈希后的 `sessionRow`（`role="treeitem"`） |
+| 工作区行 `projectRow` | **256 × 34** · 圆角 **12** · padding `0 8px` · gap 6 | 同上 |
+| 面板导航行 `panelRow` | **252 × 36** · 圆角 **12** · padding `7px 8px` · gap 8 · 14/22 | 同上 |
+| 行尾时间 `time` | **38 × 16** · 12/16 · `--dsw-alias-label-tertiary`（文本形如「10分钟」「1小时」） | 同上 |
+| 面板标题 `panelTitle` | 28 × 22 · 14/22（文本「插件」「自动化任务」） | 同上 |
+| 左栏底部入口 `lc-ov-entry` | **260 × 42** · 圆角 12 · padding `0 10px` | `docs/reference/README.md` 的骨架表（实测自 geometry.json） |
+| 左栏底部「设置」行 `triggerRow` | **260 × 34** · 圆角 12 · padding `0 10px`（标签 28 × 22 · 14/22） | 同上 |
+
+**判定（官方自身不一致）**：同一个左栏里，三种行分别是 32 / 34 / 36 高——行高不同、圆角都是 12。这不是排版事故：会话行要放状态字形、工作区行要放折叠角、面板导航行要放 16px 图标，各自撑出来的高度不同。**但插件没有理由跟着分三档**：插件往左栏加行时按会话行（32 高）或面板行（36 高）取一档即可，别自造第四个数。
+
 ## geometry-source
 
 写法为「数值 ← 文件名 选择器」：左列是箭头左侧，右列是「文件名 + 选择器」。

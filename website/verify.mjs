@@ -314,6 +314,9 @@ if (browserPath === null) {
     await goto(base + '#/inventory')
     const inventoryRows = await evaluate(`document.querySelectorAll('.table-wrap tbody tr').length`)
     check('element inventory renders', inventoryRows > 50, `${inventoryRows} rows`)
+    /* 深度检查：清单要区分「归了位」和「规范里真的写下了尺寸」。 */
+    const describedBadges = await evaluate(`document.querySelectorAll('.badge').length`)
+    check('element inventory distinguishes documented rows', describedBadges > 10, `${describedBadges} badges`)
 
     /* ── shell behaviour: one page, three independently scrolling columns ── */
 
