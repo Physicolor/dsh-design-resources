@@ -1,19 +1,27 @@
 /* Card 卡片 —— 几何来源：
- *   圆角 12px        ← 官方 HoverCard.module.css `.card`；ReadBlock.module.css
- *                       `.block` 的 `--dsl-read-radius: 12px`
- *   0.5px 描边       ← 官方 markdown/MarkdownText.module.css
- *                       `.markdown :not(pre) > code`（border: 0.5px solid
- *                       var(--dsw-alias-border-l1)）
- *   底色 layer-2     ← 官方 Modal.module.css `.dialog`（浮层底色用的是同一 token）
+ *   圆角 20px        ← 官方 settings 卡片：`border-radius: var(--dsw-radius-xl)`
+ *                       （`--dsw-radius-xl: 20px`，见 data/tokens.json 的 scale 组）
+ *   0.5px 描边       ← 官方 settings 卡片：`border: .5px solid
+ *                       var(--dsw-alias-settings-card-stroke)`
+ *   底色             ← 官方 settings 卡片：`background:
+ *                       var(--dsw-alias-settings-card-fill)`
  *   标题 16/24/500   ← 官方 Modal.module.css `.title`
  *   正文 14/22       ← 官方 Modal.module.css `.description`
  *   说明次级色       ← 官方 Modal.module.css `.close` / Pill.module.css `.pill`
  *   footer hairline  ← 官方 Menu.module.css `.footer`（border-top 0.5px + border-l2）
+ *
+ * 表面的三档（这套值的出处都在 data/tokens.json，浅色深色共用）：
+ *   贴地卡片  0.5px hairline + 20px 圆角 + 一层底色 —— 本组件这一档
+ *   浮层      16px 圆角 + --dsw-specific-menu + backdrop-filter +
+ *             box-shadow: var(--dsw-elevation-prominent)（菜单、弹层）
+ *   大面板    28px 圆角（--dsw-radius-panel）+ --dsw-alias-bg-layer-2 + elevation
+ * 圆角档位：4 / 8 / 12 / 16 / 20 / 28（xs → panel）。阴影与描边不叠加：
+ * 离开文档流才用 elevation，贴着的容器只用 hairline。
  * 内边距与插槽间距为本仓库建议值（4 的倍数），逐条理由见 README。
  * 实现为本仓库原创：用 CSS 变量承载几何，未复制官方 CSS 源码。 */
 
 .card {
-  --dsh-card-radius: 12px;
+  --dsh-card-radius: var(--dsw-radius-xl);
   --dsh-card-padding: 16px;
   --dsh-card-gap: 12px;
   --dsh-card-head-gap: 4px;
@@ -25,9 +33,9 @@
   padding: var(--dsh-card-padding);
   /* 边框与阴影二选一：卡片是内联内容容器，不脱离文档流，
    * 所以走 hairline 描边而不是 elevation（理由见 README「几何来源」）。 */
-  border: 0.5px solid var(--dsw-alias-border-l1);
+  border: 0.5px solid var(--dsw-alias-settings-card-stroke);
   border-radius: var(--dsh-card-radius);
-  background: var(--dsw-alias-bg-layer-2);
+  background: var(--dsw-alias-settings-card-fill);
   color: var(--dsw-alias-label-primary);
   font-size: 14px;
   line-height: 22px;

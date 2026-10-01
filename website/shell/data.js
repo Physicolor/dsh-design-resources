@@ -51,9 +51,20 @@ window.DSHShellData = {
     model: 'DeepSeek V4.1 Flash High',
     permission: '完全权限',
 
-    /* 输入卡下方的状态条 ← 真实界面同一行的内容与顺序（02-session.png）。
-     * 数字是示例值，格式照抄。 */
-    statusLine: ['9 轮 279 步', '283 tok/s', '91M tok', '缓存命中 99%', '≈$0.95', '57%'],
+    /* 输入卡下方那一行 ← 产品为 `conversation.input.dock` 座位留的盒子。
+     *
+     * 本机上这个座位的占用者给出轮/步、吞吐、用量、缓存、花费、上下文占用，
+     * 并按「轮/步 + 吞吐」「用量 + 缓存 + 花费」「占用」分成三组；组内用 `·`
+     * 分隔，组与组之间留白。分组、间距、字号都取自真实渲染
+     * （`docs/reference/status-line.json`），数字只是示例值。
+     *
+     * 图标取官方图标集里语义对得上的三个（refresh / data / gauge）：那三个
+     * 字形属于座位的占用者，本仓库不复制插件自己的图标。 */
+    statusLine: [
+        { icon: 'refresh', items: ['9 轮 279 步', '283 tok/s'] },
+        { icon: 'data', items: ['91M tok', '缓存命中 99%', '≈$0.95'] },
+        { icon: 'gauge', items: ['57%'] },
+    ],
 
     messages: [
         { role: 'user', text: '把这一版接口文档按模块重新组织一下，顺便标出哪些字段是可选的。' },
@@ -63,9 +74,11 @@ window.DSHShellData = {
         },
     ],
 
+    /* 工具调用 ← 产品里是一条可展开的活动行：16px 图标 + 14px 标题（min-height
+     * 19px，`WW4l1q_title`），下面接内容。不是自造的卡片框。 */
     tool: {
-        name: 'read',
-        summary: '读取 docs/api.md',
+        label: '已读取文件',
+        summary: 'read · 读取 docs/api.md',
         detail: '共 214 行，识别出 6 个模块、38 个字段。',
     },
 

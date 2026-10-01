@@ -13,7 +13,7 @@
     var COMPONENTS = D.components || []
     var SEATS = D.seats || []
     var ICONS = D.icons || []
-    var TOKENS = D.tokens || { light: {}, dark: {}, resolvedLight: {}, resolvedDark: {}, palette: {} }
+    var TOKENS = D.tokens || { light: {}, dark: {}, resolvedLight: {}, resolvedDark: {}, palette: {}, scale: {} }
     var I18N = D.i18n || { zh: {}, en: {} }
 
     var shell = document.getElementById('shell')
@@ -75,6 +75,24 @@
             })
         }
         return text
+    }
+
+    /**
+     * Look a dotted key up as the raw value, objects included.
+     *
+     * `t` answers with text; some blocks are authored as objects (column headings,
+     * the token → description map) and are read with this instead.
+     * @param key - dotted path into the dictionary.
+     * @returns the value, or null when missing.
+     */
+    function raw(key) {
+        var node = I18N[LANG]
+        var parts = key.split('.')
+        for (var i = 0; i < parts.length; i++) {
+            if (node === undefined || node === null) return null
+            node = node[parts[i]]
+        }
+        return node === undefined ? null : node
     }
 
     /* ── helpers ───────────────────────────────────────────────────── */
@@ -1271,12 +1289,45 @@
                 return '<tr><td class="mono">' + esc(n) + '</td><td>' + swatch + '</td>'
                     + '<td class="mono">' + esc(lightValue) + '</td><td class="mono">' + esc(darkValue) + '</td></tr>'
             }).join('')
-            + '</tbody></table></div></section></div>'
+            + '</tbody></table></div></section>'
+            + geometrySection()
+            + '</div>'
 
         renderAside([
             { title: t('tokens.depthTitle'), html: p(t('tokens.depth')) },
+            { title: t('tokens.geometryTitle'), html: p(t('tokens.geometryNote')) },
             { title: t('tokens.sourceTitle'), html: p(t('tokens.source')) },
         ])
+    }
+
+    /**
+     * The token reference's second half: corners, elevations, shadow levels.
+     *
+     * The colour table alone makes the system look like it is only made of
+     * colours, which is how a plugin author ends up inventing a seventh corner
+     * radius or stacking a shadow on a card. Values come from the collected
+     * theme (`TOKENS.scale`); the wording of "where it goes" is authored here.
+     * @returns HTML.
+     */
+    function geometrySection() {
+        var scale = TOKENS.scale || {}
+        var use = raw('tokens.geometryUse') || {}
+        /* Fixed order: the corner scale first, then the elevation recipes. */
+        var order = Object.keys(use).filter(function (name) { return scale[name] !== undefined })
+        if (order.length === 0) return ''
+        return '<section class="section"><div class="section__head">'
+            + '<h2 class="section__title">' + esc(t('tokens.geometryTitle')) + '</h2></div>'
+            + p(t('tokens.geometryLead'))
+            + '<div class="table-wrap"><table><thead><tr>'
+            + '<th>' + esc(t('tokens.geometryColumns.name')) + '</th>'
+            + '<th>' + esc(t('tokens.geometryColumns.value')) + '</th>'
+            + '<th>' + esc(t('tokens.geometryColumns.use')) + '</th></tr></thead><tbody>'
+            + order.map(function (name) {
+                return '<tr><td class="mono">' + esc(name) + '</td>'
+                    + '<td class="mono">' + esc(scale[name]) + '</td>'
+                    + '<td>' + esc(use[name]) + '</td></tr>'
+            }).join('')
+            + '</tbody></table></div></section>'
     }
 
     /** Fallback page. */

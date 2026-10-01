@@ -8,18 +8,38 @@
 
 ## geometry-source
 
-数值逐条读自官方 primitives 包，写法为「数值 ← 文件名 选择器」。
+数值逐条读自官方产物（`app.asar` 里的主题层与 `@deepseek-ai/dsh-client-ui-primitives` 的 CSS），写法为「数值 ← 出处 选择器 / 声明」。
 
 | 数值 | 出处 |
 | --- | --- |
-| `border-radius: 12px` | ← `HoverCard.module.css` `.card`；`ReadBlock.module.css` `.block` 的 `--dsl-read-radius: 12px` |
-| `border: 0.5px solid var(--dsw-alias-border-l1)` | ← `markdown/MarkdownText.module.css` `.markdown :not(pre) > code`；同一几何也出现在官方合成 token `--dsw-elevation-stroke: 0 0 0 .5px var(--dsw-elevation-stroke-color)`（该 token 的颜色即 `--dsw-alias-border-l1`） |
-| `background: var(--dsw-alias-bg-layer-2)` | ← `Modal.module.css` `.dialog`（官方浮层底色用的同一 token） |
+| `border-radius: var(--dsw-radius-xl)`（20px） | ← 官方设置页卡片 `settings/*.module.css` `.card`（`border-radius: var(--dsw-radius-xl)`）；`--dsw-radius-xl: 20px` ← 主题层 `:root`，见 `data/tokens.json` 的 `scale` |
+| `border: 0.5px solid var(--dsw-alias-settings-card-stroke)` | ← 官方设置页卡片 `.card` 的 `border: .5px solid var(--dsw-alias-settings-card-stroke)` |
+| `background: var(--dsw-alias-settings-card-fill)` | ← 官方设置页卡片 `.card` 的 `background: var(--dsw-alias-settings-card-fill)`（该别名解析为 `--dsw-alias-bg-layer-2`） |
 | 标题 `16px` / `line-height: 24px` / `font-weight: 500` | ← `Modal.module.css` `.title` |
 | 正文 `14px` / `line-height: 22px` | ← `Modal.module.css` `.description` |
 | 说明文字色 `var(--dsw-alias-label-secondary)` | ← `Modal.module.css` `.close`、`Pill.module.css` `.pill`（官方把次级文字设为该 token 的两处） |
 | footer 上方 hairline `0.5px` + `var(--dsw-alias-border-l2)` | ← `Menu.module.css` `.footer`（`border-top: 0.5px solid var(--dsw-alias-border-l2)`） |
 | 标题色 `var(--dsw-alias-label-primary)` | ← `Modal.module.css` `.title` |
+
+### surface —— 表面分三档（本组件选第一档）
+
+圆角与高程不是随手取的值：官方把「贴着文档流」和「浮在上面」分成两套写法，shadow 与 hairline 不在同一个元素上叠加。三档取值都来自主题层，见 `data/tokens.json` 的 `scale` 组。
+
+| 档 | 圆角 | 底与边 | 高程 |
+| --- | --- | --- | --- |
+| 贴地卡片（本组件） | `--dsw-radius-xl` 20px | `--dsw-alias-settings-card-fill` + `.5px` `--dsw-alias-settings-card-stroke` | 无 `box-shadow` |
+| 浮层（菜单、弹层） | `--dsw-radius-lg` 16px | `--dsw-specific-menu` + `backdrop-filter: var(--dsw-menu-backdrop-filter)` | `box-shadow: var(--dsw-elevation-prominent)` |
+| 大面板（占满一屏的浮层） | `--dsw-radius-panel` 28px | `--dsw-alias-bg-layer-2` | `box-shadow: var(--dsw-elevation-*)` |
+
+高程 token 的字面值（主题层，浅深共用）：
+
+- `--dsw-elevation-stroke: 0 0 0 .5px var(--dsw-elevation-stroke-color)`
+- `--dsw-elevation-panel: var(--dsw-elevation-stroke), 0 3px 8px 0 #00000008, 0 0 16px 0 #00000005`
+- `--dsw-elevation-prominent: var(--dsw-elevation-stroke), 0 3px 8px 0 #0000000a, 0 0 20px 0 #0000000d`
+- `--dsw-elevation-soft: var(--dsw-elevation-stroke), 0 4px 16px 0 #00000008, 0 0 24px 0 #00000008`
+- `--dsw-shadow-lv1 / lv2 / lv3`：三档通用投影，用于按钮、悬浮件这类小元素
+
+圆角档位只有六个：`4 / 8 / 12 / 16 / 20 / 28`（`--dsw-radius-xs` → `--dsw-radius-panel`）。自造第 7 个值，并排看就是两套东西。
 
 ### 本仓库建议值（非官方数值）
 
@@ -27,7 +47,7 @@
 - `.card { gap: 12px }`（插槽之间的纵向间距）：4 的倍数，取 12px 是因为官方 `HoverCard.module.css` `.card` 的纵向内边距、`ReadBlock.module.css` `.body` 的纵向内边距都是 `12px`，同一档间距。
 - `.header { gap: 4px }`（标题与说明之间）：4 的倍数，且 4px 是官方最小的间距档（`Button.module.css` `.button` 的 `gap: 4px`、`Pill.module.css` `.pill` 的 `gap: 4px`）。
 - `.footer { padding-top: 12px }`：与插槽间距同档（12px），让 hairline 上下的呼吸一致。
-- **边框与阴影二选一：本组件选 `border: 0.5px solid var(--dsw-alias-border-l1)`，不用 `box-shadow: var(--dsw-shadow-lv1)`。** 理由：官方用阴影的场合全是「脱离文档流的浮层」——`HoverCard.module.css` `.card` 用 `--dsw-shadow-lv3`、`Menu.module.css` `.list` 与 `Modal.module.css` `.dialog` 用 `--dsw-elevation-prominent`；而官方真正的内联容器（`ReadBlock.module.css` `.block`）只有底色、没有高程。卡片并排出现时，逐张投影会互相叠出脏边，hairline 才是官方内联这一层的语言。
+- **边框与阴影二选一：本组件选 `border: 0.5px solid var(--dsw-alias-settings-card-stroke)`，不用 `box-shadow`。** 理由：官方用阴影的场合全是「脱离文档流的浮层」——菜单与弹层用 `--dsw-elevation-prominent`、悬浮件用 `--dsw-elevation-panel`；而官方真正的内联容器（设置页卡片、`ReadBlock.module.css` `.block`）只有底色加一条 0.5px 描边、没有高程。卡片并排出现时，逐张投影会互相叠出脏边，hairline 才是官方内联这一层的语言。要用高程，请改用浮层那一档，别在卡片上叠投影。
 - 代价说明：`0.5px` 描边在 `box-sizing: border-box` 下让盒子每边多占 0.5px（合计 1px），这是刻意的实描边，不是 padding 的一部分。
 
 ### 本仓库决策（改写官方行为）
@@ -71,15 +91,18 @@
 
 DSH 语义 token：
 
-- `--dsw-alias-bg-layer-2` — `.card` 底色
-- `--dsw-alias-border-l1` — `.card` 描边色
+- `--dsw-alias-settings-card-fill` — `.card` 底色（官方设置页卡片用的同一别名）
+- `--dsw-alias-settings-card-stroke` — `.card` 描边色
+- `--dsw-radius-xl` — `.card` 圆角（20px）
 - `--dsw-alias-border-l2` — `.footer` 上方 hairline 色
 - `--dsw-alias-label-primary` — `.card` 基础文字色、`.title` 颜色
 - `--dsw-alias-label-secondary` — `.description` 颜色
 
+本组件不用高程 token（`--dsw-elevation-*` / `--dsw-shadow-lv*`）；它们属于浮层那一档，字面值见上文 surface 一节。
+
 组件级 CSS 变量（本仓库内部，不是 DSH token）：
 
-- `--dsh-card-radius`（`12px`）
+- `--dsh-card-radius`（`var(--dsw-radius-xl)`）
 - `--dsh-card-padding`（`16px`）
 - `--dsh-card-gap`（`12px`，同时用于 `.footer` 的 `padding-top`）
 - `--dsh-card-head-gap`（`4px`）
@@ -109,6 +132,8 @@ DSH 语义 token：
 10. `.card` 不出现 `:focus-visible`（组件内无交互元素）；若新增交互元素必须同时补焦点样式（`AC-MF-10`）。
 11. 类名拼接顺序为「基础类 + 外部 className」，外部类名最后追加，以便覆盖。
 12. 不 import 除 `react` 以外的任何运行时依赖（含 `@deepseek-ai/*`）。
+13. `.card` 的 `border-radius` 取值为六个官方档位之一（`--dsw-radius-xs/sm/md/lg/xl/panel`，即 4 / 8 / 12 / 16 / 20 / 28），不出现其他圆角字面量。
+14. `.card` 不同时使用 `--dsw-elevation-*` / `--dsw-shadow-lv*`：贴地容器只走 hairline（surface 一节的规则）。
 
 ## demo
 

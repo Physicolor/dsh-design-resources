@@ -59,6 +59,12 @@
   --dsw-alias-border-l2: #0000001a;
   --dsw-alias-border-l3: #0000001f;
   --dsw-alias-border-l4: #00000029;
+  --dsw-alias-settings-card-fill: var(--dsw-alias-bg-layer-2);
+  --dsw-alias-settings-card-stroke: var(--dsw-alias-border-l4);
+  /* 圆角档位（浅深共用）：4 / 8 / 12 / 16 / 20 / 28 */
+  --dsw-radius-sm: 8px;
+  --dsw-radius-xl: 20px;
+  --dsw-radius-panel: 28px;
   --dsw-alias-brand-primary: var(--dsw-static-neutral-bluish-1000);
   --dsw-alias-button-contrast-fill: var(--dsw-static-neutral-bluish-700);
   --dsw-alias-button-elevated-fill: var(--dsw-static-neutral-bluish-00);
@@ -128,7 +134,7 @@
    数值逐条取自同目录 card.module.css（CSS Modules 的哈希类名已去掉），
    规则重新组织过，声明值未改。 */
 .card {
-  --dsh-card-radius: 12px;
+  --dsh-card-radius: var(--dsw-radius-xl);
   --dsh-card-padding: 16px;
   --dsh-card-gap: 12px;
   --dsh-card-head-gap: 4px;
@@ -138,9 +144,9 @@
   flex-direction: column;
   gap: var(--dsh-card-gap);
   padding: var(--dsh-card-padding);
-  border: 0.5px solid var(--dsw-alias-border-l1);
+  border: 0.5px solid var(--dsw-alias-settings-card-stroke);
   border-radius: var(--dsh-card-radius);
-  background: var(--dsw-alias-bg-layer-2);
+  background: var(--dsw-alias-settings-card-fill);
   color: var(--dsw-alias-label-primary);
   font-size: 14px;
   line-height: 22px;

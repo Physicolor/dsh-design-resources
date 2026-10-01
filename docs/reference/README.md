@@ -25,13 +25,45 @@ node scripts/capture-dsh.mjs 01-hero 06-plugins
 | 场景 | 文件 | 拍的是什么 |
 | --- | --- | --- |
 | `01-hero` | `01-hero.png` | 新会话页：hero、输入卡、工具行 |
-| `02-session` | `02-session.png` | 会话页：消息流、工具调用卡 |
+| `02-session` | `02-session.png` | 会话页：消息流、工具调用卡、输入区、dock |
 | `03-settings-open` | `03-settings-open.png` | 设置面板：分段按钮、开关、下拉、数字输入 |
 | `04-settings-models` | `04-settings-models.png` | 设置 · 模型 |
 | `05-settings-components` | `05-settings-components.png` | 设置 · 组件 |
 | `06-plugins` | `06-plugins.png` | 插件列表：分组标题、行、行尾开关、主按钮 |
 | `07-composer` | `07-composer.png` | 输入区特写 |
-| `08-session-geometry` | `geometry.json` | 会话页的**真实渲染树**：每个占位节点的盒子与计算样式 |
+| `08-session-geometry` | `geometry.json` | 框架骨架的**真实渲染树**：每个占位节点的盒子与计算样式 |
+| `09-chrome` | `chrome.json` | 侧栏图标 + 顶栏全部控件（含 SVG / 位图原样） |
+| `10-composer-geometry` | `composer-geometry.json` | 输入卡子树（深 14 层）：圆角、内边距、工具行 |
+| `11-status-line` | `status-line.json` | 卡下方 dock 的每一项：文字、字号、颜色、容器链与间距 |
+| `12-conversation-geometry` | `conversation-geometry.json` | 会话区子树：阅读列、气泡、活动行、输入区、dock |
+| `13-top-strip` | `top-strip.json` | 首行按像素位置扫出来的全部控件 |
+
+## 插件的部分不算产品的
+
+采集是照着一台**装了插件**的机器拍的，所以图里混着插件画的界面。判据是类名与座位：
+
+| 画面里的东西 | 是谁的 |
+| --- | --- |
+| 中栏右侧那列卡片（`Command Code`、`Token 用量` …） | 插件 `dsh-widgets`（`dsx-stats-*`、`dsx-stats-rail`），占的是产品的右栏；复刻官方骨架时不画 |
+| 顶栏「组件」那枚胶囊（`dsx-stats-capsule`） | 同上，坐在 `conversation.session.header.utilities` 里 |
+| 卡下方那行数字（轮/步、tok/s、缓存命中…） | 内容由座位占用者给出，坐在产品为 `conversation.input.dock` 留的盒子里；**盒子的几何是产品的**（`RlGAzG_dock`） |
+
+## 会话页的横向几何（1570×905，无插件右栏时）
+
+会话页最容易复刻错的是"一段话能有多宽"。它不是中栏宽度，而是中栏里再收一次的一条固定宽度的阅读列。
+
+| 部位 | 数值 | 来源节点 |
+| --- | --- | --- |
+| 会话头部 | **50 高**（0..50）：页签 26 高、下划线在 y 37..38 | `conversation.session.header` |
+| 标题左沿 | x = 308（中栏左沿 + **28**） | 头部首个子节点 |
+| 阅读列 | **748 宽居中**（中栏 1290 时即 551..1299） | `xz4KEq_column` |
+| 阅读区内边距 | 16px 32px | `xz4KEq_scroll` |
+| 用户气泡 | 右沿贴阅读列右沿；圆角 **20**；padding 10px 16px；底色 rgb(237,243,254) | `cJsG2q_bubble` |
+| 助手正文 | 没有气泡，14/24 直接落在背景上 | `v5IAXa_root` |
+| 工具调用行 | 16px 图标 + 14px 标题，高 19 | `WW4l1q_title` |
+| 输入卡 | **780 宽居中**、圆角 28、padding 8px 0 0、内 gap 12 | `RlGAzG_card` |
+| 卡下 dock | 高 **26**（padding-top 4 + 22 的内容）；组内 gap 6、组间 14；字号 12/20 | `RlGAzG_dock` |
+| 顶栏工具 | 右沿 x = 1558（离视口右沿 **12**）；按钮 28×28 居中于 50 高的首行 | `top-strip.json` |
 
 ## 采集方法上的一个坑
 
@@ -60,10 +92,10 @@ node scripts/capture-dsh.mjs 01-hero 06-plugins
 | 底部区 | 256 × 126 @ (12, 773) | `*_footArea` |
 | 底部动作行 | **260 × 42** @ (10, 815) | `lc-ov-entry` |
 | 设置行 | **260 × 34** @ (10, 861) | `*_triggerRow` |
-| 会话头部 | **1290 × 40** @ (280, 0) | `*_header` |
+| 会话头部 | 新会话页没有它；会话页是 **1290 × 50** @ (280, 0) | `conversation.session.header` |
 | 会话主体 | 1290 × 865 @ (280, 40) | `*_body` |
 | 输入区座位 | 1283 × 238 @ (280, 354) | `*_composerSeat` |
-| 输入卡 | **780 × 114**，圆角 **28 px**，白底，padding 8px | 直接量 `[data-input-scroll]` 的父元素 |
+| 输入卡 | **780 宽**，圆角 **28 px**，白底，padding 8px 0 0；hero 里高 114（输入区 52），会话里单行时高 98（输入区 36） | `RlGAzG_card` |
 
 > 说明：`geometry.json` 里还出现了 `OUqwTW_panel`（707 px 宽）——那是**插件**（右侧组件栏）渲染的面板，不是产品自身的右栏。复刻官方骨架时不计入。
 

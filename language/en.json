@@ -176,7 +176,26 @@
         "depthTitle": "How elevation is expressed",
         "depth": "Express depth with background layers (bg-base → bg-layer-1 → bg-layer-2 → bg-overlay), not with shadows. A shadow is the exception, not the default.",
         "sourceTitle": "Source",
-        "source": "Values come straight from the theme definition inside the product's client bundle, one set per theme, unmodified."
+        "source": "Values come straight from the theme definition inside the product's client bundle, one set per theme, unmodified.",
+        "geometryTitle": "Corners, shadows and elevation",
+        "geometryLead": "The other half of the system. There are six corner steps and three elevation recipes — put two surfaces side by side and one step off shows. A surface that sits in the flow gets a 0.5px hairline; only what floats gets elevation, and the two never stack on one element.",
+        "geometryColumns": { "name": "Token", "value": "Value", "use": "Where it goes" },
+        "geometryUse": {
+            "--dsw-radius-xs": "Smallest step: badges, small swatches",
+            "--dsw-radius-sm": "Small controls: tags, inline chips",
+            "--dsw-radius-md": "Middle: inputs, toolbar rows",
+            "--dsw-radius-lg": "Floating: menus, popovers, raised panels",
+            "--dsw-radius-xl": "Cards: the card on a settings page (this repository's Card uses this step)",
+            "--dsw-radius-panel": "Large: the composer card, a full-screen panel",
+            "--dsw-elevation-stroke": "The 0.5px stroke every elevation recipe starts from",
+            "--dsw-elevation-panel": "Floating controls: small buttons above content",
+            "--dsw-elevation-prominent": "Menus and popovers",
+            "--dsw-elevation-soft": "Large floating surfaces: wider and softer",
+            "--dsw-shadow-lv1": "General-purpose shadow, step one",
+            "--dsw-shadow-lv2": "General-purpose shadow, step two",
+            "--dsw-shadow-lv3": "General-purpose shadow, step three (highest)"
+        },
+        "geometryNote": "These values are read out of the product's theme layer the same way the colours are (the scale group in data/tokens.json); one set serves both themes."
     },
     "footer": {
         "name": "DeepSeek Design Resources",

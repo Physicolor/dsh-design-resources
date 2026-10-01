@@ -302,6 +302,13 @@ if (browserPath === null) {
     // token table renders swatches
     await goto(base + '#/tokens')
     check('token table renders', await evaluate(`document.querySelectorAll('.table-wrap tbody tr').length > 50`), String(await evaluate(`document.querySelectorAll('.table-wrap tbody tr').length`)))
+    /* 颜色之外的另一半：圆角档位与高程配方。少这一块，令牌页看起来就只有颜色。 */
+    const geometryRows = await evaluate(`(function(){
+        var tables = [].slice.call(document.querySelectorAll('.table-wrap table'));
+        var geo = tables.filter(function(x){ return x.textContent.indexOf('--dsw-radius-panel') !== -1 })[0];
+        return geo ? geo.querySelectorAll('tbody tr').length : 0;
+    })()`)
+    check('token page carries the geometry table', geometryRows >= 12, `${geometryRows} rows`)
 
     /* ── shell behaviour: one page, three independently scrolling columns ── */
 
@@ -369,6 +376,9 @@ if (browserPath === null) {
             var side = sr.querySelector('.sh-side');
             var head = sr.querySelector('.sh-head');
             var stage = sr.querySelector('.sh-stage');
+            var column = sr.querySelector('.sh-flow__column');
+            var card = sr.querySelector('.sh-card');
+            var dock = sr.querySelector('.sh-status');
             /* offsetWidth/offsetHeight, not getBoundingClientRect: the shell is
              * scaled to fit its container, so a rect reports screen pixels while
              * the layout these numbers describe lives in the 1570-wide coordinate
@@ -378,7 +388,11 @@ if (browserPath === null) {
                 head: head ? head.offsetHeight : -1,
                 ratio: side ? Math.round(side.offsetWidth / 1570 * 1000) / 1000 : -1,
                 scale: stage ? Math.round((stage.getBoundingClientRect().height / 1010) * 1000) / 1000 : -1,
-                sessions: sr.querySelectorAll('.sh-session').length
+                sessions: sr.querySelectorAll('.sh-session').length,
+                column: column ? column.offsetWidth : -1,
+                card: card ? card.offsetWidth : -1,
+                dock: dock ? dock.offsetHeight : -1,
+                tools: sr.querySelectorAll('.sh-head__tools > *').length
             };
         }
         return null;
@@ -388,7 +402,16 @@ if (browserPath === null) {
     /* The whole point of scaling rather than stretching: the rail has to keep the
      * share of the frame it has in the product (280 / 1570 = 17.8%). */
     check('shell keeps the product proportion', shellInfo !== null && Math.abs(shellInfo.ratio - 0.178) <= 0.003, shellInfo === null ? 'n/a' : String(shellInfo.ratio))
-    check('shell header is 40px', shellInfo !== null && Math.abs(shellInfo.head - 40) <= 2, shellInfo === null ? 'n/a' : shellInfo.head + 'px')
+    /* 会话头部在会话页是 50 高（页签 26、下划线落在 y 37..38）；采集值见
+     * docs/reference/README.md 的「会话页的横向几何」。 */
+    check('shell session header is 50px', shellInfo !== null && Math.abs(shellInfo.head - 50) <= 2, shellInfo === null ? 'n/a' : shellInfo.head + 'px')
+    /* 一段话能有多宽，取决于这条阅读列，而不是中栏宽度。 */
+    check('shell reading column is 748px', shellInfo !== null && Math.abs(shellInfo.column - 748) <= 2, shellInfo === null ? 'n/a' : shellInfo.column + 'px')
+    check('shell composer card is 780px', shellInfo !== null && Math.abs(shellInfo.card - 780) <= 2, shellInfo === null ? 'n/a' : shellInfo.card + 'px')
+    /* 卡下方 dock：padding-top 4 + 内容 22 = 26。 */
+    check('shell composer dock is 26px', shellInfo !== null && Math.abs(shellInfo.dock - 26) <= 2, shellInfo === null ? 'n/a' : shellInfo.dock + 'px')
+    /* 顶栏右上角：打开方式分段按钮、省略号、右侧边栏开关，三样都要在。 */
+    check('shell top strip carries the three real tools', shellInfo !== null && shellInfo.tools === 3, shellInfo === null ? 'n/a' : String(shellInfo.tools))
     check('shell shows demo sessions', shellInfo !== null && shellInfo.sessions >= 3, shellInfo === null ? 'n/a' : String(shellInfo.sessions))
 
     const shellToggle = await evaluate(`(function(){

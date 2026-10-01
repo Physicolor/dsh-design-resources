@@ -389,6 +389,9 @@ const data = {
     dark: tokens.dark ?? {},
     resolvedLight: tokens.resolved?.light ?? {},
     resolvedDark: tokens.resolved?.dark ?? {},
+    /* Theme-independent geometry: radius scale, elevation recipes, shadow
+     * levels. Without it the token page can only talk about colours. */
+    scale: tokens.scale ?? {},
   },
   components: components.items,
   specs,

@@ -50,17 +50,22 @@ const OPEN_SETTINGS = `(() => {
 /**
  * Open one session from the sidebar.
  *
- * Session rows are clickable containers rather than `<a>`/`<button>`, so the
- * handle is the title text, walked up to whatever handles the click.
+ * Rows are the elements carrying `sidebar.workspaces.session.row.action`, which
+ * is a seat the product declares — unlike the hashed class names (`hIlkoa_…`),
+ * which change between builds. The **first row that is not the selected one** is
+ * picked on purpose: the selected row is the empty new session, and the screen
+ * worth measuring is a session that already has turns (header, messages, input
+ * and the status line under it). Nothing here writes to a session; it only
+ * switches which one is displayed.
  */
 const OPEN_SESSION = `(() => {
-  const scope = document.querySelector('[data-slot="sidebar.workspaces"]')
-  if (scope === null) throw new Error('workspace list not found')
-  const leaf = [...scope.querySelectorAll('*')]
-    .find(el => el.children.length === 0 && (el.textContent || '').trim().length > 6)
-  if (leaf === undefined) throw new Error('no session row matched')
-  const row = leaf.closest('[role="button"], li, [class*="_row"]') ?? leaf.parentElement
-  row.click()
+  const rows = [...document.querySelectorAll('[data-slot="sidebar.workspaces.session.row.action"]')]
+    .map(el => el.closest('[class*="sessionRow"]') || el.parentElement)
+    .filter(el => el !== null)
+  const selected = rows.find(row => [...row.classList].some(c => c.endsWith('_selected')))
+  const target = rows.find(row => row !== selected) ?? rows[0]
+  if (target === undefined) throw new Error('no session row matched')
+  target.click()
   return true
 })()`
 
@@ -96,6 +101,41 @@ const GEOMETRY_PROBE = `(() => {
   walk(document.getElementById('root') || document.body, 0)
   return JSON.stringify({ viewport: { w: innerWidth, h: innerHeight }, nodes })
 })()`
+
+/**
+ * The top strip, as an expression: every control on the first row of the app.
+ *
+ * The right-hand tools (ellipsis, open the working directory, open the right
+ * sidebar) belong to the conversation header's utility group and its corner, so
+ * a harvest that only looks at `conversation.header` misses them — which is how
+ * a reproduction ends up with two of the three, or with an invented third. This
+ * walks the whole first row by pixel position, so whatever is up there gets
+ * measured, seat or no seat. Some of them are not glyphs at all: "open in file
+ * explorer" draws the OS folder bitmap, so the markup is kept when there is no
+ * inline SVG.
+ */
+const TOP_STRIP_EXPR = `(() => {
+  const out = []
+  for (const el of document.querySelectorAll('button, [role="button"], a')) {
+    const r = el.getBoundingClientRect()
+    if (r.width < 4 || r.height < 4 || r.width > 420) continue
+    if (r.y > 60) continue
+    const svg = el.querySelector('svg')
+    const seat = el.closest('[data-slot]')
+    out.push({
+      label: (el.getAttribute('aria-label') || el.textContent || '').trim().slice(0, 40),
+      rect: [Math.round(r.x), Math.round(r.y), Math.round(r.width), Math.round(r.height)],
+      cls: String(el.className || '').slice(0, 70),
+      seat: seat === null ? null : seat.getAttribute('data-slot'),
+      svg: svg === null ? null : svg.outerHTML,
+      html: svg === null ? el.outerHTML.slice(0, 700) : null,
+    })
+  }
+  return out
+})()`
+
+/** The same harvest, standing alone as a scene probe. */
+const TOPSTRIP_PROBE = `JSON.stringify(${TOP_STRIP_EXPR}, null, 1)`
 
 /**
  * Harvest the chrome that carries no seat of its own: the sidebar glyphs and the
@@ -135,7 +175,132 @@ const CHROME_PROBE = `(() => {
       h: Math.round(rect.height),
     })
   }
-  return JSON.stringify({ icons, header }, null, 2)
+  return JSON.stringify({ icons, header, top: ${TOP_STRIP_EXPR} }, null, 2)
+})()`
+
+/**
+ * Measure the composer area in full detail.
+ *
+ * The general geometry probe stops at depth 9, which is exactly where the input
+ * card starts — so the card's own subtree (its radius, its status line, the gaps
+ * between the status items) was never captured, and eyeballing it produced a
+ * wrong radius and a wrong status-bar rhythm. This probe goes deeper, on purpose,
+ * and on one area.
+ */
+const COMPOSER_PROBE = `(() => {
+  const out = []
+  const bar = document.querySelector('[data-slot="conversation.composer.bar"]')
+  /* Start one level above the bar: the status line lives in a dock outside it. */
+  const seat = bar && bar.parentElement ? bar.parentElement : document.body
+  const walk = (el, depth) => {
+    if (depth > 14) return
+    const r = el.getBoundingClientRect()
+    if (r.width > 1 && r.height > 1) {
+      const cs = getComputedStyle(el)
+      out.push({
+        d: depth,
+        tag: el.tagName.toLowerCase(),
+        cls: (el.className || '').toString().slice(0, 110),
+        rect: [Math.round(r.x), Math.round(r.y), Math.round(r.width), Math.round(r.height)],
+        font: cs.fontSize + '/' + cs.lineHeight,
+        color: cs.color,
+        gap: cs.gap,
+        pad: [cs.paddingTop, cs.paddingRight, cs.paddingBottom, cs.paddingLeft].join(' '),
+        margin: [cs.marginTop, cs.marginRight, cs.marginBottom, cs.marginLeft].join(' '),
+        radius: cs.borderRadius,
+        bg: cs.backgroundColor,
+        text: el.children.length === 0 ? (el.textContent || '').trim().slice(0, 40) : '',
+      })
+    }
+    for (const child of el.children) walk(child, depth + 1)
+  }
+  walk(seat, 0)
+  return JSON.stringify(out, null, 1)
+})()`
+
+/**
+ * Locate the composer status line and describe its container chain.
+ *
+ * The status line turned out not to live inside the composer seat's subtree at
+ * all, so scanning that seat for it found nothing. This probe searches the whole
+ * document for the line's text and walks up from it, which is also how you find
+ * where a piece of chrome actually belongs when the seat model does not say.
+ */
+const STATUS_PROBE = `(() => {
+  const found = []
+  for (const el of document.querySelectorAll('*')) {
+    if (el.children.length !== 0) continue
+    const text = (el.textContent || '').trim()
+    if (text === '' || text.length > 28) continue
+    if (!/tok\\/s|缓存|≈|轮|%/.test(text)) continue
+    const rect = el.getBoundingClientRect()
+    if (rect.width < 2 || rect.height < 2) continue
+    const cs = getComputedStyle(el)
+    const chain = []
+    let node = el.parentElement
+    for (let i = 0; i < 5 && node !== null; i++) {
+      const ncs = getComputedStyle(node)
+      const nr = node.getBoundingClientRect()
+      chain.push({
+        cls: String(node.className || node.tagName).slice(0, 60),
+        gap: ncs.gap,
+        pad: [ncs.paddingTop, ncs.paddingRight, ncs.paddingBottom, ncs.paddingLeft].join(' '),
+        rect: [Math.round(nr.x), Math.round(nr.y), Math.round(nr.width), Math.round(nr.height)],
+      })
+      node = node.parentElement
+    }
+    found.push({
+      text,
+      rect: [Math.round(rect.x), Math.round(rect.y), Math.round(rect.width), Math.round(rect.height)],
+      font: cs.fontSize + '/' + cs.lineHeight,
+      color: cs.color,
+      chain,
+    })
+  }
+  return JSON.stringify(found, null, 1)
+})()`
+
+/**
+ * Measure the conversation column itself.
+ *
+ * The reading column is not the centre column: the product insets the message
+ * list inside it, and the numbers of that inset (how wide the text runs, where a
+ * user bubble starts and stops, the gap between turns) are what makes a
+ * reproduction look like the product rather than like a chat page in general.
+ * The general probe stops at depth 9, so this one goes deep on one seat.
+ */
+const CONVERSATION_PROBE = `(() => {
+  const out = []
+  const walk = (el, depth) => {
+    if (depth > 12 || out.length > 900) return
+    const r = el.getBoundingClientRect()
+    if (r.width > 1 && r.height > 1) {
+      const cs = getComputedStyle(el)
+      out.push({
+        d: depth,
+        tag: el.tagName.toLowerCase(),
+        slot: el.getAttribute('data-slot') || undefined,
+        cls: String(el.className || '').slice(0, 90),
+        rect: [Math.round(r.x), Math.round(r.y), Math.round(r.width), Math.round(r.height)],
+        font: cs.fontSize + '/' + cs.lineHeight,
+        color: cs.color,
+        gap: cs.gap,
+        pad: [cs.paddingTop, cs.paddingRight, cs.paddingBottom, cs.paddingLeft].join(' '),
+        margin: [cs.marginTop, cs.marginRight, cs.marginBottom, cs.marginLeft].join(' '),
+        radius: cs.borderRadius,
+        bg: cs.backgroundColor,
+        maxWidth: cs.maxWidth,
+        text: el.children.length === 0 ? (el.textContent || '').trim().slice(0, 40) : '',
+      })
+    }
+    for (const child of el.children) walk(child, depth + 1)
+  }
+  const root = document.querySelector('[data-slot="conversation.session"]')
+    ?? document.querySelector('[data-slot="conversation.session.header"]')
+    ?? document.querySelector('[data-slot="main.conversation"]')
+  if (root === null) throw new Error('conversation seat not found')
+  walk(root.parentElement ?? root, 0)
+  return JSON.stringify(out, null, 1)
 })()`
 
 /**
@@ -183,6 +348,30 @@ const SCENES = [
     title: '侧栏与头部的图标采集',
     steps: [OPEN_SESSION],
     collect: 'chrome',
+  },
+  {
+    name: '10-composer-geometry',
+    title: '输入区 · 逐像素几何',
+    steps: [OPEN_SESSION],
+    collect: 'composer',
+  },
+  {
+    name: '11-status-line',
+    title: '输入区状态条定位',
+    steps: [OPEN_SESSION],
+    collect: 'status',
+  },
+  {
+    name: '12-conversation-geometry',
+    title: '会话区 · 逐像素几何',
+    steps: [OPEN_SESSION],
+    collect: 'conversation',
+  },
+  {
+    name: '13-top-strip',
+    title: '顶栏 · 全部控件与图标',
+    steps: [OPEN_SESSION],
+    collect: 'topstrip',
   },
   {
     name: '03-settings-open',
@@ -386,6 +575,30 @@ try {
       const json = await evaluate(CHROME_PROBE)
       await writeFile(join(OUT, 'chrome.json'), json, 'utf8')
       console.log(`chrome    ${scene.name}  ${Math.round(json.length / 1024)} KB`)
+    }
+
+    if (scene.collect === 'composer') {
+      const json = await evaluate(COMPOSER_PROBE)
+      await writeFile(join(OUT, 'composer-geometry.json'), json, 'utf8')
+      console.log(`composer  ${scene.name}  ${Math.round(json.length / 1024)} KB`)
+    }
+
+    if (scene.collect === 'status') {
+      const json = await evaluate(STATUS_PROBE)
+      await writeFile(join(OUT, 'status-line.json'), json, 'utf8')
+      console.log(`status    ${scene.name}  ${Math.round(json.length / 1024)} KB`)
+    }
+
+    if (scene.collect === 'conversation') {
+      const json = await evaluate(CONVERSATION_PROBE)
+      await writeFile(join(OUT, 'conversation-geometry.json'), json, 'utf8')
+      console.log(`conversa. ${scene.name}  ${Math.round(json.length / 1024)} KB`)
+    }
+
+    if (scene.collect === 'topstrip') {
+      const json = await evaluate(TOPSTRIP_PROBE)
+      await writeFile(join(OUT, 'top-strip.json'), json, 'utf8')
+      console.log(`topstrip  ${scene.name}  ${Math.round(json.length / 1024)} KB`)
     }
   }
 } catch (error) {

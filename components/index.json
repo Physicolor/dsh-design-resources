@@ -1,523 +1,451 @@
 {
-    "$comment":  "DSH 设计资源组件清单。id 必须等于该组件目录下 \u003cid\u003e.module.css 的文件名主干（website/gen-site.mjs 用 entry.id.toLowerCase() + \".module.css\" 定位样式文件）；path 相对仓库根、以 / 结尾。几何来源只区分两类：官方 @deepseek-ai/dsh-client-ui-primitives 中实际读到的选择器（\"数值 ← 选择器\"），或 README 中明确标注的「本仓库建议值」。",
-    "components":  [
-                       {
-                           "id":  "button",
-                           "name":  "Button",
-                           "category":  "controls",
-                           "path":  "components/controls/Button/",
-                           "summary":  "一个 \u003cbutton\u003e 包装：四种视觉家族 + 两种尺寸 + 可选前置图标。；零依赖，只用到 react 和 CSS Modules",
-                           "whenToUse":  "触发一个动作：提交、保存、删除、打开菜单、重试。；工具条里需要一组视觉权重明确的动作时，用 ghost + toolbar 分层",
-                           "whenNotToUse":  "只是跳转链接：用 \u003ca\u003e，按钮的语义是「执行」不是「导航」。；切换开关状态：用 Switch。；在若干互斥选项间选择：用 Pill 或 SegmentedControl，按钮不表达「选中」。；静态标签：用 Tag。；一个动作还没准备好时不要把 primary 换成 ghost 来「禁用」——直接 disabled，否则用户无法分辨「不能用」和「不是主操作」",
-                           "geometrySource":  "全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/Button.module.css；height: 36px ← .md；padding: 0 14px、gap: 4px、border-radius: 18px、font-size: 14px、line-height: 22px ← .button；height: 28px、font-size: 12px、line-height: 18px、padding: 0 10px、border-radius: 14px ← .sm；图标容器 16×16 ← .icon",
-                           "tags":  [
-                                        "控件",
-                                        "零依赖",
-                                        "按钮",
-                                        "主操作",
-                                        "变体",
-                                        "button"
-                                    ]
-                       },
-                       {
-                           "id":  "input",
-                           "name":  "Input",
-                           "category":  "controls",
-                           "path":  "components/controls/Input/",
-                           "summary":  "一个 \u003cspan\u003e 外壳包着原生 \u003cinput\u003e：；ref 直接透传到内部 \u003cinput\u003e（不是外壳），所以 ref.current.focus()、；读 selectionStart 都能用。；除 className（挂在外壳上）之外的全部 input 属性原样透传：；value / onChange / placeholder / type / disabled / readOnly /",
-                           "whenToUse":  "单行文本录入：搜索框、会话标题、路径、URL。；需要 32px 紧凑高度、和 Button 的 sm / Pill 同处一行的表单",
-                           "whenNotToUse":  "多行文本：用 \u003ctextarea\u003e。Input 固定 32px 高，塞多行会溢出。；需要在若干固定选项里选一个：用 Pill / 下拉菜单，不要让用户手打。；纯展示的只读值：用文本或 Tag。禁用输入框会带来「这里本来能改」的错觉。；带校验错误的表单行：本组件不含错误态。错误信息应由外层容器渲染在输入框下方，；并给 input 挂 aria-invalid + aria-describedby（属性可以透传进来）。；数字调节：用 stepper；Input 只是文本输入",
-                           "geometrySource":  "全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/Input.module.css；height: 32px、padding: 0 8px、gap: 6px、border-radius: 8px ← .wrap；border: 0.5px solid var(--dsw-alias-border-l4)、background: var(--dsw-alias-bg-layer-1)、display: inline-flex、align-items: center ← .wrap",
-                           "tags":  [
-                                        "控件",
-                                        "零依赖",
-                                        "输入框",
-                                        "表单",
-                                        "forwardRef",
-                                        "input"
-                                    ]
-                       },
-                       {
-                           "id":  "pill",
-                           "name":  "Pill",
-                           "category":  "controls",
-                           "path":  "components/controls/Pill/",
-                           "summary":  "一个按 onClick 分岔的双形态组件：；active 是受控值 —— 组件只把选中态画出来，状态本身归调用方。选中态的画法是；文字升到 label-primary、底色换成 button-ghost-active-fill，再叠一圈；inset 0 0 0 1px 的内描边。；onClick 在类型层面被设成 undefined，所以静态胶囊不可能被误加点击行为",
-                           "whenToUse":  "一组互斥筛选条件里选一个：「今天 / 最近 7 天 / 最近 30 天」。；展示一个可点的短状态，点了之后直接切到那个状态（标签页式的轻量导航）。；需要一枚 24px 高、比 Button 更小更静的胶囊时",
-                           "whenNotToUse":  "触发一个命令（保存 / 删除 / 重试）：用 Button。Pill 表达的是「选中了哪一个」，；不是「执行一件事」。；只读的状态标注：用 Tag。Pill 有选中态语义，Tag 没有。；开关：用 Switch；active 是可点出来的选中态，不是开关的 on/off。；多个可以同时选中：Pill 的 active 是单个布尔值，多选场景它表达不了。；纯展示且不带 active 的静态胶囊：这其实是 Tag 的 neutral tone，；用 Pill 会让人以为能点",
-                           "geometrySource":  "全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/Pill.module.css；height: 24px、padding: 0 8px、gap: 4px、border-radius: 12px、font-size: 12px、line-height: 18px ← .pill；border: none、color: var(--dsw-alias-label-secondary)、background: var(--dsw-alias-bg-layer-2) ← .pill；cursor: pointer ← .interactive",
-                           "tags":  [
-                                        "控件",
-                                        "零依赖",
-                                        "胶囊",
-                                        "选中态",
-                                        "筛选",
-                                        "pill"
-                                    ]
-                       },
-                       {
-                           "id":  "segmentedcontrol",
-                           "name":  "SegmentedControl",
-                           "category":  "controls",
-                           "path":  "components/controls/SegmentedControl/",
-                           "summary":  "一个受控组件：value 由宿主持有，onChange 只在选中项真的变了时才触发。；键盘：Tab 进组一次，← →（以及 ↑ ↓ Home End）在段间移动，焦点与选中一起走，Space / Enter 选中当前段。；为什么用 radiogroup / radio 而不是 tablist / tab：两种语义都要求「一组互斥项、方向键移动、只有一个 Tab 落点」，本组件都满足。区别在结果：",
-                           "whenToUse":  "2–5 个互斥选项，且需要一眼看全所有选项（视图切换、时间区间、对齐方式、单位）。；选项少到不值得开一个下拉菜单，且切换后立即生效（无提交语义）。；需要在同一行里表达「当前选中项」，但 Pill 的单行 24px 装不下时",
-                           "whenNotToUse":  "选项超过 5 个，或文案长度不可控：横向空间会失控，用 Select / Menu。；选项不是互斥的（可以同时选多个）：用 Checkbox 组。；每一项会切换出一块面板内容、并且需要读屏播报「选项卡 N/M」：用 tablist / tab 自己实现，本组件不承担面板语义。；触发一个动作（保存、删除）：用 Button，分段不表达「执行」。；只是标记状态、不可点击：用 Tag。；布尔开关：用 Switch（两段的分段控件做开关是过度设计）",
-                           "geometrySource":  "官方没有此控件。下列数值全部读自官方 CSS，本仓库只负责把它们组合起来；容器 padding: 4px、段间 gap: 0 ← Menu.module.css .list（padding: 4px / gap: 0）；容器 border-radius: 12px ← Pill.module.css .pill；容器底色 --dsw-alias-bg-module-platform ← Tag.module.css .tag[data-tone=\u0027neutral\u0027] 的 background；段高 36px（md） ← Button.module.css .md",
-                           "tags":  [
-                                        "控件",
-                                        "零依赖",
-                                        "分段",
-                                        "单选",
-                                        "方向键",
-                                        "segmentedcontrol"
-                                    ]
-                       },
-                       {
-                           "id":  "stepper",
-                           "name":  "Stepper",
-                           "category":  "controls",
-                           "path":  "components/controls/Stepper/",
-                           "summary":  "一个受控组件：value 由宿主持有，onChange 收到的一定是收敛后的合法值。；不做的事：不做拖动改值、不做长按连加、不做滑杆、不做滚轮改值",
-                           "whenToUse":  "数量、份数、字号、重试次数这类「有下界上界、以固定步长变化」的数值。；需要精确到某一格（例如端口号、页码），键盘上下键比滑杆更可控时。；表单里已经有 min / max 语义，希望越界在交互层就被拦住时",
-                           "whenNotToUse":  "值域很大或没有边界（音量、进度、任意金额）：用 Slider 或直接 Input，逐格点太慢。；连续型输入、需要一次性输入长数字：用普通 Input，步进器每点一次只走一格。；候选项是有限的固定集合：用 SegmentedControl 或 Select，不要让用户按加减去凑。；布尔开关：用 Switch。；不要把它当成「只能点不能打字」的展示件：role=\"spinbutton\" 隐含「键盘可改值」的承诺",
-                           "geometrySource":  "外壳与状态色全部来自官方 CSS（本仓库没有这两个组件的官方对应物，所有几何都是「官方锚点 + 建议值」拼装）；height: 32px、padding: 0 8px、gap: 6px ← Input.module.css .wrap；border: 0.5px solid var(--dsw-alias-border-l4)、border-radius: 8px ← Input.module.css .wrap；background: var(--dsw-alias-bg-layer-1) ← Input.module.css .wrap",
-                           "tags":  [
-                                        "控件",
-                                        "零依赖",
-                                        "数字",
-                                        "步进",
-                                        "键盘",
-                                        "stepper"
-                                    ]
-                       },
-                       {
-                           "id":  "switch",
-                           "name":  "Switch",
-                           "category":  "controls",
-                           "path":  "components/controls/Switch/",
-                           "summary":  "一个带 role=\"switch\" 的 \u003cbutton type=\"button\"\u003e，里面是一枚 16×16 的圆形滑块。；外观挂在 aria-checked 而不是另一个并行 class 上：视觉状态和辅助技术读到的状态；来自同一个属性，不可能互相说谎。选中时轨道换成 brand-primary、滑块；translateX(16px)，过渡 120ms",
-                           "whenToUse":  "立刻生效的二态设置：自动保存、深色模式、实验特性。；设置项的效果不需要「保存」按钮确认的场景",
-                           "whenNotToUse":  "需要按「保存 / 提交」才生效的表单：用复选框。开关的语义是「马上生效」，；放在表单里会误导用户以为已经生效了。；两个互斥选项里选一个（列表 / 网格）：用 Pill 或分段控件，那是选择不是开关。；触发动词（删除、重试）：用 Button。；展示状态而不可改：用 Tag 或只读文本，别给一个永远 disabled 的开关。；一个开关控制一整组设置：说明层级没理清，拆开或用别的控件",
-                           "geometrySource":  "全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/Switch.module.css；width: 36px、height: 20px、padding: 2px、border: 0、border-radius: 10px、corner-shape: round ← .switch；background: var(--dsw-alias-border-l3)、cursor: pointer、flex: 0 0 auto ← .switch；background: var(--dsw-alias-brand-primary) ← .switch[aria-checked=\u0027true\u0027]",
-                           "tags":  [
-                                        "控件",
-                                        "零依赖",
-                                        "开关",
-                                        "受控",
-                                        "aria-checked",
-                                        "switch"
-                                    ]
-                       },
-                       {
-                           "id":  "tag",
-                           "name":  "Tag",
-                           "category":  "controls",
-                           "path":  "components/controls/Tag/",
-                           "summary":  "一个 \u003cspan\u003e，几何固定、配色由 tone 决定。配色全部通过 data-tone 属性选择器；切换（与官方一致），所以调用方仍然可以叠自己的 class 去调整摆放而不影响 palette。；零依赖，只用到 react 和 CSS Modules",
-                           "whenToUse":  "给列表项、卡片、表格行加一小段元信息：版本号、许可证、体积、环境。；标注状态：「已启用」「待处理」「构建失败」。；在一组标签里用 solid 指出当前选中的那一个",
-                           "whenNotToUse":  "需要点击：用 Pill。Tag 是只读的 \u003cspan\u003e，没有 hover 也没有焦点态。；表达开关状态：用 Switch。；放长句子或说明文字：Tag 是 white-space: nowrap 的单行胶囊，长文案会撑开布局。；文案应由调用方截断。；当按钮用（「删除」这类动作）：用 Button。给它加 onClick 会造出一个；没有键盘可达性的假按钮。；同一行堆超过 3~4 个：考虑改用纯文本或 quiet，颜色太多会淹掉真正的状态信号",
-                           "geometrySource":  "全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/Tag.module.css；border-radius: 999px、corner-shape: round、padding: 1px 8px、font-size: 11px、line-height: 17px、font-weight: 500、white-space: nowrap ← .tag；border: 0.5px solid var(--dsw-alias-border-l4)、color: var(--dsw-alias-label-tertiary) ← .tag[data-tone=\u0027outline\u0027]",
-                           "tags":  [
-                                        "控件",
-                                        "零依赖",
-                                        "标签",
-                                        "状态",
-                                        "只读",
-                                        "tag"
-                                    ]
-                       },
-                       {
-                           "id":  "card",
-                           "name":  "Card",
-                           "category":  "surfaces",
-                           "path":  "components/surfaces/Card/",
-                           "summary":  "零依赖的 \u003csection\u003e 包装，只 import react 与 CSS Modules。四个插槽全部可选：；四个插槽都不传时卡片只剩一个空的描边盒子——没有内容就不要渲染卡片",
-                           "whenToUse":  "把一组相关信息收进一个视觉整体：统计摘要、设置分组、插件详情、空状态说明。；页面上并排几块内容、需要一眼看出边界。；需要「标题 + 说明 + 正文 + 底部操作」这种固定结构，又不想每次重写间距",
-                           "whenNotToUse":  "浮在页面之上的层：用 Modal / Drawer / 菜单，它们用 elevation 表达「浮起来」，卡片用的是贴地的 hairline。；列表项：一排卡片会把列表读成「一堆并列的盒子」而不是「一条序列」，长列表应该用行 + hairline 分隔。；整块可点击：卡片没有交互语义。要点整块跳转，请把内容放进 \u003ca\u003e / \u003cbutton\u003e，或把操作放进 footer",
-                           "geometrySource":  "标题 18px/26px/600 ← 官方设置页表头实测（锚点 h2.<hash>_title / p.<hash>_intro，记录见 dsh-ui-harmonizer 的 docs/settings-section-style.md，非本仓库发明）；其余为本仓库建议值；border-radius: 12px ← HoverCard.module.css .card；ReadBlock.module.css .block 的 --dsl-read-radius: 12px；border: 0.5px solid var(--dsw-alias-border-l1) ← markdown/MarkdownText.module.css .markdown :not(pre) \u003e code",
-                           "tags":  [
-                                        "容器",
-                                        "零依赖",
-                                        "卡片",
-                                        "插槽",
-                                        "card"
-                                    ]
-                       },
-                       {
-                           "id":  "drawer",
-                           "name":  "Drawer",
-                           "category":  "surfaces",
-                           "path":  "components/surfaces/Drawer/",
-                           "summary":  "零依赖的侧边抽屉，只 import react、react-dom（createPortal）与 CSS Modules。；官方没有对应组件，所以面板几何复用官方 Modal 对话框的内层结构（header / title /；close / description / body / footer）与官方遮罩 .mask，只把「居中浮层」换成；「贴边满高」",
-                           "whenToUse":  "需要「不离开当前页面」的附属内容：文件树、会话列表、插件详情、检查器。；内容比对话框长、需要滚动，但又不想让用户切走。；右侧工具面板（side=\"right\"，默认）与左侧导航栏（side=\"left\"）",
-                           "whenNotToUse":  "短决策（确认、输入一个名字）：用 Modal，它居中、宽度受控、注意力更集中。；常驻导航：抽屉会遮住内容，常驻侧栏应该直接占位（不压遮罩、不锁交互）。；需要用户填一整套表单：抽屉宽度有限，长表单用独立页面。；一次开多个抽屉：会互相盖住遮罩，改成抽屉内换内容。；只是提示：用 Toast",
-                           "geometrySource":  "官方没有抽屉组件，所以面板的每一段几何都从已核实的官方选择器借用；遮罩 position: absolute、inset: 0、background: var(--dsw-alias-bg-mask-1)、backdrop-filter: var(--dsw-mask-blur) ← Modal.module.css .mask；面板底色 var(--dsw-alias-bg-layer-2) ← Modal.module.css .dialog；面板阴影 var(--dsw-elevation-prominent) ← Modal.module.css .dialog；Menu.module.css .list",
-                           "tags":  [
-                                        "容器",
-                                        "零依赖",
-                                        "抽屉",
-                                        "侧边面板",
-                                        "焦点陷阱",
-                                        "drawer"
-                                    ]
-                       },
-                       {
-                           "id":  "modal",
-                           "name":  "Modal",
-                           "category":  "surfaces",
-                           "path":  "components/surfaces/Modal/",
-                           "summary":  "零依赖的对话框，只 import react、react-dom（createPortal）与 CSS Modules。；几何逐条对齐官方 Modal，另加一个官方没有的焦点陷阱。；引用了这个组件就不要再自己写遮罩层：遮罩的点击关闭、Escape、焦点归还都由组件负责",
-                           "whenToUse":  "需要用户先回答再做下一步：确认创建、输入名称、选择保存位置。；一个动作有不可逆后果、需要显式确认时（配合 RiskConfirmation 那一类内容）。；错误 / 失败需要用户当场决定怎么办（重试 / 取消）",
-                           "whenNotToUse":  "只是告知：用 Toast，通知不该拦住用户手上的事。；内容很多、需要滚动阅读：用 Drawer 或独立页面，对话框适合短决策。；嵌套对话框：不要在一个 Modal 上再开一个 Modal，改成在对话框内切换内容。；二选一且不需解释：用行内的确认按钮组，不必抬一层遮罩。；频繁触发的流程：每次都弹会打断节奏，考虑内联表单",
-                           "geometrySource":  "全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/Modal.module.css 与同目录 index.js 里的 Modal 实现；position: fixed、inset: 0、z-index: 1000、padding: 24px、居中 flex ← Modal.module.css .root；background: var(--dsw-alias-bg-mask-1)、backdrop-filter: var(--dsw-mask-blur) ← .mask",
-                           "tags":  [
-                                        "容器",
-                                        "零依赖",
-                                        "对话框",
-                                        "portal",
-                                        "焦点陷阱",
-                                        "modal"
-                                    ]
-                       },
-                       {
-                           "id":  "sectionheader",
-                           "name":  "SectionHeader",
-                           "category":  "surfaces",
-                           "path":  "components/surfaces/SectionHeader/",
-                           "summary":  "零依赖的 \u003cdiv\u003e 包装，只 import react 与 CSS Modules。三件事：；组件不带任何外边距（margin 交给使用方），只负责自己的高度与那条 hairline；区块之间的纵向间距请在使用方用统一的间距档控制",
-                           "whenToUse":  "设置页 / 首选项面板里，把一组相关选项和一个标题对齐。；长表单需要分段，每段要一句说明「这一组是干什么的」。；内容区需要跟导航或页面标题拉开层次，靠 hairline 而不是靠加粗",
-                           "whenNotToUse":  "对话框标题：那是 Modal 的 .title 几何（16/24/500），层级和间距都不同，别混用。；卡片内部的标题：用 Card 的 title 插槽（16/24/500），区块表头的 18px 在卡片里会顶破层级。；需要可展开 / 可折叠的组：那是一个折叠控件（DisclosureRow 一类），标题要能点击、要带展开状态",
-                           "geometrySource":  "本仓库建议值（非官方数值）；副标题 font: var(--dsw-font-xs-13)（13px / 20px） ← ReadBlock.module.css .count、.copyButton（官方对这条合成 token 的实际用法）；token 本体定义在官方主题，demo 脚手架的 :root 里逐字内联；副标题色 var(--dsw-alias-label-tertiary) ← Menu.module.css .label；ReadBlock.module.css .count / .lang（官方把补充说明设为该 token）",
-                           "tags":  [
-                                        "容器",
-                                        "零依赖",
-                                        "表头",
-                                        "设置页",
-                                        "hairline",
-                                        "sectionheader"
-                                    ]
-                       },
-                       {
-                           "id":  "empty-state",
-                           "name":  "EmptyState",
-                           "category":  "feedback",
-                           "path":  "components/feedback/EmptyState/",
-                           "summary":  "一个垂直居中的块：图标? + 标题 + 说明? + 动作?。全部居中，宽度收紧到 280px 以内。；零依赖，只用到 react 和 CSS Modules",
-                           "whenToUse":  "列表 / 面板第一次打开时什么都没有（首次使用）。；筛选、搜索之后没有匹配结果——这类文案要说明「是筛选条件导致的」，并给一个「清除筛选」的动作。；出错了但页面结构还在，用空状态 + 一个重试按钮承载。；功能被权限 / 配额挡住：说明原因和恢复方式",
-                           "whenNotToUse":  "数据还在加载：用骨架屏或 LoadingDots。把「还没加载」画成「空」会误导用户以为数据没了。；已经有内容、只是某一区块为空：先考虑这一块是否该整个隐藏，空状态会占掉宝贵的垂直空间。；需要用户做两件以上互斥的事（上传 / 导入 / 新建）：那是引导页而不是空状态，动作插槽里塞三个按钮会失去焦点。；一句话就能说清的错误，直接放在原位置（例如 InlineNotice），不要铺一整屏",
-                           "geometrySource":  "官方没有 EmptyState 组件，@deepseek-ai/dsh-client-ui-primitives/lib/ 下没有任何同名文件。；标题 14px / 22px、font-weight: 500 ← 沿用官方合成 token 的层级：--dsw-font-s-14 即 14px/22px（官方 Button 的 .button 也是 14/22）。字重 500 取自官方 Modal.module.css 的 .title。；说明 font: var(--dsw-font-xs-13) ← 官方合成 token 13px/20px，本组件直接整条使用（含字体族）。；gap: 12px ← 建议值。4 的倍数",
-                           "tags":  [
-                                        "反馈",
-                                        "零依赖",
-                                        "空状态",
-                                        "占位",
-                                        "插槽",
-                                        "empty-state"
-                                    ]
-                       },
-                       {
-                           "id":  "inline-notice",
-                           "name":  "InlineNotice",
-                           "category":  "feedback",
-                           "path":  "components/feedback/InlineNotice/",
-                           "summary":  "一个横向的提示条：图标? + 文案 + 关闭按钮?。；单行形态高 32px、圆角 8px、12/18 字号、字重 500，视觉上就是官方 ConnectionIndicator 那条断线提示的通用化版本。；零依赖，只用到 react 和 CSS Modules",
-                           "whenToUse":  "页面里需要一段持续存在、用户可能慢慢读的状态说明：网络不稳定、配额快用完、保存到了哪里。；表单提交失败的整体原因（放在表单上方或下方）。；设置项的副作用提醒：「关闭后本地草稿会被清除」",
-                           "whenNotToUse":  "一次性的成功反馈、说完就消失：用 Toast，它不占文档流。；有多个操作要选（重试 / 忽略 / 查看详情）：提示条只有文字和一个关闭，选不动；用带按钮的区域或对话框。；字段级的校验错误：直接贴在字段下方用一句红色的 \u003cspan\u003e 和一个 aria-invalid，不要为每一行输入都套一个提示条。；全局的、需要用户立刻响应的错误：用对话框，InlineNotice 不会抢焦点。；一屏放三条以上：提示条一多就变成噪音，考虑合并成一条或收进设置页",
-                           "geometrySource":  "单行几何读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/ConnectionIndicator.module.css；height: 32px、padding: 0 10px、border-radius: 8px ← .indicator；box-sizing: border-box、border: none ← .indicator；font-size: 12px、font-weight: 500、line-height: 18px、white-space: nowrap ← .indicator",
-                           "tags":  [
-                                        "反馈",
-                                        "零依赖",
-                                        "提示条",
-                                        "状态",
-                                        "内联",
-                                        "inline-notice"
-                                    ]
-                       },
-                       {
-                           "id":  "loading-dots",
-                           "name":  "LoadingDots",
-                           "category":  "feedback",
-                           "path":  "components/feedback/LoadingDots/",
-                           "summary":  "inline-flex 的一行三个圆点，颜色继承父级 color，尺寸和间距由 props 控制。；三个点包在 aria-hidden=\"true\" 的视觉层里，只把一段视觉隐藏的文本交给屏幕阅读器朗读。；零依赖，只用到 react 和 CSS Modules",
-                           "whenToUse":  "一次请求 / 一次生成正在进行，但位置已知：紧跟在「正在生成回复」这类文案后面。；按钮内部短时等待（配 aria-busy 或改用按钮自己的 loading 态）。；工具条、状态行这种一行高的紧凑位置",
-                           "whenNotToUse":  "页面首次加载、大块区域还空着：用骨架屏（--dsw-alias-bg-skeleton 就是给它的），三点太小、不足以占位。；耗时可能超过几秒且进度可估：用进度条，三点不会告诉用户「还要多久」。；需要用户等待时不能做别的：这是阻塞式加载，应当给对话框或遮罩，而不是角落里转三个点。；只是装饰性的「活跃」标记：用 StateDot，它表达的是状态而不是加载",
-                           "geometrySource":  "官方没有 LoadingDots 组件，但 ConnectionIndicator.module.css 里有一套现成的三点时序，；「三点依次出现」这件事本身、动画周期 1.5s、infinite ← 官方 ConnectionIndicator.module.css 的 .secondDot / .thirdDot（animation: reveal-second-dot 1.5s step-end infinite）",
-                           "tags":  [
-                                        "反馈",
-                                        "零依赖",
-                                        "加载",
-                                        "动画",
-                                        "三点",
-                                        "loading-dots"
-                                    ]
-                       },
-                       {
-                           "id":  "toast",
-                           "name":  "Toast",
-                           "category":  "feedback",
-                           "path":  "components/feedback/Toast/",
-                           "summary":  "一个传送到 document.body 的 position: fixed 提示条：可选前置图标 + 一段文案。；没有按钮、没有关闭箭头——它靠时间自己消失。零依赖，只用到 react、react-dom（仅 createPortal）和 CSS Modules。；组件把两件事拆开：",
-                           "whenToUse":  "动作已经完成，用户不需要做任何事：已保存、已复制 3 项、已重新连接。；需要「稍纵即逝」的确认感，又不想在页面里永久占一块位置",
-                           "whenNotToUse":  "需要用户读很久或需要操作（重试 / 查看详情）：用 InlineNotice，它是留在文档流里的。；页面内的表单校验、字段级错误：用 InlineNotice 贴着字段放。；阻塞式确认（删除前问一句）：用对话框（Modal / RiskConfirmation），Toast 不拦截点击也无法承载按钮。；同一时刻多个提示叠罗汉：Toast 固定在同一个位置，会互相盖住。用 key 重挂载来「后一条顶掉前一条」，或者改用队列式的行内提示",
-                           "geometrySource":  "读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/Toast.module.css；position: fixed、top: 40px、left: 50%、z-index: 1100 ← .toast；pointer-events: none ← .toast；display: flex、align-items: center、gap: 10px ← .toast；width: max-content、max-width: min(640px, calc(100vw - 48px)) ← .toast",
-                           "tags":  [
-                                        "反馈",
-                                        "零依赖",
-                                        "提示",
-                                        "自动消失",
-                                        "portal",
-                                        "toast"
-                                    ]
-                       },
-                       {
-                           "id":  "disclosure-row",
-                           "name":  "DisclosureRow",
-                           "category":  "data-display",
-                           "path":  "components/data-display/DisclosureRow/",
-                           "summary":  "一个 24px 高的行：[16×16 leading 图标] 6px 间距 [标题] [可选的折叠态次要信息]。；受控组件：open 决定展开与否，onToggle 是唯一的切换入口。；两种命中形态：；默认（expandOnRowClick={false}）：只有左侧 16×16 的图标按钮可切换。；expandOnRowClick：整行变成 role=\"button\"，点行内任意位置都能切换",
-                           "whenToUse":  "折叠／展开一段次级内容：设置项的高级选项、文件改动的逐文件明细、工具调用的原始参数。；需要在 24px 的同一行里同时表达「有内容可看」与「当前是展开还是收起」。；一屏里有很多条同类信息，默认全部收起、让用户按需展开时",
-                           "whenNotToUse":  "内容属于主流程必经步骤：默认折叠会让用户找不到（spec/70-checklist.md 的 A02）。；展开的内容是主内容而不是次级信息：直接用标题 + 正文，不要藏在折叠行后面。；纯导航跳转：用链接，aria-expanded 表达的是「展开」不是「跳转」。；需要在一组互斥内容间切换：那是 Tab / Pill；DisclosureRow 的多个实例可以同时展开",
-                           "geometrySource":  "数值全部读自官方；display: flex、flex-direction: column、width: 100%、min-width: 0 ← DisclosureRow.module.css → .root；position: relative、overflow: hidden、display: flex、align-items: center、min-width: 0 ← DisclosureRow.module.css → .row",
-                           "tags":  [
-                                        "数据展示",
-                                        "零依赖",
-                                        "折叠",
-                                        "展开",
-                                        "aria-expanded",
-                                        "disclosure-row"
-                                    ]
-                       },
-                       {
-                           "id":  "key-value-list",
-                           "name":  "KeyValueList",
-                           "category":  "data-display",
-                           "path":  "components/data-display/KeyValueList/",
-                           "summary":  "一个 \u003cdl\u003e：每对键值是 \u003cdt\u003e / \u003cdd\u003e，用 \u003cdiv\u003e 包成一行（HTML 规范允许用 \u003cdiv\u003e 分组 dl 里的 dt/dd）。；零依赖，只用到 react 和 CSS Modules。官方 dsh-client-ui-primitives 没有对应组件，；几何按官方若干选择器拼装（见「几何来源」）",
-                           "whenToUse":  "展示对象的只读明细：模型参数、请求头、配置摘要、文件元信息、环境变量。；键是固定短词、值可能较长（URL、路径、模型名）——值列会换行而不是撑破容器。；需要纵向比对一列数值时用 valueAlign=\"end\"，小数点位置能对上",
-                           "whenNotToUse":  "只有一两行、且需要强调数值大小：用 StatRow，它的数值是正文级字号 + 等宽数字，语义也更窄。；需要用户编辑这些键值：\u003cdl\u003e 是只读语义的展示结构，请用表单控件。；值是列表、树、代码块等块级内容：\u003cdd\u003e 里放块级内容是合法的，但视觉上会被行高 14/22 的节奏压扁，建议改用自定义卡片布局。；键与值是同一层级的并列项（没有主从关系）：用表格或 Tag 列表，dl 表达的是「名称—描述」配对",
-                           "geometrySource":  "官方没有 KeyValueList，以下数值逐条读自官方文件；键 font-size: 13px、line-height: 20px ← 官方合成 token --dsw-font-xs-13；官方消费点见 ReadBlock.module.css → .count（font: var(--dsw-font-xs-13)）；键色 var(--dsw-alias-label-tertiary) ← 官方 Menu.module.css → .label（三级文字取色）",
-                           "tags":  [
-                                        "数据展示",
-                                        "零依赖",
-                                        "键值",
-                                        "明细",
-                                        "dl",
-                                        "key-value-list"
-                                    ]
-                       },
-                       {
-                           "id":  "mini-bar",
-                           "name":  "MiniBar",
-                           "category":  "data-display",
-                           "path":  "components/data-display/MiniBar/",
-                           "summary":  "一个 role=\"progressbar\" 的 \u003cdiv\u003e：内部是轨道（.track）和填充（.fill），填充宽度按 value / max 计算；可选在右侧显示取整后的百分比文本。；零依赖，只用到 react 和 CSS Modules。官方 dsh-client-ui-primitives 没有对应组件，；几何按官方若干选择器拼装（见「几何来源」）",
-                           "whenToUse":  "列表行里表达占比：上下文窗口占用、缓存命中、磁盘使用、任务进度。；与 StatRow 搭配：StatRow 给标签和数字，MiniBar 给同一指标的视觉比例。；需要一眼看出「接近满了」的场景：tone=\"warn\" / tone=\"error\"",
-                           "whenNotToUse":  "多组数据横向对比：那是条形图（一组条按同一基线对齐），MiniBar 只有一条轨道。；数值本身已经足够、比例没有意义：只写数字或 StatRow 就好，多余的条形是噪声。；需要用户拖动改变数值：这是只读展示元素，不是滑块。；需要精确读数的仪表：百分比文本会取整，精确值请放在旁边的文本里",
-                           "geometrySource":  "官方没有 MiniBar，以下数值逐条读自官方文件；圆角 border-radius: 999px ← 官方 Tag.module.css → .tag（胶囊几何）；过渡 transition: width 120ms ease ← 官方 Switch.module.css → .thumb（transition: transform 120ms ease，时长与缓动照抄）",
-                           "tags":  [
-                                        "数据展示",
-                                        "零依赖",
-                                        "进度",
-                                        "占比",
-                                        "progressbar",
-                                        "mini-bar"
-                                    ]
-                       },
-                       {
-                           "id":  "state-dot",
-                           "name":  "StateDot",
-                           "category":  "data-display",
-                           "path":  "components/data-display/StateDot/",
-                           "summary":  "done / warning / error / idle：一个 \u003cspan\u003e，外圈是同色 10% 的光环，内圈是 60%；直径的实心核，颜色由 data-state 决定。；ongoing：一个 10×10 viewBox 的 \u003csvg\u003e，外圈 8 个 2×2 方块跑 1s 的像素追逐动画。；两种形态都是 aria-hidden=\"true\" 的纯装饰元素——圆点不携带可读文本",
-                           "whenToUse":  "列表行、时间线、步骤条左侧的状态标记：\u003cStateDot state=\"done\" /\u003e 构建成功。；会话 / 任务 / 工具的运行状态：ongoing 表达「正在进行，还没有结论」。；状态需要在一列里纵向对齐、并且颜色要跟主题走的时候——圆点用 currentColor 派生，；换主题不用改代码",
-                           "whenNotToUse":  "单独用。组件是 aria-hidden 的，页面上只有圆点、没有文字时，屏幕阅读器读不到任何；状态（见「可访问性要点」）。没有文字可配时请用 Tag 或带文本的 ConnectionIndicator。；表达布尔开关或可点击的选中态：那是 Switch / Pill，圆点不可交互、也不接受点击。；表达进度百分比：圆点只有离散状态，没有连续量。；表达「文件类型」：那是 FileTypeIcon",
-                           "geometrySource":  "数值全部读自官方；默认外径 10px（Figma 尺寸） ← lib/index.js → function StateDot({ state, size = 10, ... })；flex: none ← StateDot.module.css → .dot、.matrix；position: relative、display: inline-block ← StateDot.module.css → .dot；光环 inset: 0、border-radius: 50%、background: currentColor、opacity: 0.1 ← StateDot.module.css → .dot::before",
-                           "tags":  [
-                                        "数据展示",
-                                        "零依赖",
-                                        "状态",
-                                        "圆点",
-                                        "动画",
-                                        "state-dot"
-                                    ]
-                       },
-                       {
-                           "id":  "stat-row",
-                           "name":  "StatRow",
-                           "category":  "data-display",
-                           "path":  "components/data-display/StatRow/",
-                           "summary":  "一个 \u003cdiv\u003e 行：左侧标签，右侧数值组（数值 + 可选单位），最右可选变化量。；零依赖，只用到 react 和 CSS Modules。官方 dsh-client-ui-primitives 没有对应组件，；几何是按官方若干选择器拼装的（见「几何来源」）。；数值组用 margin-left: auto 顶到右侧；如果只传 label + value，它就是一行普通的左右对齐文本",
-                           "whenToUse":  "展示成组的只读指标：缓存命中率、延迟、token 用量、磁盘占用、并发数。；需要「当前值 + 相对基准的变化」一起出现时（delta + deltaTone）。；面板里用 \u003cStatRow divider /\u003e 堆叠成一列，行间自带 hairline",
-                           "whenNotToUse":  "一项数据需要突出的大字号展示（仪表盘大数字）：用专门的统计卡，StatRow 的字号是正文级。；数据是「键 → 值」的通用对象（可能是多行、长文本）：用 KeyValueList，它的键列有固定层级、值可换行。；需要用户输入或选择：这是纯展示组件，没有交互、没有焦点。；需要与目标值比较的条形可视化：StatRow 里放 MiniBar 才是那个场景",
-                           "geometrySource":  "官方没有 StatRow，以下数值逐条读自官方文件；标签 font-size: 13px、line-height: 24px ← 官方 DisclosureRow.module.css → .title；标签色 var(--dsw-alias-label-secondary) ← 官方 DisclosureRow.module.css → .title；数值 font-size: 14px、line-height: 22px ← 官方 Button.module.css → .button；数值色 var(--dsw-alias-label-primary) ← 官方 Button.module.css → .button",
-                           "tags":  [
-                                        "数据展示",
-                                        "零依赖",
-                                        "指标",
-                                        "统计",
-                                        "只读",
-                                        "stat-row"
-                                    ]
-                       },
-                       {
-                           "id":  "panelheader",
-                           "name":  "PanelHeader",
-                           "category":  "layout",
-                           "path":  "components/layout/PanelHeader/",
-                           "summary":  "一个不渲染任何交互的 \u003cdiv\u003e 头部容器：；左列 heading：title（14/22，字重 500）+ 可选 description（12/18）；右列 actions：任意节点，通常放若干 Button；底部 hairline：0.5px 的 var(--dsw-alias-border-l1)，可用 divider={false} 关掉",
-                           "whenToUse":  "一个可关闭的面板、抽屉、侧栏、浮层的顶部标题区。；需要在标题右边放「关闭 / 更多 / 折叠」这类动作时。；面板内部按段分隔，需要一条与官方同款的细分割线时",
-                           "whenNotToUse":  "对话框标题：官方 Modal.module.css 已有成套的 .header / .title（16/24/500，padding: 22px 14px 12px 24px），不要用本组件替代。；页面级大标题（\u003ch1\u003e）或导航栏：字号体系不同，这里固定 14/22。；只想放一条分割线：直接用 0.5px solid var(--dsw-alias-border-l1) 的 \u003chr\u003e 或伪元素，不必套标题栏",
-                           "geometrySource":  "数值全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib；font-weight: 500、color: var(--dsw-alias-label-primary) ← Modal.module.css .title（原注释：figma wt510，渲染 500）；标题字号取 14px / 22px ← Button.module.css .button（font-size: 14px; line-height: 22px）——面板标题比对话框标题低一档，故不取 Modal 的 16/24",
-                           "tags":  [
-                                        "布局",
-                                        "零依赖",
-                                        "面板",
-                                        "标题栏",
-                                        "hairline",
-                                        "panelheader"
-                                    ]
-                       },
-                       {
-                           "id":  "settingsrow",
-                           "name":  "SettingsRow",
-                           "category":  "layout",
-                           "path":  "components/layout/SettingsRow/",
-                           "summary":  "根节点是 \u003clabel\u003e 的布局行：；.text 竖排：标题（14/22）+ 可选说明（13/20）；.control：flex: none 的右侧控件区（Switch / Input / Button / \u003cselect\u003e）；.divider：0.5px 的 var(--dsw-alias-border-l2)",
-                           "whenToUse":  "设置面板 / 首选项页面里「一个开关控制一件事」的行。；需要标题 + 一行解释（13/20 灰色小字）的设置项。；一侧是标签、另一侧是输入框或下拉的表单行",
-                           "whenNotToUse":  "侧边栏 / 导航列表的可选中行：用 SidebarRow（它是按钮，有选中语义）。；表单里的多字段堆叠（标签在上、输入在下）：用常规 \u003clabel\u003e + 表单布局，本行是左右分栏。；一行里有多个并列控件时：control 里塞多个控件是允许的，但若彼此语义不相关，请拆成两行。；可点整行跳转的入口：那是 SidebarRow，设置行表达的是「改一个值」不是「去一个地方」",
-                           "geometrySource":  "标题 font-size: 14px; line-height: 22px ← Button.module.css .button（面板/设置项标题沿用这一档字号，与 PanelHeader 一致）；标题色 var(--dsw-alias-label-primary) ← Modal.module.css .title / Button.module.css .button",
-                           "tags":  [
-                                        "布局",
-                                        "零依赖",
-                                        "设置项",
-                                        "表单行",
-                                        "settingsrow"
-                                    ]
-                       },
-                       {
-                           "id":  "sidebarrow",
-                           "name":  "SidebarRow",
-                           "category":  "layout",
-                           "path":  "components/layout/SidebarRow/",
-                           "summary":  "一个 \u003cbutton type=\"button\"\u003e，内部固定三段：前置图标（16×16）/ 标题（可省略号截断）/ 尾部（计数、快捷键、对勾）。；零依赖，只用到 react 和 CSS Modules",
-                           "whenToUse":  "侧边栏的会话 / 文件 / 页面列表项。；任何需要在列表项右侧挂状态（计数、未读点、快捷键）的场景。；需要「当前选中项」的列表：用 selectionStyle=\"check\" 与官方 Menu 保持一致",
-                           "whenNotToUse":  "弹出菜单里的项：用官方 Menu 的 .item，它自带 portal、方向键导航与子菜单。；只是跳转的外部链接：用 \u003ca\u003e，不要用按钮假装链接（那会丢掉「在新标签打开」等浏览器能力）。；一行里要塞多行内容（标题 + 说明 + 标签）：用 SettingsRow，它的结构是给设置项准备的。；纯展示、不可点的行：不要用本组件——一个永远可点但什么都不做的按钮是键盘用户的陷阱",
-                           "geometrySource":  "数值全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/Menu.module.css；min-height: 40px、padding: 8px 10px、border-radius: 10px、gap: 8px、font-size: 14px、line-height: 22px、color: var(--dsw-alias-label-primary)、text-align: left ← .item（原注释：figma .Menu_cell，min-h 40 / r10 / pad 10/8 / 14-22 / gap 8）",
-                           "tags":  [
-                                        "布局",
-                                        "零依赖",
-                                        "侧边栏",
-                                        "导航",
-                                        "选中",
-                                        "sidebarrow"
-                                    ]
-                       },
-                       {
-                           "id":  "toolbarrow",
-                           "name":  "ToolbarRow",
-                           "category":  "layout",
-                           "path":  "components/layout/ToolbarRow/",
-                           "summary":  "一个纯布局的 \u003cdiv\u003e，本身不含任何按钮样式：；flex-wrap: wrap 默认开启，窗口变窄时按钮换行而不是溢出。零依赖，只用到 react 和 CSS Modules",
-                           "whenToUse":  "一排并列的动作按钮（筛选 / 排序 / 格式化 / 刷新）。；需要吸顶的工具条：\u003cToolbarRow sticky divider size=\"sm\"\u003e。；浮在内容上方的悬浮工具条：variant=\"filled\" 配 Button variant=\"toolbar\"",
-                           "whenNotToUse":  "一组互斥选项（今天 / 本周 / 全部）：那是 SegmentedControl 或 Pill 的语义，工具条不表达「选中」。；单一动作：直接放一个 Button，不要为它套一层容器。；需要自动折行到第二行的导航菜单：用 Menu，工具条不做菜单语义。；页面顶部的完整应用栏（含 logo、搜索）：那是导航栏，不是工具条",
-                           "geometrySource":  "数值全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib；min-height: 32px（md） ← ConnectionIndicator.module.css .indicator（height: 32px）；var(--dsw-alias-button-tool-bar-fill)（filled 形态的底色） ← Button.module.css .toolbar；gap: 4px（默认间距） ← Button.module.css .button（gap: 4px）",
-                           "tags":  [
-                                        "布局",
-                                        "零依赖",
-                                        "工具条",
-                                        "按钮组",
-                                        "toolbarrow"
-                                    ]
-                       },
-                       {
-                           "id":  "list-row-group",
-                           "name":  "ListRowGroup",
-                           "category":  "patterns",
-                           "path":  "components/patterns/ListRowGroup/",
-                           "summary":  "导出三个组件：；行几何与官方菜单单元一致（min-height: 40px / padding: 8px 10px / border-radius: 10px），；但它是布局行，不自带菜单语义。；零依赖，只用到 react 和 CSS Modules。不 import 仓库内任何其它组件",
-                           "whenToUse":  "设置页、右栏面板、插件弹层里的一串同类条目：开关项、导航项、文件项、结果项。；需要给这一串条目一个小标题（「启动行为」「已连接的账号」）来分组。；行之间需要 0.5px 的 hairline 分隔（行间距为 0，靠线而不是靠空隙分段）",
-                           "whenNotToUse":  "行自己就是一次「动作」且需要明确的按钮外观：用 Button。ListRow interactive 提供的是；整行可点的列表语义，不是按钮的视觉重量。；是互斥选项：用 Pill 或 Switch。行组不表达「选中状态」，aria-current / aria-checked；要由行内的控件自己声明。；是浮层菜单：官方 Menu 已经提供菜单卡（圆角 20px、box-shadow: var(--dsw-elevation-prominent)、",
-                           "geometrySource":  "官方没有 ListRowGroup 对应物（lib/index.js 的导出里没有行组）。每条几何都取自官方菜单的对应单元；分组标题 padding: 8px 10px、font-size: 12px、line-height: 16px ← Menu.module.css .label；分组标题颜色 --dsw-alias-label-tertiary ← Menu.module.css .label（color）",
-                           "tags":  [
-                                        "骨架",
-                                        "零依赖",
-                                        "列表",
-                                        "分组",
-                                        "分隔线",
-                                        "list-row-group"
-                                    ]
-                       },
-                       {
-                           "id":  "panel-seat",
-                           "name":  "PanelSeat",
-                           "category":  "patterns",
-                           "path":  "components/patterns/PanelSeat/",
-                           "summary":  "一个 \u003cdiv role=\"group\"\u003e，里面是「标题行（标题 + 右对齐操作区）+ 正文」两段。；正文与操作全部由调用方通过 children / actions 插槽传入。；零依赖，只用到 react 和 CSS Modules。不 import 仓库内任何其它组件",
-                           "whenToUse":  "插件要在会话流（conversation.view / conversation.session，或 conversation.input.dock 之类的纵向插入点）里；放一块自带说明的结构化内容：构建结果、引用来源、待确认项、插件的局部状态。；这块内容需要有标题、且标题右边有一两个操作。；内容宽度不定，希望按内容收缩而不是硬撑满整行",
-                           "whenNotToUse":  "不是会话内容：全局设置、对象切换分别属于设置页与左栏（spec/10-frame-layout.md 第 4 节），；不要借会话流的壳把它们塞进来。；只是一个短提示：用 Toast（瞬时）或 Tag（静态标签），不要为一行字套一个带标题的容器。；需要用户必须先处理才能继续：用 Modal 或 RiskConfirmation。PanelSeat 是会话流里的一块内容，；默认不抢焦点、不拦截操作，不适合承载必经流程",
-                           "geometrySource":  "官方没有 PanelSeat 对应物（lib/index.js 的导出里没有这个骨架）。每条几何都是锚定一个已核实数值；容器圆角 12px ← ReadBlock.module.css .block（--dsl-read-radius: 12px）；surface 底色 --dsw-alias-markdown-code-block ← ReadBlock.module.css .block（background）；标题行 gap: 12px ← ReadBlock.module.css .banner（gap: 12px）",
-                           "tags":  [
-                                        "骨架",
-                                        "零依赖",
-                                        "会话区",
-                                        "插件插槽",
-                                        "panel-seat"
-                                    ]
-                       },
-                       {
-                           "id":  "settings-page",
-                           "name":  "SettingsPage",
-                           "category":  "patterns",
-                           "path":  "components/patterns/SettingsPage/",
-                           "summary":  "一个纯布局外壳，导出三个组件：；零依赖，只用到 react 和 CSS Modules。不 import 仓库内任何其它组件",
-                           "whenToUse":  "插件提供一个独立设置页（占用 settings.section 之外的整页空间，或在独立窗口/标签页里渲染）。；设置项多到需要左侧分区导航（≥ 3 个分区）才能扫读。；内容列里需要「标题 + 若干行」的重复结构，直接用 SettingsSection 统一排版",
-                           "whenNotToUse":  "只给宿主设置页加一个分区：那属于 settings.section 座位（single 类型，见 spec/11-slot-seats.md 第 4 节），宿主会给你一个已经排好版的容器，用本组件会把设置页套成两层导航。；只有 1–2 个分区：不需要导航列，直接用一个标题 + 若干 ListRowGroup 即可；左侧空导航是纯浪费。；不是设置：会话语义的内容属于会话区，不要借设置页的壳（spec/10-frame-layout.md 第 4 节的跨区域决策表）",
-                           "geometrySource":  "官方没有 SettingsPage 对应物（lib/index.js 的导出里没有设置页骨架）。因此本组件的每条几何都是；导航行 min-height: 40px、padding: 8px 10px、border-radius: 10px、gap: 8px、font-size: 14px、line-height: 22px ← Menu.module.css .item；导航行 hover 底色 --dsw-alias-interactive-bg-hover ← Menu.module.css .item:hover:not(:disabled)",
-                           "tags":  [
-                                        "骨架",
-                                        "零依赖",
-                                        "设置页",
-                                        "整页骨架",
-                                        "导航",
-                                        "settings-page"
-                                    ]
-                       },
-                       {
-                           "id":  "fishmark",
-                           "name":  "FishMark",
-                           "category":  "brand",
-                           "path":  "components/brand/FishMark/",
-                           "summary":  "单条 \u003cpath\u003e 的装饰性图形，路径就是官方导出的 FISH_LOGO_PATH，原生视框 23.16 × 17.04，默认宽 24px。；零依赖：只 import react 和一份 CSS Modules（fishmark.module.css），运行时不读文件、不 import 任何 @deepseek-ai/* 包",
-                           "whenToUse":  "品牌区、启动页、关于页、加载态里需要「这是 DeepSeek」的图形符号。；位置只够放一个图形：favicon 位、头像位、工具条品牌位。；需要图形跟随文字色变化：外层换 color 就够，不用准备第二份图。；与 Wordmark 搭配时，它负责图形、Wordmark 负责可读的品牌名",
-                           "whenNotToUse":  "需要用户读出品牌名：用 Wordmark 或直接写文字。鱼标本身不含可读文本。；需要「图形 + 文字」的官方组合：那是 Wordmark（includeMark 默认开启）。；只是想要一个装饰性占位块：用骨架屏或图标组件，鱼标的品牌语义太强。；想改多色 / 渐变 / 双色调：path 固定 fill=\"currentColor\"，本组件不提供改色参数，用 CSS color 控制。；当成图标按钮的内容：按钮要自己画图标并给 aria-label，别把品牌标当功能图标",
-                           "geometrySource":  "全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/index.js 的 //#region lib/types/FishLogo.js 区块；viewBox \"0 0 23.16 17.04\" ← lib/index.js · const FISH_LOGO_VIEWBOX = { width: 23.16, height: 17.04 }（其上一行注释：Native viewBox of FISH_LOGO_PATH）；默认宽 24 ← lib/index.js · function FishLogo({ size = 24, className })",
-                           "tags":  [
-                                        "品牌",
-                                        "零依赖",
-                                        "鱼标",
-                                        "SVG",
-                                        "currentColor",
-                                        "fishmark"
-                                    ]
-                       },
-                       {
-                           "id":  "wordmark",
-                           "name":  "Wordmark",
-                           "category":  "brand",
-                           "path":  "components/brand/Wordmark/",
-                           "summary":  "一个 \u003csvg\u003e 里画三段东西（顺序即绘制顺序）：；9 条文字路径（p / d / e / e / s / e / e / l / k），fill=\"currentColor\"；1 条鲸鱼路径，同样 currentColor，外面套一个 clipPath 修边",
-                           "whenToUse":  "首屏、关于页、导出图、文档页眉页脚：需要一次写出完整品牌名。；需要官方的「图形 + 文字」组合：保持 includeMark（默认）。；位置偏窄、只要文字部分：includeMark={false}",
-                           "whenNotToUse":  "位置只够放一个图形：用 FishMark。；需要屏幕阅读器读出品牌名：字标里没有文本节点，默认 aria-hidden，读不出「deepseek」。要可读就用真实文字，或传 title，或「可见文本 + FishMark」。；当页面标题用：用 \u003ch1\u003e 文本 + FishMark，字标没有文本层级，也不参与文档大纲。；小于 16px 高：文字笔画会糊，那个尺寸请只用 FishMark",
-                           "geometrySource":  "全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/index.js 的 //#region lib/types/BrandWordmark.js 区块；viewBox \"0 0 182 24\" / \"26 0 156 24\" ← lib/index.js · BrandWordmark 的 viewBox: includeMark ? \"0 0 182 24\" : \"26 0 156 24\"",
-                           "tags":  [
-                                        "品牌",
-                                        "零依赖",
-                                        "字标",
-                                        "badge",
-                                        "currentColor",
-                                        "wordmark"
-                                    ]
-                       }
-                   ]
+    "$comment": "DSH 设计资源组件清单。id 必须等于该组件目录下 <id>.module.css 的文件名主干（website/gen-site.mjs 用 entry.id.toLowerCase() + \".module.css\" 定位样式文件）；path 相对仓库根、以 / 结尾。几何来源只区分两类：官方 @deepseek-ai/dsh-client-ui-primitives 中实际读到的选择器（\"数值 ← 选择器\"），或 README 中明确标注的「本仓库建议值」。",
+    "components": [
+        {
+            "id": "button",
+            "name": "Button",
+            "category": "controls",
+            "path": "components/controls/Button/",
+            "summary": "一个 <button> 包装：四种视觉家族 + 两种尺寸 + 可选前置图标。；零依赖，只用到 react 和 CSS Modules",
+            "whenToUse": "触发一个动作：提交、保存、删除、打开菜单、重试。；工具条里需要一组视觉权重明确的动作时，用 ghost + toolbar 分层",
+            "whenNotToUse": "只是跳转链接：用 <a>，按钮的语义是「执行」不是「导航」。；切换开关状态：用 Switch。；在若干互斥选项间选择：用 Pill 或 SegmentedControl，按钮不表达「选中」。；静态标签：用 Tag。；一个动作还没准备好时不要把 primary 换成 ghost 来「禁用」——直接 disabled，否则用户无法分辨「不能用」和「不是主操作」",
+            "geometrySource": "全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/Button.module.css；height: 36px ← .md；padding: 0 14px、gap: 4px、border-radius: 18px、font-size: 14px、line-height: 22px ← .button；height: 28px、font-size: 12px、line-height: 18px、padding: 0 10px、border-radius: 14px ← .sm；图标容器 16×16 ← .icon",
+            "tags": [
+                "控件",
+                "零依赖",
+                "按钮",
+                "主操作",
+                "变体",
+                "button"
+            ]
+        },
+        {
+            "id": "input",
+            "name": "Input",
+            "category": "controls",
+            "path": "components/controls/Input/",
+            "summary": "一个 <span> 外壳包着原生 <input>：；ref 直接透传到内部 <input>（不是外壳），所以 ref.current.focus()、；读 selectionStart 都能用。；除 className（挂在外壳上）之外的全部 input 属性原样透传：；value / onChange / placeholder / type / disabled / readOnly /",
+            "whenToUse": "单行文本录入：搜索框、会话标题、路径、URL。；需要 32px 紧凑高度、和 Button 的 sm / Pill 同处一行的表单",
+            "whenNotToUse": "多行文本：用 <textarea>。Input 固定 32px 高，塞多行会溢出。；需要在若干固定选项里选一个：用 Pill / 下拉菜单，不要让用户手打。；纯展示的只读值：用文本或 Tag。禁用输入框会带来「这里本来能改」的错觉。；带校验错误的表单行：本组件不含错误态。错误信息应由外层容器渲染在输入框下方，；并给 input 挂 aria-invalid + aria-describedby（属性可以透传进来）。；数字调节：产品里没有步进器这种东西，也不要用两个小按钮夹一个输入框拼一个出来",
+            "geometrySource": "全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/Input.module.css；height: 32px、padding: 0 8px、gap: 6px、border-radius: 8px ← .wrap；border: 0.5px solid var(--dsw-alias-border-l4)、background: var(--dsw-alias-bg-layer-1)、display: inline-flex、align-items: center ← .wrap",
+            "tags": [
+                "控件",
+                "零依赖",
+                "输入框",
+                "表单",
+                "forwardRef",
+                "input"
+            ]
+        },
+        {
+            "id": "pill",
+            "name": "Pill",
+            "category": "controls",
+            "path": "components/controls/Pill/",
+            "summary": "一个按 onClick 分岔的双形态组件：；active 是受控值 —— 组件只把选中态画出来，状态本身归调用方。选中态的画法是；文字升到 label-primary、底色换成 button-ghost-active-fill，再叠一圈；inset 0 0 0 1px 的内描边。；onClick 在类型层面被设成 undefined，所以静态胶囊不可能被误加点击行为",
+            "whenToUse": "一组互斥筛选条件里选一个：「今天 / 最近 7 天 / 最近 30 天」。；展示一个可点的短状态，点了之后直接切到那个状态（标签页式的轻量导航）。；需要一枚 24px 高、比 Button 更小更静的胶囊时",
+            "whenNotToUse": "触发一个命令（保存 / 删除 / 重试）：用 Button。Pill 表达的是「选中了哪一个」，；不是「执行一件事」。；只读的状态标注：用 Tag。Pill 有选中态语义，Tag 没有。；开关：用 Switch；active 是可点出来的选中态，不是开关的 on/off。；多个可以同时选中：Pill 的 active 是单个布尔值，多选场景它表达不了。；纯展示且不带 active 的静态胶囊：这其实是 Tag 的 neutral tone，；用 Pill 会让人以为能点",
+            "geometrySource": "全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/Pill.module.css；height: 24px、padding: 0 8px、gap: 4px、border-radius: 12px、font-size: 12px、line-height: 18px ← .pill；border: none、color: var(--dsw-alias-label-secondary)、background: var(--dsw-alias-bg-layer-2) ← .pill；cursor: pointer ← .interactive",
+            "tags": [
+                "控件",
+                "零依赖",
+                "胶囊",
+                "选中态",
+                "筛选",
+                "pill"
+            ]
+        },
+        {
+            "id": "segmentedcontrol",
+            "name": "SegmentedControl",
+            "category": "controls",
+            "path": "components/controls/SegmentedControl/",
+            "summary": "一个受控组件：value 由宿主持有，onChange 只在选中项真的变了时才触发。；键盘：Tab 进组一次，← →（以及 ↑ ↓ Home End）在段间移动，焦点与选中一起走，Space / Enter 选中当前段。；为什么用 radiogroup / radio 而不是 tablist / tab：两种语义都要求「一组互斥项、方向键移动、只有一个 Tab 落点」，本组件都满足。区别在结果：",
+            "whenToUse": "2–5 个互斥选项，且需要一眼看全所有选项（视图切换、时间区间、对齐方式、单位）。；选项少到不值得开一个下拉菜单，且切换后立即生效（无提交语义）。；需要在同一行里表达「当前选中项」，但 Pill 的单行 24px 装不下时",
+            "whenNotToUse": "选项超过 5 个，或文案长度不可控：横向空间会失控，用 Select / Menu。；选项不是互斥的（可以同时选多个）：用 Checkbox 组。；每一项会切换出一块面板内容、并且需要读屏播报「选项卡 N/M」：用 tablist / tab 自己实现，本组件不承担面板语义。；触发一个动作（保存、删除）：用 Button，分段不表达「执行」。；只是标记状态、不可点击：用 Tag。；布尔开关：用 Switch（两段的分段控件做开关是过度设计）",
+            "geometrySource": "官方没有此控件。下列数值全部读自官方 CSS，本仓库只负责把它们组合起来；容器 padding: 4px、段间 gap: 0 ← Menu.module.css .list（padding: 4px / gap: 0）；容器 border-radius: 12px ← Pill.module.css .pill；容器底色 --dsw-alias-bg-module-platform ← Tag.module.css .tag[data-tone='neutral'] 的 background；段高 36px（md） ← Button.module.css .md",
+            "tags": [
+                "控件",
+                "零依赖",
+                "分段",
+                "单选",
+                "方向键",
+                "segmentedcontrol"
+            ]
+        },
+        {
+            "id": "switch",
+            "name": "Switch",
+            "category": "controls",
+            "path": "components/controls/Switch/",
+            "summary": "一个带 role=\"switch\" 的 <button type=\"button\">，里面是一枚 16×16 的圆形滑块。；外观挂在 aria-checked 而不是另一个并行 class 上：视觉状态和辅助技术读到的状态；来自同一个属性，不可能互相说谎。选中时轨道换成 brand-primary、滑块；translateX(16px)，过渡 120ms",
+            "whenToUse": "立刻生效的二态设置：自动保存、深色模式、实验特性。；设置项的效果不需要「保存」按钮确认的场景",
+            "whenNotToUse": "需要按「保存 / 提交」才生效的表单：用复选框。开关的语义是「马上生效」，；放在表单里会误导用户以为已经生效了。；两个互斥选项里选一个（列表 / 网格）：用 Pill 或分段控件，那是选择不是开关。；触发动词（删除、重试）：用 Button。；展示状态而不可改：用 Tag 或只读文本，别给一个永远 disabled 的开关。；一个开关控制一整组设置：说明层级没理清，拆开或用别的控件",
+            "geometrySource": "全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/Switch.module.css；width: 36px、height: 20px、padding: 2px、border: 0、border-radius: 10px、corner-shape: round ← .switch；background: var(--dsw-alias-border-l3)、cursor: pointer、flex: 0 0 auto ← .switch；background: var(--dsw-alias-brand-primary) ← .switch[aria-checked='true']",
+            "tags": [
+                "控件",
+                "零依赖",
+                "开关",
+                "受控",
+                "aria-checked",
+                "switch"
+            ]
+        },
+        {
+            "id": "tag",
+            "name": "Tag",
+            "category": "controls",
+            "path": "components/controls/Tag/",
+            "summary": "一个 <span>，几何固定、配色由 tone 决定。配色全部通过 data-tone 属性选择器；切换（与官方一致），所以调用方仍然可以叠自己的 class 去调整摆放而不影响 palette。；零依赖，只用到 react 和 CSS Modules",
+            "whenToUse": "给列表项、卡片、表格行加一小段元信息：版本号、许可证、体积、环境。；标注状态：「已启用」「待处理」「构建失败」。；在一组标签里用 solid 指出当前选中的那一个",
+            "whenNotToUse": "需要点击：用 Pill。Tag 是只读的 <span>，没有 hover 也没有焦点态。；表达开关状态：用 Switch。；放长句子或说明文字：Tag 是 white-space: nowrap 的单行胶囊，长文案会撑开布局。；文案应由调用方截断。；当按钮用（「删除」这类动作）：用 Button。给它加 onClick 会造出一个；没有键盘可达性的假按钮。；同一行堆超过 3~4 个：考虑改用纯文本或 quiet，颜色太多会淹掉真正的状态信号",
+            "geometrySource": "全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/Tag.module.css；border-radius: 999px、corner-shape: round、padding: 1px 8px、font-size: 11px、line-height: 17px、font-weight: 500、white-space: nowrap ← .tag；border: 0.5px solid var(--dsw-alias-border-l4)、color: var(--dsw-alias-label-tertiary) ← .tag[data-tone='outline']",
+            "tags": [
+                "控件",
+                "零依赖",
+                "标签",
+                "状态",
+                "只读",
+                "tag"
+            ]
+        },
+        {
+            "id": "card",
+            "name": "Card",
+            "category": "surfaces",
+            "path": "components/surfaces/Card/",
+            "summary": "零依赖的 <section> 包装，只 import react 与 CSS Modules。四个插槽全部可选：；四个插槽都不传时卡片只剩一个空的描边盒子——没有内容就不要渲染卡片",
+            "whenToUse": "把一组相关信息收进一个视觉整体：统计摘要、设置分组、插件详情、空状态说明。；页面上并排几块内容、需要一眼看出边界。；需要「标题 + 说明 + 正文 + 底部操作」这种固定结构，又不想每次重写间距",
+            "whenNotToUse": "浮在页面之上的层：用 Modal 或菜单，它们用 elevation 表达「浮起来」，卡片用的是贴地的 hairline。；列表项：一排卡片会把列表读成「一堆并列的盒子」而不是「一条序列」，长列表应该用行 + hairline 分隔。；整块可点击：卡片没有交互语义。要点整块跳转，请把内容放进 <a> / <button>，或把操作放进 footer",
+            "geometrySource": "标题 18px/26px/600 ← 官方设置页表头实测（锚点 h2.<hash>_title / p.<hash>_intro，记录见 dsh-ui-harmonizer 的 docs/settings-section-style.md，非本仓库发明）；表面三样读自官方设置页卡片 .card：border-radius: var(--dsw-radius-xl)（20px）、border: .5px solid var(--dsw-alias-settings-card-stroke)、background: var(--dsw-alias-settings-card-fill)；圆角只有六档 4/8/12/16/20/28（--dsw-radius-xs…panel），高程 token 的字面值见 SPEC 的 surface 一节；其余间距为本仓库建议值",
+            "tags": [
+                "容器",
+                "零依赖",
+                "卡片",
+                "插槽",
+                "card"
+            ]
+        },
+        {
+            "id": "modal",
+            "name": "Modal",
+            "category": "surfaces",
+            "path": "components/surfaces/Modal/",
+            "summary": "零依赖的对话框，只 import react、react-dom（createPortal）与 CSS Modules。；几何逐条对齐官方 Modal，另加一个官方没有的焦点陷阱。；引用了这个组件就不要再自己写遮罩层：遮罩的点击关闭、Escape、焦点归还都由组件负责",
+            "whenToUse": "需要用户先回答再做下一步：确认创建、输入名称、选择保存位置。；一个动作有不可逆后果、需要显式确认时（配合 RiskConfirmation 那一类内容）。；错误 / 失败需要用户当场决定怎么办（重试 / 取消）",
+            "whenNotToUse": "只是告知：用 Toast，通知不该拦住用户手上的事。；内容很多、需要滚动阅读：用独立页面或整块面板，对话框适合短决策。；嵌套对话框：不要在一个 Modal 上再开一个 Modal，改成在对话框内切换内容。；二选一且不需解释：用行内的确认按钮组，不必抬一层遮罩。；频繁触发的流程：每次都弹会打断节奏，考虑内联表单",
+            "geometrySource": "全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/Modal.module.css 与同目录 index.js 里的 Modal 实现；position: fixed、inset: 0、z-index: 1000、padding: 24px、居中 flex ← Modal.module.css .root；background: var(--dsw-alias-bg-mask-1)、backdrop-filter: var(--dsw-mask-blur) ← .mask",
+            "tags": [
+                "容器",
+                "零依赖",
+                "对话框",
+                "portal",
+                "焦点陷阱",
+                "modal"
+            ]
+        },
+        {
+            "id": "empty-state",
+            "name": "EmptyState",
+            "category": "feedback",
+            "path": "components/feedback/EmptyState/",
+            "summary": "一个垂直居中的块：图标? + 标题 + 说明? + 动作?。全部居中，宽度收紧到 280px 以内。；零依赖，只用到 react 和 CSS Modules",
+            "whenToUse": "列表 / 面板第一次打开时什么都没有（首次使用）。；筛选、搜索之后没有匹配结果——这类文案要说明「是筛选条件导致的」，并给一个「清除筛选」的动作。；出错了但页面结构还在，用空状态 + 一个重试按钮承载。；功能被权限 / 配额挡住：说明原因和恢复方式",
+            "whenNotToUse": "数据还在加载：用骨架屏或 LoadingDots。把「还没加载」画成「空」会误导用户以为数据没了。；已经有内容、只是某一区块为空：先考虑这一块是否该整个隐藏，空状态会占掉宝贵的垂直空间。；需要用户做两件以上互斥的事（上传 / 导入 / 新建）：那是引导页而不是空状态，动作插槽里塞三个按钮会失去焦点。；一句话就能说清的错误，直接放在原位置（例如 InlineNotice），不要铺一整屏",
+            "geometrySource": "官方没有 EmptyState 组件，@deepseek-ai/dsh-client-ui-primitives/lib/ 下没有任何同名文件。；标题 14px / 22px、font-weight: 500 ← 沿用官方合成 token 的层级：--dsw-font-s-14 即 14px/22px（官方 Button 的 .button 也是 14/22）。字重 500 取自官方 Modal.module.css 的 .title。；说明 font: var(--dsw-font-xs-13) ← 官方合成 token 13px/20px，本组件直接整条使用（含字体族）。；gap: 12px ← 建议值。4 的倍数",
+            "tags": [
+                "反馈",
+                "零依赖",
+                "空状态",
+                "占位",
+                "插槽",
+                "empty-state"
+            ]
+        },
+        {
+            "id": "inline-notice",
+            "name": "InlineNotice",
+            "category": "feedback",
+            "path": "components/feedback/InlineNotice/",
+            "summary": "一个横向的提示条：图标? + 文案 + 关闭按钮?。；单行形态高 32px、圆角 8px、12/18 字号、字重 500，视觉上就是官方 ConnectionIndicator 那条断线提示的通用化版本。；零依赖，只用到 react 和 CSS Modules",
+            "whenToUse": "页面里需要一段持续存在、用户可能慢慢读的状态说明：网络不稳定、配额快用完、保存到了哪里。；表单提交失败的整体原因（放在表单上方或下方）。；设置项的副作用提醒：「关闭后本地草稿会被清除」",
+            "whenNotToUse": "一次性的成功反馈、说完就消失：用 Toast，它不占文档流。；有多个操作要选（重试 / 忽略 / 查看详情）：提示条只有文字和一个关闭，选不动；用带按钮的区域或对话框。；字段级的校验错误：直接贴在字段下方用一句红色的 <span> 和一个 aria-invalid，不要为每一行输入都套一个提示条。；全局的、需要用户立刻响应的错误：用对话框，InlineNotice 不会抢焦点。；一屏放三条以上：提示条一多就变成噪音，考虑合并成一条或收进设置页",
+            "geometrySource": "单行几何读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/ConnectionIndicator.module.css；height: 32px、padding: 0 10px、border-radius: 8px ← .indicator；box-sizing: border-box、border: none ← .indicator；font-size: 12px、font-weight: 500、line-height: 18px、white-space: nowrap ← .indicator",
+            "tags": [
+                "反馈",
+                "零依赖",
+                "提示条",
+                "状态",
+                "内联",
+                "inline-notice"
+            ]
+        },
+        {
+            "id": "loading-dots",
+            "name": "LoadingDots",
+            "category": "feedback",
+            "path": "components/feedback/LoadingDots/",
+            "summary": "inline-flex 的一行三个圆点，颜色继承父级 color，尺寸和间距由 props 控制。；三个点包在 aria-hidden=\"true\" 的视觉层里，只把一段视觉隐藏的文本交给屏幕阅读器朗读。；零依赖，只用到 react 和 CSS Modules",
+            "whenToUse": "一次请求 / 一次生成正在进行，但位置已知：紧跟在「正在生成回复」这类文案后面。；按钮内部短时等待（配 aria-busy 或改用按钮自己的 loading 态）。；工具条、状态行这种一行高的紧凑位置",
+            "whenNotToUse": "页面首次加载、大块区域还空着：用骨架屏（--dsw-alias-bg-skeleton 就是给它的），三点太小、不足以占位。；耗时可能超过几秒且进度可估：用进度条，三点不会告诉用户「还要多久」。；需要用户等待时不能做别的：这是阻塞式加载，应当给对话框或遮罩，而不是角落里转三个点。；只是装饰性的「活跃」标记：用 StateDot，它表达的是状态而不是加载",
+            "geometrySource": "官方没有 LoadingDots 组件，但 ConnectionIndicator.module.css 里有一套现成的三点时序，；「三点依次出现」这件事本身、动画周期 1.5s、infinite ← 官方 ConnectionIndicator.module.css 的 .secondDot / .thirdDot（animation: reveal-second-dot 1.5s step-end infinite）",
+            "tags": [
+                "反馈",
+                "零依赖",
+                "加载",
+                "动画",
+                "三点",
+                "loading-dots"
+            ]
+        },
+        {
+            "id": "toast",
+            "name": "Toast",
+            "category": "feedback",
+            "path": "components/feedback/Toast/",
+            "summary": "一个传送到 document.body 的 position: fixed 提示条：可选前置图标 + 一段文案。；没有按钮、没有关闭箭头——它靠时间自己消失。零依赖，只用到 react、react-dom（仅 createPortal）和 CSS Modules。；组件把两件事拆开：",
+            "whenToUse": "动作已经完成，用户不需要做任何事：已保存、已复制 3 项、已重新连接。；需要「稍纵即逝」的确认感，又不想在页面里永久占一块位置",
+            "whenNotToUse": "需要用户读很久或需要操作（重试 / 查看详情）：用 InlineNotice，它是留在文档流里的。；页面内的表单校验、字段级错误：用 InlineNotice 贴着字段放。；阻塞式确认（删除前问一句）：用对话框（Modal / RiskConfirmation），Toast 不拦截点击也无法承载按钮。；同一时刻多个提示叠罗汉：Toast 固定在同一个位置，会互相盖住。用 key 重挂载来「后一条顶掉前一条」，或者改用队列式的行内提示",
+            "geometrySource": "读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/Toast.module.css；position: fixed、top: 40px、left: 50%、z-index: 1100 ← .toast；pointer-events: none ← .toast；display: flex、align-items: center、gap: 10px ← .toast；width: max-content、max-width: min(640px, calc(100vw - 48px)) ← .toast",
+            "tags": [
+                "反馈",
+                "零依赖",
+                "提示",
+                "自动消失",
+                "portal",
+                "toast"
+            ]
+        },
+        {
+            "id": "disclosure-row",
+            "name": "DisclosureRow",
+            "category": "data-display",
+            "path": "components/data-display/DisclosureRow/",
+            "summary": "一个 24px 高的行：[16×16 leading 图标] 6px 间距 [标题] [可选的折叠态次要信息]。；受控组件：open 决定展开与否，onToggle 是唯一的切换入口。；两种命中形态：；默认（expandOnRowClick={false}）：只有左侧 16×16 的图标按钮可切换。；expandOnRowClick：整行变成 role=\"button\"，点行内任意位置都能切换",
+            "whenToUse": "折叠／展开一段次级内容：设置项的高级选项、文件改动的逐文件明细、工具调用的原始参数。；需要在 24px 的同一行里同时表达「有内容可看」与「当前是展开还是收起」。；一屏里有很多条同类信息，默认全部收起、让用户按需展开时",
+            "whenNotToUse": "内容属于主流程必经步骤：默认折叠会让用户找不到（spec/70-checklist.md 的 A02）。；展开的内容是主内容而不是次级信息：直接用标题 + 正文，不要藏在折叠行后面。；纯导航跳转：用链接，aria-expanded 表达的是「展开」不是「跳转」。；需要在一组互斥内容间切换：那是 Tab / Pill；DisclosureRow 的多个实例可以同时展开",
+            "geometrySource": "数值全部读自官方；display: flex、flex-direction: column、width: 100%、min-width: 0 ← DisclosureRow.module.css → .root；position: relative、overflow: hidden、display: flex、align-items: center、min-width: 0 ← DisclosureRow.module.css → .row",
+            "tags": [
+                "数据展示",
+                "零依赖",
+                "折叠",
+                "展开",
+                "aria-expanded",
+                "disclosure-row"
+            ]
+        },
+        {
+            "id": "key-value-list",
+            "name": "KeyValueList",
+            "category": "data-display",
+            "path": "components/data-display/KeyValueList/",
+            "summary": "一个 <dl>：每对键值是 <dt> / <dd>，用 <div> 包成一行（HTML 规范允许用 <div> 分组 dl 里的 dt/dd）。；零依赖，只用到 react 和 CSS Modules。官方 dsh-client-ui-primitives 没有对应组件，；几何按官方若干选择器拼装（见「几何来源」）",
+            "whenToUse": "展示对象的只读明细：模型参数、请求头、配置摘要、文件元信息、环境变量。；键是固定短词、值可能较长（URL、路径、模型名）——值列会换行而不是撑破容器。；需要纵向比对一列数值时用 valueAlign=\"end\"，小数点位置能对上",
+            "whenNotToUse": "需要用户编辑这些键值：<dl> 是只读语义的展示结构，请用表单控件。；值是列表、树、代码块等块级内容：<dd> 里放块级内容是合法的，但视觉上会被行高 14/22 的节奏压扁，建议改用自定义卡片布局。；键与值是同一层级的并列项（没有主从关系）：用表格或 Tag 列表，dl 表达的是「名称—描述」配对",
+            "geometrySource": "官方没有 KeyValueList，以下数值逐条读自官方文件；键 font-size: 13px、line-height: 20px ← 官方合成 token --dsw-font-xs-13；官方消费点见 ReadBlock.module.css → .count（font: var(--dsw-font-xs-13)）；键色 var(--dsw-alias-label-tertiary) ← 官方 Menu.module.css → .label（三级文字取色）",
+            "tags": [
+                "数据展示",
+                "零依赖",
+                "键值",
+                "明细",
+                "dl",
+                "key-value-list"
+            ]
+        },
+        {
+            "id": "mini-bar",
+            "name": "MiniBar",
+            "category": "data-display",
+            "path": "components/data-display/MiniBar/",
+            "summary": "一个 role=\"progressbar\" 的 <div>：内部是轨道（.track）和填充（.fill），填充宽度按 value / max 计算；可选在右侧显示取整后的百分比文本。；零依赖，只用到 react 和 CSS Modules。官方 dsh-client-ui-primitives 没有对应组件，；几何按官方若干选择器拼装（见「几何来源」）",
+            "whenToUse": "列表行里表达占比：上下文窗口占用、缓存命中、磁盘使用、任务进度。；需要一眼看出「接近满了」的场景：tone=\"warn\" / tone=\"error\"",
+            "whenNotToUse": "多组数据横向对比：那是条形图（一组条按同一基线对齐），MiniBar 只有一条轨道。；数值本身已经足够、比例没有意义：只写数字就好，多余的条形是噪声。；需要用户拖动改变数值：这是只读展示元素，不是滑块。；需要精确读数的仪表：百分比文本会取整，精确值请放在旁边的文本里",
+            "geometrySource": "官方没有 MiniBar，以下数值逐条读自官方文件；圆角 border-radius: 999px ← 官方 Tag.module.css → .tag（胶囊几何）；过渡 transition: width 120ms ease ← 官方 Switch.module.css → .thumb（transition: transform 120ms ease，时长与缓动照抄）",
+            "tags": [
+                "数据展示",
+                "零依赖",
+                "进度",
+                "占比",
+                "progressbar",
+                "mini-bar"
+            ]
+        },
+        {
+            "id": "state-dot",
+            "name": "StateDot",
+            "category": "data-display",
+            "path": "components/data-display/StateDot/",
+            "summary": "done / warning / error / idle：一个 <span>，外圈是同色 10% 的光环，内圈是 60%；直径的实心核，颜色由 data-state 决定。；ongoing：一个 10×10 viewBox 的 <svg>，外圈 8 个 2×2 方块跑 1s 的像素追逐动画。；两种形态都是 aria-hidden=\"true\" 的纯装饰元素——圆点不携带可读文本",
+            "whenToUse": "列表行、时间线、步骤条左侧的状态标记：<StateDot state=\"done\" /> 构建成功。；会话 / 任务 / 工具的运行状态：ongoing 表达「正在进行，还没有结论」。；状态需要在一列里纵向对齐、并且颜色要跟主题走的时候——圆点用 currentColor 派生，；换主题不用改代码",
+            "whenNotToUse": "单独用。组件是 aria-hidden 的，页面上只有圆点、没有文字时，屏幕阅读器读不到任何；状态（见「可访问性要点」）。没有文字可配时请用 Tag 或带文本的 ConnectionIndicator。；表达布尔开关或可点击的选中态：那是 Switch / Pill，圆点不可交互、也不接受点击。；表达进度百分比：圆点只有离散状态，没有连续量。；表达「文件类型」：那是 FileTypeIcon",
+            "geometrySource": "数值全部读自官方；默认外径 10px（Figma 尺寸） ← lib/index.js → function StateDot({ state, size = 10, ... })；flex: none ← StateDot.module.css → .dot、.matrix；position: relative、display: inline-block ← StateDot.module.css → .dot；光环 inset: 0、border-radius: 50%、background: currentColor、opacity: 0.1 ← StateDot.module.css → .dot::before",
+            "tags": [
+                "数据展示",
+                "零依赖",
+                "状态",
+                "圆点",
+                "动画",
+                "state-dot"
+            ]
+        },
+        {
+            "id": "panelheader",
+            "name": "PanelHeader",
+            "category": "layout",
+            "path": "components/layout/PanelHeader/",
+            "summary": "一个不渲染任何交互的 <div> 头部容器：；左列 heading：title（14/22，字重 500）+ 可选 description（12/18）；右列 actions：任意节点，通常放若干 Button；底部 hairline：0.5px 的 var(--dsw-alias-border-l1)，可用 divider={false} 关掉",
+            "whenToUse": "一个可关闭的面板、抽屉、侧栏、浮层的顶部标题区。；需要在标题右边放「关闭 / 更多 / 折叠」这类动作时。；面板内部按段分隔，需要一条与官方同款的细分割线时",
+            "whenNotToUse": "对话框标题：官方 Modal.module.css 已有成套的 .header / .title（16/24/500，padding: 22px 14px 12px 24px），不要用本组件替代。；页面级大标题（<h1>）或导航栏：字号体系不同，这里固定 14/22。；只想放一条分割线：直接用 0.5px solid var(--dsw-alias-border-l1) 的 <hr> 或伪元素，不必套标题栏",
+            "geometrySource": "数值全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib；font-weight: 500、color: var(--dsw-alias-label-primary) ← Modal.module.css .title（原注释：figma wt510，渲染 500）；标题字号取 14px / 22px ← Button.module.css .button（font-size: 14px; line-height: 22px）——面板标题比对话框标题低一档，故不取 Modal 的 16/24",
+            "tags": [
+                "布局",
+                "零依赖",
+                "面板",
+                "标题栏",
+                "hairline",
+                "panelheader"
+            ]
+        },
+        {
+            "id": "settingsrow",
+            "name": "SettingsRow",
+            "category": "layout",
+            "path": "components/layout/SettingsRow/",
+            "summary": "根节点是 <label> 的布局行：；.text 竖排：标题（14/22）+ 可选说明（13/20）；.control：flex: none 的右侧控件区（Switch / Input / Button / <select>）；.divider：0.5px 的 var(--dsw-alias-border-l2)",
+            "whenToUse": "设置面板 / 首选项页面里「一个开关控制一件事」的行。；需要标题 + 一行解释（13/20 灰色小字）的设置项。；一侧是标签、另一侧是输入框或下拉的表单行",
+            "whenNotToUse": "侧边栏 / 导航列表的可选中行：用 SidebarRow（它是按钮，有选中语义）。；表单里的多字段堆叠（标签在上、输入在下）：用常规 <label> + 表单布局，本行是左右分栏。；一行里有多个并列控件时：control 里塞多个控件是允许的，但若彼此语义不相关，请拆成两行。；可点整行跳转的入口：那是 SidebarRow，设置行表达的是「改一个值」不是「去一个地方」",
+            "geometrySource": "标题 font-size: 14px; line-height: 22px ← Button.module.css .button（面板/设置项标题沿用这一档字号，与 PanelHeader 一致）；标题色 var(--dsw-alias-label-primary) ← Modal.module.css .title / Button.module.css .button",
+            "tags": [
+                "布局",
+                "零依赖",
+                "设置项",
+                "表单行",
+                "settingsrow"
+            ]
+        },
+        {
+            "id": "sidebarrow",
+            "name": "SidebarRow",
+            "category": "layout",
+            "path": "components/layout/SidebarRow/",
+            "summary": "一个 <button type=\"button\">，内部固定三段：前置图标（16×16）/ 标题（可省略号截断）/ 尾部（计数、快捷键、对勾）。；零依赖，只用到 react 和 CSS Modules",
+            "whenToUse": "侧边栏的会话 / 文件 / 页面列表项。；任何需要在列表项右侧挂状态（计数、未读点、快捷键）的场景。；需要「当前选中项」的列表：用 selectionStyle=\"check\" 与官方 Menu 保持一致",
+            "whenNotToUse": "弹出菜单里的项：用官方 Menu 的 .item，它自带 portal、方向键导航与子菜单。；只是跳转的外部链接：用 <a>，不要用按钮假装链接（那会丢掉「在新标签打开」等浏览器能力）。；一行里要塞多行内容（标题 + 说明 + 标签）：用 SettingsRow，它的结构是给设置项准备的。；纯展示、不可点的行：不要用本组件——一个永远可点但什么都不做的按钮是键盘用户的陷阱",
+            "geometrySource": "数值全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/Menu.module.css；min-height: 40px、padding: 8px 10px、border-radius: 10px、gap: 8px、font-size: 14px、line-height: 22px、color: var(--dsw-alias-label-primary)、text-align: left ← .item（原注释：figma .Menu_cell，min-h 40 / r10 / pad 10/8 / 14-22 / gap 8）",
+            "tags": [
+                "布局",
+                "零依赖",
+                "侧边栏",
+                "导航",
+                "选中",
+                "sidebarrow"
+            ]
+        },
+        {
+            "id": "toolbarrow",
+            "name": "ToolbarRow",
+            "category": "layout",
+            "path": "components/layout/ToolbarRow/",
+            "summary": "一个纯布局的 <div>，本身不含任何按钮样式：；flex-wrap: wrap 默认开启，窗口变窄时按钮换行而不是溢出。零依赖，只用到 react 和 CSS Modules",
+            "whenToUse": "一排并列的动作按钮（筛选 / 排序 / 格式化 / 刷新）。；需要吸顶的工具条：<ToolbarRow sticky divider size=\"sm\">。；浮在内容上方的悬浮工具条：variant=\"filled\" 配 Button variant=\"toolbar\"",
+            "whenNotToUse": "一组互斥选项（今天 / 本周 / 全部）：那是 SegmentedControl 或 Pill 的语义，工具条不表达「选中」。；单一动作：直接放一个 Button，不要为它套一层容器。；需要自动折行到第二行的导航菜单：用 Menu，工具条不做菜单语义。；页面顶部的完整应用栏（含 logo、搜索）：那是导航栏，不是工具条",
+            "geometrySource": "数值全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib；min-height: 32px（md） ← ConnectionIndicator.module.css .indicator（height: 32px）；var(--dsw-alias-button-tool-bar-fill)（filled 形态的底色） ← Button.module.css .toolbar；gap: 4px（默认间距） ← Button.module.css .button（gap: 4px）",
+            "tags": [
+                "布局",
+                "零依赖",
+                "工具条",
+                "按钮组",
+                "toolbarrow"
+            ]
+        },
+        {
+            "id": "list-row-group",
+            "name": "ListRowGroup",
+            "category": "patterns",
+            "path": "components/patterns/ListRowGroup/",
+            "summary": "导出三个组件：；行几何与官方菜单单元一致（min-height: 40px / padding: 8px 10px / border-radius: 10px），；但它是布局行，不自带菜单语义。；零依赖，只用到 react 和 CSS Modules。不 import 仓库内任何其它组件",
+            "whenToUse": "设置页、右栏面板、插件弹层里的一串同类条目：开关项、导航项、文件项、结果项。；需要给这一串条目一个小标题（「启动行为」「已连接的账号」）来分组。；行之间需要 0.5px 的 hairline 分隔（行间距为 0，靠线而不是靠空隙分段）",
+            "whenNotToUse": "行自己就是一次「动作」且需要明确的按钮外观：用 Button。ListRow interactive 提供的是；整行可点的列表语义，不是按钮的视觉重量。；是互斥选项：用 Pill 或 Switch。行组不表达「选中状态」，aria-current / aria-checked；要由行内的控件自己声明。；是浮层菜单：官方 Menu 已经提供菜单卡（圆角 20px、box-shadow: var(--dsw-elevation-prominent)、",
+            "geometrySource": "官方没有 ListRowGroup 对应物（lib/index.js 的导出里没有行组）。每条几何都取自官方菜单的对应单元；分组标题 padding: 8px 10px、font-size: 12px、line-height: 16px ← Menu.module.css .label；分组标题颜色 --dsw-alias-label-tertiary ← Menu.module.css .label（color）",
+            "tags": [
+                "骨架",
+                "零依赖",
+                "列表",
+                "分组",
+                "分隔线",
+                "list-row-group"
+            ]
+        },
+        {
+            "id": "panel-seat",
+            "name": "PanelSeat",
+            "category": "patterns",
+            "path": "components/patterns/PanelSeat/",
+            "summary": "一个 <div role=\"group\">，里面是「标题行（标题 + 右对齐操作区）+ 正文」两段。；正文与操作全部由调用方通过 children / actions 插槽传入。；零依赖，只用到 react 和 CSS Modules。不 import 仓库内任何其它组件",
+            "whenToUse": "插件要在会话流（conversation.view / conversation.session，或 conversation.input.dock 之类的纵向插入点）里；放一块自带说明的结构化内容：构建结果、引用来源、待确认项、插件的局部状态。；这块内容需要有标题、且标题右边有一两个操作。；内容宽度不定，希望按内容收缩而不是硬撑满整行",
+            "whenNotToUse": "不是会话内容：全局设置、对象切换分别属于设置页与左栏（spec/10-frame-layout.md 第 4 节），；不要借会话流的壳把它们塞进来。；只是一个短提示：用 Toast（瞬时）或 Tag（静态标签），不要为一行字套一个带标题的容器。；需要用户必须先处理才能继续：用 Modal 或 RiskConfirmation。PanelSeat 是会话流里的一块内容，；默认不抢焦点、不拦截操作，不适合承载必经流程",
+            "geometrySource": "官方没有 PanelSeat 对应物（lib/index.js 的导出里没有这个骨架）。每条几何都是锚定一个已核实数值；容器圆角 12px ← ReadBlock.module.css .block（--dsl-read-radius: 12px）；surface 底色 --dsw-alias-markdown-code-block ← ReadBlock.module.css .block（background）；标题行 gap: 12px ← ReadBlock.module.css .banner（gap: 12px）",
+            "tags": [
+                "骨架",
+                "零依赖",
+                "会话区",
+                "插件插槽",
+                "panel-seat"
+            ]
+        },
+        {
+            "id": "settings-page",
+            "name": "SettingsPage",
+            "category": "patterns",
+            "path": "components/patterns/SettingsPage/",
+            "summary": "一个纯布局外壳，导出三个组件：；零依赖，只用到 react 和 CSS Modules。不 import 仓库内任何其它组件",
+            "whenToUse": "插件提供一个独立设置页（占用 settings.section 之外的整页空间，或在独立窗口/标签页里渲染）。；设置项多到需要左侧分区导航（≥ 3 个分区）才能扫读。；内容列里需要「标题 + 若干行」的重复结构，直接用 SettingsSection 统一排版",
+            "whenNotToUse": "只给宿主设置页加一个分区：那属于 settings.section 座位（single 类型，见 spec/11-slot-seats.md 第 4 节），宿主会给你一个已经排好版的容器，用本组件会把设置页套成两层导航。；只有 1–2 个分区：不需要导航列，直接用一个标题 + 若干 ListRowGroup 即可；左侧空导航是纯浪费。；不是设置：会话语义的内容属于会话区，不要借设置页的壳（spec/10-frame-layout.md 第 4 节的跨区域决策表）",
+            "geometrySource": "官方没有 SettingsPage 对应物（lib/index.js 的导出里没有设置页骨架）。因此本组件的每条几何都是；导航行 min-height: 40px、padding: 8px 10px、border-radius: 10px、gap: 8px、font-size: 14px、line-height: 22px ← Menu.module.css .item；导航行 hover 底色 --dsw-alias-interactive-bg-hover ← Menu.module.css .item:hover:not(:disabled)",
+            "tags": [
+                "骨架",
+                "零依赖",
+                "设置页",
+                "整页骨架",
+                "导航",
+                "settings-page"
+            ]
+        },
+        {
+            "id": "fishmark",
+            "name": "FishMark",
+            "category": "brand",
+            "path": "components/brand/FishMark/",
+            "summary": "单条 <path> 的装饰性图形，路径就是官方导出的 FISH_LOGO_PATH，原生视框 23.16 × 17.04，默认宽 24px。；零依赖：只 import react 和一份 CSS Modules（fishmark.module.css），运行时不读文件、不 import 任何 @deepseek-ai/* 包",
+            "whenToUse": "品牌区、启动页、关于页、加载态里需要「这是 DeepSeek」的图形符号。；位置只够放一个图形：favicon 位、头像位、工具条品牌位。；需要图形跟随文字色变化：外层换 color 就够，不用准备第二份图。；与 Wordmark 搭配时，它负责图形、Wordmark 负责可读的品牌名",
+            "whenNotToUse": "需要用户读出品牌名：用 Wordmark 或直接写文字。鱼标本身不含可读文本。；需要「图形 + 文字」的官方组合：那是 Wordmark（includeMark 默认开启）。；只是想要一个装饰性占位块：用骨架屏或图标组件，鱼标的品牌语义太强。；想改多色 / 渐变 / 双色调：path 固定 fill=\"currentColor\"，本组件不提供改色参数，用 CSS color 控制。；当成图标按钮的内容：按钮要自己画图标并给 aria-label，别把品牌标当功能图标",
+            "geometrySource": "全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/index.js 的 //#region lib/types/FishLogo.js 区块；viewBox \"0 0 23.16 17.04\" ← lib/index.js · const FISH_LOGO_VIEWBOX = { width: 23.16, height: 17.04 }（其上一行注释：Native viewBox of FISH_LOGO_PATH）；默认宽 24 ← lib/index.js · function FishLogo({ size = 24, className })",
+            "tags": [
+                "品牌",
+                "零依赖",
+                "鱼标",
+                "SVG",
+                "currentColor",
+                "fishmark"
+            ]
+        },
+        {
+            "id": "wordmark",
+            "name": "Wordmark",
+            "category": "brand",
+            "path": "components/brand/Wordmark/",
+            "summary": "一个 <svg> 里画三段东西（顺序即绘制顺序）：；9 条文字路径（p / d / e / e / s / e / e / l / k），fill=\"currentColor\"；1 条鲸鱼路径，同样 currentColor，外面套一个 clipPath 修边",
+            "whenToUse": "首屏、关于页、导出图、文档页眉页脚：需要一次写出完整品牌名。；需要官方的「图形 + 文字」组合：保持 includeMark（默认）。；位置偏窄、只要文字部分：includeMark={false}",
+            "whenNotToUse": "位置只够放一个图形：用 FishMark。；需要屏幕阅读器读出品牌名：字标里没有文本节点，默认 aria-hidden，读不出「deepseek」。要可读就用真实文字，或传 title，或「可见文本 + FishMark」。；当页面标题用：用 <h1> 文本 + FishMark，字标没有文本层级，也不参与文档大纲。；小于 16px 高：文字笔画会糊，那个尺寸请只用 FishMark",
+            "geometrySource": "全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/index.js 的 //#region lib/types/BrandWordmark.js 区块；viewBox \"0 0 182 24\" / \"26 0 156 24\" ← lib/index.js · BrandWordmark 的 viewBox: includeMark ? \"0 0 182 24\" : \"26 0 156 24\"",
+            "tags": [
+                "品牌",
+                "零依赖",
+                "字标",
+                "badge",
+                "currentColor",
+                "wordmark"
+            ]
+        }
+    ]
 }

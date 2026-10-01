@@ -45,11 +45,19 @@
     --sh-hover: rgb(0 0 0 / 4%);
     --sh-active: rgb(0 0 0 / 7%);
 
-    /* 尺寸 ← geometry.json 的 rect */
+    /* 尺寸 ← 真实渲染的 rect（1570×905 视口）
+     *
+     * 中栏与会话区的水平关系全部来自 conversation-geometry.json：无论中栏是
+     * 1290px（无插件右栏）还是 1085px（插件占位时），阅读列都是 748px 居中、
+     * 输入卡都是 780px 居中，两者的轴心重合。 */
     --sh-side-w: 280px;                  /* sidebarCol 280x905 */
     --sh-right-w: 0px;                   /* 右栏默认收起，打开时 348px */
     --sh-handle-w: 8px;                  /* handle 8x905 @ x=276 */
-    --sh-head-h: 40px;                   /* Dc7zOa_header 1290x40 */
+    --sh-head-h: 50px;                   /* 会话头部 0..50：页签下划线落在 37..38 */
+    --sh-col-w: 748px;                   /* xz4KEq_column 748 宽 */
+    --sh-gutter: 32px;                   /* xz4KEq_scroll padding 16px 32px */
+    --sh-card-w: 780px;                  /* RlGAzG_card 780 × 98 */
+    --sh-dock-h: 22px;                   /* RlGAzG_dock 内容高 22，盒高 26 */
     --sh-logo-h: 60px;                   /* logoRow 256x60 */
     --sh-new-h: 38px;                    /* newSession 252x38 */
     --sh-row-h: 36px;                    /* panelRow 252x36 */
@@ -58,11 +66,12 @@
     --sh-settings-h: 34px;               /* triggerRow 260x34 */
 
     --sh-radius: 12px;                   /* panelRow / newSession borderRadius 12px */
-    /* 输入卡圆角：对 01-hero.png 的弧线做最小二乘拟合得 21.4px（RMSE 0.42），
-     * 取 21。此前写的 28px 是错的——那次是从一次采集里读到的，但采集脚本的
-     * depth 上限截掉了输入卡子树，读到的是别的元素。 */
-    --sh-radius-card: 21px;
-    --sh-line-card: rgb(0 0 0 / 7.5%);   /* 输入卡边框实测 236/255 ≈ 7.5% */
+    /* 输入卡圆角 ← 运行中的产品计算样式：RlGAzG_card 的 borderRadius = 28px
+     * （docs/reference/composer-geometry.json）。此前一度按 01-hero.png 的弧线
+     * 拟合改成 21px，那是错的——对圆角矩形的弧线做拟合不是可靠测量，DOM 上的
+     * 计算值才是。 */
+    --sh-radius-card: 28px;
+    --sh-line-card: rgb(0 0 0 / 7.5%);   /* 卡片边框，按截图取样 ≈236/255 */
     --sh-radius-pill: 999px;
 
     --sh-font: 'HarmonyOS Sans SC', 'HarmonyOS Sans', -apple-system, BlinkMacSystemFont,
@@ -339,7 +348,7 @@
 .sh-settings:hover { background: var(--sh-hover); }
 .sh-settings svg { width: 16px; height: 16px; flex: none; color: var(--sh-ink-2); }
 
-/* ── 中栏 ← centerCol 1290x905 / header 1290x40 ───────────────────── */
+/* ── 中栏 ← 会话头部 0..50、消息列 748 居中 ─────────────────────────── */
 
 .sh-center {
     display: flex;
@@ -352,42 +361,89 @@
 .sh-head {
     display: flex;
     align-items: center;
-    gap: 12px;
-    height: var(--sh-head-h);             /* header 1290×40 */
-    padding: 0 28px 0 20px;
+    gap: 0;
+    height: var(--sh-head-h);             /* 会话头部 0..50 */
+    padding: 0 12px 0 28px;               /* 标题左沿 = 中栏左沿 + 28；工具右沿 = 右沿 - 12 */
     flex: none;
     background: var(--sh-bg);
 }
-.sh-head__chips { display: flex; align-items: center; gap: 6px; }
-.sh-chip--meta { height: 22px; font-size: 12px; color: var(--sh-ink-2); }
-.sh-chip--meta svg { width: 12px; height: 12px; }
 .sh-head__title {
     display: flex;
     align-items: center;
     gap: 6px;
     min-width: 0;
+    margin-right: 8px;
     font-size: 14px;
+    line-height: 22px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.sh-head__chip {
+.sh-head__title svg { width: 12px; height: 12px; color: var(--sh-ink-3); flex: none; }
+.sh-head__chips { display: flex; align-items: center; gap: 6px; }
+.sh-chip--meta {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 1px 6px;
-    font-size: 12px;
-    color: var(--sh-ink-3);
-    border-radius: 6px;
+    height: 28px;                         /* EBLgjq_trigger 28 高 */
+    padding: 0 8px;
+    font-size: 13px;
+    line-height: 20px;
+    color: var(--sh-ink-2);               /* rgb(97,102,107) */
+    border-radius: 8px;
+    white-space: nowrap;
 }
-.sh-head__views { display: flex; align-items: center; gap: 12px; font-size: 13px; }
-.sh-head__view { color: var(--sh-ink-3); cursor: default; }
-.sh-head__view[aria-current='true'] {
-    color: var(--sh-ink);
-    font-weight: 500;
-    box-shadow: inset 0 -2px 0 var(--sh-ink);
+.sh-chip--meta svg { width: 10px; height: 10px; color: var(--sh-ink-3); }
+.sh-head__views {
+    display: flex;
+    align-items: center;
+    gap: 25px;                            /* 页签之间 25px（856→881→906→931→956） */
+    margin-left: 24px;
+    height: var(--sh-head-h);
+    font-size: 13px;
+    line-height: 20px;
 }
-.sh-head__tools { display: flex; align-items: center; gap: 6px; }
+.sh-head__view { position: relative; display: inline-flex; align-items: center; height: 100%; color: var(--sh-ink-3); cursor: default; }
+.sh-head__view[aria-current='true'] { color: #4176e6; font-weight: 500; }
+.sh-head__view[aria-current='true']::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 12px;                         /* 下划线 y 37..38 */
+    height: 2px;
+    background: #4176e6;
+    border-radius: 1px;
+}
+.sh-head__tools { display: flex; align-items: center; gap: 6px; margin-left: auto; }
+
+/* 顶栏的「打开方式」分段按钮：左边是系统文件夹位图，右边一条中缝加 10px 折角。 */
+.sh-open {
+    display: inline-flex;
+    align-items: stretch;
+    height: 28px;
+    border: 1px solid rgb(0 0 0 / 12%);
+    border-radius: 8px;
+    overflow: hidden;
+}
+.sh-open__main,
+.sh-open__more {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    color: var(--sh-ink-2);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background var(--sh-dur-fast) var(--sh-ease);
+}
+.sh-open__main { width: 27px; }
+.sh-open__more { width: 18px; border-left: 1px solid rgb(0 0 0 / 12%); }
+.sh-open__main:hover,
+.sh-open__more:hover { background: var(--sh-hover); }
+.sh-open__app { display: block; width: 13px; height: 13px; }
+.sh-open__more svg { width: 10px; height: 10px; }
 
 .sh-body {
     flex: 1;
@@ -396,88 +452,122 @@
     flex-direction: column;
     overflow: hidden;
 }
+
+/* 阅读区：左右各 32px 内边距，里面是一条 748px、居中、不再变宽的阅读列。 */
 .sh-flow {
     flex: 1;
     min-height: 0;
-    padding: 8px 28px 0 20px;
+    padding: 16px var(--sh-gutter) 16px var(--sh-gutter);
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    gap: 14px;
 }
-.sh-msg { display: flex; gap: 10px; max-width: 100%; }
+.sh-flow__column {
+    width: 100%;
+    max-width: var(--sh-col-w);
+    margin: 0 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;                            /* v5IAXa_body gap 16px */
+}
+.sh-msg { display: flex; max-width: 100%; }
 .sh-msg--user { justify-content: flex-end; }
 .sh-msg__bubble {
-    max-width: 76%;
-    padding: 10px 14px;
+    max-width: 100%;
+    padding: 10px 16px;
     font-size: 14px;
-    line-height: 1.6;
-    border-radius: 16px;
-    background: #f2f3f5;
+    line-height: 22px;
+    color: var(--sh-ink);
+    background: #edf3fe;                  /* cJsG2q_bubble 底色 rgb(237,243,254) */
+    border-radius: 20px;                  /* cJsG2q_bubble 圆角 20px */
 }
-.sh-msg--user .sh-msg__bubble { background: #e9ebef; }
-.sh-msg__bubble p { margin: 0; }
-.sh-msg__bubble p + p { margin-top: 8px; }
+.sh-msg__text { font-size: 14px; line-height: 24px; color: var(--sh-ink); }
+.sh-msg__bubble p, .sh-msg__text p { margin: 0; }
+.sh-msg__bubble p + p, .sh-msg__text p + p { margin-top: 16px; }
 
-.sh-tool {
-    border: 1px solid var(--sh-line-soft);
-    border-radius: var(--sh-radius);
-    overflow: hidden;
-}
-.sh-tool__head {
-    display: flex;
+/* 工具调用 ← 折叠态活动行：16px 图标 + 14px 标题，19px 高，内容紧随其后。 */
+.sh-tool { display: flex; flex-direction: column; }
+.sh-tool__title {
+    display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    font-size: 12px;
-    color: var(--sh-ink-3);
-    background: #f7f8f9;
+    gap: 6px;
+    align-self: flex-start;
+    height: 19px;                         /* WW4l1q_title 92 × 19 */
+    padding: 0;
+    font-size: 14px;
+    line-height: 19px;
+    color: var(--sh-ink-2);
+    background: transparent;
+    border: none;
+    cursor: pointer;
 }
-.sh-tool__body { padding: 10px 12px; font-size: 13px; color: var(--sh-ink-2); }
+.sh-tool__leading { display: inline-flex; width: 16px; height: 16px; color: var(--sh-ink-3); }
+.sh-tool__leading svg { width: 16px; height: 16px; }
+.sh-tool__body { padding-top: 0; font-size: 14px; line-height: 24px; color: var(--sh-ink); }
 
-/* ── 输入区 ← composerSeat 1283x238，输入卡 780x114 r28 ────────────── */
+/* ── 输入区 ← composerSeat：卡 → dock 26px → 底 4px ─────────────────── */
 
 .sh-composer {
     flex: none;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
-    padding: 16px 28px 20px 20px;
+    gap: 0;                               /* dock 紧贴卡底，间距由 dock 的 padding-top 给 */
+    padding: 0 16px 4px 16px;             /* RlGAzG_root padding 0 16px 4px 16px */
 }
 .sh-card {
-    width: min(780px, 100%);              /* 实测 780x114 */
-    padding: 8px 0;                       /* 实测 padding 8px 0 */
+    display: flex;
+    flex-direction: column;
+    gap: 12px;                            /* RlGAzG_card gap 12px */
+    width: min(var(--sh-card-w), 100%);   /* RlGAzG_card 780 × 98 */
+    padding: 8px 0 0 0;                   /* RlGAzG_card padding 8px 0 0 0 */
     background: var(--sh-bg);
     border: 1px solid var(--sh-line-card);
     border-radius: var(--sh-radius-card);
 }
 .sh-card__input {
-    padding: 8px 20px 6px;
+    padding: 4px 8px 0 14px;              /* RlGAzG_input padding 4px 8px 0 14px */
+    min-height: 36px;                     /* 会话里单行时 RlGAzG_input 776 × 36 */
     font-size: 14px;
-    line-height: 1.6;
+    line-height: 24px;                    /* placeholder 754 × 24 */
     color: var(--sh-ink-3);
 }
 .sh-tools {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 6px 12px 4px;
+    gap: 12px;                            /* RlGAzG_tools gap 12px */
+    height: 42px;                         /* RlGAzG_row 780 × 42 */
+    padding: 2px 8px 6px 8px;             /* RlGAzG_row padding 2px 8px 6px 8px */
 }
 .sh-tools__spacer { flex: 1; }
 
-/* ── 输入卡下方的状态条：产品自己那一行（轮/步、吞吐、用量、缓存、花费、占用）── */
+/* ── 卡下方的 dock ─────────────────────────────────────────────────────
+ * 这是产品给 `conversation.input.dock` 座位留的盒子：padding-top 4px，内容高
+ * 22px；里面分三组，组内 gap 6px、组间 14px，字号 12/20、色 label-tertiary。
+ * 本机上坐在这个座位里的是「轮/步、吞吐、用量、缓存、花费、占用」（占用者给出
+ * 内容，几何由产品给盒子定），采集值见 docs/reference/status-line.json。 */
 
 .sh-status {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding-top: 8px;
+    gap: 14px;
+    height: 26px;                         /* RlGAzG_dock 26 高 */
+    padding-top: 4px;                     /* RlGAzG_dock padding 4px 0 0 0 */
     font-size: 12px;
+    line-height: 20px;
     color: var(--sh-ink-3);
 }
-.sh-status__sep { color: var(--sh-line); }
+.sh-status__group {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: var(--sh-dock-h);
+    padding: 1px 8px;                     /* iq1doa_pill padding 1px 8px */
+}
+.sh-status__group svg { width: 14px; height: 14px; flex: none; }
+.sh-status__sep { color: #c3c6ca; }
 .sh-round {
     display: inline-flex;
     align-items: center;
@@ -493,15 +583,22 @@
     transition: background var(--sh-dur-fast) var(--sh-ease);
 }
 .sh-round:hover { background: var(--sh-hover); }
-.sh-round--send { background: #d7dbe2; color: #fff; cursor: default; }
+.sh-round--send {
+    width: 34px;                          /* RlGAzG_primary 34 × 34，圆形 */
+    height: 34px;
+    background: #d7dbe2;
+    color: #fff;
+    cursor: default;
+}
 .sh-round svg { width: 16px; height: 16px; }
 .sh-chip {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    height: 26px;
-    padding: 0 8px;
+    height: 28px;                         /* dlU_AG_trigger / wq12jW_trigger 28 高 */
+    padding: 0 4px 0 8px;                 /* dlU_AG_trigger padding 0 4px 0 8px */
     font-size: 13px;
+    line-height: 20px;
     color: var(--sh-ink-2);
     background: transparent;
     border: none;

@@ -1,0 +1,1142 @@
+[
+ {
+  "d": 0,
+  "tag": "div",
+  "cls": "Dc7zOa_composerStack Dc7zOa_composerHero",
+  "rect": [
+   516,
+   354,
+   812,
+   238
+  ],
+  "font": "16px/normal",
+  "color": "rgb(15, 17, 21)",
+  "gap": "8px",
+  "pad": "0px 0px 32px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 1,
+  "tag": "div",
+  "cls": "Hqq-bq_root",
+  "rect": [
+   516,
+   354,
+   812,
+   44
+  ],
+  "font": "16px/normal",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "0px 24px 0px 24px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 2,
+  "tag": "div",
+  "cls": "Hqq-bq_stack",
+  "rect": [
+   540,
+   354,
+   764,
+   44
+  ],
+  "font": "16px/normal",
+  "color": "rgb(15, 17, 21)",
+  "gap": "12px",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 3,
+  "tag": "div",
+  "cls": "Hqq-bq_headline",
+  "rect": [
+   540,
+   354,
+   764,
+   32
+  ],
+  "font": "26px/32px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "12px 10px",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 4,
+  "tag": "span",
+  "cls": "Hqq-bq_fishHitbox",
+  "rect": [
+   792,
+   357,
+   34,
+   25
+  ],
+  "font": "26px/32px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 6,
+  "tag": "svg",
+  "cls": "[object SVGAnimatedString]",
+  "rect": [
+   792,
+   357,
+   34,
+   25
+  ],
+  "font": "26px/32px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 7,
+  "tag": "path",
+  "cls": "[object SVGAnimatedString]",
+  "rect": [
+   792,
+   357,
+   34,
+   25
+  ],
+  "font": "26px/32px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 4,
+  "tag": "span",
+  "cls": "Hqq-bq_titleGroup",
+  "rect": [
+   836,
+   354,
+   215,
+   32
+  ],
+  "font": "26px/32px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "4px 7px",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 5,
+  "tag": "span",
+  "cls": "",
+  "rect": [
+   836,
+   354,
+   156,
+   32
+  ],
+  "font": "26px/32px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": "探索未至之境"
+ },
+ {
+  "d": 5,
+  "tag": "span",
+  "cls": "Hqq-bq_previewBadge",
+  "rect": [
+   999,
+   356,
+   52,
+   21
+  ],
+  "font": "12px/18px",
+  "color": "rgb(14, 48, 116)",
+  "gap": "normal",
+  "pad": "1px 7px 0px 7px",
+  "margin": "2px 0px 0px 0px",
+  "radius": "999px",
+  "bg": "rgb(228, 237, 253)",
+  "text": "预览版"
+ },
+ {
+  "d": 1,
+  "tag": "div",
+  "cls": "Dc7zOa_heroWorkspaceRow",
+  "rect": [
+   516,
+   410,
+   812,
+   28
+  ],
+  "font": "16px/normal",
+  "color": "rgb(15, 17, 21)",
+  "gap": "2px",
+  "pad": "0px 16px 0px 20px",
+  "margin": "4px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 2,
+  "tag": "button",
+  "cls": "Hqq-bq_workspace",
+  "rect": [
+   536,
+   410,
+   162,
+   28
+  ],
+  "font": "13px/20px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "4px",
+  "pad": "0px 8px 0px 8px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "8px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 3,
+  "tag": "svg",
+  "cls": "[object SVGAnimatedString]",
+  "rect": [
+   544,
+   416,
+   16,
+   16
+  ],
+  "font": "13px/20px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 4,
+  "tag": "path",
+  "cls": "[object SVGAnimatedString]",
+  "rect": [
+   545,
+   423,
+   13,
+   6
+  ],
+  "font": "13px/20px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 4,
+  "tag": "path",
+  "cls": "[object SVGAnimatedString]",
+  "rect": [
+   544,
+   422,
+   14,
+   7
+  ],
+  "font": "13px/20px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 4,
+  "tag": "path",
+  "cls": "[object SVGAnimatedString]",
+  "rect": [
+   544,
+   417,
+   13,
+   12
+  ],
+  "font": "13px/20px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 3,
+  "tag": "span",
+  "cls": "Hqq-bq_workspaceLabel",
+  "rect": [
+   564,
+   414,
+   110,
+   20
+  ],
+  "font": "13px/20px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": "DeepSeek-Harness"
+ },
+ {
+  "d": 3,
+  "tag": "svg",
+  "cls": "[object SVGAnimatedString]",
+  "rect": [
+   677,
+   418,
+   12,
+   12
+  ],
+  "font": "13px/20px",
+  "color": "rgb(173, 178, 184)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 4,
+  "tag": "path",
+  "cls": "[object SVGAnimatedString]",
+  "rect": [
+   680,
+   422,
+   6,
+   3
+  ],
+  "font": "13px/20px",
+  "color": "rgb(173, 178, 184)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 3,
+  "tag": "span",
+  "cls": "_root_4ub78_1 _oGoKq_menuAnchor",
+  "rect": [
+   701,
+   410,
+   106,
+   28
+  ],
+  "font": "16px/normal",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 4,
+  "tag": "button",
+  "cls": "_oGoKq_seat",
+  "rect": [
+   701,
+   410,
+   106,
+   28
+  ],
+  "font": "13px/20px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "4px",
+  "pad": "0px 8px 0px 8px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "8px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 5,
+  "tag": "svg",
+  "cls": "[object SVGAnimatedString]",
+  "rect": [
+   709,
+   416,
+   16,
+   16
+  ],
+  "font": "13px/20px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 6,
+  "tag": "path",
+  "cls": "[object SVGAnimatedString]",
+  "rect": [
+   712,
+   418,
+   11,
+   11
+  ],
+  "font": "13px/20px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 6,
+  "tag": "path",
+  "cls": "[object SVGAnimatedString]",
+  "rect": [
+   716,
+   418,
+   3,
+   3
+  ],
+  "font": "13px/20px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 6,
+  "tag": "path",
+  "cls": "[object SVGAnimatedString]",
+  "rect": [
+   712,
+   425,
+   3,
+   3
+  ],
+  "font": "13px/20px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 6,
+  "tag": "path",
+  "cls": "[object SVGAnimatedString]",
+  "rect": [
+   720,
+   425,
+   3,
+   3
+  ],
+  "font": "13px/20px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 5,
+  "tag": "span",
+  "cls": "_oGoKq_seatLabel",
+  "rect": [
+   729,
+   414,
+   52,
+   20
+  ],
+  "font": "13px/20px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": "标准模式"
+ },
+ {
+  "d": 5,
+  "tag": "svg",
+  "cls": "[object SVGAnimatedString]",
+  "rect": [
+   785,
+   417,
+   14,
+   14
+  ],
+  "font": "13px/20px",
+  "color": "rgb(173, 178, 184)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 6,
+  "tag": "path",
+  "cls": "[object SVGAnimatedString]",
+  "rect": [
+   789,
+   422,
+   7,
+   3
+  ],
+  "font": "13px/20px",
+  "color": "rgb(173, 178, 184)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 2,
+  "tag": "div",
+  "cls": "RlGAzG_root RlGAzG_hero",
+  "rect": [
+   516,
+   446,
+   812,
+   114
+  ],
+  "font": "16px/normal",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "0px 16px 0px 16px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 3,
+  "tag": "div",
+  "cls": "RlGAzG_card",
+  "rect": [
+   532,
+   446,
+   780,
+   114
+  ],
+  "font": "14px/24px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "12px",
+  "pad": "8px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "28px",
+  "bg": "rgb(255, 255, 255)",
+  "text": ""
+ },
+ {
+  "d": 4,
+  "tag": "div",
+  "cls": "RlGAzG_scroll",
+  "rect": [
+   532,
+   454,
+   776,
+   52
+  ],
+  "font": "14px/24px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 4px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 5,
+  "tag": "div",
+  "cls": "RlGAzG_grow",
+  "rect": [
+   532,
+   454,
+   776,
+   52
+  ],
+  "font": "14px/24px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 6,
+  "tag": "div",
+  "cls": "RlGAzG_input",
+  "rect": [
+   532,
+   454,
+   776,
+   52
+  ],
+  "font": "14px/24px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "4px 8px 0px 14px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 6,
+  "tag": "div",
+  "cls": "RlGAzG_placeholder",
+  "rect": [
+   546,
+   458,
+   754,
+   24
+  ],
+  "font": "14px/24px",
+  "color": "rgb(173, 178, 184)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": "描述你想要构建的内容, / 调用指令, @ 文件或对话"
+ },
+ {
+  "d": 4,
+  "tag": "div",
+  "cls": "RlGAzG_row",
+  "rect": [
+   532,
+   518,
+   780,
+   42
+  ],
+  "font": "14px/24px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "12px",
+  "pad": "2px 8px 6px 8px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 5,
+  "tag": "div",
+  "cls": "RlGAzG_tools",
+  "rect": [
+   540,
+   523,
+   140,
+   28
+  ],
+  "font": "14px/24px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "12px",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 6,
+  "tag": "button",
+  "cls": "RlGAzG_add",
+  "rect": [
+   540,
+   523,
+   28,
+   28
+  ],
+  "font": "13.3333px/normal",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "1px 6px 1px 6px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "999px",
+  "bg": "rgb(245, 246, 247)",
+  "text": ""
+ },
+ {
+  "d": 7,
+  "tag": "svg",
+  "cls": "[object SVGAnimatedString]",
+  "rect": [
+   547,
+   530,
+   14,
+   14
+  ],
+  "font": "13.3333px/normal",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 6,
+  "tag": "div",
+  "cls": "RlGAzG_modes",
+  "rect": [
+   580,
+   523,
+   100,
+   28
+  ],
+  "font": "14px/24px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "12px",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 8,
+  "tag": "span",
+  "cls": "_root_4ub78_1",
+  "rect": [
+   580,
+   523,
+   100,
+   28
+  ],
+  "font": "14px/24px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 9,
+  "tag": "button",
+  "cls": "dlU_AG_trigger",
+  "rect": [
+   580,
+   523,
+   100,
+   28
+  ],
+  "font": "13px/20px",
+  "color": "rgb(97, 102, 107)",
+  "gap": "4px",
+  "pad": "0px 4px 0px 8px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "8px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 10,
+  "tag": "span",
+  "cls": "dlU_AG_triggerIcon",
+  "rect": [
+   588,
+   530,
+   14,
+   14
+  ],
+  "font": "13px/20px",
+  "color": "rgb(97, 102, 107)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 11,
+  "tag": "svg",
+  "cls": "[object SVGAnimatedString]",
+  "rect": [
+   588,
+   530,
+   14,
+   14
+  ],
+  "font": "13px/20px",
+  "color": "rgb(97, 102, 107)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 12,
+  "tag": "path",
+  "cls": "[object SVGAnimatedString]",
+  "rect": [
+   589,
+   531,
+   10,
+   11
+  ],
+  "font": "13px/20px",
+  "color": "rgb(97, 102, 107)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 10,
+  "tag": "span",
+  "cls": "dlU_AG_triggerLabel",
+  "rect": [
+   606,
+   527,
+   52,
+   20
+  ],
+  "font": "13px/20px",
+  "color": "rgb(97, 102, 107)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": "完全权限"
+ },
+ {
+  "d": 10,
+  "tag": "span",
+  "cls": "dlU_AG_chevron",
+  "rect": [
+   662,
+   530,
+   14,
+   14
+  ],
+  "font": "13px/20px",
+  "color": "rgb(173, 178, 184)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 11,
+  "tag": "svg",
+  "cls": "[object SVGAnimatedString]",
+  "rect": [
+   662,
+   530,
+   14,
+   14
+  ],
+  "font": "13px/20px",
+  "color": "rgb(173, 178, 184)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 12,
+  "tag": "path",
+  "cls": "[object SVGAnimatedString]",
+  "rect": [
+   665,
+   535,
+   7,
+   3
+  ],
+  "font": "13px/20px",
+  "color": "rgb(173, 178, 184)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 5,
+  "tag": "div",
+  "cls": "RlGAzG_trailing",
+  "rect": [
+   1066,
+   520,
+   238,
+   34
+  ],
+  "font": "14px/24px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "12px",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 374.266px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 6,
+  "tag": "div",
+  "cls": "RlGAzG_standardControls",
+  "rect": [
+   1066,
+   523,
+   180,
+   28
+  ],
+  "font": "14px/24px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "12px",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 8,
+  "tag": "div",
+  "cls": "wq12jW_root",
+  "rect": [
+   1066,
+   523,
+   180,
+   28
+  ],
+  "font": "14px/24px",
+  "color": "rgb(15, 17, 21)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 9,
+  "tag": "button",
+  "cls": "wq12jW_trigger",
+  "rect": [
+   1066,
+   523,
+   180,
+   28
+  ],
+  "font": "13px/20px",
+  "color": "rgb(97, 102, 107)",
+  "gap": "4px",
+  "pad": "0px 4px 0px 8px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "8px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 10,
+  "tag": "span",
+  "cls": "wq12jW_triggerLabel",
+  "rect": [
+   1074,
+   527,
+   118,
+   20
+  ],
+  "font": "13px/20px",
+  "color": "rgb(97, 102, 107)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": "DeepSeek V4.1 Flash"
+ },
+ {
+  "d": 10,
+  "tag": "span",
+  "cls": "wq12jW_triggerEffort",
+  "rect": [
+   1196,
+   527,
+   27,
+   20
+  ],
+  "font": "13px/20px",
+  "color": "rgb(173, 178, 184)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": "High"
+ },
+ {
+  "d": 10,
+  "tag": "svg",
+  "cls": "[object SVGAnimatedString]",
+  "rect": [
+   1228,
+   530,
+   14,
+   14
+  ],
+  "font": "13px/20px",
+  "color": "rgb(173, 178, 184)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 11,
+  "tag": "path",
+  "cls": "[object SVGAnimatedString]",
+  "rect": [
+   1231,
+   535,
+   7,
+   3
+  ],
+  "font": "13px/20px",
+  "color": "rgb(173, 178, 184)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 6,
+  "tag": "button",
+  "cls": "RlGAzG_primary",
+  "rect": [
+   1270,
+   518,
+   34,
+   34
+  ],
+  "font": "13.3333px/normal",
+  "color": "rgb(255, 255, 255)",
+  "gap": "normal",
+  "pad": "1px 6px 1px 6px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "999px",
+  "bg": "rgb(65, 118, 230)",
+  "text": ""
+ },
+ {
+  "d": 7,
+  "tag": "svg",
+  "cls": "[object SVGAnimatedString]",
+  "rect": [
+   1279,
+   527,
+   16,
+   16
+  ],
+  "font": "13.3333px/normal",
+  "color": "rgb(255, 255, 255)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ },
+ {
+  "d": 8,
+  "tag": "path",
+  "cls": "[object SVGAnimatedString]",
+  "rect": [
+   1280,
+   527,
+   13,
+   14
+  ],
+  "font": "13.3333px/normal",
+  "color": "rgb(255, 255, 255)",
+  "gap": "normal",
+  "pad": "0px 0px 0px 0px",
+  "margin": "0px 0px 0px 0px",
+  "radius": "0px",
+  "bg": "rgba(0, 0, 0, 0)",
+  "text": ""
+ }
+]
