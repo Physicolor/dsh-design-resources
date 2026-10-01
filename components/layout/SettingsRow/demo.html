@@ -3,15 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SettingsRow 设置项行 · DSH 设计资源</title>
+<title>SettingsRow · DSH 设计资源</title>
 <style>
-/* ---------------------------------------------------------------------------
-   演示用 token 脚手架。数值逐条取自本仓库 website/css/dsh-tokens.css 与
-   app.asar 内官方主题对合成 token（elevation / shadow / font）的定义，
-   与 components/controls/Button/demo.html 的 :root 逐字一致。
-   真实 DSH 运行时由宿主主题注入这些变量；demo 只是把同一批值内联进来，
-   组件类本身不写死任何颜色。
-   --------------------------------------------------------------------------- */
 :root {
   --dsw-static-neutral-bluish-00: #fff;
   --dsw-static-neutral-bluish-50: #f9fafb;
@@ -116,17 +109,31 @@
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
 }
 
-/* ---------------------------------------------------------------------------
-   以下为 SettingsRow 组件样式，与 settingsrow.module.css 数值逐条一致
-   （类名去掉了 CSS Modules 的哈希）。§ 标记的行是本仓库建议值。
-   标题 14/22 取官方 Button.module.css .button；说明用官方合成 token
-   --dsw-font-xs-13；分隔线 0.5px + border-l2 取官方 Menu.module.css .footer。
-   --------------------------------------------------------------------------- */
+/* 深色主题：站点把深色 token 挂在 body[data-ds-dark-theme] 上，Shadow DOM 里选择不到它，
+   而 :host 自己的自定义属性又会盖过继承值——所以深色值在文件内自带一份，用 light-dark()
+   依据宿主继承下来的 color-scheme 选择。只列本页用到、且深浅两套取值不同的 token；
+   数值逐条取自 website/css/dsh-tokens.css。 */
+:root {
+  --dsw-alias-bg-layer-1: light-dark(var(--dsw-static-neutral-bluish-00), var(--dsw-static-neutral-bluish-875));
+  --dsw-alias-border-l2: light-dark(#0000001a, #ffffff1f);
+  --dsw-alias-border-l3: light-dark(#0000001f, #ffffff29);
+  --dsw-alias-border-l4: light-dark(#00000029, #fff3);
+  --dsw-alias-brand-primary: light-dark(var(--dsw-static-neutral-bluish-1000), var(--dsw-static-neutral-bluish-50));
+  --dsw-alias-interactive-bg-hover: light-dark(#2631480f, #ffffff14);
+  --dsw-alias-label-dimmed: light-dark(var(--dsw-static-neutral-bluish-200), var(--dsw-static-neutral-bluish-750));
+  --dsw-alias-label-primary: light-dark(var(--dsw-static-neutral-bluish-1000), var(--dsw-static-neutral-bluish-50));
+  --dsw-alias-label-primary-foreground: light-dark(var(--dsw-static-neutral-bluish-00), var(--dsw-static-neutral-bluish-1000));
+  --dsw-alias-label-tertiary: light-dark(var(--dsw-static-neutral-bluish-600), var(--dsw-static-neutral-bluish-400));
+}
+
+/* --------------------------------------------------- 组件几何
+   数值逐条取自同目录 settingsrow.module.css（CSS Modules 的哈希类名已去掉），
+   规则重新组织过，声明值未改。 */
 .row {
-  --dsh-sr-min-height: 44px;  /* § 建议值 */
-  --dsh-sr-pad-y: 12px;       /* § 建议值 */
-  --dsh-sr-pad-x: 12px;       /* § 建议值 */
-  --dsh-sr-gap: 12px;         /* § 建议值 */
+  --dsh-sr-min-height: 44px;
+  --dsh-sr-pad-y: 12px;
+  --dsh-sr-pad-x: 12px;
+  --dsh-sr-gap: 12px;
 
   box-sizing: border-box;
   display: flex;
@@ -139,23 +146,29 @@
   cursor: pointer;
   font-family: inherit;
 }
-.divider { box-shadow: inset 0 -0.5px 0 0 var(--dsw-alias-border-l2); } /* token 来自官方 Menu .footer */
+
+/* 行间分隔线：官方 Menu.module.css .footer 的 0.5px + border-l2 */
+.divider { box-shadow: inset 0 -0.5px 0 0 var(--dsw-alias-border-l2); }
 
 .text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+
 .title { font-size: 14px; line-height: 22px; color: var(--dsw-alias-label-primary); }
+
 .description {
-  /* 与本组件 settingsrow.module.css 一致：longhand 兜底 + 合成 token 覆盖 */
   font-size: var(--dsh-sr-desc-size, 13px);
   line-height: var(--dsh-sr-desc-line, 20px);
   color: var(--dsw-alias-label-tertiary);
 }
+
 @supports (font: var(--dsw-font-xs-13)) {
   .description { font: var(--dsw-font-xs-13); }
 }
-.control { flex: none; display: flex; align-items: center; gap: 8px; }
-.row:hover { background: var(--dsw-alias-interactive-bg-hover); } /* § 建议值 */
 
-/* --- 为了让 demo 里的控件真实可见：官方 Switch.module.css / Input.module.css 的值 --- */
+.control { flex: none; display: flex; align-items: center; gap: 8px; }
+
+.row:hover { background: var(--dsw-alias-interactive-bg-hover); }
+
+/* Switch 组件的几何，逐条同 controls/Switch/switch.module.css。 */
 .switch {
   box-sizing: border-box;
   position: relative;
@@ -165,21 +178,30 @@
   padding: 2px;
   border: 0;
   border-radius: 10px;
+  corner-shape: round;
   background: var(--dsw-alias-border-l3);
   cursor: pointer;
 }
-.switch[aria-checked="true"] { background: var(--dsw-alias-brand-primary); }
+
+.switch[aria-checked='true'] { background: var(--dsw-alias-brand-primary); }
+.switch:disabled { cursor: default; opacity: 0.5; }
 .switch:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 2px; }
-.thumb {
+
+.switch .thumb {
+  display: block;
   width: 16px;
   height: 16px;
   border-radius: 50%;
+  corner-shape: round;
   background: var(--dsw-alias-label-primary-foreground);
   transition: transform 120ms ease;
 }
-.switch[aria-checked="true"] .thumb { transform: translateX(16px); }
 
+.switch[aria-checked='true'] .thumb { transform: translateX(16px); }
+
+/* Input 组件的几何，逐条同 controls/Input/input.module.css。 */
 .input-wrap {
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -189,10 +211,12 @@
   border-radius: 8px;
   background: var(--dsw-alias-bg-layer-1);
 }
-.input {
+
+.input-wrap:focus-within { border-color: var(--dsw-alias-brand-primary); }
+
+.input-field {
   flex: 1;
   min-width: 0;
-  width: 96px;
   border: none;
   outline: none;
   background: transparent;
@@ -201,162 +225,84 @@
   line-height: 22px;
   color: var(--dsw-alias-label-primary);
 }
-.input::placeholder { color: var(--dsw-alias-label-dimmed); }
 
-.select {
-  height: 32px;
-  padding: 0 8px;
-  border: 0.5px solid var(--dsw-alias-border-l4);
-  border-radius: 8px;
-  background: var(--dsw-alias-bg-layer-1);
+.input-field::placeholder { color: var(--dsw-alias-label-dimmed); }
+
+/* ------------------------------------------------------------------ demo 外壳
+   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
+   .demo-label 是本页唯一允许出现的文字，只写客观事实（尺寸 / 状态名）。 */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 16px;
   color: var(--dsw-alias-label-primary);
-  font-family: inherit;
+  font-family: var(--dsw-font-family);
   font-size: 14px;
   line-height: 22px;
 }
-
-/* ------------------------- 下面是为了 demo 能看清组件，非组件样式 ------------------------- */
-.panel {
-  box-sizing: border-box;
-  width: 420px;
-  padding: 4px 8px;
-  border-radius: 12px;
-  background: var(--dsw-alias-bg-layer-2);
-  box-shadow: var(--dsw-elevation-prominent);
-}
-.group-title {
-  margin: 0;
-  padding: 8px 12px;
-  font-size: 12px;
+.demo-label {
+  margin: 0 0 8px;
+  font-size: 11px;
   line-height: 16px;
-  font-weight: 500;
   color: var(--dsw-alias-label-tertiary);
 }
-
-body {
-  margin: 0;
-  padding: 32px;
-  background: var(--dsw-alias-bg-base);
-  color: var(--dsw-alias-label-primary);
-  font: var(--dsw-font-s-14);
+.demo-group + .demo-group { margin-top: 20px; }
+.demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.demo-stack, .stack { display: flex; flex-direction: column; }
+.demo-canvas {
+  padding: 12px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--dsw-alias-label-primary) 7%, transparent);
 }
-h1 { font-size: 18px; line-height: 26px; font-weight: 600; margin: 0 0 4px; }
-p.lead { margin: 0 0 24px; color: var(--dsw-alias-label-secondary); font: var(--dsw-font-xs-13); }
-h2 { font-size: 13px; line-height: 20px; font-weight: 600; color: var(--dsw-alias-label-tertiary); margin: 24px 0 8px; }
-.hint { color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); }
 </style>
 </head>
 <body>
-  <h1>SettingsRow 设置项行</h1>
-  <p class="lead">标题 14/22 取官方 Button .button 的字号档；说明用官方合成 token --dsw-font-xs-13（13/20）+ label-tertiary；分隔线 0.5px + border-l2 取官方 Menu .footer。最小高度、内边距、间距为本仓库建议值（4 的倍数）。</p>
-
-  <h2>基础 · 标题 + 控件</h2>
-  <div class="panel">
-    <label class="row divider">
-      <span class="text"><span class="title">自动保存</span></span>
-      <span class="control">
-        <button type="button" class="switch" role="switch" aria-checked="true" aria-label="自动保存"><span class="thumb"></span></button>
-      </span>
-    </label>
-    <label class="row">
-      <span class="text"><span class="title">发送前确认</span></span>
-      <span class="control">
-        <button type="button" class="switch" role="switch" aria-checked="false" aria-label="发送前确认"><span class="thumb"></span></button>
-      </span>
-    </label>
-  </div>
-
-  <h2>带说明 · 标题 14/22 + 说明 13/20</h2>
-  <div class="panel">
+  <div class="demo-group" style="max-width:420px">
+    <p class="demo-label">min-height 44 · pad 12 · gap 12 · r10 · 标题 14/22</p>
     <label class="row divider">
       <span class="text">
         <span class="title">自动保存</span>
         <span class="description">每次编辑后 2 秒写入磁盘</span>
       </span>
+      <span class="control"><button type="button" class="switch" role="switch" aria-checked="true" aria-label="自动保存"><span class="thumb"></span></button></span>
+    </label>
+    <label class="row divider">
+      <span class="text">
+        <span class="title">深色模式</span>
+        <span class="description">跟随系统</span>
+      </span>
+      <span class="control"><button type="button" class="switch" role="switch" aria-checked="false" aria-label="深色模式"><span class="thumb"></span></button></span>
+    </label>
+  </div>
+
+  <div class="demo-group" style="max-width:420px">
+    <p class="demo-label">control · Input h32 · 标题点击即聚焦</p>
+    <label class="row divider">
+      <span class="text"><span class="title">工作目录</span></span>
       <span class="control">
-        <button type="button" class="switch" role="switch" aria-checked="true" aria-label="自动保存"><span class="thumb"></span></button>
+        <span class="input-wrap" style="width:200px"><span style="display:inline-flex;flex:none;width:16px;height:16px;align-items:center;justify-content:center;color:var(--dsw-alias-label-tertiary)"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M1.6 3.2h4.4l1.2 1.6h7.2v8H1.6z" fill="currentColor"/></svg></span><input class="input-field" value="D:\dsh-home" aria-label="工作目录"></span>
       </span>
     </label>
     <label class="row divider">
       <span class="text">
-        <span class="title">流式输出</span>
-        <span class="description">逐字显示模型回复，关闭后等整段生成完再显示</span>
+        <span class="title">搜索范围</span>
+        <span class="description">留空表示全库</span>
       </span>
       <span class="control">
-        <button type="button" class="switch" role="switch" aria-checked="false" aria-label="流式输出"><span class="thumb"></span></button>
-      </span>
-    </label>
-    <label class="row">
-      <span class="text">
-        <span class="title">主题</span>
-        <span class="description">跟随系统外观</span>
-      </span>
-      <span class="control">
-        <select class="select" aria-label="主题">
-          <option>跟随系统</option>
-          <option>浅色</option>
-          <option>深色</option>
-        </select>
+        <span class="input-wrap" style="width:200px"><span style="display:inline-flex;flex:none;width:16px;height:16px;align-items:center;justify-content:center;color:var(--dsw-alias-label-tertiary)"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6.8 1.6a5.2 5.2 0 1 0 3.06 9.4l3.07 3.07 1.13-1.13-3.07-3.07A5.2 5.2 0 0 0 6.8 1.6zm0 1.6a3.6 3.6 0 1 1 0 7.2 3.6 3.6 0 0 1 0-7.2z" fill="currentColor"/></svg></span><input class="input-field" placeholder="关键字" aria-label="搜索范围"></span>
       </span>
     </label>
   </div>
 
-  <h2>右侧是输入型控件</h2>
-  <div class="panel">
-    <label class="row divider">
-      <span class="text">
-        <span class="title">工作目录</span>
-        <span class="description">模型读写文件的根目录</span>
-      </span>
-      <span class="control">
-        <span class="input-wrap"><input class="input" type="text" value="D:\Documents" aria-label="工作目录"></span>
-      </span>
-    </label>
-    <label class="row divider">
-      <span class="text">
-        <span class="title">命令前缀</span>
-        <span class="description">每轮请求前追加的系统提示</span>
-      </span>
-      <span class="control">
-        <span class="input-wrap"><input class="input" type="text" placeholder="例如 /no-emoji" aria-label="命令前缀"></span>
-      </span>
-    </label>
+  <div class="demo-group" style="max-width:420px">
+    <p class="demo-label">divider false · 列表最后一行 · 控件各自带焦点环</p>
     <label class="row">
-      <span class="text"><span class="title">禁用整行（无控件时也保持排版）</span></span>
-      <span class="control">
-        <button type="button" class="switch" role="switch" aria-checked="false" disabled aria-label="禁用示例" style="opacity:.5"><span class="thumb"></span></button>
+      <span class="text">
+        <span class="title">通知</span>
+        <span class="description">仅在失败时提醒</span>
       </span>
+      <span class="control"><button type="button" class="switch" role="switch" aria-checked="false" aria-label="通知"><span class="thumb"></span></button><button type="button" class="switch" role="switch" aria-checked="true" aria-label="已锁定"><span class="thumb"></span></button></span>
     </label>
   </div>
-
-  <h2>最后一个设置项 · divider=false</h2>
-  <div class="panel">
-    <label class="row divider">
-      <span class="text"><span class="title">上一行有分隔线</span></span>
-      <span class="control"><span class="hint">0.5px l2</span></span>
-    </label>
-    <label class="row">
-      <span class="text"><span class="title">最后一行没有分隔线</span></span>
-      <span class="control"><span class="hint">divider=false</span></span>
-    </label>
-  </div>
-
-  <h2>只读展示 · 无控件</h2>
-  <div class="panel">
-    <label class="row divider">
-      <span class="text">
-        <span class="title">版本</span>
-        <span class="description">设置行的 control 可省略，右栏留空</span>
-      </span>
-    </label>
-    <label class="row">
-      <span class="text"><span class="title">点击标题文字会聚焦/切换右侧控件（根节点是 label）</span></span>
-      <span class="control">
-        <button type="button" class="switch" role="switch" aria-checked="false" aria-label="label 演示"><span class="thumb"></span></button>
-      </span>
-    </label>
-  </div>
-
-  <p class="hint" style="margin-top:24px">提示：把鼠标移到任意一行上看整行悬停底（§ 本仓库建议值）；Tab 到开关上看官方 Switch 的焦点环；点「label 演示」这一行的文字，开关会被激活。</p>
 </body>
 </html>

@@ -3,15 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Button 按钮 · DSH 设计资源</title>
+<title>Button · DSH 设计资源</title>
 <style>
-/* ---------------------------------------------------------------------------
-   演示用 token 脚手架。
-   数值逐条取自本仓库 website/css/dsh-tokens.css（由产品主题采集生成）与
-   app.asar 内官方主题对合成 token（elevation / shadow / font）的定义。
-   真实 DSH 运行时由宿主主题注入这些变量；demo 只是把同一批值内联进来，
-   组件类本身不写死任何颜色。
-   --------------------------------------------------------------------------- */
 :root {
   --dsw-static-neutral-bluish-00: #fff;
   --dsw-static-neutral-bluish-50: #f9fafb;
@@ -117,10 +110,23 @@
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
 }
 
-/* ---------------------------------------------------------------------------
-   以下为 Button 组件样式，与 button.module.css 数值逐条一致（类名去掉了
-   CSS Modules 的哈希）。§ 标记的行是本仓库建议值，不是官方数值。
-   --------------------------------------------------------------------------- */
+/* 深色主题：站点把深色 token 挂在 body[data-ds-dark-theme] 上，Shadow DOM 里选择不到它，
+   而 :host 自己的自定义属性又会盖过继承值——所以深色值在文件内自带一份，用 light-dark()
+   依据宿主继承下来的 color-scheme 选择。只列本页用到、且深浅两套取值不同的 token；
+   数值逐条取自 website/css/dsh-tokens.css。 */
+:root {
+  --dsw-alias-border-l3: light-dark(#0000001f, #ffffff29);
+  --dsw-alias-brand-primary: light-dark(var(--dsw-static-neutral-bluish-1000), var(--dsw-static-neutral-bluish-50));
+  --dsw-alias-button-primary-hover: light-dark(var(--dsw-static-neutral-bluish-750), var(--dsw-static-neutral-bluish-100));
+  --dsw-alias-interactive-bg-active: light-dark(#2631481a, #ffffff24);
+  --dsw-alias-interactive-bg-hover: light-dark(#2631480f, #ffffff14);
+  --dsw-alias-label-primary: light-dark(var(--dsw-static-neutral-bluish-1000), var(--dsw-static-neutral-bluish-50));
+  --dsw-alias-label-primary-foreground: light-dark(var(--dsw-static-neutral-bluish-00), var(--dsw-static-neutral-bluish-1000));
+}
+
+/* --------------------------------------------------- 组件几何
+   数值逐条取自同目录 button.module.css（CSS Modules 的哈希类名已去掉），
+   规则重新组织过，声明值未改。 */
 .button {
   --dsh-btn-height: 36px;
   --dsh-btn-pad-x: 14px;
@@ -146,7 +152,9 @@
   white-space: nowrap;
   cursor: pointer;
 }
+
 .button:disabled { cursor: not-allowed; opacity: 0.4; }
+
 /* § 本仓库建议值：官方 Button 未定义焦点样式 */
 .button:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 2px; }
 
@@ -157,6 +165,7 @@
   --dsh-btn-font-size: 12px;
   --dsh-btn-line-height: 18px;
 }
+
 /* § 高度取官方注释的 Icon_container 28×28；width/padding 为本仓库建议值 */
 .icon-only { --dsh-btn-pad-x: 0; width: var(--dsh-btn-height); padding: 0; }
 
@@ -178,81 +187,81 @@
   height: 16px;
 }
 
-/* ------------------------------------------------------------------ demo 外壳 */
+/* ------------------------------------------------------------------ demo 外壳
+   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
+   .demo-label 是本页唯一允许出现的文字，只写客观事实（尺寸 / 状态名）。 */
+* { box-sizing: border-box; }
 body {
   margin: 0;
-  padding: 32px;
-  background: var(--dsw-alias-bg-base);
+  padding: 16px;
   color: var(--dsw-alias-label-primary);
-  font: var(--dsw-font-s-14);
+  font-family: var(--dsw-font-family);
+  font-size: 14px;
+  line-height: 22px;
 }
-h1 { font-size: 18px; line-height: 26px; font-weight: 600; margin: 0 0 4px; }
-p.lead { margin: 0 0 24px; color: var(--dsw-alias-label-secondary); font: var(--dsw-font-xs-13); }
-h2 { font-size: 13px; line-height: 20px; font-weight: 600; color: var(--dsw-alias-label-tertiary); margin: 24px 0 8px; }
-.row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-.toolbar-strip {
-  display: inline-flex; align-items: center; gap: 4px;
-  padding: 4px; border-radius: 12px;
-  background: var(--dsw-alias-bg-module-platform);
+.demo-label {
+  margin: 0 0 8px;
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--dsw-alias-label-tertiary);
 }
-.hint { color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); }
+.demo-group + .demo-group { margin-top: 20px; }
+.demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.demo-stack, .stack { display: flex; flex-direction: column; }
+.demo-canvas {
+  padding: 12px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--dsw-alias-label-primary) 7%, transparent);
+}
 </style>
 </head>
 <body>
-  <h1>Button 按钮</h1>
-  <p class="lead">几何来自官方 Button.module.css（h36 / pad 0 14px / gap 4px / r18；sm h28 / 12-18 / pad 0 10px / r14）。实现为本仓库原创。</p>
-
-  <h2>四变体 · md（36px）</h2>
-  <div class="row">
-    <button type="button" class="button primary">主要操作</button>
-    <button type="button" class="button ghost">次要操作</button>
-    <button type="button" class="button outline">取消</button>
-    <button type="button" class="button toolbar">工具条</button>
+  <div class="demo-group">
+    <p class="demo-label">primary · ghost · outline · toolbar — md · h36 r18 · pad 0 14</p>
+    <div class="demo-row">
+      <button type="button" class="button primary">主要操作</button>
+      <button type="button" class="button ghost">次要操作</button>
+      <button type="button" class="button outline">取消</button>
+      <button type="button" class="button toolbar">工具条</button>
+    </div>
   </div>
 
-  <h2>四变体 · sm（28px）</h2>
-  <div class="row">
-    <button type="button" class="button primary sm">保存</button>
-    <button type="button" class="button ghost sm">重试</button>
-    <button type="button" class="button outline sm">取消</button>
-    <button type="button" class="button toolbar sm">设置</button>
+  <div class="demo-group">
+    <p class="demo-label">sm · h28 r14 · pad 0 10 · font 12/18</p>
+    <div class="demo-row">
+      <button type="button" class="button primary sm">保存</button>
+      <button type="button" class="button ghost sm">重试</button>
+      <button type="button" class="button outline sm">取消</button>
+      <button type="button" class="button toolbar sm">设置</button>
+    </div>
   </div>
 
-  <h2>带图标（图标容器 16×16）</h2>
-  <div class="row">
-    <button type="button" class="button primary">
-      <span class="icon"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M7.2 1.6h1.6v5.6h5.6v1.6H8.8v5.6H7.2V8.8H1.6V7.2h5.6V1.6z" fill="currentColor"/></svg></span>
-      新建会话
-    </button>
-    <button type="button" class="button ghost sm">
-      <span class="icon"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.6a6.4 6.4 0 1 0 0 12.8A6.4 6.4 0 0 0 8 1.6zm0 1.6a4.8 4.8 0 1 1 0 9.6 4.8 4.8 0 0 1 0-9.6z" fill="currentColor"/></svg></span>
-      刷新
-    </button>
+  <div class="demo-group">
+    <p class="demo-label">icon 16×16 · gap 4 — md / md / sm / sm</p>
+    <div class="demo-row">
+      <button type="button" class="button primary"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M7.2 1.6h1.6v5.6h5.6v1.6H8.8v5.6H7.2V8.8H1.6V7.2h5.6V1.6z" fill="currentColor"/></svg></span>新建会话</button>
+      <button type="button" class="button ghost"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 2.4a5.6 5.6 0 1 1-5.52 4.64h1.61A4 4 0 1 0 8 4z" fill="currentColor"/><path d="M7.2 0.8 10.4 3.2 7.2 5.6z" fill="currentColor"/></svg></span>刷新</button>
+      <button type="button" class="button outline sm"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3.5 2.4 8 6.9l4.5-4.5 1.1 1.1L9.1 8l4.5 4.5-1.1 1.1L8 9.1l-4.5 4.5-1.1-1.1L6.9 8 2.4 3.5z" fill="currentColor"/></svg></span>取消</button>
+      <button type="button" class="button toolbar sm"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M13.1 4.6 6.4 11.3 2.9 7.8l1.1-1.1 2.4 2.4 5.6-5.6z" fill="currentColor"/></svg></span>应用</button>
+    </div>
   </div>
 
-  <h2>仅图标按钮（sm 高度 28px，正方形，需 aria-label）</h2>
-  <div class="row">
-    <button type="button" class="button ghost sm icon-only" aria-label="更多操作">
-      <span class="icon"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="3" cy="8" r="1.4" fill="currentColor"/><circle cx="8" cy="8" r="1.4" fill="currentColor"/><circle cx="13" cy="8" r="1.4" fill="currentColor"/></svg></span>
-    </button>
-    <button type="button" class="button toolbar sm icon-only" aria-label="关闭">
-      <span class="icon"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 2.4 8 6.9l4.5-4.5 1.1 1.1L9.1 8l4.5 4.5-1.1 1.1L8 9.1l-4.5 4.5-1.1-1.1L6.9 8 2.4 3.5z" fill="currentColor"/></svg></span>
-    </button>
+  <div class="demo-group">
+    <p class="demo-label">icon-only · 28×28 · 需 aria-label</p>
+    <div class="demo-row">
+      <button type="button" class="button ghost sm icon-only" aria-label="更多操作"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><circle cx="3" cy="8" r="1.4" fill="currentColor"/><circle cx="8" cy="8" r="1.4" fill="currentColor"/><circle cx="13" cy="8" r="1.4" fill="currentColor"/></svg></span></button>
+      <button type="button" class="button toolbar sm icon-only" aria-label="关闭"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3.5 2.4 8 6.9l4.5-4.5 1.1 1.1L9.1 8l4.5 4.5-1.1 1.1L8 9.1l-4.5 4.5-1.1-1.1L6.9 8 2.4 3.5z" fill="currentColor"/></svg></span></button>
+      <button type="button" class="button primary sm icon-only" aria-label="添加"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M7.2 1.6h1.6v5.6h5.6v1.6H8.8v5.6H7.2V8.8H1.6V7.2h5.6V1.6z" fill="currentColor"/></svg></span></button>
+    </div>
   </div>
 
-  <h2>禁用（opacity 0.4）</h2>
-  <div class="row">
-    <button type="button" class="button primary" disabled>主要操作</button>
-    <button type="button" class="button outline" disabled>取消</button>
+  <div class="demo-group">
+    <p class="demo-label">disabled · opacity 0.4</p>
+    <div class="demo-row">
+      <button type="button" class="button primary" disabled>主要操作</button>
+      <button type="button" class="button ghost" disabled>次要操作</button>
+      <button type="button" class="button outline" disabled>取消</button>
+    </div>
   </div>
-
-  <h2>放进工具条</h2>
-  <div class="toolbar-strip">
-    <button type="button" class="button toolbar sm icon-only" aria-label="添加">+</button>
-    <button type="button" class="button toolbar sm">筛选</button>
-    <button type="button" class="button toolbar sm">排序</button>
-  </div>
-
-  <p class="hint" style="margin-top:24px">提示：把鼠标移到按钮上看 hover 底色；Tab 键可以看到焦点环（§ 本仓库建议值）。</p>
 </body>
 </html>

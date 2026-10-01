@@ -162,6 +162,40 @@ function titleOf(md, fallback) {
 /* ── components ────────────────────────────────────────────────────── */
 
 /**
+ * The first prose paragraph of a markdown document.
+ * @param md - markdown source.
+ * @returns the paragraph, with newlines folded.
+ */
+function firstParagraph(md) {
+  for (const block of md.split(/\r?\n\r?\n/u)) {
+    const text = block.trim()
+    if (text === '') continue
+    if (/^(#{1,6}\s|[-*+]\s|\d+\.\s|\||>|```)/u.test(text)) continue
+    return text.replace(/\s+/gu, ' ').trim()
+  }
+  return ''
+}
+
+/**
+ * The bullet items under a `## heading`.
+ * @param md - markdown source.
+ * @param heading - exact heading text, without the hashes.
+ * @returns list items.
+ */
+function listUnder(md, heading) {
+  const out = []
+  let inside = false
+  for (const line of md.split(/\r?\n/u)) {
+    const found = /^##\s+(.+?)\s*$/u.exec(line)
+    if (found !== null) { inside = found[1] === heading; continue }
+    if (!inside) continue
+    const item = /^\s*[-*]\s+(.+)$/u.exec(line)
+    if (item !== null) out.push(item[1].trim())
+  }
+  return out
+}
+
+/**
  * Load the reusable-source knowledge base.
  * @returns component records with source, styles, demo and docs inlined.
  */
@@ -173,13 +207,28 @@ function loadComponents() {
     const dir = entry.path ?? ''
     const base = dir === '' ? '' : `${dir.replace(/\/$/u, '')}/`
     const readme = readText(`${base}README.md`)
+    const spec = readText(`${base}SPEC.md`)
     const demo = readText(`${base}demo.html`)
     const tsx = readText(`${base}index.tsx`)
     const css = readText(`${base}${(entry.id ?? 'component').toLowerCase()}.module.css`)
+
+    /* The documents are the source of truth for the documents: the manifest's
+     * prose fields were written back when the READMEs still spoke in
+     * engineering voice, so they are read out of the prose rather than
+     * maintained in two places that drift. */
+    const summary = firstParagraph(readme) || entry.summary || ''
+    const whenToUse = listUnder(readme, '什么时候用它')
+    const whenNotToUse = listUnder(readme, '什么时候不要用它')
+
     return {
       ...entry,
+      summary,
+      whenToUse: whenToUse.length > 0 ? whenToUse : entry.whenToUse,
+      whenNotToUse: whenNotToUse.length > 0 ? whenNotToUse : entry.whenNotToUse,
       readme,
       readmeHtml: readme === '' ? '' : mdToHtml(readme),
+      specHtml: spec === '' ? '' : mdToHtml(spec),
+      hasSpec: spec !== '',
       demo,
       tsx,
       css,

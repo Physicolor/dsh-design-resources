@@ -3,17 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>InlineNotice 内联提示条 · DSH 设计资源</title>
+<title>InlineNotice · DSH 设计资源</title>
 <style>
-/* ---------------------------------------------------------------------------
-   演示用 token 脚手架。
-   数值逐条取自本仓库 website/css/dsh-tokens.css（由产品主题采集生成）与
-   app.asar 内官方主题对合成 token（elevation / shadow / font）的定义。
-   真实 DSH 运行时由宿主主题注入这些变量；demo 只是把同一批值内联进来，
-   组件类本身不写死任何颜色。
-   比 Button/demo.html 多一条：--dsw-alias-state-business-tertiary，
-   已核对 website/css/dsh-tokens.css 第 158 行存在（= --dsw-static-deepseek-100）。
-   --------------------------------------------------------------------------- */
 :root {
   --dsw-static-neutral-bluish-00: #fff;
   --dsw-static-neutral-bluish-50: #f9fafb;
@@ -120,17 +111,27 @@
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
 }
 
-/* ---------------------------------------------------------------------------
-   以下为 InlineNotice 组件样式，与 inline-notice.module.css 数值逐条一致
-   （类名去掉了 CSS Modules 的哈希）。§ 标记的行是本仓库建议值，不是官方数值。
-   --------------------------------------------------------------------------- */
+/* 深色主题：站点把深色 token 挂在 body[data-ds-dark-theme] 上，Shadow DOM 里选择不到它，
+   而 :host 自己的自定义属性又会盖过继承值——所以深色值在文件内自带一份，用 light-dark()
+   依据宿主继承下来的 color-scheme 选择。只列本页用到、且深浅两套取值不同的 token；
+   数值逐条取自 website/css/dsh-tokens.css。 */
+:root {
+  --dsw-alias-bg-module-platform: light-dark(var(--dsw-static-neutral-bluish-60), var(--dsw-static-neutral-bluish-800));
+  --dsw-alias-label-secondary: light-dark(var(--dsw-static-neutral-bluish-700), var(--dsw-static-neutral-bluish-300));
+  --dsw-alias-state-business-primary: light-dark(var(--dsw-static-deepseek-500), var(--dsw-static-deepseek-400));
+  --dsw-alias-state-error-primary: light-dark(var(--dsw-static-red-600), var(--dsw-static-red-400));
+  --dsw-alias-state-success-tertiary: light-dark(var(--dsw-static-green-100), var(--dsw-static-green-900));
+  --dsw-alias-state-warn-tertiary: light-dark(var(--dsw-static-amber-100), var(--dsw-static-amber-900));
+}
+
+/* --------------------------------------------------- 组件几何
+   数值逐条取自同目录 inline-notice.module.css（CSS Modules 的哈希类名已去掉），
+   规则重新组织过，声明值未改。 */
 .notice {
   --dsh-notice-text: var(--dsw-alias-label-secondary);
   --dsh-notice-bg: var(--dsw-alias-bg-module-platform);
   --dsh-notice-accent: var(--dsw-alias-state-business-primary);
-  /* § 本仓库建议值 */
   --dsh-notice-pad-y: 6px;
-  /* § 本仓库建议值 */
   --dsh-notice-dismiss-size: 20px;
 
   box-sizing: border-box;
@@ -152,22 +153,14 @@
   transition: background-color 160ms ease-out, color 160ms ease-out;
 }
 
-.notice:focus-visible {
-  outline: 2px solid var(--dsh-notice-accent);
-  outline-offset: 2px;
-}
+.notice:focus-visible { outline: 2px solid var(--dsh-notice-accent); outline-offset: 2px; }
 
 .actionable { cursor: pointer; }
-
-.actionable:active {
-  background: color-mix(in srgb, var(--dsh-notice-bg), var(--dsh-notice-accent) 10%);
-}
-
-/* 刚 Tab 进根按钮时，让内层关闭控件也可见 */
+.actionable:active { background: color-mix(in srgb, var(--dsh-notice-bg), var(--dsh-notice-accent) 10%); }
 .actionable:focus-visible .dismiss,
 .actionable:hover .dismiss { opacity: 1; }
 
-/* § 本仓库建议值：官方只有单行 32px 形态 */
+/* § 本仓库建议值：多行形态 */
 .multiline {
   height: auto;
   min-height: 32px;
@@ -176,17 +169,9 @@
   white-space: normal;
 }
 
-/* § 推导自 (18 - 14) / 2 = 2px */
 .multiline .icon { margin-top: 2px; }
 
-.icon {
-  display: grid;
-  place-items: center;
-  flex: none;
-  width: 14px;
-  height: 14px;
-  color: var(--dsh-notice-accent);
-}
+.icon { display: grid; place-items: center; flex: none; width: 14px; height: 14px; color: var(--dsh-notice-accent); }
 
 .text { min-width: 0; overflow-wrap: break-word; }
 
@@ -204,134 +189,87 @@
   opacity: 0.75;
 }
 
-.dismiss:hover {
-  background: color-mix(in srgb, currentColor 12%, transparent);
-  opacity: 1;
-}
+.dismiss:hover { background: color-mix(in srgb, currentColor 12%, transparent); opacity: 1; }
+.dismiss:focus-visible { outline: 2px solid currentColor; outline-offset: 1px; opacity: 1; }
 
-.dismiss:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 1px;
-  opacity: 1;
-}
-
-.warn {
-  --dsh-notice-bg: var(--dsw-alias-state-warn-tertiary);
-  --dsh-notice-text: var(--dsw-alias-state-warn-label);
-  --dsh-notice-accent: var(--dsw-alias-state-warn-label);
-}
-
-.success {
-  --dsh-notice-bg: var(--dsw-alias-state-success-tertiary);
-  --dsh-notice-text: var(--dsw-alias-state-success-primary);
-  --dsh-notice-accent: var(--dsw-alias-state-success-primary);
-}
-
-/* § 本仓库建议值：官方没有 info 的「三级底 + 主色」组合，底色用 Tag 的手法从主色派生 */
-.info {
-  --dsh-notice-bg: color-mix(in srgb, var(--dsw-alias-state-business-primary) 10%, transparent);
-  --dsh-notice-text: var(--dsw-alias-state-business-primary);
-  --dsh-notice-accent: var(--dsw-alias-state-business-primary);
-}
-
-/* § 本仓库建议值：官方 state-error 没有 tertiary 变体，同法派生 */
-.error {
-  --dsh-notice-bg: color-mix(in srgb, var(--dsw-alias-state-error-primary) 10%, transparent);
-  --dsh-notice-text: var(--dsw-alias-state-error-primary);
-  --dsh-notice-accent: var(--dsw-alias-state-error-primary);
-}
+.warn { --dsh-notice-bg: var(--dsw-alias-state-warn-tertiary); --dsh-notice-text: var(--dsw-alias-state-warn-label); --dsh-notice-accent: var(--dsw-alias-state-warn-label); }
+.success { --dsh-notice-bg: var(--dsw-alias-state-success-tertiary); --dsh-notice-text: var(--dsw-alias-state-success-primary); --dsh-notice-accent: var(--dsw-alias-state-success-primary); }
+.info { --dsh-notice-bg: color-mix(in srgb, var(--dsw-alias-state-business-primary) 10%, transparent); --dsh-notice-text: var(--dsw-alias-state-business-primary); --dsh-notice-accent: var(--dsw-alias-state-business-primary); }
+.error { --dsh-notice-bg: color-mix(in srgb, var(--dsw-alias-state-error-primary) 10%, transparent); --dsh-notice-text: var(--dsw-alias-state-error-primary); --dsh-notice-accent: var(--dsw-alias-state-error-primary); }
 
 @media (prefers-reduced-motion: reduce) {
   .notice { transition: none; }
 }
 
-/* ------------------------------------------------------------------ demo 外壳 */
+/* ------------------------------------------------------------------ demo 外壳
+   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
+   .demo-label 是本页唯一允许出现的文字，只写客观事实（尺寸 / 状态名）。 */
+* { box-sizing: border-box; }
 body {
   margin: 0;
-  padding: 32px;
-  background: var(--dsw-alias-bg-base);
+  padding: 16px;
   color: var(--dsw-alias-label-primary);
-  font: var(--dsw-font-s-14);
+  font-family: var(--dsw-font-family);
+  font-size: 14px;
+  line-height: 22px;
 }
-h1 { font-size: 18px; line-height: 26px; font-weight: 600; margin: 0 0 4px; }
-p.lead { margin: 0 0 24px; color: var(--dsw-alias-label-secondary); font: var(--dsw-font-xs-13); }
-h2 { font-size: 13px; line-height: 20px; font-weight: 600; color: var(--dsw-alias-label-tertiary); margin: 24px 0 8px; }
-.hint { color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); }
-.col { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
-.wide { width: 420px; }
+.demo-label {
+  margin: 0 0 8px;
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--dsw-alias-label-tertiary);
+}
+.demo-group + .demo-group { margin-top: 20px; }
+.demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.demo-stack, .stack { display: flex; flex-direction: column; }
+.demo-canvas {
+  padding: 12px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--dsw-alias-label-primary) 7%, transparent);
+}
 </style>
 </head>
 <body>
-  <h1>InlineNotice 内联提示条</h1>
-  <p class="lead">单行几何对齐官方 ConnectionIndicator.module.css（h32 / pad 0 10px / r8 / 12-18 / 500 / 图标 14×14）；warn 与 success 配色直接来自它的 .warning / .success。info 与 error 底色为本仓库建议值（见 README）。</p>
-
-  <h2>四种语气（带图标，单行 32px）</h2>
-  <p class="hint" style="margin:0 0 8px">图标取仓库图标库：warning-outline-16（viewBox 14）、check-outline-14、IconQuestionOutline14。图标是装饰，语义写在文案里。</p>
-  <div class="col">
-    <div class="notice info">
-      <span class="icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.5757 7.00012C12.5757 3.92085 10.0794 1.42463 7.00012 1.42456C3.9208 1.42456 1.42456 3.9208 1.42456 7.00012C1.42463 10.0794 3.92085 12.5757 7.00012 12.5757C10.0793 12.5756 12.5756 10.0793 12.5757 7.00012ZM13.8002 7.00012C13.8001 10.7559 10.7559 13.8001 7.00012 13.8002C3.2443 13.8002 0.199291 10.7559 0.199219 7.00012C0.199219 3.24426 3.24426 0.199219 7.00012 0.199219C10.7559 0.199291 13.8002 3.2443 13.8002 7.00012Z" fill="currentColor"/><path d="M6.18042 8.68184C6.18043 8.09153 6.32893 7.34655 6.92127 6.8481C7.28566 6.54148 7.76104 6.27318 8.0022 6.10811C8.28964 5.91137 8.42234 5.76562 8.48328 5.58944C8.57774 5.31609 8.53121 5.00904 8.34912 4.76741C8.17409 4.53522 7.83879 4.32222 7.28186 4.32222C5.99668 4.32225 5.46969 5.11832 5.46949 5.78939H4.24414C4.24436 4.39942 5.36327 3.09691 7.28186 3.09688C8.17773 3.09688 8.89489 3.45606 9.32752 4.02999C9.75287 4.59438 9.86938 5.32775 9.64026 5.99019C9.44847 6.5444 9.04722 6.87743 8.69434 7.11898C8.29506 7.39226 8.02318 7.52192 7.70996 7.78548C7.51943 7.94582 7.40577 8.24899 7.40577 8.68184V8.75533H6.18042V8.68184Z" fill="currentColor"/><path d="M7.39455 9.44026V10.8109H6.16921V9.44026H7.39455Z" fill="currentColor"/></svg></span>
-      <span class="text">本地草稿已保留 7 天</span>
-    </div>
-
-    <div class="notice success" role="status">
-      <span class="icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.5635 4.58984L7.61426 9.07715C7.35154 9.37561 7.11346 9.64812 6.89453 9.84668C6.66593 10.054 6.38519 10.2506 6.01465 10.3164C5.82079 10.3508 5.62207 10.3529 5.42773 10.3213C5.0561 10.2609 4.77266 10.0674 4.54102 9.86328C4.31926 9.66791 4.07752 9.39911 3.81055 9.10449L2.44531 7.59863L3.55664 6.59082L4.92188 8.09766C5.21256 8.41844 5.38878 8.61191 5.53223 8.73828C5.61022 8.80699 5.65253 8.83192 5.66895 8.83984C5.69648 8.84429 5.72449 8.84467 5.75195 8.83984C5.72657 8.84451 5.75564 8.85422 5.88672 8.73535C6.02833 8.60692 6.20225 8.41088 6.48828 8.08594L10.4385 3.59961L11.5635 4.58984Z" fill="currentColor"/></svg></span>
-      <span class="text">已保存到本地</span>
-    </div>
-
-    <div class="notice warn">
-      <span class="icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.3002 3.32843L7.69986 3.32843L7.69986 7.79657H6.3002L6.3002 3.32843Z" fill="currentColor"/><path d="M6.3002 9.01935H7.69986V10.6711H6.3002V9.01935Z" fill="currentColor"/><path d="M12.6328 6.99976C12.6328 3.88874 10.111 1.36694 7 1.36694C3.88899 1.36695 1.3672 3.88875 1.36719 6.99976C1.36719 10.1108 3.88899 12.6326 7 12.6326C10.111 12.6326 12.6328 10.1108 12.6328 6.99976ZM13.8582 6.99976C13.8582 10.7873 10.7876 13.8579 7 13.8579C3.21244 13.8579 0.141846 10.7873 0.141846 6.99976C0.141857 3.2122 3.21245 0.141612 7 0.141602C10.7876 0.141602 13.8581 3.21219 13.8582 6.99976Z" fill="currentColor"/></svg></span>
-      <span class="text">连接不稳定，正在重试</span>
-    </div>
-
-    <div class="notice error" role="alert">
-      <span class="icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.3002 3.32843L7.69986 3.32843L7.69986 7.79657H6.3002L6.3002 3.32843Z" fill="currentColor"/><path d="M6.3002 9.01935H7.69986V10.6711H6.3002V9.01935Z" fill="currentColor"/><path d="M12.6328 6.99976C12.6328 3.88874 10.111 1.36694 7 1.36694C3.88899 1.36695 1.3672 3.88875 1.36719 6.99976C1.36719 10.1108 3.88899 12.6326 7 12.6326C10.111 12.6326 12.6328 10.1108 12.6328 6.99976ZM13.8582 6.99976C13.8582 10.7873 10.7876 13.8579 7 13.8579C3.21244 13.8579 0.141846 10.7873 0.141846 6.99976C0.141857 3.2122 3.21245 0.141612 7 0.141602C10.7876 0.141602 13.8581 3.21219 13.8582 6.99976Z" fill="currentColor"/></svg></span>
-      <span class="text">上传失败：单文件不得超过 20MB</span>
+  <div class="demo-group">
+    <p class="demo-label">单行 · h32 r8 · pad 0 10 · gap 4 · font 12/18 · 500</p>
+    <div class="stack" style="gap:8px;align-items:flex-start">
+      <div class="notice info"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.6a6.4 6.4 0 1 1 0 12.8A6.4 6.4 0 0 1 8 1.6zm0 1.6a4.8 4.8 0 1 0 0 9.6 4.8 4.8 0 0 0 0-9.6zM7.2 7.2h1.6v4H7.2zM7.2 4.8h1.6v1.6H7.2z" fill="currentColor"/></svg></span><span class="text">索引已更新，可开始搜索</span></div>
+      <div class="notice success"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.6a6.4 6.4 0 1 1 0 12.8A6.4 6.4 0 0 1 8 1.6zm3.1 4.5-4.3 4.3-2-2-1.1 1.1 3.1 3.1 5.4-5.4z" fill="currentColor"/></svg></span><span class="text">已保存到本地</span></div>
+      <div class="notice warn"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.6 15 14H1zM8 5.6 4.6 12h6.8zM7.2 7.2h1.6v2.4H7.2zm0 3.2h1.6v1.6H7.2z" fill="currentColor"/></svg></span><span class="text">当前网络不稳定</span></div>
+      <div class="notice error"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.6a6.4 6.4 0 1 1 0 12.8A6.4 6.4 0 0 1 8 1.6zm2.9 3.5L8 7.9 5.1 5.1 4 6.2 6.9 9 4 11.9l1.1 1.1L8 10.1l2.9 2.9 1.1-1.1L9.1 9 12 6.2z" fill="currentColor"/></svg></span><span class="text">上传失败：权限不足</span></div>
     </div>
   </div>
 
-  <h2>无图标（只靠文字表达状态，颜色是辅助线索）</h2>
-  <div class="col">
-    <div class="notice info"><span class="text">本周剩余配额 12%</span></div>
-    <div class="notice warn"><span class="text">当前为只读模式</span></div>
-  </div>
-
-  <h2>多行形态（height:auto，min-height:32px，pad 6px 10px）§ 本仓库建议值</h2>
-  <div class="col wide">
-    <div class="notice error multiline" role="alert">
-      <span class="icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.3002 3.32843L7.69986 3.32843L7.69986 7.79657H6.3002L6.3002 3.32843Z" fill="currentColor"/><path d="M6.3002 9.01935H7.69986V10.6711H6.3002V9.01935Z" fill="currentColor"/><path d="M12.6328 6.99976C12.6328 3.88874 10.111 1.36694 7 1.36694C3.88899 1.36695 1.3672 3.88875 1.36719 6.99976C1.36719 10.1108 3.88899 12.6326 7 12.6326C10.111 12.6326 12.6328 10.1108 12.6328 6.99976ZM13.8582 6.99976C13.8582 10.7873 10.7876 13.8579 7 13.8579C3.21244 13.8579 0.141846 10.7873 0.141846 6.99976C0.141857 3.2122 3.21245 0.141612 7 0.141602C10.7876 0.141602 13.8581 3.21219 13.8582 6.99976Z" fill="currentColor"/></svg></span>
-      <span class="text">同步失败：远端返回 503。已排队等待自动重试，恢复网络后会在后台继续，不需要你重新编辑。</span>
+  <div class="demo-group">
+    <p class="demo-label">无图标 · 仅文案</p>
+    <div class="stack" style="gap:8px;align-items:flex-start">
+      <div class="notice"><span class="text">只读模式</span></div>
+      <div class="notice success"><span class="text">已连接</span></div>
     </div>
   </div>
 
-  <h2>可关闭（根节点变成 button，整条可点；hover / active 有反馈）</h2>
-  <p class="hint" style="margin:0 0 8px">鼠标移上去看底色变化，按下看 active 叠色；这是官方 ConnectionIndicator .warning:active 同款写法。</p>
-  <div class="col">
-    <button type="button" class="notice warn actionable" aria-label="当前网络不稳定，点此重新连接">
-      <span class="icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.3002 3.32843L7.69986 3.32843L7.69986 7.79657H6.3002L6.3002 3.32843Z" fill="currentColor"/><path d="M6.3002 9.01935H7.69986V10.6711H6.3002V9.01935Z" fill="currentColor"/><path d="M12.6328 6.99976C12.6328 3.88874 10.111 1.36694 7 1.36694C3.88899 1.36695 1.3672 3.88875 1.36719 6.99976C1.36719 10.1108 3.88899 12.6326 7 12.6326C10.111 12.6326 12.6328 10.1108 12.6328 6.99976ZM13.8582 6.99976C13.8582 10.7873 10.7876 13.8579 7 13.8579C3.21244 13.8579 0.141846 10.7873 0.141846 6.99976C0.141857 3.2122 3.21245 0.141612 7 0.141602C10.7876 0.141602 13.8581 3.21219 13.8582 6.99976Z" fill="currentColor"/></svg></span>
-      <span class="text">连接不稳定，点此重连</span>
-    </button>
-  </div>
-
-  <h2>带右侧关闭按钮（§ 本仓库建议值：20×20 热区，图标 14px，需 aria-label）</h2>
-  <div class="col">
-    <div class="notice success">
-      <span class="icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.5635 4.58984L7.61426 9.07715C7.35154 9.37561 7.11346 9.64812 6.89453 9.84668C6.66593 10.054 6.38519 10.2506 6.01465 10.3164C5.82079 10.3508 5.62207 10.3529 5.42773 10.3213C5.0561 10.2609 4.77266 10.0674 4.54102 9.86328C4.31926 9.66791 4.07752 9.39911 3.81055 9.10449L2.44531 7.59863L3.55664 6.59082L4.92188 8.09766C5.21256 8.41844 5.38878 8.61191 5.53223 8.73828C5.61022 8.80699 5.65253 8.83192 5.66895 8.83984C5.69648 8.84429 5.72449 8.84467 5.75195 8.83984C5.72657 8.84451 5.75564 8.85422 5.88672 8.73535C6.02833 8.60692 6.20225 8.41088 6.48828 8.08594L10.4385 3.59961L11.5635 4.58984Z" fill="currentColor"/></svg></span>
-      <span class="text">已保存到本地</span>
-      <span class="dismiss" role="button" tabindex="0" aria-label="关闭提示"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M14.1168 13.197L13.197 14.1167L1.8833 2.80303L2.80309 1.88324L14.1168 13.197Z" fill="currentColor"/><path d="M13.197 1.88326L14.1168 2.80305L2.80309 14.1168L1.8833 13.197L13.197 1.88326Z" fill="currentColor"/></svg></span>
-    </div>
-    <div class="notice info">
-      <span class="text">本地草稿已保留 7 天</span>
-      <span class="dismiss" role="button" tabindex="0" aria-label="关闭提示"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M14.1168 13.197L13.197 14.1167L1.8833 2.80303L2.80309 1.88324L14.1168 13.197Z" fill="currentColor"/><path d="M13.197 1.88326L14.1168 2.80305L2.80309 14.1168L1.8833 13.197L13.197 1.88326Z" fill="currentColor"/></svg></span>
+  <div class="demo-group">
+    <p class="demo-label">multiline · min-height 32 · pad 6 10 · icon margin-top 2</p>
+    <div class="stack" style="gap:8px;align-items:flex-start;max-width:360px">
+      <div class="notice error multiline"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.6a6.4 6.4 0 1 1 0 12.8A6.4 6.4 0 0 1 8 1.6zm2.9 3.5L8 7.9 5.1 5.1 4 6.2 6.9 9 4 11.9l1.1 1.1L8 10.1l2.9 2.9 1.1-1.1L9.1 9 12 6.2z" fill="currentColor"/></svg></span><span class="text">上传失败：文件超过 20MB。请压缩后重试，或改用分片上传。</span></div>
+      <div class="notice warn multiline"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.6 15 14H1zM8 5.6 4.6 12h6.8zM7.2 7.2h1.6v2.4H7.2zm0 3.2h1.6v1.6H7.2z" fill="currentColor"/></svg></span><span class="text">当前工作目录不在版本控制下，改动不会自动留档。</span></div>
     </div>
   </div>
 
-  <h2>放进真实排版里（提示条是 inline-flex，宽度贴合内容）</h2>
-  <div class="col wide">
-    <div style="font-weight:600">项目配额</div>
-    <div class="notice warn"><span class="text">本周剩余配额 12%</span></div>
-    <div class="hint">重置时间：每周一 00:00（这一行是普通正文，用来对比 12/18 与 13/20 的字号差）。</div>
+  <div class="demo-group">
+    <p class="demo-label">onDismiss · 根节点 button · dismiss 20×20 r6 · 悬停/聚焦才显形</p>
+    <div class="stack" style="gap:8px;align-items:flex-start">
+      <button type="button" class="notice success actionable">
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.6a6.4 6.4 0 1 1 0 12.8A6.4 6.4 0 0 1 8 1.6zm3.1 4.5-4.3 4.3-2-2-1.1 1.1 3.1 3.1 5.4-5.4z" fill="currentColor"/></svg></span>
+        <span class="text">已保存</span>
+        <span class="dismiss" role="button" tabindex="0" aria-label="关闭提示"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M14.1168 13.197 13.197 14.1167 1.8833 2.803 2.803 1.8832z" fill="currentColor"/><path d="M13.197 1.8833 14.1168 2.803 2.803 14.1168 1.8833 13.197z" fill="currentColor"/></svg></span>
+      </button>
+      <button type="button" class="notice warn actionable">
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.6 15 14H1zM8 5.6 4.6 12h6.8zM7.2 7.2h1.6v2.4H7.2zm0 3.2h1.6v1.6H7.2z" fill="currentColor"/></svg></span>
+        <span class="text">模型已切换，历史消息不重算</span>
+        <span class="dismiss" role="button" tabindex="0" aria-label="关闭提示"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M14.1168 13.197 13.197 14.1167 1.8833 2.803 2.803 1.8832z" fill="currentColor"/><path d="M13.197 1.8833 14.1168 2.803 2.803 14.1168 1.8833 13.197z" fill="currentColor"/></svg></span>
+      </button>
+    </div>
   </div>
-
-  <p class="hint" style="margin-top:24px">提示：Tab 键可以把焦点移到「可关闭」的提示条与关闭按钮上，看到 2px 焦点环；开启系统「减弱动态效果」后 160ms 底色过渡被关掉。</p>
 </body>
 </html>

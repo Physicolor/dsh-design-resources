@@ -103,6 +103,9 @@
         "tags": "标签",
         "preview": "实况预览",
         "sourceLabel": "源码",
+        "docHuman": "说明",
+        "docSpec": "技术规格",
+        "docSpecNote": "这一份是给 Agent 与工程师看的：几何来源、API、令牌与可自动检测的约束。",
         "chineseOnly": "本组件的说明目前只有中文版。",
         "usage": "组件目录本身就是一个 npm 包，可以被安装；也可以直接把单个目录复制进你的插件源码。"
     },

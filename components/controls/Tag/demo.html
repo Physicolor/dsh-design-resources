@@ -3,15 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tag 标签 · DSH 设计资源</title>
+<title>Tag · DSH 设计资源</title>
 <style>
-/* ---------------------------------------------------------------------------
-   演示用 token 脚手架。
-   数值逐条取自本仓库 website/css/dsh-tokens.css（由产品主题采集生成）与
-   app.asar 内官方主题对合成 token（elevation / shadow / font）的定义。
-   真实 DSH 运行时由宿主主题注入这些变量；demo 只是把同一批值内联进来，
-   组件类本身不写死任何颜色。
-   --------------------------------------------------------------------------- */
 :root {
   --dsw-static-neutral-bluish-00: #fff;
   --dsw-static-neutral-bluish-50: #f9fafb;
@@ -117,10 +110,24 @@
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
 }
 
-/* ---------------------------------------------------------------------------
-   以下为 Tag 组件样式，与 tag.module.css 数值逐条一致（类名去掉了 CSS Modules
-   的哈希）。官方配色全部走 data-tone 属性选择器，这里照搬同一套选择器。
-   --------------------------------------------------------------------------- */
+/* 深色主题：站点把深色 token 挂在 body[data-ds-dark-theme] 上，Shadow DOM 里选择不到它，
+   而 :host 自己的自定义属性又会盖过继承值——所以深色值在文件内自带一份，用 light-dark()
+   依据宿主继承下来的 color-scheme 选择。只列本页用到、且深浅两套取值不同的 token；
+   数值逐条取自 website/css/dsh-tokens.css。 */
+:root {
+  --dsw-alias-bg-layer-3: light-dark(var(--dsw-static-neutral-bluish-00), var(--dsw-static-neutral-bluish-800));
+  --dsw-alias-bg-module-platform: light-dark(var(--dsw-static-neutral-bluish-60), var(--dsw-static-neutral-bluish-800));
+  --dsw-alias-border-l4: light-dark(#00000029, #fff3);
+  --dsw-alias-label-primary: light-dark(var(--dsw-static-neutral-bluish-1000), var(--dsw-static-neutral-bluish-50));
+  --dsw-alias-label-secondary: light-dark(var(--dsw-static-neutral-bluish-700), var(--dsw-static-neutral-bluish-300));
+  --dsw-alias-label-tertiary: light-dark(var(--dsw-static-neutral-bluish-600), var(--dsw-static-neutral-bluish-400));
+  --dsw-alias-state-business-primary: light-dark(var(--dsw-static-deepseek-500), var(--dsw-static-deepseek-400));
+  --dsw-alias-state-error-primary: light-dark(var(--dsw-static-red-600), var(--dsw-static-red-400));
+}
+
+/* --------------------------------------------------- 组件几何
+   数值逐条取自同目录 tag.module.css（CSS Modules 的哈希类名已去掉），
+   规则重新组织过，声明值未改。 */
 .tag {
   --dsh-tag-radius: 999px;
   --dsh-tag-pad-y: 1px;
@@ -151,69 +158,79 @@
   background: color-mix(in srgb, var(--dsw-alias-state-success-primary) 10%, transparent);
   color: var(--dsw-alias-state-success-primary);
 }
+
 .tag[data-tone='info'] {
   background: color-mix(in srgb, var(--dsw-alias-state-business-primary) 10%, transparent);
   color: var(--dsw-alias-state-business-primary);
 }
+
 .tag[data-tone='warning'] {
   background: color-mix(in srgb, var(--dsw-alias-state-warn-primary) 12%, transparent);
   color: var(--dsw-alias-state-warn-primary);
 }
+
 .tag[data-tone='danger'] {
   background: color-mix(in srgb, var(--dsw-alias-state-error-primary) 10%, transparent);
   color: var(--dsw-alias-state-error-primary);
 }
 
-/* ------------------------------------------------------------------ demo 外壳 */
+/* ------------------------------------------------------------------ demo 外壳
+   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
+   .demo-label 是本页唯一允许出现的文字，只写客观事实（尺寸 / 状态名）。 */
+* { box-sizing: border-box; }
 body {
   margin: 0;
-  padding: 32px;
-  background: var(--dsw-alias-bg-base);
+  padding: 16px;
   color: var(--dsw-alias-label-primary);
-  font: var(--dsw-font-s-14);
+  font-family: var(--dsw-font-family);
+  font-size: 14px;
+  line-height: 22px;
 }
-h1 { font-size: 18px; line-height: 26px; font-weight: 600; margin: 0 0 4px; }
-p.lead { margin: 0 0 24px; color: var(--dsw-alias-label-secondary); font: var(--dsw-font-xs-13); }
-h2 { font-size: 13px; line-height: 20px; font-weight: 600; color: var(--dsw-alias-label-tertiary); margin: 24px 0 8px; }
-p.note { margin: 0 0 8px; color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); }
-.row { display: flex; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
-.cell { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; min-width: 132px; }
-.cell code { color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); }
-.hint { color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); margin-top: 24px; }
+.demo-label {
+  margin: 0 0 8px;
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--dsw-alias-label-tertiary);
+}
+.demo-group + .demo-group { margin-top: 20px; }
+.demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.demo-stack, .stack { display: flex; flex-direction: column; }
+.demo-canvas {
+  padding: 12px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--dsw-alias-label-primary) 7%, transparent);
+}
 </style>
 </head>
 <body>
-  <h1>Tag 标签</h1>
-  <p class="lead">几何来自官方 Tag.module.css（r999px / pad 1px 8px / 11-17 / weight 500），8 个 tone 走 data-tone 属性选择器，与官方一致。实现为本仓库原创。</p>
-
-  <h2>八个 tone（默认 outline）</h2>
-  <p class="note">每一格是一种 palette；状态色（success / info / warning / danger）的底色由文字色 10% 混合而来，warning 沿用官方的 12%。</p>
-  <div class="row">
-    <div class="cell"><span class="tag" data-tone="outline">草稿</span><code>outline</code></div>
-    <div class="cell"><span class="tag" data-tone="solid">当前选中</span><code>solid</code></div>
-    <div class="cell"><span class="tag" data-tone="neutral">只读</span><code>neutral</code></div>
-    <div class="cell"><span class="tag" data-tone="quiet">内部备注</span><code>quiet</code></div>
-    <div class="cell"><span class="tag" data-tone="success">已启用</span><code>success</code></div>
-    <div class="cell"><span class="tag" data-tone="info">已归类</span><code>info</code></div>
-    <div class="cell"><span class="tag" data-tone="warning">待处理</span><code>warning</code></div>
-    <div class="cell"><span class="tag" data-tone="danger">构建失败</span><code>danger</code></div>
+  <div class="demo-group">
+    <p class="demo-label">半径 999px · pad 1px 8px · font 11/17 · weight 500</p>
+    <div class="demo-row">
+      <span class="tag" data-tone="outline">草稿</span>
+      <span class="tag" data-tone="solid">当前</span>
+      <span class="tag" data-tone="neutral">本地</span>
+      <span class="tag" data-tone="quiet">只读</span>
+    </div>
   </div>
 
-  <h2>同一行长文本不换行（white-space: nowrap）</h2>
-  <p class="note">标签在窄容器里宁可撑开也不折行；过长文案应由调用方截断，而不是靠换行。</p>
-  <div class="row">
-    <span class="tag" data-tone="info">deepseek-ai/dsh-client-ui-primitives</span>
-    <span class="tag" data-tone="warning">v0.1.0-beta.3</span>
+  <div class="demo-group">
+    <p class="demo-label">success 10% · info 10% · warning 12% · danger 10%</p>
+    <div class="demo-row">
+      <span class="tag" data-tone="success">已启用</span>
+      <span class="tag" data-tone="info">已同步</span>
+      <span class="tag" data-tone="warning">待确认</span>
+      <span class="tag" data-tone="danger">构建失败</span>
+    </div>
   </div>
 
-  <h2>一行里混用（常见：一行元信息）</h2>
-  <div class="row">
-    <span class="tag" data-tone="solid">已发布</span>
-    <span class="tag" data-tone="neutral">MIT</span>
-    <span class="tag" data-tone="quiet">2.4 MB</span>
-    <span class="tag" data-tone="success">校验通过</span>
+  <div class="demo-group">
+    <p class="demo-label">sizes 1px 8px — 同行混排</p>
+    <div class="demo-row" style="gap:6px">
+      <span class="tag" data-tone="neutral">v4.1.0</span>
+      <span class="tag" data-tone="success">稳定</span>
+      <span class="tag" data-tone="outline">MIT</span>
+      <span class="tag" data-tone="quiet">3 天前</span>
+    </div>
   </div>
-
-  <p class="hint">提示：标签是纯静态的 &lt;span&gt;，没有 hover / 焦点态 —— 需要点击请用 Pill。</p>
 </body>
 </html>

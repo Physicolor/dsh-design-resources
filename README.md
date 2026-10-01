@@ -61,6 +61,8 @@ Every specimen renders as **live HTML**, not a mockup image, because these compo
 
 The site follows this repository's own spec, so it is the spec's first implementation rather than just a description of it:
 
+- **the index is a foldable tree**: groups are captions rather than toggles (a caption that hides its own contents saves height and loses the answer to "what is in here"), only component branches fold, and the fold control sits at the end of the row; exactly **one row** is ever lit — the one you opened;
+- **specimens have no frame**: the live content sits directly on the page instead of in a box inside a box;
 - **each column scrolls on its own** while the page itself never does, under a liquid-glass top bar content passes behind;
 - **both rails drag to resize** (arrow keys work too) and remember their width and collapsed state;
 - **either rail collapses entirely**, with an animated open/close;

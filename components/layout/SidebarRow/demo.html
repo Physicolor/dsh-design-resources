@@ -3,15 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SidebarRow 侧边栏行 · DSH 设计资源</title>
+<title>SidebarRow · DSH 设计资源</title>
 <style>
-/* ---------------------------------------------------------------------------
-   演示用 token 脚手架。数值逐条取自本仓库 website/css/dsh-tokens.css 与
-   app.asar 内官方主题对合成 token（elevation / shadow / font）的定义，
-   与 components/controls/Button/demo.html 的 :root 逐字一致。
-   真实 DSH 运行时由宿主主题注入这些变量；demo 只是把同一批值内联进来，
-   组件类本身不写死任何颜色。
-   --------------------------------------------------------------------------- */
 :root {
   --dsw-static-neutral-bluish-00: #fff;
   --dsw-static-neutral-bluish-50: #f9fafb;
@@ -116,12 +109,21 @@
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
 }
 
-/* ---------------------------------------------------------------------------
-   以下为 SidebarRow 组件样式，与 sidebarrow.module.css 数值逐条一致
-   （类名去掉了 CSS Modules 的哈希）。§ 标记的行是本仓库建议值。
-   这些几何读自官方 Menu.module.css 的 .item / .itemIcon / .itemLabel / .check
-   / .selectedFill / .selected。
-   --------------------------------------------------------------------------- */
+/* 深色主题：站点把深色 token 挂在 body[data-ds-dark-theme] 上，Shadow DOM 里选择不到它，
+   而 :host 自己的自定义属性又会盖过继承值——所以深色值在文件内自带一份，用 light-dark()
+   依据宿主继承下来的 color-scheme 选择。只列本页用到、且深浅两套取值不同的 token；
+   数值逐条取自 website/css/dsh-tokens.css。 */
+:root {
+  --dsw-alias-brand-primary: light-dark(var(--dsw-static-neutral-bluish-1000), var(--dsw-static-neutral-bluish-50));
+  --dsw-alias-interactive-bg-active: light-dark(#2631481a, #ffffff24);
+  --dsw-alias-interactive-bg-hover: light-dark(#2631480f, #ffffff14);
+  --dsw-alias-label-primary: light-dark(var(--dsw-static-neutral-bluish-1000), var(--dsw-static-neutral-bluish-50));
+  --dsw-alias-label-tertiary: light-dark(var(--dsw-static-neutral-bluish-600), var(--dsw-static-neutral-bluish-400));
+}
+
+/* --------------------------------------------------- 组件几何
+   数值逐条取自同目录 sidebarrow.module.css（CSS Modules 的哈希类名已去掉），
+   规则重新组织过，声明值未改。 */
 .row {
   --dsh-sb-min-height: 40px;
   --dsh-sb-pad-x: 10px;
@@ -135,7 +137,7 @@
   gap: var(--dsh-sb-gap);
   width: 100%;
   min-height: var(--dsh-sb-min-height);
-  min-width: 0;          /* § 建议值（官方只写在 .itemLabel 上） */
+  min-width: 0;
   padding: var(--dsh-sb-pad-y) var(--dsh-sb-pad-x);
   border: none;
   border-radius: var(--dsh-sb-radius);
@@ -147,14 +149,14 @@
   text-align: left;
   cursor: pointer;
 }
+
 .row:hover:not(:disabled) { background: var(--dsw-alias-interactive-bg-hover); }
 .row:active:not(:disabled) { background: var(--dsw-alias-interactive-bg-active); }
 .row:disabled { cursor: not-allowed; opacity: 0.4; }
-/* § 本仓库建议值：官方 Menu 未定义行内焦点样式 */
 .row:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: -2px; }
 
-.selected-fill { background: var(--dsw-alias-interactive-bg-hover); }
-.selected-fill:hover:not(:disabled) { background: var(--dsw-alias-interactive-bg-active); }
+.selectedFill { background: var(--dsw-alias-interactive-bg-hover); }
+.selectedFill:hover:not(:disabled) { background: var(--dsw-alias-interactive-bg-active); }
 
 .leading {
   display: inline-flex;
@@ -165,8 +167,11 @@
   height: 16px;
   color: var(--dsw-alias-label-tertiary);
 }
+
 .label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.trailing { flex: none; color: var(--dsw-alias-label-tertiary); font-size: 12px; line-height: 18px; } /* § 字号建议值 */
+
+.trailing { flex: none; color: var(--dsw-alias-label-tertiary); font-size: 12px; line-height: 18px; }
+
 .check {
   display: inline-flex;
   flex: none;
@@ -176,102 +181,103 @@
   height: 16px;
   color: var(--dsw-alias-label-primary);
 }
-/* § 建议值：官方 Menu 没有复选框行 */
-.checkbox { flex: none; width: 16px; height: 16px; margin: 0; accent-color: var(--dsw-alias-button-primary-fill); cursor: pointer; }
 
-/* ------------------------- 下面是为了 demo 能看清组件，非组件样式 ------------------------- */
-.sidebar {
-  box-sizing: border-box;
-  width: 240px;
-  padding: 4px;
-  border-radius: 12px;
-  background: var(--dsw-alias-specific-sidebar-fill);
-  box-shadow: var(--dsw-elevation-prominent);
+/* 建议值：16×16 + accent-color，对齐官方 RiskConfirmation 的 .acknowledgement input */
+.checkbox {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--dsw-alias-button-primary-fill);
+  cursor: pointer;
 }
-.placed { position: relative; }
 
+/* ------------------------------------------------------------------ demo 外壳
+   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
+   .demo-label 是本页唯一允许出现的文字，只写客观事实（尺寸 / 状态名）。 */
+* { box-sizing: border-box; }
 body {
   margin: 0;
-  padding: 32px;
-  background: var(--dsw-alias-bg-base);
+  padding: 16px;
   color: var(--dsw-alias-label-primary);
-  font: var(--dsw-font-s-14);
+  font-family: var(--dsw-font-family);
+  font-size: 14px;
+  line-height: 22px;
 }
-h1 { font-size: 18px; line-height: 26px; font-weight: 600; margin: 0 0 4px; }
-p.lead { margin: 0 0 24px; color: var(--dsw-alias-label-secondary); font: var(--dsw-font-xs-13); }
-h2 { font-size: 13px; line-height: 20px; font-weight: 600; color: var(--dsw-alias-label-tertiary); margin: 24px 0 8px; }
-.hint { color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); }
+.demo-label {
+  margin: 0 0 8px;
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--dsw-alias-label-tertiary);
+}
+.demo-group + .demo-group { margin-top: 20px; }
+.demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.demo-stack, .stack { display: flex; flex-direction: column; }
+.demo-canvas {
+  padding: 12px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--dsw-alias-label-primary) 7%, transparent);
+}
 </style>
 </head>
 <body>
-  <h1>SidebarRow 侧边栏行</h1>
-  <p class="lead">几何逐条锚定官方 Menu.module.css 的 .item（min-h 40 / pad 8px 10px / r10 / gap 8 / 14-22）与 .itemIcon（16×16）、.itemLabel、.check、.selectedFill。checkbox 尺寸与焦点环为本仓库建议值。</p>
-
-  <h2>基础 · 图标 + 标题 + 尾部计数</h2>
-  <div class="sidebar">
+  <div class="demo-group" style="max-width:280px">
+    <p class="demo-label">min-height 40 · pad 8 10 · gap 8 · r10 · 图标 16×16</p>
     <button type="button" class="row">
-      <span class="leading" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2.4 3.2h11.2v7.2H8L4.8 13v-2.6H2.4z" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></span>
+      <span class="leading" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M2.4 2.4h11.2v8H7.2L4 13.2V10.4H2.4z" fill="currentColor"/></svg></span>
       <span class="label">今天的对话</span>
     </button>
     <button type="button" class="row">
-      <span class="leading" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2.4 3.2h11.2v7.2H8L4.8 13v-2.6H2.4z" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></span>
-      <span class="label">昨天的对话</span>
+      <span class="leading" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M1.6 3.2h4.4l1.2 1.6h7.2v8H1.6z" fill="currentColor"/></svg></span>
+      <span class="label">工作区</span>
       <span class="trailing">12</span>
     </button>
-    <button type="button" class="row" disabled>
-      <span class="leading" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2.4 3.2h11.2v7.2H8L4.8 13v-2.6H2.4z" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></span>
-      <span class="label">已归档（disabled，opacity .4）</span>
-    </button>
   </div>
 
-  <h2>选中态 · check（默认，官方 Menu 的做法：透明底 + 尾部对勾）</h2>
-  <div class="sidebar">
-    <button type="button" class="row">
-      <span class="leading" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2.4 3.2h11.2v7.2H8L4.8 13v-2.6H2.4z" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></span>
-      <span class="label">未选中</span>
-    </button>
+  <div class="demo-group" style="max-width:280px">
+    <p class="demo-label">selected · selectionStyle check · 透明底 + 尾部对勾</p>
     <button type="button" class="row" aria-pressed="true">
-      <span class="leading" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2.4 3.2h11.2v7.2H8L4.8 13v-2.6H2.4z" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></span>
-      <span class="label">已选中（尾部对勾）</span>
-      <span class="check" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M13.1 4.6 6.4 11.3 2.9 7.8l1.1-1.1 2.4 2.4 5.6-5.6z" fill="currentColor"/></svg></span>
+      <span class="leading" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M2.4 2.4h11.2v8H7.2L4 13.2V10.4H2.4z" fill="currentColor"/></svg></span>
+      <span class="label">今天的对话</span>
+      <span class="check"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M13.1 4.6 6.4 11.3 2.9 7.8l1.1-1.1 2.4 2.4 5.6-5.6z" fill="currentColor"/></svg></span>
+    </button>
+    <button type="button" class="row" aria-pressed="false">
+      <span class="leading" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M1.6 3.2h4.4l1.2 1.6h7.2v8H1.6z" fill="currentColor"/></svg></span>
+      <span class="label">工作区</span>
+      <span class="trailing">12</span>
     </button>
   </div>
 
-  <h2>选中态 · fill（§ 建议值：整行铺官方 Menu .selectedFill 的底色）</h2>
-  <div class="sidebar">
-    <button type="button" class="row">
-      <span class="leading" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2.4 3.2h11.2v7.2H8L4.8 13v-2.6H2.4z" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></span>
-      <span class="label">未选中</span>
+  <div class="demo-group" style="max-width:280px">
+    <p class="demo-label">selected · selectionStyle fill · 整行 interactive-bg-hover</p>
+    <button type="button" class="row selectedFill" aria-pressed="true">
+      <span class="leading" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.6a4 4 0 0 1 4 4v2.4l1.2 2.4H2.8L4 8V5.6a4 4 0 0 1 4-4zm0 12.8a1.6 1.6 0 0 1-1.6-1.6h3.2A1.6 1.6 0 0 1 8 14.4z" fill="currentColor"/></svg></span>
+      <span class="label">通知</span>
     </button>
-    <button type="button" class="row selected-fill" aria-pressed="true">
-      <span class="leading" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2.4 3.2h11.2v7.2H8L4.8 13v-2.6H2.4z" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></span>
-      <span class="label">已选中（整行填充）</span>
-      <span class="trailing">3</span>
+    <button type="button" class="row" aria-pressed="false">
+      <span class="leading" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M2.4 2.4h11.2v8H7.2L4 13.2V10.4H2.4z" fill="currentColor"/></svg></span>
+      <span class="label">已归档</span>
     </button>
   </div>
 
-  <h2>多选 · checkbox（§ 建议值：16×16 + accent-color）</h2>
-  <div class="sidebar">
+  <div class="demo-group" style="max-width:280px">
+    <p class="demo-label">checkbox · 16×16 accent-color · aria-label</p>
     <button type="button" class="row">
-      <span class="leading"><input type="checkbox" class="checkbox" aria-label="选择 设计规范.md"></span>
-      <span class="label">设计规范.md</span>
-    </button>
-    <button type="button" class="row">
-      <span class="leading"><input type="checkbox" class="checkbox" checked aria-label="选择 报告.md"></span>
+      <span class="leading"><input type="checkbox" class="checkbox" checked readonly tabindex="-1" aria-label="选择 报告.md"></span>
       <span class="label">报告.md</span>
     </button>
-  </div>
-
-  <h2>长标题截断（.itemLabel 的 ellipsis）</h2>
-  <div class="sidebar">
     <button type="button" class="row">
-      <span class="leading" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2.4 3.2h11.2v7.2H8L4.8 13v-2.6H2.4z" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></span>
-      <span class="label">这是一个非常长的侧边栏标题，它会被省略号截断而不会把行撑宽</span>
-      <span class="trailing">99+</span>
+      <span class="leading"><input type="checkbox" class="checkbox" readonly tabindex="-1" aria-label="选择 笔记.md"></span>
+      <span class="label">笔记.md</span>
     </button>
   </div>
 
-  <h2>hover / 按压 / 焦点（静态展示不了，请自己试）</h2>
-  <p class="hint">把鼠标移到任意一行上看 hover 底色 var(--dsw-alias-interactive-bg-hover)；按住看 active；Tab 键在行之间移动，能看到 § 建议值的焦点环（outline-offset: -2px，落在行内）。</p>
+  <div class="demo-group" style="max-width:280px">
+    <p class="demo-label">disabled · opacity 0.4 · cursor not-allowed</p>
+    <button type="button" class="row" disabled>
+      <span class="leading" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M1.6 3.2h4.4l1.2 1.6h7.2v8H1.6z" fill="currentColor"/></svg></span>
+      <span class="label">只读目录</span>
+    </button>
+  </div>
 </body>
 </html>

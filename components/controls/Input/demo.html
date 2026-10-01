@@ -3,15 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Input 输入框 · DSH 设计资源</title>
+<title>Input · DSH 设计资源</title>
 <style>
-/* ---------------------------------------------------------------------------
-   演示用 token 脚手架。
-   数值逐条取自本仓库 website/css/dsh-tokens.css（由产品主题采集生成）与
-   app.asar 内官方主题对合成 token（elevation / shadow / font）的定义。
-   真实 DSH 运行时由宿主主题注入这些变量；demo 只是把同一批值内联进来，
-   组件类本身不写死任何颜色。
-   --------------------------------------------------------------------------- */
 :root {
   --dsw-static-neutral-bluish-00: #fff;
   --dsw-static-neutral-bluish-50: #f9fafb;
@@ -117,10 +110,22 @@
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
 }
 
-/* ---------------------------------------------------------------------------
-   以下为 Input 组件样式，与 input.module.css 数值逐条一致（类名去掉了 CSS Modules
-   的哈希）。§ 标记的行是本仓库建议值。
-   --------------------------------------------------------------------------- */
+/* 深色主题：站点把深色 token 挂在 body[data-ds-dark-theme] 上，Shadow DOM 里选择不到它，
+   而 :host 自己的自定义属性又会盖过继承值——所以深色值在文件内自带一份，用 light-dark()
+   依据宿主继承下来的 color-scheme 选择。只列本页用到、且深浅两套取值不同的 token；
+   数值逐条取自 website/css/dsh-tokens.css。 */
+:root {
+  --dsw-alias-bg-layer-1: light-dark(var(--dsw-static-neutral-bluish-00), var(--dsw-static-neutral-bluish-875));
+  --dsw-alias-border-l4: light-dark(#00000029, #fff3);
+  --dsw-alias-brand-primary: light-dark(var(--dsw-static-neutral-bluish-1000), var(--dsw-static-neutral-bluish-50));
+  --dsw-alias-label-dimmed: light-dark(var(--dsw-static-neutral-bluish-200), var(--dsw-static-neutral-bluish-750));
+  --dsw-alias-label-primary: light-dark(var(--dsw-static-neutral-bluish-1000), var(--dsw-static-neutral-bluish-50));
+  --dsw-alias-label-tertiary: light-dark(var(--dsw-static-neutral-bluish-600), var(--dsw-static-neutral-bluish-400));
+}
+
+/* --------------------------------------------------- 组件几何
+   数值逐条取自同目录 input.module.css（CSS Modules 的哈希类名已去掉），
+   规则重新组织过，声明值未改。 */
 .wrap {
   --dsh-input-height: 32px;
   --dsh-input-pad-x: 8px;
@@ -140,6 +145,7 @@
   border-radius: var(--dsh-input-radius);
   background: var(--dsw-alias-bg-layer-1);
 }
+
 .wrap:focus-within { border-color: var(--dsw-alias-brand-primary); }
 
 .icon {
@@ -163,80 +169,69 @@
   line-height: var(--dsh-input-line-height);
   color: var(--dsw-alias-label-primary);
 }
+
 .input::placeholder { color: var(--dsw-alias-label-dimmed); }
 
-/* § 本仓库建议值：官方 Input 没有 disabled 视觉（opacity 0.4 / not-allowed
-   取值沿用官方 Button.module.css 的 .button:disabled） */
+/* § 本仓库建议值：官方 Input 没有 disabled 视觉 */
 .wrap:has(.input:disabled) { cursor: not-allowed; opacity: 0.4; }
 
-/* ------------------------------------------------------------------ demo 外壳 */
+/* ------------------------------------------------------------------ demo 外壳
+   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
+   .demo-label 是本页唯一允许出现的文字，只写客观事实（尺寸 / 状态名）。 */
+* { box-sizing: border-box; }
 body {
   margin: 0;
-  padding: 32px;
-  background: var(--dsw-alias-bg-base);
+  padding: 16px;
   color: var(--dsw-alias-label-primary);
-  font: var(--dsw-font-s-14);
+  font-family: var(--dsw-font-family);
+  font-size: 14px;
+  line-height: 22px;
 }
-h1 { font-size: 18px; line-height: 26px; font-weight: 600; margin: 0 0 4px; }
-p.lead { margin: 0 0 24px; color: var(--dsw-alias-label-secondary); font: var(--dsw-font-xs-13); }
-h2 { font-size: 13px; line-height: 20px; font-weight: 600; color: var(--dsw-alias-label-tertiary); margin: 24px 0 8px; }
-p.note { margin: 0 0 8px; color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); }
-.stack { display: flex; flex-direction: column; gap: 12px; max-width: 380px; }
-.row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-.wrap.wide { width: 320px; }
-/* 静态展示用：把 :focus-within 的描边钉在容器上，方便肉眼比对。 */
-.force-focus { border-color: var(--dsw-alias-brand-primary); }
-.hint { color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); margin-top: 24px; }
+.demo-label {
+  margin: 0 0 8px;
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--dsw-alias-label-tertiary);
+}
+.demo-group + .demo-group { margin-top: 20px; }
+.demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.demo-stack, .stack { display: flex; flex-direction: column; }
+.demo-canvas {
+  padding: 12px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--dsw-alias-label-primary) 7%, transparent);
+}
 </style>
 </head>
 <body>
-  <h1>Input 输入框</h1>
-  <p class="lead">几何来自官方 Input.module.css（h32 / pad 0 8px / gap 6px / r8 / 0.5px 描边；图标容器 16×16；14-22）。实现为本仓库原创。</p>
-
-  <h2>基础</h2>
-  <p class="note">默认状态：0.5px 描边 border-l4，底色 bg-layer-1，占位文字 label-dimmed。点进去能看到边框变成 brand-primary。</p>
-  <div class="stack">
-    <span class="wrap wide"><input class="input" placeholder="搜索会话"></span>
-    <span class="wrap wide"><input class="input" value="已经填好的内容"></span>
+  <div class="demo-group">
+    <p class="demo-label">h32 r8 · pad 0 8 · gap 6 · border .5px l4</p>
+    <div class="demo-row">
+      <span class="wrap" style="width:220px"><input class="input" placeholder="搜索会话" aria-label="搜索会话"></span>
+      <span class="wrap" style="width:220px"><input class="input" value="deepseek-v4" aria-label="模型"></span>
+    </div>
   </div>
 
-  <h2>带 16×16 前置图标（间距 6px）</h2>
-  <p class="note">图标容器 16×16，颜色 label-tertiary；图标本身应 aria-hidden，名字由输入框自己的 label 提供。</p>
-  <div class="stack">
-    <span class="wrap wide">
-      <span class="icon"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M7 2a5 5 0 1 0 3.1 8.9l3 3 1.1-1.1-3-3A5 5 0 0 0 7 2zm0 1.6a3.4 3.4 0 1 1 0 6.8 3.4 3.4 0 0 1 0-6.8z" fill="currentColor"/></svg></span>
-      <input class="input" placeholder="搜索">
-    </span>
-    <span class="wrap wide">
-      <span class="icon"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6.4 1.6a4.8 4.8 0 0 0-4.8 4.8v3.2a4.8 4.8 0 0 0 4.8 4.8h3.2a4.8 4.8 0 0 0 4.8-4.8V6.4a4.8 4.8 0 0 0-4.8-4.8H6.4zm1.7 3.2h1.6v4.8H8.1V4.8zm0 6.4h1.6v1.6H8.1v-1.6z" fill="currentColor"/></svg></span>
-      <input class="input" placeholder="输入链接地址">
-    </span>
+  <div class="demo-group">
+    <p class="demo-label">icon 16×16 · label-tertiary</p>
+    <div class="demo-row">
+      <span class="wrap" style="width:220px"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6.8 1.6a5.2 5.2 0 1 0 3.06 9.4l3.07 3.07 1.13-1.13-3.07-3.07A5.2 5.2 0 0 0 6.8 1.6zm0 1.6a3.6 3.6 0 1 1 0 7.2 3.6 3.6 0 0 1 0-7.2z" fill="currentColor"/></svg></span><input class="input" placeholder="搜索" aria-label="搜索"></span>
+      <span class="wrap" style="width:220px"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6.4 9.6a2.4 2.4 0 0 1 0-3.4l2-2a2.4 2.4 0 0 1 3.4 3.4l-.7.7-1.13-1.13.7-.7a.8.8 0 0 0-1.14-1.14l-2 2a.8.8 0 0 0 0 1.14z" fill="currentColor"/><path d="M9.6 6.4a2.4 2.4 0 0 1 0 3.4l-2 2a2.4 2.4 0 0 1-3.4-3.4l.7-.7 1.13 1.13-.7.7a.8.8 0 0 0 1.14 1.14l2-2a.8.8 0 0 0 0-1.14z" fill="currentColor"/></svg></span><input class="input" value="https://dsh.local" aria-label="地址"></span>
+    </div>
   </div>
 
-  <h2>聚焦态（:focus-within 时边框换成 brand-primary）</h2>
-  <p class="note">左为静态展示的聚焦描边；右侧可以直接点进去，看到同一个效果。</p>
-  <div class="stack">
-    <span class="wrap wide force-focus"><input class="input" value="聚焦中的输入框"></span>
-    <span class="wrap wide"><input class="input" placeholder="点我试试"></span>
+  <div class="demo-group">
+    <p class="demo-label">focus-within · border-color brand-primary</p>
+    <div class="demo-row">
+      <span class="wrap" style="width:220px"><input class="input" placeholder="点一下，或按 Tab" aria-label="聚焦示例"></span>
+    </div>
   </div>
 
-  <h2>禁用（§ 本仓库建议值：官方没有 disabled 视觉）</h2>
-  <p class="note">opacity 0.4 沿用官方 Button 的禁用读法，让「不能用」在全库是同一个强度。</p>
-  <div class="stack">
-    <span class="wrap wide"><input class="input" value="不可编辑" disabled></span>
-    <span class="wrap wide">
-      <span class="icon"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.8 7.2V5.6a3.2 3.2 0 0 1 6.4 0v1.6h.8v6.4H4V7.2h.8zm1.6 0h3.2V5.6a1.6 1.6 0 0 0-3.2 0v1.6z" fill="currentColor"/></svg></span>
-      <input class="input" placeholder="已锁定的输入框" disabled>
-    </span>
+  <div class="demo-group">
+    <p class="demo-label">disabled · opacity 0.4</p>
+    <div class="demo-row">
+      <span class="wrap" style="width:220px"><input class="input" value="写入中" disabled aria-label="禁用示例"></span>
+    </div>
   </div>
-
-  <h2>宽度由外层 className 控制</h2>
-  <p class="note">组件本身是 inline-flex，宽度交给调用方；下面两个输入框同高不同宽。</p>
-  <div class="row">
-    <span class="wrap"><input class="input" placeholder="窄" size="8"></span>
-    <span class="wrap wide"><input class="input" placeholder="宽（320px）"></span>
-  </div>
-
-  <p class="hint">提示：真实组件把 ref 和全部 input 属性透传给内部原生 &lt;input&gt;；本页直接用原生标签静态展示。</p>
 </body>
 </html>

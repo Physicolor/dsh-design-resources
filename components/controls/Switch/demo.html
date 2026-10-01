@@ -3,15 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Switch 开关 · DSH 设计资源</title>
+<title>Switch · DSH 设计资源</title>
 <style>
-/* ---------------------------------------------------------------------------
-   演示用 token 脚手架。
-   数值逐条取自本仓库 website/css/dsh-tokens.css（由产品主题采集生成）与
-   app.asar 内官方主题对合成 token（elevation / shadow / font）的定义。
-   真实 DSH 运行时由宿主主题注入这些变量；demo 只是把同一批值内联进来，
-   组件类本身不写死任何颜色。
-   --------------------------------------------------------------------------- */
 :root {
   --dsw-static-neutral-bluish-00: #fff;
   --dsw-static-neutral-bluish-50: #f9fafb;
@@ -117,11 +110,19 @@
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
 }
 
-/* ---------------------------------------------------------------------------
-   以下为 Switch 组件样式，与 switch.module.css 数值逐条一致（类名去掉了
-   CSS Modules 的哈希）。开关外观挂在 aria-checked 上，与官方一致。
-   § 标记的行是本仓库建议值。
-   --------------------------------------------------------------------------- */
+/* 深色主题：站点把深色 token 挂在 body[data-ds-dark-theme] 上，Shadow DOM 里选择不到它，
+   而 :host 自己的自定义属性又会盖过继承值——所以深色值在文件内自带一份，用 light-dark()
+   依据宿主继承下来的 color-scheme 选择。只列本页用到、且深浅两套取值不同的 token；
+   数值逐条取自 website/css/dsh-tokens.css。 */
+:root {
+  --dsw-alias-border-l3: light-dark(#0000001f, #ffffff29);
+  --dsw-alias-brand-primary: light-dark(var(--dsw-static-neutral-bluish-1000), var(--dsw-static-neutral-bluish-50));
+  --dsw-alias-label-primary-foreground: light-dark(var(--dsw-static-neutral-bluish-00), var(--dsw-static-neutral-bluish-1000));
+}
+
+/* --------------------------------------------------- 组件几何
+   数值逐条取自同目录 switch.module.css（CSS Modules 的哈希类名已去掉），
+   规则重新组织过，声明值未改。 */
 .switch {
   --dsh-switch-width: 36px;
   --dsh-switch-height: 20px;
@@ -142,6 +143,7 @@
   background: var(--dsw-alias-border-l3);
   cursor: pointer;
 }
+
 .switch[aria-checked='true'] { background: var(--dsw-alias-brand-primary); }
 .switch:disabled { cursor: default; opacity: 0.5; }
 .switch:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 2px; }
@@ -155,75 +157,79 @@
   background: var(--dsw-alias-label-primary-foreground);
   transition: transform var(--dsh-switch-duration) ease;
 }
+
 .switch[aria-checked='true'] .thumb { transform: translateX(var(--dsh-switch-thumb-offset)); }
 
-/* § 本仓库建议值：官方未声明 reduced-motion 分支 */
-@media (prefers-reduced-motion: reduce) { .thumb { transition: none; } }
+/* § 本仓库建议值 */
+@media (prefers-reduced-motion: reduce) {
+  .thumb { transition: none; }
+}
 
-/* ------------------------------------------------------------------ demo 外壳 */
+/* ------------------------------------------------------------------ demo 外壳
+   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
+   .demo-label 是本页唯一允许出现的文字，只写客观事实（尺寸 / 状态名）。 */
+* { box-sizing: border-box; }
 body {
   margin: 0;
-  padding: 32px;
-  background: var(--dsw-alias-bg-base);
+  padding: 16px;
   color: var(--dsw-alias-label-primary);
-  font: var(--dsw-font-s-14);
+  font-family: var(--dsw-font-family);
+  font-size: 14px;
+  line-height: 22px;
 }
-h1 { font-size: 18px; line-height: 26px; font-weight: 600; margin: 0 0 4px; }
-p.lead { margin: 0 0 24px; color: var(--dsw-alias-label-secondary); font: var(--dsw-font-xs-13); }
-h2 { font-size: 13px; line-height: 20px; font-weight: 600; color: var(--dsw-alias-label-tertiary); margin: 24px 0 8px; }
-p.note { margin: 0 0 8px; color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); }
-.list { display: flex; flex-direction: column; gap: 12px; max-width: 420px; }
-.item {
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  padding: 10px 12px; border-radius: 10px;
-  border: 0.5px solid var(--dsw-alias-border-l2);
+.demo-label {
+  margin: 0 0 8px;
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--dsw-alias-label-tertiary);
 }
-.item .meta { display: flex; flex-direction: column; gap: 2px; }
-.item .meta small { color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); }
-.row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-/* 静态展示用：把键盘焦点环钉在元素上，方便肉眼比对。 */
-.force-focus { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 2px; }
-.hint { color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); margin-top: 24px; }
+.demo-group + .demo-group { margin-top: 20px; }
+.demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.demo-stack, .stack { display: flex; flex-direction: column; }
+.demo-canvas {
+  padding: 12px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--dsw-alias-label-primary) 7%, transparent);
+}
 </style>
 </head>
 <body>
-  <h1>Switch 开关</h1>
-  <p class="lead">几何来自官方 Switch.module.css（36×20 / pad 2px / r10；滑块 16×16，选中 translateX(16px)，120ms）。实现为本仓库原创。</p>
-
-  <h2>三种状态</h2>
-  <p class="note">轨道只是背景色变化：关是 border-l3，开是 brand-primary；滑块始终 16×16 圆形。</p>
-  <div class="row">
-    <button type="button" role="switch" aria-checked="false" aria-label="关闭状态示例" class="switch"><span class="thumb"></span></button>
-    <button type="button" role="switch" aria-checked="true" aria-label="开启状态示例" class="switch"><span class="thumb"></span></button>
-    <button type="button" role="switch" aria-checked="false" aria-label="禁用状态示例" class="switch" disabled><span class="thumb"></span></button>
-    <button type="button" role="switch" aria-checked="true" aria-label="禁用且开启示例" class="switch" disabled><span class="thumb"></span></button>
-  </div>
-  <p class="note">顺序：关 / 开 / 禁用（关） / 禁用（开）。禁用时 opacity 0.5，光标不再是 pointer。</p>
-
-  <h2>键盘焦点（2px brand-primary，offset 2px）</h2>
-  <p class="note">左为静态展示的焦点环；右可真实 Tab 到并看到同一圈描边。</p>
-  <div class="row">
-    <button type="button" role="switch" aria-checked="true" aria-label="静态焦点展示" class="switch force-focus"><span class="thumb"></span></button>
-    <button type="button" role="switch" aria-checked="false" aria-label="可聚焦示例" class="switch"><span class="thumb"></span></button>
-  </div>
-
-  <h2>放进设置行里</h2>
-  <p class="note">开关没有可见文字，可访问名由 aria-label 提供；行标题只是给人看的。</p>
-  <div class="list">
-    <div class="item">
-      <span class="meta">自动保存<small>每 30 秒写入一次</small></span>
-      <button type="button" role="switch" aria-checked="true" aria-label="自动保存" class="switch"><span class="thumb"></span></button>
-    </div>
-    <div class="item">
-      <span class="meta">发送前预览<small>仅影响本地显示</small></span>
-      <button type="button" role="switch" aria-checked="false" aria-label="发送前预览" class="switch"><span class="thumb"></span></button>
-    </div>
-    <div class="item">
-      <span class="meta">实验特性<small>正在写入配置，暂时锁住</small></span>
-      <button type="button" role="switch" aria-checked="false" aria-label="实验特性" title="正在写入配置" class="switch" disabled><span class="thumb"></span></button>
+  <div class="demo-group">
+    <p class="demo-label">off · on — 36×20 · pad 2 · r10 · thumb 16</p>
+    <div class="demo-row" style="gap:16px">
+      <button type="button" class="switch" role="switch" aria-checked="false" aria-label="自动保存"><span class="thumb"></span></button>
+      <button type="button" class="switch" role="switch" aria-checked="true" aria-label="自动保存"><span class="thumb"></span></button>
     </div>
   </div>
 
-  <p class="hint">提示：真实组件完全受控（checked + onChange），本页写成原生属性以便静态展示。</p>
+  <div class="demo-group">
+    <p class="demo-label">focus-visible · 2px brand-primary + offset 2</p>
+    <div class="demo-row" style="gap:16px">
+      <button type="button" class="switch" role="switch" aria-checked="false" aria-label="按 Tab 聚焦"><span class="thumb"></span></button>
+      <button type="button" class="switch" role="switch" aria-checked="true" aria-label="按 Tab 聚焦"><span class="thumb"></span></button>
+    </div>
+  </div>
+
+  <div class="demo-group">
+    <p class="demo-label">disabled · opacity 0.5</p>
+    <div class="demo-row" style="gap:16px">
+      <button type="button" class="switch" role="switch" aria-checked="false" aria-label="已锁定" title="正在写入配置" disabled><span class="thumb"></span></button>
+      <button type="button" class="switch" role="switch" aria-checked="true" aria-label="已锁定" title="正在写入配置" disabled><span class="thumb"></span></button>
+    </div>
+  </div>
+
+  <div class="demo-group">
+    <p class="demo-label">行内用法 · 文字 + switch</p>
+    <div class="demo-stack">
+      <span style="display:flex;align-items:center;justify-content:space-between;gap:12px;width:240px">
+        <span>自动保存</span>
+        <button type="button" class="switch" role="switch" aria-checked="true" aria-label="自动保存"><span class="thumb"></span></button>
+      </span>
+      <span style="display:flex;align-items:center;justify-content:space-between;gap:12px;width:240px">
+        <span>深色模式</span>
+        <button type="button" class="switch" role="switch" aria-checked="false" aria-label="深色模式"><span class="thumb"></span></button>
+      </span>
+    </div>
+  </div>
 </body>
 </html>

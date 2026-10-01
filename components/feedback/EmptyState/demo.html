@@ -3,15 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>EmptyState 空状态 · DSH 设计资源</title>
+<title>EmptyState · DSH 设计资源</title>
 <style>
-/* ---------------------------------------------------------------------------
-   演示用 token 脚手架。
-   数值逐条取自本仓库 website/css/dsh-tokens.css（由产品主题采集生成）与
-   app.asar 内官方主题对合成 token（elevation / shadow / font）的定义。
-   真实 DSH 运行时由宿主主题注入这些变量；demo 只是把同一批值内联进来，
-   组件类本身不写死任何颜色。
-   --------------------------------------------------------------------------- */
 :root {
   --dsw-static-neutral-bluish-00: #fff;
   --dsw-static-neutral-bluish-50: #f9fafb;
@@ -117,11 +110,23 @@
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
 }
 
-/* ---------------------------------------------------------------------------
-   以下为 EmptyState 组件样式，与 empty-state.module.css 数值逐条一致
-   （类名去掉了 CSS Modules 的哈希）。§ 标记的行是本仓库建议值 —— 官方没有
-   EmptyState 组件，所以这里几乎每一行都是建议值。
-   --------------------------------------------------------------------------- */
+/* 深色主题：站点把深色 token 挂在 body[data-ds-dark-theme] 上，Shadow DOM 里选择不到它，
+   而 :host 自己的自定义属性又会盖过继承值——所以深色值在文件内自带一份，用 light-dark()
+   依据宿主继承下来的 color-scheme 选择。只列本页用到、且深浅两套取值不同的 token；
+   数值逐条取自 website/css/dsh-tokens.css。 */
+:root {
+  --dsw-alias-brand-primary: light-dark(var(--dsw-static-neutral-bluish-1000), var(--dsw-static-neutral-bluish-50));
+  --dsw-alias-button-primary-hover: light-dark(var(--dsw-static-neutral-bluish-750), var(--dsw-static-neutral-bluish-100));
+  --dsw-alias-interactive-bg-hover: light-dark(#2631480f, #ffffff14);
+  --dsw-alias-label-primary: light-dark(var(--dsw-static-neutral-bluish-1000), var(--dsw-static-neutral-bluish-50));
+  --dsw-alias-label-primary-foreground: light-dark(var(--dsw-static-neutral-bluish-00), var(--dsw-static-neutral-bluish-1000));
+  --dsw-alias-label-secondary: light-dark(var(--dsw-static-neutral-bluish-700), var(--dsw-static-neutral-bluish-300));
+  --dsw-alias-label-tertiary: light-dark(var(--dsw-static-neutral-bluish-600), var(--dsw-static-neutral-bluish-400));
+}
+
+/* --------------------------------------------------- 组件几何
+   数值逐条取自同目录 empty-state.module.css（CSS Modules 的哈希类名已去掉），
+   规则重新组织过，声明值未改。 */
 .empty {
   --dsh-empty-icon-slot: 32px;
   --dsh-empty-gap: 12px;
@@ -162,7 +167,6 @@
 }
 
 .description {
-  /* 标题与说明之间 6px，比 flex 的 12px 紧：-(12 - 6) = -6px */
   margin: calc(-1 * var(--dsh-empty-gap) + var(--dsh-empty-title-desc-gap)) 0 0;
   max-width: var(--dsh-empty-max-w);
   color: var(--dsw-alias-label-secondary);
@@ -170,116 +174,90 @@
   text-wrap: pretty;
 }
 
-.action {
-  display: flex;
+.action { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: var(--dsh-empty-action-gap); }
+
+/* 动作插槽里放的是 Button 组件：几何逐条同 controls/Button/button.module.css
+   （h36 · pad 0 14 · r18 · gap 4 · 14/22）。 */
+.button {
+  box-sizing: border-box;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  margin-top: var(--dsh-empty-action-gap);
+  gap: 4px;
+  height: 36px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 18px;
+  background: transparent;
+  color: var(--dsw-alias-label-primary);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 22px;
+  white-space: nowrap;
+  cursor: pointer;
 }
 
-/* ------------------------------------------------------------------ demo 外壳 */
+.button.primary { background: var(--dsw-alias-button-primary-fill); color: var(--dsw-alias-label-primary-foreground); }
+.button.primary:hover { background: var(--dsw-alias-button-primary-hover); }
+.button.ghost:hover { background: var(--dsw-alias-interactive-bg-hover); }
+.button:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 2px; }
+.button .icon16 { display: inline-flex; flex: none; align-items: center; justify-content: center; width: 16px; height: 16px; }
+
+/* ------------------------------------------------------------------ demo 外壳
+   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
+   .demo-label 是本页唯一允许出现的文字，只写客观事实（尺寸 / 状态名）。 */
+* { box-sizing: border-box; }
 body {
   margin: 0;
-  padding: 32px;
-  background: var(--dsw-alias-bg-base);
+  padding: 16px;
   color: var(--dsw-alias-label-primary);
-  font: var(--dsw-font-s-14);
+  font-family: var(--dsw-font-family);
+  font-size: 14px;
+  line-height: 22px;
 }
-h1 { font-size: 18px; line-height: 26px; font-weight: 600; margin: 0 0 4px; }
-p.lead { margin: 0 0 24px; color: var(--dsw-alias-label-secondary); font: var(--dsw-font-xs-13); }
-h2 { font-size: 13px; line-height: 20px; font-weight: 600; color: var(--dsw-alias-label-tertiary); margin: 24px 0 8px; }
-.hint { color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); }
-.row { display: flex; gap: 16px; flex-wrap: wrap; align-items: stretch; }
-.card {
-  flex: 1 1 320px; min-width: 320px;
-  border: 0.5px solid var(--dsw-alias-border-l3);
-  border-radius: 12px;
-  background: var(--dsw-alias-bg-layer-2);
+.demo-label {
+  margin: 0 0 8px;
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--dsw-alias-label-tertiary);
 }
-.card-title {
-  padding: 10px 16px;
-  border-bottom: 0.5px solid var(--dsw-alias-border-l2);
-  font-size: 13px; line-height: 20px; font-weight: 600;
+.demo-group + .demo-group { margin-top: 20px; }
+.demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.demo-stack, .stack { display: flex; flex-direction: column; }
+.demo-canvas {
+  padding: 12px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--dsw-alias-label-primary) 7%, transparent);
 }
-
-/* demo 里用 Button 组件的既有几何（同 Button/demo.html），仅作动作插槽的示例。 */
-.button {
-  display: inline-flex; align-items: center; justify-content: center; gap: 4px;
-  height: 36px; padding: 0 14px; border: 0; border-radius: 18px;
-  font-family: inherit; font-size: 14px; line-height: 22px; white-space: nowrap; cursor: pointer;
-}
-.button.primary { background: var(--dsw-alias-button-primary-fill); color: var(--dsw-alias-label-primary-foreground); }
-.button.ghost { background: transparent; color: var(--dsw-alias-label-primary); }
-.button.ghost:hover { background: var(--dsw-alias-interactive-bg-hover); }
 </style>
 </head>
 <body>
-  <h1>EmptyState 空状态</h1>
-  <p class="lead">官方没有同名组件，全部几何为本仓库建议值；文字层级刻意对齐官方（标题 14/22、说明 13/20）。实现为本仓库原创。</p>
-
-  <h2>完整形态：图标（32×32）+ 标题 + 说明 + 动作</h2>
-  <p class="hint" style="margin:0 0 8px">图标是 32×32 的线稿，颜色继承 --dsw-alias-label-tertiary；动作是仓库 Button 的 primary 变体。</p>
-  <div class="card">
+  <div class="demo-group" style="max-width:360px">
+    <p class="demo-label">icon 32×32 · gap 12 · 标题 14/22 500 · 说明 13/20 · 动作 margin-top 16</p>
     <div class="empty">
-      <span class="icon" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 9.5A2.5 2.5 0 0 1 7.5 7h17A2.5 2.5 0 0 1 27 9.5v13a2.5 2.5 0 0 1-2.5 2.5h-17A2.5 2.5 0 0 1 5 22.5v-13Z" stroke="currentColor" stroke-width="1.5"/><path d="M5 18h6.5l1.5 3h6l1.5-3H27" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
+      <span class="icon" aria-hidden="true"><svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true"><path d="M6 8h20v14H6z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 17h5l1.6 3h6.8l1.6-3h5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></span>
       <p class="title">还没有会话</p>
-      <p class="description">新建一个会话，问第一个问题。历史记录会保存在本地，随时可以回来继续。</p>
+      <p class="description">新建一个会话，问第一个问题。</p>
       <div class="action">
-        <button type="button" class="button primary">新建会话</button>
-        <button type="button" class="button ghost">看看示例</button>
+        <button type="button" class="button primary"><span class="icon16"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M7.2 1.6h1.6v5.6h5.6v1.6H8.8v5.6H7.2V8.8H1.6V7.2h5.6V1.6z" fill="currentColor"/></svg></span>新建会话</button>
+        <button type="button" class="button ghost">导入</button>
       </div>
     </div>
   </div>
 
-  <h2>极简形态：只有标题（缺省的说明与动作都不渲染）</h2>
-  <div class="card">
+  <div class="demo-group" style="max-width:360px">
+    <p class="demo-label">仅标题 · 无 icon / description / action</p>
     <div class="empty">
       <p class="title">没有匹配的结果</p>
     </div>
   </div>
 
-  <h2>筛选导致的空：说明 + 一个「清除筛选」动作（用 role="status" 让读屏知道内容变了）</h2>
-  <div class="card">
-    <div class="empty" role="status">
-      <p class="title">没有符合条件的文件</p>
-      <p class="description">当前筛选是「.tsx」+「3 天内修改」。试试放宽时间范围，或清除筛选看全部。</p>
-      <div class="action">
-        <button type="button" class="button ghost">清除筛选</button>
-      </div>
-    </div>
-  </div>
-
-  <h2>长说明：max-width 280px 生效，两行以上（文本不会拉满整行，flex 子项是 shrink-to-fit）</h2>
-  <div class="card" style="max-width:440px">
+  <div class="demo-group" style="max-width:360px">
+    <p class="demo-label">pad 32 12 · 标题说明间距 6px（负 margin 抵消 gap）</p>
     <div class="empty">
-      <span class="icon" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="11" stroke="currentColor" stroke-width="1.5"/><path d="M16 10.5v6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="16" cy="21" r="1" fill="currentColor"/></svg></span>
-      <p class="title">这个工作区还没有连接任何数据源</p>
-      <p class="description">连接之后就能在对话里直接查询表结构、跑只读 SQL。数据源凭据只保存在本机，不会上传。</p>
-      <div class="action">
-        <button type="button" class="button primary">连接数据源</button>
-      </div>
+      <p class="title">搜索无结果</p>
+      <p class="description">换个关键词，或清空筛选条件后再试一次。</p>
     </div>
   </div>
-
-  <h2>并排的紧凑面板：padding 可以按需覆写（这里是 demo 覆写，组件默认 32px 12px）</h2>
-  <div class="row">
-    <div class="card" style="min-width:0">
-      <div class="card-title">会话列表</div>
-      <div class="empty" style="padding:16px 12px">
-        <p class="title">暂无会话</p>
-        <p class="description">点右下角的加号开始。</p>
-      </div>
-    </div>
-    <div class="card" style="min-width:0">
-      <div class="card-title">附件</div>
-      <div class="empty" style="padding:16px 12px">
-        <p class="title">还没有附件</p>
-        <p class="description">拖文件到这里，或点回形针。</p>
-      </div>
-    </div>
-  </div>
-
-  <p class="hint" style="margin-top:24px">提示：图标位固定 32×32，所以传 24px 或 32px 的线稿都能居中；标题与说明都是 shrink-to-fit 居中，max-width 只是长文本的上限。</p>
 </body>
 </html>

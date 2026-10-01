@@ -407,24 +407,34 @@
         })
         var categories = Object.keys(byCategory).sort()
         if (categories.length > 0) {
-            var openComponent = path.indexOf('/component/') === 0 ? path.slice('/component/'.length) : null
+            var openId = path.indexOf('/component/') === 0 ? path.slice('/component/'.length) : null
             var componentLinks = [{
                 href: href('/components'),
                 label: t('index.allComponents'),
                 count: COMPONENTS.length,
                 active: path === '/components',
             }].concat(categories.map(function (cat) {
-                var holdsOpen = openComponent !== null && byCategory[cat].some(function (c) { return c.id === openComponent })
+                var holdsOpen = openId !== null && byCategory[cat].some(function (c) { return c.id === openId })
+                var key = 'cat-' + cat
+                var flag = OPEN_GROUPS[key]
+                /* Folded unless the reader opened it, or is reading something
+                 * inside it — a tree you cannot find yourself in is worse than a
+                 * long list. Children are always rendered and folded by CSS, so
+                 * opening one needs no re-render. */
+                var open = flag === true || (flag === undefined && holdsOpen)
                 return {
+                    key: key,
                     href: href('/components/' + cat),
                     label: categoryLabel(cat),
                     count: byCategory[cat].length,
-                    /* reading a component keeps its category lit and lists the
-                     * item underneath, so the index answers "where am I?" */
-                    active: path === '/components/' + cat || holdsOpen,
-                    children: holdsOpen ? byCategory[cat].filter(function (c) { return c.id === openComponent }).map(function (c) {
-                        return { href: href('/component/' + c.id), label: c.name, active: true, sub: true }
-                    }) : [],
+                    /* the branch itself is never lit: exactly one row carries the
+                     * current position, and it is the row actually opened */
+                    active: path === '/components/' + cat,
+                    collapsible: true,
+                    open: open,
+                    children: byCategory[cat].map(function (c) {
+                        return { href: href('/component/' + c.id), label: c.name, active: path === '/component/' + c.id, sub: true }
+                    }),
                 }
             }))
             groups.push({ id: 'components', title: t('index.components'), links: componentLinks })
@@ -444,7 +454,7 @@
     }
 
     /**
-     * One navigation row.
+     * One leaf navigation row.
      * @param link - { href, label, count, active, sub }.
      * @returns html.
      */
@@ -457,32 +467,60 @@
     }
 
     /**
+     * A branch row: the label navigates, the chevron at the right end folds it.
+     *
+     * Folded content is rendered and collapsed with `grid-template-rows`, so
+     * opening a branch costs no re-render and the animation has something to
+     * animate.
+     * @param link - { key, href, label, count, active, open, children }.
+     * @param chevron - chevron SVG markup.
+     * @returns html.
+     */
+    function branchRow(link, chevron) {
+        return '<div class="index__branch" data-open="' + link.open + '" data-key="' + esc(link.key) + '">'
+            + '<div class="index__row">'
+            + '<a class="index__link index__link--parent" href="' + esc(link.href) + '"'
+            + (link.active ? ' aria-current="page"' : '') + '>'
+            + '<span class="index__label">' + esc(link.label) + '</span>'
+            + (link.count == null ? '' : '<span class="index__count">' + link.count + '</span>')
+            + '</a>'
+            + '<button class="index__disclosure" type="button" aria-expanded="' + link.open + '"'
+            + ' aria-label="' + esc(link.label) + '">'
+            + '<span class="index__chevron">' + chevron + '</span></button>'
+            + '</div>'
+            + '<div class="index__children"><div>'
+            + (link.children || []).map(linkRow).join('')
+            + '</div></div></div>'
+    }
+
+    /**
      * Render the left index.
+     *
+     * Groups are plain captions, not foldable headers: a caption that hides its
+     * own contents saves vertical space at the cost of hiding the answer to
+     * "what is in here". Only the component branches fold, because there the
+     * list really is long.
      * @param path - current route path.
      */
     function renderIndex(path) {
         var chevron = iconSvg('chevron-down')
         indexEl.innerHTML = navModel(path).map(function (group) {
-            var open = OPEN_GROUPS[group.id] !== false
-            return '<div class="index__group" data-open="' + open + '" data-group="' + esc(group.id) + '">'
-                + '<button class="index__head" type="button" aria-expanded="' + open + '">'
-                + '<span class="index__chevron">' + chevron + '</span>'
-                + '<span>' + esc(group.title) + '</span>'
-                + '</button>'
-                + '<div class="index__list"><div>'
+            return '<div class="index__group">'
+                + '<p class="index__title">' + esc(group.title) + '</p>'
                 + group.links.map(function (link) {
-                    return linkRow(link) + (link.children || []).map(linkRow).join('')
+                    return link.collapsible === true ? branchRow(link, chevron) : linkRow(link)
                 }).join('')
-                + '</div></div></div>'
+                + '</div>'
         }).join('')
 
-        Array.prototype.forEach.call(indexEl.querySelectorAll('.index__head'), function (head) {
-            head.addEventListener('click', function () {
-                var group = head.parentElement
-                var open = group.getAttribute('data-open') === 'true'
-                group.setAttribute('data-open', open ? 'false' : 'true')
-                head.setAttribute('aria-expanded', open ? 'false' : 'true')
-                OPEN_GROUPS[group.getAttribute('data-group')] = !open
+        Array.prototype.forEach.call(indexEl.querySelectorAll('.index__disclosure'), function (button) {
+            button.addEventListener('click', function (event) {
+                event.preventDefault()
+                var branch = button.closest('.index__branch')
+                var open = branch.getAttribute('data-open') !== 'true'
+                branch.setAttribute('data-open', String(open))
+                button.setAttribute('aria-expanded', String(open))
+                OPEN_GROUPS[branch.getAttribute('data-key')] = open
                 save('dshdr-groups', JSON.stringify(OPEN_GROUPS))
             })
         })
@@ -631,12 +669,36 @@
             /* The first rule is the site's, the rest is the demo's own document:
              * both themes are already resolved into `--dsw-*` on the page, so the
              * specimen follows the page theme without a second token set. */
-            shadow.innerHTML = '<style>'
-                + ':host{display:block;font-family:var(--site-font);font-size:var(--site-text-body);color:var(--site-label);background:var(--site-bg-stage);border-radius:var(--site-radius-s);overflow:hidden}'
+            shadow.innerHTML = toShadowMarkup(html)
+                + '<style>'
+                /* Appended AFTER the demo's own document so it wins the tie: the
+                 * demo still owns its canvas colour, but the page owns the type
+                 * and the text colour, and no extra frame is added around it. */
+                + ':host{display:block;font-family:var(--site-font);font-size:var(--site-text-body);color:var(--site-label)}'
                 + ':host *{box-sizing:border-box}'
                 + '</style>'
-                + toShadowMarkup(html)
         })
+    }
+
+    /**
+     * A badge.
+     * @param text - label.
+     * @param tone - modifier suffix.
+     * @returns html.
+     */
+    /**
+     * The "guide / spec" switch.
+     *
+     * Two audiences, two documents. The guide answers "should I reach for
+     * this?", the spec answers "what exactly is it?" — shown at once, the second
+     * buries the first.
+     * @returns html.
+     */
+    function docSwitch() {
+        return '<div class="doc-switch"><div class="segmented" data-doc-switch>'
+            + '<button type="button" data-doc="readme" aria-selected="true">' + esc(t('components.docHuman')) + '</button>'
+            + '<button type="button" data-doc="spec" aria-selected="false">' + esc(t('components.docSpec')) + '</button>'
+            + '</div></div>'
     }
 
     /**
@@ -970,7 +1032,9 @@
             + '<p class="hero__lede">' + esc(toPlain(c.summary)) + '</p></div>'
             + (LANG === 'en' ? '<div class="callout"><span class="callout__mark">i</span><div><p>' + esc(t('components.chineseOnly')) + '</p></div></div>' : '')
             + specimen(t('components.preview'), c.demo)
-            + (c.readmeHtml ? '<article class="prose">' + c.readmeHtml + '</article>' : '')
+            + (c.hasSpec === true ? docSwitch() : '')
+            + (c.readmeHtml ? '<article class="prose" data-doc-panel="readme">' + c.readmeHtml + '</article>' : '')
+            + (c.hasSpec === true ? '<article class="prose" data-doc-panel="spec" hidden>' + c.specHtml + '</article>' : '')
             + (c.tsx ? codeBlock((c.path || '') + 'index.tsx', c.tsx, { folded: true }) : '')
             + (c.css ? codeBlock((c.path || '') + (c.id || 'component').toLowerCase() + '.module.css', c.css, { folded: true }) : '')
             + '</div>'
@@ -1187,6 +1251,17 @@
                 var folded = code.getAttribute('data-fold') === 'true'
                 code.setAttribute('data-fold', folded ? 'false' : 'true')
                 button.textContent = folded ? t('actions.collapse') : t('actions.expand')
+            })
+        })
+        Array.prototype.forEach.call(mainEl.querySelectorAll('[data-doc-switch] button'), function (button) {
+            button.addEventListener('click', function () {
+                var want = button.getAttribute('data-doc')
+                Array.prototype.forEach.call(button.parentElement.children, function (sibling) {
+                    sibling.setAttribute('aria-selected', String(sibling === button))
+                })
+                Array.prototype.forEach.call(mainEl.querySelectorAll('[data-doc-panel]'), function (panel) {
+                    panel.hidden = panel.getAttribute('data-doc-panel') !== want
+                })
             })
         })
         Array.prototype.forEach.call(mainEl.querySelectorAll('[data-back]'), function (button) {

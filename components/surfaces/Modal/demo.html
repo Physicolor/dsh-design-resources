@@ -3,15 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Modal 对话框 · DSH 设计资源</title>
+<title>Modal · DSH 设计资源</title>
 <style>
-/* ---------------------------------------------------------------------------
-   演示用 token 脚手架。
-   数值逐条取自本仓库 website/css/dsh-tokens.css（由产品主题采集生成）与
-   app.asar 内官方主题对合成 token（elevation / shadow / font）的定义。
-   真实 DSH 运行时由宿主主题注入这些变量；demo 只是把同一批值内联进来，
-   组件类本身不写死任何颜色。
-   --------------------------------------------------------------------------- */
 :root {
   --dsw-static-neutral-bluish-00: #fff;
   --dsw-static-neutral-bluish-50: #f9fafb;
@@ -117,10 +110,28 @@
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
 }
 
-/* ---------------------------------------------------------------------------
-   以下为 Modal 组件样式，与 modal.module.css 数值逐条一致（类名去掉了 CSS
-   Modules 的哈希）。§ 标记的行是本仓库建议值，不是官方数值。
-   --------------------------------------------------------------------------- */
+/* 深色主题：站点把深色 token 挂在 body[data-ds-dark-theme] 上，Shadow DOM 里选择不到它，
+   而 :host 自己的自定义属性又会盖过继承值——所以深色值在文件内自带一份，用 light-dark()
+   依据宿主继承下来的 color-scheme 选择。只列本页用到、且深浅两套取值不同的 token；
+   数值逐条取自 website/css/dsh-tokens.css。 */
+:root {
+  --dsw-alias-bg-layer-1: light-dark(var(--dsw-static-neutral-bluish-00), var(--dsw-static-neutral-bluish-875));
+  --dsw-alias-bg-layer-2: light-dark(var(--dsw-static-neutral-bluish-00), var(--dsw-static-neutral-bluish-850));
+  --dsw-alias-bg-mask-1: light-dark(#0000003d, #00000080);
+  --dsw-alias-border-l3: light-dark(#0000001f, #ffffff29);
+  --dsw-alias-border-l4: light-dark(#00000029, #fff3);
+  --dsw-alias-brand-primary: light-dark(var(--dsw-static-neutral-bluish-1000), var(--dsw-static-neutral-bluish-50));
+  --dsw-alias-button-primary-hover: light-dark(var(--dsw-static-neutral-bluish-750), var(--dsw-static-neutral-bluish-100));
+  --dsw-alias-interactive-bg-hover: light-dark(#2631480f, #ffffff14);
+  --dsw-alias-label-primary: light-dark(var(--dsw-static-neutral-bluish-1000), var(--dsw-static-neutral-bluish-50));
+  --dsw-alias-label-primary-foreground: light-dark(var(--dsw-static-neutral-bluish-00), var(--dsw-static-neutral-bluish-1000));
+  --dsw-alias-label-secondary: light-dark(var(--dsw-static-neutral-bluish-700), var(--dsw-static-neutral-bluish-300));
+  --dsw-alias-label-tertiary: light-dark(var(--dsw-static-neutral-bluish-600), var(--dsw-static-neutral-bluish-400));
+}
+
+/* --------------------------------------------------- 组件几何
+   数值逐条取自同目录 modal.module.css（CSS Modules 的哈希类名已去掉），
+   规则重新组织过，声明值未改。 */
 .root {
   --dsh-modal-z: 1000;
   --dsh-modal-pad: 24px;
@@ -133,7 +144,9 @@
   justify-content: center;
   padding: var(--dsh-modal-pad);
 }
+
 .mask { position: absolute; inset: 0; background: var(--dsw-alias-bg-mask-1); backdrop-filter: var(--dsw-mask-blur); }
+
 .dialog {
   --dsh-modal-width: 380px;
   --dsh-modal-radius: 24px;
@@ -153,144 +166,160 @@
   border-radius: var(--dsh-modal-radius);
   background: var(--dsw-alias-bg-layer-2);
   box-shadow: var(--dsw-elevation-prominent);
-  outline: none;   /* § 建议值：容器可编程聚焦，不画默认焦点环 */
+  outline: none;
 }
+
 .content { display: flex; flex-direction: column; width: 100%; }
+
+/* header：padding 22px 14px 12px 24px · gap 8 · space-between */
 .header { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 22px 14px 12px 24px; }
+
 .title { margin: 0; font-size: 16px; line-height: 24px; font-weight: 500; color: var(--dsw-alias-label-primary); }
+
 .close {
-  flex: none; box-sizing: border-box;
-  display: inline-flex; align-items: center; justify-content: center;
-  padding: 0;   /* § 建议值：官方依赖宿主全局 reset */
-  width: 28px; height: 28px;
-  border: none; border-radius: 8px; background: transparent;
-  cursor: pointer; color: var(--dsw-alias-label-secondary);
+  flex: none;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  color: var(--dsw-alias-label-secondary);
 }
+
 .close:hover { background: var(--dsw-alias-interactive-bg-hover); }
-/* § 建议值：官方 .close 没有焦点样式 */
 .close:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 2px; }
+
 .icon { display: block; width: 14px; height: 14px; }
+
 .description { margin: 0; padding: 0 var(--dsh-modal-pad-x); font-size: 14px; line-height: 22px; font-weight: 400; color: var(--dsw-alias-label-primary); }
-.body { display: flex; flex-direction: column; min-width: 0; margin-top: var(--dsh-modal-gap); padding: 0 var(--dsh-modal-pad-x); }
+
+/* 主体容器。类名不叫 .body：站点会把「前面不是词字符的 body + {」改写成 :host。 */
+.dialogBody { display: flex; flex-direction: column; min-width: 0; margin-top: var(--dsh-modal-gap); padding: 0 var(--dsh-modal-pad-x); }
+
 .footer { display: flex; align-items: center; justify-content: flex-end; gap: 8px; padding: 0 var(--dsh-modal-pad-x); }
 
+/* ------------------------------------------------------------------ 静态复现
+   预览不弹遮罩层：把 fixed 全屏改成文档流里的一块，遮罩色直接当这块的底色，
+   dialog 的 r24 / pad / gap / header 内边距 / 28×28 关闭键全部保持官方取值。 */
+.stage {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--dsh-modal-pad);
+  border-radius: 8px;
+  background: var(--dsw-alias-bg-mask-1);
+}
+
+/* Button 组件的几何，逐条同 controls/Button/button.module.css。 */
+.button {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 36px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 18px;
+  background: transparent;
+  color: var(--dsw-alias-label-primary);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 22px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.button.ghost:hover:not(:disabled) { background: var(--dsw-alias-interactive-bg-hover); }
+.button.primary { background: var(--dsw-alias-button-primary-fill); color: var(--dsw-alias-label-primary-foreground); }
+.button.primary:hover:not(:disabled) { background: var(--dsw-alias-button-primary-hover); }
+.button.outline { border: 0.5px solid var(--dsw-alias-border-l3); }
+.button.outline:hover:not(:disabled) { background: var(--dsw-alias-interactive-bg-hover); }
+.button:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 2px; }
+
 /* ------------------------------------------------------------------ demo 外壳
-   以下不是组件样式。真实组件把 .root 定位在视口上，demo 里为了静态展示，
-   把 .root 关进一个 .demo-stage 里（position: relative + 固定高度）。 */
+   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
+   .demo-label 是本页唯一允许出现的文字，只写客观事实（尺寸 / 状态名）。 */
+* { box-sizing: border-box; }
 body {
   margin: 0;
-  padding: 32px;
-  background: var(--dsw-alias-bg-base);
+  padding: 16px;
   color: var(--dsw-alias-label-primary);
-  font: var(--dsw-font-s-14);
+  font-family: var(--dsw-font-family);
+  font-size: 14px;
+  line-height: 22px;
 }
-h1 { font-size: 18px; line-height: 26px; font-weight: 600; margin: 0 0 4px; }
-p.lead { margin: 0 0 24px; color: var(--dsw-alias-label-secondary); font: var(--dsw-font-xs-13); }
-h2 { font-size: 13px; line-height: 20px; font-weight: 600; color: var(--dsw-alias-label-tertiary); margin: 24px 0 8px; }
-.demo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 20px; }
-.demo-stage {
-  position: relative; height: 420px; overflow: hidden;
-  border: 0.5px solid var(--dsw-alias-border-l2); border-radius: 12px;
-  background: var(--dsw-alias-bg-module-platform);
+.demo-label {
+  margin: 0 0 8px;
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--dsw-alias-label-tertiary);
 }
-.demo-stage > .root { position: absolute; }
-.demo-note { margin: 6px 0 0; color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); }
-.demo-input {
-  display: flex; align-items: center; box-sizing: border-box; height: 32px; padding: 0 8px;
-  border: 0.5px solid var(--dsw-alias-border-l4); border-radius: 8px; background: var(--dsw-alias-bg-layer-1);
-  color: var(--dsw-alias-label-primary); font: var(--dsw-font-s-14);
+.demo-group + .demo-group { margin-top: 20px; }
+.demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.demo-stack, .stack { display: flex; flex-direction: column; }
+.demo-canvas {
+  padding: 12px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--dsw-alias-label-primary) 7%, transparent);
 }
-.demo-btn {
-  height: 36px; padding: 0 14px; border: 0; border-radius: 18px; cursor: pointer;
-  background: transparent; color: var(--dsw-alias-label-primary); font: var(--dsw-font-s-14);
-}
-.demo-btn:hover { background: var(--dsw-alias-interactive-bg-hover); }
-.demo-btn--primary { background: var(--dsw-alias-button-primary-fill); color: var(--dsw-alias-label-primary-foreground); }
-.demo-btn--primary:hover { background: var(--dsw-alias-button-primary-hover); }
-.demo-btn--outline { border: 0.5px solid var(--dsw-alias-border-l3); }
 </style>
 </head>
 <body>
-  <h1>Modal 对话框</h1>
-  <p class="lead">几何逐条取自官方 Modal.module.css（r24 / width min(380px,100%) / gap 20px / 遮罩 bg-mask-1 / elevation-prominent / header pad 22 14 12 24）。外框里的灰色区域是 demo 替身，用来把 fixed 遮罩关进固定高度里；真实组件铺满视口。</p>
-
-  <h2>完整形态：标题 + 说明 + 主体输入 + 底部操作</h2>
-  <div class="demo-grid">
-    <div>
-      <div class="demo-stage">
-        <div class="root" role="presentation">
-          <div class="mask" aria-hidden="true"></div>
-          <div class="dialog" role="dialog" aria-modal="true" aria-label="新建会话" tabindex="-1">
-            <div class="content">
-              <div class="header">
-                <h2 class="title">新建会话</h2>
-                <button type="button" class="close" aria-label="关闭">
-                  <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.1 3 8 6.9 11.9 3l1.1 1.1L9.1 8l3.9 3.9-1.1 1.1L8 9.1 4.1 13 3 11.9 6.9 8 3 4.1z" fill="currentColor"/></svg>
-                </button>
-              </div>
-              <p class="description">会话会使用当前工作目录的默认设置。</p>
-              <div class="body"><div class="demo-input">会话名称</div></div>
-            </div>
-            <div class="footer">
-              <button type="button" class="demo-btn demo-btn--outline">取消</button>
-              <button type="button" class="demo-btn demo-btn--primary">创建</button>
-            </div>
+  <div class="demo-group">
+    <p class="demo-label">静态复现 · dialog w380 r24 · header 22/14/12/24 · footer gap 8</p>
+    <div class="stage">
+      <div class="dialog" role="dialog" aria-modal="true" aria-label="新建会话" tabindex="-1">
+        <div class="content">
+          <div class="header">
+            <h2 class="title">新建会话</h2>
+            <button type="button" class="close" aria-label="关闭"><svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.1 3 8 6.9 11.9 3l1.1 1.1L9.1 8l3.9 3.9-1.1 1.1L8 9.1 4.1 13 3 11.9 6.9 8 3 4.1z" fill="currentColor"/></svg></button>
+          </div>
+          <p class="description">会话会使用当前工作目录的默认设置。</p>
+          <div class="dialogBody">
+            <span style="box-sizing:border-box;display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 8px;border:0.5px solid var(--dsw-alias-border-l4);border-radius:8px;background:var(--dsw-alias-bg-layer-1)">
+              <input style="flex:1;min-width:0;border:none;outline:none;background:transparent;font-family:inherit;font-size:14px;line-height:22px;color:var(--dsw-alias-label-primary)" value="未命名会话" aria-label="会话名称">
+            </span>
           </div>
         </div>
-      </div>
-      <p class="demo-note">header 的 padding 是 22 / 14 / 12 / 24，右侧只给 14px 是因为关闭按钮自己就是 28×28 的点击区；底部 24px 与对话框的 padding-bottom 对齐。</p>
-    </div>
-
-    <div>
-      <div class="demo-stage">
-        <div class="root" role="presentation">
-          <div class="mask" aria-hidden="true"></div>
-          <div class="dialog" role="dialog" aria-modal="true" aria-label="删除这条记录" tabindex="-1">
-            <div class="content">
-              <div class="header">
-                <h2 class="title">删除这条记录</h2>
-                <button type="button" class="close" aria-label="关闭">
-                  <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.1 3 8 6.9 11.9 3l1.1 1.1L9.1 8l3.9 3.9-1.1 1.1L8 9.1 4.1 13 3 11.9 6.9 8 3 4.1z" fill="currentColor"/></svg>
-                </button>
-              </div>
-              <p class="description">删除后无法恢复。</p>
-            </div>
-            <div class="footer">
-              <button type="button" class="demo-btn demo-btn--outline">取消</button>
-              <button type="button" class="demo-btn demo-btn--primary">删除</button>
-            </div>
-          </div>
+        <div class="footer">
+          <button type="button" class="button outline">取消</button>
+          <button type="button" class="button primary">创建</button>
         </div>
       </div>
-      <p class="demo-note">没有 body 时对话框只剩 header + description + footer：三者之间的 20px 由 .dialog 的 gap 与 .body 的 margin-top 提供，不靠额外的空白元素。</p>
-    </div>
-
-    <div>
-      <div class="demo-stage">
-        <div class="root" role="presentation">
-          <div class="mask" aria-hidden="true"></div>
-          <div class="dialog" role="dialog" aria-modal="true" aria-label="重试" tabindex="-1">
-            <div class="content">
-              <div class="header">
-                <h2 class="title">上次请求失败</h2>
-                <button type="button" class="close" aria-label="关闭">
-                  <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.1 3 8 6.9 11.9 3l1.1 1.1L9.1 8l3.9 3.9-1.1 1.1L8 9.1 4.1 13 3 11.9 6.9 8 3 4.1z" fill="currentColor"/></svg>
-                </button>
-              </div>
-              <p class="description">网络连接被重置，可以立即重试或改用离线模型。</p>
-              <div class="body"><div class="demo-input">也可以直接输入新的端点地址</div></div>
-            </div>
-            <div class="footer">
-              <button type="button" class="demo-btn">稍后</button>
-              <button type="button" class="demo-btn demo-btn--primary">重试</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <p class="demo-note">footer 里的按钮用的是本仓库 Button 的几何（h36 / pad 0 14px / r18），这里只作为占位内容，Modal 本身不依赖 Button。</p>
     </div>
   </div>
 
-  <p class="demo-note" style="margin-top:24px">提示：hover 关闭按钮可以看到 <code>--dsw-alias-interactive-bg-hover</code> 底色，Tab 可以看到关闭按钮的焦点环（§ 本仓库建议值）。Escape 关闭、遮罩点击关闭、焦点陷阱与焦点归还只在实际 React 组件里生效，静态 demo 展示的是外观。</p>
+  <div class="demo-group">
+    <p class="demo-label">仅标题 · 无 description / body · content 收在 header 后</p>
+    <div class="stage">
+      <div class="dialog" role="dialog" aria-modal="true" aria-label="删除确认" tabindex="-1">
+        <div class="content">
+          <div class="header">
+            <h2 class="title">删除确认</h2>
+            <button type="button" class="close" aria-label="关闭"><svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.1 3 8 6.9 11.9 3l1.1 1.1L9.1 8l3.9 3.9-1.1 1.1L8 9.1 4.1 13 3 11.9 6.9 8 3 4.1z" fill="currentColor"/></svg></button>
+          </div>
+        </div>
+        <div class="footer">
+          <button type="button" class="button outline">取消</button>
+          <button type="button" class="button primary">删除</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-group">
+    <p class="demo-label">几何事实 · mask rgba(0,0,0,.24) + blur(none) · root padding 24 · z 1000</p>
+    <div class="demo-row" style="gap:12px;font-size:12px;line-height:18px;color:var(--dsw-alias-label-tertiary)">
+      <span>w min(380px, 100%)</span><span>r 24px</span><span>gap 20px</span><span>pb 24px</span><span>close 28×28 r8</span>
+    </div>
+  </div>
 </body>
 </html>

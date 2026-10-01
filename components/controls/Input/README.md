@@ -1,85 +1,31 @@
 # Input 输入框
 
-32px 高的单行输入框，可选一个 16×16 的前置图标。
+搜索框里那枚放大镜加一条细线框，就是它。改会话标题、填一个目录路径、粘一个链接，用的也是同一个。
 
-## 是什么
+## 什么时候用它
 
-一个 `<span>` 外壳包着原生 `<input>`：
+- 单行文字录入：搜索、标题、路径、链接。
+- 需要和旁边的小按钮、小胶囊并排放在同一行里，高度要压得住。
+- 用户输入的内容短、一眼能看全。
 
-- `ref` 直接透传到内部 `<input>`（不是外壳），所以 `ref.current.focus()`、
-  读 `selectionStart` 都能用。
-- 除 `className`（挂在外壳上）之外的全部 input 属性原样透传：
-  `value` / `onChange` / `placeholder` / `type` / `disabled` / `readOnly` /
-  `autoFocus` / `onKeyDown` / `aria-*` …
-- `icon` 会给一个 16×16 的图标容器。传 `null` / `undefined` 时容器整个不渲染。
+## 什么时候不要用它
 
-外壳负责所有视觉：0.5px 描边、8px 圆角、`bg-layer-1` 底色，聚焦时
-（`:focus-within`）边框换成 `brand-primary`。内部 `<input>` 自己无边框、无轮廓、
-透明底。
+- 要写多行：请改用文本域。这个输入框高度是固定的，多行内容会直接溢出去。
+- 在几个固定选项里挑一个：请改用胶囊或下拉，不要让用户手打一个本来可以直接选的词。
+- 只是展示一个只读的值：用普通文字或标签。灰着的输入框会让人以为这里本来能改。
+- 想让用户调数字：请改用步进器，输入框只负责文字。
+- 需要当场提示填错了：这个组件不带错误态，错误文案要由外面那层容器放在输入框下方。
 
-零依赖，只用到 `react` 和 CSS Modules。
+## 怎么用得好
 
-## 什么时候用
+**光有占位提示不算有名字。** 占位文字一开始输入就消失了，也不是输入框的名字。旁边给一行标签，或者让输入框带上自己的名字，读屏用户才知道这一格要填什么。
 
-- 单行文本录入：搜索框、会话标题、路径、URL。
-- 需要 32px 紧凑高度、和 `Button` 的 `sm` / `Pill` 同处一行的表单。
+**聚焦要看得出来。** 用户按 Tab 走进来的时候，整条边框变色是最省事的信号；再叠一圈额外的焦点圈，会出现两圈颜色打架的情况。
 
-## 什么时候不要用
+**前置图标是装饰，不是名字。** 放大镜只说明「这是搜索」，读屏不读它，含义要靠输入框自己的名字承担。
 
-- 多行文本：用 `<textarea>`。Input 固定 32px 高，塞多行会溢出。
-- 需要在若干固定选项里选一个：用 `Pill` / 下拉菜单，不要让用户手打。
-- 纯展示的只读值：用文本或 `Tag`。禁用输入框会带来「这里本来能改」的错觉。
-- 带校验错误的表单行：本组件不含错误态。错误信息应由外层容器渲染在输入框下方，
-  并给 `input` 挂 `aria-invalid` + `aria-describedby`（属性可以透传进来）。
-- 数字调节：用 stepper；Input 只是文本输入。
+**两种「不能改」要分清。** 彻底用不了就用禁用，它会从键盘顺序里消失；只是暂时不给编辑、但仍希望用户读到内容，就用只读。
 
-## 几何来源
+**别把它做成一行里最矮的东西。** 和旁边的按钮、胶囊并排时高度对不上，会让整行看起来没对齐；对不上时先调整布局，而不是把输入框压扁。
 
-全部读自官方 `@deepseek-ai/dsh-client-ui-primitives/lib/Input.module.css`：
-
-| 数值 | 出处（选择器） |
-| --- | --- |
-| `height: 32px`、`padding: 0 8px`、`gap: 6px`、`border-radius: 8px` | `.wrap` |
-| `border: 0.5px solid var(--dsw-alias-border-l4)`、`background: var(--dsw-alias-bg-layer-1)`、`display: inline-flex`、`align-items: center` | `.wrap` |
-| `border-color: var(--dsw-alias-brand-primary)` | `.wrap:focus-within` |
-| `width: 16px`、`height: 16px`、`color: var(--dsw-alias-label-tertiary)` | `.icon` |
-| `flex: 1`、`min-width: 0`、`border: none`、`outline: none`、`background: transparent` | `.input` |
-| `font-size: 14px`、`line-height: 22px`、`color: var(--dsw-alias-label-primary)` | `.input` |
-| `color: var(--dsw-alias-label-dimmed)` | `.input::placeholder` |
-
-同样读自官方 `lib/index.js` 的 `function Input`：外壳是 `<span class=wrap>`，
-有 `icon` 时先在前面插一个 `<span class=icon>`，然后是 `<input class=input>`，
-其余属性全部展开到 `<input>` 上。
-
-**本仓库建议值（非官方数值）：**
-
-- `.wrap:has(.input:disabled) { opacity: 0.4; cursor: not-allowed; }`
-  —— 官方 `Input.module.css` 完全没有 disabled 视觉：禁用的输入框看起来和可用的
-  一模一样，用户会先点一下才发现不能用。取值直接沿用官方
-  `Button.module.css` 的 `.button:disabled`（`opacity: 0.4` + `cursor: not-allowed`），
-  让「禁用 = 0.4」成为全库同一条读法。
-  注意这一条用了 `:has()`（Chrome 105+ / Safari 15.4+ / Firefox 121+）；
-  需要兼容更老的运行时，请改成由调用方在外壳上加一个 class。
-- `.icon` 上的 `flex: none`：官方只写了 `display: inline-flex` + 16×16。
-  容器没有 flex 收缩约束时，长内容可能把图标压扁；`flex: none` 锁住 16×16。
-- `.input` 上的 `font-family: inherit`：官方未声明。`<input>` 不会从祖先继承字体，
-  不写的话浏览器会用系统默认字体，和页面其余文字不一致。
-- `.wrap` 上的 `box-sizing: border-box`：官方未声明。外壳有 `0.5px` 边框，
-  没有 `border-box` 时实际高度会多出 1px。
-
-实现为本仓库原创（CSS 变量承载几何 + 外壳/图标/输入三段式），未复制官方 CSS 源码。
-
-## 可访问性要点
-
-- **输入框需要一个可访问名**。占位文字不是名字（它会在输入后消失，读屏软件也不
-  总把它当标签）。请给 `aria-label`，或者让外层 `<label htmlFor>` 指到内部 input 的 id。
-- **前置图标要 `aria-hidden="true"`**，否则图标里的文本节点会被读一遍；
-  它的含义应由输入框自己的名字承担。
-- **焦点只用一个信号**：内部 `<input>` 设了 `outline: none`，焦点靠外壳的
-  `:focus-within` 边框变色表达。这是官方做法，所以不要再给 input 加别的焦点环，
-  否则会出现两圈。
-- **错误态不是本组件的职责**：透传 `aria-invalid` 与 `aria-describedby`，
-  由外层渲染错误文案。
-- `disabled` 会让输入框从 Tab 序列里消失。如果只是想「暂时不给改但还要能被读到」，
-  用 `readOnly` + `aria-readonly`。
-- 输入框的 `type` 请按语义选（`email` / `url` / `search`），移动端会给出更合适的键盘。
+实现细节见 SPEC.md。

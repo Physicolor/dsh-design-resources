@@ -302,50 +302,60 @@ body[data-resizing] { cursor: col-resize; user-select: none; }
 
 /* ── index (left) ──────────────────────────────────────────────────── */
 
-.index__group { margin-bottom: var(--site-s5); }
+/* Groups are captions, not foldable headers, and they sit tight against their
+ * own entries — the vertical rhythm comes from the caption's top margin, not
+ * from a gap under every group. */
+.index__group { margin-bottom: 2px; }
 
-.index__head {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    width: 100%;
-    height: 28px;
-    padding: 0 6px 0 8px;
-    background: transparent;
-    border: none;
-    border-radius: 7px;
-    cursor: pointer;
+.index__title {
+    margin: 14px 0 2px;
+    padding: 0 8px;
     font-size: var(--site-text-micro);
     font-weight: 600;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--site-label-3);
-    transition: color var(--site-dur-fast) var(--site-ease);
 }
-.index__head:hover { color: var(--site-label-2); }
-.index__chevron {
-    width: 12px;
-    height: 12px;
-    flex: none;
-    transition: transform var(--site-dur) var(--site-ease);
-}
-.index__chevron svg { width: 100%; height: 100%; display: block; }
-.index__group[data-open='false'] .index__chevron { transform: rotate(-90deg); }
+.index__group:first-child .index__title { margin-top: 0; }
 
-.index__list {
+.index__row { display: flex; align-items: center; }
+.index__link--parent { flex: 1; min-width: 0; }
+
+/* the fold control lives at the right end of the row, per the owner's call */
+.index__disclosure {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    flex: none;
+    margin-right: 2px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    color: var(--site-label-3);
+    cursor: pointer;
+    transition: background var(--site-dur-fast) var(--site-ease), color var(--site-dur-fast) var(--site-ease);
+}
+.index__disclosure:hover { background: var(--site-bg-subtle); color: var(--site-label); }
+.index__chevron { display: block; width: 12px; height: 12px; transition: transform var(--site-dur) var(--site-ease); }
+.index__chevron svg { width: 100%; height: 100%; display: block; }
+.index__branch[data-open='false'] .index__chevron { transform: rotate(-90deg); }
+
+.index__children {
     display: grid;
     grid-template-rows: 1fr;
-    transition: grid-template-rows var(--site-dur-slow) var(--site-ease),
-                opacity var(--site-dur) var(--site-ease);
+    transition: grid-template-rows var(--site-dur-slow) var(--site-ease), opacity var(--site-dur) var(--site-ease);
 }
-.index__group[data-open='false'] .index__list { grid-template-rows: 0fr; opacity: 0; }
-.index__list > div { overflow: hidden; min-height: 0; }
+.index__branch[data-open='false'] .index__children { grid-template-rows: 0fr; opacity: 0; }
+.index__children > div { overflow: hidden; min-height: 0; }
 
 .index__link {
     display: flex;
     align-items: center;
     gap: var(--site-s2);
-    height: 30px;
+    height: 28px;
     padding: 0 8px;
     border-radius: 7px;
     font-size: var(--site-text-note);
@@ -418,37 +428,18 @@ a.card:hover { transform: translateY(-2px); box-shadow: var(--site-shadow); bord
 
 /* ── specimen stage (no nested scrolling: the frame grows to fit) ──── */
 
-.specimen {
-    margin-bottom: var(--site-s5);
-    padding: var(--site-s4);
-    background: var(--site-bg-sunken);
-    border: 1px solid var(--site-line-soft);
-    border-radius: var(--site-radius-m);
-}
+/* No frame and no inner card: the specimen is a canvas, and a box inside a box
+ * inside a page is three rectangles doing one rectangle's job. */
+.specimen { margin-bottom: var(--site-s6); }
 .specimen__label {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0 0 var(--site-s3);
+    margin: 0 0 var(--site-s2);
     font-size: var(--site-text-micro);
     font-weight: 600;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--site-label-3);
 }
-.specimen__open {
-    font-size: var(--site-text-micro);
-    letter-spacing: 0;
-    text-transform: none;
-    color: var(--site-accent-ink);
-    cursor: pointer;
-}
-.specimen__stage {
-    display: block;
-    border-radius: var(--site-radius-s);
-    overflow: hidden;
-    /* the shadow root paints its own surface and background */
-}
+.specimen__stage { display: block; }
 
 /* ── icon grid ─────────────────────────────────────────────────────── */
 
@@ -720,6 +711,11 @@ code, .mono { font-family: var(--site-font-mono); font-size: 12px; }
     background: var(--site-accent);
     will-change: transform;
 }
+
+/* ── guide / spec switch on a component page ───────────────────────── */
+
+.doc-switch { display: flex; margin: 0 0 var(--site-s4); }
+[data-doc-panel][hidden] { display: none; }
 
 /* ── breadcrumb + back ─────────────────────────────────────────────── */
 

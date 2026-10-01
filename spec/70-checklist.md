@@ -27,7 +27,7 @@
 | A15 | 按钮高度只用 36 或 28，圆角只用 18 或 14 | CT-MF-01 | 自动 |
 | A16 | Button 内图标容器为 16×16，且未抬高按钮高度 | CT-MF-02 | 自动 |
 | A17 | Tag 未绑定点击动作 | CT-MF-04 | 半自动 |
-| A18 | 每个交互控件具备 default/hover/active/focus-visible/disabled 五态 | CT-MF-07 | 半自动 |
+| A18 | 每个交互控件具备 default/hover/active/focus-visible/disabled 五态（官方控件未提供的不补，按 00-overview §4.1） | CT-MF-07 | 半自动 |
 | A19 | 状态色全部来自 `--dsw-*` 语义 token | CT-MF-08 | 自动 |
 | A20 | 未自造官方已有控件的替代品（仿 switch／仿下拉／div 冒充按钮） | CT-MF-11 | 半自动 |
 | A21 | 未用 CSS 覆盖官方控件的高度、圆角、字号 | CT-MF-12 | 自动 |
@@ -39,8 +39,8 @@
 | A27 | 未假设浅色主题（无硬编码浅底或深字） | TK-MF-07 | 自动 |
 | A28 | 自定义色提供了 light/dark/Increase Contrast 三套变体 | TK-MF-08 | 半自动 |
 | A29 | 字号与行高成对使用 | TK-MF-11 | 半自动 |
-| A30 | 过渡时长取值全部落在 100/150/200/300/350 之内且不超过 350ms | MO-MF-01 | 自动 |
-| A31 | 交互过渡使用 `cubic-bezier(0.40, 0, 0.20, 1)` | MO-MF-04 | 自动 |
+| A30 | 过渡时长取值全部落在 100/150/200/300/350 之内且不超过 350ms（沿用官方控件自带过渡值的除外，按 00-overview §4.1） | MO-MF-01 | 自动 |
+| A31 | 交互过渡使用 `cubic-bezier(0.40, 0, 0.20, 1)`（沿用官方控件自带曲线的除外） | MO-MF-04 | 自动 |
 | A32 | 无无限循环动画（loading 除外） | MO-MF-07 | 自动 |
 | A33 | 未对 width/height/top/left/margin 等布局属性做动画 | MO-MF-08 | 自动 |
 | A34 | 有 `prefers-reduced-motion: reduce` 分支，且以媒体查询或 matchMedia 监听实现 | MO-MF-09 / MO-MF-10 | 自动 |

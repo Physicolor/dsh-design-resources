@@ -103,6 +103,9 @@
         "tags": "Tags",
         "preview": "Live preview",
         "sourceLabel": "Source",
+        "docHuman": "Guide",
+        "docSpec": "Spec",
+        "docSpecNote": "This one is for agents and engineers: geometry sources, API, tokens and machine-checkable constraints.",
         "chineseOnly": "This component's documentation is currently Chinese-only.",
         "usage": "The component directory is an npm package and can be installed; a single folder can also be copied straight into your plugin."
     },
