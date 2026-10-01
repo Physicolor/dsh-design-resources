@@ -795,7 +795,8 @@
         {
             "match": "plainRun",
             "where": "spec/10-frame-layout.md",
-            "note": "消息正文里的纯文本片段（带 @ 引用时被切出来的那几段）"
+            "note": "消息正文里的纯文本片段（带 @ 引用时被切出来的那几段）",
+            "flexible": true
         },
         {
             "match": "Hefa_q_",

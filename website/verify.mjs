@@ -81,6 +81,26 @@ if (data !== null) {
   check('brand fish mark present', typeof data.brand.fish === 'string' && data.brand.fish.includes('path'))
   check('every seat has a purpose', data.seats.every(s => typeof s.purpose === 'string' && s.purpose.length > 0))
   check('spec documents rendered', data.specs.length > 0, `${data.specs.length}`)
+
+  /* 元素清单的验收条件：产品侧每一个身份都要有家——要么规范里写下了它的尺寸，
+   * 要么被明确判定「尺寸随内容走」。第三方插件的按插件搁置，不计入这条。
+   * 这一条把「扫完并一一对应」变成 build 能判的断言，而不是一句自我评价。
+   * 没扫过（data/ui-coverage.json 不存在）时不判，免得新克隆一上来就红。 */
+  let coverageJson = { coverage: [] }
+  try {
+    coverageJson = JSON.parse(await readFile(join(ROOT, 'data', 'ui-coverage.json'), 'utf8'))
+  } catch { /* 还没扫过 */ }
+  if (coverageJson.coverage.length > 0) {
+    const families = (JSON.parse(await readFile(join(ROOT, 'data', 'inventory-anchors.json'), 'utf8')).pluginFamilies ?? [])
+    const isThirdParty = row => {
+      const hay = `${row.key} ${row.cls ?? ''} ${row.slot ?? ''}`.toLowerCase()
+      return row.pluginOwned === true || families.some(f => hay.includes(String(f.match).toLowerCase()))
+    }
+    const ownRows = coverageJson.coverage.filter(row => !isThirdParty(row))
+    const unresolved = ownRows.filter(row => row.coverage !== 'covered' || row.described === false)
+    check('every product element has a documented home', unresolved.length === 0,
+      `${ownRows.length} own identities, ${unresolved.length} unresolved${unresolved.length === 0 ? '' : ': ' + unresolved.slice(0, 3).map(r => r.key).join(', ')}`)
+  }
 }
 
 /* ── 3. browser ────────────────────────────────────────────────────── */

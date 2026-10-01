@@ -1,11 +1,11 @@
 {
   "$comment": "清单里的每个身份在规范/组件语料里有没有位置。covered = 人工锚点命中（described 表示目标文件里写下了它的实测尺寸）；referenced = 语料里出现过这个词（要复核）；missing = 待办。",
-  "generatedAt": "2026-10-01T18:39:19.149Z",
+  "generatedAt": "2026-10-01T19:01:47.782Z",
   "counts": {
     "identities": 436,
     "covered": 390,
     "described": 102,
-    "coveredNotDescribed": 118,
+    "coveredNotDescribed": 117,
     "referenced": 8,
     "missing": 38,
     "pluginOwned": 119
@@ -6526,7 +6526,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
