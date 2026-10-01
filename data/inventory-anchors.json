@@ -1,5 +1,21 @@
 {
     "$comment": "产品界面里的类名族 → 本仓库规范/组件里的出处。scan-ui.mjs 的自动对照只能做包含判断，而同一件东西在产品和仓库里常常不是一个名字：产品叫 sessionRow，仓库里叫 SidebarRow。这张表是人的判断，命中的身份直接判为已收录（并把出处指向这里写的地方）。match 是子串匹配，越具体越先命中；where 是仓库内的路径。",
+    "pluginFamilies": [
+        { "match": "dsx-", "plugin": "dsh-widgets" },
+        { "match": "lc-", "plugin": "dsh-usage-center" },
+        { "match": "duc-", "plugin": "dsh-usage-center" },
+        { "match": "dye-", "plugin": "dsh-mem" },
+        { "match": "uitw-", "plugin": "dsh-ui-harmonizer" },
+        { "match": "dsh_notification", "plugin": "dsh-widgets" },
+        { "match": "dpp-", "plugin": "DeepSeek 客户端（非 dsh 插件）" },
+        { "match": "fbulu_", "plugin": "未识别（待查）" },
+        { "match": "Mrat-", "plugin": "未识别（待查）" },
+        { "match": "Nhu-QW", "plugin": "未识别（待查）" },
+        { "match": "1ik0f", "plugin": "dsh-ui-harmonizer" },
+        { "match": "1rv3m", "plugin": "dsh-ui-harmonizer" },
+        { "match": "brmue", "plugin": "dsh-ui-harmonizer" },
+        { "match": "6nhg2", "plugin": "dsh-widgets" }
+    ],
     "anchors": [
         { "match": "sessionRow", "where": "components/layout/SidebarRow", "note": "左栏会话行（含运行态圆环、时间、悬停更多）" },
         { "match": "projectRow", "where": "components/layout/SidebarRow", "note": "左栏工作区行" },

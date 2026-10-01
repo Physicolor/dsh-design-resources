@@ -3,8 +3,28 @@
 - id: settings-page
 - category: patterns
 - source: `components/patterns/SettingsPage/`（`index.tsx` / `settings-page.module.css`）
-- official-counterpart: 无。官方 `lib/index.js` 的导出列表里没有设置页骨架；每条几何都是「锚定某个已核实数值」，逐条见下
-- human-doc: `README.md`（判断与取舍；本文件只放事实）
+- official-counterpart: 官方 primitives 包（`lib/index.js`）里没有这个组件；但**产品里有设置窗口本身**——采集到的实测几何见下节。本组件是给插件用的骨架建议，不是「产品没有设置页」的意思。
+
+## 产品里的设置窗口（实测）
+
+`docs/reference/settings-panel.json`（1570×905 视口，窗口盒子 [385, 53, 800, 800]），demo 就是照这一份渲染的。
+
+| 部位 | 实测值 |
+| --- | --- |
+| 遮罩 | 全屏 `--dsw-alias-bg-mask-1`（计算值 `rgba(0,0,0,.24)`） |
+| 窗口 | **800 × 800** · 圆角 **28px** · 白底 · `box-shadow` = `--dsw-elevation-prominent`（计算值 `0 0 0 .5px rgba(0,0,0,.16), 0 3px 8px rgba(0,0,0,.04), 0 0 20px rgba(0,0,0,.05)`） |
+| 导航列 | **188 宽** · padding `22px 12px 0` · 标题与列表 gap 18 · 列表行距 4 |
+| 导航格 | **164 × 40** · 圆角 **12** · padding `9px 16px 9px 12px` · gap 8 · 选中底 `rgb(235,238,242)` |
+| 内容列 | **612 宽** · 头部 54 高（padding `20px 14px 8px 10px`）· 选项区 padding `0 24px 24px` |
+| 分区标题 | **18/26 · 600**（`h2`） |
+| 分区说明 | **13/20** · 下方 12 |
+| 设置行 | padding `16px 0` · 标题 **14/22** · 说明 **12/18** · 行间一条 hairline · 文字列右侧留 48 |
+| 选择器 | 高 **36** · 圆角 **12** · padding `0 14` · gap 12 · 底 `rgb(245,246,247)` · 折角 14×14 |
+| 主题方块 | **183 × 84** · 圆角 **20** · padding `20px 32px` · 选中底 `rgb(245,246,247)` |
+| 开关 | **36 × 20** · 圆角 999 · 滑块 16 · 打开时 `--dsw-alias-brand-primary` |
+| 数字微调 | 上下两枚 **17 × 12** 箭头 · 圆角 4（字号大小那一行） |
+
+注意两处与本组件原先的建议值不一致，以实测为准：导航格圆角是 12（不是 10）、设置行说明是 12/18（不是 13/20）。
 
 ## geometry-source
 

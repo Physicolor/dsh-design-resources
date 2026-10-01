@@ -188,7 +188,7 @@
             "summary": "inline-flex 的一行三个圆点，颜色继承父级 color，尺寸和间距由 props 控制。；三个点包在 aria-hidden=\"true\" 的视觉层里，只把一段视觉隐藏的文本交给屏幕阅读器朗读。；零依赖，只用到 react 和 CSS Modules",
             "whenToUse": "一次请求 / 一次生成正在进行，但位置已知：紧跟在「正在生成回复」这类文案后面。；按钮内部短时等待（配 aria-busy 或改用按钮自己的 loading 态）。；工具条、状态行这种一行高的紧凑位置",
             "whenNotToUse": "页面首次加载、大块区域还空着：用骨架屏（--dsw-alias-bg-skeleton 就是给它的），三点太小、不足以占位。；耗时可能超过几秒且进度可估：用进度条，三点不会告诉用户「还要多久」。；需要用户等待时不能做别的：这是阻塞式加载，应当给对话框或遮罩，而不是角落里转三个点。；只是装饰性的「活跃」标记：用 StateDot，它表达的是状态而不是加载",
-            "geometrySource": "官方没有 LoadingDots 组件，但 ConnectionIndicator.module.css 里有一套现成的三点时序，；「三点依次出现」这件事本身、动画周期 1.5s、infinite ← 官方 ConnectionIndicator.module.css 的 .secondDot / .thirdDot（animation: reveal-second-dot 1.5s step-end infinite）",
+            "geometrySource": "官方没有 LoadingDots 组件，但 ConnectionIndicator.module.css 里有一套现成的三点时序，；「三点依次出现」这件事本身、动画周期 1.5s、infinite ← 官方 ConnectionIndicator.module.css 的 .secondDot / .thirdDot（animation: reveal-second-dot 1.5s step-end infinite）；产品里的加载/运行态另有一枚官方字形：见本目录的 RunningRing（左栏会话行首的运行圆环）",
             "tags": [
                 "反馈",
                 "零依赖",
@@ -196,6 +196,24 @@
                 "动画",
                 "三点",
                 "loading-dots"
+            ]
+        },
+        {
+            "id": "running-ring",
+            "name": "RunningRing",
+            "category": "feedback",
+            "path": "components/feedback/RunningRing/",
+            "summary": "一枚 14px 的运行圆环：25% 不透明度的轨道，加一段绕圈跑并自己伸缩的弧（r 9.5 / stroke 2 / viewBox 24）。；零依赖，只用到 react 和 CSS Modules。；它就是产品里左栏会话「正在跑」时行首那一枚字形，几何逐条采自运行中的界面",
+            "whenToUse": "列表行的状态是「正在进行、时长不可估」：会话行首、任务行左侧。；空间很小、放不下文案的地方——14px 说清一件事，不需要可见标签。；配一段读屏文字（label）用，视觉上只留环。",
+            "whenNotToUse": "知道还剩多久：用进度条，转圈回答不了「还要多久」（Apple HIG：能确定时长就优先确定式进度）。；几毫秒就好的动作：闪一下反而像卡住，等超过约一秒再出现。；表达完成 / 失败 / 警告：用 StateDot 或标签；环停在那里只会被读成卡住。；给按钮当加载图标：按钮自己该有 loading 态。；一屏挂好几个：一屏一个「正在跑」是状态，五个是噪声。",
+            "geometrySource": "全部采自运行中的产品（docs/reference/running-row.json）：width/height 14、viewBox 0 0 24 24、两枚 circle cx/cy 12 / r 9.5 / stroke-width 2 / linecap round、轨道 opacity .25、弧 dasharray 12 150、旋转 1.5s linear infinite、伸缩 1.5s ease-in-out infinite、颜色 --dsw-alias-label-tertiary、reduced-motion 停在 18 150 / -3 ← 客户端 CSS 模块 _spinner_1i3xo_37 / _spinnerMotion_1i3xo_42 / _spinnerTrack_1i3xo_47 / _spinnerArc_1i3xo_48 与 @keyframes _dsh-state-dot-spin / _dsh-state-dot-dash",
+            "tags": [
+                "反馈",
+                "零依赖",
+                "运行态",
+                "加载",
+                "圆环",
+                "running-ring"
             ]
         },
         {
@@ -401,7 +419,7 @@
             "summary": "一个纯布局外壳，导出三个组件：；零依赖，只用到 react 和 CSS Modules。不 import 仓库内任何其它组件",
             "whenToUse": "插件提供一个独立设置页（占用 settings.section 之外的整页空间，或在独立窗口/标签页里渲染）。；设置项多到需要左侧分区导航（≥ 3 个分区）才能扫读。；内容列里需要「标题 + 若干行」的重复结构，直接用 SettingsSection 统一排版",
             "whenNotToUse": "只给宿主设置页加一个分区：那属于 settings.section 座位（single 类型，见 spec/11-slot-seats.md 第 4 节），宿主会给你一个已经排好版的容器，用本组件会把设置页套成两层导航。；只有 1–2 个分区：不需要导航列，直接用一个标题 + 若干 ListRowGroup 即可；左侧空导航是纯浪费。；不是设置：会话语义的内容属于会话区，不要借设置页的壳（spec/10-frame-layout.md 第 4 节的跨区域决策表）",
-            "geometrySource": "官方没有 SettingsPage 对应物（lib/index.js 的导出里没有设置页骨架）。因此本组件的每条几何都是；导航行 min-height: 40px、padding: 8px 10px、border-radius: 10px、gap: 8px、font-size: 14px、line-height: 22px ← Menu.module.css .item；导航行 hover 底色 --dsw-alias-interactive-bg-hover ← Menu.module.css .item:hover:not(:disabled)",
+            "geometrySource": "产品里有设置窗口本身（实测 800 × 800、圆角 28、--dsw-elevation-prominent、遮罩 --dsw-alias-bg-mask-1、导航列 188、内容列 612、导航格 164 × 40 圆角 12、分区标题 18/26/600、设置行 padding 16px 0 且说明 12/18、选择器高 36 圆角 12、主题方块 183 × 84 圆角 20 ← docs/reference/settings-panel.json）；骨架组件本身官方 primitives 包没有对应物，其余数值逐条锚定已核实选择器",
             "tags": [
                 "骨架",
                 "零依赖",

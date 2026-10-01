@@ -1,0 +1,104 @@
+/* RunningRing 运行圆环 —— 几何全部来自运行中的产品：
+ *   docs/reference/running-row.json（左栏会话行首，采集视口 1570×905）
+ *
+ * 产品里的类名是 CSS Modules 哈希（`_spinner_1i3xo_37`）；同一模块还有
+ * `_dot_1i3xo_2`（静态状态圆点）与 `_step_1i3xo_97`（步骤点）。这里只取运行圆环：
+ *   svg            行内实渲 14 × 14、viewBox 0 0 24 24
+ *   两个 circle    cx/cy 12、r 9.5、fill none、stroke currentColor
+ *                  stroke-width 2、stroke-linecap round
+ *   轨道           opacity .25
+ *   弧             stroke-dasharray 12 150
+ *   g              transform-origin center；spin 1.5s linear infinite
+ *   弧             dash 1.5s ease-in-out infinite
+ *   keyframes      spin: to { rotate(360deg) }
+ *                  dash: 0% 12 150 / 0 → 50% 24 150 / -6 → 100% 12 150 / 0
+ *   减动效         两条动画都停；弧停在 18 150 / -3（仍然看得出「没转完」）
+ *   颜色           --dsw-alias-label-tertiary（侧栏里那一枚就是这个色）
+ *
+ * 实现为本仓库原创：关键帧改名 `dsh-design-running-ring-*`，避免与产品同名定义在
+ * 同一页面里互相覆盖；声明值与产品逐条一致。 */
+
+.root {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+}
+
+.ring {
+  display: block;
+  flex: none;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.motion {
+  transform-origin: center;
+  animation: dsh-design-running-ring-spin 1.5s linear infinite;
+}
+
+.track,
+.arc {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.track {
+  opacity: 0.25;
+}
+
+.arc {
+  stroke-dasharray: 12 150;
+  animation: dsh-design-running-ring-dash 1.5s ease-in-out infinite;
+}
+
+@keyframes dsh-design-running-ring-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dsh-design-running-ring-dash {
+  0% {
+    stroke-dasharray: 12 150;
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dasharray: 24 150;
+    stroke-dashoffset: -6;
+  }
+
+  to {
+    stroke-dasharray: 12 150;
+    stroke-dashoffset: 0;
+  }
+}
+
+/* 减动效：转的东西必须停下来，但不能停成一个「卡住」的圆。
+ * 静止帧取产品 reduced-motion 分支里的那一帧（18 150 / -3）——轨道、弧、颜色都还在，
+ * 所以它在静态下依然读作「进行中」，而不是「完成」。 */
+@media (prefers-reduced-motion: reduce) {
+  .motion,
+  .arc {
+    animation: none;
+  }
+
+  .arc {
+    stroke-dasharray: 18 150;
+    stroke-dashoffset: -3;
+  }
+}
+
+/* 给读屏的「进行中」。产品在会话行里就是把它放在环旁边（`hIlkoa_visuallyHidden`），
+ * 而不是可见的标签——Apple HIG 也建议转圈本身不需要可见标签。 */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

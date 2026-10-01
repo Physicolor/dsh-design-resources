@@ -1,5 +1,5 @@
 {
-    "$comment": "哪些组件的实现对应官方已有组件，哪些是本仓库补充的。判断依据是每个组件 SPEC.md 的 official-counterpart 字段：official 表示官方 primitives 包里有同名组件，网站上看到的就是 DSH 里真实存在、用户会遇到的控件；proposed 表示官方没有这个组件，几何是逐条锚定官方选择器拼出来的实现建议。网站必须把两者区分显示——把 proposed 当官方界面展示，等于编造 UI。",
+    "$comment": "哪些组件的实现对应官方已有组件，哪些是本仓库补充的。判断依据是每个组件 SPEC.md 的 official-counterpart 字段：official 表示这件东西在产品界面里真实存在（官方 primitives 包里有同名组件，或者产品客户端自己的 CSS 模块在渲染它——例如运行圆环 running-ring），网站上看到的就是用户会遇到的控件；proposed 表示产品里没有这个界面，几何是逐条锚定官方选择器拼出来的实现建议。网站必须把两者区分显示——把 proposed 当官方界面展示，等于编造 UI。",
     "source": "components/*/*/SPEC.md 的 official-counterpart 字段，2026-10 汇总",
     "official": [
         "button",
@@ -11,6 +11,7 @@
         "toast",
         "disclosure-row",
         "state-dot",
+        "running-ring",
         "fishmark",
         "wordmark"
     ],

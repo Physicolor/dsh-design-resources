@@ -47,6 +47,22 @@ DSH 官方未公开动效时长与缓动曲线数值。Apple HIG 同样没有公
 
 <!-- demo: motion-panels | 大到左右栏开合时整个页面的位移。点按钮手动开合，或让它自己循环播放。 -->
 
+## 3.1 进行中的动效（加载 / 运行态）
+
+持续动效不属于时长五档——`MO-MF-01` 管的是状态过渡（点一下、开一下），这里管的是「一直在跑」。官方为此有三套并存的实现，周期都是 1s 或 1.5s：
+
+| 形态 | 周期与曲线 | 出处 |
+| --- | --- | --- |
+| 运行圆环（转 + 弧伸缩） | 转 `1.5s linear infinite`；伸缩 `1.5s ease-in-out infinite` | 客户端 CSS 模块 `_spinnerMotion_1i3xo_42` / `_spinnerArc_1i3xo_48`；组件见 `components/feedback/RunningRing/` |
+| 像素追逐（库里 `StateDot` 的 `ongoing`） | `1s` 无限，四段离散台阶（`opacity` 1 / 0.6 / 0.35 / 0.15），逐格 `animation-delay` 相差 125ms | `@deepseek-ai/dsh-client-ui-primitives/lib/StateDot.module.css` `@keyframes dsh-state-dot-chase` |
+| 三点依次出现 | `1.5s` 无限，`step-end` | `ConnectionIndicator.module.css` `.secondDot` / `.thirdDot` |
+
+- `MO-MF-12`：持续进行中的动效周期只能取 `1s` 或 `1.5s`，且必须是 `infinite`。判定：扫描 `animation-iteration-count: infinite` 的 `animation-duration`。
+- `MO-MF-13`：同一条「正在进行」的信息，一个界面里只用一种形态。会话行首用了运行圆环，就不要在同一行再挂三点或追逐方块——它们是三套官方实现，不是三个粒度。
+- `MO-MF-14`：能用确定式进度（知道还剩多少）就不要用转圈。这是 Apple HIG 的取向（[Progress indicators](https://developer.apple.com/cn/design/human-interface-guidelines/progress-indicators)：能确定时长时优先 determinate，因为它能帮用户决定要不要先去做别的）。官方目前没有进度条组件，插件要用就自己实现，但**别把转圈当作「反正差不多」的替代**。
+
+**官方自身的不统一（按 HIG 判定）**：官方 primitives 包给 `ongoing` 的是像素追逐矩阵，而产品实际渲染在会话行首的是转圈环——两套并存，库里那套在真实界面里没有出现。HIG 把「时长不可估」的等待归为 indeterminate，其形态就是 spinner（「All platforms support a circular image that appears to spin」），并且建议在空间受限的小区域优先用 spinner。**判定：这是官方没统一，不是有意的设计分工；跟产品走（转圈环），追逐矩阵只在必须用库里 `StateDot` 时才会出现。**（活的对照在 `components/feedback/RunningRing/` 的预览里。）
+
 ## 4. prefers-reduced-motion（强制）
 
 - `MO-MF-09`：必须响应 `prefers-reduced-motion: reduce`。在该模式下，所有非必要的位移、缩放、旋转改为即时（0ms）；允许保留透明度变化与加载指示器，但加载指示器不得有大幅位移。

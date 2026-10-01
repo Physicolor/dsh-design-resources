@@ -17,6 +17,7 @@
     /* 元素清单：运行中的界面扫出来的每个身份，以及它有没有落进规范。 */
     var INVENTORY = D.inventory || { elements: [], counts: {} }
     var COVERAGE = D.coverage || { coverage: [], counts: {} }
+    var ANCHORS = D.anchors || { anchors: [], pluginFamilies: [] }
     var I18N = D.i18n || { zh: {}, en: {} }
 
     var shell = document.getElementById('shell')
@@ -771,6 +772,10 @@
         var mount = function (host, html) {
             var shadow = host.attachShadow({ mode: 'open' })
             shadow.innerHTML = toShadowMarkup(html) + SHADOW_RESET
+            /* `[data-icon]` 占位符在 demo 里也管用：`hydrateIcons` 走的是
+             * querySelectorAll，不会穿过 shadow 边界，所以每个 demo 自己的根要单独喂一次。
+             * 有了它，demo 不用把官方图标再抄一份进来。 */
+            hydrateIcons(shadow)
             /* `innerHTML` never executes a `<script>`, so an embedded demo would
              * be a picture of an interaction rather than an interaction. The
              * nodes are rebuilt so the demo can actually be operated. */
@@ -1346,10 +1351,28 @@
         var query = (q || '').trim().toLowerCase()
         var all = COVERAGE.coverage || []
         var counts = COVERAGE.counts || { identities: all.length, referenced: 0, missing: 0, pluginOwned: 0 }
-        var rows = all.filter(function (row) {
+        var families = (ANCHORS.pluginFamilies || [])
+
+        /**
+         * 这条身份是哪家插件画的（产品自己的元素返回 null）。
+         * @param row - 清单里的一行。
+         * @returns 插件名，或 null。
+         */
+        function pluginOf(row) {
+            var key = row.key.toLowerCase()
+            for (var i = 0; i < families.length; i++) {
+                if (key.indexOf(String(families[i].match).toLowerCase()) !== -1) return families[i].plugin
+            }
+            return row.pluginOwned === true ? t('inventory.pluginUnknown') : null
+        }
+
+        var official = all.filter(function (row) { return pluginOf(row) === null })
+        var thirdParty = all.filter(function (row) { return pluginOf(row) !== null })
+        var match = function (row) {
             if (query === '') return true
             return (row.key + ' ' + row.slot + ' ' + (row.texts || []).join(' ')).toLowerCase().indexOf(query) !== -1
-        })
+        }
+        var rows = official.filter(match)
 
         if (all.length === 0) {
             mainEl.innerHTML = '<div class="main-inner"><div class="hero"><h1 class="hero__title">' + esc(t('inventory.title')) + '</h1>'
@@ -1358,11 +1381,17 @@
             return
         }
 
-        var rowsHtml = rows.map(function (row) {
-            var state = row.coverage === 'missing'
-                ? '<span class="badge badge--warn">' + esc(t('inventory.stateMissing')) + '</span>'
-                : (row.pluginOwned === true
-                    ? '<span class="badge badge--neutral">' + esc(t('inventory.statePlugin')) + '</span>'
+        /**
+         * 一行清单。
+         * @param row - 清单条目。
+         * @returns HTML。
+         */
+        function rowHtml(row) {
+            var plugin = pluginOf(row)
+            var state = plugin !== null
+                ? '<span class="badge badge--neutral">' + esc(t('inventory.stateParked')) + '</span>'
+                : (row.coverage === 'missing'
+                    ? '<span class="badge badge--warn">' + esc(t('inventory.stateMissing')) + '</span>'
                     : '<span class="badge badge--safe">' + esc(t('inventory.stateCovered')) + '</span>')
             var where = (row.hits || []).slice(0, 2).map(function (hit) {
                 return '<code class="mono">' + esc(hit.where.replace(/^components\//u, '').replace(/^spec\//u, 'spec/')) + '</code>'
@@ -1371,25 +1400,42 @@
             return '<tr><td><code class="mono">' + esc(row.key.split('|')[0] || row.key) + '</code>'
                 + (row.slot ? '<br><span style="color:var(--site-label-3)">' + esc(row.slot) + '</span>' : '')
                 + '</td><td>' + esc(seen) + '</td><td class="mono">' + esc(row.size) + '</td>'
-                + '<td>' + state + '</td><td>' + where + '</td></tr>'
-        }).join('')
+                + '<td>' + state + (plugin === null ? '' : '<br><span style="color:var(--site-label-3)">' + esc(plugin) + '</span>') + '</td>'
+                + '<td>' + where + '</td></tr>'
+        }
+
+        var head = function (title, hint) {
+            return '<section class="section"><div class="section__head"><h2 class="section__title">' + esc(title) + '</h2>'
+                + '<span class="section__hint">' + esc(hint) + '</span></div>'
+                + '<div class="table-wrap"><table><thead><tr>'
+                + '<th>' + esc(t('inventory.columns.identity')) + '</th>'
+                + '<th>' + esc(t('inventory.columns.where')) + '</th>'
+                + '<th>' + esc(t('inventory.columns.size')) + '</th>'
+                + '<th>' + esc(t('inventory.columns.state')) + '</th>'
+                + '<th>' + esc(t('inventory.columns.source')) + '</th>'
+                + '</tr></thead><tbody>'
+        }
+
+        /* 官方元素排前面：这份资源的顺序是「先把产品自己的东西讲清楚」，第三方插件
+         * 只登记、不展开——它们不是 DSH 的界面语言。 */
+        var officialRowsHtml = rows.map(rowHtml).join('')
+        var thirdRows = thirdParty.filter(match)
+        var thirdRowsHtml = thirdRows.slice(0, 60).map(rowHtml).join('')
 
         mainEl.innerHTML = '<div class="main-inner">'
             + '<div class="hero"><h1 class="hero__title">' + esc(t('inventory.title')) + '</h1>'
             + '<p class="hero__lede">' + esc(t('inventory.lede', {
-                identities: counts.identities || 0, referenced: counts.referenced || 0, missing: counts.missing || 0,
+                identities: counts.identities || 0, official: official.length, third: thirdParty.length, missing: counts.missing || 0,
             })) + '</p></div>'
             + '<div class="callout"><span class="callout__mark">i</span><div><p>' + esc(t('inventory.note')) + '</p></div></div>'
-            + '<section class="section"><div class="section__head"><h2 class="section__title">'
-            + esc(t('inventory.tableTitle', { n: rows.length }))
-            + '</h2><span class="section__hint">' + (query === '' ? esc(t('inventory.order')) : esc(t('seats.filter')) + '：' + esc(query)) + '</span></div>'
-            + '<div class="table-wrap"><table><thead><tr>'
-            + '<th>' + esc(t('inventory.columns.identity')) + '</th>'
-            + '<th>' + esc(t('inventory.columns.where')) + '</th>'
-            + '<th>' + esc(t('inventory.columns.size')) + '</th>'
-            + '<th>' + esc(t('inventory.columns.state')) + '</th>'
-            + '<th>' + esc(t('inventory.columns.source')) + '</th>'
-            + '</tr></thead><tbody>' + rowsHtml + '</tbody></table></div></section></div>'
+            + head(t('inventory.tableTitle', { n: rows.length }), query === '' ? t('inventory.order') : t('seats.filter') + '：' + query)
+            + officialRowsHtml + '</tbody></table></div></section>'
+            + '<section class="section"><div class="section__head">'
+            + '<h2 class="section__title">' + esc(t('inventory.thirdTitle', { n: thirdParty.length })) + '</h2>'
+            + '<span class="section__hint">' + esc(t('inventory.thirdHint')) + '</span></div>'
+            + p(t('inventory.thirdNote'))
+            + (thirdRows.length === 0 ? '' : head('', '') + thirdRowsHtml + '</tbody></table></div>')
+            + '</section></div>'
 
         renderAside([
             { title: t('inventory.howTitle'), html: p(t('inventory.how')) },

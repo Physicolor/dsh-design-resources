@@ -398,6 +398,8 @@ const data = {
   /* 元素清单：scripts/scan-ui.mjs 的产物。没扫过就是空数组，站点会提示去扫。 */
   inventory: readJson('data/ui-inventory.json', { elements: [], counts: {} }),
   coverage: readJson('data/ui-coverage.json', { coverage: [], counts: {} }),
+  /* 类名族 → 插件名：用来把「插件专有」的东西归到具体插件名下，搁置时也说得清是谁的。 */
+  anchors: readJson('data/inventory-anchors.json', { anchors: [], pluginFamilies: [] }),
 }
 
 const banner = `/**

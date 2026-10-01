@@ -1,4 +1,6 @@
-<!-- 本组件官方没有对应物，这是本仓库建议的实现；预览为几何展示，不代表产品界面。 -->
+<!-- 预览是产品里那个设置窗口的复刻：800 × 800、圆角 28、188 导航列 + 612 内容列，
+     数值逐条来自 docs/reference/settings-panel.json。本组件（骨架）官方 primitives 包里
+     没有对应物，但产品里的设置窗口是真实存在的界面。 -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
@@ -126,94 +128,192 @@
   --dsw-alias-label-tertiary: light-dark(var(--dsw-static-neutral-bluish-600), var(--dsw-static-neutral-bluish-400));
 }
 
-/* --------------------------------------------------- 组件几何
-   数值逐条取自同目录 settings-page.module.css（CSS Modules 的哈希类名已去掉），
-   规则重新组织过，声明值未改。 */
-.page {
-  --dsh-settings-nav-width: 218px;
-  --dsh-settings-gap: 32px;
-  --dsh-settings-pad: 24px;
-  --dsh-settings-block-gap: 24px;
-  --dsh-settings-radius: 12px;
-  --dsh-settings-nav-pad: 4px;
-  --dsh-settings-content-max: 640px;
+/* --------------------------------------------------- 真实窗口的几何
+   这一段不再写「本仓库建议值」：数值逐条取自运行中的产品
+   （docs/reference/settings-panel.json；1570×905 视口，采集时窗口盒子 [385, 53, 800, 800]）。
+
+   遮罩      全屏 --dsw-alias-bg-mask-1（实测 rgba(0,0,0,.24)）
+   窗口      800 × 800 · 圆角 28 · 白底 · box-shadow = --dsw-elevation-prominent
+   导航列    188 宽 · padding 22px 12px 0 · 标题与列表 gap 18 · 列表行距 4
+   导航格    164 × 40 · 圆角 12 · padding 9px 16px 9px 12px · gap 8 · 选中底 rgb(235,238,242)
+   内容列    612 宽 · 头部 54 高（padding 20px 14px 8px 10px）· 选项区 padding 0 24px 24px
+   分区标题  18/26 · 600　说明 13/20 · 下方 12
+   设置行    padding 16px 0 · 标题 14/22 · 说明 12/18 · 行间一条 hairline
+   选择器    高 36 · 圆角 12 · padding 0 14 · gap 12 · 底 rgb(245,246,247) · 折角 14×14
+   主题方块  183 × 84 · 圆角 20 · padding 20px 32px · 选中底 rgb(245,246,247)
+   开关      36 × 20 · 圆角 999 · 滑块 16 · 打开时 brand-primary
+   数字微调  上下两枚 17 × 12 箭头 · 圆角 4 */
+
+.window {
+  /* 三处实测底色（不是 token），就地标注出处 */
+  --dsh-nav-active: #ebeef2;      /* ← 采集 rgb(235,238,242) */
+  --dsh-selector-fill: #f5f6f7;   /* ← 采集 rgb(245,246,247) */
 
   box-sizing: border-box;
   display: flex;
-  align-items: flex-start;
-  gap: var(--dsh-settings-gap);
-  padding: var(--dsh-settings-pad);
+  width: 800px;
+  height: 800px;
+  overflow: hidden;
+  border-radius: 28px;
+  background: var(--dsw-alias-bg-layer-1);
+  box-shadow: var(--dsw-elevation-prominent);
   color: var(--dsw-alias-label-primary);
-  font-family: inherit;
+  font-family: var(--dsw-font-family);
   font-size: 14px;
   line-height: 22px;
 }
 
 .nav {
+  display: flex;
   flex: none;
+  flex-direction: column;
+  gap: 18px;
   box-sizing: border-box;
-  width: var(--dsh-settings-nav-width);
-  padding: var(--dsh-settings-nav-pad);
-  border-radius: var(--dsh-settings-radius);
-  background: var(--dsw-alias-bg-module-platform);
+  width: 188px;
+  padding: 22px 12px 0;
 }
-
-.navInner { display: flex; flex-direction: column; gap: 0; }
-
-/* 导航行：官方 Menu.module.css .item */
+.navTitle { padding: 0 12px; font-size: 16px; line-height: 24px; font-weight: 600; }
+.navList { display: flex; flex-direction: column; gap: 4px; }
 .navItem {
   box-sizing: border-box;
   display: flex;
   align-items: center;
   gap: 8px;
   width: 100%;
-  min-height: 40px;
-  padding: 8px 10px;
+  height: 40px;
+  padding: 9px 16px 9px 12px;
   border: 0;
-  border-radius: 10px;
+  border-radius: 12px;
   background: transparent;
   color: var(--dsw-alias-label-secondary);
-  font-family: inherit;
-  font-size: 14px;
-  line-height: 22px;
+  font: inherit;
   text-align: left;
-  text-decoration: none;
   cursor: pointer;
 }
-
-.navItem:hover:not(:disabled) { background: var(--dsw-alias-interactive-bg-hover); }
-.navItemActive { color: var(--dsw-alias-label-primary); background: var(--dsw-alias-interactive-bg-hover); }
-.navItem:disabled { opacity: 0.4; cursor: not-allowed; }
+.navItem:hover:not([aria-current='page']) { background: var(--dsw-alias-interactive-bg-hover); }
+.navItem[aria-current='page'] { background: var(--dsh-nav-active); color: var(--dsw-alias-label-primary); }
 .navItem:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 2px; }
-
-.navItemIcon {
-  display: inline-flex;
-  flex: none;
-  align-items: center;
-  justify-content: center;
-  width: 16px;
-  height: 16px;
-  color: var(--dsw-alias-label-tertiary);
-}
-
+.navItemIcon { display: inline-flex; flex: none; width: 16px; height: 16px; color: var(--dsw-alias-label-tertiary); }
+.navItemIcon svg { display: block; width: 100%; height: 100%; }
 .navItemLabel { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-.content { flex: 1; min-width: 0; max-width: var(--dsh-settings-content-max); }
+.content { display: flex; flex: 1; min-width: 0; flex-direction: column; }
+.contentHead {
+  box-sizing: border-box;
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  height: 54px;
+  padding: 20px 14px 8px 10px;
+}
+.options { flex: 1; min-height: 0; box-sizing: border-box; padding: 0 24px 24px; overflow: hidden; }
 
-.pageTitle { margin: 0; font-size: 16px; line-height: 24px; font-weight: 500; color: var(--dsw-alias-label-primary); }
-/* 组件默认 titleLevel=1；预览被嵌进站点（页面已有 h1）与自检规则里都不该再出现 h1，
-   所以 demo 取 h2 —— .pageTitle 的字号/行高/字重不受标签影响，几何不变。 */
-.pageDescription { margin: 4px 0 0; font-size: 14px; line-height: 22px; color: var(--dsw-alias-label-secondary); }
-.contentBody { display: flex; flex-direction: column; gap: var(--dsh-settings-block-gap); margin-top: 20px; }
+.pageTitle { margin: 0; font-size: 18px; line-height: 26px; font-weight: 600; }
+.pageIntro { margin: 0; padding-bottom: 12px; font-size: 13px; line-height: 20px; color: var(--dsw-alias-label-secondary); }
 
-.section { display: flex; flex-direction: column; min-width: 0; }
-.sectionHeader { display: flex; align-items: center; gap: 8px; }
-.sectionTitle { margin: 0; font-size: 14px; line-height: 22px; font-weight: 500; color: var(--dsw-alias-label-primary); }
-.sectionActions { display: flex; flex: none; align-items: center; gap: 8px; margin-left: auto; }
-.sectionDescription { margin: 4px 0 0; font-size: 12px; line-height: 18px; color: var(--dsw-alias-label-tertiary); }
-.sectionBody { margin-top: 8px; }
+/* 设置行 ← 采集：padding 16px 0、行间一条 hairline、文字列右侧留 48、控件贴右 */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--dsw-alias-border-l2);
+}
+.row:last-child { border-bottom: 0; }
+.rowText { flex: 1; min-width: 0; padding-right: 48px; }
+.rowTitle { font-size: 14px; line-height: 22px; }
+.rowDesc { font-size: 12px; line-height: 18px; color: var(--dsw-alias-label-tertiary); }
+.rowControl { display: inline-flex; flex: none; align-items: center; gap: 8px; }
 
-/* Button 组件的几何，逐条同 controls/Button/button.module.css。 */
+/* 选择器 ← 采集：高 36、圆角 12、padding 0 14、gap 12、底 rgb(245,246,247)、折角 14×14 */
+.selector {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  height: 36px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--dsh-selector-fill);
+  color: var(--dsw-alias-label-primary);
+  font: inherit;
+  font-size: 14px;
+  line-height: 22px;
+  cursor: pointer;
+}
+.selector:hover { background: var(--dsw-alias-interactive-bg-hover); }
+.selector:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 2px; }
+.selector svg { flex: none; width: 14px; height: 14px; color: var(--dsw-alias-label-tertiary); }
+
+/* 分组标题（外观那一行）← 采集：标题 14/22，方块紧随其后 */
+.groupTitle { padding-top: 16px; font-size: 14px; line-height: 22px; }
+
+/* 主题方块 ← 采集：183 × 84、圆角 20、padding 20px 32px、gap 4、选中底 rgb(245,246,247) */
+.cubeRow { display: flex; gap: 8px; padding: 8px 0 16px; border-bottom: 1px solid var(--dsw-alias-border-l2); }
+.cube {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 183px;
+  height: 84px;
+  padding: 20px 32px;
+  border: 0;
+  border-radius: 20px;
+  background: transparent;
+  color: var(--dsw-alias-label-primary);
+  font: inherit;
+  font-size: 14px;
+  line-height: 22px;
+  cursor: pointer;
+}
+.cube[aria-pressed='true'] { background: var(--dsh-selector-fill); }
+.cube:hover:not([aria-pressed='true']) { background: var(--dsw-alias-interactive-bg-hover); }
+.cube svg { width: 16px; height: 16px; }
+
+/* 开关 ← 采集：36 × 20、圆角 999、滑块 16、padding 2、打开时 brand-primary */
+.switch {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  box-sizing: border-box;
+  width: 36px;
+  height: 20px;
+  padding: 2px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--dsw-alias-border-l3);
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+.switch[aria-checked='true'] { background: var(--dsw-alias-brand-primary); }
+.switchThumb { display: block; width: 16px; height: 16px; border-radius: 50%; background: var(--dsw-alias-label-primary-foreground); transition: transform 120ms ease; }
+.switch[aria-checked='true'] .switchThumb { transform: translateX(16px); }
+
+/* 数字微调 ← 采集：上下两枚 17 × 12 箭头、圆角 4；数值旁单位是次级色 */
+.stepper { display: inline-flex; flex-direction: column; gap: 2px; }
+.stepperArrow {
+  box-sizing: border-box;
+  width: 17px;
+  height: 12px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--dsw-alias-label-tertiary);
+  cursor: pointer;
+}
+.stepperArrow:hover { background: var(--dsw-alias-interactive-bg-hover); }
+.number { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; line-height: 22px; }
+.numberUnit { color: var(--dsw-alias-label-tertiary); }
+
+/* Button 组件的几何，逐条同 controls/Button/button.module.css；这里只用到 sm + outline。 */
 .button {
   box-sizing: border-box;
   display: inline-flex;
@@ -232,16 +332,33 @@
   white-space: nowrap;
   cursor: pointer;
 }
-
-.button.sm { height: 28px; padding: 0 10px; border-radius: 14px; font-size: 12px; line-height: 18px; }
-.button.ghost:hover:not(:disabled) { background: var(--dsw-alias-interactive-bg-hover); }
-.button.primary { background: var(--dsw-alias-button-primary-fill); color: var(--dsw-alias-label-primary-foreground); }
-.button.primary:hover:not(:disabled) { background: var(--dsw-alias-button-primary-hover); }
+.button.sm { height: 28px; padding: 0 10px; border-radius: 8px; font-size: 12px; line-height: 18px; }
+.button.outline { border: 1px solid var(--dsw-alias-border-l2); }
+.button.outline:hover { background: var(--dsw-alias-interactive-bg-hover); }
 .button:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 2px; }
+
+.iconButton {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--dsw-alias-label-secondary);
+  cursor: pointer;
+}
+.iconButton:hover { background: var(--dsw-alias-interactive-bg-hover); }
+.iconButton svg { width: 16px; height: 16px; }
 
 /* ------------------------------------------------------------------ demo 外壳
    body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
-   .demo-label 是本页唯一允许出现的文字，只写客观事实（尺寸 / 状态名）。 */
+   .demo-label 是本页唯一允许出现的说明，只写客观事实（尺寸 / 出处）。
+   导航格里的图标用 `data-icon` 占位，由站点把官方图标集里的字形填进来——
+   站外单独打开本文件时图标为空，几何不受影响。 */
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -251,68 +368,127 @@ body {
   font-size: 14px;
   line-height: 22px;
 }
-.demo-label {
-  margin: 0 0 8px;
-  font-size: 11px;
-  line-height: 16px;
-  color: var(--dsw-alias-label-tertiary);
-}
+.demo-label { margin: 0 0 8px; font-size: 11px; line-height: 16px; color: var(--dsw-alias-label-tertiary); }
 .demo-group + .demo-group { margin-top: 20px; }
-.demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-.demo-stack, .stack { display: flex; flex-direction: column; }
-.demo-canvas {
-  padding: 12px;
-  border-radius: 6px;
-  background: color-mix(in srgb, var(--dsw-alias-label-primary) 7%, transparent);
+.mask {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+  border-radius: 14px;
+  background: var(--dsw-alias-bg-mask-1);
 }
 </style>
 </head>
 <body>
   <div class="demo-group">
-    <p class="demo-label">导航列 218px · pad 4 r12 · 内容列 max 640 · 两列 gap 32 · 页面 pad 24</p>
-    <div class="page" style="max-width:720px">
-      <nav class="nav" aria-label="分区导航">
-        <div class="navInner">
-          <button type="button" class="navItem navItemActive" aria-current="page"><span class="navItemIcon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6.9 1.6h2.2l.3 1.7 1.2.5 1.5-.9 1.6 1.6-.9 1.5.5 1.2 1.7.3v2.2l-1.7.3-.5 1.2.9 1.5-1.6 1.6-1.5-.9-1.2.5-.3 1.7H6.9l-.3-1.7-1.2-.5-1.5.9-1.6-1.6.9-1.5-.5-1.2L1 9.1V6.9l1.7-.3.5-1.2-.9-1.5 1.6-1.6 1.5.9 1.2-.5zM8 6.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6z" fill="currentColor"/></svg></span><span class="navItemLabel">分区一</span></button>
-          <button type="button" class="navItem"><span class="navItemIcon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.6a6.4 6.4 0 0 0 0 12.8c.9 0 1.4-.6 1.4-1.2 0-.4-.2-.7-.4-1-.2-.2-.3-.5-.3-.8 0-.7.5-1.2 1.2-1.2h1.3A3.2 3.2 0 0 0 14.4 7C14.4 4 11.5 1.6 8 1.6zM4.6 8.4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm1.6-2.8a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm3.2-.4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm2.8 2.4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" fill="currentColor"/></svg></span><span class="navItemLabel">分区二</span></button>
-          <button type="button" class="navItem"><span class="navItemIcon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M1.6 3.2h4.4l1.2 1.6h7.2v8H1.6z" fill="currentColor"/></svg></span><span class="navItemLabel">分区三</span></button>
-        </div>
-      </nav>
-      <div class="content">
-        <h2 class="pageTitle">页面标题</h2>
-        <p class="pageDescription">页面说明文字</p>
-        <div class="contentBody">
-          <section class="section" aria-labelledby="sec-a">
-            <div class="sectionHeader">
-              <h2 class="sectionTitle" id="sec-a">分区一</h2>
-              <div class="sectionActions"><button type="button" class="button sm ghost">操作</button></div>
-            </div>
-            <p class="sectionDescription">分区说明文字</p>
-            <div class="sectionBody" style="font-size:13px;line-height:20px;color:var(--dsw-alias-label-secondary)">条目一 · 条目二 · 条目三</div>
-          </section>
-          <section class="section" aria-labelledby="sec-b">
-            <div class="sectionHeader"><h2 class="sectionTitle" id="sec-b">分区二</h2></div>
-            <div class="sectionBody" style="font-size:13px;line-height:20px;color:var(--dsw-alias-label-secondary)">条目一 · 条目二 · 条目三</div>
-          </section>
-        </div>
-      </div>
-    </div>
-  </div>
+    <p class="demo-label">真实设置窗口 · 800 × 800 · 圆角 28 · 阴影 --dsw-elevation-prominent · 背后是 --dsw-alias-bg-mask-1（采集：docs/reference/settings-panel.json）</p>
+    <div class="mask">
+      <div class="window" role="dialog" aria-label="设置">
+        <nav class="nav" aria-label="设置分区">
+          <div class="navTitle">设置</div>
+          <div class="navList">
+            <button type="button" class="navItem" aria-current="page"><span class="navItemIcon" data-icon="settings"></span><span class="navItemLabel">通用设置</span></button>
+            <button type="button" class="navItem"><span class="navItemIcon" data-icon="gauge"></span><span class="navItemLabel">模型</span></button>
+            <button type="button" class="navItem"><span class="navItemIcon" data-icon="api"></span><span class="navItemLabel">Command Code</span></button>
+            <button type="button" class="navItem"><span class="navItemIcon" data-icon="cordis-plugin"></span><span class="navItemLabel">内置插件</span></button>
+            <button type="button" class="navItem"><span class="navItemIcon" data-icon="agent-preset"></span><span class="navItemLabel">Agent 预设</span></button>
+            <button type="button" class="navItem"><span class="navItemIcon" data-icon="sparkle"></span><span class="navItemLabel">组件</span></button>
+            <button type="button" class="navItem"><span class="navItemIcon" data-icon="goal"></span><span class="navItemLabel">科研</span></button>
+            <button type="button" class="navItem"><span class="navItemIcon" data-icon="personalization"></span><span class="navItemLabel">UI 兼容性</span></button>
+            <button type="button" class="navItem"><span class="navItemIcon" data-icon="folder-open"></span><span class="navItemLabel">插件市场</span></button>
+            <button type="button" class="navItem"><span class="navItemIcon" data-icon="alarm-clock"></span><span class="navItemLabel">通知</span></button>
+          </div>
+        </nav>
+        <div class="content">
+          <div class="contentHead">
+            <button type="button" class="button sm outline">打开配置文件</button>
+            <button type="button" class="iconButton" aria-label="关闭设置"><span data-icon="close"></span></button>
+          </div>
+          <div class="options">
+            <h2 class="pageTitle">通用设置</h2>
+            <p class="pageIntro">管理语言、外观、界面与对话行为等基础偏好。</p>
 
-  <div class="demo-group">
-    <p class="demo-label">无 title / description · contentBody 直接开始 · gap 24</p>
-    <div class="page" style="max-width:720px">
-      <nav class="nav" aria-label="分区导航">
-        <div class="navInner">
-          <button type="button" class="navItem navItemActive" aria-current="page"><span class="navItemLabel">分区一</span></button>
-        </div>
-      </nav>
-      <div class="content">
-        <div class="contentBody" style="margin-top:0">
-          <section class="section">
-            <div class="sectionHeader"><h2 class="sectionTitle">分区一</h2></div>
-            <div class="sectionBody" style="font-size:13px;line-height:20px;color:var(--dsw-alias-label-secondary)">只渲染内容列时的骨架</div>
-          </section>
+            <div class="row">
+              <div class="rowText">
+                <div class="rowTitle">权限</div>
+                <div class="rowDesc">选择新会话的默认权限模式</div>
+              </div>
+              <div class="rowControl">
+                <button type="button" class="selector">完全权限<span data-icon="chevron-down"></span></button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="rowText">
+                <div class="rowTitle">语言</div>
+              </div>
+              <div class="rowControl">
+                <button type="button" class="selector">中文<span data-icon="chevron-down"></span></button>
+              </div>
+            </div>
+
+            <div class="groupTitle">外观</div>
+            <div class="cubeRow">
+              <button type="button" class="cube" aria-pressed="true"><span data-icon="light"></span>浅色</button>
+              <button type="button" class="cube" aria-pressed="false"><span data-icon="dark"></span>深色</button>
+              <button type="button" class="cube" aria-pressed="false"><span data-icon="followsystem"></span>跟随系统</button>
+            </div>
+
+            <div class="row">
+              <div class="rowText">
+                <div class="rowTitle">字号大小</div>
+                <div class="rowDesc">仅影响会话内容的字号</div>
+              </div>
+              <div class="rowControl">
+                <span class="number">14<span class="numberUnit">px</span></span>
+                <span class="stepper">
+                  <button type="button" class="stepperArrow" aria-label="增大字号"><span data-icon="chevron-up"></span></button>
+                  <button type="button" class="stepperArrow" aria-label="减小字号"><span data-icon="chevron-down"></span></button>
+                </span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="rowText">
+                <div class="rowTitle">工作步骤展示</div>
+                <div class="rowDesc">选择希望看到多少工具调用细节</div>
+              </div>
+              <div class="rowControl">
+                <button type="button" class="selector">简洁<span data-icon="chevron-down"></span></button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="rowText">
+                <div class="rowTitle">显示代码工作视图</div>
+                <div class="rowDesc">开启后，显示轨迹、本轮代码差异，可选择完整的 Agent 预设切换</div>
+              </div>
+              <div class="rowControl">
+                <button type="button" class="switch" role="switch" aria-checked="true" aria-label="显示代码工作视图"><span class="switchThumb"></span></button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="rowText">
+                <div class="rowTitle">快捷键</div>
+                <div class="rowDesc">查看和编辑当前可用的快捷键和输入操作</div>
+              </div>
+              <div class="rowControl">
+                <button type="button" class="button sm outline">编辑快捷键</button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="rowText">
+                <div class="rowTitle">网页链接默认打开方式</div>
+                <div class="rowDesc">对话中网页链接的打开位置</div>
+              </div>
+              <div class="rowControl">
+                <button type="button" class="selector">应用内侧边栏<span data-icon="chevron-down"></span></button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
