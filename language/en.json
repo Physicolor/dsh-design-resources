@@ -26,6 +26,7 @@
         "home": "Home",
         "why": "Why this exists",
         "allComponents": "All components",
+        "inventory": "Element inventory",
         "seats": "Seat directory",
         "icons": "Official icon set",
         "tokens": "Design tokens"
@@ -196,6 +197,22 @@
             "--dsw-shadow-lv3": "General-purpose shadow, step three (highest)"
         },
         "geometryNote": "These values are read out of the product's theme layer the same way the colours are (the scale group in data/tokens.json); one set serves both themes."
+    },
+    "inventory": {
+        "title": "Element inventory",
+        "lede": "Scanning the running interface turns up {identities} identities: {referenced} of them have a place somewhere in this repository's writing, {missing} do not yet. This list starts from the interface, not from the component directory.",
+        "empty": "Not scanned yet. Run node scripts/scan-ui.mjs on this machine: it opens the product, walks every state, and registers each element it can see.",
+        "note": "\"Covered\" only means some file in this repository happened to contain the word; it is not a review. \"Gap\" is the to-do list — and each of those still needs a human call: it may be something the product really has and the spec missed, or it may just be a one-off container.",
+        "tableTitle": "{n} identities",
+        "order": "By how often it appears",
+        "columns": { "identity": "Identity", "where": "Seen in", "size": "Size", "state": "State", "source": "Where the spec mentions it" },
+        "stateMissing": "Gap",
+        "stateCovered": "Covered",
+        "statePlugin": "Plugin-only",
+        "howTitle": "Where this page comes from",
+        "how": "scripts/scan-ui.mjs drives the product with the same credentials the screenshot script uses, walks it state by state, and registers every element that occupies space under an identity with the CSS Modules hash stripped off: tag, role, box, computed styles, seat, and the screens it showed up on. It is machine output, so its unit is \"things you can see\", not \"components\".",
+        "stateTitle": "Three states",
+        "stateNote": "Covered: some spec or component text mentions it. Plugin-only: an installed plugin draws it (anything under dsx-, for instance), so the product itself has no such element. Gap: neither side mentions it — decide whether it belongs in the spec or is merely a container."
     },
     "footer": {
         "name": "DeepSeek Design Resources",

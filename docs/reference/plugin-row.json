@@ -1,0 +1,252 @@
+{
+ "row": {
+  "text": "智能体团队实验性启用团队协作、团队工具、成员列表和共享任务看板。"
+ },
+ "nodes": [
+  {
+   "d": 0,
+   "tag": "li",
+   "cls": "fO69Vq_card fO69Vq_cardLink",
+   "rect": [
+    437,
+    142,
+    976,
+    66
+   ],
+   "radius": "20px",
+   "bg": "rgba(0, 0, 0, 0)",
+   "shadow": "",
+   "border": "0px none rgb(15, 17, 21)",
+   "pad": "0px 0px 0px 0px",
+   "gap": "",
+   "font": "16px/normal 400",
+   "color": "rgb(15, 17, 21)",
+   "text": ""
+  },
+  {
+   "d": 1,
+   "tag": "div",
+   "cls": "fO69Vq_cardHead",
+   "rect": [
+    437,
+    142,
+    976,
+    66
+   ],
+   "radius": "0px",
+   "bg": "rgba(0, 0, 0, 0)",
+   "shadow": "",
+   "border": "0px none rgb(15, 17, 21)",
+   "pad": "8px 8px 8px 8px",
+   "gap": "14px",
+   "font": "16px/normal 400",
+   "color": "rgb(15, 17, 21)",
+   "text": ""
+  },
+  {
+   "d": 2,
+   "tag": "span",
+   "cls": "fO69Vq_cardIcon",
+   "rect": [
+    445,
+    150,
+    50,
+    50
+   ],
+   "radius": "16px",
+   "bg": "rgba(0, 0, 0, 0)",
+   "shadow": "",
+   "border": "1px solid rgba(0, 0, 0, 0.12)",
+   "pad": "0px 0px 0px 0px",
+   "gap": "",
+   "font": "16px/normal 400",
+   "color": "rgb(97, 102, 107)",
+   "text": ""
+  },
+  {
+   "d": 3,
+   "tag": "img",
+   "cls": "fO69Vq_packageImage",
+   "rect": [
+    452,
+    157,
+    36,
+    36
+   ],
+   "radius": "0px",
+   "bg": "rgba(0, 0, 0, 0)",
+   "shadow": "",
+   "border": "0px none rgb(97, 102, 107)",
+   "pad": "0px 0px 0px 0px",
+   "gap": "",
+   "font": "16px/normal 400",
+   "color": "rgb(97, 102, 107)",
+   "img": {
+    "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYiIGhlaWdodD0iMz",
+    "w": "36",
+    "h": "36"
+   },
+   "text": ""
+  },
+  {
+   "d": 2,
+   "tag": "div",
+   "cls": "fO69Vq_cardMain",
+   "rect": [
+    509,
+    154,
+    846,
+    42
+   ],
+   "radius": "0px",
+   "bg": "rgba(0, 0, 0, 0)",
+   "shadow": "",
+   "border": "0px none rgb(15, 17, 21)",
+   "pad": "0px 0px 0px 0px",
+   "gap": "4px",
+   "font": "16px/normal 400",
+   "color": "rgb(15, 17, 21)",
+   "text": ""
+  },
+  {
+   "d": 3,
+   "tag": "div",
+   "cls": "fO69Vq_titleRow",
+   "rect": [
+    509,
+    154,
+    846,
+    20
+   ],
+   "radius": "0px",
+   "bg": "rgba(0, 0, 0, 0)",
+   "shadow": "",
+   "border": "0px none rgb(15, 17, 21)",
+   "pad": "0px 0px 0px 0px",
+   "gap": "8px",
+   "font": "16px/normal 400",
+   "color": "rgb(15, 17, 21)",
+   "text": ""
+  },
+  {
+   "d": 4,
+   "tag": "button",
+   "cls": "fO69Vq_cardTitle fO69Vq_cardOpen",
+   "rect": [
+    509,
+    154,
+    70,
+    20
+   ],
+   "radius": "0px",
+   "bg": "rgba(0, 0, 0, 0)",
+   "shadow": "",
+   "border": "0px none rgb(15, 17, 21)",
+   "pad": "0px 0px 0px 0px",
+   "gap": "",
+   "font": "14px/20px 500",
+   "color": "rgb(15, 17, 21)",
+   "text": "智能体团队"
+  },
+  {
+   "d": 4,
+   "tag": "span",
+   "cls": "_tag_brmue_4 fO69Vq_statusTag",
+   "rect": [
+    587,
+    155,
+    44,
+    18
+   ],
+   "radius": "999px",
+   "bg": "color(srgb 0.254902 0.462745 0.901961 / 0.1)",
+   "shadow": "",
+   "border": "0px none rgb(65, 118, 230)",
+   "pad": "0px 7px 0px 7px",
+   "gap": "",
+   "font": "10px/10px 500",
+   "color": "rgb(65, 118, 230)",
+   "text": "实验性"
+  },
+  {
+   "d": 3,
+   "tag": "span",
+   "cls": "fO69Vq_cardDesc",
+   "rect": [
+    509,
+    178,
+    846,
+    18
+   ],
+   "radius": "0px",
+   "bg": "rgba(0, 0, 0, 0)",
+   "shadow": "",
+   "border": "0px none rgb(129, 133, 140)",
+   "pad": "0px 0px 0px 0px",
+   "gap": "",
+   "font": "13px/18px 400",
+   "color": "rgb(129, 133, 140)",
+   "text": "启用团队协作、团队工具、成员列表和共享任务看板。"
+  },
+  {
+   "d": 2,
+   "tag": "div",
+   "cls": "fO69Vq_cardEnd",
+   "rect": [
+    1369,
+    165,
+    36,
+    20
+   ],
+   "radius": "0px",
+   "bg": "rgba(0, 0, 0, 0)",
+   "shadow": "",
+   "border": "0px none rgb(15, 17, 21)",
+   "pad": "0px 0px 0px 0px",
+   "gap": "8px",
+   "font": "16px/normal 400",
+   "color": "rgb(15, 17, 21)",
+   "text": ""
+  },
+  {
+   "d": 3,
+   "tag": "button",
+   "cls": "_switch_1ik0f_5",
+   "rect": [
+    1369,
+    165,
+    36,
+    20
+   ],
+   "radius": "999px",
+   "bg": "rgb(15, 17, 21)",
+   "shadow": "",
+   "border": "0px none rgb(0, 0, 0)",
+   "pad": "2px 2px 2px 2px",
+   "gap": "",
+   "font": "13.3333px/normal 400",
+   "color": "rgb(0, 0, 0)",
+   "text": ""
+  },
+  {
+   "d": 4,
+   "tag": "span",
+   "cls": "_thumb_1ik0f_33",
+   "rect": [
+    1387,
+    167,
+    16,
+    16
+   ],
+   "radius": "50%",
+   "bg": "rgb(255, 255, 255)",
+   "shadow": "",
+   "border": "0px none rgb(0, 0, 0)",
+   "pad": "0px 0px 0px 0px",
+   "gap": "",
+   "font": "13.3333px/normal 400",
+   "color": "rgb(0, 0, 0)",
+   "text": ""
+  }
+ ]
+}

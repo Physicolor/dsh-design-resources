@@ -1,0 +1,171 @@
+[
+ {
+  "rowText": "进行中帮我评估一下我是否可以与需刚刚",
+  "selected": true,
+  "leadingSlot": false,
+  "firstRect": [
+   20,
+   402,
+   16,
+   20
+  ],
+  "firstHtml": "<span class=\"hIlkoa_slot\"><svg class=\"_spinner_1i3xo_37\" data-state=\"ongoing\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><g class=\"_spinnerMotion_1i3xo_42\"><circle class=\"_spinnerTrack_1i3xo_47\" cx=\"12\" cy=\"12\" r=\"9.5\"></circle><circle class=\"_spinnerArc_1i3xo_48\" cx=\"12\" cy=\"12\" r=\"9.5\"></circle></g></svg><span class=\"hIlkoa_visuallyHidden\">进行中</span></span>",
+  "svg": "<svg class=\"_spinner_1i3xo_37\" data-state=\"ongoing\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><g class=\"_spinnerMotion_1i3xo_42\"><circle class=\"_spinnerTrack_1i3xo_47\" cx=\"12\" cy=\"12\" r=\"9.5\"></circle><circle class=\"_spinnerArc_1i3xo_48\" cx=\"12\" cy=\"12\" r=\"9.5\"></circle></g></svg>",
+  "animated": [
+   {
+    "tag": "g",
+    "cls": "_spinnerMotion_1i3xo_42",
+    "animation": "1.5s linear infinite _dsh-state-dot-spin_1i3xo_1",
+    "border": "0px rgb(129, 133, 140)",
+    "radius": "0px",
+    "stroke": "none",
+    "dash": ""
+   },
+   {
+    "tag": "circle",
+    "cls": "_spinnerArc_1i3xo_48",
+    "animation": "1.5s ease-in-out infinite _dsh-state-dot-dash_1i3xo_1",
+    "border": "0px rgb(129, 133, 140)",
+    "radius": "0px",
+    "stroke": "rgb(129, 133, 140)",
+    "dash": "20.7652px, 150px"
+   }
+  ]
+ },
+ {
+  "rowText": "进行中我正在优化dsh-widgets，有几个1分钟",
+  "selected": false,
+  "leadingSlot": false,
+  "firstRect": [
+   20,
+   436,
+   16,
+   20
+  ],
+  "firstHtml": "<span class=\"hIlkoa_slot\"><svg class=\"_spinner_1i3xo_37\" data-state=\"ongoing\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><g class=\"_spinnerMotion_1i3xo_42\"><circle class=\"_spinnerTrack_1i3xo_47\" cx=\"12\" cy=\"12\" r=\"9.5\"></circle><circle class=\"_spinnerArc_1i3xo_48\" cx=\"12\" cy=\"12\" r=\"9.5\"></circle></g></svg><span class=\"hIlkoa_visuallyHidden\">进行中</span></span>",
+  "svg": "<svg class=\"_spinner_1i3xo_37\" data-state=\"ongoing\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><g class=\"_spinnerMotion_1i3xo_42\"><circle class=\"_spinnerTrack_1i3xo_47\" cx=\"12\" cy=\"12\" r=\"9.5\"></circle><circle class=\"_spinnerArc_1i3xo_48\" cx=\"12\" cy=\"12\" r=\"9.5\"></circle></g></svg>",
+  "animated": [
+   {
+    "tag": "g",
+    "cls": "_spinnerMotion_1i3xo_42",
+    "animation": "1.5s linear infinite _dsh-state-dot-spin_1i3xo_1",
+    "border": "0px rgb(129, 133, 140)",
+    "radius": "0px",
+    "stroke": "none",
+    "dash": ""
+   },
+   {
+    "tag": "circle",
+    "cls": "_spinnerArc_1i3xo_48",
+    "animation": "1.5s ease-in-out infinite _dsh-state-dot-dash_1i3xo_1",
+    "border": "0px rgb(129, 133, 140)",
+    "radius": "0px",
+    "stroke": "rgb(129, 133, 140)",
+    "dash": "20.7652px, 150px"
+   }
+  ]
+ },
+ {
+  "rowText": "进行中这 5 个分别是什么，为什么要36分钟",
+  "selected": false,
+  "leadingSlot": false,
+  "firstRect": [
+   20,
+   470,
+   16,
+   20
+  ],
+  "firstHtml": "<span class=\"hIlkoa_slot\"><svg class=\"_spinner_1i3xo_37\" data-state=\"ongoing\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><g class=\"_spinnerMotion_1i3xo_42\"><circle class=\"_spinnerTrack_1i3xo_47\" cx=\"12\" cy=\"12\" r=\"9.5\"></circle><circle class=\"_spinnerArc_1i3xo_48\" cx=\"12\" cy=\"12\" r=\"9.5\"></circle></g></svg><span class=\"hIlkoa_visuallyHidden\">进行中</span></span>",
+  "svg": "<svg class=\"_spinner_1i3xo_37\" data-state=\"ongoing\" width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><g class=\"_spinnerMotion_1i3xo_42\"><circle class=\"_spinnerTrack_1i3xo_47\" cx=\"12\" cy=\"12\" r=\"9.5\"></circle><circle class=\"_spinnerArc_1i3xo_48\" cx=\"12\" cy=\"12\" r=\"9.5\"></circle></g></svg>",
+  "animated": [
+   {
+    "tag": "g",
+    "cls": "_spinnerMotion_1i3xo_42",
+    "animation": "1.5s linear infinite _dsh-state-dot-spin_1i3xo_1",
+    "border": "0px rgb(129, 133, 140)",
+    "radius": "0px",
+    "stroke": "none",
+    "dash": ""
+   },
+   {
+    "tag": "circle",
+    "cls": "_spinnerArc_1i3xo_48",
+    "animation": "1.5s ease-in-out infinite _dsh-state-dot-dash_1i3xo_1",
+    "border": "0px rgb(129, 133, 140)",
+    "radius": "0px",
+    "stroke": "rgb(129, 133, 140)",
+    "dash": "20.7652px, 150px"
+   }
+  ]
+ },
+ {
+  "rowText": "D磁盘空间清理2小时",
+  "selected": false,
+  "leadingSlot": true,
+  "firstRect": [
+   20,
+   504,
+   16,
+   20
+  ],
+  "firstHtml": "<span class=\"hIlkoa_slot\"><div data-slot=\"sidebar.session.row.leading\" style=\"display: contents;\"></div></span>",
+  "svg": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\" stroke-width=\"1\"><path d=\"M3 9C3.55228 9 4 8.55228 4 8C4 7.44772 3.55228 7 3 7C2.44772 7 2 7.44772 2 8C2 8.55228 2.44772 9 3 9Z\" fill=\"currentColor\"></path><path d=\"M8 9C8.55228 9 9 8.55228 9 8C9 7.44772 8.55228 7 8 7C7.44772 7 7 7.44772 7 8C7 8.55228 7.44772 9 8 9Z\" fill=\"currentColor\"></path><path d=\"M13 9C13.5523 9 14 8.55228 14 8C14 7.44772 13.5523 7 13 7C12.4477 7 12 7.44772 12 8C12 8.55228 12.4477 9 13 9Z\" fill=\"currentColor\"></path></svg>",
+  "animated": []
+ },
+ {
+  "rowText": "我最近一直在开发个人插件dsh-3小时",
+  "selected": false,
+  "leadingSlot": true,
+  "firstRect": [
+   20,
+   538,
+   16,
+   20
+  ],
+  "firstHtml": "<span class=\"hIlkoa_slot\"><div data-slot=\"sidebar.session.row.leading\" style=\"display: contents;\"></div></span>",
+  "svg": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\" stroke-width=\"1\"><path d=\"M3 9C3.55228 9 4 8.55228 4 8C4 7.44772 3.55228 7 3 7C2.44772 7 2 7.44772 2 8C2 8.55228 2.44772 9 3 9Z\" fill=\"currentColor\"></path><path d=\"M8 9C8.55228 9 9 8.55228 9 8C9 7.44772 8.55228 7 8 7C7.44772 7 7 7.44772 7 8C7 8.55228 7.44772 9 8 9Z\" fill=\"currentColor\"></path><path d=\"M13 9C13.5523 9 14 8.55228 14 8C14 7.44772 13.5523 7 13 7C12.4477 7 12 7.44772 12 8C12 8.55228 12.4477 9 13 9Z\" fill=\"currentColor\"></path></svg>",
+  "animated": []
+ },
+ {
+  "rowText": "上一段对话中你给出了dsh-ui-har12小时",
+  "selected": false,
+  "leadingSlot": true,
+  "firstRect": [
+   20,
+   572,
+   16,
+   20
+  ],
+  "firstHtml": "<span class=\"hIlkoa_slot\"><div data-slot=\"sidebar.session.row.leading\" style=\"display: contents;\"></div></span>",
+  "svg": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\" stroke-width=\"1\"><path d=\"M3 9C3.55228 9 4 8.55228 4 8C4 7.44772 3.55228 7 3 7C2.44772 7 2 7.44772 2 8C2 8.55228 2.44772 9 3 9Z\" fill=\"currentColor\"></path><path d=\"M8 9C8.55228 9 9 8.55228 9 8C9 7.44772 8.55228 7 8 7C7.44772 7 7 7.44772 7 8C7 8.55228 7.44772 9 8 9Z\" fill=\"currentColor\"></path><path d=\"M13 9C13.5523 9 14 8.55228 14 8C14 7.44772 13.5523 7 13 7C12.4477 7 12 7.44772 12 8C12 8.55228 12.4477 9 13 9Z\" fill=\"currentColor\"></path></svg>",
+  "animated": []
+ },
+ {
+  "rowText": "现在不要继续重试请求，也不12小时",
+  "selected": false,
+  "leadingSlot": true,
+  "firstRect": [
+   20,
+   606,
+   16,
+   20
+  ],
+  "firstHtml": "<span class=\"hIlkoa_slot\"><div data-slot=\"sidebar.session.row.leading\" style=\"display: contents;\"></div></span>",
+  "svg": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\" stroke-width=\"1\"><path d=\"M3 9C3.55228 9 4 8.55228 4 8C4 7.44772 3.55228 7 3 7C2.44772 7 2 7.44772 2 8C2 8.55228 2.44772 9 3 9Z\" fill=\"currentColor\"></path><path d=\"M8 9C8.55228 9 9 8.55228 9 8C9 7.44772 8.55228 7 8 7C7.44772 7 7 7.44772 7 8C7 8.55228 7.44772 9 8 9Z\" fill=\"currentColor\"></path><path d=\"M13 9C13.5523 9 14 8.55228 14 8C14 7.44772 13.5523 7 13 7C12.4477 7 12 7.44772 12 8C12 8.55228 12.4477 9 13 9Z\" fill=\"currentColor\"></path></svg>",
+  "animated": []
+ },
+ {
+  "rowText": "我们之前做过在dsh-widgets的组1天",
+  "selected": false,
+  "leadingSlot": true,
+  "firstRect": [
+   20,
+   640,
+   16,
+   20
+  ],
+  "firstHtml": "<span class=\"hIlkoa_slot\"><div data-slot=\"sidebar.session.row.leading\" style=\"display: contents;\"></div></span>",
+  "svg": "<svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\" stroke-width=\"1\"><path d=\"M3 9C3.55228 9 4 8.55228 4 8C4 7.44772 3.55228 7 3 7C2.44772 7 2 7.44772 2 8C2 8.55228 2.44772 9 3 9Z\" fill=\"currentColor\"></path><path d=\"M8 9C8.55228 9 9 8.55228 9 8C9 7.44772 8.55228 7 8 7C7.44772 7 7 7.44772 7 8C7 8.55228 7.44772 9 8 9Z\" fill=\"currentColor\"></path><path d=\"M13 9C13.5523 9 14 8.55228 14 8C14 7.44772 13.5523 7 13 7C12.4477 7 12 7.44772 12 8C12 8.55228 12.4477 9 13 9Z\" fill=\"currentColor\"></path></svg>",
+  "animated": []
+ }
+]

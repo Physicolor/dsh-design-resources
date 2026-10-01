@@ -395,6 +395,9 @@ const data = {
   },
   components: components.items,
   specs,
+  /* 元素清单：scripts/scan-ui.mjs 的产物。没扫过就是空数组，站点会提示去扫。 */
+  inventory: readJson('data/ui-inventory.json', { elements: [], counts: {} }),
+  coverage: readJson('data/ui-coverage.json', { coverage: [], counts: {} }),
 }
 
 const banner = `/**

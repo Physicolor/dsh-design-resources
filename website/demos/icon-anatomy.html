@@ -149,14 +149,51 @@ body { margin: 0; }
 }
 .panel figcaption code { font-family: var(--dm-mono); font-size: 9.5px; }
 
-/* ── 标注图：16 单位的画板按 8 倍放大成 288px ──────────────────────── */
+/* ── 标注图：画板吃掉可用宽度，读数单独成列 ──────────────────────────
+ * 之前是「288px 的图 + 一整块白」：画板只占 SVG 的 16/36，四周全是空的，数值还都
+ * 飘在标注线上。现在画板按容器放大（上限 560px，画板约 250px），读数进右列——
+ * 同一块地方，图画大了，字也不用挤。 */
+.panel__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(168px, 220px);
+  gap: 12px 20px;
+  align-items: start;
+}
+@media (max-width: 820px) { .panel__body { grid-template-columns: minmax(0, 1fr); } }
 .anatomy {
   display: block;
-  width: 288px;
-  height: 288px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
   color: var(--dm-label);
 }
+.readout {
+  margin: 0;
+  min-width: 0;
+  border-top: 1px solid var(--dm-line-soft);
+}
+.readout__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--dm-line-soft);
+}
+.readout__row dt {
+  margin: 0;
+  font-size: 10.5px;
+  color: var(--dm-label-3);
+  white-space: nowrap;
+}
+.readout__row dd {
+  margin: 0;
+  font-family: var(--dm-mono);
+  font-size: 10.5px;
+  color: var(--dm-label);
+  text-align: right;
+}
+.readout__row dd em { font-style: normal; color: var(--dm-accent); }
 .anatomy .icon { fill: currentColor; }
 .anatomy .a-canvas { fill: none; stroke: var(--dm-label-3); stroke-width: 0.125; }
 .anatomy .a-ref { fill: none; stroke: var(--dm-label-3); stroke-width: 0.09; stroke-dasharray: 0.2 0.5; opacity: 0.85; }
@@ -283,8 +320,9 @@ body { margin: 0; }
 
       <!-- ── play-outline-16 ─────────────────────────────────────────── -->
       <figure class="panel panel--play">
-        <svg class="anatomy" viewBox="-10 -10 36 36" width="288" height="288" role="img"
-             aria-label="play-outline-16 放大 8 倍并标注画板、外接框与外接圆">
+        <div class="panel__body">
+        <svg class="anatomy" viewBox="-10 -10 36 36" role="img"
+             aria-label="play-outline-16 放大并标注画板、外接框与外接圆">
           <g class="icon">
             <path d="M14.1446 8C14.1446 4.6062 11.3938 1.85539 8 1.85539C4.6062 1.85539 1.85539 4.6062 1.85539 8C1.85539 11.3938 4.6062 14.1446 8 14.1446C11.3938 14.1446 14.1446 11.3938 14.1446 8ZM15.511 8C15.511 12.148 12.148 15.511 8 15.511C3.85202 15.511 0.489014 12.148 0.489014 8C0.489014 3.85202 3.85202 0.489014 8 0.489014C12.148 0.489014 15.511 3.85202 15.511 8Z"/>
             <path d="M10.5617 8.42578C10.852 8.21614 10.852 7.78386 10.5617 7.57422L7.25708 5.18751C6.90974 4.93666 6.42436 5.18484 6.42436 5.61329V10.3867C6.42436 10.8152 6.90974 11.0633 7.25708 10.8125L10.5617 8.42578Z"/>
@@ -316,13 +354,24 @@ body { margin: 0; }
             <text class="sm" x="16.3" y="9.4">三角中心 x 8.635</text>
           </g>
         </svg>
-        <figcaption><code>play-outline-16</code> · 外接框 15.022 × 15.022 · 四边内缩 0.489 · 环厚 1.366 · 2 条路径 20 段。三角外接框中心在 x 8.635，比画板中心右移 0.635（IC-MF-09 要求不对称图形做光学居中，建议补偿不超过 1px）。点线为 16 族实测内缩中位数 0.546 的参考线。</figcaption>
+        <dl class="readout">
+          <div class="readout__row"><dt>画板</dt><dd>16 × 16</dd></div>
+          <div class="readout__row"><dt>外接框</dt><dd>15.022 × 15.022</dd></div>
+          <div class="readout__row"><dt>四边内缩</dt><dd>0.489</dd></div>
+          <div class="readout__row"><dt>外接圆</dt><dd>r 7.511</dd></div>
+          <div class="readout__row"><dt>环厚</dt><dd>1.366</dd></div>
+          <div class="readout__row"><dt>路径</dt><dd>2 条 · 20 段</dd></div>
+          <div class="readout__row"><dt>光学居中</dt><dd>三角中心 x 8.635 <em>+0.635</em></dd></div>
+        </dl>
+        </div>
+        <figcaption><code>play-outline-16</code> · 三角外接框中心比画板中心右移 0.635（IC-MF-09 要求不对称图形做光学居中，建议补偿不超过 1px）。点线为 16 族实测内缩中位数 0.546 的参考线。</figcaption>
       </figure>
 
       <!-- ── close-outline-16 ────────────────────────────────────────── -->
       <figure class="panel panel--close">
-        <svg class="anatomy" viewBox="-10 -10 36 36" width="288" height="288" role="img"
-             aria-label="close-outline-16 放大 8 倍并标注视觉描边、外接框与外接圆">
+        <div class="panel__body">
+        <svg class="anatomy" viewBox="-10 -10 36 36" role="img"
+             aria-label="close-outline-16 放大并标注视觉描边、外接框与外接圆">
           <g class="icon">
             <path d="M14.1168 13.197L13.197 14.1167L1.8833 2.80303L2.80309 1.88324L14.1168 13.197Z"/>
             <path d="M13.197 1.88326L14.1168 2.80305L2.80309 14.1168L1.8833 13.197L13.197 1.88326Z"/>
@@ -351,13 +400,23 @@ body { margin: 0; }
             <text class="cjk" x="0.2" y="17.4">外接圆 r 6.117</text>
           </g>
         </svg>
-        <figcaption><code>close-outline-16</code> · 外接框 12.233 × 12.234 · 四边内缩 1.883 · 视觉描边 1.301（两条平行长边的最小垂直间距）· 2 条路径 12 段。官方图标没有 <code>stroke</code> 属性，这条「描边」是填充形状的厚度。</figcaption>
+        <dl class="readout">
+          <div class="readout__row"><dt>画板</dt><dd>16 × 16</dd></div>
+          <div class="readout__row"><dt>外接框</dt><dd>12.233 × 12.234</dd></div>
+          <div class="readout__row"><dt>四边内缩</dt><dd>1.883</dd></div>
+          <div class="readout__row"><dt>外接圆</dt><dd>r 6.117</dd></div>
+          <div class="readout__row"><dt>视觉描边</dt><dd>1.301</dd></div>
+          <div class="readout__row"><dt>路径</dt><dd>2 条 · 12 段</dd></div>
+        </dl>
+        </div>
+        <figcaption><code>close-outline-16</code> · 视觉描边＝两条平行长边的最小垂直间距。官方图标没有 <code>stroke</code> 属性，这条「描边」是填充形状的厚度。</figcaption>
       </figure>
 
       <!-- ── paperclip-outline-16 ────────────────────────────────────── -->
       <figure class="panel panel--clip">
-        <svg class="anatomy" viewBox="-10 -10 36 36" width="288" height="288" role="img"
-             aria-label="paperclip-outline-16 放大 8 倍并标注内缩与外接圆">
+        <div class="panel__body">
+        <svg class="anatomy" viewBox="-10 -10 36 36" role="img"
+             aria-label="paperclip-outline-16 放大并标注内缩与外接圆">
           <g class="icon">
             <path d="M5.5498 9.75V5H6.9502V9.75C6.9502 10.3299 7.4201 10.7998 8 10.7998C8.5799 10.7998 9.0498 10.3299 9.0498 9.75V4.5C9.0498 2.9536 7.7964 1.7002 6.25 1.7002C4.7036 1.7002 3.4502 2.9536 3.4502 4.5V9.75C3.4502 12.2629 5.4871 14.2998 8 14.2998C10.5129 14.2998 12.5498 12.2629 12.5498 9.75V4H13.9502V9.75C13.9502 13.0361 11.2861 15.7002 8 15.7002C4.71391 15.7002 2.0498 13.0361 2.0498 9.75V4.5C2.04981 2.1804 3.9304 0.299806 6.25 0.299805C8.5696 0.299805 10.4502 2.1804 10.4502 4.5V9.75C10.4502 11.1031 9.3531 12.2002 8 12.2002C6.6469 12.2002 5.5498 11.1031 5.5498 9.75Z"/>
           </g>
@@ -383,7 +442,17 @@ body { margin: 0; }
             <text class="sm" x="-9.7" y="17.4">平行边最小间距 1.400（n=13 对）</text>
           </g>
         </svg>
-        <figcaption><code>paperclip-outline-16</code> · 外接框 11.900 × 15.400 · 左右内缩 2.050、上下 0.300 · 单条路径 24 段 · 平行边最小间距 1.400。左右内缩是上下内缩的 6.8 倍——同一个画板里，两个方向的呼吸量并不相等。</figcaption>
+        <dl class="readout">
+          <div class="readout__row"><dt>画板</dt><dd>16 × 16</dd></div>
+          <div class="readout__row"><dt>外接框</dt><dd>11.900 × 15.400</dd></div>
+          <div class="readout__row"><dt>内缩 · 左右</dt><dd>2.050</dd></div>
+          <div class="readout__row"><dt>内缩 · 上下</dt><dd>0.300</dd></div>
+          <div class="readout__row"><dt>外接圆</dt><dd>r 7.700</dd></div>
+          <div class="readout__row"><dt>路径</dt><dd>1 条 · 24 段</dd></div>
+          <div class="readout__row"><dt>平行边最小间距</dt><dd>1.400</dd></div>
+        </dl>
+        </div>
+        <figcaption><code>paperclip-outline-16</code> · 左右内缩是上下内缩的 6.8 倍——同一个画板里，两个方向的呼吸量并不相等。</figcaption>
       </figure>
 
     </div>

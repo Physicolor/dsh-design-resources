@@ -44,6 +44,8 @@
     },
     "scripts": {
         "collect": "node scripts/collect-icons.mjs && node scripts/collect-tokens.mjs && node scripts/collect-slots.mjs && node scripts/gen-rules.mjs",
+        "scan": "node scripts/scan-ui.mjs",
+        "capture": "node scripts/capture-dsh.mjs",
         "rules": "node scripts/gen-rules.mjs",
         "refs": "node scripts/check-refs.mjs",
         "site": "node website/gen-site.mjs",

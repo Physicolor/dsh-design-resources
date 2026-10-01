@@ -14,6 +14,9 @@
     var SEATS = D.seats || []
     var ICONS = D.icons || []
     var TOKENS = D.tokens || { light: {}, dark: {}, resolvedLight: {}, resolvedDark: {}, palette: {}, scale: {} }
+    /* 元素清单：运行中的界面扫出来的每个身份，以及它有没有落进规范。 */
+    var INVENTORY = D.inventory || { elements: [], counts: {} }
+    var COVERAGE = D.coverage || { coverage: [], counts: {} }
     var I18N = D.i18n || { zh: {}, en: {} }
 
     var shell = document.getElementById('shell')
@@ -492,6 +495,7 @@
             id: 'resources',
             title: t('index.resources'),
             links: [
+                { href: href('/inventory'), label: t('index.inventory'), active: path === '/inventory' },
                 { href: href('/seats'), label: t('index.seats'), active: path === '/seats' },
                 { href: href('/icons'), label: t('index.icons'), active: path === '/icons' },
                 { href: href('/tokens'), label: t('index.tokens'), active: path === '/tokens' },
@@ -1330,6 +1334,69 @@
             + '</tbody></table></div></section>'
     }
 
+    /**
+     * 元素清单：界面上有什么，规范里有没有它的位置。
+     *
+     * 这一页是从界面出发的：`scripts/scan-ui.mjs` 把产品跑起来，逐个状态登记每个
+     * 占尺寸的元素，再用仓库自己的文字去问「这件东西有没有出处」。`missing` 不是
+     * 判决，是待办——自动对照只做包含判断，命中与否都要人再核一遍。
+     * @param q - 过滤文本。
+     */
+    function pageInventory(q) {
+        var query = (q || '').trim().toLowerCase()
+        var all = COVERAGE.coverage || []
+        var counts = COVERAGE.counts || { identities: all.length, referenced: 0, missing: 0, pluginOwned: 0 }
+        var rows = all.filter(function (row) {
+            if (query === '') return true
+            return (row.key + ' ' + row.slot + ' ' + (row.texts || []).join(' ')).toLowerCase().indexOf(query) !== -1
+        })
+
+        if (all.length === 0) {
+            mainEl.innerHTML = '<div class="main-inner"><div class="hero"><h1 class="hero__title">' + esc(t('inventory.title')) + '</h1>'
+                + '<p class="hero__lede">' + esc(t('inventory.empty')) + '</p></div></div>'
+            renderAside([])
+            return
+        }
+
+        var rowsHtml = rows.map(function (row) {
+            var state = row.coverage === 'missing'
+                ? '<span class="badge badge--warn">' + esc(t('inventory.stateMissing')) + '</span>'
+                : (row.pluginOwned === true
+                    ? '<span class="badge badge--neutral">' + esc(t('inventory.statePlugin')) + '</span>'
+                    : '<span class="badge badge--safe">' + esc(t('inventory.stateCovered')) + '</span>')
+            var where = (row.hits || []).slice(0, 2).map(function (hit) {
+                return '<code class="mono">' + esc(hit.where.replace(/^components\//u, '').replace(/^spec\//u, 'spec/')) + '</code>'
+            }).join('<br>') || '<span style="color:var(--site-label-3)">—</span>'
+            var seen = (row.steps || []).slice(0, 3).join(' · ')
+            return '<tr><td><code class="mono">' + esc(row.key.split('|')[0] || row.key) + '</code>'
+                + (row.slot ? '<br><span style="color:var(--site-label-3)">' + esc(row.slot) + '</span>' : '')
+                + '</td><td>' + esc(seen) + '</td><td class="mono">' + esc(row.size) + '</td>'
+                + '<td>' + state + '</td><td>' + where + '</td></tr>'
+        }).join('')
+
+        mainEl.innerHTML = '<div class="main-inner">'
+            + '<div class="hero"><h1 class="hero__title">' + esc(t('inventory.title')) + '</h1>'
+            + '<p class="hero__lede">' + esc(t('inventory.lede', {
+                identities: counts.identities || 0, referenced: counts.referenced || 0, missing: counts.missing || 0,
+            })) + '</p></div>'
+            + '<div class="callout"><span class="callout__mark">i</span><div><p>' + esc(t('inventory.note')) + '</p></div></div>'
+            + '<section class="section"><div class="section__head"><h2 class="section__title">'
+            + esc(t('inventory.tableTitle', { n: rows.length }))
+            + '</h2><span class="section__hint">' + (query === '' ? esc(t('inventory.order')) : esc(t('seats.filter')) + '：' + esc(query)) + '</span></div>'
+            + '<div class="table-wrap"><table><thead><tr>'
+            + '<th>' + esc(t('inventory.columns.identity')) + '</th>'
+            + '<th>' + esc(t('inventory.columns.where')) + '</th>'
+            + '<th>' + esc(t('inventory.columns.size')) + '</th>'
+            + '<th>' + esc(t('inventory.columns.state')) + '</th>'
+            + '<th>' + esc(t('inventory.columns.source')) + '</th>'
+            + '</tr></thead><tbody>' + rowsHtml + '</tbody></table></div></section></div>'
+
+        renderAside([
+            { title: t('inventory.howTitle'), html: p(t('inventory.how')) },
+            { title: t('inventory.stateTitle'), html: p(t('inventory.stateNote')) },
+        ])
+    }
+
     /** Fallback page. */
     function pageNotFound() {
         mainEl.innerHTML = '<div class="main-inner"><div class="hero"><h1 class="hero__title">' + esc(t('notFound.title')) + '</h1>'
@@ -1371,6 +1438,7 @@
         else if (parts[0] === 'seats') pageSeats(r.q)
         else if (parts[0] === 'icons') pageIcons(r.q)
         else if (parts[0] === 'tokens') pageTokens(r.q)
+        else if (parts[0] === 'inventory') pageInventory(r.q)
         else pageNotFound()
 
         renderIndex(path)

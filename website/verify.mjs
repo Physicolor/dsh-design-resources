@@ -310,6 +310,11 @@ if (browserPath === null) {
     })()`)
     check('token page carries the geometry table', geometryRows >= 12, `${geometryRows} rows`)
 
+    /* 元素清单：从界面出发的那一页，缺了它这份资源就只能谈组件。 */
+    await goto(base + '#/inventory')
+    const inventoryRows = await evaluate(`document.querySelectorAll('.table-wrap tbody tr').length`)
+    check('element inventory renders', inventoryRows > 50, `${inventoryRows} rows`)
+
     /* ── shell behaviour: one page, three independently scrolling columns ── */
 
     await goto(base)

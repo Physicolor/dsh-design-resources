@@ -304,6 +304,160 @@ const CONVERSATION_PROBE = `(() => {
 })()`
 
 /**
+ * Photograph the settings panel as a window.
+ *
+ * The settings screen is the repository's clearest example of a *surface*: an
+ * 800×800 rounded panel on a mask, with cards inside it. A reproduction built
+ * from imagination gets the radius and the elevation wrong, so this walks the
+ * real panel — found by its own metrics (a large rounded box), not by a hash —
+ * and records its subtree, the mask behind it, and the card inside it.
+ */
+const SETTINGS_PANEL_PROBE = `(() => {
+  const out = { panel: null, mask: null, nodes: [] }
+  const all = [...document.querySelectorAll('body *')]
+  let panel = null
+  for (const el of all) {
+    const r = el.getBoundingClientRect()
+    const cs = getComputedStyle(el)
+    if (r.width > 700 && r.height > 600 && parseFloat(cs.borderRadius) >= 24) { panel = el; break }
+  }
+  if (panel === null) throw new Error('settings panel not found')
+  const describe = (el, depth) => {
+    const r = el.getBoundingClientRect()
+    if (r.width < 1 || r.height < 1) return
+    const cs = getComputedStyle(el)
+    out.nodes.push({
+      d: depth,
+      tag: el.tagName.toLowerCase(),
+      slot: el.getAttribute('data-slot') || undefined,
+      cls: String(el.className || '').slice(0, 90),
+      rect: [Math.round(r.x), Math.round(r.y), Math.round(r.width), Math.round(r.height)],
+      radius: cs.borderRadius,
+      bg: cs.backgroundColor,
+      shadow: cs.boxShadow === 'none' ? '' : cs.boxShadow,
+      pad: [cs.paddingTop, cs.paddingRight, cs.paddingBottom, cs.paddingLeft].join(' '),
+      gap: cs.gap === 'normal' ? '' : cs.gap,
+      border: cs.borderTopWidth + ' ' + cs.borderTopStyle + ' ' + cs.borderTopColor,
+      font: cs.fontSize + '/' + cs.lineHeight + ' ' + cs.fontWeight,
+      color: cs.color,
+      backdrop: cs.backdropFilter === 'none' ? '' : cs.backdropFilter,
+      text: el.children.length === 0 ? (el.textContent || '').trim().slice(0, 40) : '',
+    })
+  }
+  describe(panel, 0)
+  const walk = (el, depth) => {
+    if (depth > 11 || out.nodes.length > 700) return
+    for (const child of el.children) { describe(child, depth); walk(child, depth + 1) }
+  }
+  walk(panel, 1)
+  /* 遮罩：面板之外那一层压暗的背景 */
+  const mask = all.find(el => {
+    const cs = getComputedStyle(el)
+    const r = el.getBoundingClientRect()
+    return r.width > 1000 && r.height > 600 && cs.backgroundColor.startsWith('rgba(') && cs.backgroundColor !== 'rgba(0, 0, 0, 0)'
+  })
+  if (mask !== undefined) {
+    const cs = getComputedStyle(mask)
+    const r = mask.getBoundingClientRect()
+    out.mask = { cls: String(mask.className || '').slice(0, 80), rect: [Math.round(r.x), Math.round(r.y), Math.round(r.width), Math.round(r.height)], bg: cs.backgroundColor, backdrop: cs.backdropFilter === 'none' ? '' : cs.backdropFilter }
+  }
+  return JSON.stringify(out, null, 1)
+})()`
+
+/**
+ * Photograph one row of the plugin list.
+ *
+ * A plugin row is a small composite that shows up nowhere else in the product:
+ * a tinted rounded square holding the plugin's own glyph, a title, a line of
+ * description, a tag, and a switch. The tile is what "icon" means to a plugin
+ * author, so it gets measured rather than described.
+ */
+const PLUGIN_ROW_PROBE = `(() => {
+  const rows = [...document.querySelectorAll('li, [class*="row"]')]
+    .filter(el => el.querySelector('input[type="checkbox"], [role="switch"]') !== null && el.getBoundingClientRect().height > 30)
+  if (rows.length === 0) throw new Error('no plugin row found')
+  const row = rows[0]
+  const out = { row: null, nodes: [] }
+  const describe = (el, depth) => {
+    const r = el.getBoundingClientRect()
+    if (r.width < 1 || r.height < 1) return
+    const cs = getComputedStyle(el)
+    out.nodes.push({
+      d: depth,
+      tag: el.tagName.toLowerCase(),
+      cls: String(el.className || '').slice(0, 90),
+      rect: [Math.round(r.x), Math.round(r.y), Math.round(r.width), Math.round(r.height)],
+      radius: cs.borderRadius,
+      bg: cs.backgroundColor,
+      shadow: cs.boxShadow === 'none' ? '' : cs.boxShadow,
+      border: cs.borderTopWidth + ' ' + cs.borderTopStyle + ' ' + cs.borderTopColor,
+      pad: [cs.paddingTop, cs.paddingRight, cs.paddingBottom, cs.paddingLeft].join(' '),
+      gap: cs.gap === 'normal' ? '' : cs.gap,
+      font: cs.fontSize + '/' + cs.lineHeight + ' ' + cs.fontWeight,
+      color: cs.color,
+      img: el.tagName.toLowerCase() === 'img' ? { src: (el.getAttribute('src') || '').slice(0, 60), w: el.getAttribute('width'), h: el.getAttribute('height') } : undefined,
+      svg: el.tagName.toLowerCase() === 'svg' ? el.outerHTML.slice(0, 400) : undefined,
+      text: el.children.length === 0 ? (el.textContent || '').trim().slice(0, 40) : '',
+    })
+  }
+  describe(row, 0)
+  const walk = (el, depth) => {
+    if (depth > 7) return
+    for (const child of el.children) { describe(child, depth); walk(child, depth + 1) }
+  }
+  walk(row, 1)
+  out.row = { text: (row.textContent || '').trim().slice(0, 60) }
+  return JSON.stringify(out, null, 1)
+})()`
+
+/**
+ * Photograph the sidebar rows that live outside any list seat.
+ *
+ * A session row carries its own state glyph — a running session shows a rotating
+ * ring where a finished one shows a chat glyph. The ring is product chrome, and a
+ * design resource that says "the product has no loading indicator" has simply
+ * never looked at the sidebar.
+ */
+const RUNNING_ROW_PROBE = `(() => {
+  const out = []
+  const rows = [...document.querySelectorAll('[data-slot="sidebar.workspaces.session.row.action"]')]
+    .map(el => el.closest('[class*="sessionRow"]') || el.parentElement)
+    .filter(el => el !== null)
+  for (const row of rows) {
+    /* 行首那枚状态字形：可能是图标、可能是正在转的环。整行扫一遍带 animation 的元素，
+     * 因为「运行中」这件事在产品里就是一段 CSS 动画。 */
+    const animated = [...row.querySelectorAll('*')]
+      .map(el => {
+        const cs = getComputedStyle(el)
+        return {
+          tag: el.tagName.toLowerCase(),
+          cls: String(el.getAttribute('class') || '').slice(0, 70),
+          animation: cs.animation === 'none' ? '' : cs.animation,
+          border: cs.borderTopWidth + ' ' + cs.borderTopColor,
+          radius: cs.borderRadius,
+          stroke: cs.stroke,
+          dash: cs.strokeDasharray === 'none' ? '' : cs.strokeDasharray,
+        }
+      })
+      .filter(item => item.animation !== '')
+      .slice(0, 5)
+    const first = row.firstElementChild
+    const r = first === null ? null : first.getBoundingClientRect()
+    out.push({
+      rowText: (row.textContent || '').trim().slice(0, 50),
+      selected: [...row.classList].some(c => c.endsWith('_selected')),
+      leadingSlot: row.querySelector('[data-slot="sidebar.session.row.leading"]') === null ? false : true,
+      firstRect: r === null ? null : [Math.round(r.x), Math.round(r.y), Math.round(r.width), Math.round(r.height)],
+      firstHtml: first === null ? '' : first.outerHTML.slice(0, 900),
+      svg: (() => { const s = row.querySelector('svg'); return s === null ? null : s.outerHTML.slice(0, 900) })(),
+      animated,
+    })
+    if (out.length >= 8) break
+  }
+  return JSON.stringify(out, null, 1)
+})()`
+
+/**
  * Click one entry in the settings nav by its exact label.
  * @param label - the nav item's text, e.g. `通用设置`.
  * @returns a step snippet.
@@ -372,6 +526,31 @@ const SCENES = [
     title: '顶栏 · 全部控件与图标',
     steps: [OPEN_SESSION],
     collect: 'topstrip',
+  },
+  {
+    name: '14-settings-panel',
+    title: '设置面板 · 窗口几何',
+    steps: [OPEN_SETTINGS],
+    collect: 'settings-panel',
+  },
+  {
+    name: '15-plugin-row',
+    title: '插件列表 · 一行',
+    steps: [`(() => {
+      const leaf = [...document.querySelectorAll('*')]
+        .find(el => el.children.length === 0 && (el.textContent || '').trim() === '插件')
+      if (leaf === undefined) throw new Error('plugins nav not found')
+      const target = leaf.closest('button, [role="button"], a') ?? leaf.parentElement
+      target.click()
+      return true
+    })()`],
+    collect: 'plugin-row',
+  },
+  {
+    name: '16-running-row',
+    title: '左栏 · 运行中的会话行',
+    steps: [OPEN_SESSION],
+    collect: 'running-row',
   },
   {
     name: '03-settings-open',
@@ -599,6 +778,24 @@ try {
       const json = await evaluate(TOPSTRIP_PROBE)
       await writeFile(join(OUT, 'top-strip.json'), json, 'utf8')
       console.log(`topstrip  ${scene.name}  ${Math.round(json.length / 1024)} KB`)
+    }
+
+    if (scene.collect === 'settings-panel') {
+      const json = await evaluate(SETTINGS_PANEL_PROBE)
+      await writeFile(join(OUT, 'settings-panel.json'), json, 'utf8')
+      console.log(`settings  ${scene.name}  ${Math.round(json.length / 1024)} KB`)
+    }
+
+    if (scene.collect === 'plugin-row') {
+      const json = await evaluate(PLUGIN_ROW_PROBE)
+      await writeFile(join(OUT, 'plugin-row.json'), json, 'utf8')
+      console.log(`plugrow   ${scene.name}  ${Math.round(json.length / 1024)} KB`)
+    }
+
+    if (scene.collect === 'running-row') {
+      const json = await evaluate(RUNNING_ROW_PROBE)
+      await writeFile(join(OUT, 'running-row.json'), json, 'utf8')
+      console.log(`running   ${scene.name}  ${Math.round(json.length / 1024)} KB`)
     }
   }
 } catch (error) {
