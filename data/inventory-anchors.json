@@ -98,10 +98,6 @@
             "plugin": "插件市场页（插件未识别）"
         },
         {
-            "match": "fbulu_",
-            "plugin": "未识别（待查）"
-        },
-        {
             "match": "Mrat-",
             "plugin": "未识别（待查）"
         },
@@ -111,6 +107,61 @@
         }
     ],
     "anchors": [
+        {
+            "match": "pageTitle|h1|",
+            "where": "components/patterns/SettingsPage",
+            "flexible": true,
+            "note": "设置页一级标题（18/26 · 600，宽度随文字）"
+        },
+        {
+            "match": "xpvNua_mark",
+            "where": "spec/10-frame-layout.md",
+            "note": "会话右侧的时间轴刻度（28 × 10）"
+        },
+        {
+            "match": "_4AI11G_root",
+            "where": "spec/10-frame-layout.md",
+            "note": "活动行（748 × 33，整行可点）"
+        },
+        {
+            "match": "_4AI11G_durationNumber",
+            "where": "spec/10-frame-layout.md",
+            "flexible": true,
+            "note": "活动行里的用时数字（9 × 17，宽度随数字）"
+        },
+        {
+            "match": "_viewport_4ub78_19",
+            "where": "spec/20-controls.md",
+            "flexible": true,
+            "note": "输入区触发器菜单里的预览位（136 × 136）"
+        },
+        {
+            "match": "_check_4ub78_179",
+            "where": "spec/20-controls.md",
+            "note": "菜单选中对勾（14 × 14）"
+        },
+        {
+            "match": "fO69Vq_count",
+            "where": "components/patterns/ListRowGroup",
+            "flexible": true,
+            "note": "分组标题右侧的计数（8 × 19）"
+        },
+        {
+            "match": "_0mJWUG_label",
+            "where": "components/layout/SidebarRow",
+            "flexible": true,
+            "note": "左栏底部入口标签（56 × 22）"
+        },
+        {
+            "match": "sidebar.footer.action",
+            "where": "components/layout/SidebarRow",
+            "note": "左栏底部入口按钮（260 × 42 · 圆角 12）"
+        },
+        {
+            "match": "action|button|",
+            "where": "spec/10-frame-layout.md",
+            "note": "消息动作按钮（28 × 28 · 圆角 8）"
+        },
         {
             "match": "text:",
             "where": "spec/30-tokens.md",
@@ -403,7 +454,8 @@
         {
             "match": "list|div|tree",
             "where": "components/layout/SidebarRow",
-            "note": "会话列表容器（270 × 527）"
+            "note": "会话列表容器（270 × 527）",
+            "flexible": true
         },
         {
             "match": "sessionOverflowButton",
@@ -461,7 +513,7 @@
         {
             "match": "xD_KDq_timeStart",
             "where": "spec/10-frame-layout.md",
-            "flexible": true,
+            "flexible": "width",
             "note": "消息时间戳（43 × 24，宽度随文字）"
         },
         {
@@ -778,7 +830,8 @@
         {
             "match": "time|span",
             "where": "components/layout/SidebarRow",
-            "note": "会话行右侧的相对时间"
+            "note": "会话行右侧的相对时间",
+            "flexible": "width"
         },
         {
             "match": "sectionLabel",

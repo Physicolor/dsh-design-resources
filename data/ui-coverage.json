@@ -1,13 +1,13 @@
 {
   "$comment": "清单里的每个身份在规范/组件语料里有没有位置。covered = 人工锚点命中（described 表示目标文件里写下了它的实测尺寸）；referenced = 语料里出现过这个词（要复核）；missing = 待办。",
-  "generatedAt": "2026-10-01T18:24:40.883Z",
+  "generatedAt": "2026-10-01T18:39:19.149Z",
   "counts": {
     "identities": 436,
-    "covered": 379,
-    "described": 86,
-    "coveredNotDescribed": 127,
-    "referenced": 17,
-    "missing": 40,
+    "covered": 390,
+    "described": 102,
+    "coveredNotDescribed": 118,
+    "referenced": 8,
+    "missing": 38,
     "pluginOwned": 119
   },
   "coverage": [
@@ -474,7 +474,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "components/layout/SidebarRow",
@@ -922,13 +922,13 @@
       ],
       "pluginOwned": true,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
-          "where": "spec/10-frame-layout.md",
-          "token": "entry|button|",
+          "where": "components/layout/SidebarRow",
+          "token": "sidebar.footer.action",
           "kind": "anchor",
-          "id": "右栏入口行（380 × 68 · 圆角 20）"
+          "id": "左栏底部入口按钮（260 × 42 · 圆角 12）"
         }
       ]
     },
@@ -950,13 +950,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": null,
+      "described": true,
       "hits": [
         {
-          "where": "spec/50-icons.md",
-          "token": "svg:0 0 16 16:M12.0997",
+          "where": "components/layout/SidebarRow",
+          "token": "sidebar.footer.action",
           "kind": "anchor",
-          "id": "产品内联字形 §7：用量中心（16 × 16 · 左栏底部入口）"
+          "id": "左栏底部入口按钮（260 × 42 · 圆角 12）"
         }
       ]
     },
@@ -983,10 +983,10 @@
       "described": false,
       "hits": [
         {
-          "where": "plugins/dsh-usage-center",
-          "token": "duc-",
+          "where": "components/layout/SidebarRow",
+          "token": "sidebar.footer.action",
           "kind": "anchor",
-          "id": "插件 dsh-usage-center 的热力图"
+          "id": "左栏底部入口按钮（260 × 42 · 圆角 12）"
         }
       ]
     },
@@ -1010,13 +1010,13 @@
       ],
       "pluginOwned": true,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
-          "where": "spec/10-frame-layout.md",
-          "token": "entry|button|",
+          "where": "components/layout/SidebarRow",
+          "token": "sidebar.footer.action",
           "kind": "anchor",
-          "id": "右栏入口行（380 × 68 · 圆角 20）"
+          "id": "左栏底部入口按钮（260 × 42 · 圆角 12）"
         }
       ]
     },
@@ -1038,13 +1038,13 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
-          "where": "plugins/dsh-usage-center",
-          "token": "lc-",
+          "where": "components/layout/SidebarRow",
+          "token": "sidebar.footer.action",
           "kind": "anchor",
-          "id": "插件 dsh-usage-center 的界面"
+          "id": "左栏底部入口按钮（260 × 42 · 圆角 12）"
         }
       ]
     },
@@ -1071,10 +1071,10 @@
       "described": false,
       "hits": [
         {
-          "where": "plugins/dsh-usage-center",
-          "token": "lc-",
+          "where": "components/layout/SidebarRow",
+          "token": "sidebar.footer.action",
           "kind": "anchor",
-          "id": "插件 dsh-usage-center 的界面"
+          "id": "左栏底部入口按钮（260 × 42 · 圆角 12）"
         }
       ]
     },
@@ -1098,13 +1098,13 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
-          "where": "components/controls/Button",
-          "token": "1rv3m",
+          "where": "components/layout/SidebarRow",
+          "token": "sidebar.footer.action",
           "kind": "anchor",
-          "id": "产品的 Button 模块（_button_1rv3m_2，含 md/sm/primary/ghost/outline/toolbar/icon 变体）"
+          "id": "左栏底部入口按钮（260 × 42 · 圆角 12）"
         }
       ]
     },
@@ -1125,9 +1125,16 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "described": null,
-      "hits": []
+      "coverage": "covered",
+      "described": true,
+      "hits": [
+        {
+          "where": "components/layout/SidebarRow",
+          "token": "sidebar.footer.action",
+          "kind": "anchor",
+          "id": "左栏底部入口按钮（260 × 42 · 圆角 12）"
+        }
+      ]
     },
     {
       "key": "label|span|",
@@ -1148,32 +1155,14 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "spec/20-controls.md",
-          "token": "label",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/30-tokens.md",
-          "token": "label",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "spec/60-accessibility.md",
-          "token": "label",
-          "kind": "spec",
-          "id": "60-accessibility"
-        },
-        {
-          "where": "components/brand/FishMark/SPEC.md",
-          "token": "label",
-          "kind": "component",
-          "id": "fishmark"
+          "where": "components/layout/SidebarRow",
+          "token": "_0mJWUG_label",
+          "kind": "anchor",
+          "id": "左栏底部入口标签（56 × 22）"
         }
       ]
     },
@@ -1987,7 +1976,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -3970,9 +3959,9 @@
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "xD_KDq_",
+          "token": "action|button|",
           "kind": "anchor",
-          "id": "消息级元信息与动作：时间戳、复制/重试按钮"
+          "id": "消息动作按钮（28 × 28 · 圆角 8）"
         }
       ]
     },
@@ -4396,7 +4385,7 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "components/layout/SidebarRow",
@@ -4837,7 +4826,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "components/layout/SidebarRow",
@@ -4993,9 +4982,16 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
+      "coverage": "covered",
       "described": null,
-      "hits": []
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "_4AI11G_durationNumber",
+          "kind": "anchor",
+          "id": "活动行里的用时数字（9 × 17，宽度随数字）"
+        }
+      ]
     },
     {
       "key": "text:14px/24px/400|span|",
@@ -5040,32 +5036,14 @@
         "有问题的回答"
       ],
       "pluginOwned": false,
-      "coverage": "referenced",
-      "described": null,
+      "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "action",
-          "kind": "spec",
-          "id": "10-frame-layout"
-        },
-        {
-          "where": "spec/11-slot-seats.md",
-          "token": "action",
-          "kind": "spec",
-          "id": "11-slot-seats"
-        },
-        {
-          "where": "spec/70-checklist.md",
-          "token": "action",
-          "kind": "spec",
-          "id": "70-checklist"
-        },
-        {
-          "where": "components/feedback/EmptyState/empty-state.module.css",
-          "token": "action",
-          "kind": "component",
-          "id": "emptystate"
+          "token": "action|button|",
+          "kind": "anchor",
+          "id": "消息动作按钮（28 × 28 · 圆角 8）"
         }
       ]
     },
@@ -6471,32 +6449,14 @@
         "跳转到第 1 轮"
       ],
       "pluginOwned": false,
-      "coverage": "referenced",
-      "described": null,
+      "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "mark",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/80-conflicts.md",
-          "token": "mark",
-          "kind": "spec",
-          "id": "80-conflicts"
-        },
-        {
-          "where": "components/brand/FishMark/fishmark.module.css",
-          "token": "mark",
-          "kind": "component",
-          "id": "fishmark"
-        },
-        {
-          "where": "components/brand/FishMark/README.md",
-          "token": "mark",
-          "kind": "component",
-          "id": "fishmark"
+          "where": "spec/10-frame-layout.md",
+          "token": "xpvNua_mark",
+          "kind": "anchor",
+          "id": "会话右侧的时间轴刻度（28 × 10）"
         }
       ]
     },
@@ -6515,32 +6475,14 @@
         "跳转到第 2 轮"
       ],
       "pluginOwned": false,
-      "coverage": "referenced",
-      "described": null,
+      "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "mark",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/80-conflicts.md",
-          "token": "mark",
-          "kind": "spec",
-          "id": "80-conflicts"
-        },
-        {
-          "where": "components/brand/FishMark/fishmark.module.css",
-          "token": "mark",
-          "kind": "component",
-          "id": "fishmark"
-        },
-        {
-          "where": "components/brand/FishMark/README.md",
-          "token": "mark",
-          "kind": "component",
-          "id": "fishmark"
+          "where": "spec/10-frame-layout.md",
+          "token": "xpvNua_mark",
+          "kind": "anchor",
+          "id": "会话右侧的时间轴刻度（28 × 10）"
         }
       ]
     },
@@ -6610,7 +6552,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": null,
+      "described": true,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -6633,32 +6575,14 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
-      "described": null,
+      "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "spec/11-slot-seats.md",
-          "token": "root",
-          "kind": "spec",
-          "id": "11-slot-seats"
-        },
-        {
-          "where": "spec/30-tokens.md",
-          "token": "root",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "components/brand/Wordmark/SPEC.md",
-          "token": "root",
-          "kind": "component",
-          "id": "wordmark"
-        },
-        {
-          "where": "components/data-display/DisclosureRow/disclosure-row.module.css",
-          "token": "root",
-          "kind": "component",
-          "id": "disclosurerow"
+          "where": "spec/10-frame-layout.md",
+          "token": "_4AI11G_root",
+          "kind": "anchor",
+          "id": "活动行（748 × 33，整行可点）"
         }
       ]
     },
@@ -6728,7 +6652,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -6779,32 +6703,14 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "spec/40-motion.md",
-          "token": "count",
-          "kind": "spec",
-          "id": "40-motion"
-        },
-        {
-          "where": "components/brand/FishMark/SPEC.md",
-          "token": "count",
-          "kind": "component",
-          "id": "fishmark"
-        },
-        {
-          "where": "components/brand/Wordmark/SPEC.md",
-          "token": "count",
-          "kind": "component",
-          "id": "wordmark"
-        },
-        {
-          "where": "components/controls/Button/SPEC.md",
-          "token": "count",
-          "kind": "component",
-          "id": "button"
+          "where": "components/patterns/ListRowGroup",
+          "token": "fO69Vq_count",
+          "kind": "anchor",
+          "id": "分组标题右侧的计数（8 × 19）"
         }
       ]
     },
@@ -8244,20 +8150,14 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "components/patterns/SettingsPage/settings-page.module.css",
-          "token": "pagetitle",
-          "kind": "component",
-          "id": "settingspage"
-        },
-        {
-          "where": "components/patterns/SettingsPage/SPEC.md",
-          "token": "page-title",
-          "kind": "component",
-          "id": "settingspage"
+          "where": "components/patterns/SettingsPage",
+          "token": "pageTitle|h1|",
+          "kind": "anchor",
+          "id": "设置页一级标题（18/26 · 600，宽度随文字）"
         }
       ]
     },
@@ -10827,20 +10727,14 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "components/data-display/MiniBar/SPEC.md",
-          "token": "presentation",
-          "kind": "component",
-          "id": "minibar"
-        },
-        {
-          "where": "components/surfaces/Modal/SPEC.md",
-          "token": "presentation",
-          "kind": "component",
-          "id": "modal"
+          "where": "spec/20-controls.md",
+          "token": "_viewport_4ub78_19",
+          "kind": "anchor",
+          "id": "输入区触发器菜单里的预览位（136 × 136）"
         }
       ]
     },
@@ -10948,32 +10842,14 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
-      "described": null,
+      "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "check",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/11-slot-seats.md",
-          "token": "check",
-          "kind": "spec",
-          "id": "11-slot-seats"
-        },
-        {
           "where": "spec/20-controls.md",
-          "token": "check",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/40-motion.md",
-          "token": "check",
-          "kind": "spec",
-          "id": "40-motion"
+          "token": "_check_4ub78_179",
+          "kind": "anchor",
+          "id": "菜单选中对勾（14 × 14）"
         }
       ]
     },
