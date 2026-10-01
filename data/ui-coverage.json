@@ -1,44 +1,16 @@
 {
   "$comment": "清单里的每个身份在规范/组件语料里有没有位置。covered = 人工锚点命中（described 表示目标文件里写下了它的实测尺寸）；referenced = 语料里出现过这个词（要复核）；missing = 待办。",
-  "generatedAt": "2026-10-01T17:56:42.861Z",
+  "generatedAt": "2026-10-01T18:24:40.883Z",
   "counts": {
-    "identities": 355,
-    "covered": 297,
-    "described": 55,
-    "coveredNotDescribed": 183,
+    "identities": 436,
+    "covered": 379,
+    "described": 86,
+    "coveredNotDescribed": 127,
     "referenced": 17,
-    "missing": 41,
+    "missing": 40,
     "pluginOwned": 119
   },
   "coverage": [
-    {
-      "key": "|svg|",
-      "cls": "",
-      "slot": "sidebar.brand.mark",
-      "count": 576,
-      "size": "24x18",
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置"
-      ],
-      "texts": [],
-      "arias": [],
-      "pluginOwned": false,
-      "coverage": "covered",
-      "described": null,
-      "hits": [
-        {
-          "where": "components/brand/FishMark",
-          "token": "sidebar.brand.mark",
-          "kind": "anchor",
-          "id": "左栏品牌鱼标（渲染盒 24 × 18，随品牌行高度）"
-        }
-      ]
-    },
     {
       "key": "duc-heat-cell l0|div|",
       "cls": "duc-heat-cell l0",
@@ -59,39 +31,6 @@
           "token": "duc-",
           "kind": "anchor",
           "id": "插件 dsh-usage-center 的热力图"
-        }
-      ]
-    },
-    {
-      "key": "title|span|",
-      "cls": "hIlkoa_title",
-      "slot": "sidebar.workspaces",
-      "count": 181,
-      "size": "218x20",
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置"
-      ],
-      "texts": [
-        ".codex",
-        "StarRail Agent",
-        "Thesis",
-        "DeepSeek-Harness"
-      ],
-      "arias": [],
-      "pluginOwned": false,
-      "coverage": "covered",
-      "described": null,
-      "hits": [
-        {
-          "where": "components/layout/SidebarRow",
-          "token": "title|span|",
-          "kind": "anchor",
-          "id": "会话行 / 工作区行的标题文字（宽度随文字）"
         }
       ]
     },
@@ -129,72 +68,6 @@
       ]
     },
     {
-      "key": "|span|",
-      "cls": "",
-      "slot": "conversation.composer",
-      "count": 106,
-      "size": "156x32",
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置"
-      ],
-      "texts": [
-        "探索未至之境",
-        "≈$0.04",
-        "14%",
-        "安装、启用和配置插件"
-      ],
-      "arias": [],
-      "pluginOwned": false,
-      "coverage": "covered",
-      "described": false,
-      "hits": [
-        {
-          "where": "spec/10-frame-layout.md",
-          "token": "composer",
-          "kind": "anchor",
-          "id": "输入区"
-        }
-      ]
-    },
-    {
-      "key": "time|span|",
-      "cls": "hIlkoa_time",
-      "slot": "sidebar.workspaces",
-      "count": 105,
-      "size": "38x16",
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置"
-      ],
-      "texts": [
-        "10分钟",
-        "11分钟",
-        "39分钟",
-        "1小时"
-      ],
-      "arias": [],
-      "pluginOwned": false,
-      "coverage": "covered",
-      "described": true,
-      "hits": [
-        {
-          "where": "components/layout/SidebarRow",
-          "token": "time|span",
-          "kind": "anchor",
-          "id": "会话行右侧的相对时间"
-        }
-      ]
-    },
-    {
       "key": "navCell|button|",
       "cls": "wCInkW_navCell",
       "slot": "",
@@ -219,34 +92,6 @@
           "token": "navCell",
           "kind": "anchor",
           "id": "设置窗口左侧导航格（164 × 40、圆角 12）"
-        }
-      ]
-    },
-    {
-      "key": "sessionRow|div|treeitem",
-      "cls": "hIlkoa_sessionRow",
-      "slot": "sidebar.workspaces",
-      "count": 92,
-      "size": "256x32",
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置"
-      ],
-      "texts": [],
-      "arias": [],
-      "pluginOwned": false,
-      "coverage": "covered",
-      "described": true,
-      "hits": [
-        {
-          "where": "components/layout/SidebarRow",
-          "token": "sessionRow",
-          "kind": "anchor",
-          "id": "左栏会话行（含运行态圆环、时间、悬停更多）"
         }
       ]
     },
@@ -282,7 +127,7 @@
       "key": "trigger|button|",
       "cls": "wCInkW_trigger",
       "slot": "settings.launcher",
-      "count": 84,
+      "count": 83,
       "size": "260x34",
       "steps": [
         "新会话页",
@@ -311,30 +156,33 @@
       ]
     },
     {
-      "key": "projectRow|div|treeitem",
-      "cls": "hIlkoa_projectRow",
+      "key": "title|span|",
+      "cls": "hIlkoa_title",
       "slot": "sidebar.workspaces",
-      "count": 75,
-      "size": "256x34",
+      "count": 45,
+      "size": "218x20",
       "steps": [
         "新会话页",
         "会话页 · 顶部",
         "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置"
+        "插件页（官方 / 已安装）"
       ],
-      "texts": [],
+      "texts": [
+        ".codex",
+        "StarRail Agent",
+        "Thesis",
+        "DeepSeek-Harness"
+      ],
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": true,
+      "described": null,
       "hits": [
         {
           "where": "components/layout/SidebarRow",
-          "token": "projectRow",
+          "token": "title|span|",
           "kind": "anchor",
-          "id": "左栏工作区行"
+          "id": "会话行 / 工作区行的标题文字（宽度随文字）"
         }
       ]
     },
@@ -403,37 +251,6 @@
       ]
     },
     {
-      "key": "|div|",
-      "cls": "",
-      "slot": "settings.general.item",
-      "count": 42,
-      "size": "413x22",
-      "steps": [
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 组件",
-        "设置 · 科研"
-      ],
-      "texts": [
-        "对话内容宽度",
-        "对话内容宽度，与对话区两侧的拖拽条共用同一个记忆值",
-        "工作区字号",
-        "左侧工作区列表、按钮与图标的整体大小"
-      ],
-      "arias": [],
-      "pluginOwned": false,
-      "coverage": "covered",
-      "described": null,
-      "hits": [
-        {
-          "where": "components/layout/SettingsRow",
-          "token": "settings.general.item",
-          "kind": "anchor",
-          "id": "设置行的文字容器与右侧控件（宽度随文字与控件）"
-        }
-      ]
-    },
-    {
       "key": "icon|svg|",
       "cls": "dzXS4q_icon",
       "slot": "conversation.session.header.corner",
@@ -477,9 +294,9 @@
       ],
       "texts": [],
       "arias": [
-        "1 轮 45 步 · 199 tok/s",
-        "3.1M tok · 缓存命中 96%",
-        "1 轮 46 步 · 199 tok/s"
+        "2 轮 85 步 · 199 tok/s",
+        "9.4M tok · 缓存命中 98%",
+        "9 轮 511 步 · 261 tok/s"
       ],
       "pluginOwned": false,
       "coverage": "covered",
@@ -494,110 +311,18 @@
       ]
     },
     {
-      "key": "title|button|",
-      "cls": "WW4l1q_title",
-      "slot": "conversation.view",
-      "count": 36,
-      "size": "106x19",
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code"
-      ],
-      "texts": [],
-      "arias": [],
-      "pluginOwned": false,
-      "coverage": "covered",
-      "described": null,
-      "hits": [
-        {
-          "where": "spec/10-frame-layout.md",
-          "token": "title|button|",
-          "kind": "anchor",
-          "id": "活动行折叠按钮"
-        }
-      ]
-    },
-    {
-      "key": "text label|span|",
-      "cls": "_text_1rdzk_17 WW4l1q_label",
-      "slot": "conversation.view",
-      "count": 36,
-      "size": "84x19",
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code"
-      ],
-      "texts": [
-        "正在分析请求",
-        "准备运行命令",
-        "准备写入文件",
-        "已完成分析"
-      ],
-      "arias": [],
-      "pluginOwned": false,
-      "coverage": "covered",
-      "described": null,
-      "hits": [
-        {
-          "where": "spec/10-frame-layout.md",
-          "token": "text label|span|",
-          "kind": "anchor",
-          "id": "活动行标签"
-        }
-      ]
-    },
-    {
-      "key": "panelTitle wide|span|",
-      "cls": "_2H3hWW_panelTitle _2H3hWW_wide",
-      "slot": "sidebar",
+      "key": "chevron|svg|",
+      "cls": "Hqq-bq_chevron",
+      "slot": "conversation.composer",
       "count": 30,
-      "size": "28x22",
+      "size": "12x12",
       "steps": [
         "新会话页",
         "会话页 · 顶部",
         "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
         "设置 · 打开",
-        "设置 · 通用设置"
-      ],
-      "texts": [
-        "插件",
-        "自动化任务"
-      ],
-      "arias": [],
-      "pluginOwned": false,
-      "coverage": "covered",
-      "described": true,
-      "hits": [
-        {
-          "where": "components/layout/SidebarRow",
-          "token": "panelTitle",
-          "kind": "anchor",
-          "id": "左栏面板标题（28 × 22 · 14/22）"
-        }
-      ]
-    },
-    {
-      "key": "spinner|svg|",
-      "cls": "_spinner_1i3xo_37",
-      "slot": "sidebar.workspaces",
-      "count": 30,
-      "size": "14x14",
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置"
+        "设置 · 通用设置",
+        "设置 · 内置插件"
       ],
       "texts": [],
       "arias": [],
@@ -606,10 +331,10 @@
       "described": true,
       "hits": [
         {
-          "where": "components/feedback/RunningRing",
-          "token": "spinner|svg|",
+          "where": "spec/10-frame-layout.md",
+          "token": "Hqq-bq_",
           "kind": "anchor",
-          "id": "运行圆环（14 × 14）"
+          "id": "新会话页的工作区行与「预览版」徽标（Hqq-bq_workspace / previewBadge / folder）"
         }
       ]
     },
@@ -701,28 +426,61 @@
       ]
     },
     {
-      "key": "chevron|svg|",
-      "cls": "Hqq-bq_chevron",
-      "slot": "conversation.composer",
-      "count": 28,
-      "size": "12x12",
+      "key": "svg:0 0 16 16:M6.58727 11.8586C9.55061|svg|",
+      "cls": "",
+      "slot": "sidebar.workspaces",
+      "count": 24,
+      "size": "14x14",
       "steps": [
         "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）",
         "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 内置插件"
+        "设置 · 通用设置"
       ],
       "texts": [],
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": true,
+      "described": null,
       "hits": [
         {
-          "where": "spec/10-frame-layout.md",
-          "token": "Hqq-bq_",
+          "where": "spec/50-icons.md",
+          "token": "svg:0 0 16 16:M6.58727",
           "kind": "anchor",
-          "id": "新会话页的工作区行与「预览版」徽标（Hqq-bq_workspace / previewBadge / folder）"
+          "id": "产品内联字形 §7：搜索（14 × 14 · 左栏搜索）"
+        }
+      ]
+    },
+    {
+      "key": "time|span|",
+      "cls": "hIlkoa_time",
+      "slot": "sidebar.workspaces",
+      "count": 24,
+      "size": "32x16",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）"
+      ],
+      "texts": [
+        "1小时",
+        "2小时",
+        "4小时",
+        "6小时"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": false,
+      "hits": [
+        {
+          "where": "components/layout/SidebarRow",
+          "token": "time|span",
+          "kind": "anchor",
+          "id": "会话行右侧的相对时间"
         }
       ]
     },
@@ -773,6 +531,90 @@
           "token": "star",
           "kind": "component",
           "id": "inlinenotice"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M8 14C11.3137 14 14 11.3|svg|",
+      "cls": "",
+      "slot": "sidebar.panellist",
+      "count": 23,
+      "size": "16x16",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）",
+        "设置 · 打开",
+        "设置 · 通用设置"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:0 0 16 16:M8 14C11.3137",
+          "kind": "anchor",
+          "id": "产品内联字形 §7：自动化任务（16 × 16 · 左栏面板导航）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M8 9.75012C8.9665 9.7501|svg|",
+      "cls": "",
+      "slot": "settings.trigger",
+      "count": 23,
+      "size": "16x16",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）",
+        "设置 · 打开",
+        "设置 · 通用设置"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:0 0 16 16:M8 9.75012",
+          "kind": "anchor",
+          "id": "产品内联字形 §7：设置（16 × 16 · 左栏底部）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M8 2V14|svg|",
+      "cls": "",
+      "slot": "conversation.composer.bar",
+      "count": 23,
+      "size": "14x14",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）",
+        "设置 · 打开",
+        "设置 · 通用设置"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:0 0 16 16:M8 2V14",
+          "kind": "anchor",
+          "id": "产品内联字形 §7：加号（14 × 14 · 输入区）"
         }
       ]
     },
@@ -949,6 +791,62 @@
       ]
     },
     {
+      "key": "svg:0 0 16 16:M2.37091 11.2501C1.58745|svg|",
+      "cls": "",
+      "slot": "sidebar",
+      "count": 22,
+      "size": "14x14",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）",
+        "设置 · 打开",
+        "设置 · 通用设置"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:0 0 16 16:M2.37091",
+          "kind": "anchor",
+          "id": "产品内联字形 §7：新会话（14 × 14 · 左栏新会话按钮）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M7.84457 5.06199C11.6605|svg|",
+      "cls": "",
+      "slot": "sidebar.panellist",
+      "count": 22,
+      "size": "16x16",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）",
+        "设置 · 打开",
+        "设置 · 通用设置"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:0 0 16 16:M7.84457",
+          "kind": "anchor",
+          "id": "产品内联字形 §7：插件（16 × 16 · 左栏面板导航）"
+        }
+      ]
+    },
+    {
       "key": "searchButton|button|",
       "cls": "_9lTDKa_searchButton",
       "slot": "sidebar.workspaces",
@@ -979,6 +877,32 @@
       ]
     },
     {
+      "key": "sessionRow|div|treeitem",
+      "cls": "hIlkoa_sessionRow",
+      "slot": "sidebar.workspaces",
+      "count": 22,
+      "size": "256x32",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": true,
+      "hits": [
+        {
+          "where": "components/layout/SidebarRow",
+          "token": "sessionRow",
+          "kind": "anchor",
+          "id": "左栏会话行（含运行态圆环、时间、悬停更多）"
+        }
+      ]
+    },
+    {
       "key": "duc-sidebar-entry|button|",
       "cls": "duc-sidebar-entry",
       "slot": "sidebar.footer.action",
@@ -1001,10 +925,38 @@
       "described": false,
       "hits": [
         {
-          "where": "plugins/dsh-usage-center",
-          "token": "duc-",
+          "where": "spec/10-frame-layout.md",
+          "token": "entry|button|",
           "kind": "anchor",
-          "id": "插件 dsh-usage-center 的热力图"
+          "id": "右栏入口行（380 × 68 · 圆角 20）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M12.0997 8.54554C12.2905|svg|",
+      "cls": "",
+      "slot": "sidebar.footer.action",
+      "count": 22,
+      "size": "16x16",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）",
+        "设置 · 打开",
+        "设置 · 通用设置"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:0 0 16 16:M12.0997",
+          "kind": "anchor",
+          "id": "产品内联字形 §7：用量中心（16 × 16 · 左栏底部入口）"
         }
       ]
     },
@@ -1061,10 +1013,10 @@
       "described": false,
       "hits": [
         {
-          "where": "plugins/dsh-usage-center",
-          "token": "lc-",
+          "where": "spec/10-frame-layout.md",
+          "token": "entry|button|",
           "kind": "anchor",
-          "id": "插件 dsh-usage-center 的界面"
+          "id": "右栏入口行（380 × 68 · 圆角 20）"
         }
       ]
     },
@@ -1127,6 +1079,105 @@
       ]
     },
     {
+      "key": "button ghost md button|button|",
+      "cls": "_button_1rv3m_2 _ghost_1rv3m_45 _md_1rv3m_23 _0mJWUG_button",
+      "slot": "sidebar.footer.action",
+      "count": 22,
+      "size": "260x42",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）",
+        "设置 · 打开",
+        "设置 · 通用设置"
+      ],
+      "texts": [],
+      "arias": [
+        "远程控制"
+      ],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": false,
+      "hits": [
+        {
+          "where": "components/controls/Button",
+          "token": "1rv3m",
+          "kind": "anchor",
+          "id": "产品的 Button 模块（_button_1rv3m_2，含 md/sm/primary/ghost/outline/toolbar/icon 变体）"
+        }
+      ]
+    },
+    {
+      "key": "lucide lucide-smartphone|svg|",
+      "cls": "lucide lucide-smartphone",
+      "slot": "sidebar.footer.action",
+      "count": 22,
+      "size": "16x16",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）",
+        "设置 · 打开",
+        "设置 · 通用设置"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "missing",
+      "described": null,
+      "hits": []
+    },
+    {
+      "key": "label|span|",
+      "cls": "_0mJWUG_label",
+      "slot": "sidebar.footer.action",
+      "count": 22,
+      "size": "56x22",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）",
+        "设置 · 打开",
+        "设置 · 通用设置"
+      ],
+      "texts": [
+        "远程控制"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "referenced",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/20-controls.md",
+          "token": "label",
+          "kind": "spec",
+          "id": "20-controls"
+        },
+        {
+          "where": "spec/30-tokens.md",
+          "token": "label",
+          "kind": "spec",
+          "id": "30-tokens"
+        },
+        {
+          "where": "spec/60-accessibility.md",
+          "token": "label",
+          "kind": "spec",
+          "id": "60-accessibility"
+        },
+        {
+          "where": "components/brand/FishMark/SPEC.md",
+          "token": "label",
+          "kind": "component",
+          "id": "fishmark"
+        }
+      ]
+    },
+    {
       "key": "-ngf_W_triggerLabel|span|",
       "cls": "-ngf_W_triggerLabel",
       "slot": "settings.trigger",
@@ -1157,55 +1208,87 @@
       ]
     },
     {
-      "key": "|button|",
+      "key": "svg:0 0 16 16:M4 6L7.29289 9.29289C7.6|svg|",
       "cls": "",
-      "slot": "",
+      "slot": "conversation.session.header.utilities",
       "count": 22,
-      "size": "44x44",
+      "size": "10x10",
       "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
         "设置 · 打开",
         "设置 · 通用设置",
         "设置 · 模型",
-        "设置 · Command Code",
-        "设置 · 内置插件",
-        "设置 · Agent 预设"
+        "设置 · Command Code"
       ],
-      "texts": [
-        "总览",
-        "实验",
-        "产物",
-        "清理审计"
-      ],
-      "arias": [
-        "Open DS++ Chat"
-      ],
+      "texts": [],
+      "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "20-controls"
-        },
+          "where": "spec/50-icons.md",
+          "token": "svg:0 0 16 16:M4 6L7.29289",
+          "kind": "anchor",
+          "id": "产品内联字形 §7：折叠角（10 × 10）"
+        }
+      ]
+    },
+    {
+      "key": "text:11px/normal/400|span|",
+      "cls": "",
+      "slot": "settings.section",
+      "count": 22,
+      "size": "19x15",
+      "steps": [
+        "设置 · 组件",
+        "设置 · 科研"
+      ],
+      "texts": [
+        "2×2",
+        "2×4",
+        "已接受:83",
+        "已拒绝:5"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
         {
           "where": "spec/30-tokens.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M5.54492 2.06738C5.91034|svg|",
+      "cls": "",
+      "slot": "sidebar.workspaces",
+      "count": 21,
+      "size": "16x16",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "插件页（官方 / 已安装）",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
         {
           "where": "spec/50-icons.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "50-icons"
+          "token": "svg:0 0 16 16:M5.54492",
+          "kind": "anchor",
+          "id": "产品内联字形 §7：添加工作区（16 × 16 · 工作区标题行）"
         }
       ]
     },
@@ -1375,8 +1458,7 @@
       ],
       "texts": [],
       "arias": [
-        "发送消息",
-        "停止生成"
+        "发送消息"
       ],
       "pluginOwned": false,
       "coverage": "covered",
@@ -1387,6 +1469,34 @@
           "token": "primary|button|",
           "kind": "anchor",
           "id": "发送圆钮（34 × 34）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M8.3125 0.980183C8.66767|svg|",
+      "cls": "",
+      "slot": "conversation.composer.bar",
+      "count": 21,
+      "size": "16x16",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
         }
       ]
     },
@@ -1421,6 +1531,64 @@
       ]
     },
     {
+      "key": "text:13px/20px/400|span|",
+      "cls": "",
+      "slot": "conversation.composer.bar",
+      "count": 21,
+      "size": "25x20",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型"
+      ],
+      "texts": [
+        "18%",
+        "安装、启用和配置插件",
+        "80%"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
+        }
+      ]
+    },
+    {
+      "key": "projectRow|div|treeitem",
+      "cls": "hIlkoa_projectRow",
+      "slot": "sidebar.workspaces",
+      "count": 20,
+      "size": "256x34",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": true,
+      "hits": [
+        {
+          "where": "components/layout/SidebarRow",
+          "token": "projectRow",
+          "kind": "anchor",
+          "id": "左栏工作区行"
+        }
+      ]
+    },
+    {
       "key": "button ghost sm button|button|",
       "cls": "_button_1rv3m_2 _ghost_1rv3m_45 _sm_1rv3m_28 dzXS4q_button",
       "slot": "conversation.session.header.corner",
@@ -1447,34 +1615,6 @@
           "token": "conversation.session.header",
           "kind": "anchor",
           "id": "会话头部里的字形与按钮（15 × 15 等，尺寸随字形）"
-        }
-      ]
-    },
-    {
-      "key": "dsx-stats-active|body|",
-      "cls": "dsx-stats-active",
-      "slot": "",
-      "count": 20,
-      "size": "1570x905",
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code"
-      ],
-      "texts": [],
-      "arias": [],
-      "pluginOwned": true,
-      "coverage": "covered",
-      "described": false,
-      "hits": [
-        {
-          "where": "plugins/dsh-widgets",
-          "token": "dsx-",
-          "kind": "anchor",
-          "id": "插件 dsh-widgets 的界面"
         }
       ]
     },
@@ -1534,6 +1674,34 @@
           "token": "conversation.session.header",
           "kind": "anchor",
           "id": "会话头部里的字形与按钮（15 × 15 等，尺寸随字形）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M6 8.25C7.51878 8.25 8.7|svg|",
+      "cls": "",
+      "slot": "conversation.session.header.actions",
+      "count": 20,
+      "size": "14x14",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:0 0 16 16:M6 8.25",
+          "kind": "anchor",
+          "id": "产品内联字形 §7：智能体团队（14 × 14 · 会话头部 chip）"
         }
       ]
     },
@@ -1716,6 +1884,34 @@
       ]
     },
     {
+      "key": "svg:0 0 16 16:M3 9C3.55228 9 4 8.55228|svg|",
+      "cls": "",
+      "slot": "conversation.session.header.utilities",
+      "count": 20,
+      "size": "15x15",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:0 0 16 16:M3 9C3.55228",
+          "kind": "anchor",
+          "id": "产品内联字形 §7：更多省略号（15 × 15）"
+        }
+      ]
+    },
+    {
       "key": "dsx-stats-capsule|button|",
       "cls": "dsx-stats-capsule",
       "slot": "conversation.session.header.utilities",
@@ -1746,11 +1942,11 @@
       ]
     },
     {
-      "key": "composerSeat|div|",
-      "cls": "Dc7zOa_composerSeat",
-      "slot": "main.conversation",
+      "key": "svg:0 0 16 16:|svg|",
+      "cls": "",
+      "slot": "conversation.session.header.utilities",
       "count": 20,
-      "size": "853x128",
+      "size": "15x15",
       "steps": [
         "会话页 · 顶部",
         "左栏 · 搜索展开",
@@ -1763,13 +1959,213 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": true,
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "composerSeat|div|",
+      "cls": "Dc7zOa_composerSeat",
+      "slot": "main.conversation",
+      "count": 20,
+      "size": "1283x128",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
           "token": "composer",
           "kind": "anchor",
           "id": "输入区"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M3.4041 13.096C2.49514 1|svg|",
+      "cls": "",
+      "slot": "conversation.composer.dock",
+      "count": 20,
+      "size": "14x14",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M13.1967 5.1869C13.7232 |svg|",
+      "cls": "",
+      "slot": "conversation.composer.dock",
+      "count": 20,
+      "size": "14x14",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "text:12px/20px/500|span|",
+      "cls": "",
+      "slot": "conversation.composer.dock",
+      "count": 20,
+      "size": "38x16",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code"
+      ],
+      "texts": [
+        "≈$0.08",
+        "≈$1.23"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 14 14:|svg|",
+      "cls": "",
+      "slot": "conversation.composer.bar",
+      "count": 20,
+      "size": "14x14",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "title|button|",
+      "cls": "WW4l1q_title",
+      "slot": "conversation.view",
+      "count": 20,
+      "size": "92x19",
+      "steps": [
+        "会话标题菜单 / 输入区菜单 · 基视图",
+        "会话标题菜单 / 输入区菜单 · 第 1 步",
+        "会话标题菜单 / 输入区菜单 · 第 2 步",
+        "会话标题菜单 / 输入区菜单 · 第 3 步"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "title|button|",
+          "kind": "anchor",
+          "id": "活动行折叠按钮"
+        }
+      ]
+    },
+    {
+      "key": "text label|span|",
+      "cls": "_text_1rdzk_17 WW4l1q_label",
+      "slot": "conversation.view",
+      "count": 20,
+      "size": "70x19",
+      "steps": [
+        "会话标题菜单 / 输入区菜单 · 基视图",
+        "会话标题菜单 / 输入区菜单 · 第 1 步",
+        "会话标题菜单 / 输入区菜单 · 第 2 步",
+        "会话标题菜单 / 输入区菜单 · 第 3 步"
+      ],
+      "texts": [
+        "已完成分析",
+        "已搜索网页，已写入文件，执行了命令",
+        "修改了文件并执行了命令",
+        "修改了文件，执行了命令，已读取图片"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "text label|span|",
+          "kind": "anchor",
+          "id": "活动行标签"
         }
       ]
     },
@@ -1787,13 +2183,43 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
-          "token": "RotMhW_",
+          "token": "card|li|",
           "kind": "anchor",
-          "id": "内置插件页的卡片与分组开关（groupToggle 76 × 22）"
+          "id": "插件卡片（277 × 84 · 圆角 20，两列网格）"
+        }
+      ]
+    },
+    {
+      "key": "text:13.3333px/normal/400|button|",
+      "cls": "",
+      "slot": "",
+      "count": 18,
+      "size": "44x44",
+      "steps": [
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code",
+        "设置 · 内置插件",
+        "设置 · Agent 预设"
+      ],
+      "texts": [],
+      "arias": [
+        "Open DS++ Chat"
+      ],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
         }
       ]
     },
@@ -1855,8 +2281,8 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "1 轮 50 步",
-        "3.8M",
+        "2 轮 85 步",
+        "9.4M",
         "—",
         "9 轮 511 步"
       ],
@@ -1874,63 +2300,28 @@
       ]
     },
     {
-      "key": "runningWhaleAnimated|span|",
-      "cls": "xz4KEq_runningWhaleAnimated",
-      "slot": "conversation.view",
+      "key": "svg:0 0 16 16:M1.50439 3.11059C1.50439|svg|",
+      "cls": "",
+      "slot": "sidebar.workspaces",
       "count": 16,
-      "size": "14x14",
+      "size": "16x16",
       "steps": [
+        "新会话页",
         "会话页 · 顶部",
         "左栏 · 搜索展开",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code"
+        "插件页（官方 / 已安装）"
       ],
       "texts": [],
-      "arias": [],
-      "pluginOwned": false,
-      "coverage": "covered",
-      "described": false,
-      "hits": [
-        {
-          "where": "spec/40-motion.md",
-          "token": "runningWhale",
-          "kind": "anchor",
-          "id": "「深度求索中」的运行鲸鱼动画"
-        }
-      ]
-    },
-    {
-      "key": "text|span|",
-      "cls": "_text_1rdzk_17",
-      "slot": "conversation.view",
-      "count": 16,
-      "size": "165x22",
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code"
-      ],
-      "texts": [
-        "深度求索中，用时 10分16秒 ···",
-        "深度求索中，用时 10分22秒 ···",
-        "深度求索中，用时 10分31秒 ···",
-        "深度求索中，用时 10分32秒 ···"
-      ],
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "spec/10-frame-layout.md",
-          "token": "text|span|",
+          "where": "spec/50-icons.md",
+          "token": "svg:",
           "kind": "anchor",
-          "id": "活动行标题（宽度随文字）"
+          "id": "产品内联字形（§7 登记，未逐一命名）"
         }
       ]
     },
@@ -1951,13 +2342,13 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
-          "token": "RotMhW_",
+          "token": "cardContent",
           "kind": "anchor",
-          "id": "内置插件页的卡片与分组开关（groupToggle 76 × 22）"
+          "id": "插件卡片内容区（275 × 82）"
         }
       ]
     },
@@ -1979,161 +2370,42 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
-          "token": "RotMhW_",
+          "token": "cardTitle|strong",
           "kind": "anchor",
-          "id": "内置插件页的卡片与分组开关（groupToggle 76 × 22）"
+          "id": "插件卡片标题（14/20 · 500，宽度随文字）"
         }
       ]
     },
     {
-      "key": "brand wide|button|",
-      "cls": "_2H3hWW_brand _2H3hWW_wide",
-      "slot": "sidebar",
-      "count": 15,
-      "size": "216x24",
+      "key": "text:13px/normal/400|span|",
+      "cls": "",
+      "slot": "settings.section",
+      "count": 16,
+      "size": "477x17",
       "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置"
+        "设置 · 组件",
+        "设置 · 科研"
       ],
-      "texts": [],
-      "arias": [
-        "新建会话"
+      "texts": [
+        "用量环形图",
+        "用量柱状图",
+        "额度预测",
+        "Token 热度图"
       ],
+      "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "components/brand/Wordmark",
-          "token": "brand wide|button|",
+          "where": "spec/30-tokens.md",
+          "token": "text:",
           "kind": "anchor",
-          "id": "左栏品牌按钮（216 × 24）"
-        }
-      ]
-    },
-    {
-      "key": "newSessionLabel wide|span|",
-      "cls": "_2H3hWW_newSessionLabel _2H3hWW_wide",
-      "slot": "sidebar",
-      "count": 15,
-      "size": "42x22",
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置"
-      ],
-      "texts": [
-        "新会话"
-      ],
-      "arias": [],
-      "pluginOwned": false,
-      "coverage": "covered",
-      "described": false,
-      "hits": [
-        {
-          "where": "components/layout/SidebarRow",
-          "token": "newSession",
-          "kind": "anchor",
-          "id": "新会话按钮（252 × 38 · 圆角 12）"
-        }
-      ]
-    },
-    {
-      "key": "list|div|tree",
-      "cls": "_9lTDKa_list",
-      "slot": "sidebar.workspaces",
-      "count": 15,
-      "size": "270x527",
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置"
-      ],
-      "texts": [],
-      "arias": [
-        "会话"
-      ],
-      "pluginOwned": false,
-      "coverage": "covered",
-      "described": false,
-      "hits": [
-        {
-          "where": "components/layout/SidebarRow",
-          "token": "_9lTDKa_",
-          "kind": "anchor",
-          "id": "左栏搜索：输入框、清除按钮、分组标题与头部动作"
-        }
-      ]
-    },
-    {
-      "key": "sessionOverflowButton|button|",
-      "cls": "_9lTDKa_sessionOverflowButton",
-      "slot": "sidebar.workspaces",
-      "count": 15,
-      "size": "256x28",
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置"
-      ],
-      "texts": [
-        "展开其余 96 个会话"
-      ],
-      "arias": [],
-      "pluginOwned": false,
-      "coverage": "covered",
-      "described": false,
-      "hits": [
-        {
-          "where": "components/layout/SidebarRow",
-          "token": "_9lTDKa_",
-          "kind": "anchor",
-          "id": "左栏搜索：输入框、清除按钮、分组标题与头部动作"
-        }
-      ]
-    },
-    {
-      "key": "fade|span|",
-      "cls": "_9lTDKa_fade",
-      "slot": "sidebar.workspaces",
-      "count": 15,
-      "size": "256x24",
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置"
-      ],
-      "texts": [],
-      "arias": [],
-      "pluginOwned": false,
-      "coverage": "covered",
-      "described": false,
-      "hits": [
-        {
-          "where": "components/layout/SidebarRow",
-          "token": "_9lTDKa_",
-          "kind": "anchor",
-          "id": "左栏搜索：输入框、清除按钮、分组标题与头部动作"
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
         }
       ]
     },
@@ -2162,94 +2434,6 @@
           "token": "cardDesc",
           "kind": "anchor",
           "id": "插件行说明（13/18，宽度随文字）"
-        }
-      ]
-    },
-    {
-      "key": "sectionLabel wide|span|",
-      "cls": "_9lTDKa_sectionLabel _9lTDKa_wide",
-      "slot": "sidebar.workspaces",
-      "count": 14,
-      "size": "39x20",
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型"
-      ],
-      "texts": [
-        "工作区"
-      ],
-      "arias": [],
-      "pluginOwned": false,
-      "coverage": "covered",
-      "described": false,
-      "hits": [
-        {
-          "where": "components/layout/SidebarRow",
-          "token": "_9lTDKa_",
-          "kind": "anchor",
-          "id": "左栏搜索：输入框、清除按钮、分组标题与头部动作"
-        }
-      ]
-    },
-    {
-      "key": "iconButton wide|button|",
-      "cls": "_9lTDKa_iconButton _9lTDKa_wide",
-      "slot": "sidebar.workspaces",
-      "count": 14,
-      "size": "28x28",
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型"
-      ],
-      "texts": [],
-      "arias": [
-        "视图选项"
-      ],
-      "pluginOwned": false,
-      "coverage": "covered",
-      "described": true,
-      "hits": [
-        {
-          "where": "components/layout/SidebarRow",
-          "token": "_9lTDKa_",
-          "kind": "anchor",
-          "id": "左栏搜索：输入框、清除按钮、分组标题与头部动作"
-        }
-      ]
-    },
-    {
-      "key": "sessionRow selected|div|treeitem",
-      "cls": "hIlkoa_sessionRow hIlkoa_selected",
-      "slot": "sidebar.workspaces",
-      "count": 14,
-      "size": "256x32",
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型"
-      ],
-      "texts": [],
-      "arias": [],
-      "pluginOwned": false,
-      "coverage": "covered",
-      "described": true,
-      "hits": [
-        {
-          "where": "components/layout/SidebarRow",
-          "token": "sessionRow",
-          "kind": "anchor",
-          "id": "左栏会话行（含运行态圆环、时间、悬停更多）"
         }
       ]
     },
@@ -2320,9 +2504,9 @@
         "用量中心（插件）"
       ],
       "texts": [
-        "39.51亿",
+        "40.63亿",
         "3482.0万",
-        "14,142 次",
+        "14,353 次",
         "327 次"
       ],
       "arias": [],
@@ -2400,7 +2584,7 @@
       ],
       "texts": [
         "1.3%",
-        "4.4%",
+        "4.3%",
         "0.8%",
         "4.5%"
       ],
@@ -2427,10 +2611,10 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "≈98.7M",
-        "≈325.4M",
-        "≈61.7M",
-        "≈336.7M"
+        "≈99.1M",
+        "≈327.3M",
+        "≈62.0M",
+        "≈337.8M"
       ],
       "arias": [],
       "pluginOwned": true,
@@ -2553,6 +2737,29 @@
       ]
     },
     {
+      "key": "svg:0 0 16 16:M14.4782 4.84067L14.2138|svg|",
+      "cls": "",
+      "slot": "settings.section",
+      "count": 13,
+      "size": "12x16",
+      "steps": [
+        "设置 · 组件"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:0 0 16 16:M14.4782",
+          "kind": "anchor",
+          "id": "产品内联字形 §7：外部链接箭头（12 × 16 · 设置页）"
+        }
+      ]
+    },
+    {
       "key": "duc-heat-axis-label|span|",
       "cls": "duc-heat-axis-label",
       "slot": "shell.overlay",
@@ -2659,13 +2866,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "components/controls/Tag",
-          "token": "brmue",
+          "token": "tag|span|",
           "kind": "anchor",
-          "id": "产品的 Tag 模块（_tag_brmue_4，与 Button/Pill/Tabs 同批）"
+          "id": "标签（高 19 = padding 1px + 行高 17px）"
         }
       ]
     },
@@ -2864,6 +3071,34 @@
       ]
     },
     {
+      "key": "svg:0 0 16 16:M2.5 2.5L13.5 13.5|svg|",
+      "cls": "",
+      "slot": "",
+      "count": 11,
+      "size": "14x14",
+      "steps": [
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code",
+        "设置 · 内置插件",
+        "设置 · Agent 预设"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
       "key": "desc|div|",
       "cls": "_3HsggG_desc",
       "slot": "settings.general.item",
@@ -2889,6 +3124,86 @@
           "token": "settings.general.item",
           "kind": "anchor",
           "id": "设置行的文字容器与右侧控件（宽度随文字与控件）"
+        }
+      ]
+    },
+    {
+      "key": "text:12px/normal/400|div|",
+      "cls": "",
+      "slot": "settings.section",
+      "count": 10,
+      "size": "564x16",
+      "steps": [
+        "设置 · 组件",
+        "设置 · 科研"
+      ],
+      "texts": [
+        "已添加 13/20（点击组件可预览与配置）",
+        "实验总数",
+        "有效",
+        "无效"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
+        }
+      ]
+    },
+    {
+      "key": "text:16px/normal/400|div|",
+      "cls": "",
+      "slot": "settings.section",
+      "count": 9,
+      "size": "564x209",
+      "steps": [
+        "设置 · 科研"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
+        }
+      ]
+    },
+    {
+      "key": "text:14px/22px/400|span|",
+      "cls": "",
+      "slot": "shell.overlay",
+      "count": 9,
+      "size": "28x22",
+      "steps": [
+        "用量中心（插件）"
+      ],
+      "texts": [
+        "总览",
+        "活动",
+        "速度",
+        "模型"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
         }
       ]
     },
@@ -2949,6 +3264,35 @@
       ]
     },
     {
+      "key": "panelTitle wide|span|",
+      "cls": "_2H3hWW_panelTitle _2H3hWW_wide",
+      "slot": "sidebar",
+      "count": 8,
+      "size": "28x22",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）"
+      ],
+      "texts": [
+        "插件",
+        "自动化任务"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": true,
+      "hits": [
+        {
+          "where": "components/layout/SidebarRow",
+          "token": "panelTitle",
+          "kind": "anchor",
+          "id": "左栏面板标题（28 × 22 · 14/22）"
+        }
+      ]
+    },
+    {
       "key": "selector|button|",
       "cls": "_3HsggG_selector",
       "slot": "settings.general.item",
@@ -2992,13 +3336,13 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
-          "token": "KZf9OG_",
+          "token": "helpButton",
           "kind": "anchor",
-          "id": "设置卡片与其分组标题（groupHead 564 × 16）"
+          "id": "帮助按钮（60 × 36 · 圆角 12，宽度随文字）"
         }
       ]
     },
@@ -3020,13 +3364,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "components/controls/Pill",
-          "token": "pill",
+          "token": "pill interactive",
           "kind": "anchor",
-          "id": "胶囊按钮（输入区状态胶囊、权限胶囊）"
+          "id": "可点胶囊（高 24）"
         }
       ]
     },
@@ -3197,9 +3541,16 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "described": null,
-      "hits": []
+      "coverage": "covered",
+      "described": true,
+      "hits": [
+        {
+          "where": "components/patterns/SettingsPage",
+          "token": "|input|",
+          "kind": "anchor",
+          "id": "设置页输入框（高 36）"
+        }
+      ]
     },
     {
       "key": "dsh_notification_toggleLabel|span|",
@@ -3283,10 +3634,10 @@
         "用量中心（插件）"
       ],
       "texts": [
-        "129.37亿",
-        "14,469",
+        "130.49亿",
+        "14,680",
         "121",
-        "98.5%"
+        "98.6%"
       ],
       "arias": [],
       "pluginOwned": true,
@@ -3445,48 +3796,77 @@
       ]
     },
     {
-      "key": "|b|",
+      "key": "svg:0 0 42 42:|svg|",
       "cls": "",
       "slot": "shell.overlay",
       "count": 8,
-      "size": "25x14",
+      "size": "96x96",
       "steps": [
         "上下文洞察（插件）"
       ],
-      "texts": [
-        "7.4B",
-        "138h2m",
-        "115.6k",
-        "664.9k"
-      ],
+      "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "b",
-          "kind": "spec",
-          "id": "00-overview"
-        },
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M10.2854 5.71481C12.9673|svg|",
+      "cls": "",
+      "slot": "conversation.view",
+      "count": 8,
+      "size": "16x16",
+      "steps": [
+        "会话标题菜单 / 输入区菜单 · 基视图",
+        "会话标题菜单 / 输入区菜单 · 第 1 步",
+        "会话标题菜单 / 输入区菜单 · 第 2 步",
+        "会话标题菜单 / 输入区菜单 · 第 3 步"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
         {
-          "where": "spec/10-frame-layout.md",
-          "token": "b",
-          "kind": "spec",
-          "id": "10-frame-layout"
-        },
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M8.85596 2.69971H4.19971|svg|",
+      "cls": "",
+      "slot": "conversation.view",
+      "count": 8,
+      "size": "14x14",
+      "steps": [
+        "会话标题菜单 / 输入区菜单 · 基视图",
+        "会话标题菜单 / 输入区菜单 · 第 1 步",
+        "会话标题菜单 / 输入区菜单 · 第 2 步",
+        "会话标题菜单 / 输入区菜单 · 第 3 步"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
         {
-          "where": "spec/11-slot-seats.md",
-          "token": "b",
-          "kind": "spec",
-          "id": "11-slot-seats"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "b",
-          "kind": "spec",
-          "id": "20-controls"
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
         }
       ]
     },
@@ -3502,7 +3882,7 @@
       "texts": [
         "34 天",
         "09:00 · 1,319 次",
-        "2,067",
+        "2,097",
         "121"
       ],
       "arias": [],
@@ -3570,6 +3950,33 @@
       ]
     },
     {
+      "key": "xD_KDq_action|button|",
+      "cls": "xD_KDq_action",
+      "slot": "conversation.chat.node",
+      "count": 6,
+      "size": "28x28",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开"
+      ],
+      "texts": [],
+      "arias": [
+        "复制",
+        "在新对话中分支"
+      ],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": true,
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "xD_KDq_",
+          "kind": "anchor",
+          "id": "消息级元信息与动作：时间戳、复制/重试按钮"
+        }
+      ]
+    },
+    {
       "key": "cc-miniMeterLabel|span|",
       "cls": "cc-miniMeterLabel",
       "slot": "settings.section",
@@ -3594,15 +4001,15 @@
       "cls": "cc-miniMeterValue",
       "slot": "settings.section",
       "count": 6,
-      "size": "23x18",
+      "size": "16x18",
       "steps": [
         "设置 · Command Code"
       ],
       "texts": [
-        "20%",
-        "8%",
-        "$4.56",
-        "0%"
+        "0%",
+        "10%",
+        "$4.04",
+        "25%"
       ],
       "arias": [],
       "pluginOwned": false,
@@ -3647,6 +4054,29 @@
       "coverage": "missing",
       "described": null,
       "hits": []
+    },
+    {
+      "key": "svg:0 0 16 16:M4 1.5h8a1 1 0 0 1 1 1v1|svg|",
+      "cls": "",
+      "slot": "settings.section",
+      "count": 6,
+      "size": "14x14",
+      "steps": [
+        "设置 · 插件市场"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
     },
     {
       "key": "commentsLink|button|",
@@ -3829,9 +4259,9 @@
       ],
       "texts": [
         "111",
-        "7.4B",
+        "7.5B",
         "¥63.37",
-        "98.88%"
+        "98.89%"
       ],
       "arias": [],
       "pluginOwned": true,
@@ -3857,7 +4287,7 @@
       ],
       "texts": [
         "共 167 个",
-        "轮次 696",
+        "轮次 702",
         "已计价 17/111 个会话",
         "含 87 个会话"
       ],
@@ -3925,7 +4355,7 @@
       "cls": "lc-ov-session-title",
       "slot": "shell.overlay",
       "count": 6,
-      "size": "270x17",
+      "size": "283x17",
       "steps": [
         "上下文洞察（插件）"
       ],
@@ -3953,15 +4383,15 @@
       "cls": "lc-ov-session-time",
       "slot": "shell.overlay",
       "count": 6,
-      "size": "48x15",
+      "size": "42x15",
       "steps": [
         "上下文洞察（插件）"
       ],
       "texts": [
-        "10 分钟前",
-        "12 分钟前",
-        "40 分钟前",
-        "1 小时前"
+        "1 小时前",
+        "2 小时前",
+        "4 小时前",
+        "6 小时前"
       ],
       "arias": [],
       "pluginOwned": true,
@@ -4028,6 +4458,62 @@
       ]
     },
     {
+      "key": "text:11px/12.65px/700|b|",
+      "cls": "",
+      "slot": "shell.overlay",
+      "count": 6,
+      "size": "34x13",
+      "steps": [
+        "上下文洞察（插件）"
+      ],
+      "texts": [
+        "150.7k",
+        "664.9k",
+        "514.4k",
+        "126.5k"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
+        }
+      ]
+    },
+    {
+      "key": "text:9px/normal/400|span|",
+      "cls": "",
+      "slot": "shell.overlay",
+      "count": 6,
+      "size": "24x12",
+      "steps": [
+        "上下文洞察（插件）"
+      ],
+      "texts": [
+        "15.1%",
+        "66.5%",
+        "51.4%",
+        "12.6%"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
+        }
+      ]
+    },
+    {
       "key": "lc-ov-session-preview|span|",
       "cls": "lc-ov-session-preview",
       "slot": "shell.overlay",
@@ -4080,12 +4566,12 @@
       "cls": "lc-ov-session-preview-text",
       "slot": "shell.overlay",
       "count": 6,
-      "size": "294x17",
+      "size": "132x17",
       "steps": [
         "上下文洞察（插件）"
       ],
       "texts": [
-        "我部署了Agents Anywhere并且连接DeepSeek Harness，为啥显示正在等待本地DSH Bridge",
+        "那应该怎么做才能连接上呢",
         "不要任何淡入淡出效果，我只要纯粹的放大缩小和位移，只不过是不同组件的动画时机不一致而已，这个难度应该不大的",
         "其它第三方插件不是官方UI的先看看有没有哪些没有对齐，或者说哪些是官方没有开发的，比如滑动条，就先统计并搁置，我们优先整",
         "不用管。现在聊一下Laya，不是Mlx不关键。我只是关心这个决策模型是否可以部署，是否需要部署，对我平时的工作流是否有帮"
@@ -4100,6 +4586,34 @@
           "token": "text|span|",
           "kind": "anchor",
           "id": "活动行标题（宽度随文字）"
+        }
+      ]
+    },
+    {
+      "key": "text:16px/normal/600|div|",
+      "cls": "",
+      "slot": "settings.section",
+      "count": 5,
+      "size": "48x21",
+      "steps": [
+        "设置 · 科研"
+      ],
+      "texts": [
+        "178",
+        "109",
+        "6",
+        "0"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
         }
       ]
     },
@@ -4198,6 +4712,364 @@
       ]
     },
     {
+      "key": "brand wide|button|",
+      "cls": "_2H3hWW_brand _2H3hWW_wide",
+      "slot": "sidebar",
+      "count": 4,
+      "size": "216x24",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）"
+      ],
+      "texts": [],
+      "arias": [
+        "新建会话"
+      ],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "components/brand/Wordmark",
+          "token": "brand wide|button|",
+          "kind": "anchor",
+          "id": "左栏品牌按钮（216 × 24）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 23.16 17.04:M22.9168 1.43018C22.6713|svg|",
+      "cls": "",
+      "slot": "sidebar.brand.mark",
+      "count": 4,
+      "size": "24x18",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "svg:26 0 156 24:M68.416 18.2447H67.0501V|svg|",
+      "cls": "",
+      "slot": "sidebar.brand.name",
+      "count": 4,
+      "size": "156x24",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "newSessionLabel wide|span|",
+      "cls": "_2H3hWW_newSessionLabel _2H3hWW_wide",
+      "slot": "sidebar",
+      "count": 4,
+      "size": "42x22",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）"
+      ],
+      "texts": [
+        "新会话"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "components/layout/SidebarRow",
+          "token": "newSessionLabel",
+          "kind": "anchor",
+          "id": "新会话按钮文字（42 × 22，宽度随文字）"
+        }
+      ]
+    },
+    {
+      "key": "list|div|tree",
+      "cls": "_9lTDKa_list",
+      "slot": "sidebar.workspaces",
+      "count": 4,
+      "size": "270x477",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）"
+      ],
+      "texts": [],
+      "arias": [
+        "会话"
+      ],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": false,
+      "hits": [
+        {
+          "where": "components/layout/SidebarRow",
+          "token": "list|div|tree",
+          "kind": "anchor",
+          "id": "会话列表容器（270 × 527）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M2.55912 7.93683C2.67584|svg|",
+      "cls": "",
+      "slot": "sidebar.workspaces",
+      "count": 4,
+      "size": "16x16",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "spinner|svg|",
+      "cls": "_spinner_1i3xo_37",
+      "slot": "sidebar.workspaces",
+      "count": 4,
+      "size": "14x14",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": true,
+      "hits": [
+        {
+          "where": "components/feedback/RunningRing",
+          "token": "spinner|svg|",
+          "kind": "anchor",
+          "id": "运行圆环（14 × 14）"
+        }
+      ]
+    },
+    {
+      "key": "sessionOverflowButton|button|",
+      "cls": "_9lTDKa_sessionOverflowButton",
+      "slot": "sidebar.workspaces",
+      "count": 4,
+      "size": "256x28",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）"
+      ],
+      "texts": [
+        "展开其余 97 个会话"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": true,
+      "hits": [
+        {
+          "where": "components/layout/SidebarRow",
+          "token": "sessionOverflowButton",
+          "kind": "anchor",
+          "id": "会话行悬停「更多」（256 × 28 · 圆角 8）"
+        }
+      ]
+    },
+    {
+      "key": "fade|span|",
+      "cls": "_9lTDKa_fade",
+      "slot": "sidebar.workspaces",
+      "count": 4,
+      "size": "256x24",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": true,
+      "hits": [
+        {
+          "where": "components/layout/SidebarRow",
+          "token": "fade|span|",
+          "kind": "anchor",
+          "id": "列表底部渐隐（256 × 24）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M11.9792 1.53296C13.36 1|svg|",
+      "cls": "",
+      "slot": "conversation.chat.node",
+      "count": 4,
+      "size": "15x15",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "durationNumber|span|",
+      "cls": "_4AI11G_durationNumber",
+      "slot": "conversation.chat.node",
+      "count": 4,
+      "size": "9x17",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开"
+      ],
+      "texts": [
+        "1",
+        "47"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "missing",
+      "described": null,
+      "hits": []
+    },
+    {
+      "key": "text:14px/24px/400|span|",
+      "cls": "",
+      "slot": "conversation.chat.node",
+      "count": 4,
+      "size": "16x19",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开"
+      ],
+      "texts": [
+        "分",
+        "秒"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
+        }
+      ]
+    },
+    {
+      "key": "action|button|",
+      "cls": "vpunvW_action",
+      "slot": "conversation.chat.assistant-actions",
+      "count": 4,
+      "size": "28x28",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开"
+      ],
+      "texts": [],
+      "arias": [
+        "好的回答",
+        "有问题的回答"
+      ],
+      "pluginOwned": false,
+      "coverage": "referenced",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "action",
+          "kind": "spec",
+          "id": "10-frame-layout"
+        },
+        {
+          "where": "spec/11-slot-seats.md",
+          "token": "action",
+          "kind": "spec",
+          "id": "11-slot-seats"
+        },
+        {
+          "where": "spec/70-checklist.md",
+          "token": "action",
+          "kind": "spec",
+          "id": "70-checklist"
+        },
+        {
+          "where": "components/feedback/EmptyState/empty-state.module.css",
+          "token": "action",
+          "kind": "component",
+          "id": "emptystate"
+        }
+      ]
+    },
+    {
       "key": "tag statusTag|span|",
       "cls": "_tag_brmue_4 fO69Vq_statusTag",
       "slot": "main",
@@ -4212,13 +5084,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
-          "where": "components/controls/Tag",
-          "token": "brmue",
+          "where": "spec/50-icons.md",
+          "token": "tag statusTag",
           "kind": "anchor",
-          "id": "产品的 Tag 模块（_tag_brmue_4，与 Button/Pill/Tabs 同批）"
+          "id": "插件行状态标签（高 18 · 圆角 999）"
         }
       ]
     },
@@ -4243,6 +5115,60 @@
           "token": "settings.general.item",
           "kind": "anchor",
           "id": "设置行的文字容器与右侧控件（宽度随文字与控件）"
+        }
+      ]
+    },
+    {
+      "key": "text:14px/22px/400|div|",
+      "cls": "",
+      "slot": "settings.general.item",
+      "count": 4,
+      "size": "413x22",
+      "steps": [
+        "设置 · 打开",
+        "设置 · 通用设置"
+      ],
+      "texts": [
+        "对话内容宽度",
+        "工作区字号"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
+        }
+      ]
+    },
+    {
+      "key": "text:12px/18px/400|div|",
+      "cls": "",
+      "slot": "settings.general.item",
+      "count": 4,
+      "size": "413x18",
+      "steps": [
+        "设置 · 打开",
+        "设置 · 通用设置"
+      ],
+      "texts": [
+        "对话内容宽度，与对话区两侧的拖拽条共用同一个记忆值",
+        "左侧工作区列表、按钮与图标的整体大小"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
         }
       ]
     },
@@ -4340,9 +5266,46 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
+      "coverage": "covered",
       "described": null,
-      "hits": []
+      "hits": [
+        {
+          "where": "components/patterns/ListRowGroup",
+          "token": "groupTitle",
+          "kind": "anchor",
+          "id": "列表分组标题（高度随文字）"
+        }
+      ]
+    },
+    {
+      "key": "text:12px/18px/400|span|",
+      "cls": "",
+      "slot": "settings.section",
+      "count": 4,
+      "size": "192x18",
+      "steps": [
+        "设置 · Command Code",
+        "设置 · 内置插件",
+        "设置 · 插件市场"
+      ],
+      "texts": [
+        "使用方式：自动切换（按列表顺序）",
+        "由 Agent 预设按会话组成",
+        "29 个",
+        "发现社区为 DeepSeek Harness 开发的插件"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
+        }
+      ]
     },
     {
       "key": "cc-rowTitle|label|",
@@ -4382,13 +5345,13 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
-          "where": "spec/20-controls.md",
-          "token": "main|button|",
+          "where": "components/patterns/SettingsPage",
+          "token": "cardMain",
           "kind": "anchor",
-          "id": "打开方式分段按钮的左半（23 × 22）"
+          "id": "卡片主体（274 × 119 · 圆角 20px 20px 0 0）"
         }
       ]
     },
@@ -4410,13 +5373,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
-          "token": "KZf9OG_",
+          "token": "cardName",
           "kind": "anchor",
-          "id": "设置卡片与其分组标题（groupHead 564 × 16）"
+          "id": "卡片名（宽度随文字）"
         }
       ]
     },
@@ -4438,13 +5401,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
-          "token": "KZf9OG_",
+          "token": "cardId",
           "kind": "anchor",
-          "id": "设置卡片与其分组标题（groupHead 564 × 16）"
+          "id": "卡片标识（代码体，宽度随文字）"
         }
       ]
     },
@@ -4461,13 +5424,36 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
-          "token": "KZf9OG_",
+          "token": "cardFoot",
           "kind": "anchor",
-          "id": "设置卡片与其分组标题（groupHead 564 × 16）"
+          "id": "卡片脚（274 × 49）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M4.9375 5.90295H11.0625|svg|",
+      "cls": "",
+      "slot": "settings.section",
+      "count": 4,
+      "size": "16x16",
+      "steps": [
+        "设置 · Agent 预设"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
         }
       ]
     },
@@ -4549,6 +5535,32 @@
       ]
     },
     {
+      "key": "svg:0 0 16 16:M7.99986 14.0887C11.3626|svg|",
+      "cls": "",
+      "slot": "conversation.view",
+      "count": 4,
+      "size": "14x14",
+      "steps": [
+        "会话标题菜单 / 输入区菜单 · 基视图",
+        "会话标题菜单 / 输入区菜单 · 第 1 步",
+        "会话标题菜单 / 输入区菜单 · 第 2 步",
+        "会话标题菜单 / 输入区菜单 · 第 3 步"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
       "key": "cell|button|menuitem",
       "cls": "wq12jW_cell",
       "slot": "",
@@ -4562,13 +5574,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "spec/20-controls.md",
-          "token": "menu",
+          "token": "cell|button|menuitem",
           "kind": "anchor",
-          "id": "弹出菜单"
+          "id": "选择型菜单项（240 × 34 · 圆角 12）"
         }
       ]
     },
@@ -4651,48 +5663,106 @@
       ]
     },
     {
-      "key": "count|span|",
-      "cls": "fO69Vq_count",
-      "slot": "main",
+      "key": "sectionLabel wide|span|",
+      "cls": "_9lTDKa_sectionLabel _9lTDKa_wide",
+      "slot": "sidebar.workspaces",
       "count": 3,
-      "size": "8x19",
+      "size": "39x20",
       "steps": [
-        "插件页（官方 / 已安装）",
-        "设置 · 通用设置"
+        "新会话页",
+        "会话页 · 顶部",
+        "插件页（官方 / 已安装）"
       ],
       "texts": [
-        "8",
-        "12",
-        "1 个后台任务运行中"
+        "工作区"
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "spec/40-motion.md",
-          "token": "count",
-          "kind": "spec",
-          "id": "40-motion"
-        },
+          "where": "components/layout/SidebarRow",
+          "token": "sectionLabel",
+          "kind": "anchor",
+          "id": "分组小标题（39 × 20，宽度随文字）"
+        }
+      ]
+    },
+    {
+      "key": "iconButton wide|button|",
+      "cls": "_9lTDKa_iconButton _9lTDKa_wide",
+      "slot": "sidebar.workspaces",
+      "count": 3,
+      "size": "28x28",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "插件页（官方 / 已安装）"
+      ],
+      "texts": [],
+      "arias": [
+        "视图选项"
+      ],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": true,
+      "hits": [
         {
-          "where": "components/brand/FishMark/SPEC.md",
-          "token": "count",
-          "kind": "component",
-          "id": "fishmark"
-        },
+          "where": "components/layout/SidebarRow",
+          "token": "_9lTDKa_",
+          "kind": "anchor",
+          "id": "左栏搜索：输入框、清除按钮、分组标题与头部动作"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M2.3 5h5.85M12.05 5h1.65|svg|",
+      "cls": "",
+      "slot": "sidebar.workspaces",
+      "count": 3,
+      "size": "16x16",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "插件页（官方 / 已安装）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
         {
-          "where": "components/brand/Wordmark/SPEC.md",
-          "token": "count",
-          "kind": "component",
-          "id": "wordmark"
-        },
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "sessionRow selected|div|treeitem",
+      "cls": "hIlkoa_sessionRow hIlkoa_selected",
+      "slot": "sidebar.workspaces",
+      "count": 3,
+      "size": "256x32",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": true,
+      "hits": [
         {
-          "where": "components/controls/Button/SPEC.md",
-          "token": "count",
-          "kind": "component",
-          "id": "button"
+          "where": "components/layout/SidebarRow",
+          "token": "sessionRow",
+          "kind": "anchor",
+          "id": "左栏会话行（含运行态圆环、时间、悬停更多）"
         }
       ]
     },
@@ -4782,85 +5852,6 @@
       ]
     },
     {
-      "key": "rowCard|li|",
-      "cls": "_3nPmjq_rowCard",
-      "slot": "settings.section",
-      "count": 3,
-      "size": "564x54",
-      "steps": [
-        "设置 · 模型"
-      ],
-      "texts": [],
-      "arias": [],
-      "pluginOwned": false,
-      "coverage": "covered",
-      "described": false,
-      "hits": [
-        {
-          "where": "components/patterns/SettingsPage",
-          "token": "_3nPmjq_",
-          "kind": "anchor",
-          "id": "设置卡片：卡片圆角、行名 14/22 · 500、次要按钮 46 × 28"
-        }
-      ]
-    },
-    {
-      "key": "rowName|span|",
-      "cls": "_3nPmjq_rowName",
-      "slot": "settings.section",
-      "count": 3,
-      "size": "95x22",
-      "steps": [
-        "设置 · 模型"
-      ],
-      "texts": [
-        "DeepSeek 账号",
-        "DeepSeek",
-        "Command Code"
-      ],
-      "arias": [],
-      "pluginOwned": false,
-      "coverage": "covered",
-      "described": false,
-      "hits": [
-        {
-          "where": "components/patterns/SettingsPage",
-          "token": "_3nPmjq_",
-          "kind": "anchor",
-          "id": "设置卡片：卡片圆角、行名 14/22 · 500、次要按钮 46 × 28"
-        }
-      ]
-    },
-    {
-      "key": "secondaryButton|button|",
-      "cls": "_3nPmjq_secondaryButton",
-      "slot": "settings.section",
-      "count": 3,
-      "size": "46x28",
-      "steps": [
-        "设置 · 模型"
-      ],
-      "texts": [
-        "编辑"
-      ],
-      "arias": [
-        "编辑 DeepSeek 账号 (deepseek-account)",
-        "编辑 DeepSeek (deepseek-official)",
-        "编辑 Command Code (commandcode)"
-      ],
-      "pluginOwned": false,
-      "coverage": "covered",
-      "described": false,
-      "hits": [
-        {
-          "where": "components/patterns/SettingsPage",
-          "token": "_3nPmjq_",
-          "kind": "anchor",
-          "id": "设置卡片：卡片圆角、行名 14/22 · 500、次要按钮 46 × 28"
-        }
-      ]
-    },
-    {
       "key": "cc-group cc-groupDivided|section|",
       "cls": "cc-group cc-groupDivided",
       "slot": "settings.section",
@@ -4916,10 +5907,10 @@
       "described": true,
       "hits": [
         {
-          "where": "components/controls/Switch",
-          "token": "switch",
+          "where": "components/patterns/SettingsPage",
+          "token": "|input|",
           "kind": "anchor",
-          "id": "开关"
+          "id": "设置页输入框（高 36）"
         }
       ]
     },
@@ -4947,6 +5938,87 @@
           "token": "tab",
           "kind": "anchor",
           "id": "会话头部页签（对话 / 轨迹 / 上下文）"
+        }
+      ]
+    },
+    {
+      "key": "text:13px/20px/400|div|",
+      "cls": "",
+      "slot": "settings.section",
+      "count": 3,
+      "size": "112x20",
+      "steps": [
+        "设置 · 科研"
+      ],
+      "texts": [
+        "research-cordis · P0",
+        "方向 v2.0 自适应生成式域适应链路（Author Confirmed 2026-09-03 · RESEARCH_D",
+        "（注册表尚无 已接受+干净口径 记录；运行 backfill 预览/导入后显示）"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
+        }
+      ]
+    },
+    {
+      "key": "text:13px/normal/400|button|",
+      "cls": "",
+      "slot": "settings.section",
+      "count": 3,
+      "size": "30x35",
+      "steps": [
+        "设置 · 科研"
+      ],
+      "texts": [
+        "实验",
+        "产物",
+        "清理审计"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
+        }
+      ]
+    },
+    {
+      "key": "text:11px/20px/400|div|",
+      "cls": "",
+      "slot": "settings.section",
+      "count": 3,
+      "size": "532x20",
+      "steps": [
+        "设置 · 科研"
+      ],
+      "texts": [
+        "runs/detect/runs_w1_paper/ft_p4/weights/best.pt（2026-09-03 磁",
+        "vedai_rebuild/VEDAI_IMG2IMG_RUN_MANIFEST.json",
+        "ucas_rebuild/runs_log/UCAS_REBUILD_FINAL_REPORT.md"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
         }
       ]
     },
@@ -4994,6 +6066,33 @@
           "token": "cardDesc",
           "kind": "anchor",
           "id": "插件行说明（13/18，宽度随文字）"
+        }
+      ]
+    },
+    {
+      "key": "text:9.5px/9.5px/400|span|",
+      "cls": "",
+      "slot": "shell.overlay",
+      "count": 3,
+      "size": "10x15",
+      "steps": [
+        "用量中心（插件）"
+      ],
+      "texts": [
+        "一",
+        "三",
+        "五"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
         }
       ]
     },
@@ -5095,13 +6194,13 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
-          "where": "spec/10-frame-layout.md",
-          "token": "EBLgjq_",
+          "where": "spec/20-controls.md",
+          "token": "panel panelCompact",
           "kind": "anchor",
-          "id": "会话头部 chip（智能体团队 / 标准模式）与其成员行"
+          "id": "会话头部 chip 展开的紧凑面板（320 × 141 · 圆角 12）"
         }
       ]
     },
@@ -5145,13 +6244,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "EBLgjq_",
+          "token": "inactiveIcon",
           "kind": "anchor",
-          "id": "会话头部 chip（智能体团队 / 标准模式）与其成员行"
+          "id": "会话头部 chip 面板里的成员图标（14 × 14）"
         }
       ]
     },
@@ -5203,9 +6302,9 @@
       "hits": [
         {
           "where": "components/controls/Tag",
-          "token": "brmue",
+          "token": "tag|span|",
           "kind": "anchor",
-          "id": "产品的 Tag 模块（_tag_brmue_4，与 Button/Pill/Tabs 同批）"
+          "id": "标签（高 19 = padding 1px + 行高 17px）"
         }
       ]
     },
@@ -5226,13 +6325,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
-          "where": "spec/10-frame-layout.md",
-          "token": "EBLgjq_",
+          "where": "spec/20-controls.md",
+          "token": "emptyNotice",
           "kind": "anchor",
-          "id": "会话头部 chip（智能体团队 / 标准模式）与其成员行"
+          "id": "菜单里的空提示（284 × 16，宽度随文字）"
         }
       ]
     },
@@ -5273,13 +6372,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "spec/20-controls.md",
-          "token": "menu",
+          "token": "item|button|menuitem",
           "kind": "anchor",
-          "id": "弹出菜单"
+          "id": "普通菜单项（136 × 34 · 圆角 12 · padding 6px 8px）"
         }
       ]
     },
@@ -5323,13 +6422,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "unKlVG_",
+          "token": "entry|button|",
           "kind": "anchor",
-          "id": "右栏 pane 标签上的图标（16 × 16）"
+          "id": "右栏入口行（380 × 68 · 圆角 20）"
         }
       ]
     },
@@ -5358,11 +6457,99 @@
       ]
     },
     {
+      "key": "mark|button|",
+      "cls": "xpvNua_mark",
+      "slot": "conversation.view",
+      "count": 2,
+      "size": "28x10",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开"
+      ],
+      "texts": [],
+      "arias": [
+        "跳转到第 1 轮"
+      ],
+      "pluginOwned": false,
+      "coverage": "referenced",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/00-overview.md",
+          "token": "mark",
+          "kind": "spec",
+          "id": "00-overview"
+        },
+        {
+          "where": "spec/80-conflicts.md",
+          "token": "mark",
+          "kind": "spec",
+          "id": "80-conflicts"
+        },
+        {
+          "where": "components/brand/FishMark/fishmark.module.css",
+          "token": "mark",
+          "kind": "component",
+          "id": "fishmark"
+        },
+        {
+          "where": "components/brand/FishMark/README.md",
+          "token": "mark",
+          "kind": "component",
+          "id": "fishmark"
+        }
+      ]
+    },
+    {
+      "key": "mark markActive|button|",
+      "cls": "xpvNua_mark xpvNua_markActive",
+      "slot": "conversation.view",
+      "count": 2,
+      "size": "28x10",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开"
+      ],
+      "texts": [],
+      "arias": [
+        "跳转到第 2 轮"
+      ],
+      "pluginOwned": false,
+      "coverage": "referenced",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/00-overview.md",
+          "token": "mark",
+          "kind": "spec",
+          "id": "00-overview"
+        },
+        {
+          "where": "spec/80-conflicts.md",
+          "token": "mark",
+          "kind": "spec",
+          "id": "80-conflicts"
+        },
+        {
+          "where": "components/brand/FishMark/fishmark.module.css",
+          "token": "mark",
+          "kind": "component",
+          "id": "fishmark"
+        },
+        {
+          "where": "components/brand/FishMark/README.md",
+          "token": "mark",
+          "kind": "component",
+          "id": "fishmark"
+        }
+      ]
+    },
+    {
       "key": "bubble|div|",
       "cls": "cJsG2q_bubble",
       "slot": "conversation.chat.node",
       "count": 2,
-      "size": "525x64",
+      "size": "200x42",
       "steps": [
         "会话页 · 顶部",
         "左栏 · 搜索展开"
@@ -5371,13 +6558,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "bubble",
+          "token": "bubble|div|",
           "kind": "anchor",
-          "id": "用户消息气泡"
+          "id": "用户气泡（实测 525 × 64，宽高随内容）"
         }
       ]
     },
@@ -5386,13 +6573,13 @@
       "cls": "_plainRun_fbulu_6",
       "slot": "conversation.chat.node",
       "count": 2,
-      "size": "480x41",
+      "size": "168x19",
       "steps": [
         "会话页 · 顶部",
         "左栏 · 搜索展开"
       ],
       "texts": [
-        "我部署了Agents Anywhere并且连接DeepSeek Harness，为啥显示正在等待本地DSH Bridge"
+        "那应该怎么做才能连接上呢"
       ],
       "arias": [],
       "pluginOwned": false,
@@ -5418,25 +6605,67 @@
         "左栏 · 搜索展开"
       ],
       "texts": [
-        "00:35"
+        "00:53"
       ],
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "xD_KDq_",
+          "token": "xD_KDq_timeStart",
           "kind": "anchor",
-          "id": "消息级元信息与动作：时间戳、复制/重试按钮"
+          "id": "消息时间戳（43 × 24，宽度随文字）"
         }
       ]
     },
     {
-      "key": "xD_KDq_action|button|",
-      "cls": "xD_KDq_action",
+      "key": "root|button|",
+      "cls": "_4AI11G_root",
       "slot": "conversation.chat.node",
+      "count": 2,
+      "size": "748x33",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "referenced",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/11-slot-seats.md",
+          "token": "root",
+          "kind": "spec",
+          "id": "11-slot-seats"
+        },
+        {
+          "where": "spec/30-tokens.md",
+          "token": "root",
+          "kind": "spec",
+          "id": "30-tokens"
+        },
+        {
+          "where": "components/brand/Wordmark/SPEC.md",
+          "token": "root",
+          "kind": "component",
+          "id": "wordmark"
+        },
+        {
+          "where": "components/data-display/DisclosureRow/disclosure-row.module.css",
+          "token": "root",
+          "kind": "component",
+          "id": "disclosurerow"
+        }
+      ]
+    },
+    {
+      "key": "lc-jump hover:bg-(--dsw-alias-interactive-bg-hover) hover:text-(--dsw-alias-label-secondary)|button|",
+      "cls": "lc-jump hover:bg-(--dsw-alias-interactive-bg-hover) hover:text-(--dsw-alias-label-secondary)",
+      "slot": "conversation.chat.assistant-actions",
       "count": 2,
       "size": "28x28",
       "steps": [
@@ -5445,11 +6674,61 @@
       ],
       "texts": [],
       "arias": [
-        "复制"
+        "在上下文视图中查看此轮"
       ],
+      "pluginOwned": true,
+      "coverage": "covered",
+      "described": false,
+      "hits": [
+        {
+          "where": "plugins/dsh-usage-center",
+          "token": "lc-",
+          "kind": "anchor",
+          "id": "插件 dsh-usage-center 的界面"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M1.01503 8.0001L5.6964 8|svg|",
+      "cls": "",
+      "slot": "conversation.chat.node",
+      "count": 2,
+      "size": "16x17",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开"
+      ],
+      "texts": [],
+      "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": true,
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "xD_KDq_timeEnd|span|",
+      "cls": "xD_KDq_timeEnd",
+      "slot": "conversation.chat.node",
+      "count": 2,
+      "size": "28x24",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开"
+      ],
+      "texts": [
+        "00:55"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -5475,13 +6754,80 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "components/patterns/ListRowGroup",
-          "token": "fO69Vq_groupTitle",
+          "token": "groupTitle",
           "kind": "anchor",
-          "id": "列表分组标题（插件页「官方 / 已安装」）"
+          "id": "列表分组标题（高度随文字）"
+        }
+      ]
+    },
+    {
+      "key": "count|span|",
+      "cls": "fO69Vq_count",
+      "slot": "main",
+      "count": 2,
+      "size": "8x19",
+      "steps": [
+        "插件页（官方 / 已安装）"
+      ],
+      "texts": [
+        "8",
+        "13"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "referenced",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/40-motion.md",
+          "token": "count",
+          "kind": "spec",
+          "id": "40-motion"
+        },
+        {
+          "where": "components/brand/FishMark/SPEC.md",
+          "token": "count",
+          "kind": "component",
+          "id": "fishmark"
+        },
+        {
+          "where": "components/brand/Wordmark/SPEC.md",
+          "token": "count",
+          "kind": "component",
+          "id": "wordmark"
+        },
+        {
+          "where": "components/controls/Button/SPEC.md",
+          "token": "count",
+          "kind": "component",
+          "id": "button"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 36 36:M24.6294 8.63696C26.2862|svg|",
+      "cls": "",
+      "slot": "main",
+      "count": 2,
+      "size": "36x36",
+      "steps": [
+        "插件页（官方 / 已安装）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
         }
       ]
     },
@@ -5580,6 +6926,78 @@
           "token": "settings.general.item",
           "kind": "anchor",
           "id": "设置行的文字容器与右侧控件（宽度随文字与控件）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M8.00007 11.8117C10.1052|svg|",
+      "cls": "",
+      "slot": "settings.general.item",
+      "count": 2,
+      "size": "16x16",
+      "steps": [
+        "设置 · 打开",
+        "设置 · 通用设置"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M14.1127 8.70663C14.2576|svg|",
+      "cls": "",
+      "slot": "settings.general.item",
+      "count": 2,
+      "size": "16x16",
+      "steps": [
+        "设置 · 打开",
+        "设置 · 通用设置"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M13.5 2.5H2.5C1.94772 2.|svg|",
+      "cls": "",
+      "slot": "settings.general.item",
+      "count": 2,
+      "size": "16x16",
+      "steps": [
+        "设置 · 打开",
+        "设置 · 通用设置"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
         }
       ]
     },
@@ -5793,31 +7211,6 @@
       ]
     },
     {
-      "key": "credentialDot credentialDotConfigured|span|img",
-      "cls": "_3nPmjq_credentialDot _3nPmjq_credentialDotConfigured",
-      "slot": "settings.section",
-      "count": 2,
-      "size": "8x8",
-      "steps": [
-        "设置 · 模型"
-      ],
-      "texts": [],
-      "arias": [
-        "API 密钥已配置"
-      ],
-      "pluginOwned": false,
-      "coverage": "covered",
-      "described": false,
-      "hits": [
-        {
-          "where": "components/patterns/SettingsPage",
-          "token": "_3nPmjq_",
-          "kind": "anchor",
-          "id": "设置卡片：卡片圆角、行名 14/22 · 500、次要按钮 46 × 28"
-        }
-      ]
-    },
-    {
       "key": "cc-linkButton|button|",
       "cls": "cc-linkButton",
       "slot": "settings.section",
@@ -5950,13 +7343,65 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
-          "token": "KZf9OG_",
+          "token": "groupHead",
           "kind": "anchor",
-          "id": "设置卡片与其分组标题（groupHead 564 × 16）"
+          "id": "卡片分组标题（高度随文字）"
+        }
+      ]
+    },
+    {
+      "key": "text:18px/26px/600|div|",
+      "cls": "",
+      "slot": "settings.section",
+      "count": 2,
+      "size": "90x26",
+      "steps": [
+        "设置 · 科研"
+      ],
+      "texts": [
+        "科研仪表盘",
+        "AGenDA thesis workspace"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
+        }
+      ]
+    },
+    {
+      "key": "text:13px/normal/400|div|",
+      "cls": "",
+      "slot": "settings.section",
+      "count": 2,
+      "size": "564x34",
+      "steps": [
+        "设置 · 科研"
+      ],
+      "texts": [
+        "• P0-1 生死线 Gate（全 CPU，0 GPU）：留点交叉验证「前 k 观测预测最优 strength」+ 三域",
+        "• P0-2 账目同步：29 个 clean3341 评测 tag 补入 registry（P11_low2≡P12_1"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
         }
       ]
     },
@@ -5995,13 +7440,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "components/controls/Button",
-          "token": "1rv3m",
+          "token": "button primary sm|button|",
           "kind": "anchor",
-          "id": "产品的 Button 模块（_button_1rv3m_2，含 md/sm/primary/ghost/outline/toolbar/icon 变体）"
+          "id": "主按钮 sm（高 28）"
         }
       ]
     },
@@ -6058,7 +7503,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -6170,6 +7615,32 @@
       ]
     },
     {
+      "key": "text:10.5px/15.75px/400|span|",
+      "cls": "",
+      "slot": "shell.overlay",
+      "count": 2,
+      "size": "11x16",
+      "steps": [
+        "用量中心（插件）"
+      ],
+      "texts": [
+        "少",
+        "多"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
+        }
+      ]
+    },
+    {
       "key": "duc-heat-total|span|",
       "cls": "duc-heat-total",
       "slot": "shell.overlay",
@@ -6179,7 +7650,7 @@
         "用量中心（插件）"
       ],
       "texts": [
-        "窗口内合计 129.35亿 Token",
+        "窗口内合计 130.49亿 Token",
         "49 天有记录 · 当前连续 34 天 · 最长 34 天"
       ],
       "arias": [],
@@ -6271,6 +7742,58 @@
       ]
     },
     {
+      "key": "text:12px/13.8px/700|b|",
+      "cls": "",
+      "slot": "shell.overlay",
+      "count": 2,
+      "size": "25x14",
+      "steps": [
+        "上下文洞察（插件）"
+      ],
+      "texts": [
+        "7.5B",
+        "139h42m"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
+        }
+      ]
+    },
+    {
+      "key": "text:10px/normal/400|span|",
+      "cls": "",
+      "slot": "shell.overlay",
+      "count": 2,
+      "size": "30x14",
+      "steps": [
+        "上下文洞察（插件）"
+      ],
+      "texts": [
+        "总用量",
+        "活跃时长"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
+        }
+      ]
+    },
+    {
       "key": "lc-gran|div|group",
       "cls": "lc-gran",
       "slot": "shell.overlay",
@@ -6319,29 +7842,6 @@
           "token": "lc-",
           "kind": "anchor",
           "id": "插件 dsh-usage-center 的界面"
-        }
-      ]
-    },
-    {
-      "key": "lc-ov-running|span|",
-      "cls": "lc-ov-running",
-      "slot": "shell.overlay",
-      "count": 2,
-      "size": "7x7",
-      "steps": [
-        "上下文洞察（插件）"
-      ],
-      "texts": [],
-      "arias": [],
-      "pluginOwned": true,
-      "coverage": "covered",
-      "described": false,
-      "hits": [
-        {
-          "where": "spec/40-motion.md",
-          "token": "running",
-          "kind": "anchor",
-          "id": "运行中提示行（深度求索中…）"
         }
       ]
     },
@@ -6407,13 +7907,38 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "Hqq-bq_",
+          "token": "fish|svg|",
           "kind": "anchor",
-          "id": "新会话页的工作区行与「预览版」徽标（Hqq-bq_workspace / previewBadge / folder）"
+          "id": "新会话页鱼标（34 × 25，随品牌字号）"
+        }
+      ]
+    },
+    {
+      "key": "text:26px/32px/500|span|",
+      "cls": "",
+      "slot": "conversation.composer",
+      "count": 1,
+      "size": "156x32",
+      "steps": [
+        "新会话页"
+      ],
+      "texts": [
+        "探索未至之境"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
         }
       ]
     },
@@ -6432,13 +7957,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "Hqq-bq_",
+          "token": "previewBadge",
           "kind": "anchor",
-          "id": "新会话页的工作区行与「预览版」徽标（Hqq-bq_workspace / previewBadge / folder）"
+          "id": "「预览版」徽标（52 × 21 · 圆角 999）"
         }
       ]
     },
@@ -6457,13 +7982,13 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "Hqq-bq_",
+          "token": "workspace|button|",
           "kind": "anchor",
-          "id": "新会话页的工作区行与「预览版」徽标（Hqq-bq_workspace / previewBadge / folder）"
+          "id": "新会话页工作区按钮（162 × 28）"
         }
       ]
     },
@@ -6505,13 +8030,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "Hqq-bq_",
+          "token": "workspaceLabel",
           "kind": "anchor",
-          "id": "新会话页的工作区行与「预览版」徽标（Hqq-bq_workspace / previewBadge / folder）"
+          "id": "工作区标签（110 × 20，宽度随文字）"
         }
       ]
     },
@@ -6528,13 +8053,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "_oGoKq_",
+          "token": "seat|button|",
           "kind": "anchor",
-          "id": "新会话页的 Agent 预设座位（图标 + 标签 + 折叠角）"
+          "id": "Agent 预设座位按钮（106 × 28）"
         }
       ]
     },
@@ -6576,13 +8101,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "_oGoKq_",
+          "token": "seatLabel",
           "kind": "anchor",
-          "id": "新会话页的 Agent 预设座位（图标 + 标签 + 折叠角）"
+          "id": "座位标签（52 × 20，宽度随文字）"
         }
       ]
     },
@@ -6599,13 +8124,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "components/layout/SidebarRow",
-          "token": "_9lTDKa_",
+          "token": "search searchExpanded",
           "kind": "anchor",
-          "id": "左栏搜索：输入框、清除按钮、分组标题与头部动作"
+          "id": "搜索行（252 × 30 · 圆角 12）"
         }
       ]
     },
@@ -6622,13 +8147,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
-          "where": "components/layout/SidebarRow",
-          "token": "_9lTDKa_",
+          "where": "components/patterns/SettingsPage",
+          "token": "|input|",
           "kind": "anchor",
-          "id": "左栏搜索：输入框、清除按钮、分组标题与头部动作"
+          "id": "设置页输入框（高 36）"
         }
       ]
     },
@@ -6647,13 +8172,36 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "components/layout/SidebarRow",
-          "token": "_9lTDKa_",
+          "token": "clearButton",
           "kind": "anchor",
-          "id": "左栏搜索：输入框、清除按钮、分组标题与头部动作"
+          "id": "搜索清除按钮（24 × 24）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M3.5 3.5L12.5 12.5|svg|",
+      "cls": "",
+      "slot": "sidebar.workspaces",
+      "count": 1,
+      "size": "14x14",
+      "steps": [
+        "左栏 · 搜索展开"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
         }
       ]
     },
@@ -6728,13 +8276,59 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "components/controls/Button",
-          "token": "1rv3m",
+          "token": "infoButton",
           "kind": "anchor",
-          "id": "产品的 Button 模块（_button_1rv3m_2，含 md/sm/primary/ghost/outline/toolbar/icon 变体）"
+          "id": "说明图标按钮（20 × 20）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 14 14:M12.5757 7.00012C12.5757|svg|",
+      "cls": "",
+      "slot": "main",
+      "count": 1,
+      "size": "11x11",
+      "steps": [
+        "插件页（官方 / 已安装）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M14.5001 8C14.5 9.28552 |svg|",
+      "cls": "",
+      "slot": "main",
+      "count": 1,
+      "size": "16x16",
+      "steps": [
+        "插件页（官方 / 已安装）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
         }
       ]
     },
@@ -6754,21 +8348,21 @@
       "described": true,
       "hits": [
         {
-          "where": "components/controls/Button",
-          "token": "1rv3m",
+          "where": "components/patterns/SettingsPage",
+          "token": "addButton",
           "kind": "anchor",
-          "id": "产品的 Button 模块（_button_1rv3m_2，含 md/sm/primary/ghost/outline/toolbar/icon 变体）"
+          "id": "设置页「添加 / 新建」按钮（高 44 · 圆角 12）"
         }
       ]
     },
     {
-      "key": "spinner triggerDot|svg|",
-      "cls": "_spinner_1i3xo_37 foD-wG_triggerDot",
-      "slot": "conversation.session.header.actions",
+      "key": "svg:0 0 36 36:M10 11L16.606 17.606C16.|svg|",
+      "cls": "",
+      "slot": "main",
       "count": 1,
-      "size": "14x14",
+      "size": "36x36",
       "steps": [
-        "设置 · 通用设置"
+        "插件页（官方 / 已安装）"
       ],
       "texts": [],
       "arias": [],
@@ -6777,33 +8371,79 @@
       "described": null,
       "hits": [
         {
-          "where": "spec/10-frame-layout.md",
-          "token": "conversation.session.header",
+          "where": "spec/50-icons.md",
+          "token": "svg:",
           "kind": "anchor",
-          "id": "会话头部里的字形与按钮（15 × 15 等，尺寸随字形）"
+          "id": "产品内联字形（§7 登记，未逐一命名）"
         }
       ]
     },
     {
-      "key": "addButton|button|",
-      "cls": "_3nPmjq_addButton",
-      "slot": "settings.section",
+      "key": "svg:0 0 36 36:M18.0486 28.4901C12.0858|svg|",
+      "cls": "",
+      "slot": "main",
       "count": 1,
-      "size": "564x44",
+      "size": "36x36",
       "steps": [
-        "设置 · 模型"
+        "插件页（官方 / 已安装）"
       ],
       "texts": [],
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
-          "where": "components/patterns/SettingsPage",
-          "token": "_3nPmjq_",
+          "where": "spec/50-icons.md",
+          "token": "svg:",
           "kind": "anchor",
-          "id": "设置卡片：卡片圆角、行名 14/22 · 500、次要按钮 46 × 28"
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 36 36:|svg|",
+      "cls": "",
+      "slot": "main",
+      "count": 1,
+      "size": "36x36",
+      "steps": [
+        "插件页（官方 / 已安装）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 36 36:M26.5362 26.9865L22.3813|svg|",
+      "cls": "",
+      "slot": "main",
+      "count": 1,
+      "size": "36x36",
+      "steps": [
+        "插件页（官方 / 已安装）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
         }
       ]
     },
@@ -6960,12 +8600,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "described": null,
-      "hits": []
+      "coverage": "covered",
+      "described": true,
+      "hits": [
+        {
+          "where": "components/patterns/SettingsPage",
+          "token": "addButton",
+          "kind": "anchor",
+          "id": "设置页「添加 / 新建」按钮（高 44 · 圆角 12）"
+        }
+      ]
     },
     {
-      "key": "|p|",
+      "key": "text:12px/18px/400|p|",
       "cls": "",
       "slot": "settings.section",
       "count": 1,
@@ -6978,32 +8625,14 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "p",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/10-frame-layout.md",
-          "token": "p",
-          "kind": "spec",
-          "id": "10-frame-layout"
-        },
-        {
-          "where": "spec/11-slot-seats.md",
-          "token": "p",
-          "kind": "spec",
-          "id": "11-slot-seats"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "p",
-          "kind": "spec",
-          "id": "20-controls"
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
         }
       ]
     },
@@ -7111,13 +8740,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
-          "where": "spec/10-frame-layout.md",
-          "token": "tab",
+          "where": "components/patterns/SettingsPage",
+          "token": "panel|div|tabpanel",
           "kind": "anchor",
-          "id": "会话头部页签（对话 / 轨迹 / 上下文）"
+          "id": "设置内容滚动容器（高随内容）"
         }
       ]
     },
@@ -7134,18 +8763,18 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
-          "token": "RotMhW_",
+          "token": "search|label|",
           "kind": "anchor",
-          "id": "内置插件页的卡片与分组开关（groupToggle 76 × 22）"
+          "id": "设置页搜索行（564 × 36）"
         }
       ]
     },
     {
-      "key": "|input|",
+      "key": "text:13px/normal/400|input|",
       "cls": "",
       "slot": "settings.plugins.tab",
       "count": 1,
@@ -7159,13 +8788,13 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
-          "where": "spec/10-frame-layout.md",
-          "token": "tab",
+          "where": "spec/30-tokens.md",
+          "token": "text:",
           "kind": "anchor",
-          "id": "会话头部页签（对话 / 轨迹 / 上下文）"
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
         }
       ]
     },
@@ -7182,13 +8811,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
-          "token": "RotMhW_",
+          "token": "groupToggle",
           "kind": "anchor",
-          "id": "内置插件页的卡片与分组开关（groupToggle 76 × 22）"
+          "id": "分组开关（76 × 22）"
         }
       ]
     },
@@ -7210,10 +8839,10 @@
       "described": null,
       "hits": [
         {
-          "where": "components/layout/SidebarRow",
-          "token": "title|span|",
+          "where": "components/patterns/ListRowGroup",
+          "token": "groupTitle",
           "kind": "anchor",
-          "id": "会话行 / 工作区行的标题文字（宽度随文字）"
+          "id": "列表分组标题（高度随文字）"
         }
       ]
     },
@@ -7232,13 +8861,13 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
-          "token": "RotMhW_",
+          "token": "switcher",
           "kind": "anchor",
-          "id": "内置插件页的卡片与分组开关（groupToggle 76 × 22）"
+          "id": "分段 / 切换（166 × 36 · 圆角 12）"
         }
       ]
     },
@@ -7257,13 +8886,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
-          "token": "RotMhW_",
+          "token": "switcher",
           "kind": "anchor",
-          "id": "内置插件页的卡片与分组开关（groupToggle 76 × 22）"
+          "id": "分段 / 切换（166 × 36 · 圆角 12）"
         }
       ]
     },
@@ -7280,13 +8909,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
-          "token": "KZf9OG_",
+          "token": "card cardActive",
           "kind": "anchor",
-          "id": "设置卡片与其分组标题（groupHead 564 × 16）"
+          "id": "展开态卡片（高随内容）"
         }
       ]
     },
@@ -7303,13 +8932,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
-          "token": "KZf9OG_",
+          "token": "creatorButton",
           "kind": "anchor",
-          "id": "设置卡片与其分组标题（groupHead 564 × 16）"
+          "id": "设置页创建按钮（高 44 · 圆角 12）"
         }
       ]
     },
@@ -7360,6 +8989,31 @@
           "token": "dsx-",
           "kind": "anchor",
           "id": "插件 dsh-widgets 的界面"
+        }
+      ]
+    },
+    {
+      "key": "text:13px/normal/600|button|",
+      "cls": "",
+      "slot": "settings.section",
+      "count": 1,
+      "size": "30x35",
+      "steps": [
+        "设置 · 科研"
+      ],
+      "texts": [
+        "总览"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/30-tokens.md",
+          "token": "text:",
+          "kind": "anchor",
+          "id": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
         }
       ]
     },
@@ -7500,13 +9154,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "components/controls/Button",
-          "token": "1rv3m",
+          "token": "button ghost sm|button|",
           "kind": "anchor",
-          "id": "产品的 Button 模块（_button_1rv3m_2，含 md/sm/primary/ghost/outline/toolbar/icon 变体）"
+          "id": "幽灵按钮 sm（高 28）"
         }
       ]
     },
@@ -7548,6 +9202,29 @@
           "token": "1rv3m",
           "kind": "anchor",
           "id": "产品的 Button 模块（_button_1rv3m_2，含 md/sm/primary/ghost/outline/toolbar/icon 变体）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M8 1.95317V10.0469|svg|",
+      "cls": "",
+      "slot": "settings.section",
+      "count": 1,
+      "size": "14x14",
+      "steps": [
+        "设置 · 插件市场"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
         }
       ]
     },
@@ -7622,32 +9299,14 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
-      "described": null,
+      "coverage": "covered",
+      "described": false,
       "hits": [
         {
-          "where": "spec/10-frame-layout.md",
-          "token": "wrap",
-          "kind": "spec",
-          "id": "10-frame-layout"
-        },
-        {
-          "where": "spec/11-slot-seats.md",
-          "token": "wrap",
-          "kind": "spec",
-          "id": "11-slot-seats"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "wrap",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/70-checklist.md",
-          "token": "wrap",
-          "kind": "spec",
-          "id": "70-checklist"
+          "where": "components/layout/SidebarRow",
+          "token": "searchInput",
+          "kind": "anchor",
+          "id": "搜索输入框（196 × 20）"
         }
       ]
     },
@@ -7663,32 +9322,14 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
-      "described": null,
+      "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "spec/10-frame-layout.md",
-          "token": "input",
-          "kind": "spec",
-          "id": "10-frame-layout"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "input",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/70-checklist.md",
-          "token": "input",
-          "kind": "spec",
-          "id": "70-checklist"
-        },
-        {
-          "where": "components/controls/Input/input.module.css",
-          "token": "input",
-          "kind": "component",
-          "id": "input"
+          "where": "components/patterns/SettingsPage",
+          "token": "|input|",
+          "kind": "anchor",
+          "id": "设置页输入框（高 36）"
         }
       ]
     },
@@ -7707,13 +9348,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "components/controls/Pill",
-          "token": "pill",
+          "token": "pill interactive",
           "kind": "anchor",
-          "id": "胶囊按钮（输入区状态胶囊、权限胶囊）"
+          "id": "可点胶囊（高 24）"
         }
       ]
     },
@@ -7916,6 +9557,213 @@
       ]
     },
     {
+      "key": "svg:0 0 24 24:M3 3v18h18|svg|",
+      "cls": "",
+      "slot": "shell.overlay",
+      "count": 1,
+      "size": "16x16",
+      "steps": [
+        "用量中心（插件）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 24 24:M8 2v4|svg|",
+      "cls": "",
+      "slot": "shell.overlay",
+      "count": 1,
+      "size": "16x16",
+      "steps": [
+        "用量中心（插件）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 24 24:M12 14l4-4|svg|",
+      "cls": "",
+      "slot": "shell.overlay",
+      "count": 1,
+      "size": "16x16",
+      "steps": [
+        "用量中心（插件）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 24 24:M12 2 2 7l10 5 10-5-10-5|svg|",
+      "cls": "",
+      "slot": "shell.overlay",
+      "count": 1,
+      "size": "16x16",
+      "steps": [
+        "用量中心（插件）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 24 24:M4 4h16v6H4z|svg|",
+      "cls": "",
+      "slot": "shell.overlay",
+      "count": 1,
+      "size": "16x16",
+      "steps": [
+        "用量中心（插件）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 24 24:M8 6h13|svg|",
+      "cls": "",
+      "slot": "shell.overlay",
+      "count": 1,
+      "size": "16x16",
+      "steps": [
+        "用量中心（插件）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 24 24:M12 2a10 10 0 1 0 0 20 1|svg|",
+      "cls": "",
+      "slot": "shell.overlay",
+      "count": 1,
+      "size": "16x16",
+      "steps": [
+        "用量中心（插件）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 24 24:M3 7h15a3 3 0 0 1 3 3v7a|svg|",
+      "cls": "",
+      "slot": "shell.overlay",
+      "count": 1,
+      "size": "16x16",
+      "steps": [
+        "用量中心（插件）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 24 24:M9 18h6|svg|",
+      "cls": "",
+      "slot": "shell.overlay",
+      "count": 1,
+      "size": "16x16",
+      "steps": [
+        "用量中心（插件）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
       "key": "duc-icon-btn|button|",
       "cls": "duc-icon-btn",
       "slot": "shell.overlay",
@@ -7941,6 +9789,29 @@
       ]
     },
     {
+      "key": "svg:0 0 24 24:M21 12a9 9 0 1 1-3-6.7|svg|",
+      "cls": "",
+      "slot": "shell.overlay",
+      "count": 1,
+      "size": "14x14",
+      "steps": [
+        "用量中心（插件）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
       "key": "duc-icon-btn duc-close|button|",
       "cls": "duc-icon-btn duc-close",
       "slot": "shell.overlay",
@@ -7962,6 +9833,29 @@
           "token": "close|button|",
           "kind": "anchor",
           "id": "图标按钮（28 × 28 · 圆角 8）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 24 24:M18 6 6 18|svg|",
+      "cls": "",
+      "slot": "shell.overlay",
+      "count": 1,
+      "size": "14x14",
+      "steps": [
+        "用量中心（插件）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
         }
       ]
     },
@@ -8050,7 +9944,7 @@
         "用量中心（插件）"
       ],
       "texts": [
-        "对比上一等长周期：总 Token +66.0% · 请求 +66.0%"
+        "对比上一等长周期：总 Token +65.3% · 请求 +63.1%"
       ],
       "arias": [],
       "pluginOwned": true,
@@ -8499,7 +10393,7 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "180 tok/s"
+        "181 tok/s"
       ],
       "arias": [],
       "pluginOwned": true,
@@ -8817,13 +10711,13 @@
       ],
       "pluginOwned": true,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
-          "where": "plugins/dsh-usage-center",
-          "token": "lc-",
+          "where": "components/patterns/SettingsPage",
+          "token": "|input|",
           "kind": "anchor",
-          "id": "插件 dsh-usage-center 的界面"
+          "id": "设置页输入框（高 36）"
         }
       ]
     },
@@ -8876,6 +10770,29 @@
       ]
     },
     {
+      "key": "lc-ov-running|span|",
+      "cls": "lc-ov-running",
+      "slot": "shell.overlay",
+      "count": 1,
+      "size": "7x7",
+      "steps": [
+        "上下文洞察（插件）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": true,
+      "coverage": "covered",
+      "described": false,
+      "hits": [
+        {
+          "where": "spec/40-motion.md",
+          "token": "running",
+          "kind": "anchor",
+          "id": "运行中提示行（深度求索中…）"
+        }
+      ]
+    },
+    {
       "key": "surface list scrollable portal|div|menu",
       "cls": "_surface_ri079_1 _list_4ub78_7 _scrollable_4ub78_19 _portal_4ub78_41",
       "slot": "",
@@ -8888,13 +10805,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "spec/20-controls.md",
-          "token": "menu",
+          "token": "surface list scrollable portal",
           "kind": "anchor",
-          "id": "弹出菜单"
+          "id": "菜单浮层的表面容器（尺寸随内容）"
         }
       ]
     },
@@ -8928,6 +10845,52 @@
       ]
     },
     {
+      "key": "svg:0 0 16 16:M5.08545 8.13775L7.18455|svg|",
+      "cls": "",
+      "slot": "",
+      "count": 1,
+      "size": "14x14",
+      "steps": [
+        "会话标题菜单 / 输入区菜单 · 第 3 步"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M6.4209 1.68067C7.43922 |svg|",
+      "cls": "",
+      "slot": "",
+      "count": 1,
+      "size": "14x14",
+      "steps": [
+        "会话标题菜单 / 输入区菜单 · 第 3 步"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
       "key": "item selected|button|menuitem",
       "cls": "_item_4ub78_90 _selected_4ub78_216",
       "slot": "",
@@ -8940,13 +10903,36 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "spec/20-controls.md",
           "token": "menu",
           "kind": "anchor",
           "id": "弹出菜单"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M6.59624 2.14853C7.50155|svg|",
+      "cls": "",
+      "slot": "",
+      "count": 1,
+      "size": "14x14",
+      "steps": [
+        "会话标题菜单 / 输入区菜单 · 第 3 步"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
         }
       ]
     },
@@ -9031,13 +11017,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "spec/20-controls.md",
-          "token": "dlU_AG_",
+          "token": "dlU_AG_badge",
           "kind": "anchor",
-          "id": "输入区权限选择器与它的菜单选项（含 EXP 角标）"
+          "id": "菜单项角标（14 × 10，如 EXP）"
         }
       ]
     },
@@ -9157,6 +11143,52 @@
       ]
     },
     {
+      "key": "svg:0 0 16 16:M13.5 1.5H2.5C1.94772 1.|svg|",
+      "cls": "",
+      "slot": "rightbar.session",
+      "count": 1,
+      "size": "15x15",
+      "steps": [
+        "右侧边栏"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
+      "key": "svg:0 0 16 16:M2.33203 10.4054V13.1681|svg|",
+      "cls": "",
+      "slot": "rightbar.session",
+      "count": 1,
+      "size": "15x15",
+      "steps": [
+        "右侧边栏"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "described": null,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "svg:",
+          "kind": "anchor",
+          "id": "产品内联字形（§7 登记，未逐一命名）"
+        }
+      ]
+    },
+    {
       "key": "collapseGlyph|svg|",
       "cls": "OUqwTW_collapseGlyph",
       "slot": "rightbar.session",
@@ -9169,13 +11201,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "OUqwTW_",
+          "token": "collapseGlyph",
           "kind": "anchor",
-          "id": "右栏的折叠字形与图标按钮（15 × 15）"
+          "id": "右栏折叠字形（15 × 15）"
         }
       ]
     },
@@ -9192,7 +11224,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -9217,13 +11249,13 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
-          "where": "spec/20-controls.md",
-          "token": "main|button|",
+          "where": "spec/10-frame-layout.md",
+          "token": "button ghost md main|button|",
           "kind": "anchor",
-          "id": "打开方式分段按钮的左半（23 × 22）"
+          "id": "右栏入口按钮（高 66，行高随内容）"
         }
       ]
     }

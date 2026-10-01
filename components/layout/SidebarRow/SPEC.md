@@ -14,6 +14,11 @@
 | --- | --- | --- |
 | 新会话按钮 `newSession` | **252 × 38** · 圆角 **12** · 14px 文字（行尾快捷键见 20-controls §6） | `docs/reference/README.md` 的骨架表 |
 | 折叠按钮 `iconButton toggle` | **28 × 28** · 圆角 **8**（品牌行右端） | 同上 |
+| 会话列表容器 `list` | **270 × 527** · padding `0 5px 16px 4px` | `geometry.json` |
+| 分组小标题 `sectionLabel` | **39 × 20**（「工作区」「未分组」，13px 级） | 元素清单 |
+| 悬停「更多」`sessionOverflowButton` | **256 × 28** · 圆角 8 · padding `0 12px 0 28px`（左侧 28px 留给行首字形） | 元素清单 |
+| 列表底部渐隐 `fade` | **256 × 24**（长列表被裁切时压在下沿） | 元素清单 |
+| 搜索行 `searchExpanded` | **252 × 30** · 圆角 12；输入框 **196 × 20**、清除按钮 **24 × 24** | 元素清单 |
 | 会话行 `sessionRow` | **256 × 32** · 圆角 **12** · padding `0 8px` · gap 0 · 14px 文字 | 客户端模块哈希后的 `sessionRow`（`role="treeitem"`） |
 | 工作区行 `projectRow` | **256 × 34** · 圆角 **12** · padding `0 8px` · gap 6 | 同上 |
 | 面板导航行 `panelRow` | **252 × 36** · 圆角 **12** · padding `7px 8px` · gap 8 · 14/22 | 同上 |

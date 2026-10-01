@@ -179,12 +179,25 @@ const INVENTORY_PROBE = `(() => {
     const text = el.children.length === 0 ? (el.textContent || '').trim().slice(0, 60) : ''
     const skip = SVG.has(tag) && !isIcon
     /* 没有类名、没有座位、也没有 role 的容器不是「一件东西」，是布局的中间层：
-     * 把它们全登记进来，清单会被大量同名的空 div 身份淹没。 */
+     * 把它们全登记进来，清单会被大量同名的空 div 身份淹没。但**有文字的匿名元素**要留——
+     * 它们是排版本身（hero 标题、状态文字）。这类元素只按类名归一化会全部并成一个
+     * 空身份（106 次计数里混着好几种字号），所以补上字体签名，让不同排版各自成一条。 */
     const name = norm(classOf(el))
-    const anonymous = name === '' && (ownSlot === null || ownSlot === '') && (el.getAttribute('role') || '') === '' && !isControl && !isIcon
+    const anon = name === ''
+    /* 没有类名的元素按「它是什么」认：
+     *   图标 → viewBox + 第一条路径的指纹（同一枚字形在不同位置重复出现时才并得起来，
+     *          不同字形即使 viewBox 相同也不会混）；
+     *   文字 → 字体签名（26/32/500 的 hero 标题与 13/20/400 的状态文字是两回事）。
+     * 早前用父级字号给 svg 分类，结果 158 次计数里混着好几种字形——字号对图标毫无意义。 */
+    const firstPath = isIcon ? (el.querySelector('path')?.getAttribute('d') ?? '') : ''
+    const anonKey = isIcon
+      ? ('svg:' + (el.getAttribute('viewBox') ?? '') + ':' + firstPath.slice(0, 24))
+      : ('text:' + cs.fontSize + '/' + cs.lineHeight + '/' + cs.fontWeight)
+    const keyName = anon ? anonKey : name
+    const anonymous = anon && (ownSlot === null || ownSlot === '') && (el.getAttribute('role') || '') === '' && !isControl && !isIcon
     if (visible && !skip && !anonymous && (isControl || hasSurface || text !== '' || isIcon)) {
       out.push({
-        key: name + '|' + tag + '|' + (el.getAttribute('role') || ''),
+        key: keyName + '|' + tag + '|' + (el.getAttribute('role') || ''),
         tag,
         cls: classOf(el).slice(0, 120),
         slot: ownSlot || '',
@@ -247,6 +260,29 @@ function describedIn(textByFile, where, size) {
 }
 
 /**
+ * 目标文件里有没有提到这个高度。
+ *
+ * 宽度随文字走的元素（按钮、胶囊、标签、文字行），规范里该写的是**高度**，不是
+ * 「92 × 28」这种实例尺寸。这类锚点标 `flexible: 'width'`，检查只要求目标文件出现
+ * 这个高度数字。
+ * @param textByFile - 文件路径 → 小写正文。
+ * @param where - 锚点给的目标路径。
+ * @param size - 实测尺寸，形如 `92x28`。
+ * @returns 找到返回 true，尺寸无法解析返回 null，没找到返回 false。
+ */
+function heightDescribedIn(textByFile, where, size) {
+  const match = /^(\d+)x(\d+)$/u.exec(String(size ?? ''))
+  if (match === null) return null
+  const height = Number(match[2])
+  const probe = new RegExp(`(^|[^0-9])${height}([^0-9]|$)`, 'u')
+  for (const [file, text] of textByFile) {
+    if (!file.startsWith(where)) continue
+    if (probe.test(text)) return true
+  }
+  return false
+}
+
+/**
  * 给清单打分：每个身份在规范/组件语料里有没有位置，位子上有没有写下它的尺寸。
  *
  * 先问人工锚点（产品叫什么 ↔ 仓库里叫什么），再去语料里做包含判断。包含判断只能
@@ -276,9 +312,14 @@ function scoreCoverage(elements) {
       pluginOwned,
     }
     if (anchor !== undefined) {
-      /* `flexible: true` 的锚点表示「这件东西的尺寸随内容走」（会话标题、状态文字……），
-       * 规范不该为它写死一个数——深度检查对这类返回 null，不计入待办。 */
-      const described = anchor.flexible === true ? null : describedIn(textByFile, anchor.where, el.style?.size)
+      /* `flexible: true` 的锚点表示「尺寸完全随内容走」（会话标题、状态文字……），规范不该为它
+       * 写死一个数；`flexible: 'width'` 表示只有宽度随内容（按钮、胶囊、文字行），检查退一步，
+       * 只要求目标文件写了它的高度。两种都不计入待办。 */
+      const described = anchor.flexible === true
+        ? null
+        : (anchor.flexible === 'width'
+            ? heightDescribedIn(textByFile, anchor.where, el.style?.size)
+            : describedIn(textByFile, anchor.where, el.style?.size))
       return {
         ...base,
         coverage: 'covered',

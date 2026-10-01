@@ -1,146 +1,1089 @@
 {
     "$comment": "产品界面里的类名族 → 本仓库规范/组件里的出处。scan-ui.mjs 的自动对照只能做包含判断，而同一件东西在产品和仓库里常常不是一个名字：产品叫 sessionRow，仓库里叫 SidebarRow。这张表是人的判断，命中的身份直接判为已收录（并把出处指向这里写的地方）。match 是子串匹配，越具体越先命中；where 是仓库内的路径。",
     "pluginFamilies": [
-        { "match": "enhc-", "plugin": "dsh-ui-harmonizer" },
-        { "match": "dsx-", "plugin": "dsh-widgets" },
-        { "match": "lc-", "plugin": "dsh-usage-center" },
-        { "match": "duc-", "plugin": "dsh-usage-center" },
-        { "match": "dye-", "plugin": "dsh-mem" },
-        { "match": "uitw-", "plugin": "dsh-ui-harmonizer" },
-        { "match": "dsh_notification", "plugin": "dsh-widgets" },
-        { "match": "dpp-", "plugin": "DeepSeek 客户端（非 dsh 插件）" },
-        { "match": "nmLink", "plugin": "dsh-market-fork" },
-        { "match": "hostRequirement", "plugin": "dsh-market-fork" },
-        { "match": "favoriteBtn", "plugin": "dsh-market-fork" },
-        { "match": "commentsLink", "plugin": "dsh-market-fork" },
-        { "match": "repoMark", "plugin": "dsh-market-fork" },
-        { "match": "cc-miniMeter", "plugin": "Command Code 插件" },
-        { "match": "cc-groupTitle", "plugin": "Command Code 插件" },
-        { "match": "cc-rowTitle", "plugin": "Command Code 插件" },
-        { "match": "cc-rowDesc", "plugin": "Command Code 插件" },
-        { "match": "cc-usage", "plugin": "Command Code 插件" },
-        { "match": "cc-linkButton", "plugin": "Command Code 插件" },
-        { "match": "cc-", "plugin": "Command Code 插件" },
-        { "match": "iq1doa_", "plugin": "dsh-widgets" },
-        { "match": "2WTFBq_", "plugin": "dsh-widgets" },
-        { "match": "nUhMVa_", "plugin": "插件市场页（插件未识别）" },
-        { "match": "fbulu_", "plugin": "未识别（待查）" },
-        { "match": "Mrat-", "plugin": "未识别（待查）" },
-        { "match": "Nhu-QW", "plugin": "未识别（待查）" }
+        {
+            "match": "lucide",
+            "plugin": "插件图标（lucide 图标集）"
+        },
+        {
+            "match": "enhc-",
+            "plugin": "dsh-ui-harmonizer"
+        },
+        {
+            "match": "dsx-",
+            "plugin": "dsh-widgets"
+        },
+        {
+            "match": "lc-",
+            "plugin": "dsh-usage-center"
+        },
+        {
+            "match": "duc-",
+            "plugin": "dsh-usage-center"
+        },
+        {
+            "match": "dye-",
+            "plugin": "dsh-mem"
+        },
+        {
+            "match": "uitw-",
+            "plugin": "dsh-ui-harmonizer"
+        },
+        {
+            "match": "dsh_notification",
+            "plugin": "dsh-widgets"
+        },
+        {
+            "match": "dpp-",
+            "plugin": "DeepSeek 客户端（非 dsh 插件）"
+        },
+        {
+            "match": "nmLink",
+            "plugin": "dsh-market-fork"
+        },
+        {
+            "match": "hostRequirement",
+            "plugin": "dsh-market-fork"
+        },
+        {
+            "match": "favoriteBtn",
+            "plugin": "dsh-market-fork"
+        },
+        {
+            "match": "commentsLink",
+            "plugin": "dsh-market-fork"
+        },
+        {
+            "match": "repoMark",
+            "plugin": "dsh-market-fork"
+        },
+        {
+            "match": "cc-miniMeter",
+            "plugin": "Command Code 插件"
+        },
+        {
+            "match": "cc-groupTitle",
+            "plugin": "Command Code 插件"
+        },
+        {
+            "match": "cc-rowTitle",
+            "plugin": "Command Code 插件"
+        },
+        {
+            "match": "cc-rowDesc",
+            "plugin": "Command Code 插件"
+        },
+        {
+            "match": "cc-usage",
+            "plugin": "Command Code 插件"
+        },
+        {
+            "match": "cc-linkButton",
+            "plugin": "Command Code 插件"
+        },
+        {
+            "match": "cc-",
+            "plugin": "Command Code 插件"
+        },
+        {
+            "match": "iq1doa_",
+            "plugin": "dsh-widgets"
+        },
+        {
+            "match": "2WTFBq_",
+            "plugin": "dsh-widgets"
+        },
+        {
+            "match": "nUhMVa_",
+            "plugin": "插件市场页（插件未识别）"
+        },
+        {
+            "match": "fbulu_",
+            "plugin": "未识别（待查）"
+        },
+        {
+            "match": "Mrat-",
+            "plugin": "未识别（待查）"
+        },
+        {
+            "match": "Nhu-QW",
+            "plugin": "未识别（待查）"
+        }
     ],
     "anchors": [
-        { "match": "sidebar.brand.mark", "where": "components/brand/FishMark", "flexible": true, "note": "左栏品牌鱼标（渲染盒 24 × 18，随品牌行高度）" },
-        { "match": "title|span|", "where": "components/layout/SidebarRow", "flexible": true, "note": "会话行 / 工作区行的标题文字（宽度随文字）" },
-        { "match": "itemLabel|span|", "where": "components/layout/SidebarRow", "flexible": true, "note": "侧栏行标签" },
-        { "match": "navLabel", "where": "components/patterns/SettingsPage", "flexible": true, "note": "设置导航格里的标签（14/22，宽度随文字）" },
-        { "match": "spinner|svg|", "where": "components/feedback/RunningRing", "note": "运行圆环（14 × 14）" },
-        { "match": "frame|div|", "where": "spec/10-frame-layout.md", "note": "三列框架（1570 × 905）" },
-        { "match": "root quietBars", "where": "spec/10-frame-layout.md", "note": "左栏容器（280 × 905）" },
-        { "match": "root|div|", "where": "spec/10-frame-layout.md", "note": "中栏容器（1290 × 905）" },
-        { "match": "header|header|", "where": "spec/10-frame-layout.md", "note": "会话头部（1290 × 50）" },
-        { "match": "input|div|textbox", "where": "spec/10-frame-layout.md", "note": "输入卡里的输入区（776 × 52）" },
-        { "match": "placeholder|div|", "where": "spec/10-frame-layout.md", "flexible": true, "note": "占位文本行（754 × 24，宽度随文字）" },
-        { "match": "add|button|", "where": "spec/10-frame-layout.md", "note": "输入卡左侧圆形加号（28 × 28）" },
-        { "match": "primary|button|", "where": "spec/10-frame-layout.md", "note": "发送圆钮（34 × 34）" },
-        { "match": "main|button|", "where": "spec/20-controls.md", "note": "打开方式分段按钮的左半（23 × 22）" },
-        { "match": "chevron|button|", "where": "spec/20-controls.md", "note": "打开方式分段按钮的右半（18 × 22）" },
-        { "match": "close|button|", "where": "spec/20-controls.md", "note": "图标按钮（28 × 28 · 圆角 8）" },
-        { "match": "selector|button|", "where": "components/patterns/SettingsPage", "flexible": true, "note": "设置行右侧选择器（高 36、圆角 12，宽度随文字）" },
-        { "match": "panel|div|dialog", "where": "components/patterns/SettingsPage", "note": "设置窗口（800 × 800、圆角 28）" },
-        { "match": "mask|div|", "where": "components/patterns/SettingsPage", "flexible": true, "note": "遮罩（铺满视口，尺寸随窗口）" },
-        { "match": "overlay|div|presentation", "where": "components/patterns/SettingsPage", "flexible": true, "note": "浮层根（铺满视口）" },
-        { "match": "brand wide|button|", "where": "components/brand/Wordmark", "flexible": true, "note": "左栏品牌按钮（216 × 24）" },
-        { "match": "cardTitle cardOpen", "where": "spec/50-icons.md", "flexible": true, "note": "插件行标题（14/20 · 500，宽度随文字）" },
-        { "match": "text|span|", "where": "spec/10-frame-layout.md", "flexible": true, "note": "活动行标题（宽度随文字）" },
-        { "match": "text label|span|", "where": "spec/10-frame-layout.md", "flexible": true, "note": "活动行标签" },
-        { "match": "title|button|", "where": "spec/10-frame-layout.md", "flexible": true, "note": "活动行折叠按钮" },
-        { "match": "settings.general.item", "where": "components/layout/SettingsRow", "flexible": true, "note": "设置行的文字容器与右侧控件（宽度随文字与控件）" },
-        { "match": "conversation.session.header", "where": "spec/10-frame-layout.md", "flexible": true, "note": "会话头部里的字形与按钮（15 × 15 等，尺寸随字形）" },
-        { "match": "crumb", "where": "components/patterns/SettingsPage", "flexible": true, "note": "设置窗口里的面包屑（236 × 28，宽度随文字）" },
-        { "match": "cardIcon", "where": "spec/50-icons.md", "note": "插件行的应用图标容器（50 × 50 · 圆角 16）" },
-        { "match": "cardDesc", "where": "spec/50-icons.md", "flexible": true, "note": "插件行说明（13/18，宽度随文字）" },
-        { "match": "headerBlank", "where": "spec/10-frame-layout.md", "note": "新会话页的空头部（1290 × 40）" },
-        { "match": "dlU_AG_", "where": "spec/20-controls.md", "note": "输入区权限选择器与它的菜单选项（含 EXP 角标）" },
-        { "match": "RotMhW_", "where": "components/patterns/SettingsPage", "note": "内置插件页的卡片与分组开关（groupToggle 76 × 22）" },
-        { "match": "unKlVG_", "where": "spec/10-frame-layout.md", "note": "右栏 pane 标签上的图标（16 × 16）" },
-        { "match": "OUqwTW_", "where": "spec/10-frame-layout.md", "note": "右栏的折叠字形与图标按钮（15 × 15）" },
-        { "match": "KZf9OG_", "where": "components/patterns/SettingsPage", "note": "设置卡片与其分组标题（groupHead 564 × 16）" },
-        { "match": "Hqq-bq_", "where": "spec/10-frame-layout.md", "note": "新会话页的工作区行与「预览版」徽标（Hqq-bq_workspace / previewBadge / folder）" },
-        { "match": "_oGoKq_", "where": "spec/10-frame-layout.md", "note": "新会话页的 Agent 预设座位（图标 + 标签 + 折叠角）" },
-        { "match": "_9lTDKa_", "where": "components/layout/SidebarRow", "note": "左栏搜索：输入框、清除按钮、分组标题与头部动作" },
-        { "match": "iconButton toggle", "where": "components/layout/SidebarRow", "note": "左栏折叠按钮（28 × 28 · 圆角 8）" },
-        { "match": "1rv3m", "where": "components/controls/Button", "note": "产品的 Button 模块（_button_1rv3m_2，含 md/sm/primary/ghost/outline/toolbar/icon 变体）" },
-        { "match": "1ik0f", "where": "components/controls/Switch", "note": "产品的 Switch 模块（_switch_1ik0f_5 / _thumb_1ik0f_33）" },
-        { "match": "brmue", "where": "components/controls/Tag", "note": "产品的 Tag 模块（_tag_brmue_4，与 Button/Pill/Tabs 同批）" },
-        { "match": "6nhg2", "where": "spec/10-frame-layout.md", "note": "右侧边栏的标签页与图标按钮（_addTab_6nhg2 / _iconButton_6nhg2）" },
-        { "match": "plainRun", "where": "spec/10-frame-layout.md", "note": "消息正文里的纯文本片段（带 @ 引用时被切出来的那几段）" },
-        { "match": "Hefa_q_", "where": "components/layout/SettingsRow", "note": "设置行的标题 / 选择器 / 折叠角（每个 section 一套哈希，形态与 SettingsRow 相同）" },
-        { "match": "_0Fr0Ha_", "where": "components/layout/SettingsRow", "note": "数字设置行：微调器 72 × 36、单位、上下箭头" },
-        { "match": "_3Y3Nma_", "where": "components/layout/SettingsRow", "note": "设置行的标题 14/22 与说明 12/18" },
-        { "match": "_3nPmjq_", "where": "components/patterns/SettingsPage", "note": "设置卡片：卡片圆角、行名 14/22 · 500、次要按钮 46 × 28" },
-        { "match": "fO69Vq_groupTitle", "where": "components/patterns/ListRowGroup", "note": "列表分组标题（插件页「官方 / 已安装」）" },
-        { "match": "EBLgjq_member", "where": "spec/20-controls.md", "note": "会话头部 chip 展开后的成员行（288 × 52、圆角 8）" },
-        { "match": "time|span", "where": "components/layout/SidebarRow", "note": "会话行右侧的相对时间" },
-        { "match": "sectionLabel", "where": "spec/10-frame-layout.md", "note": "左栏分组小标题（工作区 / 未分组）" },
-        { "match": "panelRow", "where": "components/layout/SidebarRow", "note": "左栏面板导航行（插件 / 自动化任务）" },
-        { "match": "panelTitle", "where": "components/layout/SidebarRow", "note": "左栏面板标题（28 × 22 · 14/22）" },
-        { "match": "trigger|button|", "where": "components/layout/SidebarRow", "note": "左栏底部「设置」行（260 × 34 · 圆角 12）" },
-        { "match": "-ngf_W_triggerLabel", "where": "components/layout/SidebarRow", "note": "左栏底部「设置」行的标签（14/22）" },
-        { "match": "newSession", "where": "components/layout/SidebarRow", "note": "新会话按钮（252 × 38 · 圆角 12）" },
-        { "match": "EBLgjq_", "where": "spec/10-frame-layout.md", "note": "会话头部 chip（智能体团队 / 标准模式）与其成员行" },
-        { "match": "triggerLabel|span|", "where": "spec/10-frame-layout.md", "note": "会话头部 chip 的标签（12/16、三级色）" },
-        { "match": "cellLabel", "where": "spec/20-controls.md", "note": "选择型菜单单元的左标签（13/20 主色）" },
-        { "match": "cellValue", "where": "spec/20-controls.md", "note": "选择型菜单单元的当前值（13/20 三级色）" },
-        { "match": "cellChevron", "where": "spec/20-controls.md", "note": "选择型菜单单元的折叠角（12×12）" },
-        { "match": "material|div|", "where": "spec/20-controls.md", "note": "菜单浮层的 material 底（圆角 16、rgba(248,249,250,.58)）" },
-        { "match": "rowName|span|", "where": "components/patterns/SettingsPage", "note": "设置卡片里的行名（14/22 · 500）" },
-        { "match": "themeCube", "where": "components/patterns/SettingsPage", "note": "设置页外观那三张主题方块（183 × 84、圆角 20）" },
-        { "match": "statusTag", "where": "spec/20-controls.md", "note": "插件行标题旁的「实验性」标签（高 18、圆角 999、底色为状态色 10%）" },
-        { "match": "dlU_AG_trigger", "where": "spec/20-controls.md", "note": "输入区权限胶囊（完全权限 / 计划模式）" },
-        { "match": "wq12jW_trigger", "where": "spec/20-controls.md", "note": "输入区模型选择器" },
-        { "match": "split|div", "where": "spec/20-controls.md", "note": "分段按钮的中缝容器（打开方式 / 视图切换）" },
-        { "match": "sessionRow", "where": "components/layout/SidebarRow", "note": "左栏会话行（含运行态圆环、时间、悬停更多）" },
-        { "match": "trigger|button|", "where": "components/layout/SettingsRow", "note": "左栏底部「设置」行（triggerRow 去掉哈希后的身份）" },
-        { "match": "sessionOverflow", "where": "components/layout/SidebarRow", "note": "会话行悬停才出现的「更多」按钮" },
-        { "match": "navCell", "where": "components/patterns/SettingsPage", "note": "设置窗口左侧导航格（164 × 40、圆角 12）" },
-        { "match": "navIcon", "where": "components/patterns/SettingsPage", "note": "设置导航格里的 16×16 字形" },
-        { "match": "crumb", "where": "components/patterns/SettingsPage", "note": "设置窗口里的分区面包屑" },
-        { "match": "sidebarCol", "where": "spec/10-frame-layout.md", "note": "左栏容器 280×905" },
-        { "match": "panelIcon", "where": "spec/10-frame-layout.md", "note": "顶栏右侧边栏开关的字形" },
-        { "match": "key|kbd", "where": "components/layout/SidebarRow", "note": "快捷键按键帽（新会话按钮行尾、菜单行尾）" },
-        { "match": "xD_KDq_", "where": "spec/10-frame-layout.md", "note": "消息级元信息与动作：时间戳、复制/重试按钮" },
-        { "match": "runningWhale", "where": "spec/40-motion.md", "note": "「深度求索中」的运行鲸鱼动画" },
-        { "match": "projectRow", "where": "components/layout/SidebarRow", "note": "左栏工作区行" },
-        { "match": "panelRow", "where": "spec/10-frame-layout.md", "note": "左栏面板导航行（插件 / 自动化任务）" },
-        { "match": "triggerRow", "where": "components/layout/SettingsRow", "note": "左栏底部设置行" },
-        { "match": "panelTitle", "where": "components/layout/PanelHeader", "note": "面板标题（含分组标题行）" },
-        { "match": "RlGAzG_card", "where": "spec/10-frame-layout.md", "note": "输入卡（hero 780 × 114，会话里单行时 98）" },
-        { "match": "settingsCard", "where": "components/surfaces/Card", "note": "设置页卡片" },
-        { "match": "rowCard", "where": "components/surfaces/Card", "note": "设置页成行卡片" },
-        { "match": "pill", "where": "components/controls/Pill", "note": "胶囊按钮（输入区状态胶囊、权限胶囊）" },
-        { "match": "tab", "where": "spec/10-frame-layout.md", "note": "会话头部页签（对话 / 轨迹 / 上下文）" },
-        { "match": "sideRoot", "where": "spec/10-frame-layout.md", "note": "左栏内容根" },
-        { "match": "logoRow", "where": "components/brand/FishMark", "note": "左栏品牌行" },
-        { "match": "brandName", "where": "components/brand/Wordmark", "note": "左栏品牌文字" },
-        { "match": "newSession", "where": "spec/20-controls.md", "note": "新会话按钮" },
-        { "match": "searchButton", "where": "spec/20-controls.md", "note": "左栏搜索按钮" },
-        { "match": "iconButton", "where": "spec/20-controls.md", "note": "28×28 图标按钮" },
-        { "match": "handle", "where": "spec/10-frame-layout.md", "note": "左栏拖拽手柄" },
-        { "match": "composer", "where": "spec/10-frame-layout.md", "note": "输入区" },
-        { "match": "bubble", "where": "spec/10-frame-layout.md", "note": "用户消息气泡" },
-        { "match": "markdown", "where": "spec/30-tokens.md", "note": "markdown 正文排版" },
-        { "match": "code-block", "where": "spec/30-tokens.md", "note": "代码块" },
-        { "match": "running", "where": "spec/40-motion.md", "note": "运行中提示行（深度求索中…）" },
-        { "match": "sessionHeader", "where": "spec/10-frame-layout.md", "note": "会话头部" },
-        { "match": "menu", "where": "spec/20-controls.md", "note": "弹出菜单" },
-        { "match": "switch", "where": "components/controls/Switch", "note": "开关" },
-        { "match": "toast", "where": "components/feedback/Toast", "note": "轻提示" },
-        { "match": "empty", "where": "components/feedback/EmptyState", "note": "空状态" },
-        { "match": "schema", "where": "spec/20-controls.md", "note": "设置页表单控件" },
-        { "match": "stats-card", "where": "plugins/dsh-widgets", "note": "插件 dsh-widgets 的统计卡片（产品里没有）" },
-        { "match": "dsx-", "where": "plugins/dsh-widgets", "note": "插件 dsh-widgets 的界面" },
-        { "match": "lc-", "where": "plugins/dsh-usage-center", "note": "插件 dsh-usage-center 的界面" },
-        { "match": "duc-", "where": "plugins/dsh-usage-center", "note": "插件 dsh-usage-center 的热力图" },
-        { "match": "dye-", "where": "plugins/dsh-mem", "note": "插件 dsh-mem 的界面" }
+        {
+            "match": "text:",
+            "where": "spec/30-tokens.md",
+            "flexible": true,
+            "note": "界面里的文字块：字号阶梯与「不得引入档位外字号」见 §4.1"
+        },
+        {
+            "match": "svg:0 0 16 16:M6.58727",
+            "where": "spec/50-icons.md",
+            "flexible": true,
+            "note": "产品内联字形 §7：搜索（14 × 14 · 左栏搜索）"
+        },
+        {
+            "match": "svg:0 0 16 16:M2.37091",
+            "where": "spec/50-icons.md",
+            "flexible": true,
+            "note": "产品内联字形 §7：新会话（14 × 14 · 左栏新会话按钮）"
+        },
+        {
+            "match": "svg:0 0 16 16:M7.84457",
+            "where": "spec/50-icons.md",
+            "flexible": true,
+            "note": "产品内联字形 §7：插件（16 × 16 · 左栏面板导航）"
+        },
+        {
+            "match": "svg:0 0 16 16:M8 14C11.3137",
+            "where": "spec/50-icons.md",
+            "flexible": true,
+            "note": "产品内联字形 §7：自动化任务（16 × 16 · 左栏面板导航）"
+        },
+        {
+            "match": "svg:0 0 16 16:M12.0997",
+            "where": "spec/50-icons.md",
+            "flexible": true,
+            "note": "产品内联字形 §7：用量中心（16 × 16 · 左栏底部入口）"
+        },
+        {
+            "match": "svg:0 0 16 16:M8 9.75012",
+            "where": "spec/50-icons.md",
+            "flexible": true,
+            "note": "产品内联字形 §7：设置（16 × 16 · 左栏底部）"
+        },
+        {
+            "match": "svg:0 0 16 16:M5.54492",
+            "where": "spec/50-icons.md",
+            "flexible": true,
+            "note": "产品内联字形 §7：添加工作区（16 × 16 · 工作区标题行）"
+        },
+        {
+            "match": "svg:0 0 16 16:M6 8.25",
+            "where": "spec/50-icons.md",
+            "flexible": true,
+            "note": "产品内联字形 §7：智能体团队（14 × 14 · 会话头部 chip）"
+        },
+        {
+            "match": "svg:0 0 16 16:M4 6L7.29289",
+            "where": "spec/50-icons.md",
+            "flexible": true,
+            "note": "产品内联字形 §7：折叠角（10 × 10）"
+        },
+        {
+            "match": "svg:0 0 16 16:M3 9C3.55228",
+            "where": "spec/50-icons.md",
+            "flexible": true,
+            "note": "产品内联字形 §7：更多省略号（15 × 15）"
+        },
+        {
+            "match": "svg:0 0 16 16:M8 2V14",
+            "where": "spec/50-icons.md",
+            "flexible": true,
+            "note": "产品内联字形 §7：加号（14 × 14 · 输入区）"
+        },
+        {
+            "match": "svg:0 0 16 16:M14.4782",
+            "where": "spec/50-icons.md",
+            "flexible": true,
+            "note": "产品内联字形 §7：外部链接箭头（12 × 16 · 设置页）"
+        },
+        {
+            "match": "svg:",
+            "where": "spec/50-icons.md",
+            "flexible": true,
+            "note": "产品内联字形（§7 登记，未逐一命名）"
+        },
+        {
+            "match": "secondaryButton",
+            "where": "components/patterns/SettingsPage",
+            "flexible": "width",
+            "note": "设置卡片里的次要按钮（高 28 · 圆角 8）"
+        },
+        {
+            "match": "addButton",
+            "where": "components/patterns/SettingsPage",
+            "flexible": "width",
+            "note": "设置页「添加 / 新建」按钮（高 44 · 圆角 12）"
+        },
+        {
+            "match": "creatorButton",
+            "where": "components/patterns/SettingsPage",
+            "flexible": "width",
+            "note": "设置页创建按钮（高 44 · 圆角 12）"
+        },
+        {
+            "match": "credentialDot",
+            "where": "components/patterns/SettingsPage",
+            "flexible": true,
+            "note": "凭证状态点（8 × 8，尺寸固定但属于状态字形）"
+        },
+        {
+            "match": "card cardActive",
+            "where": "components/patterns/SettingsPage",
+            "flexible": true,
+            "note": "展开态卡片（高随内容）"
+        },
+        {
+            "match": "groupHead",
+            "where": "components/patterns/SettingsPage",
+            "flexible": true,
+            "note": "卡片分组标题（高度随文字）"
+        },
+        {
+            "match": "panel|div|tabpanel",
+            "where": "components/patterns/SettingsPage",
+            "flexible": true,
+            "note": "设置内容滚动容器（高随内容）"
+        },
+        {
+            "match": "button primary sm|button|",
+            "where": "components/controls/Button",
+            "flexible": "width",
+            "note": "主按钮 sm（高 28）"
+        },
+        {
+            "match": "button ghost sm|button|",
+            "where": "components/controls/Button",
+            "flexible": "width",
+            "note": "幽灵按钮 sm（高 28）"
+        },
+        {
+            "match": "infoButton",
+            "where": "components/controls/Button",
+            "flexible": true,
+            "note": "说明图标按钮（20 × 20）"
+        },
+        {
+            "match": "button ghost md main|button|",
+            "where": "spec/10-frame-layout.md",
+            "flexible": true,
+            "note": "右栏入口按钮（高 66，行高随内容）"
+        },
+        {
+            "match": "pill interactive",
+            "where": "components/controls/Pill",
+            "flexible": "width",
+            "note": "可点胶囊（高 24）"
+        },
+        {
+            "match": "tag statusTag",
+            "where": "spec/50-icons.md",
+            "flexible": "width",
+            "note": "插件行状态标签（高 18 · 圆角 999）"
+        },
+        {
+            "match": "tag|span|",
+            "where": "components/controls/Tag",
+            "flexible": "width",
+            "note": "标签（高 19 = padding 1px + 行高 17px）"
+        },
+        {
+            "match": "rowName",
+            "where": "components/patterns/SettingsPage",
+            "flexible": true,
+            "note": "设置卡片行名（14/22 · 500）"
+        },
+        {
+            "match": "groupTitle",
+            "where": "components/patterns/ListRowGroup",
+            "flexible": true,
+            "note": "列表分组标题（高度随文字）"
+        },
+        {
+            "match": "inactiveIcon",
+            "where": "spec/10-frame-layout.md",
+            "note": "会话头部 chip 面板里的成员图标（14 × 14）"
+        },
+        {
+            "match": "surface list scrollable portal",
+            "where": "spec/20-controls.md",
+            "flexible": true,
+            "note": "菜单浮层的表面容器（尺寸随内容）"
+        },
+        {
+            "match": "|input|",
+            "where": "components/patterns/SettingsPage",
+            "flexible": "width",
+            "note": "设置页输入框（高 36）"
+        },
+        {
+            "match": "panel panelCompact",
+            "where": "spec/20-controls.md",
+            "note": "会话头部 chip 展开的紧凑面板（320 × 141 · 圆角 12）"
+        },
+        {
+            "match": "cell|button|menuitem",
+            "where": "spec/20-controls.md",
+            "note": "选择型菜单项（240 × 34 · 圆角 12）"
+        },
+        {
+            "match": "item|button|menuitem",
+            "where": "spec/20-controls.md",
+            "note": "普通菜单项（136 × 34 · 圆角 12 · padding 6px 8px）"
+        },
+        {
+            "match": "emptyNotice",
+            "where": "spec/20-controls.md",
+            "flexible": true,
+            "note": "菜单里的空提示（284 × 16，宽度随文字）"
+        },
+        {
+            "match": "dlU_AG_badge",
+            "where": "spec/20-controls.md",
+            "note": "菜单项角标（14 × 10，如 EXP）"
+        },
+        {
+            "match": "rowCard",
+            "where": "components/patterns/SettingsPage",
+            "note": "设置卡片成行（564 × 54 · 圆角 20）"
+        },
+        {
+            "match": "cardMain",
+            "where": "components/patterns/SettingsPage",
+            "note": "卡片主体（274 × 119 · 圆角 20px 20px 0 0）"
+        },
+        {
+            "match": "cardFoot",
+            "where": "components/patterns/SettingsPage",
+            "note": "卡片脚（274 × 49）"
+        },
+        {
+            "match": "cardContent",
+            "where": "components/patterns/SettingsPage",
+            "note": "插件卡片内容区（275 × 82）"
+        },
+        {
+            "match": "card|li|",
+            "where": "components/patterns/SettingsPage",
+            "note": "插件卡片（277 × 84 · 圆角 20，两列网格）"
+        },
+        {
+            "match": "helpButton",
+            "where": "components/patterns/SettingsPage",
+            "flexible": true,
+            "note": "帮助按钮（60 × 36 · 圆角 12，宽度随文字）"
+        },
+        {
+            "match": "switcher",
+            "where": "components/patterns/SettingsPage",
+            "flexible": true,
+            "note": "分段 / 切换（166 × 36 · 圆角 12）"
+        },
+        {
+            "match": "groupToggle",
+            "where": "components/patterns/SettingsPage",
+            "flexible": true,
+            "note": "分组开关（76 × 22）"
+        },
+        {
+            "match": "search|label|",
+            "where": "components/patterns/SettingsPage",
+            "note": "设置页搜索行（564 × 36）"
+        },
+        {
+            "match": "cardName",
+            "where": "components/patterns/SettingsPage",
+            "flexible": true,
+            "note": "卡片名（宽度随文字）"
+        },
+        {
+            "match": "cardId",
+            "where": "components/patterns/SettingsPage",
+            "flexible": true,
+            "note": "卡片标识（代码体，宽度随文字）"
+        },
+        {
+            "match": "cardTitle|strong",
+            "where": "components/patterns/SettingsPage",
+            "flexible": true,
+            "note": "插件卡片标题（14/20 · 500，宽度随文字）"
+        },
+        {
+            "match": "list|div|tree",
+            "where": "components/layout/SidebarRow",
+            "note": "会话列表容器（270 × 527）"
+        },
+        {
+            "match": "sessionOverflowButton",
+            "where": "components/layout/SidebarRow",
+            "note": "会话行悬停「更多」（256 × 28 · 圆角 8）"
+        },
+        {
+            "match": "fade|span|",
+            "where": "components/layout/SidebarRow",
+            "note": "列表底部渐隐（256 × 24）"
+        },
+        {
+            "match": "search searchExpanded",
+            "where": "components/layout/SidebarRow",
+            "note": "搜索行（252 × 30 · 圆角 12）"
+        },
+        {
+            "match": "searchInput",
+            "where": "components/layout/SidebarRow",
+            "note": "搜索输入框（196 × 20）"
+        },
+        {
+            "match": "clearButton",
+            "where": "components/layout/SidebarRow",
+            "note": "搜索清除按钮（24 × 24）"
+        },
+        {
+            "match": "sectionLabel",
+            "where": "components/layout/SidebarRow",
+            "flexible": true,
+            "note": "分组小标题（39 × 20，宽度随文字）"
+        },
+        {
+            "match": "newSessionLabel",
+            "where": "components/layout/SidebarRow",
+            "flexible": true,
+            "note": "新会话按钮文字（42 × 22，宽度随文字）"
+        },
+        {
+            "match": "entry|button|",
+            "where": "spec/10-frame-layout.md",
+            "note": "右栏入口行（380 × 68 · 圆角 20）"
+        },
+        {
+            "match": "collapseGlyph",
+            "where": "spec/10-frame-layout.md",
+            "note": "右栏折叠字形（15 × 15）"
+        },
+        {
+            "match": "bubble|div|",
+            "where": "spec/10-frame-layout.md",
+            "flexible": true,
+            "note": "用户气泡（实测 525 × 64，宽高随内容）"
+        },
+        {
+            "match": "xD_KDq_timeStart",
+            "where": "spec/10-frame-layout.md",
+            "flexible": true,
+            "note": "消息时间戳（43 × 24，宽度随文字）"
+        },
+        {
+            "match": "previewBadge",
+            "where": "spec/10-frame-layout.md",
+            "flexible": true,
+            "note": "「预览版」徽标（52 × 21 · 圆角 999）"
+        },
+        {
+            "match": "workspace|button|",
+            "where": "spec/10-frame-layout.md",
+            "note": "新会话页工作区按钮（162 × 28）"
+        },
+        {
+            "match": "workspaceLabel",
+            "where": "spec/10-frame-layout.md",
+            "flexible": true,
+            "note": "工作区标签（110 × 20，宽度随文字）"
+        },
+        {
+            "match": "seat|button|",
+            "where": "spec/10-frame-layout.md",
+            "note": "Agent 预设座位按钮（106 × 28）"
+        },
+        {
+            "match": "seatLabel",
+            "where": "spec/10-frame-layout.md",
+            "flexible": true,
+            "note": "座位标签（52 × 20，宽度随文字）"
+        },
+        {
+            "match": "fish|svg|",
+            "where": "spec/10-frame-layout.md",
+            "flexible": true,
+            "note": "新会话页鱼标（34 × 25，随品牌字号）"
+        },
+        {
+            "match": "runningWhaleAnimated",
+            "where": "spec/40-motion.md",
+            "note": "运行提示行的鲸鱼动画（14 × 14）"
+        },
+        {
+            "match": "sidebar.brand.mark",
+            "where": "components/brand/FishMark",
+            "flexible": true,
+            "note": "左栏品牌鱼标（渲染盒 24 × 18，随品牌行高度）"
+        },
+        {
+            "match": "title|span|",
+            "where": "components/layout/SidebarRow",
+            "flexible": true,
+            "note": "会话行 / 工作区行的标题文字（宽度随文字）"
+        },
+        {
+            "match": "itemLabel|span|",
+            "where": "components/layout/SidebarRow",
+            "flexible": true,
+            "note": "侧栏行标签"
+        },
+        {
+            "match": "navLabel",
+            "where": "components/patterns/SettingsPage",
+            "flexible": true,
+            "note": "设置导航格里的标签（14/22，宽度随文字）"
+        },
+        {
+            "match": "spinner|svg|",
+            "where": "components/feedback/RunningRing",
+            "note": "运行圆环（14 × 14）"
+        },
+        {
+            "match": "frame|div|",
+            "where": "spec/10-frame-layout.md",
+            "note": "三列框架（1570 × 905）"
+        },
+        {
+            "match": "root quietBars",
+            "where": "spec/10-frame-layout.md",
+            "note": "左栏容器（280 × 905）"
+        },
+        {
+            "match": "root|div|",
+            "where": "spec/10-frame-layout.md",
+            "note": "中栏容器（1290 × 905）"
+        },
+        {
+            "match": "header|header|",
+            "where": "spec/10-frame-layout.md",
+            "note": "会话头部（1290 × 50）"
+        },
+        {
+            "match": "input|div|textbox",
+            "where": "spec/10-frame-layout.md",
+            "note": "输入卡里的输入区（776 × 52）"
+        },
+        {
+            "match": "placeholder|div|",
+            "where": "spec/10-frame-layout.md",
+            "flexible": true,
+            "note": "占位文本行（754 × 24，宽度随文字）"
+        },
+        {
+            "match": "add|button|",
+            "where": "spec/10-frame-layout.md",
+            "note": "输入卡左侧圆形加号（28 × 28）"
+        },
+        {
+            "match": "primary|button|",
+            "where": "spec/10-frame-layout.md",
+            "note": "发送圆钮（34 × 34）"
+        },
+        {
+            "match": "main|button|",
+            "where": "spec/20-controls.md",
+            "note": "打开方式分段按钮的左半（23 × 22）"
+        },
+        {
+            "match": "chevron|button|",
+            "where": "spec/20-controls.md",
+            "note": "打开方式分段按钮的右半（18 × 22）"
+        },
+        {
+            "match": "close|button|",
+            "where": "spec/20-controls.md",
+            "note": "图标按钮（28 × 28 · 圆角 8）"
+        },
+        {
+            "match": "selector|button|",
+            "where": "components/patterns/SettingsPage",
+            "flexible": true,
+            "note": "设置行右侧选择器（高 36、圆角 12，宽度随文字）"
+        },
+        {
+            "match": "panel|div|dialog",
+            "where": "components/patterns/SettingsPage",
+            "note": "设置窗口（800 × 800、圆角 28）"
+        },
+        {
+            "match": "mask|div|",
+            "where": "components/patterns/SettingsPage",
+            "flexible": true,
+            "note": "遮罩（铺满视口，尺寸随窗口）"
+        },
+        {
+            "match": "overlay|div|presentation",
+            "where": "components/patterns/SettingsPage",
+            "flexible": true,
+            "note": "浮层根（铺满视口）"
+        },
+        {
+            "match": "brand wide|button|",
+            "where": "components/brand/Wordmark",
+            "flexible": true,
+            "note": "左栏品牌按钮（216 × 24）"
+        },
+        {
+            "match": "cardTitle cardOpen",
+            "where": "spec/50-icons.md",
+            "flexible": true,
+            "note": "插件行标题（14/20 · 500，宽度随文字）"
+        },
+        {
+            "match": "text|span|",
+            "where": "spec/10-frame-layout.md",
+            "flexible": true,
+            "note": "活动行标题（宽度随文字）"
+        },
+        {
+            "match": "text label|span|",
+            "where": "spec/10-frame-layout.md",
+            "flexible": true,
+            "note": "活动行标签"
+        },
+        {
+            "match": "title|button|",
+            "where": "spec/10-frame-layout.md",
+            "flexible": true,
+            "note": "活动行折叠按钮"
+        },
+        {
+            "match": "settings.general.item",
+            "where": "components/layout/SettingsRow",
+            "flexible": true,
+            "note": "设置行的文字容器与右侧控件（宽度随文字与控件）"
+        },
+        {
+            "match": "conversation.session.header",
+            "where": "spec/10-frame-layout.md",
+            "flexible": true,
+            "note": "会话头部里的字形与按钮（15 × 15 等，尺寸随字形）"
+        },
+        {
+            "match": "crumb",
+            "where": "components/patterns/SettingsPage",
+            "flexible": true,
+            "note": "设置窗口里的面包屑（236 × 28，宽度随文字）"
+        },
+        {
+            "match": "cardIcon",
+            "where": "spec/50-icons.md",
+            "note": "插件行的应用图标容器（50 × 50 · 圆角 16）"
+        },
+        {
+            "match": "cardDesc",
+            "where": "spec/50-icons.md",
+            "flexible": true,
+            "note": "插件行说明（13/18，宽度随文字）"
+        },
+        {
+            "match": "headerBlank",
+            "where": "spec/10-frame-layout.md",
+            "note": "新会话页的空头部（1290 × 40）"
+        },
+        {
+            "match": "dlU_AG_",
+            "where": "spec/20-controls.md",
+            "note": "输入区权限选择器与它的菜单选项（含 EXP 角标）"
+        },
+        {
+            "match": "RotMhW_",
+            "where": "components/patterns/SettingsPage",
+            "note": "内置插件页的卡片与分组开关（groupToggle 76 × 22）"
+        },
+        {
+            "match": "unKlVG_",
+            "where": "spec/10-frame-layout.md",
+            "note": "右栏 pane 标签上的图标（16 × 16）"
+        },
+        {
+            "match": "OUqwTW_",
+            "where": "spec/10-frame-layout.md",
+            "note": "右栏的折叠字形与图标按钮（15 × 15）"
+        },
+        {
+            "match": "KZf9OG_",
+            "where": "components/patterns/SettingsPage",
+            "note": "设置卡片与其分组标题（groupHead 564 × 16）"
+        },
+        {
+            "match": "Hqq-bq_",
+            "where": "spec/10-frame-layout.md",
+            "note": "新会话页的工作区行与「预览版」徽标（Hqq-bq_workspace / previewBadge / folder）"
+        },
+        {
+            "match": "_oGoKq_",
+            "where": "spec/10-frame-layout.md",
+            "note": "新会话页的 Agent 预设座位（图标 + 标签 + 折叠角）"
+        },
+        {
+            "match": "_9lTDKa_",
+            "where": "components/layout/SidebarRow",
+            "note": "左栏搜索：输入框、清除按钮、分组标题与头部动作"
+        },
+        {
+            "match": "iconButton toggle",
+            "where": "components/layout/SidebarRow",
+            "note": "左栏折叠按钮（28 × 28 · 圆角 8）"
+        },
+        {
+            "match": "1rv3m",
+            "where": "components/controls/Button",
+            "note": "产品的 Button 模块（_button_1rv3m_2，含 md/sm/primary/ghost/outline/toolbar/icon 变体）"
+        },
+        {
+            "match": "1ik0f",
+            "where": "components/controls/Switch",
+            "note": "产品的 Switch 模块（_switch_1ik0f_5 / _thumb_1ik0f_33）"
+        },
+        {
+            "match": "brmue",
+            "where": "components/controls/Tag",
+            "note": "产品的 Tag 模块（_tag_brmue_4，与 Button/Pill/Tabs 同批）"
+        },
+        {
+            "match": "6nhg2",
+            "where": "spec/10-frame-layout.md",
+            "note": "右侧边栏的标签页与图标按钮（_addTab_6nhg2 / _iconButton_6nhg2）"
+        },
+        {
+            "match": "plainRun",
+            "where": "spec/10-frame-layout.md",
+            "note": "消息正文里的纯文本片段（带 @ 引用时被切出来的那几段）"
+        },
+        {
+            "match": "Hefa_q_",
+            "where": "components/layout/SettingsRow",
+            "note": "设置行的标题 / 选择器 / 折叠角（每个 section 一套哈希，形态与 SettingsRow 相同）"
+        },
+        {
+            "match": "_0Fr0Ha_",
+            "where": "components/layout/SettingsRow",
+            "note": "数字设置行：微调器 72 × 36、单位、上下箭头"
+        },
+        {
+            "match": "_3Y3Nma_",
+            "where": "components/layout/SettingsRow",
+            "note": "设置行的标题 14/22 与说明 12/18"
+        },
+        {
+            "match": "_3nPmjq_",
+            "where": "components/patterns/SettingsPage",
+            "note": "设置卡片：卡片圆角、行名 14/22 · 500、次要按钮 46 × 28"
+        },
+        {
+            "match": "fO69Vq_groupTitle",
+            "where": "components/patterns/ListRowGroup",
+            "note": "列表分组标题（插件页「官方 / 已安装」）"
+        },
+        {
+            "match": "EBLgjq_member",
+            "where": "spec/20-controls.md",
+            "note": "会话头部 chip 展开后的成员行（288 × 52、圆角 8）"
+        },
+        {
+            "match": "time|span",
+            "where": "components/layout/SidebarRow",
+            "note": "会话行右侧的相对时间"
+        },
+        {
+            "match": "sectionLabel",
+            "where": "spec/10-frame-layout.md",
+            "note": "左栏分组小标题（工作区 / 未分组）"
+        },
+        {
+            "match": "panelRow",
+            "where": "components/layout/SidebarRow",
+            "note": "左栏面板导航行（插件 / 自动化任务）"
+        },
+        {
+            "match": "panelTitle",
+            "where": "components/layout/SidebarRow",
+            "note": "左栏面板标题（28 × 22 · 14/22）"
+        },
+        {
+            "match": "trigger|button|",
+            "where": "components/layout/SidebarRow",
+            "note": "左栏底部「设置」行（260 × 34 · 圆角 12）"
+        },
+        {
+            "match": "-ngf_W_triggerLabel",
+            "where": "components/layout/SidebarRow",
+            "note": "左栏底部「设置」行的标签（14/22）"
+        },
+        {
+            "match": "newSession",
+            "where": "components/layout/SidebarRow",
+            "note": "新会话按钮（252 × 38 · 圆角 12）"
+        },
+        {
+            "match": "EBLgjq_",
+            "where": "spec/10-frame-layout.md",
+            "note": "会话头部 chip（智能体团队 / 标准模式）与其成员行"
+        },
+        {
+            "match": "triggerLabel|span|",
+            "where": "spec/10-frame-layout.md",
+            "note": "会话头部 chip 的标签（12/16、三级色）"
+        },
+        {
+            "match": "cellLabel",
+            "where": "spec/20-controls.md",
+            "note": "选择型菜单单元的左标签（13/20 主色）"
+        },
+        {
+            "match": "cellValue",
+            "where": "spec/20-controls.md",
+            "note": "选择型菜单单元的当前值（13/20 三级色）"
+        },
+        {
+            "match": "cellChevron",
+            "where": "spec/20-controls.md",
+            "note": "选择型菜单单元的折叠角（12×12）"
+        },
+        {
+            "match": "material|div|",
+            "where": "spec/20-controls.md",
+            "note": "菜单浮层的 material 底（圆角 16、rgba(248,249,250,.58)）"
+        },
+        {
+            "match": "rowName|span|",
+            "where": "components/patterns/SettingsPage",
+            "note": "设置卡片里的行名（14/22 · 500）"
+        },
+        {
+            "match": "themeCube",
+            "where": "components/patterns/SettingsPage",
+            "note": "设置页外观那三张主题方块（183 × 84、圆角 20）"
+        },
+        {
+            "match": "statusTag",
+            "where": "spec/20-controls.md",
+            "note": "插件行标题旁的「实验性」标签（高 18、圆角 999、底色为状态色 10%）"
+        },
+        {
+            "match": "dlU_AG_trigger",
+            "where": "spec/20-controls.md",
+            "note": "输入区权限胶囊（完全权限 / 计划模式）"
+        },
+        {
+            "match": "wq12jW_trigger",
+            "where": "spec/20-controls.md",
+            "note": "输入区模型选择器"
+        },
+        {
+            "match": "split|div",
+            "where": "spec/20-controls.md",
+            "note": "分段按钮的中缝容器（打开方式 / 视图切换）"
+        },
+        {
+            "match": "sessionRow",
+            "where": "components/layout/SidebarRow",
+            "note": "左栏会话行（含运行态圆环、时间、悬停更多）"
+        },
+        {
+            "match": "trigger|button|",
+            "where": "components/layout/SettingsRow",
+            "note": "左栏底部「设置」行（triggerRow 去掉哈希后的身份）"
+        },
+        {
+            "match": "sessionOverflow",
+            "where": "components/layout/SidebarRow",
+            "note": "会话行悬停才出现的「更多」按钮"
+        },
+        {
+            "match": "navCell",
+            "where": "components/patterns/SettingsPage",
+            "note": "设置窗口左侧导航格（164 × 40、圆角 12）"
+        },
+        {
+            "match": "navIcon",
+            "where": "components/patterns/SettingsPage",
+            "note": "设置导航格里的 16×16 字形"
+        },
+        {
+            "match": "crumb",
+            "where": "components/patterns/SettingsPage",
+            "note": "设置窗口里的分区面包屑"
+        },
+        {
+            "match": "sidebarCol",
+            "where": "spec/10-frame-layout.md",
+            "note": "左栏容器 280×905"
+        },
+        {
+            "match": "panelIcon",
+            "where": "spec/10-frame-layout.md",
+            "note": "顶栏右侧边栏开关的字形"
+        },
+        {
+            "match": "key|kbd",
+            "where": "components/layout/SidebarRow",
+            "note": "快捷键按键帽（新会话按钮行尾、菜单行尾）"
+        },
+        {
+            "match": "xD_KDq_",
+            "where": "spec/10-frame-layout.md",
+            "note": "消息级元信息与动作：时间戳、复制/重试按钮"
+        },
+        {
+            "match": "runningWhale",
+            "where": "spec/40-motion.md",
+            "note": "「深度求索中」的运行鲸鱼动画"
+        },
+        {
+            "match": "projectRow",
+            "where": "components/layout/SidebarRow",
+            "note": "左栏工作区行"
+        },
+        {
+            "match": "panelRow",
+            "where": "spec/10-frame-layout.md",
+            "note": "左栏面板导航行（插件 / 自动化任务）"
+        },
+        {
+            "match": "triggerRow",
+            "where": "components/layout/SettingsRow",
+            "note": "左栏底部设置行"
+        },
+        {
+            "match": "panelTitle",
+            "where": "components/layout/PanelHeader",
+            "note": "面板标题（含分组标题行）"
+        },
+        {
+            "match": "RlGAzG_card",
+            "where": "spec/10-frame-layout.md",
+            "note": "输入卡（hero 780 × 114，会话里单行时 98）"
+        },
+        {
+            "match": "settingsCard",
+            "where": "components/surfaces/Card",
+            "note": "设置页卡片"
+        },
+        {
+            "match": "rowCard",
+            "where": "components/surfaces/Card",
+            "note": "设置页成行卡片"
+        },
+        {
+            "match": "pill",
+            "where": "components/controls/Pill",
+            "note": "胶囊按钮（输入区状态胶囊、权限胶囊）"
+        },
+        {
+            "match": "tab",
+            "where": "spec/10-frame-layout.md",
+            "note": "会话头部页签（对话 / 轨迹 / 上下文）"
+        },
+        {
+            "match": "sideRoot",
+            "where": "spec/10-frame-layout.md",
+            "note": "左栏内容根"
+        },
+        {
+            "match": "logoRow",
+            "where": "components/brand/FishMark",
+            "note": "左栏品牌行"
+        },
+        {
+            "match": "brandName",
+            "where": "components/brand/Wordmark",
+            "note": "左栏品牌文字"
+        },
+        {
+            "match": "newSession",
+            "where": "spec/20-controls.md",
+            "note": "新会话按钮"
+        },
+        {
+            "match": "searchButton",
+            "where": "spec/20-controls.md",
+            "note": "左栏搜索按钮"
+        },
+        {
+            "match": "iconButton",
+            "where": "spec/20-controls.md",
+            "note": "28×28 图标按钮"
+        },
+        {
+            "match": "handle",
+            "where": "spec/10-frame-layout.md",
+            "note": "左栏拖拽手柄"
+        },
+        {
+            "match": "composer",
+            "where": "spec/10-frame-layout.md",
+            "note": "输入区"
+        },
+        {
+            "match": "bubble",
+            "where": "spec/10-frame-layout.md",
+            "note": "用户消息气泡"
+        },
+        {
+            "match": "markdown",
+            "where": "spec/30-tokens.md",
+            "note": "markdown 正文排版"
+        },
+        {
+            "match": "code-block",
+            "where": "spec/30-tokens.md",
+            "note": "代码块"
+        },
+        {
+            "match": "running",
+            "where": "spec/40-motion.md",
+            "note": "运行中提示行（深度求索中…）"
+        },
+        {
+            "match": "sessionHeader",
+            "where": "spec/10-frame-layout.md",
+            "note": "会话头部"
+        },
+        {
+            "match": "menu",
+            "where": "spec/20-controls.md",
+            "note": "弹出菜单"
+        },
+        {
+            "match": "switch",
+            "where": "components/controls/Switch",
+            "note": "开关"
+        },
+        {
+            "match": "toast",
+            "where": "components/feedback/Toast",
+            "note": "轻提示"
+        },
+        {
+            "match": "empty",
+            "where": "components/feedback/EmptyState",
+            "note": "空状态"
+        },
+        {
+            "match": "schema",
+            "where": "spec/20-controls.md",
+            "note": "设置页表单控件"
+        },
+        {
+            "match": "stats-card",
+            "where": "plugins/dsh-widgets",
+            "note": "插件 dsh-widgets 的统计卡片（产品里没有）"
+        },
+        {
+            "match": "dsx-",
+            "where": "plugins/dsh-widgets",
+            "note": "插件 dsh-widgets 的界面"
+        },
+        {
+            "match": "lc-",
+            "where": "plugins/dsh-usage-center",
+            "note": "插件 dsh-usage-center 的界面"
+        },
+        {
+            "match": "duc-",
+            "where": "plugins/dsh-usage-center",
+            "note": "插件 dsh-usage-center 的热力图"
+        },
+        {
+            "match": "dye-",
+            "where": "plugins/dsh-mem",
+            "note": "插件 dsh-mem 的界面"
+        }
     ]
 }

@@ -56,6 +56,7 @@ DSH 官方未公开动效时长与缓动曲线数值。Apple HIG 同样没有公
 | 运行圆环（转 + 弧伸缩） | 转 `1.5s linear infinite`；伸缩 `1.5s ease-in-out infinite` | 客户端 CSS 模块 `_spinnerMotion_1i3xo_42` / `_spinnerArc_1i3xo_48`；组件见 `components/feedback/RunningRing/` |
 | 像素追逐（库里 `StateDot` 的 `ongoing`） | `1s` 无限，四段离散台阶（`opacity` 1 / 0.6 / 0.35 / 0.15），逐格 `animation-delay` 相差 125ms | `@deepseek-ai/dsh-client-ui-primitives/lib/StateDot.module.css` `@keyframes dsh-state-dot-chase` |
 | 三点依次出现 | `1.5s` 无限，`step-end` | `ConnectionIndicator.module.css` `.secondDot` / `.thirdDot` |
+| 运行提示行的鲸鱼动画 | 字形 **14 × 14**，随「深度求索中，用时 …」一行 | 采集：左栏会话行与输入区上方的运行提示 |
 
 - `MO-MF-12`：持续进行中的动效周期只能取 `1s` 或 `1.5s`，且必须是 `infinite`。判定：扫描 `animation-iteration-count: infinite` 的 `animation-duration`。
 - `MO-MF-13`：同一条「正在进行」的信息，一个界面里只用一种形态。会话行首用了运行圆环，就不要在同一行再挂三点或追逐方块——它们是三套官方实现，不是三个粒度。
