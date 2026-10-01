@@ -30,21 +30,25 @@ window.DSHShellData = {
     ],
     sessionsMore: 12,
 
-    /* 底部区 ← 真实界面「用量中心 / 上下文洞察 / 设置」 */
+    /* 底部区 ← 只放产品自己注册的入口。
+     * `sidebar.footer.action` 上的占用者里，registrant 为 mf（产品自身 bundle）
+     * 的是 cordis-panel；「用量中心」「上下文洞察」是插件注册的，不属于产品，
+     * 所以复刻里不出现——复刻只画产品自身有的东西。 */
     footer: [
-        { id: 'usage', label: '用量中心', icon: 'gauge' },
-        { id: 'context', label: '上下文洞察', icon: 'data' },
+        { id: 'cordis-panel', label: 'Cordis 插件', icon: 'cordis-plugin' },
     ],
     settings: { id: 'settings', label: '设置', icon: 'settings' },
 
-    /* 会话头部 ← header 1290×40，含标题、视图切换（对话 / 轨迹 / 上下文）与工具 */
+    /* 会话头部 ← header 1290×40。左侧会话标题、中间状态 chip、右侧视图与工具，
+     * 照 `03-settings-open.png` 的真实排布。 */
+    headerChips: ['1 个子智能体', '标准模式'],
     views: [
         { id: 'chat', label: '对话', current: true },
         { id: 'trajectory', label: '轨迹' },
         { id: 'context', label: '上下文' },
     ],
 
-    model: 'DeepSeek V4.1 Flash 高',
+    model: 'DeepSeek V4.1 Flash High',
     permission: '完全权限',
 
     messages: [

@@ -718,6 +718,7 @@
             window.DSHShell.mount(host, {
                 css: D.shellCss || '',
                 icon: function (name) { return iconSvg(name) },
+                chrome: D.chrome || { icons: {}, header: [] },
                 esc: esc,
                 brandMark: (D.brand && D.brand.fish) || '',
                 left: options.left === 'closed' ? 'closed' : 'open',

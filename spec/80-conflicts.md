@@ -18,7 +18,7 @@
 
 | 座位 | 事实 |
 | --- | --- |
-| `shell.overlay` | 14 个占用者，其中 13 个未声明 order，全部落在默认值 0；层级顺序由注册时序决定，不可预测 |
+| `shell.overlay` | 14 个占用者，其中 11 个未声明 order，全部落在默认值 0；层级顺序由注册时序决定，不可预测 |
 | `settings.section` | 11 个占用者，其中 research-cordis / dsh-market / ui-harmony 三个 order 均为 40，顺序无法解释 |
 | `conversation.session.header.utilities` | 4 个占用者，order 为 -10 / -5 / 0 / 5，排布清晰 |
 

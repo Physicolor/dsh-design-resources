@@ -370,6 +370,9 @@ const data = {
   },
   i18n,
   demos: loadDemos(),
+  /* The reproduction draws its chrome from the live product: these are the SVGs
+   * the real sidebar and header render, harvested by scripts/capture-dsh.mjs. */
+  chrome: readJson('docs/reference/chrome.json', { icons: {}, header: [] }),
   /* The shell's stylesheet travels with the data because the shell renders into
    * a shadow root, where a <link> to the page's stylesheets would not apply. */
   shellCss: readText('website/shell/shell.css'),

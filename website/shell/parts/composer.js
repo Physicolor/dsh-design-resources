@@ -39,10 +39,10 @@ window.DSHShellParts.composer = function (ctx) {
 
     return '<div class="sh-composer" data-region="conversation.composer.bar">'
         + (docks ? dock('conversation.input.dock', '输入卡上方：扩展本次输入的能力', '') : '')
+        /* 标注一律在卡片**外面**：画进卡片内部会被读成"卡片自己的一部分"，
+         * 而它其实是在说明卡片内部有哪些座位。 */
+        + (docks ? dock('conversation.input.overlay', '卡片内部的浮层：补全、下拉、提示——不得常驻', '') : '')
         + '<div class="sh-card">'
-        + (docks
-            ? dock('conversation.input.overlay', '卡内浮层：补全、下拉、提示——不得常驻', 'sh-dock--inside')
-            : '')
         + '<div class="sh-card__input">' + esc(data.placeholder) + '</div>'
         + '<div class="sh-tools">'
         + '<button class="sh-round" type="button" aria-label="添加附件">' + icon('plus') + '</button>'

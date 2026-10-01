@@ -40,7 +40,7 @@
 
 ## 3. list 座位的 order 规范
 
-- `SL-MF-03`：[实测] `list` 座位必须显式声明 order，禁止依赖默认 0。证据：`shell.overlay` 14 个占用者中 13 个未声明 order，全部落在默认值 0，层级顺序由注册时序决定，不可预测；反例是 `conversation.session.header.utilities`，4 个占用者显式 -10 / -5 / 0 / 5，顺序可解释。
+- `SL-MF-03`：[实测] `list` 座位必须显式声明 order，禁止依赖默认 0。证据：`shell.overlay` 14 个占用者中 11 个未声明 order，全部落在默认值 0，层级顺序由注册时序决定，不可预测；反例是 `conversation.session.header.utilities`，4 个占用者显式 -10 / -5 / 0 / 5，顺序可解释。占用者快照见 `data/raw/occupancy-2026-10-01.json`（采集时间 2026-10-01；数字随本机启用了哪些插件而变，引用时须注明时间）。
 - `SL-RC-04`：order 建议分段。无权威数值，本仓库建议如下，理由：让「忘记声明」与「有意居中」可区分，并给后续插入留出空间。
 
 | 区间 | 用途 |

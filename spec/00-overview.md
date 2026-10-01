@@ -12,7 +12,7 @@ DSH 官方为插件作者提供的兼容层覆盖技术栈：Cordis 插件系统
 
 | 座位 | 占用者 | 已核实事实 |
 | --- | --- | --- |
-| `shell.overlay` | 14 | 其中 13 个未声明 `order`，全部落在默认值 0，层级顺序由注册时序决定，不可预测 |
+| `shell.overlay` | 14 | 其中 11 个未声明 `order`，全部落在默认值 0，层级顺序由注册时序决定，不可预测 |
 | `settings.section` | 11 | research-cordis / dsh-market / ui-harmony 三者 order 均为 40，顺序无法解释 |
 | `conversation.session.header.utilities` | 4 | order 分别 -10 / -5 / 0 / 5，排布清晰，可解释 |
 

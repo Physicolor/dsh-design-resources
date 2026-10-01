@@ -91,10 +91,10 @@
             "conflictBody": "The later one simply covers the earlier one. Nothing is missing from the interface and nothing logs an error — you find out from user reports."
         },
         "proof": {
-            "overlay": "14 plugins occupy shell.overlay in the official UI, and 13 of them never say where they belong in the order. They all fall to the default 0, so the stacking follows load order — reload the same machine and the order can change.",
+            "overlay": "14 plugins occupy shell.overlay in the official UI, and 11 of them never say where they belong in the order. They all fall to the default 0, so the stacking follows load order — reload the same machine and the order can change.",
             "settings": "11 plugins occupy settings.section, and 3 of them all declare order 40. Which of those three comes first is equally unexplained."
         },
-        "asideNote": "Both figures come from counting the running harness item by item, not from an estimate.",
+        "asideNote": "Both figures were counted on this machine on 2026-10-01; the raw snapshot is in data/raw/occupancy-2026-10-01.json. A different machine, or a different set of enabled plugins, gives different numbers.",
         "closing": "This is not one plugin's fault. With no shared answers, everyone makes a reasonable choice and the sum still looks like this. The repository does two things: it fills in the numbers and the practice that were missing, and it makes the collisions visible."
     },
     "spec": {

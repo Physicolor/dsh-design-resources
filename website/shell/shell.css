@@ -58,7 +58,11 @@
     --sh-settings-h: 34px;               /* triggerRow 260x34 */
 
     --sh-radius: 12px;                   /* panelRow / newSession borderRadius 12px */
-    --sh-radius-card: 28px;              /* 输入卡圆角，实测 28px */
+    /* 输入卡圆角：对 01-hero.png 的弧线做最小二乘拟合得 21.4px（RMSE 0.42），
+     * 取 21。此前写的 28px 是错的——那次是从一次采集里读到的，但采集脚本的
+     * depth 上限截掉了输入卡子树，读到的是别的元素。 */
+    --sh-radius-card: 21px;
+    --sh-line-card: rgb(0 0 0 / 7.5%);   /* 输入卡边框实测 236/255 ≈ 7.5% */
     --sh-radius-pill: 999px;
 
     --sh-font: 'HarmonyOS Sans SC', 'HarmonyOS Sans', -apple-system, BlinkMacSystemFont,
@@ -81,15 +85,28 @@
 
 /* ── 框架：三列栅格 ← frame display:grid ───────────────────────────── */
 
-.sh-root {
+/* 舞台：按真实视口比例预留高度；内部按容器宽度等比缩放 */
+.sh-stage {
     position: relative;
-    /* 三列用 flex 而不是 grid：实测 `grid-template-columns: var(…)` 在运行时
-     * 改变量时不会重新求值——变量读出来是新值，栅格却仍按旧值布局
-     * （320px 的变量、280px 的列）。换成 flex + width 之后拖拽才真正跟手。 */
-    display: flex;
     width: 100%;
-    aspect-ratio: 1570 / 905;             /* 采集视口，保持真实比例 */
-    min-height: 380px;
+    max-width: 760px;                     /* 复刻不必撑满阅读栏 */
+    margin: 0 auto;
+    aspect-ratio: 1570 / 905;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.sh-root {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* 按采集视口 1:1 作画，再整体缩放。若改成让布局随容器拉伸，280px 的左栏在
+     * 窄容器里会变成 31% 而不是产品的 17.8%——那就不是同一个布局了。 */
+    width: 1570px;
+    height: 905px;
+    display: flex;
+    transform: scale(var(--sh-scale, 1));
+    transform-origin: top left;
     background: var(--sh-bg);
     border-radius: 10px;
     overflow: hidden;
@@ -133,6 +150,7 @@
     align-items: center;
     gap: 8px;
     height: var(--sh-logo-h);
+    margin-bottom: 4px;                   /* logoRow 下沿 66 → newSession 顶边 70 */
     padding: 8px 0 8px 4px;               /* logoRow padding 8px 0 8px 4px */
     flex: none;
 }
@@ -332,15 +350,17 @@
 }
 
 .sh-head {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: start;
-    gap: 8px;
-    height: var(--sh-head-h);             /* header 1290x40 */
-    padding: 10px 28px 0 20px;            /* header padding 10px 28px 0 20px */
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: var(--sh-head-h);             /* header 1290×40 */
+    padding: 0 28px 0 20px;
     flex: none;
     background: var(--sh-bg);
 }
+.sh-head__chips { display: flex; align-items: center; gap: 6px; }
+.sh-chip--meta { height: 22px; font-size: 12px; color: var(--sh-ink-2); }
+.sh-chip--meta svg { width: 12px; height: 12px; }
 .sh-head__title {
     display: flex;
     align-items: center;
@@ -429,8 +449,8 @@
     width: min(780px, 100%);              /* 实测 780x114 */
     padding: 8px 0;                       /* 实测 padding 8px 0 */
     background: var(--sh-bg);
-    border: 1px solid var(--sh-line);
-    border-radius: var(--sh-radius-card); /* 实测圆角 28px */
+    border: 1px solid var(--sh-line-card);
+    border-radius: var(--sh-radius-card);
 }
 .sh-card__input {
     padding: 8px 20px 6px;

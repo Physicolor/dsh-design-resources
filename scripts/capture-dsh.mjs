@@ -98,6 +98,47 @@ const GEOMETRY_PROBE = `(() => {
 })()`
 
 /**
+ * Harvest the chrome that carries no seat of its own: the sidebar glyphs and the
+ * session-header controls.
+ *
+ * Icons are grabbed as the **live SVG the product renders**, not looked up by
+ * name in a package. Guessing by name is how `lock` silently resolved to a clock
+ * and how the sidebar glyphs ended up looking nothing like the real ones.
+ */
+const CHROME_PROBE = `(() => {
+  const svgFor = (label) => {
+    const leaf = [...document.querySelectorAll('*')].find(el => el.children.length === 0 && (el.textContent || '').trim() === label)
+    if (leaf === undefined) return null
+    let node = leaf
+    for (let i = 0; i < 4 && node; i++) {
+      const svg = node.querySelector('svg')
+      if (svg) return svg.outerHTML
+      node = node.parentElement
+    }
+    return null
+  }
+  const icons = {}
+  for (const label of ['新会话', '插件', '自动化任务', '用量中心', '上下文洞察', '设置']) {
+    icons[label] = svgFor(label)
+  }
+
+  const header = []
+  const scope = document.querySelector('[data-slot="conversation.header"]') ?? document.body
+  for (const el of scope.querySelectorAll('button, [role="button"]')) {
+    const svg = el.querySelector('svg')
+    const rect = el.getBoundingClientRect()
+    if (rect.width < 4) continue
+    header.push({
+      label: (el.getAttribute('aria-label') || el.textContent || '').trim().slice(0, 48),
+      svg: svg === null ? null : svg.outerHTML,
+      w: Math.round(rect.width),
+      h: Math.round(rect.height),
+    })
+  }
+  return JSON.stringify({ icons, header }, null, 2)
+})()`
+
+/**
  * Click one entry in the settings nav by its exact label.
  * @param label - the nav item's text, e.g. `通用设置`.
  * @returns a step snippet.
@@ -136,6 +177,12 @@ const SCENES = [
     title: '会话页 · 几何采集',
     steps: [OPEN_SESSION],
     collect: true,
+  },
+  {
+    name: '09-chrome',
+    title: '侧栏与头部的图标采集',
+    steps: [OPEN_SESSION],
+    collect: 'chrome',
   },
   {
     name: '03-settings-open',
@@ -333,6 +380,12 @@ try {
       const json = await evaluate(GEOMETRY_PROBE)
       await writeFile(join(OUT, 'geometry.json'), json, 'utf8')
       console.log(`geometry  ${scene.name}  ${Math.round(json.length / 1024)} KB`)
+    }
+
+    if (scene.collect === 'chrome') {
+      const json = await evaluate(CHROME_PROBE)
+      await writeFile(join(OUT, 'chrome.json'), json, 'utf8')
+      console.log(`chrome    ${scene.name}  ${Math.round(json.length / 1024)} KB`)
     }
   }
 } catch (error) {

@@ -37,12 +37,16 @@ window.DSHShell = (function () {
         var ctx = {
             data: window.DSHShellData,
             icon: config.icon,
+            /* Real chrome harvested from the running product; `icon` is the
+             * fallback for anything the harvest did not cover. */
+            chrome: config.chrome || { icons: {}, header: [] },
             esc: config.esc,
             config: config,
         }
         var parts = window.DSHShellParts
 
-        return '<div class="sh-root" data-demo="true"'
+        return '<div class="sh-stage">'
+            + '<div class="sh-root" data-demo="true"'
             + ' data-left="' + (config.left === 'closed' ? 'closed' : 'open') + '"'
             + ' data-right="' + (config.right === 'open' ? 'open' : 'closed') + '"'
             + (config.highlight ? ' data-hl="' + config.highlight + '"' : '')
@@ -57,7 +61,7 @@ window.DSHShell = (function () {
             + '</div>'
             + '</div>'
             + parts.railRight(ctx)
-            + '</div>'
+            + '</div></div>'
     }
 
     /**
@@ -66,8 +70,26 @@ window.DSHShell = (function () {
      * @param config - 见文件头。
      */
     function wire(root, config) {
+        var stage = root.querySelector('.sh-stage')
         var shell = root.querySelector('.sh-root')
-        if (shell === null) return
+        if (shell === null || stage === null) return
+
+        /**
+         * Fit the reproduction into its container by scaling.
+         *
+         * The shell is drawn at the real viewport size (1570×905) and then scaled
+         * to whatever width the page gives it. Stretching the layout instead
+         * would break the one thing it exists to show: at 1570px the left rail is
+         * 280px, which is 17.8% — squeeze the container to 888px and a fixed
+         * 280px rail becomes 31.5%, i.e. a different layout from the product's.
+         */
+        function fit() {
+            var width = stage.clientWidth
+            if (width > 0) stage.style.setProperty('--sh-scale', String(width / 1570))
+        }
+        fit()
+        if (window.ResizeObserver !== undefined) new ResizeObserver(fit).observe(stage)
+        window.addEventListener('resize', fit)
 
         /**
          * 切换一侧栏的开合，并同步所有相关按钮的说明文字。
@@ -103,7 +125,11 @@ window.DSHShell = (function () {
                 handle.setAttribute('data-active', 'true')
                 handle.setPointerCapture(event.pointerId)
                 var move = function (ev) {
-                    var width = Math.min(420, Math.max(200, startWidth + ev.clientX - startX))
+                    /* The shell is scaled to fit its container, so a screen pixel
+                     * is not a shell pixel: divide by the current scale or the
+                     * rail lags behind the pointer. */
+                    var scale = (stage.clientWidth / 1570) || 1
+                    var width = Math.min(420, Math.max(200, startWidth + (ev.clientX - startX) / scale))
                     shell.style.setProperty('--sh-side-w', width + 'px')
                 }
                 var up = function () {

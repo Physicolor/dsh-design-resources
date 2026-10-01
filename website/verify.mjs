@@ -367,13 +367,17 @@ if (browserPath === null) {
             var root = sr.querySelector('.sh-root');
             if (!root) continue;
             var side = sr.querySelector('.sh-side');
-            var center = sr.querySelector('.sh-center');
             var head = sr.querySelector('.sh-head');
+            var stage = sr.querySelector('.sh-stage');
+            /* offsetWidth/offsetHeight, not getBoundingClientRect: the shell is
+             * scaled to fit its container, so a rect reports screen pixels while
+             * the layout these numbers describe lives in the 1570-wide coordinate
+             * system the reproduction is drawn in. */
             return {
-                root: Math.round(root.getBoundingClientRect().width),
-                side: side ? Math.round(side.getBoundingClientRect().width) : -1,
-                center: center ? Math.round(center.getBoundingClientRect().width) : -1,
-                head: head ? Math.round(head.getBoundingClientRect().height) : -1,
+                side: side ? side.offsetWidth : -1,
+                head: head ? head.offsetHeight : -1,
+                ratio: side ? Math.round(side.offsetWidth / 1570 * 1000) / 1000 : -1,
+                scale: stage ? Math.round((stage.getBoundingClientRect().height / 905) * 1000) / 1000 : -1,
                 sessions: sr.querySelectorAll('.sh-session').length
             };
         }
@@ -381,6 +385,9 @@ if (browserPath === null) {
     })()`)
     check('shell reproduction mounts', shellInfo !== null, JSON.stringify(shellInfo))
     check('shell left rail is 280px', shellInfo !== null && Math.abs(shellInfo.side - 280) <= 2, shellInfo === null ? 'n/a' : shellInfo.side + 'px')
+    /* The whole point of scaling rather than stretching: the rail has to keep the
+     * share of the frame it has in the product (280 / 1570 = 17.8%). */
+    check('shell keeps the product proportion', shellInfo !== null && Math.abs(shellInfo.ratio - 0.178) <= 0.003, shellInfo === null ? 'n/a' : String(shellInfo.ratio))
     check('shell header is 40px', shellInfo !== null && Math.abs(shellInfo.head - 40) <= 2, shellInfo === null ? 'n/a' : shellInfo.head + 'px')
     check('shell shows demo sessions', shellInfo !== null && shellInfo.sessions >= 3, shellInfo === null ? 'n/a' : String(shellInfo.sessions))
 
@@ -434,7 +441,7 @@ if (browserPath === null) {
             var side = sr.querySelector('.sh-side');
             if (!root || !side) continue;
             return getComputedStyle(root).getPropertyValue('--sh-side-w').trim()
-                + '|' + Math.round(side.getBoundingClientRect().width) + 'px';
+                + '|' + side.offsetWidth + 'px';
         }
         return 'no shell';
     })()`)

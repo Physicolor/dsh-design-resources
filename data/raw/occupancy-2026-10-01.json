@@ -1,0 +1,73 @@
+{
+    "$comment": "座位占用者快照。规范与文案里引用的『某个座位上有几个插件、几个没声明 order』必须指回这里，否则就是没有出处的数字。采集方式：cordis_inspect_query → client / Slots / listSubTree(root=<座位名>)，取返回的 selected.occupants。",
+    "capturedAt": "2026-10-01T19:02:00+08:00",
+    "method": "cordis_inspect_query(platform=client, provider=Slots, method=listSubTree, input.root=<seat>) → data.selected.occupants",
+    "caveat": "占位数量取决于本机当时装了哪些插件、哪些处于启用状态；换一台机器或换一个 profile 结果会不同。引用这些数字时必须同时说明采集时间。",
+    "seats": {
+        "shell.overlay": {
+            "kind": "list",
+            "scope": "root",
+            "purpose": "Frame-wide floating layer, above every column and outside their scroll containers.",
+            "occupants": [
+                { "id": "session-log-upload-toast", "registrant": "mf", "order": null },
+                { "id": "shortcuts", "registrant": "mf", "order": null },
+                { "id": "dsh-market-toast", "registrant": "dsh-market", "order": null },
+                { "id": "desktop-onboarding", "registrant": "mf", "order": null },
+                { "id": "account.platform-page", "registrant": "mf", "order": null },
+                { "id": "workspace.session-rename", "registrant": "mf", "order": null },
+                { "id": "workspace.session-archive", "registrant": "mf", "order": null },
+                { "id": "workspace.row-toast", "registrant": "mf", "order": null },
+                { "id": "plugin-manager.refresh-toast", "registrant": "mf", "order": null },
+                { "id": "chat.quota-notice", "registrant": "mf", "order": null },
+                { "id": "schedule.delete-toast", "registrant": "mf", "order": null },
+                { "id": "context-overview", "registrant": "dsh-context", "order": 10 },
+                { "id": "enhancer-center-card", "registrant": "mf", "order": 30 },
+                { "id": "usage-center", "registrant": "mf", "order": 100 }
+            ],
+            "summary": { "total": 14, "withoutOrder": 11, "withOrder": 3 }
+        },
+        "settings.section": {
+            "kind": "list",
+            "scope": "root",
+            "purpose": "One settings page per list entry.",
+            "occupants": [
+                { "id": "account", "registrant": "mf", "order": -10 },
+                { "id": "general", "registrant": "mf", "order": 0 },
+                { "id": "models", "registrant": "mf", "order": 10 },
+                { "id": "commandcode", "registrant": "mf", "order": 12 },
+                { "id": "plugins", "registrant": "mf", "order": 15 },
+                { "id": "agent-presets", "registrant": "mf", "order": 20 },
+                { "id": "widgets", "registrant": "mf", "order": 30 },
+                { "id": "research-cordis", "registrant": "mf", "order": 40 },
+                { "id": "market", "registrant": "dsh-market", "order": 40 },
+                { "id": "ui-harmony", "registrant": "mf", "order": 40 },
+                { "id": "notification", "registrant": "mf", "order": 60 }
+            ],
+            "summary": { "total": 11, "orderForty": 3, "orderFortyIds": ["research-cordis", "market", "ui-harmony"] }
+        },
+        "conversation.session.header.utilities": {
+            "kind": "list",
+            "scope": "session",
+            "purpose": "Right-aligned Session utilities in ascending order.",
+            "occupants": [
+                { "id": "open-in-app", "registrant": "mf", "order": -10 },
+                { "id": "schedule-catalog", "registrant": "mf", "order": -5 },
+                { "id": "session-log-download", "registrant": "mf", "order": null },
+                { "id": "widgets-panel-toggle", "registrant": "mf", "order": 5 }
+            ],
+            "summary": { "total": 4, "withoutOrder": 1, "withOrder": 3 }
+        },
+        "sidebar.footer.action": {
+            "kind": "list",
+            "scope": "root",
+            "purpose": "Optional actions beside Settings at the sidebar foot.",
+            "occupants": [
+                { "id": "cordis-panel", "registrant": "mf", "order": null },
+                { "id": "usage-center-entry", "registrant": "mf", "order": null },
+                { "id": "commandcode-panel", "registrant": "mf", "order": 1 },
+                { "id": "context-overview", "registrant": "dsh-context", "order": 10 }
+            ],
+            "summary": { "total": 4, "withoutOrder": 2, "withOrder": 2 }
+        }
+    }
+}
