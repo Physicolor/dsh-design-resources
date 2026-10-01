@@ -629,7 +629,13 @@ code, .mono { font-family: var(--site-font-mono); font-size: 12px; }
 .prose li + li { margin-top: 6px; }
 .prose table { margin: 0 0 var(--site-s4); font-size: var(--site-text-note); border-collapse: collapse; width: 100%; }
 .prose th, .prose td { border: 1px solid var(--site-line-soft); padding: 8px var(--site-s3); text-align: left; }
-.prose thead th { background: var(--site-bg-subtle); }
+.prose thead th {
+    background: var(--site-bg-subtle);
+    /* No sticky head inside prose: a header that detaches from its own table
+     * reads as if the first row had floated off. Only `.table-wrap` — the data
+     * tables, where the container really is the scroller — keeps one. */
+    position: static;
+}
 .prose code { background: var(--site-bg-code); padding: 1px 5px; border-radius: 5px; }
 .prose pre { margin: 0 0 var(--site-s4); background: var(--site-bg-code); padding: var(--site-s3); border-radius: var(--site-radius-s); overflow-x: auto; }
 .prose pre code { background: none; padding: 0; }
