@@ -48,6 +48,56 @@ const OPEN_SETTINGS = `(() => {
 })()`
 
 /**
+ * Open one session from the sidebar.
+ *
+ * Session rows are clickable containers rather than `<a>`/`<button>`, so the
+ * handle is the title text, walked up to whatever handles the click.
+ */
+const OPEN_SESSION = `(() => {
+  const scope = document.querySelector('[data-slot="sidebar.workspaces"]')
+  if (scope === null) throw new Error('workspace list not found')
+  const leaf = [...scope.querySelectorAll('*')]
+    .find(el => el.children.length === 0 && (el.textContent || '').trim().length > 6)
+  if (leaf === undefined) throw new Error('no session row matched')
+  const row = leaf.closest('[role="button"], li, [class*="_row"]') ?? leaf.parentElement
+  row.click()
+  return true
+})()`
+
+/**
+ * Measure the real render tree.
+ *
+ * `[data-slot]` nodes are `display: contents` — logical seats with no box of
+ * their own — so measuring them yields zeros. What matters is the elements the
+ * seats actually render, so this walks the live tree and keeps every node that
+ * occupies space, with its computed style.
+ */
+const GEOMETRY_PROBE = `(() => {
+  const PROPS = ['display','position','width','height','minHeight','maxWidth','paddingTop','paddingRight','paddingBottom','paddingLeft','marginTop','marginRight','marginBottom','marginLeft','gap','rowGap','columnGap','gridTemplateColumns','flexDirection','alignItems','justifyContent','flexGrow','flexShrink','backgroundColor','color','borderRadius','borderTopWidth','borderBottomWidth','borderLeftWidth','borderRightWidth','borderColor','borderStyle','fontSize','fontWeight','lineHeight','fontFamily','boxShadow','opacity','overflowX','overflowY','backdropFilter','transitionDuration','transitionTimingFunction']
+  const nodes = []
+  const walk = (el, depth) => {
+    if (depth > 9 || nodes.length > 3000) return
+    const r = el.getBoundingClientRect()
+    if (r.width > 1 && r.height > 1) {
+      const cs = getComputedStyle(el)
+      const style = {}
+      for (const p of PROPS) style[p] = cs[p]
+      nodes.push({
+        d: depth,
+        tag: el.tagName.toLowerCase(),
+        slot: el.getAttribute('data-slot') || undefined,
+        cls: (el.className || '').toString().slice(0, 140),
+        rect: [Math.round(r.x), Math.round(r.y), Math.round(r.width), Math.round(r.height)],
+        style,
+      })
+    }
+    for (const child of el.children) walk(child, depth + 1)
+  }
+  walk(document.getElementById('root') || document.body, 0)
+  return JSON.stringify({ viewport: { w: innerWidth, h: innerHeight }, nodes })
+})()`
+
+/**
  * Click one entry in the settings nav by its exact label.
  * @param label - the nav item's text, e.g. `通用设置`.
  * @returns a step snippet.
@@ -79,18 +129,13 @@ const SCENES = [
   {
     name: '02-session',
     title: '会话页',
-    steps: [`(() => {
-      const scope = document.querySelector('[data-slot="sidebar.workspaces"]')
-      if (scope === null) throw new Error('workspace list not found')
-      /* session rows are clickable containers, not <a>/<button>: find the leaf
-       * that carries the title text and walk up to whatever handles the click */
-      const leaf = [...scope.querySelectorAll('*')]
-        .find(el => el.children.length === 0 && (el.textContent || '').trim().startsWith('我最近一直在开发'))
-      if (leaf === undefined) throw new Error('no session row matched')
-      const row = leaf.closest('[role="button"], li, [class*="_row"]') ?? leaf.parentElement
-      row.click()
-      return true
-    })()`],
+    steps: [OPEN_SESSION],
+  },
+  {
+    name: '08-session-geometry',
+    title: '会话页 · 几何采集',
+    steps: [OPEN_SESSION],
+    collect: true,
   },
   {
     name: '03-settings-open',
@@ -283,6 +328,12 @@ try {
     const shot = await send('Page.captureScreenshot', { format: 'png' }, 90000)
     await writeFile(join(OUT, `${scene.name}.png`), Buffer.from(shot.data, 'base64'))
     console.log(`captured  ${scene.name}  ${scene.title}`)
+
+    if (scene.collect === true) {
+      const json = await evaluate(GEOMETRY_PROBE)
+      await writeFile(join(OUT, 'geometry.json'), json, 'utf8')
+      console.log(`geometry  ${scene.name}  ${Math.round(json.length / 1024)} KB`)
+    }
   }
 } catch (error) {
   console.error(`capture failed: ${error.message}`)

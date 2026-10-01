@@ -24,7 +24,7 @@
         "components": "Reusable source",
         "resources": "Resources",
         "home": "Home",
-        "why": "Why this spec exists",
+        "why": "Why this exists",
         "allComponents": "All components",
         "seats": "Seat directory",
         "icons": "Official icon set",
@@ -45,111 +45,122 @@
         "official": "Ships with the product",
         "proposed": "Proposed here",
         "officialNote": "This component mirrors an interface element the product actually ships — you will meet it in the app.",
-        "proposedNote": "The product has no such component. This is an implementation proposal from this repository: every number is anchored to an official selector, but it is not UI the product ships — do not read it as what DSH looks like."
+        "proposedNote": "The product has no such component. This is an implementation proposal from this repository: every number traces back to an element the product already ships, but the component itself is not in the product — do not read it as what DSH looks like today."
     },
     "home": {
         "eyebrow": "DeepSeek Design Resources",
         "title": "Making community plugins<br>look like one product.",
-        "lede": "DeepSeek Harness gives plugin authors a technical stack and a development contract, but no design spec: how large a control should be, how much space belongs between two of them, how long a transition runs, how to draw an icon, or who wins when two plugins want the same spot. This resource supplies that layer — every number carries its source, and every component is ready to use.",
+        "lede": "By the fifth plugin, the interface stops looking like one product: buttons at different heights, every corner radius its own, a dialog that animates here and not there; and when two plugins both want the bottom of the sidebar, whichever loaded first sits on top. The product gives plugins somewhere to run, but no shared answer to how big a control is, how much space goes between two of them, how long a transition runs, or how to draw an icon. This resource supplies it: every number carries its source, and every component is ready to use.",
         "sectionTitle": "What is in here",
         "sectionHint": "Collected by scripts from a running harness; everything is reproducible",
         "cards": {
-            "spec": { "title": "Spec", "body": "Frame layout, seat selection, controls, tokens, motion, icons, accessibility and a pre-submission checklist.", "note": "read this layer first" },
-            "components": { "title": "Reusable source", "body": "Categorised, dependency-free React built only on official tokens, with its geometry source and when-to-use.", "note": "copy and go" },
-            "seats": { "title": "Seat directory", "body": "Every UI seat the harness declares: purpose, registration contract and shadowing risk.", "note": "decide where your UI lives" },
-            "icons": { "title": "Official icon set", "body": "Icons extracted from the product itself, with their path data untouched.", "note": "stop drawing a fifth close button" },
-            "tokens": { "title": "Design tokens", "body": "The official semantic tokens in both light and dark, side by side.", "note": "never hard-code a colour" },
-            "why": { "title": "Why", "body": "The product shipped compatibility for the stack but not for design — that is why this repository exists.", "note": "a two-minute read" }
+            "spec": { "title": "Spec", "body": "Page skeletons, controls, tokens, motion, icons, accessibility, and a checklist to run before you submit.", "note": "read this layer first" },
+            "components": { "title": "Reusable source", "body": "React components sorted by category, built on official tokens, each with where its numbers came from and when to use it.", "note": "take it and go" },
+            "seats": { "title": "Seat directory", "body": "Every place in the product a plugin can put UI: what it is for, how many plugins fit, and whether it covers official UI.", "note": "decide where your UI lives" },
+            "icons": { "title": "Official icon set", "body": "Icons lifted from the product unchanged, shapes and names both.", "note": "stop drawing a fifth close button" },
+            "tokens": { "title": "Design tokens", "body": "The official values for colour, radius and spacing, light and dark side by side. Use them as they are.", "note": "never hard-code a colour" },
+            "why": { "title": "Why", "body": "Plugins install fine; they just do not add up to one product — that is why this repository exists.", "note": "a two-minute read" }
         }
     },
     "why": {
-        "title": "Why this spec exists",
-        "lede": "In one line: the product gave plugins a stack that runs, not a spec that looks consistent.",
-        "officialTitle": "What the product already provides",
-        "missingTitle": "What it does not",
-        "proofTitle": "This has evidence",
+        "title": "Why plugins do not look like one product",
+        "lede": "Each plugin is fine on its own; together they stop looking like one product. The reason is plain: there is an interface to install into, but no shared answer for what a plugin should look like once it is in. The three sections below cover what the product already gives you, what you will run into, and where these numbers come from.",
+        "officialTitle": "What the product already gives you",
+        "missingTitle": "What you will run into",
+        "proofTitle": "This is not a guess",
         "scopeTitle": "What this repository will not do",
         "items": {
-            "tokens": "A complete semantic token set: colour, elevation and state all have official values.",
-            "primitives": "Shared control primitives (button, pill, tag, switch, input, menu, modal, toast…), with an explicit instruction not to copy a control that already exists.",
-            "seats": "A seat system where every seat declares its purpose, registration contract and shadowing risk.",
-            "icons": "An icon set with a consistent naming scheme and size families.",
-            "layout": "No layout spec: which region a plugin may occupy, how much of it, and how it coordinates with the conversation area are all unstated.",
-            "order": "No placement contract: on a list seat, the order value is left to good intentions.",
-            "motion": "No motion spec: durations and curves are not unified.",
-            "iconGeometry": "No icon geometry: stroke weight and optical alignment for a self-drawn glyph have no reference.",
-            "conflict": "No arbitration: when two plugins want the same seat or the same visual space, nothing tells anyone.",
-            "aesthetics": "It does not judge aesthetics. The spec keeps things consistent and usable; it does not claim one style is prettier.",
-            "force": "It does not force anyone to change their code. A spec is a shared reference for those who opt in.",
-            "invent": "It does not invent numbers. Every size, gap and duration carries its source, and where no authority exists it says so."
+            "tokens": "A ready-made set of values for colour, type, radius, spacing and elevation, in light and dark.",
+            "primitives": "Buttons, switches, inputs, menus and notices already ship with the product, along with one explicit instruction: do not copy a control that already exists.",
+            "seats": "A list of everywhere UI can go: what each spot is for, how many plugins fit, and whether it covers official UI.",
+            "icons": "An icon set with a consistent naming scheme and size families, so a redrawn glyph does not drift.",
+            "aesthetics": "It does not judge how things look. It keeps things consistent and usable; it does not claim one style is better.",
+            "force": "It does not force anyone to change their code. It is a shared reference for people who opt in.",
+            "invent": "It does not invent numbers. Every size, gap and duration can name its source, and where no authority exists it says so."
         },
-        "overlayLabel": "Measured conflicts",
-        "closing": "This is not one plugin's fault; it is what happens without a spec and a check. This resource does two things: fills the gap, and makes conflicts visible."
+        "gaps": {
+            "layoutClaim": "Two plugins both want their button at the bottom of the sidebar; whichever loaded first sits on top.",
+            "layoutBody": "How much room a plugin may take, and how it shares space with the conversation, has no shared answer. Each plugin follows its own reading, and together they crowd: one covers the conversation, another leaves a gap nobody uses.",
+            "orderClaim": "The order of plugins in one spot can change when you reload.",
+            "orderBody": "Spots that take several plugins sort them by order, but nothing says what to put there. The default is 0, so whichever loads first goes first — the user sees an arbitrary stack, not the important one on top.",
+            "motionClaim": "One plugin closes a panel in 100 milliseconds; the next takes 350.",
+            "motionBody": "How long an expand, a collapse or a popover should take has no shared scale. Both numbers are defensible on their own; side by side they look like two different products.",
+            "iconGeometryClaim": "A hand-drawn icon gives itself away next to an official one.",
+            "iconGeometryBody": "How thick the stroke should be, how it lines up with its neighbours, how much air it needs — there is no reference to check against. Fine alone, rough in a row.",
+            "conflictClaim": "When two plugins want the same spot, nothing tells you.",
+            "conflictBody": "The later one simply covers the earlier one. Nothing is missing from the interface and nothing logs an error — you find out from user reports."
+        },
+        "proof": {
+            "overlay": "14 plugins occupy shell.overlay in the official UI, and 13 of them never say where they belong in the order. They all fall to the default 0, so the stacking follows load order — reload the same machine and the order can change.",
+            "settings": "11 plugins occupy settings.section, and 3 of them all declare order 40. Which of those three comes first is equally unexplained."
+        },
+        "asideNote": "Both figures come from counting the running harness item by item, not from an estimate.",
+        "closing": "This is not one plugin's fault. With no shared answers, everyone makes a reasonable choice and the sum still looks like this. The repository does two things: it fills in the numbers and the practice that were missing, and it makes the collisions visible."
     },
     "spec": {
         "title": "Design spec",
-        "lede": "In reading order. If this ecosystem is new to you, start with the frame layout and seat selection.",
+        "lede": "In reading order. If you are writing your first plugin, start with the page skeleton and seat selection.",
         "chars": "chars",
         "notFound": "No such document",
         "fileLabel": "File",
         "sizeLabel": "Size",
         "sectionsLabel": "Sections",
         "outline": "On this page",
-        "relatedNote": "Checkable clauses map to the checklist and to the auditor's rules.",
+        "relatedNote": "The checkable clauses in the spec map to the checklist and the auditor's rules.",
         "chineseOnly": "This document is currently Chinese-only."
     },
     "components": {
         "title": "Reusable source",
-        "lede": "Every component is a dependency-free React implementation that uses official tokens only, and carries its geometry source and when-to-use. Copy and go.",
+        "lede": "Each component is a standalone React implementation built on official tokens, with where its numbers came from and when to use it. Take it and go.",
         "viewAll": "View all",
         "count": "",
         "whenToUse": "When to use",
         "whenNotToUse": "When not to use",
-        "geometrySource": "Geometry source",
+        "geometrySource": "Where the numbers came from",
         "tags": "Tags",
         "preview": "Live preview",
         "sourceLabel": "Source",
         "docHuman": "Guide",
         "docSpec": "Spec",
-        "docSpecNote": "This one is for agents and engineers: geometry sources, API, tokens and machine-checkable constraints.",
+        "docSpecNote": "This one is for engineers and agents: where the numbers came from, the API, the tokens, and the constraints a machine can check.",
         "chineseOnly": "This component's documentation is currently Chinese-only.",
-        "usage": "The component directory is an npm package and can be installed; a single folder can also be copied straight into your plugin."
+        "usage": "The component directory is itself an npm package you can install, or you can copy just the folder you need into your plugin."
     },
     "seats": {
         "title": "Seat directory",
-        "lede": "The harness declares {n} UI seats. Your plugin can only live in one of them — choosing the wrong seat costs more than writing the wrong style.",
-        "riskyNote": "{n} seats carry a shadowing risk of shadows-shipped-ui: occupying one replaces official UI. Use those only when you really mean to replace it.",
+        "lede": "The product has {n} places a plugin can put UI. Your interface lives in exactly one of them — choosing the wrong one costs more than writing the wrong style.",
+        "riskyNote": "{n} of them cover official UI once you occupy them. Use those only when you really mean to replace that part of the interface.",
         "tableTitle": "{n} seats",
         "treeOrder": "in tree order",
         "filter": "filter",
-        "columns": { "name": "Seat", "kind": "Kind", "scope": "Scope", "risk": "Shadowing risk", "purpose": "Purpose" },
-        "safe": "safe",
-        "shadows": "shadows official UI",
+        "columns": { "name": "Seat", "kind": "Kind", "scope": "Scope", "risk": "Covers official UI", "purpose": "Purpose" },
+        "safe": "no",
+        "shadows": "covers it",
         "kindsTitle": "Seat kinds",
         "scopesTitle": "Scopes",
         "orderTitle": "How to choose",
         "kinds": {
-            "single": "single — one occupant; a later registration shadows an earlier one",
-            "list": "list — several plugins, ordered ascending by order",
-            "keyed": "keyed — dispatched by key",
-            "chain": "chain — selector-routed, may replace the whole chain"
+            "single": "single — one occupant only; a later registration covers an earlier one",
+            "list": "list — as many as you like, sorted by order from low to high",
+            "keyed": "keyed — handed out by key, one slot each",
+            "chain": "chain — a selector decides; the whole chain can be replaced"
         },
         "scopes": {
-            "root": "root — global, exists without a session",
-            "maybe": "session-maybe — session-related but nullable",
-            "session": "session — renders only with a selected session"
+            "root": "root — global, present even with no session",
+            "maybe": "session-maybe — tied to a session, but can be empty",
+            "session": "session — appears once a session is selected"
         },
-        "orderNote": "Start with the list seat whose meaning fits best; fall back to a single seat only when nothing fits; treat seats with replaceRisk shadows-shipped-ui as a last resort."
+        "orderNote": "Start with the list spot whose meaning fits best; if none does, fall back to a single spot; leave the ones that cover official UI for last."
     },
     "icons": {
         "title": "Official icon set",
-        "lede": "{n} icons, all extracted from the product's own client bundle, with path data untouched. Naming: ic_ds_&lt;name&gt;_&lt;style&gt;_&lt;size&gt;. Click any icon to copy its SVG.",
+        "lede": "{n} icons, lifted from the product exactly as they are, shapes untouched. Naming: ic_ds_&lt;name&gt;_&lt;style&gt;_&lt;size&gt;. Click one to copy its SVG.",
         "familyNote": "Size families",
-        "familyTail": "A self-drawn glyph should match the visual weight and stroke weight of the icons beside it.",
+        "familyTail": "If you draw your own, match the stroke weight and the breathing room of the icons beside it.",
         "tableTitle": "{n} icons",
         "order": "in extraction order",
         "whyTitle": "Why use these",
-        "why": "Mismatched icon style is where a plugin interface gives itself away. The official set already has its visual weight and padding worked out; reusing it is less work than drawing something \"close enough\", and it is consistent.",
+        "why": "Mismatched icons are where a plugin interface gives itself away. This set already has its weight and padding worked out; reusing it is less work than drawing something close enough, and it stays even.",
         "namingTitle": "Naming",
         "authored": "Authored name",
         "component": "Component",
@@ -157,8 +168,8 @@
     },
     "tokens": {
         "title": "Design tokens",
-        "lede": "{palette} raw palette values back {aliases} semantic aliases. A plugin should use the aliases only — light and dark are the product's job.",
-        "usageNote": "Usage: color: var(--dsw-alias-label-primary). A hard-coded colour is the number one reason plugins break in dark mode.",
+        "lede": "{palette} colour values back {aliases} named colours. Use the names, not the values — light and dark are already worked out.",
+        "usageNote": "Reach for a token name, never a hard-coded value. The first thing to give way in dark mode is a colour written into the stylesheet.",
         "tableTitle": "{n} aliases",
         "order": "in definition order",
         "columns": { "name": "Token", "swatch": "Swatch", "light": "Light", "dark": "Dark" },
@@ -169,12 +180,12 @@
     },
     "footer": {
         "name": "DeepSeek Design Resources",
-        "source": "Spec and data collected from a running DeepSeek Harness, with sources recorded per item",
+        "source": "Spec and data taken from a running DeepSeek Harness, with the source of every item recorded",
         "generated": "Data generated"
     },
     "lab": {
         "motionTitle": "Motion bench",
-        "motionNote": "Pick a duration and a curve, then play: the block runs once. A duration in a spec should not be a number on paper — 350ms against 100ms is clearer in one glance than in ten lines of prose.",
+        "motionNote": "Pick a duration and a curve, then press play: the block runs once. A duration on paper means nothing; put two side by side and 350 milliseconds against 100 reads in one glance.",
         "play": "Play",
         "duration": "Duration",
         "curve": "Curve",
@@ -183,6 +194,6 @@
     },
     "notFound": {
         "title": "No such page",
-        "lede": "The link may point at something that has not been generated yet. Head back home, or use the search above."
+        "lede": "That link points at something that has not been generated yet. Head home, or use the search above."
     }
 }

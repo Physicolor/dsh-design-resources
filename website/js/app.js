@@ -926,7 +926,6 @@
 
     /** The positioning page. */
     function pageWhy() {
-        var s = D.stats || {}
         mainEl.innerHTML = '<div class="main-inner">'
             + '<div class="hero"><h1 class="hero__title">' + esc(t('why.title')) + '</h1>'
             + '<p class="hero__lede">' + esc(t('why.lede')) + '</p></div>'
@@ -940,16 +939,12 @@
             + '</ul>'
             + '<h2>' + esc(t('why.missingTitle')) + '</h2>'
             + '<ul>'
-            + '<li><strong>' + esc(t('why.items.layout')) + '</strong></li>'
-            + '<li><strong>' + esc(t('why.items.order')) + '</strong></li>'
-            + '<li><strong>' + esc(t('why.items.motion')) + '</strong></li>'
-            + '<li><strong>' + esc(t('why.items.iconGeometry')) + '</strong></li>'
-            + '<li><strong>' + esc(t('why.items.conflict')) + '</strong></li>'
+            + gap('layout') + gap('order') + gap('motion') + gap('iconGeometry') + gap('conflict')
             + '</ul>'
             + '<h2>' + esc(t('why.proofTitle')) + '</h2>'
             + '<div class="callout callout--warn"><span class="callout__mark">!</span><div>'
-            + '<p><code>shell.overlay</code> — ' + (s.seats ? '' : '') + esc(whyOverlayLine()) + '</p>'
-            + '<p><code>settings.section</code> — ' + esc(whySettingsLine()) + '</p>'
+            + '<p><code>shell.overlay</code> — ' + esc(t('why.proof.overlay')) + '</p>'
+            + '<p><code>settings.section</code> — ' + esc(t('why.proof.settings')) + '</p>'
             + '</div></div>'
             + '<p>' + esc(t('why.closing')) + '</p>'
             + '<h2>' + esc(t('why.scopeTitle')) + '</h2>'
@@ -961,29 +956,23 @@
             + '</div></section></div>'
 
         renderAside([
-            { title: t('spec.relatedNote'), html: p(t('why.proofTitle')) },
+            { title: t('why.proofTitle'), html: p(t('why.asideNote')) },
             { title: t('index.resources'), html: ul([t('index.seats'), t('index.icons'), t('index.tokens')]) },
         ])
     }
 
     /**
-     * The measured `shell.overlay` finding, in the current language.
-     * @returns sentence.
+     * One thing the product does not answer, as a claim plus its explanation.
+     *
+     * The claim is what the reader has already seen happen; the explanation says
+     * why it happens. Both sentences live in the dictionary so each language can
+     * phrase them its own way.
+     * @param id - gap id, e.g. `layout`.
+     * @returns html.
      */
-    function whyOverlayLine() {
-        return LANG === 'zh'
-            ? '14 个占用者，其中 13 个没有声明 order，全部落在默认值 0——层级顺序由注册时序决定，不可预测。'
-            : '14 occupants, 13 of them without an explicit order, all landing on the default 0 — stacking is decided by registration timing and is unpredictable.'
-    }
-
-    /**
-     * The measured `settings.section` finding, in the current language.
-     * @returns sentence.
-     */
-    function whySettingsLine() {
-        return LANG === 'zh'
-            ? '11 个占用者，其中三个把 order 都写成 40，顺序无法解释。'
-            : '11 occupants, three of them declaring order 40 — the resulting order cannot be explained.'
+    function gap(id) {
+        return '<li><strong>' + esc(t('why.gaps.' + id + 'Claim')) + '</strong> '
+            + esc(t('why.gaps.' + id + 'Body')) + '</li>'
     }
 
     /**
@@ -1518,8 +1507,8 @@
     function applyStaticText() {
         document.documentElement.lang = LANG === 'zh' ? 'zh-CN' : 'en'
         document.title = LANG === 'zh'
-            ? 'DeepSeek Design Resources — DeepSeek Harness 界面规范与资源'
-            : 'DeepSeek Design Resources — interface spec and resources for DeepSeek Harness'
+            ? 'DeepSeek Design Resources — 插件界面规范、组件与图标'
+            : 'DeepSeek Design Resources — spec, components and icons for plugin UI'
         Array.prototype.forEach.call(document.querySelectorAll('[data-t]'), function (node) {
             node.textContent = t(node.getAttribute('data-t'))
         })
