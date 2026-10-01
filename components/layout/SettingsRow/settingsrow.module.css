@@ -1,0 +1,84 @@
+/* 几何锚点来自官方 @deepseek-ai/dsh-client-ui-primitives/lib 与
+ * website/css/dsh-tokens.css 中已核实的值：
+ *   Button.module.css .button     → font-size 14px / line-height 22px
+ *                                   （标题字号档，同 PanelHeader）
+ *   说明文字用官方合成 token --dsw-font-xs-13（13px/20px），
+ *   该 token 由 demo 脚手架与官方主题定义，本文件带显式兜底值。
+ *   颜色：--dsw-alias-label-primary / --dsw-alias-label-tertiary
+ *   （DisclosureRow.module.css .title 与 Menu.module.css .itemIcon 使用的次级文字色）
+ *   Menu.module.css .footer       → border-top 0.5px solid var(--dsw-alias-border-l2)
+ *                                   （浮层/分区之间的分隔线用 l2）
+ *   最小高度、内边距、间距为本仓库建议值（全部 4 的倍数），README 单列。
+ * 实现为本仓库原创：CSS 变量承载几何 + 语义 token 承载颜色，未复制官方 CSS 源码。 */
+
+.row {
+  --dsh-sr-min-height: 44px;
+  --dsh-sr-pad-y: 12px;
+  --dsh-sr-pad-x: 12px;
+  --dsh-sr-gap: 12px;
+
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--dsh-sr-gap);
+  min-height: var(--dsh-sr-min-height);
+  padding: var(--dsh-sr-pad-y) var(--dsh-sr-pad-x);
+  border-radius: 10px; /* 官方 Menu.module.css .item 的圆角，让悬停底不露直角 */
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* 行间分隔线：token 取官方 Menu.module.css 的 .footer（0.5px + border-l2：
+ * 浮层/分区之间的边界用 l2，而同层内容分隔用 l1）。
+ * 实现方式改用 inset box-shadow，理由同 PanelHeader：本行有 min-height 与
+ * 10px 圆角，border-bottom 既会把高度顶成 44.5px，也会被圆角切成弧线。
+ * 列表里最后一行请传 divider={false}，或由父级用 :last-child 覆盖。 */
+.divider {
+  box-shadow: inset 0 -0.5px 0 0 var(--dsw-alias-border-l2);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.title {
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--dsw-alias-label-primary);
+}
+
+.description {
+  /* 官方合成 token；宿主未注入时退回同一组数值（13/20）。
+   * 用 longhand 而不是 font 简写：简写的兜底值必须自带 font-family，
+   * 而这里没有可靠的字族可写。 */
+  font-size: var(--dsh-sr-desc-size, 13px);
+  line-height: var(--dsh-sr-desc-line, 20px);
+  color: var(--dsw-alias-label-tertiary);
+}
+
+/* 官方把 13/20 打包成合成 token --dsw-font-xs-13（见 ReadBlock.module.css 的
+ * .count）。宿主注入了该 token 就整体采用它，否则用上面两条 longhand 兜底。 */
+@supports (font: var(--dsw-font-xs-13)) {
+  .description {
+    font: var(--dsw-font-xs-13);
+  }
+}
+
+.control {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 官方 Input.module.css / Switch.module.css 都没给「行」定义焦点样式，它们只
+ * 给控件本身定义（Switch 的 :focus-visible）。因此本组件不动控件，改用一条
+ * 建议值的整行悬停底，让鼠标用户看清当前指向哪一行；键盘焦点环由右侧控件
+ * 自行提供（官方 Switch.module.css 的 :focus-visible: outline 2px brand-primary）。 */
+.row:hover {
+  background: var(--dsw-alias-interactive-bg-hover);
+}

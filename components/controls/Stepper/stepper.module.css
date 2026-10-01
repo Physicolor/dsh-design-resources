@@ -1,0 +1,142 @@
+/* Stepper 数字步进器 —— 官方没有此控件，全部几何按下列官方锚点拼装：
+ *   .wrap        ← 官方 Input.module.css .wrap（height 32px / padding 0 8px / gap 6px /
+ *                  border 0.5px solid var(--dsw-alias-border-l4) / border-radius 8px /
+ *                  background var(--dsw-alias-bg-layer-1)）
+ *   .wrap:focus-within ← 官方 Input.module.css .wrap:focus-within（border-color 品牌色）
+ *   .field       ← 官方 Input.module.css .input（font-size 14px / line-height 22px /
+ *                  color var(--dsw-alias-label-primary)）
+ *   .icon 16×16  ← 官方 Button.module.css .icon / Input.module.css .icon
+ *   .button 三态 ← 官方 Button.module.css .ghost:hover / .ghost:active / .button:disabled
+ *   .button 字色  ← 官方 Button.module.css .button（color var(--dsw-alias-label-primary)）
+ * 带 § 的数值是本仓库建议值（官方无此数值），理由见 README「几何来源」。
+ * 实现为本仓库原创：几何用局部 CSS 变量承载，未复制官方 CSS 源码。 */
+
+.wrap {
+  --dsh-stepper-height: 32px;
+  --dsh-stepper-pad-x: 8px;
+  --dsh-stepper-gap: 6px;
+  --dsh-stepper-radius: 8px;
+  --dsh-stepper-button: 28px;
+  --dsh-stepper-icon: 16px;
+  /* § 本仓库建议值：成对的加减按钮圆角。理由：外壳官方圆角是 r8，内件取同值可避免
+   * 再引入官方尺度之外的圆角（TK-MF-03）。 */
+  --dsh-stepper-button-radius: 8px;
+  /* § 本仓库建议值：数字区宽度 40px。理由：官方 Input 的 .input 是 flex:1，在本控件里
+   * 需要一个显式宽度才不会被内容撑开；40px 是 4 的倍数，按 14px 字号下等宽数字每字不超过
+   * 0.7em（≈10px）估算可容纳 4 位数字。宿主可用 className 覆盖。 */
+  --dsh-stepper-field-width: 40px;
+
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dsh-stepper-gap);
+  height: var(--dsh-stepper-height);
+  padding: 0 var(--dsh-stepper-pad-x);
+  border: 0.5px solid var(--dsw-alias-border-l4);
+  border-radius: var(--dsh-stepper-radius);
+  background: var(--dsw-alias-bg-layer-1);
+  font-family: inherit;
+  color: var(--dsw-alias-label-primary);
+}
+
+.wrap:focus-within {
+  border-color: var(--dsw-alias-brand-primary);
+}
+
+/* 整组禁用：文字降到 label-tertiary（CT-MF-09，不靠整体降透明度），按钮各自走 :disabled。 */
+.wrap[data-disabled='true'] {
+  cursor: not-allowed;
+}
+
+.wrap[data-disabled='true'] .field {
+  color: var(--dsw-alias-label-tertiary);
+}
+
+/* ------------------------------------------------------------------ 加减按钮 */
+
+.button {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--dsh-stepper-button);
+  height: var(--dsh-stepper-button);
+  padding: 0;
+  border: 0;
+  border-radius: var(--dsh-stepper-button-radius);
+  background: transparent;
+  color: var(--dsw-alias-label-primary);
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled) {
+  background: var(--dsw-alias-interactive-bg-hover);
+}
+
+.button:active:not(:disabled) {
+  background: var(--dsw-alias-interactive-bg-active);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+/* § 本仓库建议值：官方 Button 无焦点样式；按 AC-MF-11 补 2px 品牌色焦点环，
+ * 偏移取 0 而不是 2px，理由：外壳内容高只有 31px、按钮 28px，2px 外偏移会把焦点环
+ * 画到外壳边框之外。 */
+.button:focus-visible {
+  outline: 2px solid var(--dsw-alias-brand-primary);
+  outline-offset: 0;
+}
+
+/* ------------------------------------------------------------------ 数字输入框 */
+
+.field {
+  flex: none;
+  width: var(--dsh-stepper-field-width);
+  min-width: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 22px;
+  /* § 本仓库建议值：等宽数字 + 居中。理由：加减时数字位宽不跳动（tabular-nums），
+   * 居中是步进器的通行读数方式；官方 Input 未规定对齐方式（它是普通文本输入）。 */
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  /* § 焦点环跟随圆角，取与外壳同值的 r8；见下方 .field:focus-visible。 */
+  border-radius: var(--dsh-stepper-radius);
+}
+
+/* 官方 Input 的做法是输入框 outline:none、由外壳 :focus-within 变色承接焦点；
+ * 这里额外补一个 2px 焦点环（§ 本仓库建议值，AC-MF-10 / AC-MF-11），
+ * 因为 0.5px 边框变色在浅色与深色主题下都太弱。 */
+.field:focus-visible {
+  outline: 2px solid var(--dsw-alias-brand-primary);
+  outline-offset: 0;
+}
+
+.field:disabled {
+  cursor: not-allowed;
+}
+
+/* ------------------------------------------------------------------ 图标 */
+
+.icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--dsh-stepper-icon);
+  height: var(--dsh-stepper-icon);
+}
+
+.icon > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

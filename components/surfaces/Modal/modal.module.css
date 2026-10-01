@@ -1,0 +1,141 @@
+/* Modal 对话框 —— 几何逐条对齐官方 Modal.module.css：
+ *   .root        fixed / inset:0 / z-index:1000 / 居中 / padding 24px
+ *   .mask        absolute / inset:0 / background var(--dsw-alias-bg-mask-1)
+ *                / backdrop-filter var(--dsw-mask-blur)
+ *   .dialog      gap 20px / width min(380px,100%) / padding 0 0 24px / r24
+ *                / layer-2 底色 / box-shadow var(--dsw-elevation-prominent)
+ *   .header      padding 22px 14px 12px 24px / gap 8px / space-between
+ *   .title       16/24/500
+ *   .close       28×28 / r8 / label-secondary / hover interactive-bg-hover
+ *   .description 14/22/400 / padding 0 24px
+ *   .body        margin-top 20px / padding 0 24px / min-width 0
+ *   .footer      flex-end / gap 8px / padding 0 24px
+ * 官方 JS 用 createPortal 到 body、Escape 关闭、点 mask 关闭、role="dialog"。
+ * 焦点陷阱与焦点样式为本仓库建议值（官方 Modal 没有），理由见 README。
+ * 实现为本仓库原创：用 CSS 变量承载几何，未复制官方 CSS 源码。 */
+
+.root {
+  --dsh-modal-z: 1000;
+  --dsh-modal-pad: 24px;
+
+  position: fixed;
+  inset: 0;
+  z-index: var(--dsh-modal-z);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--dsh-modal-pad);
+}
+
+.mask {
+  position: absolute;
+  inset: 0;
+  background: var(--dsw-alias-bg-mask-1);
+  backdrop-filter: var(--dsw-mask-blur);
+}
+
+.dialog {
+  --dsh-modal-width: 380px;
+  --dsh-modal-radius: 24px;
+  --dsh-modal-gap: 20px;
+  --dsh-modal-pad-x: 24px;
+
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dsh-modal-gap);
+  width: min(var(--dsh-modal-width), 100%);
+  padding: 0 0 24px;
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--dsh-modal-radius);
+  background: var(--dsw-alias-bg-layer-2);
+  box-shadow: var(--dsw-elevation-prominent);
+  /* § 本仓库建议值：对话框是可编程聚焦的容器（tabIndex=-1），
+   * 不画浏览器默认焦点环（官方依赖 :focus 默认行为，未显式声明）。 */
+  outline: none;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 22px 14px 12px 24px;
+}
+
+.title {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  color: var(--dsw-alias-label-primary);
+}
+
+.close {
+  flex: none;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* 官方未写 padding:0，依赖宿主全局 reset；本仓库组件不假定宿主 reset，
+   * 否则浏览器默认的按钮内边距会把这个方块撑大。 */
+  padding: 0;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.close:hover {
+  background: var(--dsw-alias-interactive-bg-hover);
+}
+
+/* § 本仓库建议值：官方 .close 没有焦点样式；写法对齐官方 Switch.module.css
+ * 的 :focus-visible（2px brand-primary + offset 2px）。 */
+.close:focus-visible {
+  outline: 2px solid var(--dsw-alias-brand-primary);
+  outline-offset: 2px;
+}
+
+.icon {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+.description {
+  margin: 0;
+  padding: 0 var(--dsh-modal-pad-x);
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  color: var(--dsw-alias-label-primary);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin-top: var(--dsh-modal-gap);
+  padding: 0 var(--dsh-modal-pad-x);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 0 var(--dsh-modal-pad-x);
+}

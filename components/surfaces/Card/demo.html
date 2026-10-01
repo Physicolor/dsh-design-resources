@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Card 卡片 · DSH 设计资源</title>
+<style>
+/* ---------------------------------------------------------------------------
+   演示用 token 脚手架。
+   数值逐条取自本仓库 website/css/dsh-tokens.css（由产品主题采集生成）与
+   app.asar 内官方主题对合成 token（elevation / shadow / font）的定义。
+   真实 DSH 运行时由宿主主题注入这些变量；demo 只是把同一批值内联进来，
+   组件类本身不写死任何颜色。
+   --------------------------------------------------------------------------- */
+:root {
+  --dsw-static-neutral-bluish-00: #fff;
+  --dsw-static-neutral-bluish-50: #f9fafb;
+  --dsw-static-neutral-bluish-60: #f9fafb;
+  --dsw-static-neutral-bluish-75: #f1f3f5;
+  --dsw-static-neutral-bluish-100: #ebeef2;
+  --dsw-static-neutral-bluish-150: #e9ecf2;
+  --dsw-static-neutral-bluish-200: #e1e5ee;
+  --dsw-static-neutral-bluish-300: #cfd3d6;
+  --dsw-static-neutral-bluish-400: #adb2b8;
+  --dsw-static-neutral-bluish-500: #979da6;
+  --dsw-static-neutral-bluish-600: #81858c;
+  --dsw-static-neutral-bluish-700: #61666b;
+  --dsw-static-neutral-bluish-750: #43454a;
+  --dsw-static-neutral-bluish-800: #353638;
+  --dsw-static-neutral-bluish-850: #2c2c2e;
+  --dsw-static-neutral-bluish-875: #232324;
+  --dsw-static-neutral-bluish-900: #1b1b1c;
+  --dsw-static-neutral-bluish-950: #151517;
+  --dsw-static-neutral-bluish-1000: #0f1115;
+  --dsw-static-neutral-50: #fafafa;
+  --dsw-static-neutral-200: #e5e5e5;
+  --dsw-static-neutral-300: #d4d4d4;
+  --dsw-static-deepseek-100: #e4edfd;
+  --dsw-static-deepseek-400: #7aaaff;
+  --dsw-static-deepseek-450: #5686fe;
+  --dsw-static-deepseek-500: #4176e6;
+  --dsw-static-deepseek-800: #34415b;
+  --dsw-static-green-100: #e6faed;
+  --dsw-static-green-400: #4ed17e;
+  --dsw-static-green-500: #22c55e;
+  --dsw-static-green-900: #233c2c;
+  --dsw-static-amber-100: #fef5e7;
+  --dsw-static-amber-400: #f7ad31;
+  --dsw-static-amber-500: #f59e0b;
+  --dsw-static-amber-600: #dd8629;
+  --dsw-static-amber-900: #27241f;
+  --dsw-static-red-100: #fee2e2;
+  --dsw-static-red-400: #f25a5a;
+  --dsw-static-red-600: #ec1313;
+  --dsw-static-blue-500: #3b82f6;
+
+  --dsw-alias-bg-base: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-1: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-2: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-3: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-mask-1: #0000003d;
+  --dsw-alias-bg-module-platform: var(--dsw-static-neutral-bluish-60);
+  --dsw-alias-bg-skeleton: #0000000a;
+  --dsw-alias-border-l1: #0000000a;
+  --dsw-alias-border-l2: #0000001a;
+  --dsw-alias-border-l3: #0000001f;
+  --dsw-alias-border-l4: #00000029;
+  --dsw-alias-brand-primary: var(--dsw-static-neutral-bluish-1000);
+  --dsw-alias-button-contrast-fill: var(--dsw-static-neutral-bluish-700);
+  --dsw-alias-button-elevated-fill: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-button-floating-fill: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-button-floating-hover: var(--dsw-static-neutral-bluish-75);
+  --dsw-alias-button-ghost-active-border: var(--dsw-static-neutral-bluish-500);
+  --dsw-alias-button-ghost-active-fill: var(--dsw-static-neutral-bluish-100);
+  --dsw-alias-button-primary-fill: var(--dsw-alias-brand-primary);
+  --dsw-alias-button-primary-hover: var(--dsw-static-neutral-bluish-750);
+  --dsw-alias-button-tool-bar-fill: #54555780;
+  --dsw-alias-button-tool-bar-hover: #54555799;
+  --dsw-alias-interactive-bg-active: #2631481a;
+  --dsw-alias-interactive-bg-hover: #2631480f;
+  --dsw-alias-interactive-bg-hover-danger: #ec13130d;
+  --dsw-alias-label-caption: var(--dsw-static-neutral-bluish-400);
+  --dsw-alias-label-dimmed: var(--dsw-static-neutral-bluish-200);
+  --dsw-alias-label-primary: var(--dsw-static-neutral-bluish-1000);
+  --dsw-alias-label-primary-foreground: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-label-primary-inverted: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-label-secondary: var(--dsw-static-neutral-bluish-700);
+  --dsw-alias-label-tertiary: var(--dsw-static-neutral-bluish-600);
+  --dsw-alias-link: var(--dsw-static-deepseek-500);
+  --dsw-alias-markdown-code-block: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-markdown-code-block-banner: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-markdown-inline-code: var(--dsw-static-neutral-50);
+  --dsw-alias-scrollbar-bg-l2: var(--dsw-static-neutral-200);
+  --dsw-alias-scrollbar-hover-l2: var(--dsw-static-neutral-300);
+  --dsw-alias-specific-menu: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-specific-sidebar-fill: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-state-business-primary: var(--dsw-static-deepseek-500);
+  --dsw-alias-state-error-primary: var(--dsw-static-red-600);
+  --dsw-alias-state-success-primary: var(--dsw-static-green-500);
+  --dsw-alias-state-success-tertiary: var(--dsw-static-green-100);
+  --dsw-alias-state-warn-label: var(--dsw-static-amber-600);
+  --dsw-alias-state-warn-primary: var(--dsw-static-amber-500);
+  --dsw-alias-state-warn-tertiary: var(--dsw-static-amber-100);
+  --dsw-alias-tooltip-bg: var(--dsw-static-neutral-bluish-850);
+  --dsw-specific-menu: var(--dsw-static-neutral-bluish-50);
+
+  --dsw-elevation-stroke-color: var(--dsw-alias-border-l1);
+  --dsw-elevation-stroke: 0 0 0 .5px var(--dsw-elevation-stroke-color);
+  --dsw-elevation-prominent: var(--dsw-elevation-stroke), 0 3px 8px 0 rgba(0, 0, 0, .04), 0 0 20px 0 rgba(0, 0, 0, .05);
+  --dsw-shadow-lv1: 0 2px 4px 0 rgba(0, 0, 0, .05);
+  --dsw-shadow-lv2: 0 4px 12px 0 rgba(0, 0, 0, .02), 0 2px 8px 0 rgba(0, 0, 0, .04);
+  --dsw-shadow-lv3: 0 0 1px 0 rgba(0, 0, 0, .2), 0 0 4px 0 rgba(0, 0, 0, .02), 0 12px 32px 0 rgba(0, 0, 0, .08);
+  --dsw-mask-blur: none;
+  --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* 官方把这两条写成 font 简写合成 token，这里展开以便 demo 单条使用。 */
+  --dsw-font-s-14: 14px/22px var(--dsw-font-family);
+  --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   以下为 Card 组件样式，与 card.module.css 数值逐条一致（类名去掉了 CSS Modules
+   的哈希）。§ 标记的行是本仓库建议值，不是官方数值。
+   --------------------------------------------------------------------------- */
+.card {
+  --dsh-card-radius: 12px;
+  --dsh-card-padding: 16px;   /* § 建议值 */
+  --dsh-card-gap: 12px;       /* § 建议值 */
+  --dsh-card-head-gap: 4px;   /* § 建议值 */
+
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dsh-card-gap);
+  padding: var(--dsh-card-padding);
+  border: 0.5px solid var(--dsw-alias-border-l1);
+  border-radius: var(--dsh-card-radius);
+  background: var(--dsw-alias-bg-layer-2);
+  color: var(--dsw-alias-label-primary);
+  font-size: 14px;
+  line-height: 22px;
+}
+.header { display: flex; flex-direction: column; gap: var(--dsh-card-head-gap); min-width: 0; }
+.title { margin: 0; font-size: 16px; line-height: 24px; font-weight: 500; color: var(--dsw-alias-label-primary); }
+.description { margin: 0; font-size: 14px; line-height: 22px; color: var(--dsw-alias-label-secondary); }
+.body { min-width: 0; }
+.footer { padding-top: var(--dsh-card-gap); border-top: 0.5px solid var(--dsw-alias-border-l2); }
+
+/* ------------------------------------------------------------------ demo 外壳
+   以下不是组件样式，只为把卡片摆开、给每块配一句说明。 */
+body {
+  margin: 0;
+  padding: 32px;
+  background: var(--dsw-alias-bg-base);
+  color: var(--dsw-alias-label-primary);
+  font: var(--dsw-font-s-14);
+}
+h1 { font-size: 18px; line-height: 26px; font-weight: 600; margin: 0 0 4px; }
+p.lead { margin: 0 0 24px; color: var(--dsw-alias-label-secondary); font: var(--dsw-font-xs-13); }
+h2 { font-size: 13px; line-height: 20px; font-weight: 600; color: var(--dsw-alias-label-tertiary); margin: 24px 0 8px; }
+.demo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; align-items: start; }
+.demo-note { margin: 6px 0 0; color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); }
+.demo-btn {
+  height: 36px; padding: 0 14px; border: 0; border-radius: 18px; cursor: pointer;
+  background: var(--dsw-alias-button-primary-fill); color: var(--dsw-alias-label-primary-foreground);
+  font: var(--dsw-font-s-14);
+}
+.demo-link { color: var(--dsw-alias-link); text-decoration: none; font-weight: 500; }
+.demo-stat { display: flex; align-items: baseline; gap: 6px; }
+.demo-stat strong { font-size: 24px; line-height: 32px; font-weight: 600; }
+</style>
+</head>
+<body>
+  <h1>Card 卡片</h1>
+  <p class="lead">内联内容卡片：圆角 12px（官方 HoverCard .card / ReadBlock --dsl-read-radius）、0.5px 描边（官方 MarkdownText 行内 code）、标题 16/24/500（官方 Modal .title）。内边距与插槽间距为 § 本仓库建议值，见 README。</p>
+
+  <h2>四个插槽齐全：标题 + 说明 + 正文 + footer（hairline 分隔）</h2>
+  <div class="demo-grid">
+    <section class="card">
+      <div class="header">
+        <h3 class="title">会话统计</h3>
+        <p class="description">过去 7 天</p>
+      </div>
+      <div class="body">
+        <div class="demo-stat"><strong>1,204</strong><span>条消息</span></div>
+      </div>
+      <div class="footer"><a class="demo-link" href="#none">查看详情</a></div>
+    </section>
+
+    <section class="card">
+      <div class="header">
+        <h3 class="title">插件更新</h3>
+        <p class="description">当前版本 0.3.1，有 2 个待更新项</p>
+      </div>
+      <div class="body">
+        <p style="margin:0">更新不会影响正在运行的任务，重载后生效。</p>
+      </div>
+      <div class="footer"><button type="button" class="demo-btn">立即更新</button></div>
+    </section>
+
+    <section class="card">
+      <div class="header">
+        <h3 class="title">上下文占用</h3>
+        <p class="description">42% · 已用 86k / 200k</p>
+      </div>
+      <div class="body">
+        <p style="margin:0">接近上限时 DSH 会自动压缩历史消息。</p>
+      </div>
+    </section>
+  </div>
+  <p class="demo-note">footer 上方的 hairline 只在传了 footer 时出现；卡片本身不写死颜色，浅色 / 深色主题都成立。</p>
+
+  <h2>只要标题（titleAs 决定标题级别，视觉不变）</h2>
+  <div class="demo-grid">
+    <section class="card">
+      <div class="header"><h3 class="title">工作目录</h3></div>
+      <div class="body"><code>D:\Users\12404\Documents\DeepSeek-Harness</code></div>
+    </section>
+    <section class="card">
+      <div class="header">
+        <h4 class="title">仅标题 + 说明</h4>
+        <p class="description">说明用次级色 label-secondary，与标题拉开层次</p>
+      </div>
+    </section>
+  </div>
+
+  <h2>只要正文 / 只要正文 + footer</h2>
+  <div class="demo-grid">
+    <section class="card">
+      <div class="body"><p style="margin:0">没有标题行时，卡片直接从正文开始，内边距仍是 16px。</p></div>
+    </section>
+    <section class="card">
+      <div class="body"><p style="margin:0">纯正文 + 底部操作</p></div>
+      <div class="footer"><a class="demo-link" href="#none">稍后再说</a></div>
+    </section>
+  </div>
+
+  <p class="demo-note" style="margin-top:24px">提示：demo 展示的是静态外观；hover / 焦点请直接操作里面的按钮与链接（§ 本仓库建议值之外的数值一律取自官方 CSS）。</p>
+</body>
+</html>

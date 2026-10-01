@@ -1,0 +1,156 @@
+/* 单行几何逐条来自官方 @deepseek-ai/dsh-client-ui-primitives/lib/ConnectionIndicator.module.css：
+ *   .indicator → inline-flex / align-items center / gap 4px（官方是 14px+max-content 两列网格）
+ *                height 32px / padding 0 10px / box-sizing border-box / border none
+ *                border-radius 8px / font-size 12px / font-weight 500 / line-height 18px
+ *                white-space nowrap / transition background-color,color 160ms ease-out
+ *   .icon      → display grid / place-items center / 14×14
+ *   .warning   → background var(--dsw-alias-state-warn-tertiary) / color var(--dsw-alias-state-warn-label)
+ *   .success   → background var(--dsw-alias-state-success-tertiary) / color var(--dsw-alias-state-success-primary)
+ *   .indicator:focus-visible（warning 分支）→ outline 2px 状态色 / outline-offset 2px
+ * 多行形态、info / error 配色、关闭按钮为本仓库建议值，见 README。
+ * 实现为本仓库原创，未复制官方 CSS 源码。 */
+
+.notice {
+  --dsh-notice-text: var(--dsw-alias-label-secondary);
+  --dsh-notice-bg: var(--dsw-alias-bg-module-platform);
+  --dsh-notice-accent: var(--dsw-alias-state-business-primary);
+  /* § 本仓库建议值：多行形态的上下内边距，推导见 README（6 + 18 + 6 靠 min-height 回到 32）。 */
+  --dsh-notice-pad-y: 6px;
+  /* § 本仓库建议值：关闭控件的方形热区边长 */
+  --dsh-notice-dismiss-size: 20px;
+
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 32px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 8px;
+  background: var(--dsh-notice-bg);
+  color: var(--dsh-notice-text);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+  text-align: left;
+  white-space: nowrap;
+  transition: background-color 160ms ease-out, color 160ms ease-out;
+}
+
+.notice:focus-visible {
+  outline: 2px solid var(--dsh-notice-accent);
+  outline-offset: 2px;
+}
+
+/* 有 onDismiss 时根节点是 <button>：整条可点关闭，并给出按压反馈。 */
+.actionable {
+  cursor: pointer;
+}
+
+.actionable:active {
+  background: color-mix(in srgb, var(--dsh-notice-bg), var(--dsh-notice-accent) 10%);
+}
+
+/* 刚 Tab 进根按钮时，让内层关闭控件也可见，用户能立刻看出「这里还有一个关闭」。 */
+.actionable:focus-visible .dismiss,
+.actionable:hover .dismiss {
+  opacity: 1;
+}
+
+/* § 本仓库建议值：官方 ConnectionIndicator 只有单行 32px 形态。
+ * 高度改 auto、上下内边距用单行居中推导出的 6px、允许换行。 */
+.multiline {
+  height: auto;
+  min-height: 32px;
+  align-items: flex-start;
+  padding: var(--dsh-notice-pad-y) 10px;
+  white-space: normal;
+}
+
+.multiline .icon {
+  /* 首行 18px 与 14px 图标的居中差 (18 - 14) / 2 = 2px */
+  margin-top: 2px;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 14px;
+  height: 14px;
+  color: var(--dsh-notice-accent);
+}
+
+.text {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+/* § 本仓库建议值：关闭控件，官方 ConnectionIndicator 没有关闭态。
+ * 用 role="button" 的 span 而不是 <button>：带 onDismiss 时根节点本身已经是
+ * <button>，HTML 不允许按钮嵌套按钮。 */
+.dismiss {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: var(--dsh-notice-dismiss-size);
+  height: var(--dsh-notice-dismiss-size);
+  margin: 0 -4px 0 2px;
+  border-radius: 6px;
+  color: currentColor;
+  cursor: pointer;
+  opacity: 0.75;
+}
+
+.dismiss:hover {
+  background: color-mix(in srgb, currentColor 12%, transparent);
+  opacity: 1;
+}
+
+/* 只在能独立获得焦点时才显示自己的焦点环；根按钮的焦点环已由 .notice 提供。 */
+.dismiss:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 1px;
+  opacity: 1;
+}
+
+/* ------------------------------------------------------------------ 语气 */
+
+/* 以下四条与官方配色同源：
+ *   warn / success 的底 + 文字直接取自 ConnectionIndicator.module.css 的 .warning / .success。 */
+.warn {
+  --dsh-notice-bg: var(--dsw-alias-state-warn-tertiary);
+  --dsh-notice-text: var(--dsw-alias-state-warn-label);
+  --dsh-notice-accent: var(--dsw-alias-state-warn-label);
+}
+
+.success {
+  --dsh-notice-bg: var(--dsw-alias-state-success-tertiary);
+  --dsh-notice-text: var(--dsw-alias-state-success-primary);
+  --dsh-notice-accent: var(--dsw-alias-state-success-primary);
+}
+
+/* § 本仓库建议值：官方没有 info 的「三级底」变量组合成的一条内联条。
+ * 文字色用既能当主色又能当文字色的 --dsw-alias-state-business-primary；
+ * 底色不新造 token，改用官方 Tag.module.css 里已有的手法
+ * （color-mix(in srgb, 主色 10%, transparent)）从同一主色派生。 */
+.info {
+  --dsh-notice-bg: color-mix(in srgb, var(--dsw-alias-state-business-primary) 10%, transparent);
+  --dsh-notice-text: var(--dsw-alias-state-business-primary);
+  --dsh-notice-accent: var(--dsw-alias-state-business-primary);
+}
+
+/* § 本仓库建议值：官方 state-error 只有 primary / secondary，没有三级底，
+ * 因此与 info 同法：从 --dsw-alias-state-error-primary 派生 10% 透明底。 */
+.error {
+  --dsh-notice-bg: color-mix(in srgb, var(--dsw-alias-state-error-primary) 10%, transparent);
+  --dsh-notice-text: var(--dsw-alias-state-error-primary);
+  --dsh-notice-accent: var(--dsw-alias-state-error-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notice {
+    transition: none;
+  }
+}

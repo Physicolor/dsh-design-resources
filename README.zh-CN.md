@@ -1,0 +1,98 @@
+---
+description: "DeepSeek Harness 插件生态的设计规范、座位目录、官方 token、图标集与可复用源码知识库。"
+---
+
+# DeepSeek Design Resources
+
+<p align="center">
+  <img src="icons/brand/fish.svg" alt="DeepSeek" width="72">
+</p>
+
+<p align="center">
+  <strong>让社区的插件看起来像同一个产品。</strong><br>
+  规范 · 座位目录 · 设计令牌 · 官方图标集 · 可复用源码 · 实况组件画廊
+</p>
+
+---
+
+## 这个仓库解决什么问题
+
+DeepSeek Harness 给插件作者提供了**技术栈与开发规范**：Cordis 插件系统、座位（slot）机制、`--dsw-*` 设计令牌。它没有提供**设计规范**：控件该多大、间距多少、动效多长、图标怎么画、两个插件抢同一个位置时谁优先——都没有裁决依据。
+
+结果是社区插件各写各的，同一个界面里按钮高矮不一、间距忽大忽小、层级顺序不可预测。这不是某个插件的错，是缺少规范与检查的必然结果。
+
+本仓库补上这一层。三条原则：
+
+1. **不发明数值。** 每一条尺寸、间距、时长都标注来源（官方客户端包 / Apple HIG / OpenHarmony / 本仓库建议）。没有权威依据的地方会明确写出来，而不是编一个看起来专业的数字。
+2. **不评判审美。** 规范只保证一致与可用，不宣称哪种风格更好看。
+3. **可判定的才是规范。** 「间距要舒适」不是规范；「相邻独立控件垂直间距 < 16px 判过挤」才是。每篇文档都会写明该判据能否自动检测。
+
+## 仓库结构
+
+| 目录 | 内容 |
+| --- | --- |
+| [`spec/`](spec/) | 10 篇规范文档：主页面骨架、座位选择、控件、令牌、动效、图标、可访问性、自检清单、冲突裁决 |
+| [`rules/`](rules/) | `rules.json` / `rules.csv`——自检清单的机器可读形式，供 CI 与审计器消费 |
+| [`data/`](data/) | 从运行中的 Harness 采集的真实数据：图标清单、90 个座位、113 个语义令牌 |
+| [`icons/`](icons/) | 75 个官方图标 + 品牌标识，SVG 原样导出（来源见 [`icons/README.md`](icons/README.md)） |
+| [`components/`](components/) | 可复用源码知识库：分类归档、零依赖、只用官方令牌的 React 实现 |
+| [`website/`](website/) | 实况组件画廊：Apple 风格三栏站，组件用原生 HTML 渲染，支持检索 |
+| [`scripts/`](scripts/) | 采集与生成脚本——所有数据都可重新生成，不依赖手工记录 |
+
+## 打开网站
+
+网站是**零构建、`file://` 可直接打开**的静态站：
+
+```
+website/index.html
+```
+
+或起一个本地服务器（无缓存，编辑后刷新即见）：
+
+```sh
+node scripts/serve.mjs        # → http://127.0.0.1:4173/
+```
+
+网站里每个组件都用**原生 HTML 实况渲染**（不是设计稿截图），因为它本来就是 WebUI 技术栈做出来的。左侧是 pages 索引，中间是组件实况，右侧是「为什么这么设计 / 什么时候用 / 几何来源」。
+
+## 重新生成数据
+
+所有数据都来自本机运行中的 Harness，可随时重采：
+
+```sh
+node scripts/collect-icons.mjs     # 官方图标集 → icons/ + data/icons.json
+node scripts/collect-tokens.mjs    # 官方主题令牌 → data/tokens.json + website/css/dsh-tokens.css
+node scripts/collect-slots.mjs     # 座位目录（需 data/raw/ 下的快照）→ data/slots.json
+node scripts/gen-rules.mjs         # 自检清单 → rules/rules.json
+node website/gen-site.mjs          # 汇总 → website/js/data.js
+node website/verify.mjs            # 自检：结构 + 数据 + 真实浏览器渲染 + 截图
+```
+
+采集脚本读取本机的 DSH 安装（`DSH_ASAR` / `DSH_PRIMITIVES` 可覆盖路径）。`collect-tokens.mjs` 需要桌面版 `app.asar`；`collect-slots.mjs` 需要一份座位树快照（由 Harness 的座位检查接口产出，快照文件放在 `data/raw/`）。
+
+## 与 dsh-ui-harmonizer 的分工
+
+| 仓库 | 职责 |
+| --- | --- |
+| **本仓库** | 规范、资源、可复用源码、网站——回答「应该怎么做」 |
+| [dsh-ui-harmonizer](https://github.com/Physicolor/dsh-ui-harmonizer) | 只读兼容性审计与针对性适配——回答「实际做得怎么样」，检测结果在设置页提示 |
+
+规范不强制任何人改代码；它让冲突**可见、可解释、可一键出 issue**。
+
+## 来源与许可边界
+
+本仓库的代码与文档（`spec/`、`components/`、`website/`、`scripts/`、`rules/`）为原创，MIT 许可。
+
+`icons/` 与 `data/tokens.json` 的内容**提取自 DeepSeek 官方客户端包**（`@deepseek-ai/dsh-client-ui-primitives`、桌面版主题定义），版权归 DeepSeek。它们在这里以**参考与互操作**的目的收录，逐条标注了来源，未做任何改写。使用前请自行确认官方许可条款；本仓库的 MIT 许可不覆盖这部分内容。详见 [`icons/README.md`](icons/README.md)。
+
+`spec/` 中移植自外部规范的部分（Apple Human Interface Guidelines、OpenHarmony 设计文档）均在条文内标注了出处。
+
+## 效力层级
+
+规范条目分三档，每条都带稳定 ID（如 `FL-MF-01`、`CT-RC-14`）：
+
+- **MF 强制**——必须遵守，偏离即不合规；
+- **RC 推荐**——偏离需在 README 写明理由；
+- **AD 建议**——取舍由作者判断。
+
+自检清单（[`spec/70-checklist.md`](spec/70-checklist.md)）把其中 64 条整理成二元判定项，并标注每一条能否自动检测：**36 条可自动检测、19 条半自动、9 条需人审**。

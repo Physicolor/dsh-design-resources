@@ -1,0 +1,64 @@
+/* KeyValueList 键值列表。官方没有对应组件，几何来源逐条如下（详见 README「几何来源」）：
+ *   key   13px / line-height 20px / var(--dsw-alias-label-tertiary)
+ *         ← 官方合成 token --dsw-font-xs-13（13px/20px）；三级文字取色见官方 Menu.module.css `.label`
+ *   value 14px / line-height 22px / var(--dsw-alias-label-primary)
+ *         ← 官方合成 token --dsw-font-s-14（14px/22px）；正文取色见官方 Button.module.css `.button`
+ *   divider 0.5px + var(--dsw-alias-border-l2)
+ *         ← 官方 markdown/MarkdownText.module.css `.markdown hr`
+ * 标记 § 的是本仓库建议值（4 的倍数），官方没有对应数值。
+ * 实现为本仓库原创：用 grid 与 data 属性组织规则，未复制官方 CSS。 */
+
+.list {
+  /* § 本仓库建议值：键列与值列之间的最小距离，4 的倍数。 */
+  --dsh-kv-column-gap: 12px;
+  /* § 本仓库建议值：每行上下各留 4px，4 的倍数。 */
+  --dsh-kv-row-padding: 4px;
+
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  display: grid;
+  /* 键列按内容取宽、空间不足时可收缩；值列吃掉剩余宽度并可换行。 */
+  grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
+  column-gap: var(--dsh-kv-column-gap);
+  align-items: center;
+  padding: var(--dsh-kv-row-padding) 0;
+}
+
+/* 键与值在行内垂直对齐：默认居中，值是长文本时可选 start。 */
+.list[data-align='start'] .item {
+  align-items: start;
+}
+
+.key {
+  min-width: 0;
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.value {
+  /* dd 默认有 margin-inline-start，必须清掉。 */
+  margin: 0;
+  min-width: 0;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--dsw-alias-label-primary);
+  overflow-wrap: break-word;
+}
+
+/* 值列右对齐：整列贴住容器右缘，便于纵向比对数值。 */
+.list[data-value-align='end'] .value {
+  justify-self: end;
+  text-align: end;
+}
+
+/* 行间分隔线：官方 markdown/MarkdownText.module.css `.markdown hr` 的 hairline 写法
+   （0.5px + var(--dsw-alias-border-l2)）。用相邻兄弟选择器，第一行之前不画线。 */
+.list[data-divider='true'] .item + .item {
+  border-top: 0.5px solid var(--dsw-alias-border-l2);
+}

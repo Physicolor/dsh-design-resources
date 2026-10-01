@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Toast 瞬时提示 · DSH 设计资源</title>
+<style>
+/* ---------------------------------------------------------------------------
+   演示用 token 脚手架。
+   数值逐条取自本仓库 website/css/dsh-tokens.css（由产品主题采集生成）与
+   app.asar 内官方主题对合成 token（elevation / shadow / font）的定义。
+   真实 DSH 运行时由宿主主题注入这些变量；demo 只是把同一批值内联进来，
+   组件类本身不写死任何颜色。
+   --------------------------------------------------------------------------- */
+:root {
+  --dsw-static-neutral-bluish-00: #fff;
+  --dsw-static-neutral-bluish-50: #f9fafb;
+  --dsw-static-neutral-bluish-60: #f9fafb;
+  --dsw-static-neutral-bluish-75: #f1f3f5;
+  --dsw-static-neutral-bluish-100: #ebeef2;
+  --dsw-static-neutral-bluish-150: #e9ecf2;
+  --dsw-static-neutral-bluish-200: #e1e5ee;
+  --dsw-static-neutral-bluish-300: #cfd3d6;
+  --dsw-static-neutral-bluish-400: #adb2b8;
+  --dsw-static-neutral-bluish-500: #979da6;
+  --dsw-static-neutral-bluish-600: #81858c;
+  --dsw-static-neutral-bluish-700: #61666b;
+  --dsw-static-neutral-bluish-750: #43454a;
+  --dsw-static-neutral-bluish-800: #353638;
+  --dsw-static-neutral-bluish-850: #2c2c2e;
+  --dsw-static-neutral-bluish-875: #232324;
+  --dsw-static-neutral-bluish-900: #1b1b1c;
+  --dsw-static-neutral-bluish-950: #151517;
+  --dsw-static-neutral-bluish-1000: #0f1115;
+  --dsw-static-neutral-50: #fafafa;
+  --dsw-static-neutral-200: #e5e5e5;
+  --dsw-static-neutral-300: #d4d4d4;
+  --dsw-static-deepseek-100: #e4edfd;
+  --dsw-static-deepseek-400: #7aaaff;
+  --dsw-static-deepseek-450: #5686fe;
+  --dsw-static-deepseek-500: #4176e6;
+  --dsw-static-deepseek-800: #34415b;
+  --dsw-static-green-100: #e6faed;
+  --dsw-static-green-400: #4ed17e;
+  --dsw-static-green-500: #22c55e;
+  --dsw-static-green-900: #233c2c;
+  --dsw-static-amber-100: #fef5e7;
+  --dsw-static-amber-400: #f7ad31;
+  --dsw-static-amber-500: #f59e0b;
+  --dsw-static-amber-600: #dd8629;
+  --dsw-static-amber-900: #27241f;
+  --dsw-static-red-100: #fee2e2;
+  --dsw-static-red-400: #f25a5a;
+  --dsw-static-red-600: #ec1313;
+  --dsw-static-blue-500: #3b82f6;
+
+  --dsw-alias-bg-base: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-1: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-2: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-3: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-mask-1: #0000003d;
+  --dsw-alias-bg-module-platform: var(--dsw-static-neutral-bluish-60);
+  --dsw-alias-bg-skeleton: #0000000a;
+  --dsw-alias-border-l1: #0000000a;
+  --dsw-alias-border-l2: #0000001a;
+  --dsw-alias-border-l3: #0000001f;
+  --dsw-alias-border-l4: #00000029;
+  --dsw-alias-brand-primary: var(--dsw-static-neutral-bluish-1000);
+  --dsw-alias-button-contrast-fill: var(--dsw-static-neutral-bluish-700);
+  --dsw-alias-button-elevated-fill: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-button-floating-fill: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-button-floating-hover: var(--dsw-static-neutral-bluish-75);
+  --dsw-alias-button-ghost-active-border: var(--dsw-static-neutral-bluish-500);
+  --dsw-alias-button-ghost-active-fill: var(--dsw-static-neutral-bluish-100);
+  --dsw-alias-button-primary-fill: var(--dsw-alias-brand-primary);
+  --dsw-alias-button-primary-hover: var(--dsw-static-neutral-bluish-750);
+  --dsw-alias-button-tool-bar-fill: #54555780;
+  --dsw-alias-button-tool-bar-hover: #54555799;
+  --dsw-alias-interactive-bg-active: #2631481a;
+  --dsw-alias-interactive-bg-hover: #2631480f;
+  --dsw-alias-interactive-bg-hover-danger: #ec13130d;
+  --dsw-alias-label-caption: var(--dsw-static-neutral-bluish-400);
+  --dsw-alias-label-dimmed: var(--dsw-static-neutral-bluish-200);
+  --dsw-alias-label-primary: var(--dsw-static-neutral-bluish-1000);
+  --dsw-alias-label-primary-foreground: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-label-primary-inverted: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-label-secondary: var(--dsw-static-neutral-bluish-700);
+  --dsw-alias-label-tertiary: var(--dsw-static-neutral-bluish-600);
+  --dsw-alias-link: var(--dsw-static-deepseek-500);
+  --dsw-alias-markdown-code-block: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-markdown-code-block-banner: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-markdown-inline-code: var(--dsw-static-neutral-50);
+  --dsw-alias-scrollbar-bg-l2: var(--dsw-static-neutral-200);
+  --dsw-alias-scrollbar-hover-l2: var(--dsw-static-neutral-300);
+  --dsw-alias-specific-menu: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-specific-sidebar-fill: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-state-business-primary: var(--dsw-static-deepseek-500);
+  --dsw-alias-state-error-primary: var(--dsw-static-red-600);
+  --dsw-alias-state-success-primary: var(--dsw-static-green-500);
+  --dsw-alias-state-success-tertiary: var(--dsw-static-green-100);
+  --dsw-alias-state-warn-label: var(--dsw-static-amber-600);
+  --dsw-alias-state-warn-primary: var(--dsw-static-amber-500);
+  --dsw-alias-state-warn-tertiary: var(--dsw-static-amber-100);
+  --dsw-alias-tooltip-bg: var(--dsw-static-neutral-bluish-850);
+  --dsw-specific-menu: var(--dsw-static-neutral-bluish-50);
+
+  --dsw-elevation-stroke-color: var(--dsw-alias-border-l1);
+  --dsw-elevation-stroke: 0 0 0 .5px var(--dsw-elevation-stroke-color);
+  --dsw-elevation-prominent: var(--dsw-elevation-stroke), 0 3px 8px 0 rgba(0, 0, 0, .04), 0 0 20px 0 rgba(0, 0, 0, .05);
+  --dsw-shadow-lv1: 0 2px 4px 0 rgba(0, 0, 0, .05);
+  --dsw-shadow-lv2: 0 4px 12px 0 rgba(0, 0, 0, .02), 0 2px 8px 0 rgba(0, 0, 0, .04);
+  --dsw-shadow-lv3: 0 0 1px 0 rgba(0, 0, 0, .2), 0 0 4px 0 rgba(0, 0, 0, .02), 0 12px 32px 0 rgba(0, 0, 0, .08);
+  --dsw-mask-blur: none;
+  --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* 官方把这两条写成 font 简写合成 token，这里展开以便 demo 单条使用。 */
+  --dsw-font-s-14: 14px/22px var(--dsw-font-family);
+  --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   以下为 Toast 组件样式，与 toast.module.css 数值逐条一致（类名去掉了
+   CSS Modules 的哈希）。§ 标记的行是本仓库建议值，不是官方数值。
+   --------------------------------------------------------------------------- */
+.toast {
+  --dsh-toast-offset-top: 40px;
+  --dsh-toast-z: 1100;
+  --dsh-toast-gap: 10px;
+  --dsh-toast-pad-y: 12px;
+  --dsh-toast-pad-x: 16px;
+  --dsh-toast-radius: 14px;
+  --dsh-toast-max-w: 640px;
+  --dsh-toast-inset: 48px;
+  --dsh-toast-font-size: 14px;
+  --dsh-toast-line-height: 22px;
+  /* § 本仓库建议值：官方只给 .icon 的布局，容器边长没有数值。 */
+  --dsh-toast-icon-size: 16px;
+
+  position: fixed;
+  top: var(--dsh-toast-offset-top);
+  left: 50%;
+  z-index: var(--dsh-toast-z);
+  pointer-events: none;
+  /* § 本仓库建议值 */
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--dsh-toast-gap);
+  width: max-content;
+  max-width: min(var(--dsh-toast-max-w), calc(100vw - var(--dsh-toast-inset)));
+  padding: var(--dsh-toast-pad-y) var(--dsh-toast-pad-x);
+  border-radius: var(--dsh-toast-radius);
+  background: var(--dsw-alias-button-contrast-fill);
+  color: var(--dsw-alias-label-primary-inverted);
+  /* § 本仓库建议值 */
+  font-family: inherit;
+  font-size: var(--dsh-toast-font-size);
+  line-height: var(--dsh-toast-line-height);
+  box-shadow: var(--dsw-shadow-lv3);
+  transform: translateX(-50%);
+  animation:
+    dsh-toast-in 160ms ease-out,
+    dsh-toast-fade 1000ms ease var(--dsh-toast-hold, 3000ms) forwards;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: var(--dsh-toast-icon-size);
+  height: var(--dsh-toast-icon-size);
+  color: var(--dsw-alias-state-warn-label);
+}
+
+.text { min-width: 0; }
+
+@keyframes dsh-toast-in {
+  from { opacity: 0; transform: translate(-50%, -6px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes dsh-toast-fade {
+  to { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    animation: dsh-toast-fade 1000ms ease var(--dsh-toast-hold, 3000ms) forwards;
+  }
+}
+
+/* ------------------------------------------------------------------ demo 外壳 */
+body {
+  margin: 0;
+  padding: 32px;
+  background: var(--dsw-alias-bg-base);
+  color: var(--dsw-alias-label-primary);
+  font: var(--dsw-font-s-14);
+}
+h1 { font-size: 18px; line-height: 26px; font-weight: 600; margin: 0 0 4px; }
+p.lead { margin: 0 0 24px; color: var(--dsw-alias-label-secondary); font: var(--dsw-font-xs-13); }
+h2 { font-size: 13px; line-height: 20px; font-weight: 600; color: var(--dsw-alias-label-tertiary); margin: 24px 0 8px; }
+.hint { color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); }
+.toast-src { color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); margin: 0 0 8px; }
+
+/* demo 专用覆盖：真机上 .toast 是 position:fixed（永远贴窗口顶部居中，多条会叠在一起），
+   这里为了并排展示改成文档流内的静态块并禁用动画延迟，不影响 .module.css 的任何数值。 */
+.stack { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+.stack .toast { position: static; transform: none; animation: none; max-width: 100%; }
+.replay .toast { animation: dsh-toast-in 160ms ease-out 2000ms; }
+</style>
+</head>
+<body>
+  <h1>Toast 瞬时提示</h1>
+  <p class="lead">几何逐条对齐官方 Toast.module.css（top 40px / left 50% / z-index 1100 / gap 10px / padding 12px 16px / radius 14px / font 14-22 / shadow lv3）。实现为本仓库原创。</p>
+
+  <h2>带图标（图标容器 16×16，颜色取 --dsw-alias-state-warn-label）</h2>
+  <p class="toast-src">图标用仓库图标库 warning-outline-16，14px 线稿。</p>
+  <div class="stack">
+    <div class="toast" role="alert" style="animation: none">
+      <span class="icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.3002 3.32843L7.69986 3.32843L7.69986 7.79657H6.3002L6.3002 3.32843Z" fill="currentColor"/><path d="M6.3002 9.01935H7.69986V10.6711H6.3002V9.01935Z" fill="currentColor"/><path d="M12.6328 6.99976C12.6328 3.88874 10.111 1.36694 7 1.36694C3.88899 1.36695 1.3672 3.88875 1.36719 6.99976C1.36719 10.1108 3.88899 12.6326 7 12.6326C10.111 12.6326 12.6328 10.1108 12.6328 6.99976ZM13.8582 6.99976C13.8582 10.7873 10.7876 13.8579 7 13.8579C3.21244 13.8579 0.141846 10.7873 0.141846 6.99976C0.141857 3.2122 3.21245 0.141612 7 0.141602C10.7876 0.141602 13.8581 3.21219 13.8582 6.99976Z" fill="currentColor"/></svg></span>
+      <span class="text">网络已断开，正在重试</span>
+    </div>
+  </div>
+
+  <h2>无图标 · 短文案（width: max-content 贴合内容）</h2>
+  <div class="stack">
+    <div class="toast" role="alert" style="animation: none"><span class="text">已保存</span></div>
+    <div class="toast" role="alert" style="animation: none"><span class="text">已复制 3 项</span></div>
+  </div>
+
+  <h2>长文案（上限 min(640px, calc(100vw - 48px)) 内换行）</h2>
+  <div class="stack">
+    <div class="toast" role="alert" style="animation: none">
+      <span class="icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.3002 3.32843L7.69986 3.32843L7.69986 7.79657H6.3002L6.3002 3.32843Z" fill="currentColor"/><path d="M6.3002 9.01935H7.69986V10.6711H6.3002V9.01935Z" fill="currentColor"/><path d="M12.6328 6.99976C12.6328 3.88874 10.111 1.36694 7 1.36694C3.88899 1.36695 1.3672 3.88875 1.36719 6.99976C1.36719 10.1108 3.88899 12.6326 7 12.6326C10.111 12.6326 12.6328 10.1108 12.6328 6.99976ZM13.8582 6.99976C13.8582 10.7873 10.7876 13.8579 7 13.8579C3.21244 13.8579 0.141846 10.7873 0.141846 6.99976C0.141857 3.2122 3.21245 0.141612 7 0.141602C10.7876 0.141602 13.8581 3.21219 13.8582 6.99976Z" fill="currentColor"/></svg></span>
+      <span class="text">保存失败：远端返回 503，已排队等待自动重试；恢复网络后会在后台继续，不需要你重新编辑。</span>
+    </div>
+  </div>
+
+  <h2>真实定位于视口顶部（未覆盖样式，动画会自行播放）</h2>
+  <p class="toast-src">正下方这一条用的是组件原样：position fixed / top 40px / left 50% / z-index 1100。它会滑入、停 3 秒、淡出（页面加载即开始）。</p>
+  <div class="toast" role="alert" style="--dsh-toast-hold:3000ms">
+    <span class="text">截屏已保存到下载目录</span>
+  </div>
+
+  <h2>进场动画循环回放（demo 专用：animation 只放滑入这一条，无 forwards 所以会回到原位）</h2>
+  <div class="stack replay">
+    <div class="toast" role="alert"><span class="text">160ms ease-out 滑入，2s 后重播</span></div>
+  </div>
+
+  <h2>淡出后（forwards 停在 opacity: 0）</h2>
+  <div class="stack">
+    <div class="toast" role="alert" style="opacity: 0"><span class="text">这条已经淡出完成</span></div>
+  </div>
+
+  <p class="hint" style="margin-top:24px">提示：开启系统「减弱动态效果」后滑入被去掉，只保留淡出（§ 与官方 Toast.module.css 的 reduced-motion 分支一致）。多条同时出现时它们会叠在同一位置——用 key 重挂载实现「后一条顶掉前一条」，或改用 InlineNotice。</p>
+</body>
+</html>

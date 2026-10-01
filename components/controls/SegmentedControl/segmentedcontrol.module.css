@@ -1,0 +1,115 @@
+/* SegmentedControl 分段控件 —— 官方没有此控件，几何由下列官方锚点拼装：
+ *   .control 内边距 4px、段间 gap 0  ← 官方 Menu.module.css .list（padding: 4px / gap: 0）
+ *   .control 外层圆角 12px            ← 官方 Pill.module.css .pill（border-radius: 12px）
+ *   .control 底色 bg-module-platform  ← 官方 Tag.module.css .tag[data-tone='neutral']（background）
+ *   .option 段高 / 字号 / 行高 / 内边距 ← 官方 Button.module.css .md(36px) 与 .sm(28px / 12-18 / 0 10px)
+ *                                        与 .button(14-22 / padding 0 14px)
+ *   .option 段圆角 8px               ← 8 = 外层 r12 − 内边距 4；8px 本身来自官方 Input.module.css .wrap
+ *   .option 默认色 / 选中色          ← 官方 Pill.module.css .pill(--dsw-alias-label-secondary)
+ *                                       与 .active(--dsw-alias-label-primary)
+ *   .option[aria-checked='true'] 填充与描边 ← 官方 Pill.module.css .active
+ *   .option hover / active 底色      ← 官方 Button.module.css .ghost:hover / .ghost:active
+ *   .icon 16×16                      ← 官方 Button.module.css .icon
+ * 带 § 的数值是本仓库建议值，理由见 README「几何来源」。
+ * 实现为本仓库原创：几何用局部 CSS 变量承载，未复制官方 CSS 源码。 */
+
+.control {
+  --dsh-seg-pad: 4px;
+  --dsh-seg-radius: 12px;
+  --dsh-seg-inner-radius: 8px;
+  --dsh-seg-height: 36px;
+  --dsh-seg-pad-x: 14px;
+  --dsh-seg-font-size: 14px;
+  --dsh-seg-line-height: 22px;
+  --dsh-seg-gap: 4px;
+  --dsh-seg-icon: 16px;
+
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  padding: var(--dsh-seg-pad);
+  border-radius: var(--dsh-seg-radius);
+  background: var(--dsw-alias-bg-module-platform);
+  font-family: inherit;
+}
+
+/* sm：段高与内边距换成官方 Button .sm 那一组，容器内边距与外圆角不变。 */
+.sm {
+  --dsh-seg-height: 28px;
+  --dsh-seg-pad-x: 10px;
+  --dsh-seg-font-size: 12px;
+  --dsh-seg-line-height: 18px;
+}
+
+/* ------------------------------------------------------------------ 分段 */
+
+.option {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: var(--dsh-seg-gap);
+  height: var(--dsh-seg-height);
+  padding: 0 var(--dsh-seg-pad-x);
+  border: 0;
+  border-radius: var(--dsh-seg-inner-radius);
+  background: transparent;
+  color: var(--dsw-alias-label-secondary);
+  font-family: inherit;
+  font-size: var(--dsh-seg-font-size);
+  line-height: var(--dsh-seg-line-height);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.option:hover:not(:disabled):not([aria-checked='true']) {
+  background: var(--dsw-alias-interactive-bg-hover);
+}
+
+/* § 本仓库建议值：官方 Pill 没有 :active 态，取官方 Button .ghost:active 的底色补齐五态。 */
+.option:active:not(:disabled):not([aria-checked='true']) {
+  background: var(--dsw-alias-interactive-bg-active);
+}
+
+.option[aria-checked='true'] {
+  color: var(--dsw-alias-label-primary);
+  background: var(--dsw-alias-button-ghost-active-fill);
+  box-shadow: inset 0 0 0 1px var(--dsw-alias-button-ghost-active-border);
+}
+
+/* § 本仓库建议值：官方 Button / Pill 都没有焦点样式；按 AC-MF-10 / AC-MF-11 补
+ * 2px 品牌色焦点环 + 2px 外偏移（段在容器 4px 内边距里，环不会画到容器之外）。 */
+.option:focus-visible {
+  outline: 2px solid var(--dsw-alias-brand-primary);
+  outline-offset: 2px;
+}
+
+/* § 本仓库建议值：整组禁用。文字降到 label-tertiary（CT-MF-09，不靠整体降透明度），
+ * 保持选中段的填充，让「当前是哪一段」仍然可读。 */
+.disabled .option {
+  cursor: not-allowed;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.disabled .option[aria-checked='true'] {
+  color: var(--dsw-alias-label-tertiary);
+}
+
+/* ------------------------------------------------------------------ 图标 */
+
+.icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--dsh-seg-icon);
+  height: var(--dsh-seg-icon);
+}
+
+.icon > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

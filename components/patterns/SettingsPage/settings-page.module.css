@@ -1,0 +1,183 @@
+/* 几何锚点（逐条，详见 README「几何来源」）：
+ *   导航行   官方 Menu.module.css .item      → min-height 40 / padding 8px 10px / radius 10px / gap 8px / 14-22
+ *   导航行 hover / 选中  官方 Menu .item:hover:not(:disabled) / .selectedFill
+ *   导航图标 官方 Menu.module.css .itemIcon  → 16×16 + label-tertiary
+ *   导航容器内边距 4px    官方 Menu.module.css .list
+ *   导航容器圆角 12px     官方 ReadBlock.module.css .block (--dsl-read-radius)
+ *   页面标题 16-24-500    官方 Modal.module.css .title
+ *   页面描述 14-22        官方 Modal.module.css .description
+ *   分区标题 14-22-500    官方 Button .button(14-22) + Modal .title(500)
+ *   标题与内容 20px       官方 Modal.module.css .dialog gap / .body margin-top
+ * § 标记的为「本仓库建议值」：官方没有 SettingsPage 对应物，这些数值在官方侧没有直接来源，理由见 README。
+ * 实现为本仓库原创（变量承载几何 + 单类切换），未复制官方 CSS 源码。 */
+
+.page {
+  --dsh-settings-nav-width: 218px; /* § 建议值 */
+  --dsh-settings-gap: 32px; /* § 建议值 */
+  --dsh-settings-pad: 24px; /* § 建议值 */
+  --dsh-settings-block-gap: 24px; /* § 建议值 */
+  --dsh-settings-radius: 12px; /* 官方 ReadBlock .block */
+  --dsh-settings-nav-pad: 4px; /* 官方 Menu .list */
+  --dsh-settings-content-max: 640px; /* § 建议值（借官方 Toast 的 640 上限） */
+
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--dsh-settings-gap);
+  padding: var(--dsh-settings-pad);
+  color: var(--dsw-alias-label-primary);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+/* ------------------------------------------------------------------ 左列 */
+
+.nav {
+  flex: none;
+  box-sizing: border-box;
+  width: var(--dsh-settings-nav-width);
+  padding: var(--dsh-settings-nav-pad);
+  border-radius: var(--dsh-settings-radius);
+  /* § 建议值：用官方 neutral Tag 同款的平台底色承载导航列；
+     官方侧栏另有 --dsw-specific-sidebar-* 系列，本组件不引用以免与宿主侧栏语义混淆。 */
+  background: var(--dsw-alias-bg-module-platform);
+}
+
+.navInner {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.navItem {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  /* § 建议值：官方 Menu .item 一律 label-primary；本组件用 label-secondary 表示
+     「非当前项」，让选中态不依赖底色也能分辨。 */
+  color: var(--dsw-alias-label-secondary);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 22px;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.navItem:hover:not(:disabled) {
+  background: var(--dsw-alias-interactive-bg-hover);
+}
+
+/* 选中态沿用官方 Menu .selectedFill 的同一 fill（官方用尾部对勾做标记）。 */
+.navItemActive {
+  color: var(--dsw-alias-label-primary);
+  background: var(--dsw-alias-interactive-bg-hover);
+}
+
+.navItem:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* § 建议值：官方 SettingsPage 无对应物；写法对齐官方 Switch.module.css 的 focus-visible。 */
+.navItem:focus-visible {
+  outline: 2px solid var(--dsw-alias-brand-primary);
+  outline-offset: 2px;
+}
+
+.navItemIcon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.navItemLabel {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------------ 右列 */
+
+.content {
+  flex: 1;
+  min-width: 0;
+  max-width: var(--dsh-settings-content-max);
+}
+
+.pageTitle {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  color: var(--dsw-alias-label-primary);
+}
+
+.pageDescription {
+  margin: 4px 0 0; /* § 建议值（4 的倍数） */
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.contentBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dsh-settings-block-gap);
+  margin-top: 20px;
+}
+
+/* ------------------------------------------------------------------ 分区 */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 500;
+  color: var(--dsw-alias-label-primary);
+}
+
+.sectionActions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.sectionDescription {
+  margin: 4px 0 0; /* § 建议值（4 的倍数） */
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.sectionBody {
+  margin-top: 8px; /* § 建议值（4 的倍数） */
+}

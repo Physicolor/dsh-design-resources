@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drawer 抽屉 · DSH 设计资源</title>
+<style>
+/* ---------------------------------------------------------------------------
+   演示用 token 脚手架。
+   数值逐条取自本仓库 website/css/dsh-tokens.css（由产品主题采集生成）与
+   app.asar 内官方主题对合成 token（elevation / shadow / font）的定义。
+   真实 DSH 运行时由宿主主题注入这些变量；demo 只是把同一批值内联进来，
+   组件类本身不写死任何颜色。
+   --------------------------------------------------------------------------- */
+:root {
+  --dsw-static-neutral-bluish-00: #fff;
+  --dsw-static-neutral-bluish-50: #f9fafb;
+  --dsw-static-neutral-bluish-60: #f9fafb;
+  --dsw-static-neutral-bluish-75: #f1f3f5;
+  --dsw-static-neutral-bluish-100: #ebeef2;
+  --dsw-static-neutral-bluish-150: #e9ecf2;
+  --dsw-static-neutral-bluish-200: #e1e5ee;
+  --dsw-static-neutral-bluish-300: #cfd3d6;
+  --dsw-static-neutral-bluish-400: #adb2b8;
+  --dsw-static-neutral-bluish-500: #979da6;
+  --dsw-static-neutral-bluish-600: #81858c;
+  --dsw-static-neutral-bluish-700: #61666b;
+  --dsw-static-neutral-bluish-750: #43454a;
+  --dsw-static-neutral-bluish-800: #353638;
+  --dsw-static-neutral-bluish-850: #2c2c2e;
+  --dsw-static-neutral-bluish-875: #232324;
+  --dsw-static-neutral-bluish-900: #1b1b1c;
+  --dsw-static-neutral-bluish-950: #151517;
+  --dsw-static-neutral-bluish-1000: #0f1115;
+  --dsw-static-neutral-50: #fafafa;
+  --dsw-static-neutral-200: #e5e5e5;
+  --dsw-static-neutral-300: #d4d4d4;
+  --dsw-static-deepseek-100: #e4edfd;
+  --dsw-static-deepseek-400: #7aaaff;
+  --dsw-static-deepseek-450: #5686fe;
+  --dsw-static-deepseek-500: #4176e6;
+  --dsw-static-deepseek-800: #34415b;
+  --dsw-static-green-100: #e6faed;
+  --dsw-static-green-400: #4ed17e;
+  --dsw-static-green-500: #22c55e;
+  --dsw-static-green-900: #233c2c;
+  --dsw-static-amber-100: #fef5e7;
+  --dsw-static-amber-400: #f7ad31;
+  --dsw-static-amber-500: #f59e0b;
+  --dsw-static-amber-600: #dd8629;
+  --dsw-static-amber-900: #27241f;
+  --dsw-static-red-100: #fee2e2;
+  --dsw-static-red-400: #f25a5a;
+  --dsw-static-red-600: #ec1313;
+  --dsw-static-blue-500: #3b82f6;
+
+  --dsw-alias-bg-base: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-1: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-2: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-3: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-mask-1: #0000003d;
+  --dsw-alias-bg-module-platform: var(--dsw-static-neutral-bluish-60);
+  --dsw-alias-bg-skeleton: #0000000a;
+  --dsw-alias-border-l1: #0000000a;
+  --dsw-alias-border-l2: #0000001a;
+  --dsw-alias-border-l3: #0000001f;
+  --dsw-alias-border-l4: #00000029;
+  --dsw-alias-brand-primary: var(--dsw-static-neutral-bluish-1000);
+  --dsw-alias-button-contrast-fill: var(--dsw-static-neutral-bluish-700);
+  --dsw-alias-button-elevated-fill: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-button-floating-fill: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-button-floating-hover: var(--dsw-static-neutral-bluish-75);
+  --dsw-alias-button-ghost-active-border: var(--dsw-static-neutral-bluish-500);
+  --dsw-alias-button-ghost-active-fill: var(--dsw-static-neutral-bluish-100);
+  --dsw-alias-button-primary-fill: var(--dsw-alias-brand-primary);
+  --dsw-alias-button-primary-hover: var(--dsw-static-neutral-bluish-750);
+  --dsw-alias-button-tool-bar-fill: #54555780;
+  --dsw-alias-button-tool-bar-hover: #54555799;
+  --dsw-alias-interactive-bg-active: #2631481a;
+  --dsw-alias-interactive-bg-hover: #2631480f;
+  --dsw-alias-interactive-bg-hover-danger: #ec13130d;
+  --dsw-alias-label-caption: var(--dsw-static-neutral-bluish-400);
+  --dsw-alias-label-dimmed: var(--dsw-static-neutral-bluish-200);
+  --dsw-alias-label-primary: var(--dsw-static-neutral-bluish-1000);
+  --dsw-alias-label-primary-foreground: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-label-primary-inverted: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-label-secondary: var(--dsw-static-neutral-bluish-700);
+  --dsw-alias-label-tertiary: var(--dsw-static-neutral-bluish-600);
+  --dsw-alias-link: var(--dsw-static-deepseek-500);
+  --dsw-alias-markdown-code-block: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-markdown-code-block-banner: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-markdown-inline-code: var(--dsw-static-neutral-50);
+  --dsw-alias-scrollbar-bg-l2: var(--dsw-static-neutral-200);
+  --dsw-alias-scrollbar-hover-l2: var(--dsw-static-neutral-300);
+  --dsw-alias-specific-menu: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-specific-sidebar-fill: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-state-business-primary: var(--dsw-static-deepseek-500);
+  --dsw-alias-state-error-primary: var(--dsw-static-red-600);
+  --dsw-alias-state-success-primary: var(--dsw-static-green-500);
+  --dsw-alias-state-success-tertiary: var(--dsw-static-green-100);
+  --dsw-alias-state-warn-label: var(--dsw-static-amber-600);
+  --dsw-alias-state-warn-primary: var(--dsw-static-amber-500);
+  --dsw-alias-state-warn-tertiary: var(--dsw-static-amber-100);
+  --dsw-alias-tooltip-bg: var(--dsw-static-neutral-bluish-850);
+  --dsw-specific-menu: var(--dsw-static-neutral-bluish-50);
+
+  --dsw-elevation-stroke-color: var(--dsw-alias-border-l1);
+  --dsw-elevation-stroke: 0 0 0 .5px var(--dsw-elevation-stroke-color);
+  --dsw-elevation-prominent: var(--dsw-elevation-stroke), 0 3px 8px 0 rgba(0, 0, 0, .04), 0 0 20px 0 rgba(0, 0, 0, .05);
+  --dsw-shadow-lv1: 0 2px 4px 0 rgba(0, 0, 0, .05);
+  --dsw-shadow-lv2: 0 4px 12px 0 rgba(0, 0, 0, .02), 0 2px 8px 0 rgba(0, 0, 0, .04);
+  --dsw-shadow-lv3: 0 0 1px 0 rgba(0, 0, 0, .2), 0 0 4px 0 rgba(0, 0, 0, .02), 0 12px 32px 0 rgba(0, 0, 0, .08);
+  --dsw-mask-blur: none;
+  --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* 官方把这两条写成 font 简写合成 token，这里展开以便 demo 单条使用。 */
+  --dsw-font-s-14: 14px/22px var(--dsw-font-family);
+  --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   以下为 Drawer 组件样式，与 drawer.module.css 数值逐条一致（类名去掉了 CSS
+   Modules 的哈希）。§ 标记的行是本仓库建议值，不是官方数值。
+   --------------------------------------------------------------------------- */
+.root {
+  --dsh-drawer-z: 1000;
+
+  position: fixed;
+  inset: 0;
+  z-index: var(--dsh-drawer-z);
+  display: flex;
+}
+/* § 建议值：官方没有抽屉，方向由 data-side 切换 */
+.root[data-side='right'] { justify-content: flex-end; }
+.root[data-side='left'] { justify-content: flex-start; }
+
+.mask { position: absolute; inset: 0; background: var(--dsw-alias-bg-mask-1); backdrop-filter: var(--dsw-mask-blur); }
+
+.panel {
+  --dsh-drawer-width: 320px;   /* § 建议值：默认宽度 */
+
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: var(--dsh-drawer-width);
+  max-width: 100%;
+  height: 100%;
+  padding: 0 0 24px;
+  overflow: hidden;
+  /* § 建议值：贴边满高面板不设圆角 */
+  background: var(--dsw-alias-bg-layer-2);
+  box-shadow: var(--dsw-elevation-prominent);
+  outline: none;   /* § 建议值：容器可编程聚焦，不画默认焦点环 */
+}
+/* § 建议值：抽屉满高，内容区必须能滚动 */
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+.header { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 22px 14px 12px 24px; }
+.title { margin: 0; font-size: 16px; line-height: 24px; font-weight: 500; color: var(--dsw-alias-label-primary); }
+.close {
+  flex: none; box-sizing: border-box;
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0;   /* § 建议值：官方依赖宿主全局 reset */
+  width: 28px; height: 28px;
+  border: none; border-radius: 8px; background: transparent;
+  cursor: pointer; color: var(--dsw-alias-label-secondary);
+}
+.close:hover { background: var(--dsw-alias-interactive-bg-hover); }
+/* § 建议值：官方 .close 没有焦点样式 */
+.close:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 2px; }
+.icon { display: block; width: 14px; height: 14px; }
+.description { margin: 0; padding: 0 24px; font-size: 14px; line-height: 22px; font-weight: 400; color: var(--dsw-alias-label-primary); }
+.body { display: flex; flex-direction: column; min-width: 0; margin-top: 20px; padding: 0 24px; }
+.footer {
+  flex: none;
+  display: flex; align-items: center; justify-content: flex-end; gap: 8px;
+  padding: 0 24px;
+}
+
+/* ------------------------------------------------------------------ demo 外壳
+   以下不是组件样式。真实组件把 .root 定位在视口上，demo 里为了静态展示，
+   把 .root 关进 .demo-stage（position: relative + 固定高度）里。 */
+body {
+  margin: 0;
+  padding: 32px;
+  background: var(--dsw-alias-bg-base);
+  color: var(--dsw-alias-label-primary);
+  font: var(--dsw-font-s-14);
+}
+h1 { font-size: 18px; line-height: 26px; font-weight: 600; margin: 0 0 4px; }
+p.lead { margin: 0 0 24px; color: var(--dsw-alias-label-secondary); font: var(--dsw-font-xs-13); }
+h2 { font-size: 13px; line-height: 20px; font-weight: 600; color: var(--dsw-alias-label-tertiary); margin: 24px 0 8px; }
+.demo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(460px, 1fr)); gap: 20px; }
+.demo-stage {
+  position: relative; height: 480px; overflow: hidden;
+  border: 0.5px solid var(--dsw-alias-border-l2); border-radius: 12px;
+  background: var(--dsw-alias-bg-module-platform);
+}
+.demo-stage > .root { position: absolute; }
+.demo-note { margin: 6px 0 0; color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); }
+.demo-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  height: 36px; color: var(--dsw-alias-label-primary);
+}
+.demo-row + .demo-row { border-top: 0.5px solid var(--dsw-alias-border-l1); }
+.demo-value { color: var(--dsw-alias-label-secondary); font: var(--dsw-font-xs-13); }
+.demo-btn {
+  height: 36px; padding: 0 14px; border: 0; border-radius: 18px; cursor: pointer;
+  background: transparent; color: var(--dsw-alias-label-primary); font: var(--dsw-font-s-14);
+}
+.demo-btn:hover { background: var(--dsw-alias-interactive-bg-hover); }
+.demo-btn--outline { border: 0.5px solid var(--dsw-alias-border-l3); }
+.demo-btn--primary { background: var(--dsw-alias-button-primary-fill); color: var(--dsw-alias-label-primary-foreground); }
+.demo-btn--primary:hover { background: var(--dsw-alias-button-primary-hover); }
+</style>
+</head>
+<body>
+  <h1>Drawer 抽屉</h1>
+  <p class="lead">官方没有抽屉组件：遮罩取自官方 Modal <code>.mask</code>（bg-mask-1 + mask-blur），面板底色 / 阴影取自 <code>.dialog</code>（layer-2 + elevation-prominent），内层 header / title / close / description / body / footer 复用官方 Modal 同一组几何。宽度 320px、贴边不设圆角、内容区滚动为 § 本仓库建议值。</p>
+
+  <h2>右侧抽屉（side="right"，默认）：标题 + 说明 + 内容 + 底部操作</h2>
+  <div class="demo-grid">
+    <div>
+      <div class="demo-stage">
+        <div class="root" data-side="right" role="presentation">
+          <div class="mask" aria-hidden="true"></div>
+          <div class="panel" role="dialog" aria-modal="true" aria-label="会话文件" tabindex="-1" style="--dsh-drawer-width:320px">
+            <div class="content">
+              <div class="header">
+                <h2 class="title">会话文件</h2>
+                <button type="button" class="close" aria-label="关闭">
+                  <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.1 3 8 6.9 11.9 3l1.1 1.1L9.1 8l3.9 3.9-1.1 1.1L8 9.1 4.1 13 3 11.9 6.9 8 3 4.1z" fill="currentColor"/></svg>
+                </button>
+              </div>
+              <p class="description">本次会话改动过的文件</p>
+              <div class="body">
+                <div class="demo-row"><span>components/surfaces/Modal</span><span class="demo-value">3 改</span></div>
+                <div class="demo-row"><span>components/surfaces/Drawer</span><span class="demo-value">4 改</span></div>
+                <div class="demo-row"><span>components/surfaces/Card</span><span class="demo-value">4 改</span></div>
+                <div class="demo-row"><span>website/css/dsh-tokens.css</span><span class="demo-value">只读</span></div>
+                <div class="demo-row"><span>package.json</span><span class="demo-value">只读</span></div>
+              </div>
+            </div>
+            <div class="footer">
+              <button type="button" class="demo-btn demo-btn--outline">全部收起</button>
+              <button type="button" class="demo-btn demo-btn--primary">打开目录</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="demo-note">面板贴右边：内容区吃掉剩余高度（<code>flex:1 / min-height:0 / overflow-y:auto</code>，§ 建议值），底部操作行固定不动。</p>
+    </div>
+
+    <div>
+      <h2 style="margin-top:0">左侧抽屉（side="left"）+ 窄面板（width=240）</h2>
+      <div class="demo-stage">
+        <div class="root" data-side="left" role="presentation">
+          <div class="mask" aria-hidden="true"></div>
+          <div class="panel" role="dialog" aria-modal="true" aria-label="插件目录" tabindex="-1" style="--dsh-drawer-width:240px">
+            <div class="content">
+              <div class="header">
+                <h2 class="title">插件目录</h2>
+                <button type="button" class="close" aria-label="关闭">
+                  <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.1 3 8 6.9 11.9 3l1.1 1.1L9.1 8l3.9 3.9-1.1 1.1L8 9.1 4.1 13 3 11.9 6.9 8 3 4.1z" fill="currentColor"/></svg>
+                </button>
+              </div>
+              <div class="body">
+                <div class="demo-row"><span>dsh-design-resources</span></div>
+                <div class="demo-row"><span>dsh-memory</span></div>
+                <div class="demo-row"><span>dsh-research</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="demo-note">没有 description、没有 footer 时，面板只剩 header + body：两者之间的间距仍由 <code>.body</code> 的 <code>margin-top: 20px</code> 提供。</p>
+    </div>
+  </div>
+
+  <p class="demo-note" style="margin-top:24px">提示：hover 关闭按钮可以看到 <code>--dsw-alias-interactive-bg-hover</code> 底色，Tab 可以看到关闭按钮的焦点环（§ 本仓库建议值）。Escape 关闭、遮罩点击关闭、焦点陷阱与焦点归还只在实际 React 组件里生效，静态 demo 展示的是外观。</p>
+</body>
+</html>

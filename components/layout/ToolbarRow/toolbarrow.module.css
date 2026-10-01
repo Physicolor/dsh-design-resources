@@ -1,0 +1,53 @@
+/* 几何锚点来自官方 @deepseek-ai/dsh-client-ui-primitives/lib 下已核实的值：
+ *   ConnectionIndicator.module.css .indicator → height 32px / padding 0 10px
+ *                                                / border-radius 8px / box-sizing border-box
+ *   Button.module.css            .button     → gap 4px（本组件主间距直接取该值）
+ *   Button.module.css            .sm         → 28px 高，故 sm 档行高取 28px、间距收到 4px
+ *   Button.module.css            .toolbar    → background var(--dsw-alias-button-tool-bar-fill)
+ *   Menu.module.css              .separator  → height 0.5px / var(--dsw-alias-border-l1)
+ * 12px 的左右内边距与 sm 档的 8px 内边距为本仓库建议值（4 的倍数），README 单列。
+ * 实现为本仓库原创：CSS 变量承载几何 + 语义 token 承载颜色，未复制官方 CSS 源码。 */
+
+.row {
+  --dsh-tb-height: 32px;
+  --dsh-tb-pad-x: 12px;
+  --dsh-tb-gap: 4px;
+
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--dsh-tb-gap);
+  min-height: var(--dsh-tb-height);
+  padding: 0 var(--dsh-tb-pad-x);
+  border-radius: 8px; /* 官方 ConnectionIndicator.module.css .indicator 的 8px */
+  background: transparent;
+  font-family: inherit;
+}
+
+/* 底部 hairline：写法与官方 Menu.module.css 的 .separator 一致
+ * （0.5px + border-l1）。选 l1 的理由见 README。 */
+.divider {
+  border-bottom: 0.5px solid var(--dsw-alias-border-l1);
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+/* ------------------------------------------------------------------ 形态 */
+
+/* 官方 Button.module.css 的 .toolbar 底色，即工具条按钮的底。 */
+.filled {
+  background: var(--dsw-alias-button-tool-bar-fill);
+}
+
+/* ------------------------------------------------------------------ 尺寸 */
+
+.sm {
+  --dsh-tb-height: 28px;
+  --dsh-tb-pad-x: 8px;
+  --dsh-tb-gap: 4px;
+}

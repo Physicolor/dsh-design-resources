@@ -1,0 +1,150 @@
+/* Drawer 侧边抽屉 —— 几何来源：
+ *   .mask        官方 Modal.module.css `.mask`（background var(--dsw-alias-bg-mask-1)
+ *                + backdrop-filter var(--dsw-mask-blur)）
+ *   .panel 底色  官方 Modal.module.css `.dialog`（layer-2）
+ *   .panel 阴影  官方 Modal.module.css `.dialog` / Menu.module.css `.list`
+ *                （box-shadow var(--dsw-elevation-prominent)）
+ *   .header      官方 Modal.module.css `.header`（padding 22px 14px 12px 24px / gap 8px）
+ *   .title       官方 Modal.module.css `.title`（16/24/500）
+ *   .close       官方 Modal.module.css `.close`（28×28 / r8 / label-secondary / hover）
+ *   .description 官方 Modal.module.css `.description`（14/22 / padding 0 24px）
+ *   .body        官方 Modal.module.css `.body`（margin-top 20px / padding 0 24px）
+ *   .footer      官方 Modal.module.css `.footer`（flex-end / gap 8px / padding 0 24px）
+ *   图标 14px    官方 JS 给 close 图标的 size
+ * 宽度、面板圆角、滚动容器与焦点陷阱为本仓库建议值，理由见 README。
+ * 实现为本仓库原创：用 CSS 变量承载几何，未复制官方 CSS 源码。 */
+
+.root {
+  --dsh-drawer-z: 1000;
+
+  position: fixed;
+  inset: 0;
+  z-index: var(--dsh-drawer-z);
+  display: flex;
+}
+
+/* 停靠方向由 data-side 决定：右抽屉贴右、左抽屉贴左（本仓库建议值，
+ * 官方没有抽屉组件可参照）。 */
+.root[data-side='right'] {
+  justify-content: flex-end;
+}
+
+.root[data-side='left'] {
+  justify-content: flex-start;
+}
+
+.mask {
+  position: absolute;
+  inset: 0;
+  background: var(--dsw-alias-bg-mask-1);
+  backdrop-filter: var(--dsw-mask-blur);
+}
+
+.panel {
+  --dsh-drawer-width: 320px;
+
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: var(--dsh-drawer-width);
+  max-width: 100%;
+  height: 100%;
+  padding: 0 0 24px;
+  overflow: hidden;
+  /* § 本仓库建议值：贴边满高的面板不设圆角（官方 Modal `.dialog` 的 24px
+   * 圆角是居中浮层的几何，贴到视口边缘会与边缘产生缝隙）。 */
+  background: var(--dsw-alias-bg-layer-2);
+  box-shadow: var(--dsw-elevation-prominent);
+  /* § 本仓库建议值：容器可编程聚焦，不画默认焦点环。 */
+  outline: none;
+}
+
+/* § 本仓库建议值：官方 Modal 的 .dialog 高度自适应，不需要滚动容器；
+ * 抽屉是满高的，内容过长必须能在面板内滚动，所以内容区吃掉剩余高度。 */
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 22px 14px 12px 24px;
+}
+
+.title {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  color: var(--dsw-alias-label-primary);
+}
+
+.close {
+  flex: none;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* 官方未写 padding:0，依赖宿主全局 reset；本仓库组件不假定宿主 reset。 */
+  padding: 0;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.close:hover {
+  background: var(--dsw-alias-interactive-bg-hover);
+}
+
+/* § 本仓库建议值：官方 .close 没有焦点样式；写法对齐官方 Switch.module.css 的
+ * :focus-visible（2px brand-primary + offset 2px）。 */
+.close:focus-visible {
+  outline: 2px solid var(--dsw-alias-brand-primary);
+  outline-offset: 2px;
+}
+
+.icon {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+.description {
+  margin: 0;
+  padding: 0 24px;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  color: var(--dsw-alias-label-primary);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin-top: 20px;
+  padding: 0 24px;
+}
+
+.footer {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 0 24px;
+}

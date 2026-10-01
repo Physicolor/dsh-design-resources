@@ -1,0 +1,144 @@
+/* DisclosureRow 可展开行。
+ *
+ * 几何读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/DisclosureRow.module.css
+ * 与同目录 lib/index.js 的 DisclosureRow 函数：
+ *   .root                   → flex column / width 100% / min-width 0
+ *   .row                    → position relative / overflow hidden / flex /
+ *                             align-items center / height 24px / min-width 0
+ *   .row[data-expandable]   → cursor: pointer
+ *   .leading                → 16×16 / inline-flex 居中 / margin-right 6px /
+ *                             padding 0 / border none / background none /
+ *                             color var(--dsw-alias-label-tertiary)
+ *   .leading svg:not([data-state]) → 14×14（CSS 边缘覆盖 svg 自身属性）
+ *   .iconIdle / .chevronHover → opacity 1 / 0，各 100ms ease 过渡
+ *   .row:hover .iconIdle → opacity 0；.row:hover .chevronHover → opacity 1
+ *   .title                  → flex none / 13px / line-height 24px /
+ *                             color var(--dsw-alias-label-secondary)
+ *   JS：可展开时 role="button" + tabIndex=0 + aria-expanded + Enter/Space 触发；
+ *       仅图标按钮形态下 aria-expanded 落在 leading 按钮上
+ *
+ * 本仓库决策：官方用 --dsh-content-font-delta / --dsh-content-font-size-secondary
+ * 让这一行跟随 DSH 的字体偏好缩放，本仓库有意删掉这条轴、固定为官方默认值
+ * （delta = 0 时的 24px / 16px / 14px / 13px-24px），理由见 README「几何来源」。
+ *
+ * 实现为本仓库原创：几何由组件级 CSS 变量承载、规则重新组织，未复制官方 CSS 源码。
+ * § 标记处为本仓库建议值（官方没有的声明）。 */
+
+.root {
+  /* 官方默认值：--dsh-content-font-delta 在宿主未发布时回落到 0px，
+   * 此时的高度 / leading / 字号就是下面这四个数。 */
+  --dsh-disclosure-row-height: 24px;
+  --dsh-disclosure-leading-size: 16px;
+  --dsh-disclosure-glyph-size: 14px;
+  --dsh-disclosure-title-size: 13px;
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+}
+
+.row {
+  position: relative;
+  overflow: hidden; /* 官方如此；注意它会把子元素（含 leading 的焦点环）裁掉 */
+  display: flex;
+  align-items: center;
+  height: var(--dsh-disclosure-row-height);
+  min-width: 0;
+}
+
+.row[data-expandable] {
+  cursor: pointer;
+}
+
+.leading {
+  position: relative;
+  flex: none;
+  width: var(--dsh-disclosure-leading-size);
+  height: var(--dsh-disclosure-leading-size);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 6px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+button.leading {
+  cursor: pointer;
+}
+
+/* 行内图标渲染在 16px 盒子的中间：14px。StateDot 那类带 data-state 的 svg
+ * 不走这条规则，它保留自己的固定尺寸（官方注释写明这一点）。 */
+.leading svg:not([data-state]) {
+  width: var(--dsh-disclosure-glyph-size);
+  height: var(--dsh-disclosure-glyph-size);
+}
+
+/* 折叠态：默认显示调用方给的图标；悬停整行时它淡出、箭头淡入。 */
+.iconIdle {
+  display: inline-flex;
+  opacity: 1;
+  transition: opacity 100ms ease;
+}
+
+.chevronHover {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  opacity: 0;
+  transition: opacity 100ms ease;
+}
+
+.row:hover .iconIdle {
+  opacity: 0;
+}
+
+.row:hover .chevronHover {
+  opacity: 1;
+}
+
+.title {
+  flex: none;
+  font-size: var(--dsh-disclosure-title-size);
+  line-height: var(--dsh-disclosure-row-height);
+  color: var(--dsw-alias-label-secondary);
+}
+
+/* § 本仓库建议值：官方 DisclosureRow.module.css 没有焦点样式。
+ * spec/60-accessibility.md 的 AC-MF-11 要求 2px 实线 + --dsw-alias-brand-primary，
+ * 常规取 2px 外偏移。 */
+.row:focus-visible {
+  outline: 2px solid var(--dsw-alias-brand-primary);
+  outline-offset: 2px;
+}
+
+/* § 本仓库建议值：leading 是 16×16 的按钮，左边正好贴着 .row 的左边缘，
+ * 2px 外偏移的焦点环会被 .row 的 overflow: hidden 从左侧裁掉（AC-MF-12），
+ * 所以这一处改用 -2px 内偏移，把环画在按钮自身盒子里。 */
+.leading:focus-visible {
+  outline: 2px solid var(--dsw-alias-brand-primary);
+  outline-offset: -2px;
+}
+
+/* § 本仓库建议值：官方只给了 leading 这个 16×16 的命中区，低于
+ * spec/60-accessibility.md 的 AC-MF-01 下限 20×20。这里用一个透明伪元素把
+ * 「仅图标按钮」的热区向四周各扩 4px（左侧 4px 会被 .row 的 overflow: hidden 裁掉，
+ * 实际有效热区 20×24）。不改变任何可见几何：伪元素没有背景、没有边框。 */
+button.leading::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+}
+
+/* § 本仓库建议值：官方 DisclosureRow.module.css 没有 prefers-reduced-motion 分支。
+ * spec/40-motion.md 的 MO-MF-09 要求减少动态时去掉非必要运动；这里的两处过渡
+ * 都只是透明度切换，直接停掉最省事，也不影响信息（折叠态由 aria-expanded 与箭头承载）。 */
+@media (prefers-reduced-motion: reduce) {
+  .iconIdle,
+  .chevronHover {
+    transition: none;
+  }
+}

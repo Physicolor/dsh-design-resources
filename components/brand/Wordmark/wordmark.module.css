@@ -1,0 +1,26 @@
+/* 字标的几何（182 × 24 / 156 × 24 视框、角标矩形、两处 clipPath）不在这份 CSS 里：
+ * 官方 BrandWordmark 把它们写在 svg 属性与 JSX 里，本组件沿用同一分工。
+ * 这份 CSS 只做两件事：
+ *   1) 角标字母颜色——官方逐条写成 var(--dsw-alias-label-primary-inverted)，
+ *      本仓库把它提升为一个可覆盖的自定义属性（§ 本仓库建议值，理由见 README）；
+ *   2) 品牌标记与相邻元素的共处（§ 本仓库建议值，官方没有对应声明）。
+ * 实现为本仓库原创，未复制官方 CSS 源码（官方 BrandWordmark 也没有配套 .module.css）。 */
+
+.mark {
+  /* § 本仓库建议值：角标字母的墨色。默认就是官方用的那个语义 token，
+     把它提出来是为了在非 token 底色（例如品牌色块）上能只覆盖这一处。 */
+  --dsh-wordmark-badge-ink: var(--dsw-alias-label-primary-inverted);
+
+  /* § 本仓库建议值：品牌标记在 flex 行里不应被压缩成非等比尺寸。 */
+  flex: none;
+  /* § 本仓库建议值：svg 默认按基线对齐，与相邻文字并排时底部会显得下坠。 */
+  vertical-align: middle;
+}
+
+/* 角标矩形的底色是 currentColor，字母用上面的自定义属性：
+   浅色主题下该 token 解析为 --dsw-static-neutral-bluish-00（白），
+   深色主题下解析为 --dsw-static-neutral-bluish-800（深灰），与底色始终反相。
+   具体数值与出处见 README「角标配色与深浅主题」。 */
+.badgeInk {
+  fill: var(--dsh-wordmark-badge-ink);
+}

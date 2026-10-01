@@ -1,0 +1,109 @@
+/* 几何全部来自官方 Button.module.css：
+ *   .button → h36(md) / padding 0 14px / gap 4px / radius 18px / font 14-22
+ *   .sm     → h28 / padding 0 10px / radius 14px / font 12-18
+ *   .icon   → 图标容器 16×16
+ *   .outline→ 0.5px solid var(--dsw-alias-border-l3)
+ *   :disabled → opacity 0.4
+ * 实现为本仓库原创（变量驱动 + 单类尺寸切换），未复制官方 CSS 源码。 */
+
+.button {
+  --dsh-btn-height: 36px;
+  --dsh-btn-pad-x: 14px;
+  --dsh-btn-radius: 18px;
+  --dsh-btn-font-size: 14px;
+  --dsh-btn-line-height: 22px;
+  --dsh-btn-gap: 4px;
+
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--dsh-btn-gap);
+  height: var(--dsh-btn-height);
+  padding: 0 var(--dsh-btn-pad-x);
+  border: 0;
+  border-radius: var(--dsh-btn-radius);
+  background: transparent;
+  color: var(--dsw-alias-label-primary);
+  font-family: inherit;
+  font-size: var(--dsh-btn-font-size);
+  line-height: var(--dsh-btn-line-height);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+/* 官方 Button.module.css 未定义键盘焦点样式；本仓库建议值，理由见 README
+ * 「可访问性要点」，写法对齐官方 Switch.module.css 的 focus-visible。 */
+.button:focus-visible {
+  outline: 2px solid var(--dsw-alias-brand-primary);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------------ 尺寸 */
+
+.sm {
+  --dsh-btn-height: 28px;
+  --dsh-btn-pad-x: 10px;
+  --dsh-btn-radius: 14px;
+  --dsh-btn-font-size: 12px;
+  --dsh-btn-line-height: 18px;
+}
+
+/* 仅图标按钮：高度沿用 sm 的 28px（官方注释里的 Icon_container 28×28），
+ * width/padding 为本仓库建议值，官方未提供方形变体类。 */
+.iconOnly {
+  --dsh-btn-pad-x: 0;
+  width: var(--dsh-btn-height);
+  padding: 0;
+}
+
+/* ------------------------------------------------------------------ 变体 */
+
+.primary {
+  background: var(--dsw-alias-button-primary-fill);
+  color: var(--dsw-alias-label-primary-foreground);
+}
+
+.primary:hover:not(:disabled) {
+  background: var(--dsw-alias-button-primary-hover);
+}
+
+.ghost:hover:not(:disabled) {
+  background: var(--dsw-alias-interactive-bg-hover);
+}
+
+.ghost:active:not(:disabled) {
+  background: var(--dsw-alias-interactive-bg-active);
+}
+
+.outline {
+  border: 0.5px solid var(--dsw-alias-border-l3);
+}
+
+.outline:hover:not(:disabled) {
+  background: var(--dsw-alias-interactive-bg-hover);
+}
+
+.toolbar {
+  background: var(--dsw-alias-button-tool-bar-fill);
+}
+
+.toolbar:hover:not(:disabled) {
+  background: var(--dsw-alias-button-tool-bar-hover);
+}
+
+/* ------------------------------------------------------------------ 图标 */
+
+.icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+}

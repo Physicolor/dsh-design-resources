@@ -1,0 +1,65 @@
+/* 官方没有 EmptyState 组件，本文件所有数值均为「本仓库建议值」，理由逐条写在 README。
+ * 唯一沿用官方数值的是文字层级：标题 14/22、说明 13/20，来自官方合成 token
+ *   --dsw-font-s-14 → 14px/22px
+ *   --dsw-font-xs-13 → 13px/20px
+ * 以及官方 Button 的尺寸体系（动作插槽里放 Button 时不受本文件影响）。
+ * 间距一律取 4 的倍数。 */
+
+.empty {
+  --dsh-empty-icon-slot: 32px;
+  --dsh-empty-gap: 12px;
+  --dsh-empty-title-desc-gap: 6px;
+  --dsh-empty-action-gap: 16px;
+  --dsh-empty-max-w: 280px;
+  --dsh-empty-pad-y: 32px;
+  --dsh-empty-pad-x: 12px;
+
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--dsh-empty-gap);
+  padding: var(--dsh-empty-pad-y) var(--dsh-empty-pad-x);
+  text-align: center;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: var(--dsh-empty-icon-slot);
+  height: var(--dsh-empty-icon-slot);
+  /* 让调用方传进来的图标继承次级文字色，而不是默认的黑色描边。 */
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.title {
+  max-width: var(--dsh-empty-max-w);
+  margin: 0;
+  color: var(--dsw-alias-label-primary);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  text-wrap: pretty;
+}
+
+.description {
+  /* 标题与说明之间的间距是 6px，比 flex 的 12px 紧，
+     靠负外边距抵消掉一半的 gap：-(12 - 6) = -6px。 */
+  margin: calc(-1 * var(--dsh-empty-gap) + var(--dsh-empty-title-desc-gap)) 0 0;
+  max-width: var(--dsh-empty-max-w);
+  color: var(--dsw-alias-label-secondary);
+  /* 13/20 是官方合成 token，含字体族，直接整条使用。 */
+  font: var(--dsw-font-xs-13);
+  text-wrap: pretty;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: var(--dsh-empty-action-gap);
+}

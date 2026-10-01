@@ -1,0 +1,55 @@
+{
+    "name": "dsh-design-resources",
+    "version": "0.1.0",
+    "description": "DeepSeek Design Resources — 界面规范、可复用源码知识库与实况组件画廊，供 DeepSeek Harness 插件作者使用。",
+    "type": "module",
+    "license": "MIT",
+    "author": "Physicolor",
+    "homepage": "https://physicolor.github.io/dsh-design-resources/",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Physicolor/dsh-design-resources.git"
+    },
+    "keywords": [
+        "deepseek-harness",
+        "dsh",
+        "design-system",
+        "design-resources",
+        "ui-spec",
+        "cordis",
+        "plugin",
+        "web-ui"
+    ],
+    "files": [
+        "index.json",
+        "README.md",
+        "README.zh-CN.md",
+        "LICENSE",
+        "spec/**/*.md",
+        "rules/**/*.json",
+        "data/**/*.json",
+        "components/**",
+        "icons/**",
+        "website/**"
+    ],
+    "exports": {
+        ".": "./index.json",
+        "./index.json": "./index.json",
+        "./rules": "./rules/rules.json",
+        "./data/*": "./data/*",
+        "./spec/*": "./spec/*",
+        "./components/*": "./components/*",
+        "./package.json": "./package.json"
+    },
+    "scripts": {
+        "collect": "node scripts/collect-icons.mjs && node scripts/collect-tokens.mjs && node scripts/collect-slots.mjs && node scripts/gen-rules.mjs",
+        "rules": "node scripts/gen-rules.mjs",
+        "refs": "node scripts/check-refs.mjs",
+        "site": "node website/gen-site.mjs",
+        "verify": "node website/verify.mjs",
+        "serve": "node scripts/serve.mjs",
+        "build": "node scripts/gen-rules.mjs && node website/gen-site.mjs && node scripts/check-refs.mjs && node website/verify.mjs"
+    },
+    "devDependencies": {},
+    "dependencies": {}
+}

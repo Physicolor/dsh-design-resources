@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Input 输入框 · DSH 设计资源</title>
+<style>
+/* ---------------------------------------------------------------------------
+   演示用 token 脚手架。
+   数值逐条取自本仓库 website/css/dsh-tokens.css（由产品主题采集生成）与
+   app.asar 内官方主题对合成 token（elevation / shadow / font）的定义。
+   真实 DSH 运行时由宿主主题注入这些变量；demo 只是把同一批值内联进来，
+   组件类本身不写死任何颜色。
+   --------------------------------------------------------------------------- */
+:root {
+  --dsw-static-neutral-bluish-00: #fff;
+  --dsw-static-neutral-bluish-50: #f9fafb;
+  --dsw-static-neutral-bluish-60: #f9fafb;
+  --dsw-static-neutral-bluish-75: #f1f3f5;
+  --dsw-static-neutral-bluish-100: #ebeef2;
+  --dsw-static-neutral-bluish-150: #e9ecf2;
+  --dsw-static-neutral-bluish-200: #e1e5ee;
+  --dsw-static-neutral-bluish-300: #cfd3d6;
+  --dsw-static-neutral-bluish-400: #adb2b8;
+  --dsw-static-neutral-bluish-500: #979da6;
+  --dsw-static-neutral-bluish-600: #81858c;
+  --dsw-static-neutral-bluish-700: #61666b;
+  --dsw-static-neutral-bluish-750: #43454a;
+  --dsw-static-neutral-bluish-800: #353638;
+  --dsw-static-neutral-bluish-850: #2c2c2e;
+  --dsw-static-neutral-bluish-875: #232324;
+  --dsw-static-neutral-bluish-900: #1b1b1c;
+  --dsw-static-neutral-bluish-950: #151517;
+  --dsw-static-neutral-bluish-1000: #0f1115;
+  --dsw-static-neutral-50: #fafafa;
+  --dsw-static-neutral-200: #e5e5e5;
+  --dsw-static-neutral-300: #d4d4d4;
+  --dsw-static-deepseek-100: #e4edfd;
+  --dsw-static-deepseek-400: #7aaaff;
+  --dsw-static-deepseek-450: #5686fe;
+  --dsw-static-deepseek-500: #4176e6;
+  --dsw-static-deepseek-800: #34415b;
+  --dsw-static-green-100: #e6faed;
+  --dsw-static-green-400: #4ed17e;
+  --dsw-static-green-500: #22c55e;
+  --dsw-static-green-900: #233c2c;
+  --dsw-static-amber-100: #fef5e7;
+  --dsw-static-amber-400: #f7ad31;
+  --dsw-static-amber-500: #f59e0b;
+  --dsw-static-amber-600: #dd8629;
+  --dsw-static-amber-900: #27241f;
+  --dsw-static-red-100: #fee2e2;
+  --dsw-static-red-400: #f25a5a;
+  --dsw-static-red-600: #ec1313;
+  --dsw-static-blue-500: #3b82f6;
+
+  --dsw-alias-bg-base: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-1: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-2: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-3: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-mask-1: #0000003d;
+  --dsw-alias-bg-module-platform: var(--dsw-static-neutral-bluish-60);
+  --dsw-alias-bg-skeleton: #0000000a;
+  --dsw-alias-border-l1: #0000000a;
+  --dsw-alias-border-l2: #0000001a;
+  --dsw-alias-border-l3: #0000001f;
+  --dsw-alias-border-l4: #00000029;
+  --dsw-alias-brand-primary: var(--dsw-static-neutral-bluish-1000);
+  --dsw-alias-button-contrast-fill: var(--dsw-static-neutral-bluish-700);
+  --dsw-alias-button-elevated-fill: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-button-floating-fill: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-button-floating-hover: var(--dsw-static-neutral-bluish-75);
+  --dsw-alias-button-ghost-active-border: var(--dsw-static-neutral-bluish-500);
+  --dsw-alias-button-ghost-active-fill: var(--dsw-static-neutral-bluish-100);
+  --dsw-alias-button-primary-fill: var(--dsw-alias-brand-primary);
+  --dsw-alias-button-primary-hover: var(--dsw-static-neutral-bluish-750);
+  --dsw-alias-button-tool-bar-fill: #54555780;
+  --dsw-alias-button-tool-bar-hover: #54555799;
+  --dsw-alias-interactive-bg-active: #2631481a;
+  --dsw-alias-interactive-bg-hover: #2631480f;
+  --dsw-alias-interactive-bg-hover-danger: #ec13130d;
+  --dsw-alias-label-caption: var(--dsw-static-neutral-bluish-400);
+  --dsw-alias-label-dimmed: var(--dsw-static-neutral-bluish-200);
+  --dsw-alias-label-primary: var(--dsw-static-neutral-bluish-1000);
+  --dsw-alias-label-primary-foreground: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-label-primary-inverted: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-label-secondary: var(--dsw-static-neutral-bluish-700);
+  --dsw-alias-label-tertiary: var(--dsw-static-neutral-bluish-600);
+  --dsw-alias-link: var(--dsw-static-deepseek-500);
+  --dsw-alias-markdown-code-block: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-markdown-code-block-banner: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-markdown-inline-code: var(--dsw-static-neutral-50);
+  --dsw-alias-scrollbar-bg-l2: var(--dsw-static-neutral-200);
+  --dsw-alias-scrollbar-hover-l2: var(--dsw-static-neutral-300);
+  --dsw-alias-specific-menu: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-specific-sidebar-fill: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-state-business-primary: var(--dsw-static-deepseek-500);
+  --dsw-alias-state-error-primary: var(--dsw-static-red-600);
+  --dsw-alias-state-success-primary: var(--dsw-static-green-500);
+  --dsw-alias-state-success-tertiary: var(--dsw-static-green-100);
+  --dsw-alias-state-warn-label: var(--dsw-static-amber-600);
+  --dsw-alias-state-warn-primary: var(--dsw-static-amber-500);
+  --dsw-alias-state-warn-tertiary: var(--dsw-static-amber-100);
+  --dsw-alias-tooltip-bg: var(--dsw-static-neutral-bluish-850);
+  --dsw-specific-menu: var(--dsw-static-neutral-bluish-50);
+
+  --dsw-elevation-stroke-color: var(--dsw-alias-border-l1);
+  --dsw-elevation-stroke: 0 0 0 .5px var(--dsw-elevation-stroke-color);
+  --dsw-elevation-prominent: var(--dsw-elevation-stroke), 0 3px 8px 0 rgba(0, 0, 0, .04), 0 0 20px 0 rgba(0, 0, 0, .05);
+  --dsw-shadow-lv1: 0 2px 4px 0 rgba(0, 0, 0, .05);
+  --dsw-shadow-lv2: 0 4px 12px 0 rgba(0, 0, 0, .02), 0 2px 8px 0 rgba(0, 0, 0, .04);
+  --dsw-shadow-lv3: 0 0 1px 0 rgba(0, 0, 0, .2), 0 0 4px 0 rgba(0, 0, 0, .02), 0 12px 32px 0 rgba(0, 0, 0, .08);
+  --dsw-mask-blur: none;
+  --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* 官方把这两条写成 font 简写合成 token，这里展开以便 demo 单条使用。 */
+  --dsw-font-s-14: 14px/22px var(--dsw-font-family);
+  --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   以下为 Input 组件样式，与 input.module.css 数值逐条一致（类名去掉了 CSS Modules
+   的哈希）。§ 标记的行是本仓库建议值。
+   --------------------------------------------------------------------------- */
+.wrap {
+  --dsh-input-height: 32px;
+  --dsh-input-pad-x: 8px;
+  --dsh-input-gap: 6px;
+  --dsh-input-radius: 8px;
+  --dsh-input-icon-size: 16px;
+  --dsh-input-font-size: 14px;
+  --dsh-input-line-height: 22px;
+
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--dsh-input-gap);
+  height: var(--dsh-input-height);
+  padding: 0 var(--dsh-input-pad-x);
+  border: 0.5px solid var(--dsw-alias-border-l4);
+  border-radius: var(--dsh-input-radius);
+  background: var(--dsw-alias-bg-layer-1);
+}
+.wrap:focus-within { border-color: var(--dsw-alias-brand-primary); }
+
+.icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--dsh-input-icon-size);
+  height: var(--dsh-input-icon-size);
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--dsh-input-font-size);
+  line-height: var(--dsh-input-line-height);
+  color: var(--dsw-alias-label-primary);
+}
+.input::placeholder { color: var(--dsw-alias-label-dimmed); }
+
+/* § 本仓库建议值：官方 Input 没有 disabled 视觉（opacity 0.4 / not-allowed
+   取值沿用官方 Button.module.css 的 .button:disabled） */
+.wrap:has(.input:disabled) { cursor: not-allowed; opacity: 0.4; }
+
+/* ------------------------------------------------------------------ demo 外壳 */
+body {
+  margin: 0;
+  padding: 32px;
+  background: var(--dsw-alias-bg-base);
+  color: var(--dsw-alias-label-primary);
+  font: var(--dsw-font-s-14);
+}
+h1 { font-size: 18px; line-height: 26px; font-weight: 600; margin: 0 0 4px; }
+p.lead { margin: 0 0 24px; color: var(--dsw-alias-label-secondary); font: var(--dsw-font-xs-13); }
+h2 { font-size: 13px; line-height: 20px; font-weight: 600; color: var(--dsw-alias-label-tertiary); margin: 24px 0 8px; }
+p.note { margin: 0 0 8px; color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); }
+.stack { display: flex; flex-direction: column; gap: 12px; max-width: 380px; }
+.row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.wrap.wide { width: 320px; }
+/* 静态展示用：把 :focus-within 的描边钉在容器上，方便肉眼比对。 */
+.force-focus { border-color: var(--dsw-alias-brand-primary); }
+.hint { color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); margin-top: 24px; }
+</style>
+</head>
+<body>
+  <h1>Input 输入框</h1>
+  <p class="lead">几何来自官方 Input.module.css（h32 / pad 0 8px / gap 6px / r8 / 0.5px 描边；图标容器 16×16；14-22）。实现为本仓库原创。</p>
+
+  <h2>基础</h2>
+  <p class="note">默认状态：0.5px 描边 border-l4，底色 bg-layer-1，占位文字 label-dimmed。点进去能看到边框变成 brand-primary。</p>
+  <div class="stack">
+    <span class="wrap wide"><input class="input" placeholder="搜索会话"></span>
+    <span class="wrap wide"><input class="input" value="已经填好的内容"></span>
+  </div>
+
+  <h2>带 16×16 前置图标（间距 6px）</h2>
+  <p class="note">图标容器 16×16，颜色 label-tertiary；图标本身应 aria-hidden，名字由输入框自己的 label 提供。</p>
+  <div class="stack">
+    <span class="wrap wide">
+      <span class="icon"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M7 2a5 5 0 1 0 3.1 8.9l3 3 1.1-1.1-3-3A5 5 0 0 0 7 2zm0 1.6a3.4 3.4 0 1 1 0 6.8 3.4 3.4 0 0 1 0-6.8z" fill="currentColor"/></svg></span>
+      <input class="input" placeholder="搜索">
+    </span>
+    <span class="wrap wide">
+      <span class="icon"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6.4 1.6a4.8 4.8 0 0 0-4.8 4.8v3.2a4.8 4.8 0 0 0 4.8 4.8h3.2a4.8 4.8 0 0 0 4.8-4.8V6.4a4.8 4.8 0 0 0-4.8-4.8H6.4zm1.7 3.2h1.6v4.8H8.1V4.8zm0 6.4h1.6v1.6H8.1v-1.6z" fill="currentColor"/></svg></span>
+      <input class="input" placeholder="输入链接地址">
+    </span>
+  </div>
+
+  <h2>聚焦态（:focus-within 时边框换成 brand-primary）</h2>
+  <p class="note">左为静态展示的聚焦描边；右侧可以直接点进去，看到同一个效果。</p>
+  <div class="stack">
+    <span class="wrap wide force-focus"><input class="input" value="聚焦中的输入框"></span>
+    <span class="wrap wide"><input class="input" placeholder="点我试试"></span>
+  </div>
+
+  <h2>禁用（§ 本仓库建议值：官方没有 disabled 视觉）</h2>
+  <p class="note">opacity 0.4 沿用官方 Button 的禁用读法，让「不能用」在全库是同一个强度。</p>
+  <div class="stack">
+    <span class="wrap wide"><input class="input" value="不可编辑" disabled></span>
+    <span class="wrap wide">
+      <span class="icon"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.8 7.2V5.6a3.2 3.2 0 0 1 6.4 0v1.6h.8v6.4H4V7.2h.8zm1.6 0h3.2V5.6a1.6 1.6 0 0 0-3.2 0v1.6z" fill="currentColor"/></svg></span>
+      <input class="input" placeholder="已锁定的输入框" disabled>
+    </span>
+  </div>
+
+  <h2>宽度由外层 className 控制</h2>
+  <p class="note">组件本身是 inline-flex，宽度交给调用方；下面两个输入框同高不同宽。</p>
+  <div class="row">
+    <span class="wrap"><input class="input" placeholder="窄" size="8"></span>
+    <span class="wrap wide"><input class="input" placeholder="宽（320px）"></span>
+  </div>
+
+  <p class="hint">提示：真实组件把 ref 和全部 input 属性透传给内部原生 &lt;input&gt;；本页直接用原生标签静态展示。</p>
+</body>
+</html>

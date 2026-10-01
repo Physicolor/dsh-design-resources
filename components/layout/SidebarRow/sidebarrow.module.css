@@ -1,0 +1,125 @@
+/* 几何几乎逐条锚定官方 @deepseek-ai/dsh-client-ui-primitives/lib/Menu.module.css：
+ *   .item          → min-height 40px / padding 8px 10px / border-radius 10px
+ *                    / gap 8px / font-size 14px / line-height 22px
+ *                    / color var(--dsw-alias-label-primary) / text-align left
+ *   .item:hover    → background var(--dsw-alias-interactive-bg-hover)
+ *   .item:disabled → opacity 0.4 / cursor not-allowed
+ *   .itemIcon      → 16×16 / flex none / color var(--dsw-alias-label-tertiary)
+ *   .itemLabel     → flex 1 / min-width 0 / overflow hidden / text-overflow ellipsis
+ *                    / white-space nowrap
+ *   .check         → flex none / color var(--dsw-alias-label-primary)
+ *   .selectedFill  → background var(--dsw-alias-interactive-bg-hover)
+ *   .selected      → background transparent（官方：选中态标记是尾部对勾，不是填充）
+ * 唯一的建议值是 checkbox 的尺寸与行内间距，见 README「本仓库建议值」。
+ * 实现为本仓库原创：CSS 变量承载几何 + 语义 token 承载颜色，未复制官方 CSS 源码。 */
+
+.row {
+  --dsh-sb-min-height: 40px;
+  --dsh-sb-pad-x: 10px;
+  --dsh-sb-pad-y: 8px;
+  --dsh-sb-gap: 8px;
+  --dsh-sb-radius: 10px;
+
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--dsh-sb-gap);
+  width: 100%;
+  min-height: var(--dsh-sb-min-height);
+  min-width: 0;
+  padding: var(--dsh-sb-pad-y) var(--dsh-sb-pad-x);
+  border: none;
+  border-radius: var(--dsh-sb-radius);
+  background: transparent;
+  color: var(--dsw-alias-label-primary);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 22px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.row:hover:not(:disabled) {
+  background: var(--dsw-alias-interactive-bg-hover);
+}
+
+/* 选中态被点击时的按压反馈：官方只定义了 hover，取交互语义族里的 active。
+ * 已核对 website/css/dsh-tokens.css 中 --dsw-alias-interactive-bg-active 存在
+ * （官方 Button.module.css 的 .ghost:active 亦使用该 token）。 */
+.row:active:not(:disabled) {
+  background: var(--dsw-alias-interactive-bg-active);
+}
+
+.row:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+/* 官方 Menu.module.css 未定义行内焦点样式；本仓库建议值，写法对齐官方
+ * Switch.module.css / ConnectionIndicator.module.css 的 :focus-visible。 */
+.row:focus-visible {
+  outline: 2px solid var(--dsw-alias-brand-primary);
+  outline-offset: -2px;
+}
+
+/* ------------------------------------------------------------------ 选中态 */
+
+/* 官方 Menu.module.css 的 .selectedFill：整行铺 hover 底色。 */
+.selectedFill {
+  background: var(--dsw-alias-interactive-bg-hover);
+}
+
+/* 填充态被悬停时的加深：官方 .selectedFill 没写 hover，沿用上面 :active 的取值。 */
+.selectedFill:hover:not(:disabled) {
+  background: var(--dsw-alias-interactive-bg-active);
+}
+
+/* ------------------------------------------------------------------ 内容 */
+
+.leading {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.trailing {
+  flex: none;
+  color: var(--dsw-alias-label-tertiary);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.check {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  color: var(--dsw-alias-label-primary);
+}
+
+/* 建议值：官方 Menu 没有复选框行。16×16 与 accent-color 对齐官方
+ * RiskConfirmation.module.css 的 .acknowledgement input
+ * （width 16px / height 16px / accent-color var(--dsw-alias-button-primary-fill)），
+ * 那也是一处「行内的原生复选框」。 */
+.checkbox {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--dsw-alias-button-primary-fill);
+  cursor: pointer;
+}

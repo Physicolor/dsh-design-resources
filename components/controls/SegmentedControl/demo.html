@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SegmentedControl 分段控件 · DSH 设计资源</title>
+<style>
+/* ---------------------------------------------------------------------------
+   演示用 token 脚手架。
+   数值逐条取自本仓库 website/css/dsh-tokens.css（由产品主题采集生成）与
+   app.asar 内官方主题对合成 token（elevation / shadow / font）的定义。
+   真实 DSH 运行时由宿主主题注入这些变量；demo 只是把同一批值内联进来，
+   组件类本身不写死任何颜色。
+   --------------------------------------------------------------------------- */
+:root {
+  --dsw-static-neutral-bluish-00: #fff;
+  --dsw-static-neutral-bluish-50: #f9fafb;
+  --dsw-static-neutral-bluish-60: #f9fafb;
+  --dsw-static-neutral-bluish-75: #f1f3f5;
+  --dsw-static-neutral-bluish-100: #ebeef2;
+  --dsw-static-neutral-bluish-150: #e9ecf2;
+  --dsw-static-neutral-bluish-200: #e1e5ee;
+  --dsw-static-neutral-bluish-300: #cfd3d6;
+  --dsw-static-neutral-bluish-400: #adb2b8;
+  --dsw-static-neutral-bluish-500: #979da6;
+  --dsw-static-neutral-bluish-600: #81858c;
+  --dsw-static-neutral-bluish-700: #61666b;
+  --dsw-static-neutral-bluish-750: #43454a;
+  --dsw-static-neutral-bluish-800: #353638;
+  --dsw-static-neutral-bluish-850: #2c2c2e;
+  --dsw-static-neutral-bluish-875: #232324;
+  --dsw-static-neutral-bluish-900: #1b1b1c;
+  --dsw-static-neutral-bluish-950: #151517;
+  --dsw-static-neutral-bluish-1000: #0f1115;
+  --dsw-static-neutral-50: #fafafa;
+  --dsw-static-neutral-200: #e5e5e5;
+  --dsw-static-neutral-300: #d4d4d4;
+  --dsw-static-deepseek-100: #e4edfd;
+  --dsw-static-deepseek-400: #7aaaff;
+  --dsw-static-deepseek-450: #5686fe;
+  --dsw-static-deepseek-500: #4176e6;
+  --dsw-static-deepseek-800: #34415b;
+  --dsw-static-green-100: #e6faed;
+  --dsw-static-green-400: #4ed17e;
+  --dsw-static-green-500: #22c55e;
+  --dsw-static-green-900: #233c2c;
+  --dsw-static-amber-100: #fef5e7;
+  --dsw-static-amber-400: #f7ad31;
+  --dsw-static-amber-500: #f59e0b;
+  --dsw-static-amber-600: #dd8629;
+  --dsw-static-amber-900: #27241f;
+  --dsw-static-red-100: #fee2e2;
+  --dsw-static-red-400: #f25a5a;
+  --dsw-static-red-600: #ec1313;
+  --dsw-static-blue-500: #3b82f6;
+
+  --dsw-alias-bg-base: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-1: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-2: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-3: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-mask-1: #0000003d;
+  --dsw-alias-bg-module-platform: var(--dsw-static-neutral-bluish-60);
+  --dsw-alias-bg-skeleton: #0000000a;
+  --dsw-alias-border-l1: #0000000a;
+  --dsw-alias-border-l2: #0000001a;
+  --dsw-alias-border-l3: #0000001f;
+  --dsw-alias-border-l4: #00000029;
+  --dsw-alias-brand-primary: var(--dsw-static-neutral-bluish-1000);
+  --dsw-alias-button-contrast-fill: var(--dsw-static-neutral-bluish-700);
+  --dsw-alias-button-elevated-fill: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-button-floating-fill: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-button-floating-hover: var(--dsw-static-neutral-bluish-75);
+  --dsw-alias-button-ghost-active-border: var(--dsw-static-neutral-bluish-500);
+  --dsw-alias-button-ghost-active-fill: var(--dsw-static-neutral-bluish-100);
+  --dsw-alias-button-primary-fill: var(--dsw-alias-brand-primary);
+  --dsw-alias-button-primary-hover: var(--dsw-static-neutral-bluish-750);
+  --dsw-alias-button-tool-bar-fill: #54555780;
+  --dsw-alias-button-tool-bar-hover: #54555799;
+  --dsw-alias-interactive-bg-active: #2631481a;
+  --dsw-alias-interactive-bg-hover: #2631480f;
+  --dsw-alias-interactive-bg-hover-danger: #ec13130d;
+  --dsw-alias-label-caption: var(--dsw-static-neutral-bluish-400);
+  --dsw-alias-label-dimmed: var(--dsw-static-neutral-bluish-200);
+  --dsw-alias-label-primary: var(--dsw-static-neutral-bluish-1000);
+  --dsw-alias-label-primary-foreground: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-label-primary-inverted: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-label-secondary: var(--dsw-static-neutral-bluish-700);
+  --dsw-alias-label-tertiary: var(--dsw-static-neutral-bluish-600);
+  --dsw-alias-link: var(--dsw-static-deepseek-500);
+  --dsw-alias-markdown-code-block: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-markdown-code-block-banner: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-markdown-inline-code: var(--dsw-static-neutral-50);
+  --dsw-alias-scrollbar-bg-l2: var(--dsw-static-neutral-200);
+  --dsw-alias-scrollbar-hover-l2: var(--dsw-static-neutral-300);
+  --dsw-alias-specific-menu: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-specific-sidebar-fill: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-state-business-primary: var(--dsw-static-deepseek-500);
+  --dsw-alias-state-error-primary: var(--dsw-static-red-600);
+  --dsw-alias-state-success-primary: var(--dsw-static-green-500);
+  --dsw-alias-state-success-tertiary: var(--dsw-static-green-100);
+  --dsw-alias-state-warn-label: var(--dsw-static-amber-600);
+  --dsw-alias-state-warn-primary: var(--dsw-static-amber-500);
+  --dsw-alias-state-warn-tertiary: var(--dsw-static-amber-100);
+  --dsw-alias-tooltip-bg: var(--dsw-static-neutral-bluish-850);
+  --dsw-specific-menu: var(--dsw-static-neutral-bluish-50);
+
+  --dsw-elevation-stroke-color: var(--dsw-alias-border-l1);
+  --dsw-elevation-stroke: 0 0 0 .5px var(--dsw-elevation-stroke-color);
+  --dsw-elevation-prominent: var(--dsw-elevation-stroke), 0 3px 8px 0 rgba(0, 0, 0, .04), 0 0 20px 0 rgba(0, 0, 0, .05);
+  --dsw-shadow-lv1: 0 2px 4px 0 rgba(0, 0, 0, .05);
+  --dsw-shadow-lv2: 0 4px 12px 0 rgba(0, 0, 0, .02), 0 2px 8px 0 rgba(0, 0, 0, .04);
+  --dsw-shadow-lv3: 0 0 1px 0 rgba(0, 0, 0, .2), 0 0 4px 0 rgba(0, 0, 0, .02), 0 12px 32px 0 rgba(0, 0, 0, .08);
+  --dsw-mask-blur: none;
+  --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* 官方把这两条写成 font 简写合成 token，这里展开以便 demo 单条使用。 */
+  --dsw-font-s-14: 14px/22px var(--dsw-font-family);
+  --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   以下为 SegmentedControl 组件样式，与 segmentedcontrol.module.css 数值逐条一致
+   （类名去掉了 CSS Modules 的哈希）。§ 标记的行是本仓库建议值，不是官方数值。
+   本页是纯静态演示：没有 React 逻辑，点击只切换不了任何东西。
+   --------------------------------------------------------------------------- */
+.control {
+  --dsh-seg-pad: 4px;
+  --dsh-seg-radius: 12px;
+  --dsh-seg-inner-radius: 8px;
+  --dsh-seg-height: 36px;
+  --dsh-seg-pad-x: 14px;
+  --dsh-seg-font-size: 14px;
+  --dsh-seg-line-height: 22px;
+  --dsh-seg-gap: 4px;
+  --dsh-seg-icon: 16px;
+
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  padding: var(--dsh-seg-pad);
+  border-radius: var(--dsh-seg-radius);
+  background: var(--dsw-alias-bg-module-platform);
+  font-family: inherit;
+}
+.sm {
+  --dsh-seg-height: 28px;
+  --dsh-seg-pad-x: 10px;
+  --dsh-seg-font-size: 12px;
+  --dsh-seg-line-height: 18px;
+}
+
+.option {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: var(--dsh-seg-gap);
+  height: var(--dsh-seg-height);
+  padding: 0 var(--dsh-seg-pad-x);
+  border: 0;
+  border-radius: var(--dsh-seg-inner-radius);
+  background: transparent;
+  color: var(--dsw-alias-label-secondary);
+  font-family: inherit;
+  font-size: var(--dsh-seg-font-size);
+  line-height: var(--dsh-seg-line-height);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.option:hover:not(:disabled):not([aria-checked='true']) { background: var(--dsw-alias-interactive-bg-hover); }
+/* § 本仓库建议值：官方 Pill 无 :active 态 */
+.option:active:not(:disabled):not([aria-checked='true']) { background: var(--dsw-alias-interactive-bg-active); }
+.option[aria-checked='true'] {
+  color: var(--dsw-alias-label-primary);
+  background: var(--dsw-alias-button-ghost-active-fill);
+  box-shadow: inset 0 0 0 1px var(--dsw-alias-button-ghost-active-border);
+}
+/* § 本仓库建议值：官方 Button / Pill 都没有焦点样式 */
+.option:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 2px; }
+/* § 本仓库建议值：整组禁用 */
+.disabled .option { cursor: not-allowed; color: var(--dsw-alias-label-tertiary); }
+.disabled .option[aria-checked='true'] { color: var(--dsw-alias-label-tertiary); }
+
+.icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--dsh-seg-icon);
+  height: var(--dsh-seg-icon);
+}
+.icon > svg { display: block; width: 100%; height: 100%; }
+
+/* ------------------------------------------------------------------ demo 外壳 */
+body {
+  margin: 0;
+  padding: 32px;
+  background: var(--dsw-alias-bg-base);
+  color: var(--dsw-alias-label-primary);
+  font: var(--dsw-font-s-14);
+}
+h1 { font-size: 18px; line-height: 26px; font-weight: 600; margin: 0 0 4px; }
+p.lead { margin: 0 0 24px; color: var(--dsw-alias-label-secondary); font: var(--dsw-font-xs-13); }
+h2 { font-size: 13px; line-height: 20px; font-weight: 600; color: var(--dsw-alias-label-tertiary); margin: 24px 0 8px; }
+.demo-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.demo-hint { color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); margin: 4px 0 0; }
+/* § 演示专用：强制 hover / active / 焦点环外观，不是组件类 */
+.force-hover { background: var(--dsw-alias-interactive-bg-hover); }
+.force-active { background: var(--dsw-alias-interactive-bg-active); }
+.force-focus { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 2px; }
+</style>
+</head>
+<body>
+  <h1>SegmentedControl 分段控件</h1>
+  <p class="lead">容器内边距取自官方 Menu 的 .list（4px / gap 0），外层圆角取自官方 Pill（r12），段高与内边距取自官方 Button 的 md 36px / sm 28px 两组，选中段直接复用官方 Pill .active 的填充与内描边。官方没有此控件，段圆角等为 § 本仓库建议值，见 README。</p>
+
+  <h2>md（段高 36px）· 三段，第一段选中</h2>
+  <div class="demo-row">
+    <div class="control" role="radiogroup" aria-label="视图" aria-orientation="horizontal">
+      <button type="button" role="radio" aria-checked="true" class="option">列表</button>
+      <button type="button" role="radio" aria-checked="false" class="option" tabindex="-1">网格</button>
+      <button type="button" role="radio" aria-checked="false" class="option" tabindex="-1">时间线</button>
+    </div>
+    <p class="demo-hint">选中段：label-primary 文字 + ghost-active-fill 填充 + inset 1px 描边；未选中段：label-secondary 文字、透明底。</p>
+  </div>
+
+  <h2>sm（段高 28px）· 三段，第二段选中</h2>
+  <div class="demo-row">
+    <div class="control sm" role="radiogroup" aria-label="时间区间" aria-orientation="horizontal">
+      <button type="button" role="radio" aria-checked="false" class="option" tabindex="-1">1 天</button>
+      <button type="button" role="radio" aria-checked="true" class="option">7 天</button>
+      <button type="button" role="radio" aria-checked="false" class="option" tabindex="-1">30 天</button>
+    </div>
+    <p class="demo-hint">sm 组：段高 28px、字号 12/18、段内边距 0 10px（官方 Button .sm）；容器内边距与外圆角不变。</p>
+  </div>
+
+  <h2>带图标（图标容器 16×16，图标 aria-hidden）</h2>
+  <div class="demo-row">
+    <div class="control" role="radiogroup" aria-label="视图" aria-orientation="horizontal">
+      <button type="button" role="radio" aria-checked="true" class="option">
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M2 3.2h12v1.6H2zM2 7.2h12v1.6H2zM2 11.2h12v1.6H2z" fill="currentColor"/></svg></span>
+        列表
+      </button>
+      <button type="button" role="radio" aria-checked="false" class="option" tabindex="-1">
+        <span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M2 2h5.2v5.2H2zM8.8 2H14v5.2H8.8zM2 8.8h5.2V14H2zM8.8 8.8H14V14H8.8z" fill="currentColor"/></svg></span>
+        网格
+      </button>
+    </div>
+    <p class="demo-hint">图标与文字间距 4px（官方 Button .button 的 gap）；图标是装饰，名称只来自文字，绝不能只给图标。</p>
+  </div>
+
+  <h2>整组禁用</h2>
+  <div class="demo-row">
+    <div class="control disabled" role="radiogroup" aria-label="视图（已禁用）" aria-orientation="horizontal" aria-disabled="true">
+      <button type="button" role="radio" aria-checked="true" class="option" disabled>列表</button>
+      <button type="button" role="radio" aria-checked="false" class="option" disabled tabindex="-1">网格</button>
+      <button type="button" role="radio" aria-checked="false" class="option" disabled tabindex="-1">时间线</button>
+    </div>
+    <p class="demo-hint">文字降为 label-tertiary（CT-MF-09：不靠整体降透明度），选中段填充保留，仍能读出「当前是哪一段」；按钮为原生 disabled。</p>
+  </div>
+
+  <h2>状态静态展示（hover / active / 焦点环，演示用强制类）</h2>
+  <div class="demo-row">
+    <div class="control" role="radiogroup" aria-label="状态演示" aria-orientation="horizontal">
+      <button type="button" role="radio" aria-checked="true" class="option">选中</button>
+      <button type="button" role="radio" aria-checked="false" class="option force-hover" tabindex="-1">hover</button>
+      <button type="button" role="radio" aria-checked="false" class="option force-active" tabindex="-1">active</button>
+      <button type="button" role="radio" aria-checked="false" class="option force-focus" tabindex="-1">focus</button>
+    </div>
+    <p class="demo-hint">hover / active 底色为官方 interactive-bg-hover / interactive-bg-active（只作用于未选中段）；焦点环为 2px 品牌色 + 2px 外偏移（§ 建议值）。真实运行时用鼠标与 Tab 键即可复现。</p>
+  </div>
+
+  <h2>无选中项（value 不在 options 里）</h2>
+  <div class="demo-row">
+    <div class="control" role="radiogroup" aria-label="未选择" aria-orientation="horizontal">
+      <button type="button" role="radio" aria-checked="false" class="option">按名称</button>
+      <button type="button" role="radio" aria-checked="false" class="option" tabindex="-1">按时间</button>
+    </div>
+    <p class="demo-hint">没有任何一段点亮；组件把第一段作为 Tab 落点（roving tabindex 的兜底），键盘不会整组跳过。</p>
+  </div>
+
+  <p class="demo-hint" style="margin-top:24px">本页是纯静态外观演示，不含 React 逻辑：方向键切换、onChange 回调等行为请看 index.tsx。</p>
+</body>
+</html>

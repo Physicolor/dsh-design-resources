@@ -1,0 +1,90 @@
+/* StatRow 指标行。官方没有对应组件，几何来源逐条如下（详见 README「几何来源」）：
+ *   label  13px / line-height 24px / var(--dsw-alias-label-secondary)
+ *          ← 官方 DisclosureRow.module.css `.title`（--dsh-content-font-delta 默认 0）
+ *   value  14px / line-height 22px / var(--dsw-alias-label-primary)
+ *          ← 官方 Button.module.css `.button`
+ *   unit   12px / line-height 18px  ← 官方 Button.module.css `.sm`
+ *   delta  12px / line-height 18px  ← 官方 Button.module.css `.sm`
+ *   divider 0.5px + var(--dsw-alias-border-l2)
+ *          ← 官方 markdown/MarkdownText.module.css `.markdown hr`
+ * 标记 § 的是本仓库建议值（4 的倍数），官方没有对应数值。
+ * 实现为本仓库原创：只借鉴几何与 token 层级，未复制官方 CSS 规则。 */
+
+.row {
+  /* § 本仓库建议值：行高借用官方 Input.module.css `.wrap` 的 height:32px，
+     把它当作数据行行高是本仓库决定（见 README）。 */
+  --dsh-statrow-min-height: 32px;
+  /* § 本仓库建议值：标签与数值组之间的最小间距，4 的倍数。 */
+  --dsh-statrow-gap: 8px;
+
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--dsh-statrow-gap);
+  min-height: var(--dsh-statrow-min-height);
+}
+
+/* 分隔线：官方 markdown/MarkdownText.module.css `.markdown hr` 的 hairline 写法
+   （0.5px 高 + var(--dsw-alias-border-l2)），这里改画在行上方。
+   一组指标行里除第一行外都传 divider，或只给需要分隔的行传。 */
+.row[data-divider='true'] {
+  border-top: 0.5px solid var(--dsw-alias-border-l2);
+}
+
+.label {
+  min-width: 0;
+  font-size: 13px;
+  line-height: 24px;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.valueGroup {
+  display: inline-flex;
+  align-items: baseline;
+  /* § 本仓库建议值：数值与单位之间 4px，4 的倍数。 */
+  gap: 4px;
+  margin-left: auto;
+  min-width: 0;
+}
+
+.value {
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--dsw-alias-label-primary);
+  /* § 本仓库建议值：等宽数字，让纵向多行数值的位对齐。 */
+  font-variant-numeric: tabular-nums;
+}
+
+.unit {
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--dsw-alias-label-tertiary);
+  /* § 本仓库建议值：同 .value，保证单位与数值的行盒宽度稳定。 */
+  font-variant-numeric: tabular-nums;
+}
+
+.delta {
+  flex: none;
+  font-size: 12px;
+  line-height: 18px;
+  /* § 本仓库建议值：等宽数字，避免不同数值宽度导致右侧抖动。 */
+  font-variant-numeric: tabular-nums;
+}
+
+/* 语义色只用官方状态主色 token；data 属性挑色的写法参照官方 Tag.module.css
+   .tag[data-tone='...']，此处用并列类名表达。 */
+.delta.neutral {
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.delta.success {
+  color: var(--dsw-alias-state-success-primary);
+}
+
+.delta.warn {
+  color: var(--dsw-alias-state-warn-primary);
+}
+
+.delta.danger {
+  color: var(--dsw-alias-state-error-primary);
+}

@@ -1,0 +1,41 @@
+/* SectionHeader 设置页区块表头 —— 几何来源：
+ *   副标题 13/20       ← 官方合成 token `--dsw-font-xs-13`，用法对齐官方
+ *                        ReadBlock.module.css `.count` / `.copyButton`
+ *   副标题三级色       ← 官方 Menu.module.css `.label`、ReadBlock.module.css
+ *                        `.count` / `.lang` 用 `--dsw-alias-label-tertiary`
+ *   底部 hairline      ← 官方 markdown/MarkdownText.module.css `.markdown hr`
+ *                        （0.5px + var(--dsw-alias-border-l2)）；同款写法见
+ *                        Menu.module.css `.footer` 的 border-top
+ *   标题色             ← 官方 Modal.module.css `.title` 的 label-primary
+ * 标题 18px / 600 与全部间距为本仓库建议值，逐条理由见 README。
+ * 实现为本仓库原创：用 CSS 变量承载几何，未复制官方 CSS 源码。 */
+
+.sectionHeader {
+  /* § 本仓库建议值：18px / 26px / 600（任务书给定，未能在可读官方源中核实） */
+  --dsh-sh-title-size: 18px;
+  --dsh-sh-title-line: 26px;
+  --dsh-sh-title-weight: 600;
+  --dsh-sh-gap: 4px;
+  --dsh-sh-pad-bottom: 12px;
+
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dsh-sh-gap);
+  padding-bottom: var(--dsh-sh-pad-bottom);
+  border-bottom: 0.5px solid var(--dsw-alias-border-l2);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--dsh-sh-title-size);
+  line-height: var(--dsh-sh-title-line);
+  font-weight: var(--dsh-sh-title-weight);
+  color: var(--dsw-alias-label-primary);
+}
+
+.description {
+  margin: 0;
+  font: var(--dsw-font-xs-13);
+  color: var(--dsw-alias-label-tertiary);
+}

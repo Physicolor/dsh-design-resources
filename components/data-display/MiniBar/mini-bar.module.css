@@ -1,0 +1,67 @@
+/* MiniBar 迷你条形图 / 进度条。官方没有对应组件，几何来源逐条如下（详见 README「几何来源」）：
+ *   圆角 999px  ← 官方 Tag.module.css `.tag`（胶囊几何）
+ *   填充色      ← 官方状态主色 token，同 Tag.module.css `.tag[data-tone='...']` 用的那一批
+ *   过渡 120ms ease ← 官方 Switch.module.css `.thumb`（transition: transform 120ms ease）
+ *   轨道色 var(--dsw-alias-border-l1) ← 本仓库选定的 token（取值见 website/css/dsh-tokens.css）
+ * 标记 § 的是本仓库建议值（4 的倍数），官方没有对应数值。
+ * 实现为本仓库原创：用 data-tone 挑色（写法参照官方 Tag），未复制官方 CSS 规则。 */
+
+.bar {
+  /* § 本仓库建议值：条高 8px（4 的倍数）。官方没有条形图，8px 是「在 32px 行里
+     一眼可见、又不喧宾夺主」的取值；比它更细的 6px 不是 4 的倍数，本仓库不用。 */
+  --dsh-bar-height: 8px;
+  /* § 本仓库建议值：条形与右侧百分比之间的间距，4 的倍数。 */
+  --dsh-bar-gap: 8px;
+
+  display: flex;
+  align-items: center;
+  gap: var(--dsh-bar-gap);
+}
+
+.track {
+  flex: 1;
+  min-width: 0;
+  height: var(--dsh-bar-height);
+  /* 全圆胶囊：官方 Tag.module.css `.tag` 的 999px。 */
+  border-radius: 999px;
+  background: var(--dsw-alias-border-l1);
+  /* 让填充的圆角永远被轨道裁住（极窄宽度下圆角会被浏览器夹紧）。 */
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--dsw-alias-state-business-primary);
+  /* 官方 Switch.module.css `.thumb` 的过渡时长与缓动。值更新时平滑过渡，不跳动。 */
+  transition: width 120ms ease;
+}
+
+/* 语义色：官方状态主色 token，挑色写法参照官方 Tag.module.css 的 [data-tone='...']。 */
+.fill[data-tone='success'] {
+  background: var(--dsw-alias-state-success-primary);
+}
+
+.fill[data-tone='warn'] {
+  background: var(--dsw-alias-state-warn-primary);
+}
+
+.fill[data-tone='error'] {
+  background: var(--dsw-alias-state-error-primary);
+}
+
+.percent {
+  flex: none;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--dsw-alias-label-tertiary);
+  /* § 本仓库建议值：等宽数字，多个条形纵向排列时百分比宽度不抖。 */
+  font-variant-numeric: tabular-nums;
+}
+
+/* 与官方 Toast.module.css 的做法一致：用户要求减少动效时去掉过渡。 */
+@media (prefers-reduced-motion: reduce) {
+  .fill {
+    transition: none;
+  }
+}

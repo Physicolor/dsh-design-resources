@@ -1,0 +1,115 @@
+/* StateDot 状态圆点。
+ *
+ * 几何全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/StateDot.module.css
+ * 与同目录 lib/index.js 的 StateDot 函数：
+ *   .dot            → flex: none / position: relative / display: inline-block
+ *   .dot::before    → inset: 0 / radius 50% / background currentColor / opacity 0.1（光环）
+ *   .dot::after     → inset: 20% / radius 50% / background currentColor（实心核）
+ *   .dot[data-state]→ done / warning / error 用语义状态色，idle 用三级文字色
+ *   .dot, .matrix   → --dsh-state-ongoing: var(--dsw-static-deepseek-450)
+ *   .matrix         → flex: none / color 取上述 ongoing 变量
+ *   .cell           → fill currentColor / opacity 0.15 / 1s 无限追逐动画
+ *   关键帧 dsh-state-dot-chase → 0/12.5/25/37.5 四段离散台阶 1 / 0.6 / 0.35 / 0.15
+ *   JS：8 个 2×2 方块放在 10×10 viewBox 的外圈（坐标 0/4/8），
+ *       animation-delay = (index - 8) * 125ms
+ *
+ * 实现为本仓库原创：几何用组件级 CSS 变量承载、规则重新组织、关键帧改用自有名，
+ * 数值与官方逐条一致，但未复制官方 CSS 源码。§ 标记处为本仓库建议值，理由见 README。 */
+
+.dot,
+.matrix {
+  /* 官方注释：ongoing 的蓝在 alias 层没有对应 token
+   * （--dsw-alias-state-business-primary 是 500 档，不是这里的 450 档），
+   * 因此官方把它钉在 static 色阶上；本仓库照实沿用。 */
+  --dsh-statedot-ongoing: var(--dsw-static-deepseek-450);
+
+  flex: none;
+}
+
+/* 实心状态：外圈同色 10% 透明度当光环，内圈是 60% 直径的实心核。 */
+.dot {
+  position: relative;
+  display: inline-block;
+}
+
+.dot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  corner-shape: round; /* 官方声明；不支持的浏览器忽略即可，圆仍是圆 */
+  background: currentColor;
+  opacity: 0.1;
+}
+
+.dot::after {
+  content: '';
+  position: absolute;
+  inset: 20%; /* 外径的 60%（官方注释写的就是 6/10 缩放） */
+  border-radius: 50%;
+  corner-shape: round;
+  background: currentColor;
+}
+
+.dot[data-state='done'] {
+  color: var(--dsw-alias-state-success-primary);
+}
+
+.dot[data-state='warning'] {
+  color: var(--dsw-alias-state-warn-primary);
+}
+
+.dot[data-state='error'] {
+  color: var(--dsw-alias-state-error-primary);
+}
+
+/* idle 是「没有活动」，不是第四种结果，所以退到三级文字色。
+ * 它必须与另外三色在同一行并排时仍然成立——别把它换成 border 色或 bg 层色。 */
+.dot[data-state='idle'] {
+  color: var(--dsw-alias-label-tertiary);
+}
+
+/* ------------------------------------------------------------------ ongoing */
+
+.matrix {
+  color: var(--dsh-statedot-ongoing);
+}
+
+.cell {
+  fill: currentColor;
+  opacity: 0.15;
+  animation: dsh-design-state-dot-chase 1s infinite;
+}
+
+/* 官方关键帧的意图是「像素追逐」：被追到的格子最亮，随后三格逐级衰减，
+ * 台阶之间不插值（所以用离散的百分比分段，而不是平滑曲线）。
+ * 本仓库改成自有关键帧名，避免与官方同名定义在同一页面里互相覆盖。 */
+@keyframes dsh-design-state-dot-chase {
+  0%,
+  12.4% {
+    opacity: 1;
+  }
+  12.5%,
+  24.9% {
+    opacity: 0.6;
+  }
+  25%,
+  37.4% {
+    opacity: 0.35;
+  }
+  37.5%,
+  100% {
+    opacity: 0.15;
+  }
+}
+
+/* § 本仓库建议值：官方 StateDot.module.css 没有 prefers-reduced-motion 分支。
+ * spec/40-motion.md 的 MO-MF-09 要求「减少动态」时去掉非必要的持续运动。
+ * 追逐动画是循环装饰性运动（它表达的是「进行中」，不是位置或进度），
+ * 因此这里停掉动画，8 格统一停在中间档 0.6：形状与颜色仍然区分 ongoing。 */
+@media (prefers-reduced-motion: reduce) {
+  .cell {
+    animation: none;
+    opacity: 0.6;
+  }
+}

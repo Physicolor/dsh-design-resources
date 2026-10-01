@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PanelSeat 会话区插槽容器 · DSH 设计资源</title>
+<style>
+/* ---------------------------------------------------------------------------
+   演示用 token 脚手架。
+   数值逐条取自本仓库 website/css/dsh-tokens.css（由产品主题采集生成）与
+   app.asar 内官方主题对合成 token（elevation / shadow / font）的定义。
+   真实 DSH 运行时由宿主主题注入这些变量；demo 只是把同一批值内联进来，
+   组件类本身不写死任何颜色。
+   --------------------------------------------------------------------------- */
+:root {
+  --dsw-static-neutral-bluish-00: #fff;
+  --dsw-static-neutral-bluish-50: #f9fafb;
+  --dsw-static-neutral-bluish-60: #f9fafb;
+  --dsw-static-neutral-bluish-75: #f1f3f5;
+  --dsw-static-neutral-bluish-100: #ebeef2;
+  --dsw-static-neutral-bluish-150: #e9ecf2;
+  --dsw-static-neutral-bluish-200: #e1e5ee;
+  --dsw-static-neutral-bluish-300: #cfd3d6;
+  --dsw-static-neutral-bluish-400: #adb2b8;
+  --dsw-static-neutral-bluish-500: #979da6;
+  --dsw-static-neutral-bluish-600: #81858c;
+  --dsw-static-neutral-bluish-700: #61666b;
+  --dsw-static-neutral-bluish-750: #43454a;
+  --dsw-static-neutral-bluish-800: #353638;
+  --dsw-static-neutral-bluish-850: #2c2c2e;
+  --dsw-static-neutral-bluish-875: #232324;
+  --dsw-static-neutral-bluish-900: #1b1b1c;
+  --dsw-static-neutral-bluish-950: #151517;
+  --dsw-static-neutral-bluish-1000: #0f1115;
+  --dsw-static-neutral-50: #fafafa;
+  --dsw-static-neutral-200: #e5e5e5;
+  --dsw-static-neutral-300: #d4d4d4;
+  --dsw-static-deepseek-100: #e4edfd;
+  --dsw-static-deepseek-400: #7aaaff;
+  --dsw-static-deepseek-450: #5686fe;
+  --dsw-static-deepseek-500: #4176e6;
+  --dsw-static-deepseek-800: #34415b;
+  --dsw-static-green-100: #e6faed;
+  --dsw-static-green-400: #4ed17e;
+  --dsw-static-green-500: #22c55e;
+  --dsw-static-green-900: #233c2c;
+  --dsw-static-amber-100: #fef5e7;
+  --dsw-static-amber-400: #f7ad31;
+  --dsw-static-amber-500: #f59e0b;
+  --dsw-static-amber-600: #dd8629;
+  --dsw-static-amber-900: #27241f;
+  --dsw-static-red-100: #fee2e2;
+  --dsw-static-red-400: #f25a5a;
+  --dsw-static-red-600: #ec1313;
+  --dsw-static-blue-500: #3b82f6;
+
+  --dsw-alias-bg-base: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-1: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-2: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-3: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-mask-1: #0000003d;
+  --dsw-alias-bg-module-platform: var(--dsw-static-neutral-bluish-60);
+  --dsw-alias-bg-skeleton: #0000000a;
+  --dsw-alias-border-l1: #0000000a;
+  --dsw-alias-border-l2: #0000001a;
+  --dsw-alias-border-l3: #0000001f;
+  --dsw-alias-border-l4: #00000029;
+  --dsw-alias-brand-primary: var(--dsw-static-neutral-bluish-1000);
+  --dsw-alias-button-contrast-fill: var(--dsw-static-neutral-bluish-700);
+  --dsw-alias-button-elevated-fill: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-button-floating-fill: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-button-floating-hover: var(--dsw-static-neutral-bluish-75);
+  --dsw-alias-button-ghost-active-border: var(--dsw-static-neutral-bluish-500);
+  --dsw-alias-button-ghost-active-fill: var(--dsw-static-neutral-bluish-100);
+  --dsw-alias-button-primary-fill: var(--dsw-alias-brand-primary);
+  --dsw-alias-button-primary-hover: var(--dsw-static-neutral-bluish-750);
+  --dsw-alias-button-tool-bar-fill: #54555780;
+  --dsw-alias-button-tool-bar-hover: #54555799;
+  --dsw-alias-interactive-bg-active: #2631481a;
+  --dsw-alias-interactive-bg-hover: #2631480f;
+  --dsw-alias-interactive-bg-hover-danger: #ec13130d;
+  --dsw-alias-label-caption: var(--dsw-static-neutral-bluish-400);
+  --dsw-alias-label-dimmed: var(--dsw-static-neutral-bluish-200);
+  --dsw-alias-label-primary: var(--dsw-static-neutral-bluish-1000);
+  --dsw-alias-label-primary-foreground: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-label-primary-inverted: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-label-secondary: var(--dsw-static-neutral-bluish-700);
+  --dsw-alias-label-tertiary: var(--dsw-static-neutral-bluish-600);
+  --dsw-alias-link: var(--dsw-static-deepseek-500);
+  --dsw-alias-markdown-code-block: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-markdown-code-block-banner: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-markdown-inline-code: var(--dsw-static-neutral-50);
+  --dsw-alias-scrollbar-bg-l2: var(--dsw-static-neutral-200);
+  --dsw-alias-scrollbar-hover-l2: var(--dsw-static-neutral-300);
+  --dsw-alias-specific-menu: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-specific-sidebar-fill: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-state-business-primary: var(--dsw-static-deepseek-500);
+  --dsw-alias-state-error-primary: var(--dsw-static-red-600);
+  --dsw-alias-state-success-primary: var(--dsw-static-green-500);
+  --dsw-alias-state-success-tertiary: var(--dsw-static-green-100);
+  --dsw-alias-state-warn-label: var(--dsw-static-amber-600);
+  --dsw-alias-state-warn-primary: var(--dsw-static-amber-500);
+  --dsw-alias-state-warn-tertiary: var(--dsw-static-amber-100);
+  --dsw-alias-tooltip-bg: var(--dsw-static-neutral-bluish-850);
+  --dsw-specific-menu: var(--dsw-static-neutral-bluish-50);
+
+  --dsw-elevation-stroke-color: var(--dsw-alias-border-l1);
+  --dsw-elevation-stroke: 0 0 0 .5px var(--dsw-elevation-stroke-color);
+  --dsw-elevation-prominent: var(--dsw-elevation-stroke), 0 3px 8px 0 rgba(0, 0, 0, .04), 0 0 20px 0 rgba(0, 0, 0, .05);
+  --dsw-shadow-lv1: 0 2px 4px 0 rgba(0, 0, 0, .05);
+  --dsw-shadow-lv2: 0 4px 12px 0 rgba(0, 0, 0, .02), 0 2px 8px 0 rgba(0, 0, 0, .04);
+  --dsw-shadow-lv3: 0 0 1px 0 rgba(0, 0, 0, .2), 0 0 4px 0 rgba(0, 0, 0, .02), 0 12px 32px 0 rgba(0, 0, 0, .08);
+  --dsw-mask-blur: none;
+  --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* 官方把这两条写成 font 简写合成 token，这里展开以便 demo 单条使用。 */
+  --dsw-font-s-14: 14px/22px var(--dsw-font-family);
+  --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   以下为 PanelSeat 组件样式，与 panel-seat.module.css 数值逐条一致
+   （类名去掉了 CSS Modules 的哈希）。§ 标记的行是本仓库建议值，不是官方数值。
+   官方没有 PanelSeat 对应物；各数值的锚点在 README「几何来源」里逐条列出。
+   --------------------------------------------------------------------------- */
+.seat {
+  --dsh-pseat-radius: 12px; /* 官方 ReadBlock .block */
+  --dsh-pseat-pad-x: 16px; /* 官方 HoverCard .card */
+  --dsh-pseat-pad-y: 12px; /* 官方 HoverCard .card */
+  --dsh-pseat-gap: 12px; /* 官方 ReadBlock .banner */
+  --dsh-pseat-header-gap: 8px; /* § 建议值 */
+  --dsh-pseat-action-gap: 4px; /* 官方 Button .button */
+  --dsh-pseat-body-gap: 12px; /* § 建议值 */
+
+  box-sizing: border-box;
+  /* § 建议值：按内容宽度收缩，不铺满会话流 */
+  display: inline-flex;
+  flex-direction: column;
+  max-width: 100%;
+  border-radius: var(--dsh-pseat-radius);
+  color: var(--dsw-alias-label-primary);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 22px;
+}
+.inset { padding: var(--dsh-pseat-pad-y) var(--dsh-pseat-pad-x); }
+.surface { background: var(--dsw-alias-markdown-code-block); }
+
+.header {
+  display: flex; align-items: center; gap: var(--dsh-pseat-gap);
+  padding-bottom: var(--dsh-pseat-header-gap);
+  border-bottom: 0.5px solid var(--dsw-alias-border-l1);
+}
+.title {
+  flex: 0 1 auto; min-width: 0; margin: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-size: 14px; line-height: 22px; font-weight: 500;
+  color: var(--dsw-alias-label-primary);
+}
+.actions { display: flex; flex: none; align-items: center; gap: var(--dsh-pseat-action-gap); margin-left: auto; }
+.body { min-width: 0; padding-top: var(--dsh-pseat-body-gap); }
+.body > :first-child { margin-top: 0; }
+.body > :last-child { margin-bottom: 0; }
+
+/* ------------------------------------------------------- 以下仅 demo 使用 */
+/* 仅 demo：复刻官方 Button 的 sm / ghost 观感（本组件不 import 任何组件）。 */
+.demo-btn {
+  height: 28px; padding: 0 10px; border: 0; border-radius: 14px;
+  background: transparent; color: var(--dsw-alias-label-primary);
+  font-family: inherit; font-size: 12px; line-height: 18px; cursor: pointer;
+}
+.demo-btn:hover { background: var(--dsw-alias-interactive-bg-hover); }
+/* 仅 demo：会话流示意（两条假消息 + 事件列宽参考线）。 */
+.demo-column { max-width: 640px; display: flex; flex-direction: column; gap: 16px; }
+.demo-msg {
+  padding: 8px 12px; border-radius: 12px;
+  background: var(--dsw-alias-bg-module-platform);
+  color: var(--dsw-alias-label-secondary);
+  font-size: 13px; line-height: 20px;
+  align-self: flex-start;
+}
+.demo-guide {
+  border: 0.5px dashed var(--dsw-alias-border-l3);
+  border-radius: 4px;
+  padding: 8px;
+}
+.demo-plain { margin: 0; color: var(--dsw-alias-label-secondary); font: var(--dsw-font-xs-13); }
+
+/* ------------------------------------------------------------- demo 外壳 */
+body {
+  margin: 0;
+  padding: 32px;
+  background: var(--dsw-alias-bg-base);
+  color: var(--dsw-alias-label-primary);
+  font: var(--dsw-font-s-14);
+}
+h1 { font-size: 18px; line-height: 26px; font-weight: 600; margin: 0 0 4px; }
+p.lead { margin: 0 0 24px; color: var(--dsw-alias-label-secondary); font: var(--dsw-font-xs-13); }
+h2 { font-size: 13px; line-height: 20px; font-weight: 600; color: var(--dsw-alias-label-tertiary); margin: 24px 0 8px; }
+p.demo-note { margin: 0 0 8px; color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); }
+.hint { color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); }
+</style>
+</head>
+<body>
+  <h1>PanelSeat 会话区插槽容器</h1>
+  <p class="lead">标题行（14/22/500 + 底部 0.5px hairline）+ 正文插槽。圆角 12px 取官方 ReadBlock 的内联区块层，实现为本仓库原创。</p>
+
+  <h2>plain · 无内边距（默认）</h2>
+  <p class="demo-note">默认 display: inline-flex，按内容宽度收缩（§ 建议值），不铺满会话流；inner 由宿主控制行间距。</p>
+  <div class="demo-column">
+    <div class="seat" role="group">
+      <div class="header"><h3 class="title">构建结果</h3></div>
+      <div class="body"><p class="demo-plain">3 个文件，共 128 KB。无警告。</p></div>
+    </div>
+  </div>
+
+  <h2>带操作区 · 标题超长省略</h2>
+  <p class="demo-note">操作区 gap 4px（官方 Button .button），margin-left: auto 推到右侧；标题过长时省略号截断。</p>
+  <div class="demo-column">
+    <div class="seat" role="group" style="width:100%">
+      <div class="header">
+        <h3 class="title">这是一个非常长的标题用来演示省略号截断的行为是否符合预期</h3>
+        <div class="actions">
+          <button type="button" class="demo-btn">复制</button>
+          <button type="button" class="demo-btn">重试</button>
+        </div>
+      </div>
+      <div class="body"><p class="demo-plain">正文不受标题截断影响，仍然完整显示。</p></div>
+    </div>
+  </div>
+
+  <h2>surface + inset · 独立纸面</h2>
+  <p class="demo-note">variant="surface" 用官方 ReadBlock .block 同款底色；inset 打开 12px 16px 内边距（官方 HoverCard .card，§ 用途为本仓库建议）。</p>
+  <div class="demo-column">
+    <div class="seat surface inset" role="group">
+      <div class="header"><h3 class="title">引用来源</h3></div>
+      <div class="body">
+        <p class="demo-plain" style="margin-bottom:8px">共命中 2 条：</p>
+        <p class="demo-plain" style="color:var(--dsw-alias-link)">design-tokens.md</p>
+        <p class="demo-plain" style="color:var(--dsw-alias-link)">slot-seats.md</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>插在会话流里的样子</h2>
+  <p class="demo-note">虚线是宿主内容列的右边界（仅 demo 示意）。PanelSeat 默认不铺满宽度、不抢焦点，插进来只占它需要的那一块。</p>
+  <div class="demo-guide" style="max-width:640px">
+    <div class="demo-column">
+      <div class="demo-msg">帮我看下这个目录里有什么</div>
+      <div class="seat" role="group">
+        <div class="header"><h3 class="title">目录内容</h3></div>
+        <div class="body"><p class="demo-plain">4 个目录，12 个文件。</p></div>
+      </div>
+      <div class="demo-msg">好，继续</div>
+    </div>
+  </div>
+
+  <p class="hint" style="margin-top:24px">提示：标题行的 hairline 是 0.5px 的 --dsw-alias-border-l1，来自官方 Menu .separator；Tab 键不会在容器上停留（容器不可聚焦）。</p>
+</body>
+</html>

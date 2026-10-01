@@ -1,0 +1,74 @@
+/* 几何锚点全部来自官方 @deepseek-ai/dsh-client-ui-primitives/lib 下已核实的值：
+ *   Modal.module.css  .title  → font-size 16px / line-height 24px / font-weight 500
+ *                               / color var(--dsw-alias-label-primary)
+ *   Modal.module.css  .header → display flex / align-items center / justify-content space-between
+ *                               / gap 8px
+ *   Menu.module.css   .separator → height 0.5px / background var(--dsw-alias-border-l1)
+ *   Button.module.css .button   → font-size 14px / line-height 22px（面板标题取这一档字号）
+ * 高度、内边距、标题与动作区之间的间距为本仓库建议值（4 的倍数），README 单列。
+ * 实现为本仓库原创：用 CSS 变量承载几何 + 语义 token 承载颜色，未复制官方 CSS 源码。 */
+
+.header {
+  --dsh-ph-height: 44px;
+  --dsh-ph-pad-x: 12px;
+  --dsh-ph-gap: 8px;
+  --dsh-ph-title-size: 14px;
+  --dsh-ph-title-line: 22px;
+
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--dsh-ph-gap);
+  min-height: var(--dsh-ph-height);
+  padding: 0 var(--dsh-ph-pad-x);
+  font-family: inherit;
+}
+
+/* 底部 hairline：写法与官方 Menu.module.css 的 .separator 一致
+ * （0.5px + border-l1）。选 l1 而不是 l2 的理由见 README「几何来源」。 */
+.divider {
+  box-shadow: inset 0 -0.5px 0 0 var(--dsw-alias-border-l1);
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px; /* § 本仓库建议值：自造间距统一取 4 的倍数 */
+  min-width: 0;
+}
+
+.title {
+  overflow: hidden;
+  font-size: var(--dsh-ph-title-size);
+  font-weight: 500; /* 官方 Modal.module.css .title 的注释：figma wt510，渲染 500 */
+  line-height: var(--dsh-ph-title-line);
+  color: var(--dsw-alias-label-primary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.description {
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--dsw-alias-label-tertiary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.actions {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px; /* 官方 Button.module.css .button 的 gap 值 */
+}
+
+/* ------------------------------------------------------------------ 尺寸 */
+
+.sm {
+  --dsh-ph-height: 36px;
+  --dsh-ph-pad-x: 8px;
+}

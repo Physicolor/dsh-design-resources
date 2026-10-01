@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>StateDot 状态圆点 · DSH 设计资源</title>
+<style>
+/* ---------------------------------------------------------------------------
+   演示用 token 脚手架。
+   数值逐条取自本仓库 website/css/dsh-tokens.css（由产品主题采集生成）与
+   app.asar 内官方主题对合成 token（elevation / shadow / font）的定义。
+   真实 DSH 运行时由宿主主题注入这些变量；demo 只是把同一批值内联进来，
+   组件类本身不写死任何颜色。
+   --------------------------------------------------------------------------- */
+:root {
+  --dsw-static-neutral-bluish-00: #fff;
+  --dsw-static-neutral-bluish-50: #f9fafb;
+  --dsw-static-neutral-bluish-60: #f9fafb;
+  --dsw-static-neutral-bluish-75: #f1f3f5;
+  --dsw-static-neutral-bluish-100: #ebeef2;
+  --dsw-static-neutral-bluish-150: #e9ecf2;
+  --dsw-static-neutral-bluish-200: #e1e5ee;
+  --dsw-static-neutral-bluish-300: #cfd3d6;
+  --dsw-static-neutral-bluish-400: #adb2b8;
+  --dsw-static-neutral-bluish-500: #979da6;
+  --dsw-static-neutral-bluish-600: #81858c;
+  --dsw-static-neutral-bluish-700: #61666b;
+  --dsw-static-neutral-bluish-750: #43454a;
+  --dsw-static-neutral-bluish-800: #353638;
+  --dsw-static-neutral-bluish-850: #2c2c2e;
+  --dsw-static-neutral-bluish-875: #232324;
+  --dsw-static-neutral-bluish-900: #1b1b1c;
+  --dsw-static-neutral-bluish-950: #151517;
+  --dsw-static-neutral-bluish-1000: #0f1115;
+  --dsw-static-neutral-50: #fafafa;
+  --dsw-static-neutral-200: #e5e5e5;
+  --dsw-static-neutral-300: #d4d4d4;
+  --dsw-static-deepseek-100: #e4edfd;
+  --dsw-static-deepseek-400: #7aaaff;
+  --dsw-static-deepseek-450: #5686fe;
+  --dsw-static-deepseek-500: #4176e6;
+  --dsw-static-deepseek-800: #34415b;
+  --dsw-static-green-100: #e6faed;
+  --dsw-static-green-400: #4ed17e;
+  --dsw-static-green-500: #22c55e;
+  --dsw-static-green-900: #233c2c;
+  --dsw-static-amber-100: #fef5e7;
+  --dsw-static-amber-400: #f7ad31;
+  --dsw-static-amber-500: #f59e0b;
+  --dsw-static-amber-600: #dd8629;
+  --dsw-static-amber-900: #27241f;
+  --dsw-static-red-100: #fee2e2;
+  --dsw-static-red-400: #f25a5a;
+  --dsw-static-red-600: #ec1313;
+  --dsw-static-blue-500: #3b82f6;
+
+  --dsw-alias-bg-base: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-1: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-2: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-3: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-mask-1: #0000003d;
+  --dsw-alias-bg-module-platform: var(--dsw-static-neutral-bluish-60);
+  --dsw-alias-bg-skeleton: #0000000a;
+  --dsw-alias-border-l1: #0000000a;
+  --dsw-alias-border-l2: #0000001a;
+  --dsw-alias-border-l3: #0000001f;
+  --dsw-alias-border-l4: #00000029;
+  --dsw-alias-brand-primary: var(--dsw-static-neutral-bluish-1000);
+  --dsw-alias-button-contrast-fill: var(--dsw-static-neutral-bluish-700);
+  --dsw-alias-button-elevated-fill: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-button-floating-fill: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-button-floating-hover: var(--dsw-static-neutral-bluish-75);
+  --dsw-alias-button-ghost-active-border: var(--dsw-static-neutral-bluish-500);
+  --dsw-alias-button-ghost-active-fill: var(--dsw-static-neutral-bluish-100);
+  --dsw-alias-button-primary-fill: var(--dsw-alias-brand-primary);
+  --dsw-alias-button-primary-hover: var(--dsw-static-neutral-bluish-750);
+  --dsw-alias-button-tool-bar-fill: #54555780;
+  --dsw-alias-button-tool-bar-hover: #54555799;
+  --dsw-alias-interactive-bg-active: #2631481a;
+  --dsw-alias-interactive-bg-hover: #2631480f;
+  --dsw-alias-interactive-bg-hover-danger: #ec13130d;
+  --dsw-alias-label-caption: var(--dsw-static-neutral-bluish-400);
+  --dsw-alias-label-dimmed: var(--dsw-static-neutral-bluish-200);
+  --dsw-alias-label-primary: var(--dsw-static-neutral-bluish-1000);
+  --dsw-alias-label-primary-foreground: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-label-primary-inverted: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-label-secondary: var(--dsw-static-neutral-bluish-700);
+  --dsw-alias-label-tertiary: var(--dsw-static-neutral-bluish-600);
+  --dsw-alias-link: var(--dsw-static-deepseek-500);
+  --dsw-alias-markdown-code-block: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-markdown-code-block-banner: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-markdown-inline-code: var(--dsw-static-neutral-50);
+  --dsw-alias-scrollbar-bg-l2: var(--dsw-static-neutral-200);
+  --dsw-alias-scrollbar-hover-l2: var(--dsw-static-neutral-300);
+  --dsw-alias-specific-menu: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-specific-sidebar-fill: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-state-business-primary: var(--dsw-static-deepseek-500);
+  --dsw-alias-state-error-primary: var(--dsw-static-red-600);
+  --dsw-alias-state-success-primary: var(--dsw-static-green-500);
+  --dsw-alias-state-success-tertiary: var(--dsw-static-green-100);
+  --dsw-alias-state-warn-label: var(--dsw-static-amber-600);
+  --dsw-alias-state-warn-primary: var(--dsw-static-amber-500);
+  --dsw-alias-state-warn-tertiary: var(--dsw-static-amber-100);
+  --dsw-alias-tooltip-bg: var(--dsw-static-neutral-bluish-850);
+  --dsw-specific-menu: var(--dsw-static-neutral-bluish-50);
+
+  --dsw-elevation-stroke-color: var(--dsw-alias-border-l1);
+  --dsw-elevation-stroke: 0 0 0 .5px var(--dsw-elevation-stroke-color);
+  --dsw-elevation-prominent: var(--dsw-elevation-stroke), 0 3px 8px 0 rgba(0, 0, 0, .04), 0 0 20px 0 rgba(0, 0, 0, .05);
+  --dsw-shadow-lv1: 0 2px 4px 0 rgba(0, 0, 0, .05);
+  --dsw-shadow-lv2: 0 4px 12px 0 rgba(0, 0, 0, .02), 0 2px 8px 0 rgba(0, 0, 0, .04);
+  --dsw-shadow-lv3: 0 0 1px 0 rgba(0, 0, 0, .2), 0 0 4px 0 rgba(0, 0, 0, .02), 0 12px 32px 0 rgba(0, 0, 0, .08);
+  --dsw-mask-blur: none;
+  --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* 官方把这两条写成 font 简写合成 token，这里展开以便 demo 单条使用。 */
+  --dsw-font-s-14: 14px/22px var(--dsw-font-family);
+  --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   以下为 StateDot 组件样式，与 state-dot.module.css 数值逐条一致（类名去掉了
+   CSS Modules 的哈希）。§ 标记的行/块是本仓库建议值，不是官方数值。
+   --------------------------------------------------------------------------- */
+.dot,
+.matrix {
+  /* 官方注释：ongoing 的蓝在 alias 层没有对应 token
+   * （--dsw-alias-state-business-primary 是 500 档，不是这里的 450 档），
+   * 因此官方把它钉在 static 色阶上；本仓库照实沿用。 */
+  --dsh-statedot-ongoing: var(--dsw-static-deepseek-450);
+  flex: none;
+}
+
+.dot { position: relative; display: inline-block; }
+
+.dot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  corner-shape: round;
+  background: currentColor;
+  opacity: 0.1;
+}
+
+.dot::after {
+  content: '';
+  position: absolute;
+  inset: 20%;
+  border-radius: 50%;
+  corner-shape: round;
+  background: currentColor;
+}
+
+.dot[data-state='done'] { color: var(--dsw-alias-state-success-primary); }
+.dot[data-state='warning'] { color: var(--dsw-alias-state-warn-primary); }
+.dot[data-state='error'] { color: var(--dsw-alias-state-error-primary); }
+.dot[data-state='idle'] { color: var(--dsw-alias-label-tertiary); }
+
+.matrix { color: var(--dsh-statedot-ongoing); }
+
+.cell {
+  fill: currentColor;
+  opacity: 0.15;
+  animation: dsh-design-state-dot-chase 1s infinite;
+}
+
+@keyframes dsh-design-state-dot-chase {
+  0%, 12.4% { opacity: 1; }
+  12.5%, 24.9% { opacity: 0.6; }
+  25%, 37.4% { opacity: 0.35; }
+  37.5%, 100% { opacity: 0.15; }
+}
+
+/* § 本仓库建议值：官方 StateDot.module.css 没有 prefers-reduced-motion 分支 */
+@media (prefers-reduced-motion: reduce) {
+  .cell { animation: none; opacity: 0.6; }
+}
+
+/* ------------------------------------------------------------------ demo 外壳 */
+body {
+  margin: 0;
+  padding: 32px;
+  background: var(--dsw-alias-bg-base);
+  color: var(--dsw-alias-label-primary);
+  font: var(--dsw-font-s-14);
+}
+h1 { font-size: 18px; line-height: 26px; font-weight: 600; margin: 0 0 4px; }
+p.lead { margin: 0 0 24px; color: var(--dsw-alias-label-secondary); font: var(--dsw-font-xs-13); }
+h2 { font-size: 13px; line-height: 20px; font-weight: 600; color: var(--dsw-alias-label-tertiary); margin: 24px 0 8px; }
+.row { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+.cell-demo { display: inline-flex; align-items: center; gap: 8px; color: var(--dsw-alias-label-secondary); font: var(--dsw-font-xs-13); }
+.stack { display: flex; flex-direction: column; gap: 8px; max-width: 360px; }
+.line { display: flex; align-items: center; gap: 8px; height: 24px; }
+.line .text { color: var(--dsw-alias-label-secondary); font: var(--dsw-font-xs-13); }
+.hint { color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); margin-top: 24px; }
+.warn { color: var(--dsw-alias-state-warn-label); font: var(--dsw-font-xs-13); margin: 8px 0 0; }
+</style>
+</head>
+<body>
+  <h1>StateDot 状态圆点</h1>
+  <p class="lead">几何来自官方 StateDot.module.css（默认外径 10px / 光环 opacity 0.1 / 实心核 inset 20% / 8 个 2×2 方块跑 1s 追逐、逐格相差 125ms）。实现为本仓库原创。</p>
+
+  <h2>五种状态 · 默认外径 10px</h2>
+  <div class="row">
+    <span class="cell-demo"><span class="dot" data-state="done" style="width:10px;height:10px"></span>done 完成</span>
+    <span class="cell-demo"><span class="dot" data-state="warning" style="width:10px;height:10px"></span>warning 警告</span>
+    <span class="cell-demo"><svg class="matrix" data-state="ongoing" width="10" height="10" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><rect class="cell" x="0" y="0" width="2" height="2" style="animation-delay:-1000ms"></rect><rect class="cell" x="4" y="0" width="2" height="2" style="animation-delay:-875ms"></rect><rect class="cell" x="8" y="0" width="2" height="2" style="animation-delay:-750ms"></rect><rect class="cell" x="8" y="4" width="2" height="2" style="animation-delay:-625ms"></rect><rect class="cell" x="8" y="8" width="2" height="2" style="animation-delay:-500ms"></rect><rect class="cell" x="4" y="8" width="2" height="2" style="animation-delay:-375ms"></rect><rect class="cell" x="0" y="8" width="2" height="2" style="animation-delay:-250ms"></rect><rect class="cell" x="0" y="4" width="2" height="2" style="animation-delay:-125ms"></rect></svg>ongoing 进行中</span>
+    <span class="cell-demo"><span class="dot" data-state="error" style="width:10px;height:10px"></span>error 失败</span>
+    <span class="cell-demo"><span class="dot" data-state="idle" style="width:10px;height:10px"></span>idle 空闲</span>
+  </div>
+  <p class="hint" style="margin-top:8px">ongoing 的 8 个方块正在循环播放追逐动画（1s 一轮，每格 animation-delay 相差 125ms，负延迟把 8 格排成一个环）。</p>
+
+  <h2>size 只改外径 · 16px（内圈仍按 20% 比例缩放）</h2>
+  <div class="row">
+    <span class="cell-demo"><span class="dot" data-state="done" style="width:16px;height:16px"></span>16px done</span>
+    <span class="cell-demo"><svg class="matrix" data-state="ongoing" width="16" height="16" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><rect class="cell" x="0" y="0" width="2" height="2" style="animation-delay:-1000ms"></rect><rect class="cell" x="4" y="0" width="2" height="2" style="animation-delay:-875ms"></rect><rect class="cell" x="8" y="0" width="2" height="2" style="animation-delay:-750ms"></rect><rect class="cell" x="8" y="4" width="2" height="2" style="animation-delay:-625ms"></rect><rect class="cell" x="8" y="8" width="2" height="2" style="animation-delay:-500ms"></rect><rect class="cell" x="4" y="8" width="2" height="2" style="animation-delay:-375ms"></rect><rect class="cell" x="0" y="8" width="2" height="2" style="animation-delay:-250ms"></rect><rect class="cell" x="0" y="4" width="2" height="2" style="animation-delay:-125ms"></rect></svg>16px ongoing</span>
+    <span class="cell-demo"><span class="dot" data-state="error" style="width:16px;height:16px"></span>16px error</span>
+    <span class="cell-demo"><span class="dot" data-state="idle" style="width:16px;height:16px"></span>16px idle</span>
+  </div>
+
+  <h2>正确用法：与文字同行（圆点自身 aria-hidden，状态由文字承担）</h2>
+  <div class="stack">
+    <span class="line"><span class="dot" data-state="done" style="width:10px;height:10px"></span><span class="text">构建成功 · 用时 12s</span></span>
+    <span class="line"><span class="dot" data-state="warning" style="width:10px;height:10px"></span><span class="text">构建完成，有 2 条警告</span></span>
+    <span class="line"><svg class="matrix" data-state="ongoing" width="10" height="10" viewBox="0 0 10 10" shape-rendering="crispEdges" aria-hidden="true"><rect class="cell" x="0" y="0" width="2" height="2" style="animation-delay:-1000ms"></rect><rect class="cell" x="4" y="0" width="2" height="2" style="animation-delay:-875ms"></rect><rect class="cell" x="8" y="0" width="2" height="2" style="animation-delay:-750ms"></rect><rect class="cell" x="8" y="4" width="2" height="2" style="animation-delay:-625ms"></rect><rect class="cell" x="8" y="8" width="2" height="2" style="animation-delay:-500ms"></rect><rect class="cell" x="4" y="8" width="2" height="2" style="animation-delay:-375ms"></rect><rect class="cell" x="0" y="8" width="2" height="2" style="animation-delay:-250ms"></rect><rect class="cell" x="0" y="4" width="2" height="2" style="animation-delay:-125ms"></rect></svg><span class="text">正在生成回复…</span></span>
+    <span class="line"><span class="dot" data-state="error" style="width:10px;height:10px"></span><span class="text">连接失败 · 已重试 3 次</span></span>
+    <span class="line"><span class="dot" data-state="idle" style="width:10px;height:10px"></span><span class="text">排队中 · 尚未开始</span></span>
+  </div>
+
+  <h2>反例：只有圆点、没有文字</h2>
+  <div class="row" style="gap:12px">
+    <span class="dot" data-state="done" style="width:10px;height:10px"></span>
+    <span class="dot" data-state="warning" style="width:10px;height:10px"></span>
+    <span class="dot" data-state="error" style="width:10px;height:10px"></span>
+    <span class="dot" data-state="idle" style="width:10px;height:10px"></span>
+  </div>
+  <p class="warn">这两行圆点没有任何可读文本：组件硬编码 aria-hidden="true"，屏幕阅读器读不到状态；转灰度后 done 的绿与 idle 的灰也可能难分。请务必配文字说明结果。</p>
+
+  <p class="hint">提示：把系统设为「减少动态」后刷新本页，ongoing 会停在统一亮度（§ 本仓库建议值，官方无此分支）。</p>
+</body>
+</html>

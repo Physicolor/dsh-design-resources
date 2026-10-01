@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ListRowGroup 列表行组 · DSH 设计资源</title>
+<style>
+/* ---------------------------------------------------------------------------
+   演示用 token 脚手架。
+   数值逐条取自本仓库 website/css/dsh-tokens.css（由产品主题采集生成）与
+   app.asar 内官方主题对合成 token（elevation / shadow / font）的定义。
+   真实 DSH 运行时由宿主主题注入这些变量；demo 只是把同一批值内联进来，
+   组件类本身不写死任何颜色。
+   --------------------------------------------------------------------------- */
+:root {
+  --dsw-static-neutral-bluish-00: #fff;
+  --dsw-static-neutral-bluish-50: #f9fafb;
+  --dsw-static-neutral-bluish-60: #f9fafb;
+  --dsw-static-neutral-bluish-75: #f1f3f5;
+  --dsw-static-neutral-bluish-100: #ebeef2;
+  --dsw-static-neutral-bluish-150: #e9ecf2;
+  --dsw-static-neutral-bluish-200: #e1e5ee;
+  --dsw-static-neutral-bluish-300: #cfd3d6;
+  --dsw-static-neutral-bluish-400: #adb2b8;
+  --dsw-static-neutral-bluish-500: #979da6;
+  --dsw-static-neutral-bluish-600: #81858c;
+  --dsw-static-neutral-bluish-700: #61666b;
+  --dsw-static-neutral-bluish-750: #43454a;
+  --dsw-static-neutral-bluish-800: #353638;
+  --dsw-static-neutral-bluish-850: #2c2c2e;
+  --dsw-static-neutral-bluish-875: #232324;
+  --dsw-static-neutral-bluish-900: #1b1b1c;
+  --dsw-static-neutral-bluish-950: #151517;
+  --dsw-static-neutral-bluish-1000: #0f1115;
+  --dsw-static-neutral-50: #fafafa;
+  --dsw-static-neutral-200: #e5e5e5;
+  --dsw-static-neutral-300: #d4d4d4;
+  --dsw-static-deepseek-100: #e4edfd;
+  --dsw-static-deepseek-400: #7aaaff;
+  --dsw-static-deepseek-450: #5686fe;
+  --dsw-static-deepseek-500: #4176e6;
+  --dsw-static-deepseek-800: #34415b;
+  --dsw-static-green-100: #e6faed;
+  --dsw-static-green-400: #4ed17e;
+  --dsw-static-green-500: #22c55e;
+  --dsw-static-green-900: #233c2c;
+  --dsw-static-amber-100: #fef5e7;
+  --dsw-static-amber-400: #f7ad31;
+  --dsw-static-amber-500: #f59e0b;
+  --dsw-static-amber-600: #dd8629;
+  --dsw-static-amber-900: #27241f;
+  --dsw-static-red-100: #fee2e2;
+  --dsw-static-red-400: #f25a5a;
+  --dsw-static-red-600: #ec1313;
+  --dsw-static-blue-500: #3b82f6;
+
+  --dsw-alias-bg-base: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-1: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-2: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-3: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-mask-1: #0000003d;
+  --dsw-alias-bg-module-platform: var(--dsw-static-neutral-bluish-60);
+  --dsw-alias-bg-skeleton: #0000000a;
+  --dsw-alias-border-l1: #0000000a;
+  --dsw-alias-border-l2: #0000001a;
+  --dsw-alias-border-l3: #0000001f;
+  --dsw-alias-border-l4: #00000029;
+  --dsw-alias-brand-primary: var(--dsw-static-neutral-bluish-1000);
+  --dsw-alias-button-contrast-fill: var(--dsw-static-neutral-bluish-700);
+  --dsw-alias-button-elevated-fill: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-button-floating-fill: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-button-floating-hover: var(--dsw-static-neutral-bluish-75);
+  --dsw-alias-button-ghost-active-border: var(--dsw-static-neutral-bluish-500);
+  --dsw-alias-button-ghost-active-fill: var(--dsw-static-neutral-bluish-100);
+  --dsw-alias-button-primary-fill: var(--dsw-alias-brand-primary);
+  --dsw-alias-button-primary-hover: var(--dsw-static-neutral-bluish-750);
+  --dsw-alias-button-tool-bar-fill: #54555780;
+  --dsw-alias-button-tool-bar-hover: #54555799;
+  --dsw-alias-interactive-bg-active: #2631481a;
+  --dsw-alias-interactive-bg-hover: #2631480f;
+  --dsw-alias-interactive-bg-hover-danger: #ec13130d;
+  --dsw-alias-label-caption: var(--dsw-static-neutral-bluish-400);
+  --dsw-alias-label-dimmed: var(--dsw-static-neutral-bluish-200);
+  --dsw-alias-label-primary: var(--dsw-static-neutral-bluish-1000);
+  --dsw-alias-label-primary-foreground: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-label-primary-inverted: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-label-secondary: var(--dsw-static-neutral-bluish-700);
+  --dsw-alias-label-tertiary: var(--dsw-static-neutral-bluish-600);
+  --dsw-alias-link: var(--dsw-static-deepseek-500);
+  --dsw-alias-markdown-code-block: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-markdown-code-block-banner: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-markdown-inline-code: var(--dsw-static-neutral-50);
+  --dsw-alias-scrollbar-bg-l2: var(--dsw-static-neutral-200);
+  --dsw-alias-scrollbar-hover-l2: var(--dsw-static-neutral-300);
+  --dsw-alias-specific-menu: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-specific-sidebar-fill: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-state-business-primary: var(--dsw-static-deepseek-500);
+  --dsw-alias-state-error-primary: var(--dsw-static-red-600);
+  --dsw-alias-state-success-primary: var(--dsw-static-green-500);
+  --dsw-alias-state-success-tertiary: var(--dsw-static-green-100);
+  --dsw-alias-state-warn-label: var(--dsw-static-amber-600);
+  --dsw-alias-state-warn-primary: var(--dsw-static-amber-500);
+  --dsw-alias-state-warn-tertiary: var(--dsw-static-amber-100);
+  --dsw-alias-tooltip-bg: var(--dsw-static-neutral-bluish-850);
+  --dsw-specific-menu: var(--dsw-static-neutral-bluish-50);
+
+  --dsw-elevation-stroke-color: var(--dsw-alias-border-l1);
+  --dsw-elevation-stroke: 0 0 0 .5px var(--dsw-elevation-stroke-color);
+  --dsw-elevation-prominent: var(--dsw-elevation-stroke), 0 3px 8px 0 rgba(0, 0, 0, .04), 0 0 20px 0 rgba(0, 0, 0, .05);
+  --dsw-shadow-lv1: 0 2px 4px 0 rgba(0, 0, 0, .05);
+  --dsw-shadow-lv2: 0 4px 12px 0 rgba(0, 0, 0, .02), 0 2px 8px 0 rgba(0, 0, 0, .04);
+  --dsw-shadow-lv3: 0 0 1px 0 rgba(0, 0, 0, .2), 0 0 4px 0 rgba(0, 0, 0, .02), 0 12px 32px 0 rgba(0, 0, 0, .08);
+  --dsw-mask-blur: none;
+  --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* 官方把这两条写成 font 简写合成 token，这里展开以便 demo 单条使用。 */
+  --dsw-font-s-14: 14px/22px var(--dsw-font-family);
+  --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   以下为 ListRowGroup 组件样式，与 list-row-group.module.css 数值逐条一致
+   （类名去掉了 CSS Modules 的哈希）。§ 标记的行是本仓库建议值，不是官方数值。
+   官方没有 ListRowGroup 对应物；各数值的锚点在 README「几何来源」里逐条列出。
+   --------------------------------------------------------------------------- */
+.group { display: flex; flex-direction: column; min-width: 0; }
+
+.group-label {
+  margin: 0;
+  padding: 8px 10px;
+  font-size: 12px; line-height: 16px;
+  font-weight: inherit; /* § 建议值：抵消 <hN> 的浏览器默认加粗 */
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.rows { display: flex; flex-direction: column; gap: 0; }
+
+/* § 建议值：官方用独立 .separator 元素；这里用相邻兄弟的 border-top 表达同一宽度与颜色 */
+.rows-hairline > * + * { border-top: 0.5px solid var(--dsw-alias-border-l1); }
+
+.row {
+  box-sizing: border-box;
+  display: flex; align-items: center; gap: 8px;
+  width: 100%; min-height: 40px; padding: 8px 10px;
+  border: 0; border-radius: 10px; background: transparent;
+  color: var(--dsw-alias-label-primary);
+  font-family: inherit; font-size: 14px; line-height: 22px;
+  text-align: left;
+}
+.row-interactive { cursor: pointer; }
+.row-interactive:hover:not(:disabled) { background: var(--dsw-alias-interactive-bg-hover); }
+.row-interactive:active:not(:disabled) { background: var(--dsw-alias-interactive-bg-active); }
+.row-interactive:disabled { opacity: 0.4; cursor: not-allowed; }
+/* § 建议值：官方 ListRow 无对应物 */
+.row-interactive:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 2px; }
+
+.row-leading {
+  display: inline-flex; flex: none; align-items: center; justify-content: center;
+  width: 16px; height: 16px; color: var(--dsw-alias-label-tertiary);
+}
+.row-label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.row-trailing { display: inline-flex; flex: none; align-items: center; gap: 8px; color: var(--dsw-alias-label-tertiary); }
+
+.separator { flex: none; height: 0.5px; margin: 4px 2px; background: var(--dsw-alias-border-l1); }
+
+/* ------------------------------------------------------- 以下仅 demo 使用 */
+/* § 仅 demo：静态复刻 :hover / :active 观感，方便不移动鼠标也能看到交互态。 */
+.row-interactive.is-hover { background: var(--dsw-alias-interactive-bg-hover); }
+.row-interactive.is-active { background: var(--dsw-alias-interactive-bg-active); }
+/* 仅 demo：外层容器与示意控件，不属于本组件。 */
+.demo-box {
+  max-width: 420px;
+  padding: 4px;
+  border: 0.5px solid var(--dsw-alias-border-l2);
+  border-radius: 12px;
+}
+.demo-chip {
+  padding: 1px 8px; border-radius: 999px;
+  font-size: 11px; line-height: 17px; font-weight: 500;
+  background: var(--dsw-alias-bg-module-platform); color: var(--dsw-alias-label-secondary);
+}
+.demo-btn {
+  height: 28px; padding: 0 10px; border: 0; border-radius: 14px;
+  background: transparent; color: var(--dsw-alias-label-primary);
+  font-family: inherit; font-size: 12px; line-height: 18px; cursor: pointer;
+}
+.demo-btn:hover { background: var(--dsw-alias-interactive-bg-hover); }
+
+/* ------------------------------------------------------------- demo 外壳 */
+body {
+  margin: 0;
+  padding: 32px;
+  background: var(--dsw-alias-bg-base);
+  color: var(--dsw-alias-label-primary);
+  font: var(--dsw-font-s-14);
+}
+h1 { font-size: 18px; line-height: 26px; font-weight: 600; margin: 0 0 4px; }
+p.lead { margin: 0 0 24px; color: var(--dsw-alias-label-secondary); font: var(--dsw-font-xs-13); }
+h2 { font-size: 13px; line-height: 20px; font-weight: 600; color: var(--dsw-alias-label-tertiary); margin: 24px 0 8px; }
+p.demo-note { margin: 0 0 8px; color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); }
+.hint { color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); }
+</style>
+</head>
+<body>
+  <h1>ListRowGroup 列表行组</h1>
+  <p class="lead">分组标题（12/16 + label-tertiary，padding 8px 10px）+ 行（min-height 40 / padding 8px 10px / radius 10px）+ 0.5px hairline。全部逐条取自官方 Menu 的对应单元，实现为本仓库原创。</p>
+
+  <h2>默认 · 自动 hairline</h2>
+  <p class="demo-note">行间距 0（官方 Menu .list gap: 0），行之间由 0.5px 的 --dsw-alias-border-l1 分段。</p>
+  <div class="demo-box">
+    <section class="group" aria-labelledby="g-startup">
+      <h3 class="group-label" id="g-startup">启动行为</h3>
+      <div class="rows rows-hairline">
+        <div class="row">
+          <span class="row-leading"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.2 2.4h9.6v11.2H3.2z" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M5.6 5.6h4.8v1.2H5.6zm0 3.2h4.8v1.2H5.6z" fill="currentColor"/></svg></span>
+          <span class="row-label">恢复上次会话</span>
+          <span class="row-trailing"><span class="demo-chip">已开启</span></span>
+        </div>
+        <div class="row">
+          <span class="row-leading"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.4v11.2M2.4 8h11.2" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></span>
+          <span class="row-label">始终新建会话</span>
+        </div>
+        <div class="row">
+          <span class="row-label">这是很长的行文本用来演示省略号截断是否符合预期行为</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <h2>interactive 行 · 三种静态状态</h2>
+  <p class="demo-note">interactive 时渲染 &lt;button type="button"&gt;，带 hover / active / disabled 与焦点环。这一组里行内不得再放按钮。</p>
+  <div class="demo-box">
+    <section class="group" aria-labelledby="g-shortcut">
+      <h3 class="group-label" id="g-shortcut">快捷键</h3>
+      <div class="rows rows-hairline">
+        <button type="button" class="row row-interactive">
+          <span class="row-label">默认（未悬停）</span>
+          <span class="row-trailing"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span>
+        </button>
+        <button type="button" class="row row-interactive is-hover">
+          <span class="row-label">静态复刻 hover（§ 仅 demo）</span>
+          <span class="row-trailing"><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></span>
+        </button>
+        <button type="button" class="row row-interactive is-active">
+          <span class="row-label">静态复刻 active（§ 仅 demo）</span>
+        </button>
+        <button type="button" class="row row-interactive" disabled>
+          <span class="row-label">禁用（opacity 0.4）</span>
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <h2>展示行 + 行内操作（默认 div，不抢 Tab）</h2>
+  <p class="demo-note">行本身不可聚焦，焦点落在行内的按钮上——不要给不可聚焦的 div 挂 onClick。</p>
+  <div class="demo-box">
+    <section class="group" aria-labelledby="g-files">
+      <h3 class="group-label" id="g-files">已索引的文件</h3>
+      <div class="rows rows-hairline">
+        <div class="row">
+          <span class="row-label">design-tokens.md</span>
+          <span class="row-trailing">
+            <span class="demo-chip">12 KB</span>
+            <button type="button" class="demo-btn">打开</button>
+          </span>
+        </div>
+        <div class="row">
+          <span class="row-label">slot-seats.md</span>
+          <span class="row-trailing">
+            <span class="demo-chip">8 KB</span>
+            <button type="button" class="demo-btn">打开</button>
+          </span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <h2>separator="none" + 独立分隔线元素</h2>
+  <p class="demo-note">需要官方那种「左右各收 2px、上下各留 4px」的分隔线时用这一种（height 0.5px / margin 4px 2px / border-l1）。两种模式不要同时用，会出双线。</p>
+  <div class="demo-box">
+    <section class="group" aria-labelledby="g-mixed">
+      <h3 class="group-label" id="g-mixed">混合内容</h3>
+      <div class="rows">
+        <div class="row"><span class="row-label">第一段</span></div>
+        <div class="separator" aria-hidden="true"></div>
+        <div class="row"><span class="row-label">第二段</span></div>
+        <div class="separator" aria-hidden="true"></div>
+        <div class="row"><span class="row-label">第三段</span></div>
+      </div>
+    </section>
+  </div>
+
+  <p class="hint" style="margin-top:24px">提示：hover 行看底色；Tab 键在 interactive 行上可以看到焦点环（§ 本仓库建议值）。浮层菜单请改用官方 Menu，本组件没有菜单的键盘模型。</p>
+</body>
+</html>

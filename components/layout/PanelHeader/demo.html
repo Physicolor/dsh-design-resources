@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PanelHeader 面板标题栏 · DSH 设计资源</title>
+<style>
+/* ---------------------------------------------------------------------------
+   演示用 token 脚手架。数值逐条取自本仓库 website/css/dsh-tokens.css 与
+   app.asar 内官方主题对合成 token（elevation / shadow / font）的定义，
+   与 components/controls/Button/demo.html 的 :root 逐字一致。
+   真实 DSH 运行时由宿主主题注入这些变量；demo 只是把同一批值内联进来，
+   组件类本身不写死任何颜色。
+   --------------------------------------------------------------------------- */
+:root {
+  --dsw-static-neutral-bluish-00: #fff;
+  --dsw-static-neutral-bluish-50: #f9fafb;
+  --dsw-static-neutral-bluish-60: #f9fafb;
+  --dsw-static-neutral-bluish-75: #f1f3f5;
+  --dsw-static-neutral-bluish-100: #ebeef2;
+  --dsw-static-neutral-bluish-150: #e9ecf2;
+  --dsw-static-neutral-bluish-200: #e1e5ee;
+  --dsw-static-neutral-bluish-300: #cfd3d6;
+  --dsw-static-neutral-bluish-400: #adb2b8;
+  --dsw-static-neutral-bluish-500: #979da6;
+  --dsw-static-neutral-bluish-600: #81858c;
+  --dsw-static-neutral-bluish-700: #61666b;
+  --dsw-static-neutral-bluish-750: #43454a;
+  --dsw-static-neutral-bluish-800: #353638;
+  --dsw-static-neutral-bluish-850: #2c2c2e;
+  --dsw-static-neutral-bluish-875: #232324;
+  --dsw-static-neutral-bluish-900: #1b1b1c;
+  --dsw-static-neutral-bluish-950: #151517;
+  --dsw-static-neutral-bluish-1000: #0f1115;
+  --dsw-static-neutral-50: #fafafa;
+  --dsw-static-neutral-200: #e5e5e5;
+  --dsw-static-neutral-300: #d4d4d4;
+  --dsw-static-deepseek-100: #e4edfd;
+  --dsw-static-deepseek-400: #7aaaff;
+  --dsw-static-deepseek-450: #5686fe;
+  --dsw-static-deepseek-500: #4176e6;
+  --dsw-static-deepseek-800: #34415b;
+  --dsw-static-green-100: #e6faed;
+  --dsw-static-green-400: #4ed17e;
+  --dsw-static-green-500: #22c55e;
+  --dsw-static-green-900: #233c2c;
+  --dsw-static-amber-100: #fef5e7;
+  --dsw-static-amber-400: #f7ad31;
+  --dsw-static-amber-500: #f59e0b;
+  --dsw-static-amber-600: #dd8629;
+  --dsw-static-amber-900: #27241f;
+  --dsw-static-red-100: #fee2e2;
+  --dsw-static-red-400: #f25a5a;
+  --dsw-static-red-600: #ec1313;
+  --dsw-static-blue-500: #3b82f6;
+
+  --dsw-alias-bg-base: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-1: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-2: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-3: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-mask-1: #0000003d;
+  --dsw-alias-bg-module-platform: var(--dsw-static-neutral-bluish-60);
+  --dsw-alias-bg-skeleton: #0000000a;
+  --dsw-alias-border-l1: #0000000a;
+  --dsw-alias-border-l2: #0000001a;
+  --dsw-alias-border-l3: #0000001f;
+  --dsw-alias-border-l4: #00000029;
+  --dsw-alias-brand-primary: var(--dsw-static-neutral-bluish-1000);
+  --dsw-alias-button-contrast-fill: var(--dsw-static-neutral-bluish-700);
+  --dsw-alias-button-elevated-fill: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-button-floating-fill: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-button-floating-hover: var(--dsw-static-neutral-bluish-75);
+  --dsw-alias-button-ghost-active-border: var(--dsw-static-neutral-bluish-500);
+  --dsw-alias-button-ghost-active-fill: var(--dsw-static-neutral-bluish-100);
+  --dsw-alias-button-primary-fill: var(--dsw-alias-brand-primary);
+  --dsw-alias-button-primary-hover: var(--dsw-static-neutral-bluish-750);
+  --dsw-alias-button-tool-bar-fill: #54555780;
+  --dsw-alias-button-tool-bar-hover: #54555799;
+  --dsw-alias-interactive-bg-active: #2631481a;
+  --dsw-alias-interactive-bg-hover: #2631480f;
+  --dsw-alias-interactive-bg-hover-danger: #ec13130d;
+  --dsw-alias-label-caption: var(--dsw-static-neutral-bluish-400);
+  --dsw-alias-label-dimmed: var(--dsw-static-neutral-bluish-200);
+  --dsw-alias-label-primary: var(--dsw-static-neutral-bluish-1000);
+  --dsw-alias-label-primary-foreground: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-label-primary-inverted: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-label-secondary: var(--dsw-static-neutral-bluish-700);
+  --dsw-alias-label-tertiary: var(--dsw-static-neutral-bluish-600);
+  --dsw-alias-link: var(--dsw-static-deepseek-500);
+  --dsw-alias-markdown-code-block: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-markdown-code-block-banner: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-markdown-inline-code: var(--dsw-static-neutral-50);
+  --dsw-alias-scrollbar-bg-l2: var(--dsw-static-neutral-200);
+  --dsw-alias-scrollbar-hover-l2: var(--dsw-static-neutral-300);
+  --dsw-alias-specific-menu: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-specific-sidebar-fill: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-state-business-primary: var(--dsw-static-deepseek-500);
+  --dsw-alias-state-error-primary: var(--dsw-static-red-600);
+  --dsw-alias-state-success-primary: var(--dsw-static-green-500);
+  --dsw-alias-state-success-tertiary: var(--dsw-static-green-100);
+  --dsw-alias-state-warn-label: var(--dsw-static-amber-600);
+  --dsw-alias-state-warn-primary: var(--dsw-static-amber-500);
+  --dsw-alias-state-warn-tertiary: var(--dsw-static-amber-100);
+  --dsw-alias-tooltip-bg: var(--dsw-static-neutral-bluish-850);
+  --dsw-specific-menu: var(--dsw-static-neutral-bluish-50);
+
+  --dsw-elevation-stroke-color: var(--dsw-alias-border-l1);
+  --dsw-elevation-stroke: 0 0 0 .5px var(--dsw-elevation-stroke-color);
+  --dsw-elevation-prominent: var(--dsw-elevation-stroke), 0 3px 8px 0 rgba(0, 0, 0, .04), 0 0 20px 0 rgba(0, 0, 0, .05);
+  --dsw-shadow-lv1: 0 2px 4px 0 rgba(0, 0, 0, .05);
+  --dsw-shadow-lv2: 0 4px 12px 0 rgba(0, 0, 0, .02), 0 2px 8px 0 rgba(0, 0, 0, .04);
+  --dsw-shadow-lv3: 0 0 1px 0 rgba(0, 0, 0, .2), 0 0 4px 0 rgba(0, 0, 0, .02), 0 12px 32px 0 rgba(0, 0, 0, .08);
+  --dsw-mask-blur: none;
+  --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --dsw-font-s-14: 14px/22px var(--dsw-font-family);
+  --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   以下为 PanelHeader 组件样式，与 panelheader.module.css 数值逐条一致
+   （类名去掉了 CSS Modules 的哈希）。§ 标记的行是本仓库建议值。
+   --------------------------------------------------------------------------- */
+.header {
+  --dsh-ph-height: 44px;   /* § 建议值 */
+  --dsh-ph-pad-x: 12px;    /* § 建议值 */
+  --dsh-ph-gap: 8px;
+  --dsh-ph-title-size: 14px;
+  --dsh-ph-title-line: 22px;
+
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--dsh-ph-gap);
+  min-height: var(--dsh-ph-height);
+  padding: 0 var(--dsh-ph-pad-x);
+  font-family: inherit;
+}
+/* hairline 写法对齐官方 Menu.module.css .separator（0.5px + border-l1） */
+.divider { box-shadow: inset 0 -0.5px 0 0 var(--dsw-alias-border-l1); }
+
+.heading { display: flex; flex-direction: column; justify-content: center; gap: 4px; /* § 建议值 */ min-width: 0; }
+
+.title {
+  overflow: hidden;
+  font-size: var(--dsh-ph-title-size);
+  font-weight: 500;
+  line-height: var(--dsh-ph-title-line);
+  color: var(--dsw-alias-label-primary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.description {
+  overflow: hidden;
+  font-size: 12px;
+  line-height: 18px;
+  color: var(--dsw-alias-label-tertiary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.actions { flex: none; display: flex; align-items: center; justify-content: flex-end; gap: 4px; }
+
+.sm { --dsh-ph-height: 36px; --dsh-ph-pad-x: 8px; } /* § 建议值 */
+
+/* ------------------------- 下面是为了 demo 能看清组件，非组件样式 ------------------------- */
+.panel {
+  box-sizing: border-box;
+  width: 320px;
+  border-radius: 12px;
+  background: var(--dsw-alias-bg-layer-2);
+  box-shadow: var(--dsw-elevation-prominent);
+  overflow: hidden;
+}
+.panel-body { padding: 12px; color: var(--dsw-alias-label-secondary); font: var(--dsw-font-xs-13); }
+.icon-btn {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--dsw-alias-label-secondary);
+  cursor: pointer;
+}
+.icon-btn:hover { background: var(--dsw-alias-interactive-bg-hover); }
+
+body {
+  margin: 0;
+  padding: 32px;
+  background: var(--dsw-alias-bg-base);
+  color: var(--dsw-alias-label-primary);
+  font: var(--dsw-font-s-14);
+}
+h1 { font-size: 18px; line-height: 26px; font-weight: 600; margin: 0 0 4px; }
+p.lead { margin: 0 0 24px; color: var(--dsw-alias-label-secondary); font: var(--dsw-font-xs-13); }
+h2 { font-size: 13px; line-height: 20px; font-weight: 600; color: var(--dsw-alias-label-tertiary); margin: 24px 0 8px; }
+.hint { color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); }
+</style>
+</head>
+<body>
+  <h1>PanelHeader 面板标题栏</h1>
+  <p class="lead">标题取官方 Button .button 的 14/22 字号，字重 500 与色值取官方 Modal .title；底部 hairline 用官方 Menu .separator 的 0.5px + border-l1。高度与内边距为本仓库建议值（4 的倍数）。</p>
+
+  <h2>md（44px）· 标题 + 动作区 + hairline</h2>
+  <div class="panel">
+    <div class="header divider">
+      <div class="heading"><div class="title">会话设置</div></div>
+      <div class="actions">
+        <button type="button" class="icon-btn" aria-label="更多操作">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="3" cy="8" r="1.4" fill="currentColor"/><circle cx="8" cy="8" r="1.4" fill="currentColor"/><circle cx="13" cy="8" r="1.4" fill="currentColor"/></svg>
+        </button>
+        <button type="button" class="icon-btn" aria-label="关闭面板">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 2.4 8 6.9l4.5-4.5 1.1 1.1L9.1 8l4.5 4.5-1.1 1.1L8 9.1l-4.5 4.5-1.1-1.1L6.9 8 2.4 3.5z" fill="currentColor"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="panel-body">下面这条 hairline 是 0.5px 的 var(--dsw-alias-border-l1)，与官方 Menu 的分隔线同款。</div>
+  </div>
+
+  <h2>md · 带说明文字（高度由内容撑开）</h2>
+  <div class="panel">
+    <div class="header divider">
+      <div class="heading">
+        <div class="title">已修改文件</div>
+        <div class="description">3 个文件，未暂存</div>
+      </div>
+      <div class="actions">
+        <button type="button" class="icon-btn" aria-label="折叠">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 11.2 2.8 6l1.1-1.1L8 9l4.1-4.1L13.2 6z" fill="currentColor"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="panel-body">heading 变成两行：title 14/22 与 description 12/18。</div>
+  </div>
+
+  <h2>sm（36px）· 与官方 md 按钮等高，可关掉 hairline</h2>
+  <div class="panel">
+    <div class="header sm divider">
+      <div class="heading"><div class="title">文件</div></div>
+      <div class="actions">
+        <button type="button" class="icon-btn" aria-label="新建文件">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M7.2 1.6h1.6v5.6h5.6v1.6H8.8v5.6H7.2V8.8H1.6V7.2h5.6V1.6z" fill="currentColor"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="header sm">
+      <div class="heading"><div class="title">这一条没有 hairline（divider=false）</div></div>
+    </div>
+    <div class="panel-body">sm 的左右内边距是 8px，动作区按钮 28px 高，标题栏 36px。</div>
+  </div>
+
+  <h2>长标题截断（不换行，屏幕阅读器仍读到全文）</h2>
+  <div class="panel">
+    <div class="header divider">
+      <div class="heading"><div class="title">这是一个非常长的面板标题，它会在右侧动作区之前被省略号截断而不是换行</div></div>
+      <div class="actions">
+        <button type="button" class="icon-btn" aria-label="关闭面板">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 2.4 8 6.9l4.5-4.5 1.1 1.1L9.1 8l4.5 4.5-1.1 1.1L8 9.1l-4.5 4.5-1.1-1.1L6.9 8 2.4 3.5z" fill="currentColor"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="panel-body">min-width: 0 让标题列可以被压缩，动作区不会被挤出去。</div>
+  </div>
+
+  <p class="hint" style="margin-top:24px">提示：把鼠标移到右上角图标按钮上看 hover 底色；hairline 只有 0.5px，属正常粗细。</p>
+</body>
+</html>

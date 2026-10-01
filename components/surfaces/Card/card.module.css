@@ -1,0 +1,65 @@
+/* Card 卡片 —— 几何来源：
+ *   圆角 12px        ← 官方 HoverCard.module.css `.card`；ReadBlock.module.css
+ *                       `.block` 的 `--dsl-read-radius: 12px`
+ *   0.5px 描边       ← 官方 markdown/MarkdownText.module.css
+ *                       `.markdown :not(pre) > code`（border: 0.5px solid
+ *                       var(--dsw-alias-border-l1)）
+ *   底色 layer-2     ← 官方 Modal.module.css `.dialog`（浮层底色用的是同一 token）
+ *   标题 16/24/500   ← 官方 Modal.module.css `.title`
+ *   正文 14/22       ← 官方 Modal.module.css `.description`
+ *   说明次级色       ← 官方 Modal.module.css `.close` / Pill.module.css `.pill`
+ *   footer hairline  ← 官方 Menu.module.css `.footer`（border-top 0.5px + border-l2）
+ * 内边距与插槽间距为本仓库建议值（4 的倍数），逐条理由见 README。
+ * 实现为本仓库原创：用 CSS 变量承载几何，未复制官方 CSS 源码。 */
+
+.card {
+  --dsh-card-radius: 12px;
+  --dsh-card-padding: 16px;
+  --dsh-card-gap: 12px;
+  --dsh-card-head-gap: 4px;
+
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--dsh-card-gap);
+  padding: var(--dsh-card-padding);
+  /* 边框与阴影二选一：卡片是内联内容容器，不脱离文档流，
+   * 所以走 hairline 描边而不是 elevation（理由见 README「几何来源」）。 */
+  border: 0.5px solid var(--dsw-alias-border-l1);
+  border-radius: var(--dsh-card-radius);
+  background: var(--dsw-alias-bg-layer-2);
+  color: var(--dsw-alias-label-primary);
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dsh-card-head-gap);
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  color: var(--dsw-alias-label-primary);
+}
+
+.description {
+  margin: 0;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.body {
+  min-width: 0;
+}
+
+.footer {
+  padding-top: var(--dsh-card-gap);
+  border-top: 0.5px solid var(--dsw-alias-border-l2);
+}

@@ -1,0 +1,38 @@
+MIT License
+
+Copyright (c) 2026 Physicolor
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+SCOPE NOTE
+
+This license covers the original work of this repository: `spec/`,
+`components/`, `website/`, `scripts/`, `rules/` and the README files.
+
+It does NOT cover content extracted from DeepSeek's official client packages:
+
+  - `icons/` — icon path data and brand marks, copyright DeepSeek;
+  - `data/tokens.json` and `website/css/dsh-tokens.css` — theme token values,
+    copyright DeepSeek.
+
+Those are included for reference and interoperability, with their source
+recorded, and are not redistributed under the MIT terms above. Check the
+official license before reusing them.

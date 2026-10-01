@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EmptyState 空状态 · DSH 设计资源</title>
+<style>
+/* ---------------------------------------------------------------------------
+   演示用 token 脚手架。
+   数值逐条取自本仓库 website/css/dsh-tokens.css（由产品主题采集生成）与
+   app.asar 内官方主题对合成 token（elevation / shadow / font）的定义。
+   真实 DSH 运行时由宿主主题注入这些变量；demo 只是把同一批值内联进来，
+   组件类本身不写死任何颜色。
+   --------------------------------------------------------------------------- */
+:root {
+  --dsw-static-neutral-bluish-00: #fff;
+  --dsw-static-neutral-bluish-50: #f9fafb;
+  --dsw-static-neutral-bluish-60: #f9fafb;
+  --dsw-static-neutral-bluish-75: #f1f3f5;
+  --dsw-static-neutral-bluish-100: #ebeef2;
+  --dsw-static-neutral-bluish-150: #e9ecf2;
+  --dsw-static-neutral-bluish-200: #e1e5ee;
+  --dsw-static-neutral-bluish-300: #cfd3d6;
+  --dsw-static-neutral-bluish-400: #adb2b8;
+  --dsw-static-neutral-bluish-500: #979da6;
+  --dsw-static-neutral-bluish-600: #81858c;
+  --dsw-static-neutral-bluish-700: #61666b;
+  --dsw-static-neutral-bluish-750: #43454a;
+  --dsw-static-neutral-bluish-800: #353638;
+  --dsw-static-neutral-bluish-850: #2c2c2e;
+  --dsw-static-neutral-bluish-875: #232324;
+  --dsw-static-neutral-bluish-900: #1b1b1c;
+  --dsw-static-neutral-bluish-950: #151517;
+  --dsw-static-neutral-bluish-1000: #0f1115;
+  --dsw-static-neutral-50: #fafafa;
+  --dsw-static-neutral-200: #e5e5e5;
+  --dsw-static-neutral-300: #d4d4d4;
+  --dsw-static-deepseek-100: #e4edfd;
+  --dsw-static-deepseek-400: #7aaaff;
+  --dsw-static-deepseek-450: #5686fe;
+  --dsw-static-deepseek-500: #4176e6;
+  --dsw-static-deepseek-800: #34415b;
+  --dsw-static-green-100: #e6faed;
+  --dsw-static-green-400: #4ed17e;
+  --dsw-static-green-500: #22c55e;
+  --dsw-static-green-900: #233c2c;
+  --dsw-static-amber-100: #fef5e7;
+  --dsw-static-amber-400: #f7ad31;
+  --dsw-static-amber-500: #f59e0b;
+  --dsw-static-amber-600: #dd8629;
+  --dsw-static-amber-900: #27241f;
+  --dsw-static-red-100: #fee2e2;
+  --dsw-static-red-400: #f25a5a;
+  --dsw-static-red-600: #ec1313;
+  --dsw-static-blue-500: #3b82f6;
+
+  --dsw-alias-bg-base: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-1: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-2: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-3: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-mask-1: #0000003d;
+  --dsw-alias-bg-module-platform: var(--dsw-static-neutral-bluish-60);
+  --dsw-alias-bg-skeleton: #0000000a;
+  --dsw-alias-border-l1: #0000000a;
+  --dsw-alias-border-l2: #0000001a;
+  --dsw-alias-border-l3: #0000001f;
+  --dsw-alias-border-l4: #00000029;
+  --dsw-alias-brand-primary: var(--dsw-static-neutral-bluish-1000);
+  --dsw-alias-button-contrast-fill: var(--dsw-static-neutral-bluish-700);
+  --dsw-alias-button-elevated-fill: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-button-floating-fill: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-button-floating-hover: var(--dsw-static-neutral-bluish-75);
+  --dsw-alias-button-ghost-active-border: var(--dsw-static-neutral-bluish-500);
+  --dsw-alias-button-ghost-active-fill: var(--dsw-static-neutral-bluish-100);
+  --dsw-alias-button-primary-fill: var(--dsw-alias-brand-primary);
+  --dsw-alias-button-primary-hover: var(--dsw-static-neutral-bluish-750);
+  --dsw-alias-button-tool-bar-fill: #54555780;
+  --dsw-alias-button-tool-bar-hover: #54555799;
+  --dsw-alias-interactive-bg-active: #2631481a;
+  --dsw-alias-interactive-bg-hover: #2631480f;
+  --dsw-alias-interactive-bg-hover-danger: #ec13130d;
+  --dsw-alias-label-caption: var(--dsw-static-neutral-bluish-400);
+  --dsw-alias-label-dimmed: var(--dsw-static-neutral-bluish-200);
+  --dsw-alias-label-primary: var(--dsw-static-neutral-bluish-1000);
+  --dsw-alias-label-primary-foreground: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-label-primary-inverted: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-label-secondary: var(--dsw-static-neutral-bluish-700);
+  --dsw-alias-label-tertiary: var(--dsw-static-neutral-bluish-600);
+  --dsw-alias-link: var(--dsw-static-deepseek-500);
+  --dsw-alias-markdown-code-block: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-markdown-code-block-banner: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-markdown-inline-code: var(--dsw-static-neutral-50);
+  --dsw-alias-scrollbar-bg-l2: var(--dsw-static-neutral-200);
+  --dsw-alias-scrollbar-hover-l2: var(--dsw-static-neutral-300);
+  --dsw-alias-specific-menu: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-specific-sidebar-fill: var(--dsw-static-neutral-bluish-50);
+  --dsw-alias-state-business-primary: var(--dsw-static-deepseek-500);
+  --dsw-alias-state-error-primary: var(--dsw-static-red-600);
+  --dsw-alias-state-success-primary: var(--dsw-static-green-500);
+  --dsw-alias-state-success-tertiary: var(--dsw-static-green-100);
+  --dsw-alias-state-warn-label: var(--dsw-static-amber-600);
+  --dsw-alias-state-warn-primary: var(--dsw-static-amber-500);
+  --dsw-alias-state-warn-tertiary: var(--dsw-static-amber-100);
+  --dsw-alias-tooltip-bg: var(--dsw-static-neutral-bluish-850);
+  --dsw-specific-menu: var(--dsw-static-neutral-bluish-50);
+
+  --dsw-elevation-stroke-color: var(--dsw-alias-border-l1);
+  --dsw-elevation-stroke: 0 0 0 .5px var(--dsw-elevation-stroke-color);
+  --dsw-elevation-prominent: var(--dsw-elevation-stroke), 0 3px 8px 0 rgba(0, 0, 0, .04), 0 0 20px 0 rgba(0, 0, 0, .05);
+  --dsw-shadow-lv1: 0 2px 4px 0 rgba(0, 0, 0, .05);
+  --dsw-shadow-lv2: 0 4px 12px 0 rgba(0, 0, 0, .02), 0 2px 8px 0 rgba(0, 0, 0, .04);
+  --dsw-shadow-lv3: 0 0 1px 0 rgba(0, 0, 0, .2), 0 0 4px 0 rgba(0, 0, 0, .02), 0 12px 32px 0 rgba(0, 0, 0, .08);
+  --dsw-mask-blur: none;
+  --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* 官方把这两条写成 font 简写合成 token，这里展开以便 demo 单条使用。 */
+  --dsw-font-s-14: 14px/22px var(--dsw-font-family);
+  --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
+}
+
+/* ---------------------------------------------------------------------------
+   以下为 EmptyState 组件样式，与 empty-state.module.css 数值逐条一致
+   （类名去掉了 CSS Modules 的哈希）。§ 标记的行是本仓库建议值 —— 官方没有
+   EmptyState 组件，所以这里几乎每一行都是建议值。
+   --------------------------------------------------------------------------- */
+.empty {
+  --dsh-empty-icon-slot: 32px;
+  --dsh-empty-gap: 12px;
+  --dsh-empty-title-desc-gap: 6px;
+  --dsh-empty-action-gap: 16px;
+  --dsh-empty-max-w: 280px;
+  --dsh-empty-pad-y: 32px;
+  --dsh-empty-pad-x: 12px;
+
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--dsh-empty-gap);
+  padding: var(--dsh-empty-pad-y) var(--dsh-empty-pad-x);
+  text-align: center;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: var(--dsh-empty-icon-slot);
+  height: var(--dsh-empty-icon-slot);
+  color: var(--dsw-alias-label-tertiary);
+}
+
+.title {
+  max-width: var(--dsh-empty-max-w);
+  margin: 0;
+  color: var(--dsw-alias-label-primary);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  text-wrap: pretty;
+}
+
+.description {
+  /* 标题与说明之间 6px，比 flex 的 12px 紧：-(12 - 6) = -6px */
+  margin: calc(-1 * var(--dsh-empty-gap) + var(--dsh-empty-title-desc-gap)) 0 0;
+  max-width: var(--dsh-empty-max-w);
+  color: var(--dsw-alias-label-secondary);
+  font: var(--dsw-font-xs-13);
+  text-wrap: pretty;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: var(--dsh-empty-action-gap);
+}
+
+/* ------------------------------------------------------------------ demo 外壳 */
+body {
+  margin: 0;
+  padding: 32px;
+  background: var(--dsw-alias-bg-base);
+  color: var(--dsw-alias-label-primary);
+  font: var(--dsw-font-s-14);
+}
+h1 { font-size: 18px; line-height: 26px; font-weight: 600; margin: 0 0 4px; }
+p.lead { margin: 0 0 24px; color: var(--dsw-alias-label-secondary); font: var(--dsw-font-xs-13); }
+h2 { font-size: 13px; line-height: 20px; font-weight: 600; color: var(--dsw-alias-label-tertiary); margin: 24px 0 8px; }
+.hint { color: var(--dsw-alias-label-tertiary); font: var(--dsw-font-xs-13); }
+.row { display: flex; gap: 16px; flex-wrap: wrap; align-items: stretch; }
+.card {
+  flex: 1 1 320px; min-width: 320px;
+  border: 0.5px solid var(--dsw-alias-border-l3);
+  border-radius: 12px;
+  background: var(--dsw-alias-bg-layer-2);
+}
+.card-title {
+  padding: 10px 16px;
+  border-bottom: 0.5px solid var(--dsw-alias-border-l2);
+  font-size: 13px; line-height: 20px; font-weight: 600;
+}
+
+/* demo 里用 Button 组件的既有几何（同 Button/demo.html），仅作动作插槽的示例。 */
+.button {
+  display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+  height: 36px; padding: 0 14px; border: 0; border-radius: 18px;
+  font-family: inherit; font-size: 14px; line-height: 22px; white-space: nowrap; cursor: pointer;
+}
+.button.primary { background: var(--dsw-alias-button-primary-fill); color: var(--dsw-alias-label-primary-foreground); }
+.button.ghost { background: transparent; color: var(--dsw-alias-label-primary); }
+.button.ghost:hover { background: var(--dsw-alias-interactive-bg-hover); }
+</style>
+</head>
+<body>
+  <h1>EmptyState 空状态</h1>
+  <p class="lead">官方没有同名组件，全部几何为本仓库建议值；文字层级刻意对齐官方（标题 14/22、说明 13/20）。实现为本仓库原创。</p>
+
+  <h2>完整形态：图标（32×32）+ 标题 + 说明 + 动作</h2>
+  <p class="hint" style="margin:0 0 8px">图标是 32×32 的线稿，颜色继承 --dsw-alias-label-tertiary；动作是仓库 Button 的 primary 变体。</p>
+  <div class="card">
+    <div class="empty">
+      <span class="icon" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 9.5A2.5 2.5 0 0 1 7.5 7h17A2.5 2.5 0 0 1 27 9.5v13a2.5 2.5 0 0 1-2.5 2.5h-17A2.5 2.5 0 0 1 5 22.5v-13Z" stroke="currentColor" stroke-width="1.5"/><path d="M5 18h6.5l1.5 3h6l1.5-3H27" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
+      <p class="title">还没有会话</p>
+      <p class="description">新建一个会话，问第一个问题。历史记录会保存在本地，随时可以回来继续。</p>
+      <div class="action">
+        <button type="button" class="button primary">新建会话</button>
+        <button type="button" class="button ghost">看看示例</button>
+      </div>
+    </div>
+  </div>
+
+  <h2>极简形态：只有标题（缺省的说明与动作都不渲染）</h2>
+  <div class="card">
+    <div class="empty">
+      <p class="title">没有匹配的结果</p>
+    </div>
+  </div>
+
+  <h2>筛选导致的空：说明 + 一个「清除筛选」动作（用 role="status" 让读屏知道内容变了）</h2>
+  <div class="card">
+    <div class="empty" role="status">
+      <p class="title">没有符合条件的文件</p>
+      <p class="description">当前筛选是「.tsx」+「3 天内修改」。试试放宽时间范围，或清除筛选看全部。</p>
+      <div class="action">
+        <button type="button" class="button ghost">清除筛选</button>
+      </div>
+    </div>
+  </div>
+
+  <h2>长说明：max-width 280px 生效，两行以上（文本不会拉满整行，flex 子项是 shrink-to-fit）</h2>
+  <div class="card" style="max-width:440px">
+    <div class="empty">
+      <span class="icon" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="11" stroke="currentColor" stroke-width="1.5"/><path d="M16 10.5v6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="16" cy="21" r="1" fill="currentColor"/></svg></span>
+      <p class="title">这个工作区还没有连接任何数据源</p>
+      <p class="description">连接之后就能在对话里直接查询表结构、跑只读 SQL。数据源凭据只保存在本机，不会上传。</p>
+      <div class="action">
+        <button type="button" class="button primary">连接数据源</button>
+      </div>
+    </div>
+  </div>
+
+  <h2>并排的紧凑面板：padding 可以按需覆写（这里是 demo 覆写，组件默认 32px 12px）</h2>
+  <div class="row">
+    <div class="card" style="min-width:0">
+      <div class="card-title">会话列表</div>
+      <div class="empty" style="padding:16px 12px">
+        <p class="title">暂无会话</p>
+        <p class="description">点右下角的加号开始。</p>
+      </div>
+    </div>
+    <div class="card" style="min-width:0">
+      <div class="card-title">附件</div>
+      <div class="empty" style="padding:16px 12px">
+        <p class="title">还没有附件</p>
+        <p class="description">拖文件到这里，或点回形针。</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="hint" style="margin-top:24px">提示：图标位固定 32×32，所以传 24px 或 32px 的线稿都能居中；标题与说明都是 shrink-to-fit 居中，max-width 只是长文本的上限。</p>
+</body>
+</html>
