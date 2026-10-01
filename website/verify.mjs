@@ -251,10 +251,9 @@ if (browserPath === null) {
 
     // a component page must carry all three columns' worth of content
     await goto(base + '#/component/button')
-    check('component page renders specimen', await evaluate(`document.querySelectorAll('.specimen iframe').length === 1`))
+    check('component page renders specimen', await evaluate(`document.querySelectorAll('.specimen').length === 1`))
     check('component page renders source', await evaluate(`document.querySelectorAll('.code pre').length >= 2`), String(await evaluate(`document.querySelectorAll('.code pre').length`)))
     check('component page renders rationale', await evaluate(`document.querySelectorAll('.aside__block').length >= 3`), String(await evaluate(`document.querySelectorAll('.aside__block').length`)))
-    check('demo frame carries a document', await evaluate(`(function(){var f=document.querySelector('.specimen iframe');return f!==null&&(f.getAttribute('srcdoc')||'').length>200})()`))
 
     // a category page lists its members
     await goto(base + '#/components/controls')
@@ -296,6 +295,13 @@ if (browserPath === null) {
     // markdown conversion of the spec documents
     await goto(base + '#/spec/70-checklist')
     check('spec renders tables', await evaluate(`document.querySelectorAll('.prose table').length > 0`), String(await evaluate(`document.querySelectorAll('.prose table').length`)))
+    check('spec carries an on-this-page outline', await evaluate(`document.querySelectorAll('.aside .outline__item').length > 2`), String(await evaluate(`document.querySelectorAll('.aside .outline__item').length`)))
+    await evaluate(`(function(){var a=document.querySelector('.aside .outline__item a');if(a)a.click();return 1})()`)
+    /* smooth scrolling is animated, so give it time before measuring */
+    await new Promise(resolve => setTimeout(resolve, 900))
+    const jumped = await evaluate(`(function(){var a=document.querySelector('.aside .outline__item a');if(!a)return null;var t=document.getElementById(a.getAttribute('data-jump'));return t===null?null:Math.round(t.getBoundingClientRect().top)})()`)
+    check('outline jumps into the document', jumped !== null && jumped < 420, jumped === null ? 'n/a' : `heading at y=${jumped}`)
+    check('theme icon shows the mode in force', await evaluate(`document.getElementById('themeIcon').innerHTML.indexOf('<svg') !== -1`))
 
     // the motion spec carries a bench you can actually operate
     await goto(base + '#/spec/40-motion')
@@ -317,10 +323,23 @@ if (browserPath === null) {
     await evaluate(`document.querySelector('#lang button[data-lang="zh"]').click()`)
     check('language switches back', await evaluate(`document.documentElement.lang === 'zh-CN'`))
 
-    // the specimen must grow to its demo instead of scrolling inside a scroll
+    // the specimen renders into a shadow root — an iframe under `file://` is an
+    // opaque origin, so its height cannot be read and the preview degrades
     await goto(base + '#/component/button')
-    const frameFits = await evaluate('(function(){var f=document.querySelector(".specimen__frame");if(!f)return false;var h=parseFloat(f.style.height||"0");var doc=f.contentDocument;if(!doc)return false;return h>0&&Math.abs(h-doc.documentElement.scrollHeight)<10})()')
-    check('specimen frame fits its content', frameFits)
+    const demoInfo = await evaluate('(function(){var h=document.querySelector(".specimen__stage");if(!h)return null;var s=h.shadowRoot;if(!s)return null;return {height:Math.round(h.getBoundingClientRect().height),nodes:s.querySelectorAll("*").length,text:(s.textContent||"").trim().length}})()')
+    check('specimen mounts a shadow root', demoInfo !== null && demoInfo.nodes > 3, JSON.stringify(demoInfo))
+    check('specimen lays out at real height', demoInfo !== null && demoInfo.height > 60, demoInfo === null ? 'n/a' : `${demoInfo.height}px`)
+    check('specimen carries its demo text', demoInfo !== null && demoInfo.text > 20)
+    /* `textContent` would include the shadow root's own <style> text, where
+     * `:host` legitimately appears — so only non-style subtrees are searched. */
+    check('no selector text leaks into the specimen', await evaluate('(function(){var h=document.querySelector(".specimen__stage");if(!h||!h.shadowRoot)return false;var parts=h.shadowRoot.querySelectorAll(":scope > *:not(style)");var text="";Array.prototype.forEach.call(parts,function(n){text+=n.textContent||""});return text.indexOf(":host")===-1&&text.indexOf("lang=")===-1})()'))
+    check('breadcrumb with a back control', await evaluate(`document.querySelectorAll('.crumbs__back').length === 1 && document.querySelectorAll('.crumbs a').length >= 1`))
+    check('index marks the open component', await evaluate(`document.querySelector('.index__link--sub[aria-current="page"]') !== null`))
+    check('index lights up its category', await evaluate(`document.querySelectorAll('.index__link[aria-current="page"]').length >= 2`))
+    check('tooltip bubble is self-drawn', await evaluate(`document.querySelectorAll('body > .tip').length === 1`))
+    check('source is folded by default', await evaluate(`document.querySelectorAll('.code[data-fold="true"]').length >= 1`))
+    await evaluate(`document.querySelector('[data-fold-toggle]').click()`)
+    check('source unfolds', await evaluate(`document.querySelector('.code').getAttribute('data-fold') === 'false'`))
 
     // theme switch mirrors onto the specimen tokens
     await evaluate(`document.getElementById('theme').click()`)

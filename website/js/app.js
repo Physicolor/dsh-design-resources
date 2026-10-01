@@ -245,10 +245,10 @@
         if (effective === 'dark') document.body.setAttribute('data-ds-dark-theme', '')
         else document.body.removeAttribute('data-ds-dark-theme')
 
-        /* Show the icon of the mode you would switch TO. */
-        var target = effective === 'dark' ? 'light' : 'dark'
-        var node = document.getElementById('themeIcon')
-        node.innerHTML = iconSvg(THEME_ICON[target])
+        /* Show the mode currently in force, not the one a click would reach:
+         * an icon beside a control is a state readout first and a button second,
+         * and a moon on a light page reads as "you are in dark mode". */
+        document.getElementById('themeIcon').innerHTML = iconSvg(effective === 'dark' ? 'dark' : 'light')
         save('dshdr-theme', mode)
     }
 
@@ -407,17 +407,24 @@
         })
         var categories = Object.keys(byCategory).sort()
         if (categories.length > 0) {
+            var openComponent = path.indexOf('/component/') === 0 ? path.slice('/component/'.length) : null
             var componentLinks = [{
                 href: href('/components'),
                 label: t('index.allComponents'),
                 count: COMPONENTS.length,
                 active: path === '/components',
             }].concat(categories.map(function (cat) {
+                var holdsOpen = openComponent !== null && byCategory[cat].some(function (c) { return c.id === openComponent })
                 return {
                     href: href('/components/' + cat),
                     label: categoryLabel(cat),
                     count: byCategory[cat].length,
-                    active: path === '/components/' + cat,
+                    /* reading a component keeps its category lit and lists the
+                     * item underneath, so the index answers "where am I?" */
+                    active: path === '/components/' + cat || holdsOpen,
+                    children: holdsOpen ? byCategory[cat].filter(function (c) { return c.id === openComponent }).map(function (c) {
+                        return { href: href('/component/' + c.id), label: c.name, active: true, sub: true }
+                    }) : [],
                 }
             }))
             groups.push({ id: 'components', title: t('index.components'), links: componentLinks })
@@ -437,6 +444,19 @@
     }
 
     /**
+     * One navigation row.
+     * @param link - { href, label, count, active, sub }.
+     * @returns html.
+     */
+    function linkRow(link) {
+        return '<a class="index__link' + (link.sub === true ? ' index__link--sub' : '') + '" href="' + esc(link.href) + '"'
+            + (link.active ? ' aria-current="page"' : '') + '>'
+            + '<span class="index__label">' + esc(link.label) + '</span>'
+            + (link.count == null ? '' : '<span class="index__count">' + link.count + '</span>')
+            + '</a>'
+    }
+
+    /**
      * Render the left index.
      * @param path - current route path.
      */
@@ -451,10 +471,7 @@
                 + '</button>'
                 + '<div class="index__list"><div>'
                 + group.links.map(function (link) {
-                    return '<a class="index__link" href="' + esc(link.href) + '"' + (link.active ? ' aria-current="page"' : '') + '>'
-                        + '<span class="index__label">' + esc(link.label) + '</span>'
-                        + (link.count == null ? '' : '<span class="index__count">' + link.count + '</span>')
-                        + '</a>'
+                    return linkRow(link) + (link.children || []).map(linkRow).join('')
                 }).join('')
                 + '</div></div></div>'
         }).join('')
@@ -475,14 +492,26 @@
 
     /**
      * Render the rationale column.
+     *
+     * A rationale column with nothing to say should not be on screen. File paths
+     * and character counts are metadata, not rationale — they tell a reader
+     * nothing they need while reading — so they do not count as content here, and
+     * a page carrying only metadata collapses the column and hides its toggle.
      * @param blocks - array of { title, html }.
      */
     function renderAside(blocks) {
-        if (blocks == null || blocks.length === 0) {
+        var useful = (blocks || []).filter(function (block) {
+            return block && typeof block.html === 'string' && block.html.replace(/<[^>]*>/gu, '').trim() !== ''
+        })
+        var toggle = document.getElementById('asideToggle')
+        if (useful.length === 0) {
             asideEl.innerHTML = ''
+            setColumn('aside', false)
+            toggle.hidden = true
             return
         }
-        asideEl.innerHTML = blocks.map(function (block) {
+        toggle.hidden = false
+        asideEl.innerHTML = useful.map(function (block) {
             return '<section class="aside__block"><p class="aside__title">' + esc(block.title) + '</p>' + block.html + '</section>'
         }).join('')
     }
@@ -504,75 +533,109 @@
         return '<ul>' + items.map(function (text) { return '<li>' + esc(text) + '</li>' }).join('') + '</ul>'
     }
 
+    /**
+     * A list of internal links.
+     * @param items - [{ label, hash }].
+     * @returns html.
+     */
+    function ulLinks(items) {
+        if (items == null || items.length === 0) return ''
+        return '<ul>' + items.map(function (item) {
+            return '<li><a href="' + esc(href(item.hash)) + '">' + esc(item.label) + '</a></li>'
+        }).join('') + '</ul>'
+    }
+
     /* ── shared blocks ─────────────────────────────────────────────── */
 
     /**
-     * A code block with a copy control.
+     * A code block with a copy control and an optional fold.
+     *
+     * Source is folded by default on component pages: an electronic manual reads
+     * best when the specimen and its rationale come first and the listing is
+     * available rather than mandatory.
      * @param label - caption.
      * @param code - source text.
+     * @param options - { folded }.
      * @returns html.
      */
-    function codeBlock(label, code) {
-        return '<div class="code">'
+    function codeBlock(label, code, options) {
+        var folded = options !== undefined && options.folded === true
+        return '<div class="code"' + (folded ? ' data-fold="true"' : '') + '>'
             + '<div class="code__head"><span>' + esc(label) + '</span>'
-            + '<button class="copy" type="button" data-copy>' + esc(t('actions.copy')) + '</button></div>'
+            + '<span class="code__actions">'
+            + (folded ? '<button class="code__toggle" type="button" data-fold-toggle>' + esc(t('actions.expand')) + '</button>' : '')
+            + '<button class="copy" type="button" data-copy>' + esc(t('actions.copy')) + '</button>'
+            + '</span></div>'
             + '<pre><code>' + esc(code) + '</code></pre>'
             + '</div>'
+    }
+
+    /* ── specimens ─────────────────────────────────────────────────── */
+
+    /** Demo documents for the current render, keyed by the stage that hosts them. */
+    var DEMOS = {}
+    var demoSeq = 0
+
+    /**
+     * Rewrite a standalone demo document so it survives inside a shadow root.
+     *
+     * A demo is authored as a complete HTML page (`:root` tokens, a `body` box),
+     * and neither selector matches anything inside a shadow tree — so the tokens
+     * would be lost and the component would render unstyled. Both become `:host`,
+     * which is the shadow tree's equivalent of "the element that contains us".
+     * @param demoHtml - the demo document.
+     * @returns markup suitable for `shadowRoot.innerHTML`.
+     */
+    function toShadowMarkup(demoHtml) {
+        /* The boundary guard `[^\w<>/-]` matters: without it the tag name in
+         * `<html lang="zh-CN">` is rewritten too, and the demo then renders a
+         * literal `<:host lang="zh-CN">` line above its content. A selector is
+         * only a selector when it is followed by `{` or `,`. */
+        return String(demoHtml).replace(/(^|[^\w<>/-])(:root|html|body)(?=\s*[,{])/gu, function (_m, prefix) {
+            return prefix + ':host'
+        })
     }
 
     /**
      * A specimen stage holding a live demo.
      *
-     * The frame is deliberately NOT a fixed height: a fixed height would give the
-     * page a scrollbar inside a scrollbar. `mountFrames` measures the demo and
-     * grows the frame, so the reader scrolls once.
+     * The demo renders into a **shadow root**, not an iframe. An iframe was the
+     * obvious choice until the site was opened from disk: under `file://` every
+     * document is its own opaque origin, so the parent may not read the frame's
+     * height nor measure its content, and the preview silently degrades. A shadow
+     * root needs no measuring — the content participates in normal layout — and
+     * it still isolates the demo's styles from the page.
      * @param title - caption.
      * @param demoHtml - the demo document.
      * @returns html.
      */
     function specimen(title, demoHtml) {
         if (demoHtml == null || demoHtml === '') return ''
+        var id = 'demo-' + (demoSeq++)
+        DEMOS[id] = demoHtml
         return '<div class="specimen">'
             + '<p class="specimen__label"><span>' + esc(title) + '</span></p>'
-            + '<iframe class="specimen__frame" title="' + esc(title) + '" sandbox="allow-same-origin" srcdoc="' + esc(demoHtml) + '"></iframe>'
+            + '<div class="specimen__stage" data-demo-id="' + id + '"></div>'
             + '</div>'
     }
 
     /**
-     * Size every specimen frame to its own content.
+     * Mount every staged demo into its own shadow root.
      * @param root - subtree to scan.
      */
-    function mountFrames(root) {
-        Array.prototype.forEach.call(root.querySelectorAll('.specimen__frame'), function (frame) {
-            var fit = function () {
-                try {
-                    var doc = frame.contentDocument
-                    if (doc === null || doc === undefined) return
-                    var height = Math.max(
-                        doc.documentElement ? doc.documentElement.scrollHeight : 0,
-                        doc.body ? doc.body.scrollHeight : 0,
-                    )
-                    if (height > 0) frame.style.height = height + 'px'
-                } catch (e) { /* not measurable yet */ }
-            }
-            frame.addEventListener('load', fit)
-            setTimeout(fit, 80)
-            setTimeout(fit, 320)
-        })
-    }
-
-    /** Re-measure every live specimen after a viewport change. */
-    function refitFrames() {
-        Array.prototype.forEach.call(document.querySelectorAll('.specimen__frame'), function (frame) {
-            try {
-                var doc = frame.contentDocument
-                if (doc === null) return
-                var height = Math.max(
-                    doc.documentElement ? doc.documentElement.scrollHeight : 0,
-                    doc.body ? doc.body.scrollHeight : 0,
-                )
-                if (height > 0) frame.style.height = height + 'px'
-            } catch (e) { /* ignore */ }
+    function mountDemos(root) {
+        Array.prototype.forEach.call(root.querySelectorAll('[data-demo-id]'), function (host) {
+            var html = DEMOS[host.getAttribute('data-demo-id')]
+            if (html === undefined) return
+            var shadow = host.attachShadow({ mode: 'open' })
+            /* The first rule is the site's, the rest is the demo's own document:
+             * both themes are already resolved into `--dsw-*` on the page, so the
+             * specimen follows the page theme without a second token set. */
+            shadow.innerHTML = '<style>'
+                + ':host{display:block;font-family:var(--site-font);font-size:var(--site-text-body);color:var(--site-label);background:var(--site-bg-stage);border-radius:var(--site-radius-s);overflow:hidden}'
+                + ':host *{box-sizing:border-box}'
+                + '</style>'
+                + toShadowMarkup(html)
         })
     }
 
@@ -584,6 +647,30 @@
      */
     function badge(text, tone) {
         return '<span class="badge badge--' + tone + '">' + esc(text) + '</span>'
+    }
+
+    /**
+     * A breadcrumb trail with a back control.
+     *
+     * Every drill-down page keeps a visible position and one-click way back: a
+     * manual that only moves forward is a manual people get lost in.
+     * @param items - [{ label, hash }], the last being the current page.
+     * @param backHref - route the back control returns to.
+     * @returns html.
+     */
+    function crumbs(items, backHref) {
+        return '<nav class="crumbs" aria-label="breadcrumb">'
+            + (backHref === undefined
+                ? ''
+                : '<button class="crumbs__back" type="button" data-back="' + esc(backHref) + '" data-tip="' + esc(t('actions.back')) + '">'
+                  + iconSvg('chevron-left') + '</button>')
+            + items.map(function (item, i) {
+                if (i === items.length - 1 || item.hash === undefined) {
+                    return '<span class="crumbs__current">' + esc(item.label) + '</span>'
+                }
+                return '<a href="' + esc(href(item.hash)) + '">' + esc(item.label) + '</a><span class="crumbs__sep">/</span>'
+            }).join('')
+            + '</nav>'
     }
 
     /* ── motion bench ──────────────────────────────────────────────── */
@@ -799,21 +886,36 @@
         var spec = SPECS.filter(function (s) { return s.id === id })[0]
         if (spec == null) { pageNotFound(); return }
 
-        var headings = []
-        var re = /<h3>([^<]+)<\/h3>/gu
+        var outline = []
+        var re = /<h([23]) id="([^"]+)">([^<]*)<\/h\1>/gu
         var m
-        while ((m = re.exec(spec.html)) !== null) headings.push(m[1])
+        while ((m = re.exec(spec.html)) !== null) outline.push({ level: Number(m[1]), id: m[2], text: m[3] })
+
+        var siblings = SPECS.filter(function (s) { return s.group === spec.group && s.id !== spec.id })
 
         mainEl.innerHTML = '<div class="main-inner">'
+            + crumbs([{ label: t('spec.title'), hash: '/spec' }, { label: specTitle(spec) }], '/spec')
             + (LANG === 'en' ? '<div class="callout"><span class="callout__mark">i</span><div><p>' + esc(t('spec.chineseOnly')) + '</p></div></div>' : '')
             + (spec.id === '40-motion' ? motionLab() : '')
             + '<article class="prose">' + spec.html + '</article></div>'
 
+        /* The right column carries what you need *while reading this document*:
+         * where you can jump to inside it, and what to read next. The file name
+         * and character count are provenance, not orientation, so they live in
+         * the repository rather than on screen. */
         renderAside([
-            { title: t('spec.fileLabel'), html: '<dl><dt>' + esc(t('spec.fileLabel')) + '</dt><dd>' + esc(spec.file) + '</dd>'
-                + '<dt>' + esc(t('spec.sizeLabel')) + '</dt><dd>' + spec.chars + '</dd></dl>' },
-            headings.length > 0 ? { title: t('spec.sectionsLabel'), html: ul(headings) } : null,
-            { title: t('spec.relatedNote'), html: p(t('spec.fileLabel')) },
+            outline.length > 0 ? {
+                title: t('spec.outline'),
+                html: '<ul class="outline">' + outline.map(function (item) {
+                    return '<li class="outline__item outline__item--h' + item.level + '">'
+                        + '<a href="' + esc(href('/spec/' + spec.id)) + '" data-jump="' + esc(item.id) + '">'
+                        + esc(item.text) + '</a></li>'
+                }).join('') + '</ul>',
+            } : null,
+            siblings.length > 0 ? {
+                title: t('index.spec'),
+                html: ulLinks(siblings.map(function (s) { return { label: specTitle(s), hash: '/spec/' + s.id } })),
+            } : null,
         ].filter(Boolean))
     }
 
@@ -846,7 +948,9 @@
 
         if (isCategory && !isComponent) {
             var list = COMPONENTS.filter(function (c) { return (c.category || 'uncategorized') === arg })
-            mainEl.innerHTML = '<div class="main-inner"><div class="hero"><h1 class="hero__title">' + esc(categoryLabel(arg)) + '</h1>'
+            mainEl.innerHTML = '<div class="main-inner">'
+                + crumbs([{ label: t('components.title'), hash: '/components' }, { label: categoryLabel(arg) }], '/components')
+                + '<div class="hero"><h1 class="hero__title">' + esc(categoryLabel(arg)) + '</h1>'
                 + '<p class="hero__lede">' + list.length + ' ' + esc(t('components.count')) + '</p></div>'
                 + '<div class="cards">' + list.map(componentCard).join('') + '</div></div>'
             renderAside([{ title: t('components.title'), html: p(t('components.usage')) }])
@@ -857,13 +961,18 @@
         if (c == null) { pageNotFound(); return }
 
         mainEl.innerHTML = '<div class="main-inner">'
+            + crumbs([
+                { label: t('components.title'), hash: '/components' },
+                { label: categoryLabel(c.category), hash: '/components/' + (c.category || 'uncategorized') },
+                { label: c.name },
+            ], '/components/' + (c.category || 'uncategorized'))
             + '<div class="hero"><h1 class="hero__title">' + esc(c.name) + '</h1>'
             + '<p class="hero__lede">' + esc(toPlain(c.summary)) + '</p></div>'
             + (LANG === 'en' ? '<div class="callout"><span class="callout__mark">i</span><div><p>' + esc(t('components.chineseOnly')) + '</p></div></div>' : '')
             + specimen(t('components.preview'), c.demo)
-            + (c.tsx ? codeBlock((c.path || '') + 'index.tsx', c.tsx) : '')
-            + (c.css ? codeBlock((c.path || '') + (c.id || 'component').toLowerCase() + '.module.css', c.css) : '')
             + (c.readmeHtml ? '<article class="prose">' + c.readmeHtml + '</article>' : '')
+            + (c.tsx ? codeBlock((c.path || '') + 'index.tsx', c.tsx, { folded: true }) : '')
+            + (c.css ? codeBlock((c.path || '') + (c.id || 'component').toLowerCase() + '.module.css', c.css, { folded: true }) : '')
             + '</div>'
 
         renderAside([
@@ -964,7 +1073,7 @@
             + '<section class="section"><div class="section__head"><h2 class="section__title">' + esc(t('icons.tableTitle', { n: items.length })) + '</h2>'
             + '<span class="section__hint">' + (query === '' ? esc(t('icons.order')) : esc(t('seats.filter')) + '：' + esc(query)) + '</span></div>'
             + '<div class="icons">' + items.map(function (i) {
-                return '<button class="icon-cell" type="button" data-icon-name="' + esc(i.name) + '" title="' + esc(i.name) + '">'
+                return '<button class="icon-cell" type="button" data-icon-name="' + esc(i.name) + '" data-tip="' + esc(i.name) + '">'
                     + '<span style="display:block;width:22px;height:22px">' + (i.svg || '') + '</span>'
                     + '<span class="icon-cell__name">' + esc(i.name.replace(/^ic_ds_/u, '')) + '</span>'
                     + '</button>'
@@ -1046,6 +1155,8 @@
 
     /** Render the current route. */
     function render() {
+        DEMOS = {}
+        demoSeq = 0
         var r = route()
         var path = r.path
         var parts = path.split('/').filter(Boolean)
@@ -1070,6 +1181,26 @@
                 copy(pre.textContent, button)
             })
         })
+        Array.prototype.forEach.call(mainEl.querySelectorAll('[data-fold-toggle]'), function (button) {
+            button.addEventListener('click', function () {
+                var code = button.closest('.code')
+                var folded = code.getAttribute('data-fold') === 'true'
+                code.setAttribute('data-fold', folded ? 'false' : 'true')
+                button.textContent = folded ? t('actions.collapse') : t('actions.expand')
+            })
+        })
+        Array.prototype.forEach.call(mainEl.querySelectorAll('[data-back]'), function (button) {
+            button.addEventListener('click', function () {
+                location.hash = '#' + button.getAttribute('data-back')
+            })
+        })
+        Array.prototype.forEach.call(asideEl.querySelectorAll('[data-jump]'), function (node) {
+            node.addEventListener('click', function (event) {
+                event.preventDefault()
+                var target = document.getElementById(node.getAttribute('data-jump'))
+                if (target !== null) target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            })
+        })
         Array.prototype.forEach.call(mainEl.querySelectorAll('.icon-cell'), function (cell) {
             cell.addEventListener('click', function () {
                 var name = cell.getAttribute('data-icon-name')
@@ -1080,7 +1211,7 @@
             })
         })
 
-        mountFrames(mainEl)
+        mountDemos(mainEl)
         mountMotionLab()
         mainEl.scrollTop = 0
         mainEl.focus({ preventScroll: true })
@@ -1248,12 +1379,70 @@
         })
         queryEl.placeholder = t('search.placeholder')
         queryEl.setAttribute('aria-label', t('search.placeholder'))
-        document.getElementById('navToggle').title = t('actions.nav')
-        document.getElementById('navToggle').setAttribute('aria-label', t('actions.nav'))
-        document.getElementById('asideToggle').title = t('actions.aside')
-        document.getElementById('asideToggle').setAttribute('aria-label', t('actions.aside'))
-        document.getElementById('theme').title = t('actions.theme')
-        document.getElementById('theme').setAttribute('aria-label', t('actions.theme'))
+        setTip('navToggle', t('actions.nav'))
+        setTip('asideToggle', t('actions.aside'))
+        setTip('theme', t('actions.theme'))
+    }
+
+    /**
+     * Give a control its accessible name and its self-drawn tooltip.
+     *
+     * The native `title` bubble is browser chrome — its shape, font, delay and
+     * animation belong to the browser, not to this page — so it is never used.
+     * `data-tip` feeds a bubble drawn with the harness's own tooltip geometry
+     * (`padding 3/7, radius 8, 13px/20`), which is what this repository asks of
+     * plugins and therefore what it has to do itself.
+     * @param id - element id.
+     * @param text - label.
+     */
+    function setTip(id, text) {
+        var node = document.getElementById(id)
+        node.setAttribute('data-tip', text)
+        node.setAttribute('aria-label', text)
+    }
+
+    /** Mount the shared tooltip bubble and its listeners. */
+    function initTooltips() {
+        var tip = document.createElement('div')
+        tip.className = 'tip'
+        tip.setAttribute('role', 'tooltip')
+        document.body.appendChild(tip)
+
+        /**
+         * Show the bubble under a control.
+         * @param target - element carrying `data-tip`.
+         */
+        var show = function (target) {
+            var text = target.getAttribute('data-tip')
+            if (text === null || text === '') return
+            tip.textContent = text
+            tip.setAttribute('data-open', 'true')
+            var rect = target.getBoundingClientRect()
+            var left = Math.min(
+                Math.max(8, rect.left + rect.width / 2 - tip.offsetWidth / 2),
+                window.innerWidth - tip.offsetWidth - 8,
+            )
+            tip.style.left = left + 'px'
+            tip.style.top = (rect.bottom + 6) + 'px'
+        }
+        var hide = function () { tip.setAttribute('data-open', 'false') }
+        var closest = function (event) {
+            return event.target && event.target.closest ? event.target.closest('[data-tip]') : null
+        }
+
+        document.addEventListener('mouseover', function (event) {
+            var target = closest(event)
+            if (target !== null) show(target)
+        })
+        document.addEventListener('mouseout', function (event) {
+            if (closest(event) !== null) hide()
+        })
+        document.addEventListener('focusin', function (event) {
+            var target = closest(event)
+            if (target !== null) show(target)
+        })
+        document.addEventListener('focusout', hide)
+        window.addEventListener('scroll', hide, true)
     }
 
     /* ── boot ──────────────────────────────────────────────────────── */
@@ -1267,6 +1456,7 @@
     setColumn('nav', load('dshdr-nav', 'shown') === 'shown')
     setColumn('aside', load('dshdr-aside', 'shown') === 'shown')
     initResizers()
+    initTooltips()
 
     document.getElementById('navToggle').addEventListener('click', function () {
         setColumn('nav', shell.getAttribute('data-nav') !== 'shown')
@@ -1287,7 +1477,6 @@
     applyStaticText()
 
     window.addEventListener('hashchange', render)
-    window.addEventListener('resize', refitFrames)
 
     if (ICONS.length === 0 && SEATS.length === 0 && COMPONENTS.length === 0) {
         mainEl.innerHTML = '<div class="main-inner"><div class="hero"><h1 class="hero__title">Data not generated yet</h1>'

@@ -14,36 +14,36 @@
 </head>
 <body>
     <header class="topbar">
-        <a class="brand" href="#/">
-            <img class="brand__mark" src="assets/fish.svg" alt="DeepSeek">
-            <span class="brand__name">DeepSeek Harness</span>
-            <span class="brand__divider"></span>
-            <span class="brand__product" data-t="brand.product">设计资源</span>
-        </a>
-
         <button class="icon-button" id="navToggle" type="button" aria-pressed="true"
-                title="显示或隐藏导航栏" aria-label="显示或隐藏导航栏">
+                data-tip="显示或隐藏导航栏" aria-label="显示或隐藏导航栏">
             <span data-icon="panel-left"></span>
         </button>
 
-        <nav class="topbar__nav" id="topnav" aria-label="快捷入口"></nav>
+        <div class="topbar__center">
+            <a class="brand" href="#/">
+                <img class="brand__mark" src="assets/fish.svg" alt="DeepSeek">
+                <span class="brand__name">DeepSeek Harness</span>
+                <span class="brand__divider"></span>
+                <span class="brand__product" data-t="brand.product">设计资源</span>
+            </a>
 
-        <span class="topbar__spacer"></span>
+            <nav class="topbar__nav" id="topnav" aria-label="快捷入口"></nav>
 
-        <div class="search">
-            <span class="search__icon" data-icon="search"></span>
-            <input id="q" type="search" autocomplete="off" aria-label="搜索" placeholder="搜索组件、座位、规范、图标…">
-            <span class="search__hint" id="searchHint">Ctrl K</span>
+            <div class="search">
+                <span class="search__icon" data-icon="search"></span>
+                <input id="q" type="search" autocomplete="off" aria-label="搜索" placeholder="搜索组件、座位、规范、图标…">
+                <span class="search__hint" id="searchHint">Ctrl K</span>
+            </div>
+
+            <div class="segmented" id="lang" role="tablist" aria-label="语言"></div>
+
+            <button class="icon-button" id="theme" type="button" data-tip="切换浅色 / 深色" aria-label="切换浅色 / 深色">
+                <span id="themeIcon"></span>
+            </button>
         </div>
 
-        <div class="segmented" id="lang" role="tablist" aria-label="语言"></div>
-
-        <button class="icon-button" id="theme" type="button" title="切换浅色 / 深色" aria-label="切换浅色 / 深色">
-            <span id="themeIcon"></span>
-        </button>
-
         <button class="icon-button" id="asideToggle" type="button" aria-pressed="true"
-                title="显示或隐藏说明栏" aria-label="显示或隐藏说明栏">
+                data-tip="显示或隐藏说明栏" aria-label="显示或隐藏说明栏">
             <span data-icon="panel-right"></span>
         </button>
     </header>
@@ -62,7 +62,7 @@
         <aside class="col col--aside" id="colAside">
             <div class="resizer" data-resize="aside" role="separator" aria-orientation="vertical"
                  tabindex="0" aria-label="调整说明栏宽度"></div>
-            <div class="col__scroll" id="aside" aria-label="说明"></div>
+            <div class="col__scroll aside" id="aside" aria-label="说明"></div>
         </aside>
     </div>
 

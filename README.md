@@ -66,7 +66,10 @@ The site follows this repository's own spec, so it is the spec's first implement
 - **either rail collapses entirely**, with an animated open/close;
 - **Chinese and English** interface dictionaries; the spec prose and component docs are Chinese-only today and say so in English mode;
 - **light and dark are both authored** — a design that survives light mode and collapses in dark mode counts as a defect here;
-- **an operable motion bench** on the motion spec page: compare the five durations and both curves side by side, which is the one thing paper cannot do and an HTML reference can.
+- **an operable motion bench** on the motion spec page: compare the five durations and both curves side by side, which is the one thing paper cannot do and an HTML reference can;
+- **specimens render into a shadow root, not an iframe**: under `file://` every document is its own opaque origin, so a parent cannot read a frame's height or measure its content and the preview degrades silently; a shadow root isolates the demo's styles and needs no measuring because it takes part in normal layout;
+- **tooltips are self-drawn** — not the browser's bubble, but the harness's own geometry (`padding 3/7`, `radius 8`, `13px/20`);
+- **breadcrumbs and an on-this-page outline**: every drill-down page has a one-click way back, the rationale column lists jumpable sections, and a page carrying only metadata collapses that column instead of padding it.
 
 ## Regenerating the data
 

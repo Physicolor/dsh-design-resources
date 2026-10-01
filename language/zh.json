@@ -13,7 +13,10 @@
         "nav": "显示或隐藏导航栏",
         "aside": "显示或隐藏说明栏",
         "copy": "复制",
-        "copied": "已复制"
+        "copied": "已复制",
+        "back": "返回上一级",
+        "expand": "展开源码",
+        "collapse": "收起源码"
     },
     "index": {
         "overview": "概览",
@@ -85,6 +88,7 @@
         "fileLabel": "文件",
         "sizeLabel": "字数",
         "sectionsLabel": "小节",
+        "outline": "本页目录",
         "relatedNote": "规范条目中的可检测项，对应自检清单与审计器规则。",
         "chineseOnly": "本文档目前只有中文版。"
     },

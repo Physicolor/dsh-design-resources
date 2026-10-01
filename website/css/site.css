@@ -61,11 +61,14 @@ button { font: inherit; color: inherit; }
     position: fixed;
     inset: 0 0 auto;
     z-index: 40;
-    display: flex;
+    /* two controls pinned to the edges, everything else centred between them
+     * with a fixed gap, so the middle never drifts as the page changes */
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr) 34px;
     align-items: center;
-    gap: var(--site-s4);
+    gap: var(--site-s5);
     height: var(--site-topbar);
-    padding: 0 var(--site-s3) 0 var(--site-s4);
+    padding: 0 var(--site-s4);
     background: var(--site-glass);
     backdrop-filter: blur(28px) saturate(190%);
     -webkit-backdrop-filter: blur(28px) saturate(190%);
@@ -83,11 +86,19 @@ button { font: inherit; color: inherit; }
 
 .topbar > * { position: relative; z-index: 1; }
 
+.topbar__center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--site-s5);
+    min-width: 0;
+}
+
 .brand { display: flex; align-items: center; gap: 10px; flex: none; }
 .brand__mark { display: block; width: 24px; height: auto; color: var(--site-label); }
-.brand__name { font-size: var(--site-text-card); font-weight: 600; letter-spacing: -0.01em; }
+.brand__name { font-size: var(--site-text-card); font-weight: 600; letter-spacing: -0.01em; white-space: nowrap; }
 .brand__divider { width: 1px; height: 16px; background: var(--site-line); }
-.brand__product { font-size: var(--site-text-note); color: var(--site-label-2); }
+.brand__product { font-size: var(--site-text-note); color: var(--site-label-2); white-space: nowrap; }
 
 .topbar__nav { display: flex; gap: var(--site-s4); }
 .topbar__nav a {
@@ -97,8 +108,6 @@ button { font: inherit; color: inherit; }
     transition: color var(--site-dur-fast) var(--site-ease);
 }
 .topbar__nav a:hover { color: var(--site-label); }
-
-.topbar__spacer { flex: 1; }
 
 /* ── search ────────────────────────────────────────────────────────── */
 
@@ -228,9 +237,25 @@ button { font: inherit; color: inherit; }
     padding-top: calc(var(--site-topbar) + var(--site-s2));
     padding-bottom: var(--site-s8);
 }
-.col--nav .col__scroll { padding-left: 6px; padding-right: 6px; }
-.col--aside .col__scroll { padding-left: 6px; padding-right: 6px; }
-.col--main .col__scroll { padding-left: var(--site-s7); padding-right: var(--site-s7); }
+.col--nav .col__scroll {
+    padding-left: var(--site-s3);
+    padding-right: var(--site-s3);
+    padding-top: calc(var(--site-topbar) + var(--site-s4));
+}
+.col--aside .col__scroll {
+    /* the rationale column is prose, not a list of rows: it needs real side
+     * padding, or every paragraph starts flush against the divider */
+    padding-left: var(--site-s4);
+    padding-right: var(--site-s4);
+    padding-top: calc(var(--site-topbar) + var(--site-s4));
+}
+.col--main .col__scroll {
+    padding-left: var(--site-s6);
+    padding-right: var(--site-s6);
+    /* the top inset matches the side inset, so the content block reads as one
+     * rectangle rather than as a column with a different margin upstairs */
+    padding-top: calc(var(--site-topbar) + var(--site-s6));
+}
 
 /* a collapsed column must not keep its contents focusable */
 .col[data-collapsed='true'] .col__scroll { visibility: hidden; }
@@ -343,13 +368,14 @@ body[data-resizing] { cursor: col-resize; user-select: none; }
 
 /* ── main ──────────────────────────────────────────────────────────── */
 
-.main-inner { max-width: 880px; }
+.main-inner { max-width: 920px; margin: 0 auto; }
 
 .hero { margin-bottom: var(--site-s7); }
 .hero__eyebrow {
-    margin: 0 0 var(--site-s2);
-    font-size: var(--site-text-note);
+    margin: 0 0 var(--site-s3);
+    font-size: 15px;
     font-weight: 600;
+    letter-spacing: 0.01em;
     color: var(--site-accent);
 }
 .hero__title {
@@ -417,15 +443,11 @@ a.card:hover { transform: translateY(-2px); box-shadow: var(--site-shadow); bord
     color: var(--site-accent-ink);
     cursor: pointer;
 }
-.specimen__frame {
+.specimen__stage {
     display: block;
-    width: 100%;
-    min-height: 80px;
-    border: 0;
-    background: var(--site-bg-stage);
     border-radius: var(--site-radius-s);
     overflow: hidden;
-    transition: height var(--site-dur) var(--site-ease);
+    /* the shadow root paints its own surface and background */
 }
 
 /* ── icon grid ─────────────────────────────────────────────────────── */
@@ -495,7 +517,8 @@ code, .mono { font-family: var(--site-font-mono); font-size: 12px; }
 
 /* ── aside (right) ─────────────────────────────────────────────────── */
 
-.aside__block { margin-bottom: var(--site-s5); }
+.aside__block { margin-bottom: var(--site-s6); }
+.aside__block:last-child { margin-bottom: 0; }
 .aside__title {
     margin: 0 0 var(--site-s2);
     font-size: var(--site-text-micro);
@@ -510,6 +533,16 @@ code, .mono { font-family: var(--site-font-mono); font-size: 12px; }
 .aside dl { margin: 0; font-size: var(--site-text-note); }
 .aside dt { margin-top: var(--site-s2); font-size: var(--site-text-micro); color: var(--site-label-3); }
 .aside dd { margin: 2px 0 0; color: var(--site-label); font-family: var(--site-font-mono); font-size: 12px; word-break: break-all; }
+.aside a { color: var(--site-accent-ink); }
+.aside a:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+/* on-this-page outline in the rationale column */
+.outline { list-style: none; margin: 0; padding: 0; font-size: var(--site-text-note); }
+.outline__item + .outline__item { margin-top: 4px; }
+.outline__item a { display: block; padding: 1px 0; color: var(--site-label-2); }
+.outline__item a:hover { color: var(--site-label); text-decoration: none; }
+.outline__item--h3 { padding-left: var(--site-s3); }
+.outline__item--h3 a { color: var(--site-label-3); }
 
 /* ── code ──────────────────────────────────────────────────────────── */
 
@@ -559,6 +592,8 @@ code, .mono { font-family: var(--site-font-mono); font-size: 12px; }
 /* ── prose (spec documents) ────────────────────────────────────────── */
 
 .prose { font-size: var(--site-text-body); line-height: 1.72; color: var(--site-label); }
+/* jumped-to headings must clear the glass bar, or the outline lands you under it */
+.prose h2, .prose h3 { scroll-margin-top: calc(var(--site-topbar) + var(--site-s4)); }
 .prose h1 { margin: 0 0 var(--site-s4); font-size: var(--site-text-title); font-weight: 600; letter-spacing: -0.02em; }
 .prose h2 { margin: var(--site-s6) 0 var(--site-s3); font-size: var(--site-text-section); font-weight: 600; }
 .prose h3 { margin: var(--site-s5) 0 var(--site-s2); font-size: var(--site-text-card); font-weight: 600; }
@@ -684,6 +719,87 @@ code, .mono { font-family: var(--site-font-mono); font-size: 12px; }
     border-radius: 8px;
     background: var(--site-accent);
     will-change: transform;
+}
+
+/* ── breadcrumb + back ─────────────────────────────────────────────── */
+
+.crumbs {
+    display: flex;
+    align-items: center;
+    gap: var(--site-s2);
+    margin-bottom: var(--site-s4);
+    font-size: var(--site-text-note);
+    color: var(--site-label-3);
+}
+.crumbs__back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    margin-right: 2px;
+    border: 1px solid var(--site-line-soft);
+    border-radius: 8px;
+    background: var(--site-bg-raised);
+    color: var(--site-label-2);
+    cursor: pointer;
+    transition: background var(--site-dur-fast) var(--site-ease), color var(--site-dur-fast) var(--site-ease);
+}
+.crumbs__back:hover { background: var(--site-bg-subtle); color: var(--site-label); }
+.crumbs__back svg { width: 14px; height: 14px; display: block; }
+.crumbs a { color: var(--site-label-2); }
+.crumbs a:hover { color: var(--site-label); }
+.crumbs__current { color: var(--site-label); font-weight: 500; }
+
+/* ── tooltips: the harness's own bubble, not the browser's ─────────── */
+
+.tip {
+    position: fixed;
+    z-index: 60;
+    max-width: 50vw;
+    padding: 3px 7px;
+    border-radius: 8px;
+    background: var(--site-label);
+    color: var(--site-bg);
+    font-size: 13px;
+    line-height: 20px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-2px);
+    transition: opacity var(--site-dur-fast) var(--site-ease), transform var(--site-dur-fast) var(--site-ease);
+}
+.tip[data-open='true'] { opacity: 1; transform: translateY(0); }
+
+/* ── collapsible source ────────────────────────────────────────────── */
+
+.code[data-fold='true'] pre { display: none; }
+.code__actions { display: flex; gap: 6px; }
+.code__toggle {
+    height: 22px;
+    padding: 0 8px;
+    background: transparent;
+    border: 1px solid var(--site-line);
+    border-radius: 6px;
+    font-size: var(--site-text-micro);
+    color: var(--site-label-2);
+    cursor: pointer;
+}
+.code__toggle:hover { background: var(--site-bg-subtle); color: var(--site-label); }
+
+/* ── nested nav entry: the item you are actually reading ───────────── */
+
+.index__link { position: relative; }
+.index__link--sub { padding-left: 24px; font-size: 12.5px; }
+.index__link--sub::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    width: 1px;
+    height: 14px;
+    margin-top: -7px;
+    background: var(--site-line);
 }
 
 /* ── responsive ────────────────────────────────────────────────────── */

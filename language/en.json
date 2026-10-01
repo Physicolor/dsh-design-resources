@@ -13,7 +13,10 @@
         "nav": "Show or hide the index",
         "aside": "Show or hide the rationale",
         "copy": "Copy",
-        "copied": "Copied"
+        "copied": "Copied",
+        "back": "Back",
+        "expand": "Show source",
+        "collapse": "Hide source"
     },
     "index": {
         "overview": "Overview",
@@ -85,6 +88,7 @@
         "fileLabel": "File",
         "sizeLabel": "Size",
         "sectionsLabel": "Sections",
+        "outline": "On this page",
         "relatedNote": "Checkable clauses map to the checklist and to the auditor's rules.",
         "chineseOnly": "This document is currently Chinese-only."
     },

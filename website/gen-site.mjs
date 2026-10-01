@@ -65,12 +65,17 @@ function inline(s) {
   return out
 }
 
+/** Monotonic heading counter, so every heading gets a stable in-document anchor. */
+let headingSeq = 0
+
 /**
  * Convert the repository's markdown to HTML.
  *
  * Deliberately small: headings, tables, lists, fences, quotes, rules, inline
  * spans. It covers what `spec/` and the component READMEs actually use, and it
  * fails visibly (renders as text) rather than silently mangling structure.
+ * Headings carry an `id` because the site builds "on this page" navigation from
+ * them — a document outline you cannot click is decoration.
  * @param md - markdown source.
  * @returns HTML.
  */
@@ -95,7 +100,8 @@ function mdToHtml(md) {
     const heading = /^(#{1,4})\s+(.*)$/u.exec(line)
     if (heading !== null) {
       const level = heading[1].length
-      html.push(`<h${level}>${inline(heading[2])}</h${level}>`)
+      headingSeq += 1
+      html.push(`<h${level} id="h${headingSeq}">${inline(heading[2])}</h${level}>`)
       i++
       continue
     }
