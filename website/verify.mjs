@@ -377,7 +377,7 @@ if (browserPath === null) {
                 side: side ? side.offsetWidth : -1,
                 head: head ? head.offsetHeight : -1,
                 ratio: side ? Math.round(side.offsetWidth / 1570 * 1000) / 1000 : -1,
-                scale: stage ? Math.round((stage.getBoundingClientRect().height / 905) * 1000) / 1000 : -1,
+                scale: stage ? Math.round((stage.getBoundingClientRect().height / 1010) * 1000) / 1000 : -1,
                 sessions: sr.querySelectorAll('.sh-session').length
             };
         }

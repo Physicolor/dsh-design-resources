@@ -2,14 +2,16 @@
   输入区与两侧留白。
 
   同一个复刻界面，焦点落在输入区：卡上方的 dock、卡内的浮层、卡下方的 dock
-  都被标出来——它们不是"剩下的空间"，而是有名字、有用途的座位。
+  在这里都能看到——它们不是「剩下的空间」，而是有名字、有用途的座位。
 
-  几何来源：docs/reference/geometry.json（输入卡 780×114、圆角 28px）。
-  观感对照 docs/reference/01-hero.png 与 07-composer.png。
+  说明方式：座位名字放在**画面外面**（图注与规范正文），画面内部只用产品自己
+  有的元素。先前在卡片里画一圈蓝色虚线框去标座位，那是本仓库编出来的视觉
+  语言，读者不认识。
 
-  说明：依赖站点脚本，只在资源站内嵌时渲染。
+  几何来源：docs/reference/geometry.json；观感对照 docs/reference/01-hero.png。
+  依赖站点脚本，只在资源站内嵌时渲染。
 -->
-<div data-shell='{"hover":true,"highlight":"composer","docks":true,"right":"closed"}'>
+<div data-shell='{"hover":true,"highlight":"composer","right":"closed"}'>
     <p style="margin:0;padding:24px;font:14px/1.6 sans-serif;color:#81858c">
         此预览需要在 DeepSeek Design Resources 站内查看（它是活的界面，不是图片）。
     </p>

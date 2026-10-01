@@ -89,9 +89,9 @@
 .sh-stage {
     position: relative;
     width: 100%;
-    max-width: 760px;                     /* 复刻不必撑满阅读栏 */
-    margin: 0 auto;
-    aspect-ratio: 1570 / 905;
+    /* 视口比例用 1570:1010 而不是采集时的 1570:905——产品的高度取决于窗口有多
+     * 高，这里给一块更高的画布，让复刻把阅读区的垂直空间也用起来。 */
+    aspect-ratio: 1570 / 1010;
     overflow: hidden;
     border-radius: 10px;
 }
@@ -103,7 +103,7 @@
     /* 按采集视口 1:1 作画，再整体缩放。若改成让布局随容器拉伸，280px 的左栏在
      * 窄容器里会变成 31% 而不是产品的 17.8%——那就不是同一个布局了。 */
     width: 1570px;
-    height: 905px;
+    height: 1010px;
     display: flex;
     transform: scale(var(--sh-scale, 1));
     transform-origin: top left;
@@ -466,22 +466,18 @@
 }
 .sh-tools__spacer { flex: 1; }
 
-/* 座位标注条：只在讲输入区纵向结构时出现 */
-.sh-dock {
+/* ── 输入卡下方的状态条：产品自己那一行（轮/步、吞吐、用量、缓存、花费、占用）── */
+
+.sh-status {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
-    width: min(780px, 100%);
-    padding: 5px 12px;
-    font-size: 11px;
-    color: #4d6bfe;
-    background: rgb(77 107 254 / 7%);
-    border: 1px dashed rgb(77 107 254 / 45%);
-    border-radius: 10px;
+    padding-top: 8px;
+    font-size: 12px;
+    color: var(--sh-ink-3);
 }
-.sh-dock--inside { width: auto; margin: 0 12px 4px; }
-.sh-dock__seat { font-family: var(--sh-font-mono); font-weight: 600; white-space: nowrap; }
-.sh-dock__note { color: var(--sh-ink-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sh-status__sep { color: var(--sh-line); }
 .sh-round {
     display: inline-flex;
     align-items: center;

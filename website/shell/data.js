@@ -51,6 +51,10 @@ window.DSHShellData = {
     model: 'DeepSeek V4.1 Flash High',
     permission: '完全权限',
 
+    /* 输入卡下方的状态条 ← 真实界面同一行的内容与顺序（02-session.png）。
+     * 数字是示例值，格式照抄。 */
+    statusLine: ['9 轮 279 步', '283 tok/s', '91M tok', '缓存命中 99%', '≈$0.95', '57%'],
+
     messages: [
         { role: 'user', text: '把这一版接口文档按模块重新组织一下，顺便标出哪些字段是可选的。' },
         {

@@ -2,10 +2,12 @@
  * website/shell/parts/rail-right.js — 右栏
  *
  * 产品自身的右栏（`rightbar`）是**可开合**的：中栏为它让出宽度，收起时宽度
- * 归中栏。这里只画它的骨架与职责说明，内容用中性卡片，不模仿任何插件的面板。
+ * 归中栏。它自己**没有**关闭按钮——开合由会话头部那个按钮负责，栏内只有
+ * tab（`sidebar.right.pane.tab`）与它的标题。先前在这里画了一个关闭按钮，
+ * 那是编出来的。
  *
- * 注意：真实截图里出现的 707px 宽面板是**插件**渲染的（右侧组件栏），
- * 不属于产品自身的右栏，因此这里按官方 `rightbar` 的语义来画。
+ * 注意：真实截图里出现的 707px 宽面板是**插件**渲染的（右侧组件栏），不属于
+ * 产品自身的右栏，因此这里按官方 `rightbar` 的语义来画。
  */
 
 window.DSHShellParts = window.DSHShellParts || {}
@@ -16,7 +18,6 @@ window.DSHShellParts = window.DSHShellParts || {}
  * @returns HTML。
  */
 window.DSHShellParts.railRight = function (ctx) {
-    var icon = ctx.icon
     var esc = ctx.esc
 
     var cards = [
@@ -28,12 +29,8 @@ window.DSHShellParts.railRight = function (ctx) {
     }).join('')
 
     return '<aside class="sh-right" data-region="rightbar">'
-        + '<div class="sh-right__head">'
-        + '<span>右栏</span>'
-        + '<span class="sh-logo__spacer"></span>'
-        + '<button class="sh-icon-button" type="button" data-action="toggle-right" aria-label="收起右栏">'
-        + icon('close') + '</button>'
-        + '</div>'
+        + '<div class="sh-right__head"><span>上下文</span></div>'
         + '<div class="sh-right__body">' + cards + '</div>'
         + '</aside>'
 }
+
