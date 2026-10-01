@@ -1,0 +1,175 @@
+{
+    "meta": { "lang": "zh-CN", "short": "中", "name": "简体中文" },
+    "brand": { "product": "设计资源" },
+    "topnav": { "spec": "规范", "components": "组件", "seats": "座位", "icons": "图标", "tokens": "令牌" },
+    "search": {
+        "placeholder": "搜索组件、座位、规范、图标…",
+        "empty": "没有匹配项",
+        "hint": "按 Ctrl K 聚焦"
+    },
+    "actions": {
+        "theme": "切换浅色 / 深色",
+        "lang": "切换语言",
+        "nav": "显示或隐藏导航栏",
+        "aside": "显示或隐藏说明栏",
+        "copy": "复制",
+        "copied": "已复制"
+    },
+    "index": {
+        "overview": "概览",
+        "spec": "设计规范",
+        "components": "组件源码",
+        "resources": "资源",
+        "home": "设计资源首页",
+        "why": "为什么需要这份规范",
+        "allComponents": "全部组件",
+        "seats": "座位目录",
+        "icons": "官方图标集",
+        "tokens": "设计令牌"
+    },
+    "groups": { "basics": "基础", "visual": "视觉", "quality": "质量" },
+    "categories": {
+        "layout": "布局",
+        "controls": "控件",
+        "surfaces": "容器",
+        "feedback": "反馈",
+        "data-display": "数据展示",
+        "patterns": "页面模式",
+        "brand": "品牌",
+        "uncategorized": "未分类"
+    },
+    "home": {
+        "eyebrow": "DeepSeek Design Resources",
+        "title": "让社区的插件<br>看起来像同一个产品。",
+        "lede": "DeepSeek Harness 为插件提供了技术栈与开发规范，却没有提供设计规范：控件该多大、间距多少、动效多长、图标怎么画、两个插件抢同一个位置时谁优先，都没有裁决依据。这份资源补上这一层——每一条数值都标注来源，每一个组件都能直接拿去用。",
+        "sectionTitle": "仓库里有什么",
+        "sectionHint": "全部由脚本从运行中的 Harness 采集，可重新生成",
+        "cards": {
+            "spec": { "title": "规范", "body": "主页面骨架、座位选择、控件、令牌、动效、图标、可访问性与提交前自检清单。", "note": "先把这一层读完再动手" },
+            "components": { "title": "组件源码", "body": "分类归档、零依赖、只使用官方 token 的 React 实现，附几何来源与使用时机。", "note": "复制即可用" },
+            "seats": { "title": "座位目录", "body": "Harness 声明的每一个 UI 座位：用途、注册契约与遮蔽风险。", "note": "决定你的 UI 该放在哪里" },
+            "icons": { "title": "官方图标集", "body": "从产品自身提取的图标，保持原始路径数据与命名规范。", "note": "别再画第五种关闭按钮" },
+            "tokens": { "title": "设计令牌", "body": "官方语义 token 的浅色与深色取值，直接对照使用。", "note": "颜色不要硬编码" },
+            "why": { "title": "为什么", "body": "官方兼容了技术栈，却没有兼容设计规范——这就是这个仓库存在的原因。", "note": "两分钟读完" }
+        }
+    },
+    "why": {
+        "title": "为什么需要这份规范",
+        "lede": "一句话：官方给了插件能跑起来的技术栈，没有给插件看起来一致的设计规范。",
+        "officialTitle": "官方已经做了什么",
+        "missingTitle": "官方没有做什么",
+        "proofTitle": "这件事有实证",
+        "scopeTitle": "这个仓库不做什么",
+        "items": {
+            "tokens": "一套完整的语义 token：颜色、层级、状态都有官方取值。",
+            "primitives": "一套共享控件原语（按钮、胶囊、标签、开关、输入、菜单、弹窗、提示等），并且明文写着「不要复制已经存在的控件」。",
+            "seats": "一套座位系统：每个座位都标注了用途、注册契约与遮蔽风险。",
+            "icons": "一套图标集，命名与尺寸族都有规律。",
+            "layout": "没有布局规范：一个插件该占用哪个区域、占多大、与会话区怎么协调，没有条文。",
+            "order": "没有摆放契约：座位是 list 类型时，order 该取什么值全靠自觉。",
+            "motion": "没有动效规范：时长与曲线的档位没有统一。",
+            "iconGeometry": "没有图标几何规范：自绘图标该用多粗的描边、怎么对齐，没有依据。",
+            "conflict": "没有冲突裁决：两个插件抢同一个座位、同一段视觉空间时，没有任何机制提示。",
+            "aesthetics": "不评判审美。规范只保证一致与可用，不宣称哪种风格更好看。",
+            "force": "不强制别人改代码。规范是给愿意遵守的人的公共依据。",
+            "invent": "不发明数值。每一条尺寸、间距、时长都标注来源；没有权威依据的地方会明确写出来。"
+        },
+        "overlayLabel": "实测冲突",
+        "closing": "这不是某个插件的错，是缺少规范与检查的必然结果。这份资源做两件事：把该有的规范补上，并让冲突变得可见。"
+    },
+    "spec": {
+        "title": "规范",
+        "lede": "按阅读顺序排列。第一次接触这个生态，建议从主页面骨架与座位选择读起。",
+        "chars": "字",
+        "notFound": "没有这一篇",
+        "fileLabel": "文件",
+        "sizeLabel": "字数",
+        "sectionsLabel": "小节",
+        "relatedNote": "规范条目中的可检测项，对应自检清单与审计器规则。",
+        "chineseOnly": "本文档目前只有中文版。"
+    },
+    "components": {
+        "title": "组件源码",
+        "lede": "每个组件都是零依赖的 React 实现，只使用官方令牌，并附上几何来源与使用时机。复制即可用。",
+        "viewAll": "查看全部",
+        "count": "个",
+        "whenToUse": "什么时候用",
+        "whenNotToUse": "什么时候不要用",
+        "geometrySource": "几何来源",
+        "tags": "标签",
+        "preview": "实况预览",
+        "sourceLabel": "源码",
+        "chineseOnly": "本组件的说明目前只有中文版。",
+        "usage": "组件目录本身就是一个 npm 包，可以被安装；也可以直接把单个目录复制进你的插件源码。"
+    },
+    "seats": {
+        "title": "座位目录",
+        "lede": "Harness 声明了 {n} 个 UI 座位。你的插件只能挂在这些座位上——选错座位比写错样式代价更大。",
+        "riskyNote": "{n} 个座位的遮蔽风险为 shadows-shipped-ui：占用它会替换官方界面。这类座位只在确实要替换官方 UI 时使用。",
+        "tableTitle": "{n} 个座位",
+        "treeOrder": "按树序排列",
+        "filter": "过滤",
+        "columns": { "name": "座位", "kind": "类型", "scope": "作用域", "risk": "遮蔽风险", "purpose": "用途" },
+        "safe": "安全",
+        "shadows": "遮蔽官方",
+        "kindsTitle": "座位类型",
+        "scopesTitle": "作用域",
+        "orderTitle": "选择顺序",
+        "kinds": {
+            "single": "single — 唯一占用，后注册者遮蔽先注册者",
+            "list": "list — 多插件按 order 升序排列",
+            "keyed": "keyed — 按 key 分发",
+            "chain": "chain — 选择器路由，可整段替换"
+        },
+        "scopes": {
+            "root": "root — 全局，无会话时也存在",
+            "maybe": "session-maybe — 与会话相关但可空",
+            "session": "session — 必须选中会话才渲染"
+        },
+        "orderNote": "先找语义最贴合的 list 座位；没有合适的再考虑 single 座位；replaceRisk 为 shadows-shipped-ui 的座位最后考虑。"
+    },
+    "icons": {
+        "title": "官方图标集",
+        "lede": "{n} 个图标，全部从产品自身的客户端包提取，路径数据原样保留。命名规律：ic_ds_&lt;名称&gt;_&lt;风格&gt;_&lt;尺寸&gt;。点击任意图标复制 SVG。",
+        "familyNote": "尺寸族",
+        "familyTail": "自绘图标请与相邻图标保持同一视觉重量与描边粗细。",
+        "tableTitle": "{n} 个图标",
+        "order": "按提取顺序",
+        "whyTitle": "为什么用它",
+        "why": "图标风格不一致是插件界面最容易露馅的地方。官方图标已经处理好视觉重量与留白，直接复用比自己画一个「差不多的」更省事，也更一致。",
+        "namingTitle": "命名",
+        "authored": "授权名",
+        "component": "组件名",
+        "file": "文件"
+    },
+    "tokens": {
+        "title": "设计令牌",
+        "lede": "{palette} 个原始色板值支撑 {aliases} 个语义别名。插件只应使用语义别名——浅色与深色由产品负责。",
+        "usageNote": "用法：color: var(--dsw-alias-label-primary)。硬编码色值是插件在深色模式下翻车的第一大原因。",
+        "tableTitle": "{n} 个别名",
+        "order": "按定义顺序",
+        "columns": { "name": "令牌", "swatch": "色块", "light": "浅色", "dark": "深色" },
+        "depthTitle": "层级怎么表达",
+        "depth": "用背景层级（bg-base → bg-layer-1 → bg-layer-2 → bg-overlay）而不是阴影来表达深度。阴影是例外，不是默认手段。",
+        "sourceTitle": "来源",
+        "source": "取值直接来自产品客户端包里的主题定义，浅色与深色各一套，未经改写。"
+    },
+    "footer": {
+        "name": "DeepSeek Design Resources",
+        "source": "规范与数据取自运行中的 DeepSeek Harness，逐条标注来源",
+        "generated": "数据生成于"
+    },
+    "lab": {
+        "motionTitle": "动效档位试验台",
+        "motionNote": "选一个档位和一条曲线，点播放看方块走一次。规范里的时长不该只是纸面数字——它应当能当场比较：350ms 和 100ms 的差别，看一眼比读十行条文更清楚。",
+        "play": "播放",
+        "duration": "时长",
+        "curve": "曲线",
+        "standard": "标准",
+        "linear": "线性"
+    },
+    "notFound": {
+        "title": "没有这一页",
+        "lede": "链接可能指向了尚未生成的内容。回到首页，或用上方搜索。"
+    }
+}

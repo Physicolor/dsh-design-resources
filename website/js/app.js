@@ -1,5 +1,6 @@
 /**
- * The gallery itself: hash routing, three-column rendering, search.
+ * The gallery itself: i18n, hash routing, three independently scrolling
+ * columns, resizable rails, and search.
  *
  * No framework and no build step — the page is opened straight from disk
  * (`file://`), so every input already sits inlined in `js/data.js`.
@@ -7,25 +8,76 @@
 (function () {
     'use strict'
 
-    var D = window.DSHDR || { icons: [], seats: [], components: [], specs: [], tokens: { light: {}, dark: {}, resolvedLight: {}, resolvedDark: {} }, stats: {}, brand: {} }
+    var D = window.DSHDR || {}
+    var SPECS = D.specs || []
+    var COMPONENTS = D.components || []
+    var SEATS = D.seats || []
+    var ICONS = D.icons || []
+    var TOKENS = D.tokens || { light: {}, dark: {}, resolvedLight: {}, resolvedDark: {}, palette: {} }
+    var I18N = D.i18n || { zh: {}, en: {} }
 
+    var shell = document.getElementById('shell')
     var mainEl = document.getElementById('main')
     var indexEl = document.getElementById('index')
     var asideEl = document.getElementById('aside')
     var resultsEl = document.getElementById('results')
     var resultsPanel = document.getElementById('resultsPanel')
     var queryEl = document.getElementById('q')
+    var topnavEl = document.getElementById('topnav')
+    var langEl = document.getElementById('lang')
 
-    var CATEGORY_LABEL = {
-        layout: '布局',
-        controls: '控件',
-        surfaces: '容器',
-        feedback: '反馈',
-        'data-display': '数据展示',
-        patterns: '页面模式',
-        brand: '品牌',
-        uncategorized: '未分类',
+    /* ── storage ───────────────────────────────────────────────────── */
+
+    /**
+     * Read a preference, tolerating private mode and file:// quirks.
+     * @param key - storage key.
+     * @param fallback - value when absent.
+     * @returns the stored string, or the fallback.
+     */
+    function load(key, fallback) {
+        try {
+            var v = localStorage.getItem(key)
+            return v === null ? fallback : v
+        } catch (e) { return fallback }
     }
+
+    /**
+     * Persist a preference.
+     * @param key - storage key.
+     * @param value - value to store.
+     */
+    function save(key, value) {
+        try { localStorage.setItem(key, String(value)) } catch (e) { /* private mode */ }
+    }
+
+    /* ── i18n ──────────────────────────────────────────────────────── */
+
+    var LANG = load('dshdr-lang', (navigator.language || 'zh').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en')
+    if (I18N[LANG] === undefined) LANG = 'zh'
+
+    /**
+     * Translate a dotted key.
+     * @param key - dotted path into the dictionary.
+     * @param vars - substitutions for `{name}` placeholders.
+     * @returns the translated string, or the key itself when missing.
+     */
+    function t(key, vars) {
+        var node = I18N[LANG]
+        var parts = key.split('.')
+        for (var i = 0; i < parts.length; i++) {
+            if (node === undefined || node === null) { node = undefined; break }
+            node = node[parts[i]]
+        }
+        var text = typeof node === 'string' ? node : key
+        if (vars) {
+            Object.keys(vars).forEach(function (name) {
+                text = text.split('{' + name + '}').join(String(vars[name]))
+            })
+        }
+        return text
+    }
+
+    /* ── helpers ───────────────────────────────────────────────────── */
 
     /**
      * Escape text for HTML.
@@ -38,14 +90,65 @@
     }
 
     /**
-     * Build an absolute href for a generated SVG's detail page.
-     * @param id - item id.
-     * @returns hash href.
+     * Build a hash href.
+     * @param hash - route, leading slash.
+     * @returns href.
      */
     function href(hash) { return '#' + hash }
 
     /**
-     * Copy text to the clipboard, tolerating file:// where the async API is absent.
+     * Find an official icon by its short name.
+     * @param short - e.g. `panel-left`, `light`, `search`.
+     * @returns the icon record, or null.
+     */
+    function icon(short) {
+        for (var i = 0; i < ICONS.length; i++) {
+            var name = ICONS[i].name || ''
+            if (name.indexOf(short.replace(/-/gu, '_')) !== -1) return ICONS[i]
+        }
+        return null
+    }
+
+    /**
+     * Icon aliases.
+     *
+     * The official set has no right-hand panel glyph, and inventing one would be
+     * exactly the kind of near-duplicate this repository tells plugin authors not
+     * to draw — so the left-hand glyph is mirrored instead.
+     */
+    var ICON_ALIAS = { 'panel-right': { name: 'panel-left', flip: true } }
+
+    /**
+     * Inline an official icon's SVG.
+     * @param short - short icon name.
+     * @param flip - mirror horizontally.
+     * @returns SVG markup, or an empty string.
+     */
+    function iconSvg(short, flip) {
+        var found = icon(short)
+        if (found === null) return ''
+        return flip ? '<span style="display:block;transform:scaleX(-1)">' + (found.svg || '') + '</span>' : (found.svg || '')
+    }
+
+    /**
+     * Replace every `[data-icon]` placeholder in a subtree.
+     * @param root - element to scan.
+     */
+    function hydrateIcons(root) {
+        Array.prototype.forEach.call(root.querySelectorAll('[data-icon]'), function (node) {
+            var short = node.getAttribute('data-icon')
+            var flip = false
+            if (icon(short) === null && ICON_ALIAS[short] !== undefined) {
+                flip = ICON_ALIAS[short].flip === true
+                short = ICON_ALIAS[short].name
+            }
+            var markup = iconSvg(short, flip)
+            if (markup !== '') node.innerHTML = markup
+        })
+    }
+
+    /**
+     * Copy text, tolerating file:// where the async clipboard API is absent.
      * @param text - text to copy.
      * @param button - button to confirm on.
      */
@@ -53,133 +156,26 @@
         var done = function () {
             if (button == null) return
             var old = button.textContent
-            button.textContent = '已复制'
+            button.textContent = t('actions.copied')
             setTimeout(function () { button.textContent = old }, 1200)
         }
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(text).then(done, function () { fallback() })
-        } else { fallback() }
-
-        function fallback() {
+        var fallback = function () {
             var ta = document.createElement('textarea')
             ta.value = text
             ta.style.position = 'fixed'
             ta.style.opacity = '0'
             document.body.appendChild(ta)
             ta.select()
-            try { document.execCommand('copy'); done() } catch (e) { /* nothing else to try */ }
+            try { document.execCommand('copy'); done() } catch (e) { /* nothing left to try */ }
             document.body.removeChild(ta)
         }
-    }
-
-    /* ── index (left column) ───────────────────────────────────────── */
-
-    /**
-     * Render the left navigation.
-     * @param path - current route path.
-     */
-    function renderIndex(path) {
-        var groups = []
-
-        groups.push({
-            title: '概览',
-            links: [
-                { href: href('/'), label: '设计资源首页', active: path === '/' },
-                { href: href('/why'), label: '为什么需要这份规范', active: path === '/why' },
-            ],
-        })
-
-        if (D.specs.length > 0) {
-            groups.push({
-                title: '规范',
-                links: D.specs.map(function (s) {
-                    return { href: href('/spec/' + s.id), label: s.title, active: path === '/spec/' + s.id }
-                }),
-            })
-        }
-
-        var byCategory = {}
-        D.components.forEach(function (c) {
-            var cat = c.category || 'uncategorized'
-            byCategory[cat] = byCategory[cat] || []
-            byCategory[cat].push(c)
-        })
-        var categoryLinks = Object.keys(byCategory).sort().map(function (cat) {
-            return {
-                href: href('/components/' + cat),
-                label: CATEGORY_LABEL[cat] || cat,
-                count: byCategory[cat].length,
-                active: path === '/components/' + cat,
-            }
-        })
-        if (categoryLinks.length > 0) {
-            groups.push({
-                title: '组件源码',
-                links: [{ href: href('/components'), label: '全部组件', count: D.components.length, active: path === '/components' }].concat(categoryLinks),
-            })
-        }
-
-        groups.push({
-            title: '资源',
-            links: [
-                { href: href('/seats'), label: '座位目录', count: D.seats.length, active: path === '/seats' },
-                { href: href('/icons'), label: '官方图标集', count: D.icons.length, active: path === '/icons' },
-                { href: href('/tokens'), label: '设计令牌', count: Object.keys(D.tokens.light).length, active: path === '/tokens' },
-            ],
-        })
-
-        indexEl.innerHTML = groups.map(function (group) {
-            return '<div class="index__group">'
-                + '<p class="index__title">' + esc(group.title) + '</p>'
-                + group.links.map(function (link) {
-                    return '<a class="index__link" href="' + esc(link.href) + '"' + (link.active ? ' aria-current="page"' : '') + '>'
-                        + '<span>' + esc(link.label) + '</span>'
-                        + (link.count == null ? '' : '<span class="index__count">' + link.count + '</span>')
-                        + '</a>'
-                }).join('')
-                + '</div>'
-        }).join('')
-    }
-
-    /* ── aside (right column) ──────────────────────────────────────── */
-
-    /**
-     * Render the right-hand rationale column.
-     * @param blocks - array of { title, html }.
-     */
-    function renderAside(blocks) {
-        if (blocks == null || blocks.length === 0) {
-            asideEl.innerHTML = ''
-            return
-        }
-        asideEl.innerHTML = blocks.map(function (block) {
-            return '<section class="aside__block"><p class="aside__title">' + esc(block.title) + '</p>' + block.html + '</section>'
-        }).join('')
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(done, fallback)
+        } else { fallback() }
     }
 
     /**
-     * A `<p>` block.
-     * @param text - text.
-     * @returns html.
-     */
-    function p(text) { return '<p>' + esc(text) + '</p>' }
-
-    /**
-     * A `<ul>` block.
-     * @param items - list items.
-     * @returns html.
-     */
-    function ul(items) {
-        if (items == null || items.length === 0) return ''
-        return '<ul>' + items.map(function (t) { return '<li>' + esc(t) + '</li>' }).join('') + '</ul>'
-    }
-
-    /**
-     * Split a manifest field into list items.
-     *
-     * Component metadata packs several sentences into one string, separated by
-     * `；` (the source convention) or a newline; rendering it as one paragraph
-     * would bury the second reason.
+     * Split a manifest field into list items (the source packs sentences with `；`).
      * @param value - string, or array of strings.
      * @returns trimmed items.
      */
@@ -208,218 +204,673 @@
             .trim()
     }
 
+    /**
+     * Localised label for a component category.
+     * @param key - category key.
+     * @returns label.
+     */
+    function categoryLabel(key) {
+        var label = t('categories.' + key)
+        return label === 'categories.' + key ? (key || '') : label
+    }
+
+    /**
+     * Localised short title for a spec document.
+     * @param spec - spec record.
+     * @returns title.
+     */
+    function specTitle(spec) {
+        if (LANG === 'en' && spec.shortEn) return spec.shortEn
+        return spec.short || spec.title
+    }
+
+    /* ── theme ─────────────────────────────────────────────────────── */
+
+    var THEME_ICON = { light: 'light', dark: 'dark' }
+
+    /**
+     * Apply and reflect the theme.
+     * @param mode - `auto`, `light` or `dark`.
+     */
+    function applyTheme(mode) {
+        if (mode === 'light' || mode === 'dark') document.documentElement.setAttribute('data-theme', mode)
+        else document.documentElement.removeAttribute('data-theme')
+
+        var effective = mode
+        if (effective !== 'light' && effective !== 'dark') {
+            effective = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        }
+        /* Component previews use the product's tokens, which the product selects
+         * with `body[data-ds-dark-theme]` — mirror it so specimens match the page. */
+        if (effective === 'dark') document.body.setAttribute('data-ds-dark-theme', '')
+        else document.body.removeAttribute('data-ds-dark-theme')
+
+        /* Show the icon of the mode you would switch TO. */
+        var target = effective === 'dark' ? 'light' : 'dark'
+        var node = document.getElementById('themeIcon')
+        node.innerHTML = iconSvg(THEME_ICON[target])
+        save('dshdr-theme', mode)
+    }
+
+    /* ── layout: toggles, widths, drag ─────────────────────────────── */
+
+    var NAV_MIN = 190
+    var NAV_MAX = 460
+    var ASIDE_MIN = 240
+    var ASIDE_MAX = 560
+
+    /**
+     * Clamp a width.
+     * @param value - proposed width.
+     * @param min - lower bound.
+     * @param max - upper bound.
+     * @returns clamped width.
+     */
+    function clamp(value, min, max) { return Math.max(min, Math.min(max, value)) }
+
+    /**
+     * Read a column's current width from its user variable.
+     * @param kind - `nav` or `aside`.
+     * @returns width in px.
+     */
+    function currentWidth(kind) {
+        var name = kind === 'nav' ? '--nav-w-user' : '--aside-w-user'
+        var fallback = kind === 'nav' ? 268 : 348
+        var raw = getComputedStyle(shell).getPropertyValue(name).trim()
+        var value = parseFloat(raw)
+        return Number.isFinite(value) && value > 0 ? value : fallback
+    }
+
+    /**
+     * Set a column's user width.
+     * @param kind - `nav` or `aside`.
+     * @param width - width in px.
+     */
+    function setWidth(kind, width) {
+        shell.style.setProperty(kind === 'nav' ? '--nav-w-user' : '--aside-w-user', width + 'px')
+    }
+
+    /** Persist both rail widths. */
+    function saveWidths() {
+        save('dshdr-nav-w', Math.round(currentWidth('nav')))
+        save('dshdr-aside-w', Math.round(currentWidth('aside')))
+    }
+
+    /**
+     * Show or hide a column.
+     * @param kind - `nav` or `aside`.
+     * @param visible - whether it should be visible.
+     */
+    function setColumn(kind, visible) {
+        var attr = kind === 'nav' ? 'data-nav' : 'data-aside'
+        shell.setAttribute(attr, visible ? 'shown' : 'hidden')
+        var col = document.getElementById(kind === 'nav' ? 'colNav' : 'colAside')
+        col.setAttribute('data-collapsed', visible ? 'false' : 'true')
+        var toggle = document.getElementById(kind === 'nav' ? 'navToggle' : 'asideToggle')
+        toggle.setAttribute('aria-pressed', visible ? 'true' : 'false')
+        save(kind === 'nav' ? 'dshdr-nav' : 'dshdr-aside', visible ? 'shown' : 'hidden')
+    }
+
+    /** Wire the drag handles. */
+    function initResizers() {
+        Array.prototype.forEach.call(document.querySelectorAll('.resizer'), function (handle) {
+            var kind = handle.getAttribute('data-resize')
+
+            handle.addEventListener('pointerdown', function (event) {
+                if (event.button !== 0) return
+                event.preventDefault()
+                var startX = event.clientX
+                var startW = currentWidth(kind)
+                handle.setAttribute('data-active', 'true')
+                shell.setAttribute('data-dragging', 'true')
+                document.body.setAttribute('data-resizing', '')
+                handle.setPointerCapture(event.pointerId)
+
+                var move = function (ev) {
+                    var delta = ev.clientX - startX
+                    var next = kind === 'nav' ? startW + delta : startW - delta
+                    setWidth(kind, clamp(next, kind === 'nav' ? NAV_MIN : ASIDE_MIN, kind === 'nav' ? NAV_MAX : ASIDE_MAX))
+                }
+                var up = function () {
+                    window.removeEventListener('pointermove', move)
+                    window.removeEventListener('pointerup', up)
+                    handle.removeAttribute('data-active')
+                    shell.removeAttribute('data-dragging')
+                    document.body.removeAttribute('data-resizing')
+                    saveWidths()
+                }
+                window.addEventListener('pointermove', move)
+                window.addEventListener('pointerup', up)
+            })
+
+            /* Keyboard resizing: the handle is focusable, so this must work too. */
+            handle.addEventListener('keydown', function (event) {
+                var step = event.shiftKey ? 40 : 12
+                var min = kind === 'nav' ? NAV_MIN : ASIDE_MIN
+                var max = kind === 'nav' ? NAV_MAX : ASIDE_MAX
+                if (event.key === 'ArrowLeft') {
+                    event.preventDefault()
+                    setWidth(kind, clamp(currentWidth(kind) + (kind === 'nav' ? -step : step), min, max))
+                    saveWidths()
+                } else if (event.key === 'ArrowRight') {
+                    event.preventDefault()
+                    setWidth(kind, clamp(currentWidth(kind) + (kind === 'nav' ? step : -step), min, max))
+                    saveWidths()
+                }
+            })
+        })
+    }
+
+    /* ── index (left) ──────────────────────────────────────────────── */
+
+    /** Which navigation groups are open, persisted. */
+    var OPEN_GROUPS = (function () {
+        try { return JSON.parse(load('dshdr-groups', '{}')) || {} } catch (e) { return {} }
+    })()
+
+    /**
+     * Build the navigation model for the current page.
+     * @param path - current route path.
+     * @returns list of groups.
+     */
+    function navModel(path) {
+        var groups = []
+        groups.push({
+            id: 'overview',
+            title: t('index.overview'),
+            links: [
+                { href: href('/'), label: t('index.home'), active: path === '/' },
+                { href: href('/why'), label: t('index.why'), active: path === '/why' },
+            ],
+        })
+
+        if (SPECS.length > 0) {
+            var byGroup = { basics: [], visual: [], quality: [] }
+            SPECS.forEach(function (spec) { (byGroup[spec.group] || byGroup.basics).push(spec) })
+            Object.keys(byGroup).forEach(function (key) {
+                if (byGroup[key].length === 0) return
+                groups.push({
+                    id: 'spec-' + key,
+                    title: t('groups.' + key),
+                    links: byGroup[key].map(function (spec) {
+                        return { href: href('/spec/' + spec.id), label: specTitle(spec), active: path === '/spec/' + spec.id }
+                    }),
+                })
+            })
+        }
+
+        var byCategory = {}
+        COMPONENTS.forEach(function (c) {
+            var cat = c.category || 'uncategorized'
+            byCategory[cat] = byCategory[cat] || []
+            byCategory[cat].push(c)
+        })
+        var categories = Object.keys(byCategory).sort()
+        if (categories.length > 0) {
+            var componentLinks = [{
+                href: href('/components'),
+                label: t('index.allComponents'),
+                count: COMPONENTS.length,
+                active: path === '/components',
+            }].concat(categories.map(function (cat) {
+                return {
+                    href: href('/components/' + cat),
+                    label: categoryLabel(cat),
+                    count: byCategory[cat].length,
+                    active: path === '/components/' + cat,
+                }
+            }))
+            groups.push({ id: 'components', title: t('index.components'), links: componentLinks })
+        }
+
+        groups.push({
+            id: 'resources',
+            title: t('index.resources'),
+            links: [
+                { href: href('/seats'), label: t('index.seats'), count: SEATS.length, active: path === '/seats' },
+                { href: href('/icons'), label: t('index.icons'), count: ICONS.length, active: path === '/icons' },
+                { href: href('/tokens'), label: t('index.tokens'), count: Object.keys(TOKENS.light).length, active: path === '/tokens' },
+            ],
+        })
+
+        return groups
+    }
+
+    /**
+     * Render the left index.
+     * @param path - current route path.
+     */
+    function renderIndex(path) {
+        var chevron = iconSvg('chevron-down')
+        indexEl.innerHTML = navModel(path).map(function (group) {
+            var open = OPEN_GROUPS[group.id] !== false
+            return '<div class="index__group" data-open="' + open + '" data-group="' + esc(group.id) + '">'
+                + '<button class="index__head" type="button" aria-expanded="' + open + '">'
+                + '<span class="index__chevron">' + chevron + '</span>'
+                + '<span>' + esc(group.title) + '</span>'
+                + '</button>'
+                + '<div class="index__list"><div>'
+                + group.links.map(function (link) {
+                    return '<a class="index__link" href="' + esc(link.href) + '"' + (link.active ? ' aria-current="page"' : '') + '>'
+                        + '<span class="index__label">' + esc(link.label) + '</span>'
+                        + (link.count == null ? '' : '<span class="index__count">' + link.count + '</span>')
+                        + '</a>'
+                }).join('')
+                + '</div></div></div>'
+        }).join('')
+
+        Array.prototype.forEach.call(indexEl.querySelectorAll('.index__head'), function (head) {
+            head.addEventListener('click', function () {
+                var group = head.parentElement
+                var open = group.getAttribute('data-open') === 'true'
+                group.setAttribute('data-open', open ? 'false' : 'true')
+                head.setAttribute('aria-expanded', open ? 'false' : 'true')
+                OPEN_GROUPS[group.getAttribute('data-group')] = !open
+                save('dshdr-groups', JSON.stringify(OPEN_GROUPS))
+            })
+        })
+    }
+
+    /* ── aside (right) ─────────────────────────────────────────────── */
+
+    /**
+     * Render the rationale column.
+     * @param blocks - array of { title, html }.
+     */
+    function renderAside(blocks) {
+        if (blocks == null || blocks.length === 0) {
+            asideEl.innerHTML = ''
+            return
+        }
+        asideEl.innerHTML = blocks.map(function (block) {
+            return '<section class="aside__block"><p class="aside__title">' + esc(block.title) + '</p>' + block.html + '</section>'
+        }).join('')
+    }
+
+    /**
+     * A paragraph block.
+     * @param text - text.
+     * @returns html.
+     */
+    function p(text) { return '<p>' + esc(text) + '</p>' }
+
+    /**
+     * A list block.
+     * @param items - items.
+     * @returns html.
+     */
+    function ul(items) {
+        if (items == null || items.length === 0) return ''
+        return '<ul>' + items.map(function (text) { return '<li>' + esc(text) + '</li>' }).join('') + '</ul>'
+    }
+
     /* ── shared blocks ─────────────────────────────────────────────── */
 
     /**
      * A code block with a copy control.
-     * @param label - block caption.
-     * @param code - code text.
+     * @param label - caption.
+     * @param code - source text.
      * @returns html.
      */
     function codeBlock(label, code) {
         return '<div class="code">'
             + '<div class="code__head"><span>' + esc(label) + '</span>'
-            + '<button class="copy" type="button" data-copy>复制</button></div>'
+            + '<button class="copy" type="button" data-copy>' + esc(t('actions.copy')) + '</button></div>'
             + '<pre><code>' + esc(code) + '</code></pre>'
             + '</div>'
     }
 
     /**
-     * A specimen stage holding a live demo, rendered in an isolated frame so a
-     * demo's own styles cannot leak into the surrounding page.
-     * @param title - stage caption.
+     * A specimen stage holding a live demo.
+     *
+     * The frame is deliberately NOT a fixed height: a fixed height would give the
+     * page a scrollbar inside a scrollbar. `mountFrames` measures the demo and
+     * grows the frame, so the reader scrolls once.
+     * @param title - caption.
      * @param demoHtml - the demo document.
-     * @param height - frame height in px.
      * @returns html.
      */
-    function specimen(title, demoHtml, height) {
+    function specimen(title, demoHtml) {
         if (demoHtml == null || demoHtml === '') return ''
         return '<div class="specimen">'
-            + '<p class="specimen__label">' + esc(title) + '</p>'
-            + '<iframe title="' + esc(title) + '" style="width:100%;height:' + height + 'px;border:0;background:transparent;display:block" srcdoc="' + esc(demoHtml) + '"></iframe>'
+            + '<p class="specimen__label"><span>' + esc(title) + '</span></p>'
+            + '<iframe class="specimen__frame" title="' + esc(title) + '" sandbox="allow-same-origin" srcdoc="' + esc(demoHtml) + '"></iframe>'
             + '</div>'
     }
 
     /**
-     * A badge span.
+     * Size every specimen frame to its own content.
+     * @param root - subtree to scan.
+     */
+    function mountFrames(root) {
+        Array.prototype.forEach.call(root.querySelectorAll('.specimen__frame'), function (frame) {
+            var fit = function () {
+                try {
+                    var doc = frame.contentDocument
+                    if (doc === null || doc === undefined) return
+                    var height = Math.max(
+                        doc.documentElement ? doc.documentElement.scrollHeight : 0,
+                        doc.body ? doc.body.scrollHeight : 0,
+                    )
+                    if (height > 0) frame.style.height = height + 'px'
+                } catch (e) { /* not measurable yet */ }
+            }
+            frame.addEventListener('load', fit)
+            setTimeout(fit, 80)
+            setTimeout(fit, 320)
+        })
+    }
+
+    /** Re-measure every live specimen after a viewport change. */
+    function refitFrames() {
+        Array.prototype.forEach.call(document.querySelectorAll('.specimen__frame'), function (frame) {
+            try {
+                var doc = frame.contentDocument
+                if (doc === null) return
+                var height = Math.max(
+                    doc.documentElement ? doc.documentElement.scrollHeight : 0,
+                    doc.body ? doc.body.scrollHeight : 0,
+                )
+                if (height > 0) frame.style.height = height + 'px'
+            } catch (e) { /* ignore */ }
+        })
+    }
+
+    /**
+     * A badge.
      * @param text - label.
-     * @param tone - badge tone suffix.
+     * @param tone - modifier suffix.
      * @returns html.
      */
     function badge(text, tone) {
         return '<span class="badge badge--' + tone + '">' + esc(text) + '</span>'
     }
 
+    /* ── motion bench ──────────────────────────────────────────────── */
+
+    /** The five durations the spec hands to plugin authors. */
+    var MOTION_DURATIONS = [100, 150, 200, 300, 350]
+
+    /** The two curves the spec names. */
+    var MOTION_CURVES = [
+        { id: 'standard', value: 'cubic-bezier(0.40, 0, 0.20, 1)' },
+        { id: 'linear', value: 'linear' },
+    ]
+
+    /**
+     * The interactive motion bench embedded in the motion spec.
+     *
+     * A spec that only states "200ms" asks the reader to imagine it. Letting them
+     * run two durations back to back is the one thing a paper document cannot do
+     * and an HTML one can — which is the whole reason this reference is a site.
+     * @returns html.
+     */
+    function motionLab() {
+        return '<section class="lab" data-lab>'
+            + '<p class="specimen__label"><span>' + esc(t('lab.motionTitle')) + '</span></p>'
+            + '<p class="lab__note">' + esc(t('lab.motionNote')) + '</p>'
+            + '<div class="lab__controls">'
+            + '<div class="lab__group"><span class="lab__caption">' + esc(t('lab.duration')) + '</span>'
+            + '<div class="segmented" data-lab-durations>' + MOTION_DURATIONS.map(function (ms) {
+                return '<button type="button" data-ms="' + ms + '" aria-selected="' + (ms === 200) + '">' + ms + 'ms</button>'
+            }).join('') + '</div></div>'
+            + '<div class="lab__group"><span class="lab__caption">' + esc(t('lab.curve')) + '</span>'
+            + '<div class="segmented" data-lab-curves>' + MOTION_CURVES.map(function (curve, i) {
+                return '<button type="button" data-curve="' + esc(curve.value) + '" aria-selected="' + (i === 0) + '">'
+                    + esc(t('lab.' + curve.id)) + '</button>'
+            }).join('') + '</div></div>'
+            + '<button class="lab__play" type="button" data-lab-play>' + esc(t('lab.play')) + '</button>'
+            + '</div>'
+            + '<div class="lab__stage" data-lab-stage><span class="lab__box" data-lab-box></span></div>'
+            + '</section>'
+    }
+
+    /** Wire the motion bench, if the current page has one. */
+    function mountMotionLab() {
+        var lab = document.querySelector('[data-lab]')
+        if (lab === null) return
+
+        var box = lab.querySelector('[data-lab-box]')
+        var stage = lab.querySelector('[data-lab-stage]')
+        var duration = 200
+        var curve = MOTION_CURVES[0].value
+        var moved = false
+
+        var play = function () {
+            var travel = Math.max(0, stage.clientWidth - box.offsetWidth - 12)
+            box.style.transition = 'transform ' + duration + 'ms ' + curve
+            box.style.transform = moved ? 'translateX(' + travel + 'px)' : 'translateX(0px)'
+        }
+
+        lab.querySelector('[data-lab-play]').addEventListener('click', function () {
+            moved = !moved
+            play()
+        })
+
+        Array.prototype.forEach.call(lab.querySelectorAll('[data-lab-durations] button'), function (button) {
+            button.addEventListener('click', function () {
+                duration = Number(button.getAttribute('data-ms'))
+                Array.prototype.forEach.call(button.parentElement.children, function (sibling) {
+                    sibling.setAttribute('aria-selected', String(sibling === button))
+                })
+                moved = !moved
+                play()
+            })
+        })
+
+        Array.prototype.forEach.call(lab.querySelectorAll('[data-lab-curves] button'), function (button) {
+            button.addEventListener('click', function () {
+                curve = button.getAttribute('data-curve')
+                Array.prototype.forEach.call(button.parentElement.children, function (sibling) {
+                    sibling.setAttribute('aria-selected', String(sibling === button))
+                })
+                moved = !moved
+                play()
+            })
+        })
+    }
+
     /* ── pages ─────────────────────────────────────────────────────── */
 
     /** The landing page. */
     function pageHome() {
-        var s = D.stats
-        mainEl.innerHTML = ''
+        var s = D.stats || {}
+        mainEl.innerHTML = '<div class="main-inner">'
             + '<div class="hero">'
-            + '<p class="hero__eyebrow">DeepSeek Design Resources</p>'
-            + '<h1 class="hero__title">让社区的插件<br>看起来像同一个产品。</h1>'
-            + '<p class="hero__lede">DeepSeek Harness 为插件提供了技术栈与开发规范，却没有提供设计规范：控件该多大、间距多少、动效多长、图标怎么画、两个插件抢同一个位置时谁优先，都没有裁决依据。这份资源补上这一层——每一条数值都标注来源，每一个组件都能直接拿去用。</p>'
+            + '<p class="hero__eyebrow">' + esc(t('home.eyebrow')) + '</p>'
+            + '<h1 class="hero__title">' + t('home.title') + '</h1>'
+            + '<p class="hero__lede">' + esc(t('home.lede')) + '</p>'
             + '</div>'
             + '<section class="section">'
-            + '<div class="section__head"><h2 class="section__title">仓库里有什么</h2>'
-            + '<span class="section__hint">全部由脚本从运行中的 Harness 采集，可重新生成</span></div>'
+            + '<div class="section__head"><h2 class="section__title">' + esc(t('home.sectionTitle')) + '</h2>'
+            + '<span class="section__hint">' + esc(t('home.sectionHint')) + '</span></div>'
             + '<div class="cards">'
-            + card('规范', s.specs + ' 篇', '主页面骨架、座位选择、控件、令牌、动效、图标、可访问性与提交前自检清单。', '/spec', '先把这一层读完再动手')
-            + card('组件源码', s.components + ' 个', '分类归档、零依赖、只使用官方 token 的 React 实现，附几何来源与使用时机。', '/components', '复制即可用')
-            + card('座位目录', s.seats + ' 个', 'Harness 声明了 ' + s.seats + ' 个 UI 座位；每个座位的用途、注册契约与遮蔽风险都在这儿。', '/seats', '决定你的 UI 该放在哪里')
-            + card('官方图标集', s.icons + ' 个', '从产品自身提取的图标，保持原始路径数据与命名规范。', '/icons', '别再画第五种关闭按钮')
-            + card('设计令牌', s.aliases + ' 个', '官方语义 token 的浅色与深色取值，直接对照使用。', '/tokens', '颜色不要硬编码')
-            + card('为什么', '一页说清', '官方兼容了技术栈，却没有兼容设计规范——这就是这个仓库存在的原因。', '/why', '两分钟读完')
-            + '</div></section>'
+            + card('home.cards.spec', (s.specs || 0) + ' ' + t('components.count'), '/spec')
+            + card('home.cards.components', (s.components || 0) + ' ' + t('components.count'), '/components')
+            + card('home.cards.seats', (s.seats || 0) + ' ' + t('components.count'), '/seats')
+            + card('home.cards.icons', (s.icons || 0) + ' ' + t('components.count'), '/icons')
+            + card('home.cards.tokens', (s.aliases || 0) + ' ' + t('components.count'), '/tokens')
+            + card('home.cards.why', '', '/why')
+            + '</div></section></div>'
+
         renderAside([
-            { title: '来源', html: p('站点数据由 scripts/ 下的采集脚本从本机运行中的 DeepSeek Harness 提取：图标与令牌来自产品自身的客户端包，座位目录来自 Harness 的座位检查接口。') },
-            { title: '更新方式', html: p('任何一条数据都可以重新生成，不依赖手工记录。生成时间见页面底部。') },
+            { title: t('tokens.sourceTitle'), html: p(t('tokens.source')) },
+            { title: t('tokens.depthTitle'), html: p(t('tokens.depth')) },
+            { title: t('footer.generated'), html: p(String(D.generatedAt || '').slice(0, 19).replace('T', ' ')) },
         ])
-        document.getElementById('stamp').textContent = '数据生成于 ' + (D.generatedAt || '').slice(0, 19).replace('T', ' ')
     }
 
     /**
-     * A landing card.
-     * @param title - card title.
+     * A landing card built from an i18n prefix.
+     * @param prefix - i18n prefix, e.g. `home.cards.spec`.
      * @param meta - small meta line.
-     * @param body - description.
      * @param hash - target route.
-     * @param note - footer note.
      * @returns html.
      */
-    function card(title, meta, body, hash, note) {
+    function card(prefix, meta, hash) {
         return '<a class="card" href="' + esc(href(hash)) + '">'
-            + '<p class="card__title">' + esc(title) + '</p>'
-            + '<p class="card__body">' + esc(body) + '</p>'
-            + '<p class="card__meta">' + esc(meta) + ' · ' + esc(note) + '</p>'
+            + '<p class="card__title">' + esc(t(prefix + '.title')) + '</p>'
+            + '<p class="card__body">' + esc(t(prefix + '.body')) + '</p>'
+            + '<p class="card__meta">' + (meta === '' ? '' : esc(meta) + ' · ') + esc(t(prefix + '.note')) + '</p>'
             + '</a>'
     }
 
-    /** The positioning page: what the product does and does not provide. */
+    /** The positioning page. */
     function pageWhy() {
-        mainEl.innerHTML = ''
-            + '<div class="hero"><h1 class="hero__title">为什么需要这份规范</h1>'
-            + '<p class="hero__lede">一句话：官方给了插件能跑起来的技术栈，没有给插件看起来一致的设计规范。</p></div>'
+        var s = D.stats || {}
+        mainEl.innerHTML = '<div class="main-inner">'
+            + '<div class="hero"><h1 class="hero__title">' + esc(t('why.title')) + '</h1>'
+            + '<p class="hero__lede">' + esc(t('why.lede')) + '</p></div>'
             + '<section class="section"><div class="prose">'
-            + '<h2>官方已经做了什么</h2>'
+            + '<h2>' + esc(t('why.officialTitle')) + '</h2>'
             + '<ul>'
-            + '<li>一套完整的语义 token（' + esc(String(D.stats.aliases)) + ' 个别名，分浅色与深色两套），颜色、层级、状态都有官方取值。</li>'
-            + '<li>一套共享控件原语（按钮、胶囊、标签、开关、输入、菜单、弹窗、提示等），并且明文写着「不要复制已经存在的控件」。</li>'
-            + '<li>一套座位系统：' + esc(String(D.stats.seats)) + ' 个已声明座位，每个都标注了用途、注册契约与遮蔽风险。</li>'
-            + '<li>一套图标集：' + esc(String(D.stats.icons)) + ' 个图标，命名与尺寸族都有规律。</li>'
+            + '<li>' + esc(t('why.items.tokens')) + '</li>'
+            + '<li>' + esc(t('why.items.primitives')) + '</li>'
+            + '<li>' + esc(t('why.items.seats')) + '</li>'
+            + '<li>' + esc(t('why.items.icons')) + '</li>'
             + '</ul>'
-            + '<h2>官方没有做什么</h2>'
+            + '<h2>' + esc(t('why.missingTitle')) + '</h2>'
             + '<ul>'
-            + '<li><strong>没有布局规范</strong>：一个插件该占用哪个区域、占多大、与会话区怎么协调，没有条文。</li>'
-            + '<li><strong>没有摆放契约</strong>：座位是 <code>list</code> 类型时，<code>order</code> 该取什么值全靠自觉。</li>'
-            + '<li><strong>没有动效规范</strong>：时长与曲线的档位没有统一。</li>'
-            + '<li><strong>没有图标几何规范</strong>：自绘图标该用多粗的描边、怎么对齐，没有依据。</li>'
-            + '<li><strong>没有冲突裁决</strong>：两个插件抢同一个座位、同一段视觉空间时，没有任何机制提示。</li>'
+            + '<li><strong>' + esc(t('why.items.layout')) + '</strong></li>'
+            + '<li><strong>' + esc(t('why.items.order')) + '</strong></li>'
+            + '<li><strong>' + esc(t('why.items.motion')) + '</strong></li>'
+            + '<li><strong>' + esc(t('why.items.iconGeometry')) + '</strong></li>'
+            + '<li><strong>' + esc(t('why.items.conflict')) + '</strong></li>'
             + '</ul>'
-            + '<h2>这件事有实证</h2>'
-            + '<p>在本机运行中的 Harness 上实测（' + esc(String(D.stats.seats)) + ' 个座位）：</p>'
+            + '<h2>' + esc(t('why.proofTitle')) + '</h2>'
             + '<div class="callout callout--warn"><span class="callout__mark">!</span><div>'
-            + '<p><code>shell.overlay</code> 有 14 个占用者，其中 13 个没有声明 <code>order</code>，全部落在默认值 0——层级顺序由注册时序决定，不可预测。</p>'
-            + '<p><code>settings.section</code> 有 11 个占用者，其中三个把 order 都写成 40，顺序无法解释。</p>'
+            + '<p><code>shell.overlay</code> — ' + (s.seats ? '' : '') + esc(whyOverlayLine()) + '</p>'
+            + '<p><code>settings.section</code> — ' + esc(whySettingsLine()) + '</p>'
             + '</div></div>'
-            + '<p>这不是某个插件的错，是缺少规范与检查的必然结果。这份资源做两件事：把该有的规范补上，并让冲突变得可见。</p>'
-            + '<h2>这个仓库不做什么</h2>'
+            + '<p>' + esc(t('why.closing')) + '</p>'
+            + '<h2>' + esc(t('why.scopeTitle')) + '</h2>'
             + '<ul>'
-            + '<li>不评判审美。规范只保证一致与可用，不宣称哪种风格更好看。</li>'
-            + '<li>不强制别人改代码。规范是给愿意遵守的人的公共依据。</li>'
-            + '<li>不发明数值。每一条尺寸、间距、时长都标注来源；没有权威依据的地方会明确写出来。</li>'
+            + '<li>' + esc(t('why.items.aesthetics')) + '</li>'
+            + '<li>' + esc(t('why.items.force')) + '</li>'
+            + '<li>' + esc(t('why.items.invent')) + '</li>'
             + '</ul>'
-            + '</div></section>'
+            + '</div></section></div>'
+
         renderAside([
-            { title: '效力层级', html: p('文档中的条目分为强制（MF）、推荐（RC）、建议（AD）三档，可自动检测的条目在自检清单里单独标注。') },
-            { title: '配套检查', html: p('座位冲突、死规则、间距越界等可自动判定的项目，由 dsh-ui-harmonizer 的只读审计器检测并在设置页提示。') },
+            { title: t('spec.relatedNote'), html: p(t('why.proofTitle')) },
+            { title: t('index.resources'), html: ul([t('index.seats'), t('index.icons'), t('index.tokens')]) },
         ])
+    }
+
+    /**
+     * The measured `shell.overlay` finding, in the current language.
+     * @returns sentence.
+     */
+    function whyOverlayLine() {
+        return LANG === 'zh'
+            ? '14 个占用者，其中 13 个没有声明 order，全部落在默认值 0——层级顺序由注册时序决定，不可预测。'
+            : '14 occupants, 13 of them without an explicit order, all landing on the default 0 — stacking is decided by registration timing and is unpredictable.'
+    }
+
+    /**
+     * The measured `settings.section` finding, in the current language.
+     * @returns sentence.
+     */
+    function whySettingsLine() {
+        return LANG === 'zh'
+            ? '11 个占用者，其中三个把 order 都写成 40，顺序无法解释。'
+            : '11 occupants, three of them declaring order 40 — the resulting order cannot be explained.'
     }
 
     /**
      * The spec list, or one document.
-     * @param id - document id, when one is selected.
+     * @param id - document id, when selected.
      */
     function pageSpec(id) {
         if (id == null) {
-            mainEl.innerHTML = '<div class="hero"><h1 class="hero__title">规范</h1>'
-                + '<p class="hero__lede">按阅读顺序排列。第一次接触这个生态，建议从主页面骨架与座位选择读起。</p></div>'
-                + '<div class="cards">' + D.specs.map(function (s, i) {
-                    return '<a class="card" href="' + esc(href('/spec/' + s.id)) + '">'
-                        + '<p class="card__meta">' + String(i + 1).padStart(2, '0') + ' · ' + esc(s.id) + '</p>'
-                        + '<p class="card__title">' + esc(s.title) + '</p>'
-                        + '<p class="card__body">' + s.chars + ' 字</p>'
+            mainEl.innerHTML = '<div class="main-inner"><div class="hero"><h1 class="hero__title">' + esc(t('spec.title')) + '</h1>'
+                + '<p class="hero__lede">' + esc(t('spec.lede')) + '</p></div>'
+                + '<div class="cards">' + SPECS.map(function (spec, i) {
+                    return '<a class="card" href="' + esc(href('/spec/' + spec.id)) + '">'
+                        + '<p class="card__meta">' + esc(t('groups.' + spec.group)) + ' · ' + String(i + 1).padStart(2, '0') + '</p>'
+                        + '<p class="card__title">' + esc(specTitle(spec)) + '</p>'
+                        + '<p class="card__body">' + spec.chars + ' ' + esc(t('spec.chars')) + '</p>'
                         + '</a>'
-                }).join('') + '</div>'
-            renderAside([{ title: '说明', html: p('每篇文档开头写明适用对象与效力层级，可自动检测的判据会单独标注。') }])
+                }).join('') + '</div></div>'
+            renderAside([{ title: t('spec.relatedNote'), html: p(t('spec.lede')) }])
             return
         }
-        var spec = D.specs.filter(function (s) { return s.id === id })[0]
+
+        var spec = SPECS.filter(function (s) { return s.id === id })[0]
         if (spec == null) { pageNotFound(); return }
-        mainEl.innerHTML = '<article class="prose">' + spec.html + '</article>'
+
         var headings = []
         var re = /<h3>([^<]+)<\/h3>/gu
         var m
         while ((m = re.exec(spec.html)) !== null) headings.push(m[1])
+
+        mainEl.innerHTML = '<div class="main-inner">'
+            + (LANG === 'en' ? '<div class="callout"><span class="callout__mark">i</span><div><p>' + esc(t('spec.chineseOnly')) + '</p></div></div>' : '')
+            + (spec.id === '40-motion' ? motionLab() : '')
+            + '<article class="prose">' + spec.html + '</article></div>'
+
         renderAside([
-            { title: '文件', html: '<dl><dt>路径</dt><dd>' + esc(spec.file) + '</dd><dt>字数</dt><dd>' + spec.chars + '</dd></dl>' },
-            headings.length > 0 ? { title: '小节', html: ul(headings) } : null,
-            { title: '相关', html: p('规范条目中的可检测项，对应自检清单与审计器规则。') },
+            { title: t('spec.fileLabel'), html: '<dl><dt>' + esc(t('spec.fileLabel')) + '</dt><dd>' + esc(spec.file) + '</dd>'
+                + '<dt>' + esc(t('spec.sizeLabel')) + '</dt><dd>' + spec.chars + '</dd></dl>' },
+            headings.length > 0 ? { title: t('spec.sectionsLabel'), html: ul(headings) } : null,
+            { title: t('spec.relatedNote'), html: p(t('spec.fileLabel')) },
         ].filter(Boolean))
     }
 
     /**
      * The component index, a category page, or one component.
-     * @param arg - category key, component id, or undefined.
+     * @param arg - category key, component id, or null.
      */
     function pageComponents(arg) {
         if (arg == null) {
             var byCategory = {}
-            D.components.forEach(function (c) {
+            COMPONENTS.forEach(function (c) {
                 var cat = c.category || 'uncategorized'
                 byCategory[cat] = byCategory[cat] || []
                 byCategory[cat].push(c)
             })
-            mainEl.innerHTML = '<div class="hero"><h1 class="hero__title">组件源码</h1>'
-                + '<p class="hero__lede">每个组件都是零依赖的 React 实现，只使用官方令牌，并附上几何来源与使用时机。复制即可用。</p></div>'
+            mainEl.innerHTML = '<div class="main-inner"><div class="hero"><h1 class="hero__title">' + esc(t('components.title')) + '</h1>'
+                + '<p class="hero__lede">' + esc(t('components.lede')) + '</p></div>'
                 + Object.keys(byCategory).sort().map(function (cat) {
                     return '<section class="section"><div class="section__head">'
-                        + '<h2 class="section__title">' + esc(CATEGORY_LABEL[cat] || cat) + '</h2>'
-                        + '<a class="section__hint" href="' + esc(href('/components/' + cat)) + '">查看全部 ' + byCategory[cat].length + ' 个</a></div>'
-                        + '<div class="cards">' + byCategory[cat].slice(0, 3).map(componentCard).join('') + '</div></section>'
-                }).join('')
-            renderAside([{ title: '怎么用', html: p('组件目录本身就是一个 npm 包，可以被安装；也可以直接把单个目录复制进你的插件源码。') }])
+                        + '<h2 class="section__title">' + esc(categoryLabel(cat)) + '</h2>'
+                        + '<a class="section__link" href="' + esc(href('/components/' + cat)) + '">' + esc(t('components.viewAll')) + ' ' + byCategory[cat].length + '</a></div>'
+                        + '<div class="cards">' + byCategory[cat].map(componentCard).join('') + '</div></section>'
+                }).join('') + '</div>'
+            renderAside([{ title: t('components.title'), html: p(t('components.usage')) }])
             return
         }
 
-        var byCategoryKey = {}
-        D.components.forEach(function (c) { byCategoryKey[c.category || 'uncategorized'] = true })
-        if (byCategoryKey[arg] === true && !D.components.some(function (c) { return c.id === arg })) {
-            var list = D.components.filter(function (c) { return (c.category || 'uncategorized') === arg })
-            mainEl.innerHTML = '<div class="hero"><h1 class="hero__title">' + esc(CATEGORY_LABEL[arg] || arg) + '</h1>'
-                + '<p class="hero__lede">' + list.length + ' 个组件。</p></div>'
-                + '<div class="cards">' + list.map(componentCard).join('') + '</div>'
-            renderAside([{ title: '分类', html: p('分类按用途划分，不按视觉形态。同一个功能只应存在一个实现。') }])
+        var isCategory = COMPONENTS.some(function (c) { return (c.category || 'uncategorized') === arg })
+        var isComponent = COMPONENTS.some(function (c) { return c.id === arg })
+
+        if (isCategory && !isComponent) {
+            var list = COMPONENTS.filter(function (c) { return (c.category || 'uncategorized') === arg })
+            mainEl.innerHTML = '<div class="main-inner"><div class="hero"><h1 class="hero__title">' + esc(categoryLabel(arg)) + '</h1>'
+                + '<p class="hero__lede">' + list.length + ' ' + esc(t('components.count')) + '</p></div>'
+                + '<div class="cards">' + list.map(componentCard).join('') + '</div></div>'
+            renderAside([{ title: t('components.title'), html: p(t('components.usage')) }])
             return
         }
 
-        var c = D.components.filter(function (x) { return x.id === arg })[0]
+        var c = COMPONENTS.filter(function (x) { return x.id === arg })[0]
         if (c == null) { pageNotFound(); return }
 
-        mainEl.innerHTML = ''
+        mainEl.innerHTML = '<div class="main-inner">'
             + '<div class="hero"><h1 class="hero__title">' + esc(c.name) + '</h1>'
             + '<p class="hero__lede">' + esc(toPlain(c.summary)) + '</p></div>'
-            + specimen('实况预览', c.demo, 300)
+            + (LANG === 'en' ? '<div class="callout"><span class="callout__mark">i</span><div><p>' + esc(t('components.chineseOnly')) + '</p></div></div>' : '')
+            + specimen(t('components.preview'), c.demo)
             + (c.tsx ? codeBlock((c.path || '') + 'index.tsx', c.tsx) : '')
             + (c.css ? codeBlock((c.path || '') + (c.id || 'component').toLowerCase() + '.module.css', c.css) : '')
             + (c.readmeHtml ? '<article class="prose">' + c.readmeHtml + '</article>' : '')
+            + '</div>'
 
         renderAside([
-            c.whenToUse ? { title: '什么时候用', html: ul(toList(c.whenToUse)) } : null,
-            c.whenNotToUse ? { title: '什么时候不要用', html: ul(toList(c.whenNotToUse)) } : null,
-            c.geometrySource ? { title: '几何来源', html: p(c.geometrySource) } : null,
-            c.tags ? { title: '标签', html: p([].concat(c.tags).join(' · ')) } : null,
+            c.whenToUse ? { title: t('components.whenToUse'), html: ul(toList(c.whenToUse)) } : null,
+            c.whenNotToUse ? { title: t('components.whenNotToUse'), html: ul(toList(c.whenNotToUse)) } : null,
+            c.geometrySource ? { title: t('components.geometrySource'), html: p(toPlain(c.geometrySource)) } : null,
+            c.tags ? { title: t('components.tags'), html: p(toList(c.tags).join(' · ')) } : null,
         ].filter(Boolean))
     }
 
@@ -432,7 +883,7 @@
         return '<a class="card" href="' + esc(href('/component/' + c.id)) + '">'
             + '<p class="card__title">' + esc(c.name) + '</p>'
             + '<p class="card__body">' + esc(toPlain(c.summary)) + '</p>'
-            + '<p class="card__meta">' + esc(CATEGORY_LABEL[c.category] || c.category || '') + '</p>'
+            + '<p class="card__meta">' + esc(categoryLabel(c.category)) + '</p>'
             + '</a>'
     }
 
@@ -442,35 +893,45 @@
      */
     function pageSeats(q) {
         var query = (q || '').trim().toLowerCase()
-        var seats = D.seats.filter(function (s) {
+        var seats = SEATS.filter(function (s) {
             if (query === '') return true
             return s.name.toLowerCase().indexOf(query) !== -1
                 || (s.purpose || '').toLowerCase().indexOf(query) !== -1
                 || s.kind === query || s.scope === query || s.replaceRisk === query
         })
-        var risky = D.seats.filter(function (s) { return s.replaceRisk === 'shadows-shipped-ui' }).length
-        mainEl.innerHTML = ''
-            + '<div class="hero"><h1 class="hero__title">座位目录</h1>'
-            + '<p class="hero__lede">Harness 声明了 ' + D.seats.length + ' 个 UI 座位。你的插件只能挂在这些座位上——选错座位比写错样式代价更大。</p></div>'
-            + '<div class="callout callout--warn"><span class="callout__mark">!</span><div>'
-            + '<p>' + risky + ' 个座位的遮蔽风险为 <code>shadows-shipped-ui</code>：占用它会替换官方界面。这类座位只在确实要替换官方 UI 时使用。</p>'
-            + '</div></div>'
+        var risky = SEATS.filter(function (s) { return s.replaceRisk === 'shadows-shipped-ui' }).length
+
+        mainEl.innerHTML = '<div class="main-inner">'
+            + '<div class="hero"><h1 class="hero__title">' + esc(t('seats.title')) + '</h1>'
+            + '<p class="hero__lede">' + esc(t('seats.lede', { n: SEATS.length })) + '</p></div>'
+            + '<div class="callout callout--warn"><span class="callout__mark">!</span><div><p>'
+            + esc(t('seats.riskyNote', { n: risky })) + '</p></div></div>'
             + '<section class="section">'
-            + '<div class="section__head"><h2 class="section__title">' + seats.length + ' 个座位</h2>'
-            + '<span class="section__hint">' + (query === '' ? '按树序排列' : '过滤：' + esc(query)) + '</span></div>'
-            + '<div class="table-wrap"><table><thead><tr><th>座位</th><th>类型</th><th>作用域</th><th>遮蔽风险</th><th>用途</th></tr></thead><tbody>'
+            + '<div class="section__head"><h2 class="section__title">' + esc(t('seats.tableTitle', { n: seats.length })) + '</h2>'
+            + '<span class="section__hint">' + (query === '' ? esc(t('seats.treeOrder')) : esc(t('seats.filter')) + '：' + esc(query)) + '</span></div>'
+            + '<div class="table-wrap"><table><thead><tr>'
+            + '<th>' + esc(t('seats.columns.name')) + '</th><th>' + esc(t('seats.columns.kind')) + '</th>'
+            + '<th>' + esc(t('seats.columns.scope')) + '</th><th>' + esc(t('seats.columns.risk')) + '</th>'
+            + '<th>' + esc(t('seats.columns.purpose')) + '</th></tr></thead><tbody>'
             + seats.map(function (s) {
                 return '<tr><td class="mono">' + esc(s.name) + '</td>'
                     + '<td>' + badge(s.kind, s.kind === 'single' ? 'warn' : 'neutral') + '</td>'
                     + '<td>' + esc(s.scope) + '</td>'
-                    + '<td>' + badge(s.replaceRisk === 'none' ? '安全' : '遮蔽官方', s.replaceRisk === 'none' ? 'safe' : 'risk') + '</td>'
+                    + '<td>' + badge(s.replaceRisk === 'none' ? t('seats.safe') : t('seats.shadows'), s.replaceRisk === 'none' ? 'safe' : 'risk') + '</td>'
                     + '<td>' + esc(s.purpose) + '</td></tr>'
             }).join('')
-            + '</tbody></table></div></section>'
+            + '</tbody></table></div></section></div>'
+
         renderAside([
-            { title: '座位类型', html: ul(['single — 唯一占用，后注册者遮蔽先注册者', 'list — 多插件按 order 升序排列', 'keyed — 按 key 分发', 'chain — 选择器路由，可整段替换']) },
-            { title: '作用域', html: ul(['root — 全局，无会话时也存在', 'session-maybe — 与会话相关但可空', 'session — 必须选中会话才渲染']) },
-            { title: '选择顺序', html: p('先找语义最贴合的 list 座位；没有合适的再考虑 single 座位；replaceRisk 为 shadows-shipped-ui 的座位最后考虑。') },
+            {
+                title: t('seats.kindsTitle'),
+                html: ul(['single', 'list', 'keyed', 'chain'].map(function (k) { return t('seats.kinds.' + k) })),
+            },
+            {
+                title: t('seats.scopesTitle'),
+                html: ul(['root', 'maybe', 'session'].map(function (k) { return t('seats.scopes.' + k) })),
+            },
+            { title: t('seats.orderTitle'), html: p(t('seats.orderNote')) },
         ])
     }
 
@@ -480,81 +941,95 @@
      */
     function pageIcons(q) {
         var query = (q || '').trim().toLowerCase()
-        var icons = D.icons.filter(function (i) {
+        var items = ICONS.filter(function (i) {
             return query === '' || i.name.toLowerCase().indexOf(query) !== -1 || i.component.toLowerCase().indexOf(query) !== -1
         })
-        mainEl.innerHTML = ''
-            + '<div class="hero"><h1 class="hero__title">官方图标集</h1>'
-            + '<p class="hero__lede">' + D.icons.length + ' 个图标，全部从产品自身的客户端包提取，路径数据原样保留。命名规律：<code>ic_ds_&lt;名称&gt;_&lt;风格&gt;_&lt;尺寸&gt;</code>。点击任意图标复制 SVG。</p></div>'
-            + '<div class="callout"><span class="callout__mark">i</span><div>'
-            + '<p>尺寸族：' + (function () {
-                var families = {}
-                D.icons.forEach(function (i) {
-                    var parts = String(i.viewBox || '').split(' ')
-                    if (parts.length < 4) return
-                    var key = parts[2] + '×' + parts[3]
-                    families[key] = (families[key] || 0) + 1
-                })
-                return Object.keys(families).sort(function (a, b) {
-                    return parseFloat(b) - parseFloat(a)
-                }).map(function (k) { return k + ' · ' + families[k] + ' 个' }).join('、')
-            })() + '。自绘图标请与相邻图标保持同一视觉重量与描边粗细。</p>'
-            + '</div></div>'
-            + '<section class="section"><div class="section__head"><h2 class="section__title">' + icons.length + ' 个图标</h2>'
-            + '<span class="section__hint">' + (query === '' ? '按提取顺序' : '过滤：' + esc(query)) + '</span></div>'
-            + '<div class="icons">' + icons.map(function (i) {
-                return '<button class="icon-cell" type="button" data-svg="' + esc(i.file) + '" title="' + esc(i.name) + '">'
-                    + '<span style="display:block;width:24px;height:24px">' + (i.svg || '') + '</span>'
+
+        var families = {}
+        ICONS.forEach(function (i) {
+            var parts = String(i.viewBox || '').split(' ')
+            if (parts.length < 4) return
+            var key = parts[2] + '×' + parts[3]
+            families[key] = (families[key] || 0) + 1
+        })
+        var familyText = Object.keys(families).sort(function (a, b) {
+            return parseFloat(b) - parseFloat(a)
+        }).map(function (k) { return k + ' · ' + families[k] }).join('、')
+
+        mainEl.innerHTML = '<div class="main-inner">'
+            + '<div class="hero"><h1 class="hero__title">' + esc(t('icons.title')) + '</h1>'
+            + '<p class="hero__lede">' + t('icons.lede', { n: ICONS.length }) + '</p></div>'
+            + '<div class="callout"><span class="callout__mark">i</span><div><p>'
+            + esc(t('icons.familyNote')) + '：' + esc(familyText) + '。' + esc(t('icons.familyTail')) + '</p></div></div>'
+            + '<section class="section"><div class="section__head"><h2 class="section__title">' + esc(t('icons.tableTitle', { n: items.length })) + '</h2>'
+            + '<span class="section__hint">' + (query === '' ? esc(t('icons.order')) : esc(t('seats.filter')) + '：' + esc(query)) + '</span></div>'
+            + '<div class="icons">' + items.map(function (i) {
+                return '<button class="icon-cell" type="button" data-icon-name="' + esc(i.name) + '" title="' + esc(i.name) + '">'
+                    + '<span style="display:block;width:22px;height:22px">' + (i.svg || '') + '</span>'
                     + '<span class="icon-cell__name">' + esc(i.name.replace(/^ic_ds_/u, '')) + '</span>'
                     + '</button>'
-            }).join('')
-            + '</div></section>'
+            }).join('') + '</div></section></div>'
+
         renderAside([
-            { title: '为什么用它', html: p('图标风格不一致是插件界面最容易露馅的地方。官方图标已经处理好视觉重量与留白，直接复用比自己画一个「差不多的」更省事，也更一致。') },
-            { title: '命名', html: '<dl><dt>授权名</dt><dd>ic_ds_close_outline_16</dd><dt>组件名</dt><dd>IconCloseOutline16</dd><dt>文件</dt><dd>icons/close-outline.svg</dd></dl>' },
+            { title: t('icons.whyTitle'), html: p(t('icons.why')) },
+            {
+                title: t('icons.namingTitle'),
+                html: '<dl><dt>' + esc(t('icons.authored')) + '</dt><dd>ic_ds_close_outline_16</dd>'
+                    + '<dt>' + esc(t('icons.component')) + '</dt><dd>IconCloseOutline16</dd>'
+                    + '<dt>' + esc(t('icons.file')) + '</dt><dd>icons/close-outline-16.svg</dd></dl>',
+            },
         ])
     }
 
-    /** The token reference. */
+    /**
+     * The token reference.
+     * @param q - filter text.
+     */
     function pageTokens(q) {
         var query = (q || '').trim().toLowerCase()
-        var names = Object.keys(D.tokens.light).filter(function (n) { return query === '' || n.toLowerCase().indexOf(query) !== -1 })
-        mainEl.innerHTML = ''
-            + '<div class="hero"><h1 class="hero__title">设计令牌</h1>'
-            + '<p class="hero__lede">' + Object.keys(D.tokens.palette).length + ' 个原始色板值支撑 ' + Object.keys(D.tokens.light).length + ' 个语义别名。插件只应使用语义别名——浅色与深色由产品负责。</p></div>'
-            + '<div class="callout"><span class="callout__mark">i</span><div>'
-            + '<p>用法：<code>color: var(--dsw-alias-label-primary)</code>。硬编码色值是插件在深色模式下翻车的第一大原因。</p>'
-            + '</div></div>'
-            + '<section class="section"><div class="section__head"><h2 class="section__title">' + names.length + ' 个别名</h2>'
-            + '<span class="section__hint">' + (query === '' ? '按定义顺序' : '过滤：' + esc(query)) + '</span></div>'
-            + '<div class="table-wrap"><table><thead><tr><th>令牌</th><th>色块</th><th>浅色</th><th>深色</th></tr></thead><tbody>'
+        var names = Object.keys(TOKENS.light).filter(function (n) { return query === '' || n.toLowerCase().indexOf(query) !== -1 })
+
+        mainEl.innerHTML = '<div class="main-inner">'
+            + '<div class="hero"><h1 class="hero__title">' + esc(t('tokens.title')) + '</h1>'
+            + '<p class="hero__lede">' + esc(t('tokens.lede', {
+                palette: Object.keys(TOKENS.palette || {}).length,
+                aliases: Object.keys(TOKENS.light).length,
+            })) + '</p></div>'
+            + '<div class="callout"><span class="callout__mark">i</span><div><p>' + esc(t('tokens.usageNote')) + '</p></div></div>'
+            + '<section class="section"><div class="section__head"><h2 class="section__title">' + esc(t('tokens.tableTitle', { n: names.length })) + '</h2>'
+            + '<span class="section__hint">' + (query === '' ? esc(t('tokens.order')) : esc(t('seats.filter')) + '：' + esc(query)) + '</span></div>'
+            + '<div class="table-wrap"><table><thead><tr>'
+            + '<th>' + esc(t('tokens.columns.name')) + '</th><th>' + esc(t('tokens.columns.swatch')) + '</th>'
+            + '<th>' + esc(t('tokens.columns.light')) + '</th><th>' + esc(t('tokens.columns.dark')) + '</th></tr></thead><tbody>'
             + names.map(function (n) {
-                var light = D.tokens.resolvedLight[n] || D.tokens.light[n] || ''
-                var dark = D.tokens.resolvedDark[n] || D.tokens.dark[n] || ''
-                var swatch = /^(#|rgb|hsl)/u.test(light)
-                    ? '<span style="display:inline-block;width:20px;height:20px;border-radius:5px;border:1px solid var(--site-line-soft);background:' + esc(light) + '"></span>'
+                var lightValue = TOKENS.resolvedLight[n] || TOKENS.light[n] || ''
+                var darkValue = TOKENS.resolvedDark[n] || TOKENS.dark[n] || ''
+                var swatch = /^(#|rgb|hsl)/u.test(lightValue)
+                    ? '<span style="display:inline-block;width:18px;height:18px;border-radius:5px;background:' + esc(lightValue)
+                      + ';box-shadow:inset 0 0 0 1px var(--site-swatch-edge)"></span>'
                     : '<span style="color:var(--site-label-3)">—</span>'
                 return '<tr><td class="mono">' + esc(n) + '</td><td>' + swatch + '</td>'
-                    + '<td class="mono">' + esc(light) + '</td><td class="mono">' + esc(dark) + '</td></tr>'
+                    + '<td class="mono">' + esc(lightValue) + '</td><td class="mono">' + esc(darkValue) + '</td></tr>'
             }).join('')
-            + '</tbody></table></div></section>'
+            + '</tbody></table></div></section></div>'
+
         renderAside([
-            { title: '层级怎么表达', html: p('用背景层级（bg-base → bg-layer-1 → bg-layer-2 → bg-overlay）而不是阴影来表达深度。阴影是例外，不是默认手段。') },
-            { title: '来源', html: p('取值直接来自产品客户端包里的主题定义，浅色与深色各一套，未经改写。') },
+            { title: t('tokens.depthTitle'), html: p(t('tokens.depth')) },
+            { title: t('tokens.sourceTitle'), html: p(t('tokens.source')) },
         ])
     }
 
     /** Fallback page. */
     function pageNotFound() {
-        mainEl.innerHTML = '<div class="hero"><h1 class="hero__title">没有这一页</h1>'
-            + '<p class="hero__lede">链接可能指向了尚未生成的内容。回到<a href="' + esc(href('/')) + '">首页</a>，或用上方搜索。</p></div>'
+        mainEl.innerHTML = '<div class="main-inner"><div class="hero"><h1 class="hero__title">' + esc(t('notFound.title')) + '</h1>'
+            + '<p class="hero__lede">' + esc(t('notFound.lede')) + '</p></div></div>'
         renderAside([])
     }
 
     /* ── routing ───────────────────────────────────────────────────── */
 
     /**
-     * Parse the current hash into a path and a query.
+     * Parse the current hash.
      * @returns {{path: string, q: string}} route parts.
      */
     function route() {
@@ -562,8 +1037,7 @@
         var q = ''
         var at = raw.indexOf('?')
         if (at !== -1) {
-            var params = new URLSearchParams(raw.slice(at + 1))
-            q = params.get('q') || ''
+            q = (new URLSearchParams(raw.slice(at + 1))).get('q') || ''
             raw = raw.slice(0, at)
         }
         if (raw.charAt(0) !== '/') raw = '/' + raw
@@ -587,23 +1061,48 @@
         else pageNotFound()
 
         renderIndex(path)
+        renderTopnav(path)
+        hydrateIcons(document)
+
         Array.prototype.forEach.call(mainEl.querySelectorAll('[data-copy]'), function (button) {
             button.addEventListener('click', function () {
-                var pre = button.closest('.code').querySelector('pre code')
+                var pre = button.parentElement.parentElement.querySelector('pre code')
                 copy(pre.textContent, button)
             })
         })
         Array.prototype.forEach.call(mainEl.querySelectorAll('.icon-cell'), function (cell) {
             cell.addEventListener('click', function () {
-                var name = cell.getAttribute('title')
-                var icon = D.icons.filter(function (i) { return i.name === name })[0]
-                copy(icon ? icon.svg : '', null)
+                var name = cell.getAttribute('data-icon-name')
+                var found = ICONS.filter(function (i) { return i.name === name })[0]
+                copy(found ? found.svg : '', null)
                 cell.style.background = 'var(--site-good-soft)'
                 setTimeout(function () { cell.style.background = '' }, 400)
             })
         })
-        window.scrollTo(0, 0)
+
+        mountFrames(mainEl)
+        mountMotionLab()
+        mainEl.scrollTop = 0
         mainEl.focus({ preventScroll: true })
+    }
+
+    /**
+     * Render the quick links in the top bar.
+     * @param path - current route.
+     */
+    function renderTopnav(path) {
+        var links = [
+            { key: 'topnav.spec', href: '/spec', match: '/spec' },
+            { key: 'topnav.components', href: '/components', match: '/component' },
+            { key: 'topnav.seats', href: '/seats', match: '/seats' },
+            { key: 'topnav.icons', href: '/icons', match: '/icons' },
+            { key: 'topnav.tokens', href: '/tokens', match: '/tokens' },
+        ]
+        topnavEl.innerHTML = links.map(function (link) {
+            var active = path.indexOf(link.match) === 0
+            return '<a href="' + esc(href(link.href)) + '"' + (active ? ' style="color:var(--site-label)"' : '') + '>'
+                + esc(t(link.key)) + '</a>'
+        }).join('')
     }
 
     /* ── search ────────────────────────────────────────────────────── */
@@ -611,17 +1110,19 @@
     var INDEX = null
 
     /**
-     * Build (once) the cross-resource search index.
+     * Build the cross-resource search index once.
      * @returns the index.
      */
     function buildIndex() {
         if (INDEX !== null) return INDEX
         var out = []
-        D.specs.forEach(function (s) { out.push({ kind: '规范', name: s.title, desc: s.id, hash: '/spec/' + s.id }) })
-        D.components.forEach(function (c) { out.push({ kind: '组件', name: c.name, desc: c.summary || '', hash: '/component/' + c.id }) })
-        D.seats.forEach(function (s) { out.push({ kind: '座位', name: s.name, desc: s.purpose.slice(0, 72), hash: '/seats?q=' + encodeURIComponent(s.name) }) })
-        D.icons.forEach(function (i) { out.push({ kind: '图标', name: i.name, desc: i.component, hash: '/icons?q=' + encodeURIComponent(i.name) }) })
-        Object.keys(D.tokens.light).forEach(function (n) { out.push({ kind: '令牌', name: n, desc: '', hash: '/tokens?q=' + encodeURIComponent(n) }) })
+        SPECS.forEach(function (s) {
+            out.push({ kind: t('index.spec'), name: LANG === 'en' ? (s.shortEn || s.title) : s.title, desc: s.id, hash: '/spec/' + s.id })
+        })
+        COMPONENTS.forEach(function (c) { out.push({ kind: t('topnav.components'), name: c.name, desc: toPlain(c.summary).slice(0, 70), hash: '/component/' + c.id }) })
+        SEATS.forEach(function (s) { out.push({ kind: t('topnav.seats'), name: s.name, desc: s.purpose.slice(0, 70), hash: '/seats?q=' + encodeURIComponent(s.name) }) })
+        ICONS.forEach(function (i) { out.push({ kind: t('topnav.icons'), name: i.name, desc: i.component, hash: '/icons?q=' + encodeURIComponent(i.name) }) })
+        Object.keys(TOKENS.light).forEach(function (n) { out.push({ kind: t('topnav.tokens'), name: n, desc: '', hash: '/tokens?q=' + encodeURIComponent(n) }) })
         INDEX = out
         return out
     }
@@ -638,14 +1139,15 @@
         buildIndex().forEach(function (item) {
             var name = item.name.toLowerCase()
             var at = name.indexOf(q)
-            if (at === -1 && (item.desc || '').toLowerCase().indexOf(q) === -1) return
+            var inDesc = (item.desc || '').toLowerCase().indexOf(q) !== -1
+            if (at === -1 && !inDesc) return
             hits.push({ item: item, score: at === 0 ? 0 : at === -1 ? 2 : 1 })
         })
         hits.sort(function (a, b) { return a.score - b.score })
         return hits.slice(0, 24).map(function (h) { return h.item })
     }
 
-    /** Close the results panel. */
+    /** Hide the results panel. */
     function closeResults() {
         resultsEl.setAttribute('data-open', 'false')
         resultsPanel.innerHTML = ''
@@ -653,12 +1155,12 @@
 
     /**
      * Render search results.
-     * @param items - matched entries.
+     * @param items - matches.
      * @param activeIndex - highlighted row.
      */
     function showResults(items, activeIndex) {
         if (items.length === 0) {
-            resultsPanel.innerHTML = '<p class="results__empty">没有匹配项</p>'
+            resultsPanel.innerHTML = '<p class="results__empty">' + esc(t('search.empty')) + '</p>'
             resultsEl.setAttribute('data-open', 'true')
             return
         }
@@ -666,7 +1168,7 @@
             return '<a class="results__item" href="' + esc(href(item.hash)) + '" data-active="' + (i === activeIndex) + '">'
                 + '<span class="results__kind">' + esc(item.kind) + '</span>'
                 + '<span class="results__name">' + esc(item.name) + '</span>'
-                + '<span class="results__desc">' + esc((item.desc || '').slice(0, 60)) + '</span>'
+                + '<span class="results__desc">' + esc((item.desc || '').slice(0, 56)) + '</span>'
                 + '</a>'
         }).join('')
         resultsEl.setAttribute('data-open', 'true')
@@ -685,9 +1187,15 @@
     queryEl.addEventListener('keydown', function (event) {
         if (event.key === 'Escape') { closeResults(); queryEl.blur(); return }
         if (currentHits.length === 0) return
-        if (event.key === 'ArrowDown') { event.preventDefault(); activeHit = (activeHit + 1) % currentHits.length; showResults(currentHits, activeHit) }
-        if (event.key === 'ArrowUp') { event.preventDefault(); activeHit = (activeHit - 1 + currentHits.length) % currentHits.length; showResults(currentHits, activeHit) }
-        if (event.key === 'Enter' && activeHit >= 0) {
+        if (event.key === 'ArrowDown') {
+            event.preventDefault()
+            activeHit = (activeHit + 1) % currentHits.length
+            showResults(currentHits, activeHit)
+        } else if (event.key === 'ArrowUp') {
+            event.preventDefault()
+            activeHit = (activeHit - 1 + currentHits.length) % currentHits.length
+            showResults(currentHits, activeHit)
+        } else if (event.key === 'Enter' && activeHit >= 0) {
             event.preventDefault()
             location.hash = '#' + currentHits[activeHit].hash
             closeResults()
@@ -700,30 +1208,72 @@
     })
 
     document.addEventListener('keydown', function (event) {
-        if ((event.ctrlKey || event.metaKey) && event.key === 'k') { event.preventDefault(); queryEl.focus(); queryEl.select() }
+        if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+            event.preventDefault()
+            queryEl.focus()
+            queryEl.select()
+        }
     })
 
-    /* ── theme ─────────────────────────────────────────────────────── */
+    /* ── language ──────────────────────────────────────────────────── */
 
-    /** Apply a theme choice to the document. */
-    function applyTheme(mode) {
-        if (mode === 'light' || mode === 'dark') document.documentElement.setAttribute('data-theme', mode)
-        else document.documentElement.removeAttribute('data-theme')
-        var effective = mode
-        if (effective !== 'light' && effective !== 'dark') {
-            effective = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-        }
-        /* Component previews use the product's tokens, which the product selects
-         * with `body[data-ds-dark-theme]` — mirror it so specimens match the page. */
-        if (effective === 'dark') document.body.setAttribute('data-ds-dark-theme', '')
-        else document.body.removeAttribute('data-ds-dark-theme')
-        try { localStorage.setItem('dshdr-theme', mode) } catch (e) { /* private mode */ }
+    /** Render the language switch. */
+    function renderLangSwitch() {
+        langEl.innerHTML = ['zh', 'en'].map(function (code) {
+            var label = (I18N[code] && I18N[code].meta && I18N[code].meta.short) || code.toUpperCase()
+            return '<button type="button" role="tab" data-lang="' + code + '" aria-selected="' + (code === LANG) + '">'
+                + esc(label) + '</button>'
+        }).join('')
+        Array.prototype.forEach.call(langEl.querySelectorAll('button'), function (button) {
+            button.addEventListener('click', function () {
+                var next = button.getAttribute('data-lang')
+                if (next === LANG) return
+                LANG = next
+                save('dshdr-lang', LANG)
+                applyStaticText()
+                renderLangSwitch()
+                render()
+            })
+        })
     }
 
-    var stored = null
-    try { stored = localStorage.getItem('dshdr-theme') } catch (e) { stored = null }
-    applyTheme(stored || 'auto')
+    /** Apply translations to the static chrome and document metadata. */
+    function applyStaticText() {
+        document.documentElement.lang = LANG === 'zh' ? 'zh-CN' : 'en'
+        document.title = LANG === 'zh'
+            ? 'DeepSeek Design Resources — DeepSeek Harness 界面规范与资源'
+            : 'DeepSeek Design Resources — interface spec and resources for DeepSeek Harness'
+        Array.prototype.forEach.call(document.querySelectorAll('[data-t]'), function (node) {
+            node.textContent = t(node.getAttribute('data-t'))
+        })
+        queryEl.placeholder = t('search.placeholder')
+        queryEl.setAttribute('aria-label', t('search.placeholder'))
+        document.getElementById('navToggle').title = t('actions.nav')
+        document.getElementById('navToggle').setAttribute('aria-label', t('actions.nav'))
+        document.getElementById('asideToggle').title = t('actions.aside')
+        document.getElementById('asideToggle').setAttribute('aria-label', t('actions.aside'))
+        document.getElementById('theme').title = t('actions.theme')
+        document.getElementById('theme').setAttribute('aria-label', t('actions.theme'))
+    }
 
+    /* ── boot ──────────────────────────────────────────────────────── */
+
+    /* restore rail widths before first paint so nothing jumps */
+    var savedNav = parseFloat(load('dshdr-nav-w', ''))
+    var savedAside = parseFloat(load('dshdr-aside-w', ''))
+    if (Number.isFinite(savedNav)) setWidth('nav', clamp(savedNav, NAV_MIN, NAV_MAX))
+    if (Number.isFinite(savedAside)) setWidth('aside', clamp(savedAside, ASIDE_MIN, ASIDE_MAX))
+
+    setColumn('nav', load('dshdr-nav', 'shown') === 'shown')
+    setColumn('aside', load('dshdr-aside', 'shown') === 'shown')
+    initResizers()
+
+    document.getElementById('navToggle').addEventListener('click', function () {
+        setColumn('nav', shell.getAttribute('data-nav') !== 'shown')
+    })
+    document.getElementById('asideToggle').addEventListener('click', function () {
+        setColumn('aside', shell.getAttribute('data-aside') !== 'shown')
+    })
     document.getElementById('theme').addEventListener('click', function () {
         var current = document.documentElement.getAttribute('data-theme')
         var isDark = current !== null
@@ -732,13 +1282,16 @@
         applyTheme(isDark ? 'light' : 'dark')
     })
 
-    /* ── boot ──────────────────────────────────────────────────────── */
+    applyTheme(load('dshdr-theme', 'auto'))
+    renderLangSwitch()
+    applyStaticText()
 
     window.addEventListener('hashchange', render)
+    window.addEventListener('resize', refitFrames)
 
-    if (D.icons.length === 0 && D.seats.length === 0 && D.components.length === 0) {
-        mainEl.innerHTML = '<div class="hero"><h1 class="hero__title">数据尚未生成</h1>'
-            + '<p class="hero__lede">先在仓库根目录运行 <code>node scripts/collect-icons.mjs &amp;&amp; node scripts/collect-tokens.mjs &amp;&amp; node scripts/collect-slots.mjs &amp;&amp; node website/gen-site.mjs</code>。</p></div>'
+    if (ICONS.length === 0 && SEATS.length === 0 && COMPONENTS.length === 0) {
+        mainEl.innerHTML = '<div class="main-inner"><div class="hero"><h1 class="hero__title">Data not generated yet</h1>'
+            + '<p class="hero__lede">Run <code>node scripts/collect-icons.mjs &amp;&amp; node scripts/collect-tokens.mjs &amp;&amp; node scripts/collect-slots.mjs &amp;&amp; node website/gen-site.mjs</code> first.</p></div></div>'
     } else {
         render()
     }

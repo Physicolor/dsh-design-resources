@@ -59,6 +59,15 @@ node scripts/serve.mjs        # → http://127.0.0.1:4173/
 
 Every specimen renders as **live HTML**, not a mockup image, because these components were built with the WebUI stack in the first place. Pages on the left, the component in the middle, the rationale on the right ("why it is designed this way / when to reach for it / where the geometry comes from").
 
+The site follows this repository's own spec, so it is the spec's first implementation rather than just a description of it:
+
+- **each column scrolls on its own** while the page itself never does, under a liquid-glass top bar content passes behind;
+- **both rails drag to resize** (arrow keys work too) and remember their width and collapsed state;
+- **either rail collapses entirely**, with an animated open/close;
+- **Chinese and English** interface dictionaries; the spec prose and component docs are Chinese-only today and say so in English mode;
+- **light and dark are both authored** — a design that survives light mode and collapses in dark mode counts as a defect here;
+- **an operable motion bench** on the motion spec page: compare the five durations and both curves side by side, which is the one thing paper cannot do and an HTML reference can.
+
 ## Regenerating the data
 
 ```sh

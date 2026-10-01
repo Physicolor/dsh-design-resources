@@ -25,6 +25,8 @@ import { tmpdir } from 'node:os'
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const SITE = join(ROOT, 'website')
 const SHOTS = join(ROOT, 'docs', 'screenshots')
+/** `DSHDR_NO_SHOTS=1` skips the (slow) screenshot pass while iterating. */
+const SKIP_SHOTS = process.env.DSHDR_NO_SHOTS === '1'
 
 const results = []
 /**
@@ -267,13 +269,81 @@ if (browserPath === null) {
     await goto(base + '#/tokens')
     check('token table renders', await evaluate(`document.querySelectorAll('.table-wrap tbody tr').length > 50`), String(await evaluate(`document.querySelectorAll('.table-wrap tbody tr').length`)))
 
+    /* ── shell behaviour: one page, three independently scrolling columns ── */
+
+    await goto(base)
+    check('page itself does not scroll', await evaluate(`document.documentElement.scrollHeight <= document.documentElement.clientHeight + 1`))
+    check('three columns scroll on their own', await evaluate(`(function(){var c=document.querySelectorAll('.col__scroll');if(c.length!==3)return false;for(var i=0;i<3;i++){if(getComputedStyle(c[i]).overflowY!=='auto')return false}return true})()`))
+    check('top bar is glass', await evaluate(`(function(){var s=getComputedStyle(document.querySelector('.topbar'));var v=s.backdropFilter||s.webkitBackdropFilter||'';return v.indexOf('blur')!==-1})()`))
+    check('custom scrollbar styling', await evaluate(`(function(){var sheets=[].slice.call(document.styleSheets);return sheets.some(function(s){try{return [].slice.call(s.cssRules).some(function(r){return (r.cssText||'').indexOf('scrollbar-thumb')!==-1})}catch(e){return false}})})()`))
+
+    // rail toggles collapse and restore
+    await evaluate(`document.getElementById('navToggle').click()`)
+    check('nav collapses', await evaluate(`document.getElementById('shell').getAttribute('data-nav')==='hidden'`))
+    await evaluate(`document.getElementById('navToggle').click()`)
+    check('nav restores', await evaluate(`document.getElementById('shell').getAttribute('data-nav')==='shown'`))
+    await evaluate(`document.getElementById('asideToggle').click()`)
+    check('aside collapses', await evaluate(`document.getElementById('shell').getAttribute('data-aside')==='hidden'`))
+    await evaluate(`document.getElementById('asideToggle').click()`)
+
+    // drag handles: present, focusable, keyboard-operable
+    check('two rail handles', await evaluate(`document.querySelectorAll('.resizer').length === 2`))
+    const widthBefore = await evaluate(`getComputedStyle(document.getElementById('shell')).getPropertyValue('--nav-w').trim()`)
+    await evaluate(`(function(){var h=document.querySelector('.resizer[data-resize="nav"]');h.focus();h.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true,cancelable:true}));return 1})()`)
+    const widthAfter = await evaluate(`getComputedStyle(document.getElementById('shell')).getPropertyValue('--nav-w').trim()`)
+    check('rail resizes from the keyboard', widthBefore !== widthAfter, `${widthBefore} → ${widthAfter}`)
+
+    // markdown conversion of the spec documents
+    await goto(base + '#/spec/70-checklist')
+    check('spec renders tables', await evaluate(`document.querySelectorAll('.prose table').length > 0`), String(await evaluate(`document.querySelectorAll('.prose table').length`)))
+
+    // the motion spec carries a bench you can actually operate
+    await goto(base + '#/spec/40-motion')
+    check('motion bench renders', await evaluate(`document.querySelectorAll('[data-lab]').length === 1`))
+    await evaluate(`document.querySelector('[data-lab-play]').click()`)
+    check('motion bench animates', await evaluate(`(document.querySelector('[data-lab-box]').style.transform || '').indexOf('translateX') === 0`))
+    await evaluate(`document.querySelector('[data-lab-durations] button[data-ms="350"]').click()`)
+    check('motion bench switches duration', await evaluate(`document.querySelector('[data-lab-box]').style.transition.indexOf('350ms') !== -1`))
+    await evaluate(`document.querySelector('[data-lab-curves] button[data-curve="linear"]').click()`)
+    check('motion bench switches curve', await evaluate(`document.querySelector('[data-lab-box]').style.transition.indexOf('linear') !== -1`))
+
+    // bilingual switch
+    await goto(base)
+    await evaluate(`document.querySelector('#lang button[data-lang="en"]').click()`)
+    check('language switches to english', await evaluate(`document.documentElement.lang === 'en'`), await evaluate(`document.documentElement.lang`))
+    const firstGroup = await evaluate(`(function(){var el=document.querySelector('.index__head');return el===null?'':el.textContent.trim()})()`)
+    check('english chrome is translated', firstGroup !== '' && !/[\u4e00-\u9fa5]/u.test(firstGroup), firstGroup)
+    check('english search placeholder', await evaluate(`document.getElementById('q').placeholder.toLowerCase().indexOf('search') !== -1`))
+    await evaluate(`document.querySelector('#lang button[data-lang="zh"]').click()`)
+    check('language switches back', await evaluate(`document.documentElement.lang === 'zh-CN'`))
+
+    // the specimen must grow to its demo instead of scrolling inside a scroll
+    await goto(base + '#/component/button')
+    const frameFits = await evaluate('(function(){var f=document.querySelector(".specimen__frame");if(!f)return false;var h=parseFloat(f.style.height||"0");var doc=f.contentDocument;if(!doc)return false;return h>0&&Math.abs(h-doc.documentElement.scrollHeight)<10})()')
+    check('specimen frame fits its content', frameFits)
+
+    // theme switch mirrors onto the specimen tokens
+    await evaluate(`document.getElementById('theme').click()`)
+    check('dark theme applies', await evaluate(`document.body.hasAttribute('data-ds-dark-theme')`))
+    await evaluate(`document.getElementById('theme').click()`)
+    check('light theme restores', await evaluate(`!document.body.hasAttribute('data-ds-dark-theme')`))
+
     check('no uncaught page errors', pageErrors.length === 0, pageErrors.slice(0, 2).join(' | '))
     check('no console errors', consoleErrors.length === 0, consoleErrors.slice(0, 2).join(' | '))
 
     // screenshots for the record — a slow first paint must not fail the run
+    if (SKIP_SHOTS) {
+      console.log('SKIP  screenshots (DSHDR_NO_SHOTS=1)')
+    } else {
     await mkdir(SHOTS, { recursive: true })
     let shots = 0
-    for (const [name, route] of [['home', '#/'], ['components', '#/components'], ['component', '#/component/button'], ['icons', '#/icons'], ['seats', '#/seats'], ['spec', '#/spec'], ['tokens', '#/tokens']]) {
+
+    /**
+     * Photograph one route.
+     * @param name - output file stem.
+     * @param route - hash route.
+     */
+    async function shoot(name, route) {
       try {
         await goto(base + route)
         // a leftover query from the search check would sit over the screenshot
@@ -285,8 +355,24 @@ if (browserPath === null) {
         console.log(`WARN  screenshot ${name} skipped — ${error.message}`)
       }
     }
-    check('screenshots written', shots > 0, `${shots} files`)
 
+    for (const [name, route] of [['home', '#/'], ['components', '#/components'], ['component', '#/component/button'], ['icons', '#/icons'], ['seats', '#/seats'], ['spec', '#/spec'], ['tokens', '#/tokens']]) {
+      await shoot(name, route)
+    }
+
+    /* A dark pass: several defects a shell like this fixes are invisible in
+     * light mode and obvious in dark, so the record has to include both. */
+    await goto(base)
+    if (!(await evaluate(`document.body.hasAttribute('data-ds-dark-theme')`))) {
+      await evaluate(`document.getElementById('theme').click()`)
+    }
+    for (const [name, route] of [['home-dark', '#/'], ['component-dark', '#/component/button']]) {
+      await shoot(name, route)
+    }
+    await evaluate(`document.getElementById('theme').click()`)
+
+    check('screenshots written', shots > 0, `${shots} files`)
+    }
     ws.close()
   } catch (error) {
     check('browser pass completed', false, error.message)

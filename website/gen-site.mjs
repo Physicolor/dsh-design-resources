@@ -186,6 +186,27 @@ function loadComponents() {
 /* ── specs ─────────────────────────────────────────────────────────── */
 
 /**
+ * Spec presentation metadata.
+ *
+ * A numeric filename order (`00`, `10`, `11`, `20`…) is a good filing system and
+ * a poor table of contents: nobody looking for "how do I draw an icon" thinks
+ * "fifty". So the navigation groups by intent and shows a short title, while the
+ * document keeps its number in its own heading.
+ */
+const SPEC_META = {
+  '00-overview': { group: 'basics', short: '总览', shortEn: 'Overview' },
+  '10-frame-layout': { group: 'basics', short: '主页面骨架', shortEn: 'Frame layout' },
+  '11-slot-seats': { group: 'basics', short: '座位目录与选择', shortEn: 'Seat directory' },
+  '20-controls': { group: 'visual', short: '控件', shortEn: 'Controls' },
+  '30-tokens': { group: 'visual', short: '颜色与字体', shortEn: 'Colour and type' },
+  '40-motion': { group: 'visual', short: '动效', shortEn: 'Motion' },
+  '50-icons': { group: 'visual', short: '图标', shortEn: 'Icons' },
+  '60-accessibility': { group: 'quality', short: '可访问性', shortEn: 'Accessibility' },
+  '70-checklist': { group: 'quality', short: '提交前自检', shortEn: 'Checklist' },
+  '80-conflicts': { group: 'quality', short: '冲突裁决', shortEn: 'Conflicts' },
+}
+
+/**
  * Load and render every spec document.
  * @returns spec records in filename order.
  */
@@ -198,8 +219,29 @@ function loadSpecs() {
     .map(f => {
       const md = readFileSync(join(dir, f), 'utf8')
       const id = basename(f, '.md')
-      return { id, file: `spec/${f}`, title: titleOf(md, id), html: mdToHtml(md), chars: md.length }
+      const meta = SPEC_META[id] ?? { group: 'basics', short: id, shortEn: id }
+      return {
+        id,
+        file: `spec/${f}`,
+        title: titleOf(md, id),
+        short: meta.short,
+        shortEn: meta.shortEn,
+        group: meta.group,
+        html: mdToHtml(md),
+        chars: md.length,
+      }
     })
+}
+
+/**
+ * Load the interface dictionaries.
+ * @returns { zh, en } — each an object of nested translation tables.
+ */
+function loadI18n() {
+  return {
+    zh: readJson('language/zh.json', {}),
+    en: readJson('language/en.json', {}),
+  }
 }
 
 /* ── assemble ──────────────────────────────────────────────────────── */
@@ -216,6 +258,7 @@ const slots = readJson('data/slots.json', { seats: [], counts: {} })
 const tokens = readJson('data/tokens.json', { palette: {}, light: {}, dark: {}, resolved: { light: {}, dark: {} } })
 const components = loadComponents()
 const specs = loadSpecs()
+const i18n = loadI18n()
 
 const data = {
   generatedAt: new Date().toISOString(),
@@ -233,6 +276,7 @@ const data = {
     tokens: tokens.source ?? null,
     slots: slots.source ?? null,
   },
+  i18n,
   icons: iconItems,
   brand: {
     fish: readText('icons/brand/fish.svg'),

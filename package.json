@@ -28,6 +28,7 @@
         "spec/**/*.md",
         "rules/**/*.json",
         "data/**/*.json",
+        "language/**/*.json",
         "components/**",
         "icons/**",
         "website/**"
