@@ -232,9 +232,12 @@ function scoreCoverage(elements) {
   return elements.map(el => {
     const tokens = keyTokens(el.key)
     const pluginOwned = /dsx-|lc-|duc-|dye-|mrat-|_6nhg2/i.test(el.cls)
-    const anchor = anchors.find(a => el.key.toLowerCase().includes(String(a.match).toLowerCase()))
+    /* 锚点要连着原始类名一起匹配：身份里的哈希已经被剥掉了（`_0Fr0Ha_stepper` → `stepper`），
+     * 而「这个 section 是哪套模块」这条线索只在没剥的那半截里。 */
+    const hay = `${el.key} ${el.cls ?? ''}`.toLowerCase()
+    const anchor = anchors.find(a => hay.includes(String(a.match).toLowerCase()))
     const base = {
-      key: el.key, slot: el.slot, count: el.count, size: el.style?.size ?? '',
+      key: el.key, cls: el.cls ?? '', slot: el.slot, count: el.count, size: el.style?.size ?? '',
       steps: (el.steps ?? []).slice(0, 6), texts: el.texts ?? [], arias: el.arias ?? [],
       pluginOwned,
     }

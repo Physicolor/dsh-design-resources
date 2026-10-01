@@ -1,16 +1,17 @@
 {
   "$comment": "清单里的每个身份在规范/组件语料里有没有位置。covered = 人工锚点命中；referenced = 语料里出现过这个词（要复核）；missing = 待办。",
-  "generatedAt": "2026-10-01T16:53:11.406Z",
+  "generatedAt": "2026-10-01T17:24:47.138Z",
   "counts": {
     "identities": 355,
-    "covered": 192,
-    "referenced": 81,
-    "missing": 82,
+    "covered": 258,
+    "referenced": 53,
+    "missing": 44,
     "pluginOwned": 119
   },
   "coverage": [
     {
       "key": "|svg|",
+      "cls": "",
       "slot": "sidebar.brand.mark",
       "count": 576,
       "size": "24x18",
@@ -55,6 +56,7 @@
     },
     {
       "key": "duc-heat-cell l0|div|",
+      "cls": "duc-heat-cell l0",
       "slot": "shell.overlay",
       "count": 325,
       "size": "15x15",
@@ -76,6 +78,7 @@
     },
     {
       "key": "title|span|",
+      "cls": "hIlkoa_title",
       "slot": "sidebar.workspaces",
       "count": 181,
       "size": "218x20",
@@ -125,6 +128,7 @@
     },
     {
       "key": "navLabel|span|",
+      "cls": "wCInkW_navLabel",
       "slot": "",
       "count": 110,
       "size": "112x22",
@@ -156,6 +160,7 @@
     },
     {
       "key": "|span|",
+      "cls": "",
       "slot": "conversation.composer",
       "count": 106,
       "size": "156x32",
@@ -190,21 +195,22 @@
           "id": "pill"
         },
         {
+          "where": "components/controls/ShortcutKeys/SPEC.md",
+          "token": "span",
+          "kind": "component",
+          "id": "shortcutkeys"
+        },
+        {
           "where": "components/controls/Switch/SPEC.md",
           "token": "span",
           "kind": "component",
           "id": "switch"
-        },
-        {
-          "where": "components/controls/Tag/SPEC.md",
-          "token": "span",
-          "kind": "component",
-          "id": "tag"
         }
       ]
     },
     {
       "key": "time|span|",
+      "cls": "hIlkoa_time",
       "slot": "sidebar.workspaces",
       "count": 105,
       "size": "38x16",
@@ -236,6 +242,7 @@
     },
     {
       "key": "navCell|button|",
+      "cls": "wCInkW_navCell",
       "slot": "",
       "count": 99,
       "size": "164x40",
@@ -262,6 +269,7 @@
     },
     {
       "key": "sessionRow|div|treeitem",
+      "cls": "hIlkoa_sessionRow",
       "slot": "sidebar.workspaces",
       "count": 92,
       "size": "256x32",
@@ -288,6 +296,7 @@
     },
     {
       "key": "navIcon|svg|",
+      "cls": "wCInkW_navIcon",
       "slot": "",
       "count": 88,
       "size": "16x16",
@@ -314,6 +323,7 @@
     },
     {
       "key": "trigger|button|",
+      "cls": "wCInkW_trigger",
       "slot": "settings.launcher",
       "count": 84,
       "size": "260x34",
@@ -344,6 +354,7 @@
     },
     {
       "key": "projectRow|div|treeitem",
+      "cls": "hIlkoa_projectRow",
       "slot": "sidebar.workspaces",
       "count": 75,
       "size": "256x34",
@@ -370,6 +381,7 @@
     },
     {
       "key": "panelRow|button|",
+      "cls": "_2H3hWW_panelRow",
       "slot": "sidebar",
       "count": 43,
       "size": "252x36",
@@ -399,6 +411,7 @@
     },
     {
       "key": "tab|button|tab",
+      "cls": "Dc7zOa_tab",
       "slot": "conversation.session.header",
       "count": 42,
       "size": "26x26",
@@ -430,6 +443,7 @@
     },
     {
       "key": "|div|",
+      "cls": "",
       "slot": "settings.general.item",
       "count": 42,
       "size": "413x22",
@@ -477,6 +491,7 @@
     },
     {
       "key": "icon|svg|",
+      "cls": "dzXS4q_icon",
       "slot": "conversation.session.header.corner",
       "count": 40,
       "size": "15x15",
@@ -521,6 +536,7 @@
     },
     {
       "key": "pill|button|",
+      "cls": "iq1doa_pill",
       "slot": "conversation.composer.dock",
       "count": 40,
       "size": "153x22",
@@ -551,6 +567,7 @@
     },
     {
       "key": "title|button|",
+      "cls": "WW4l1q_title",
       "slot": "conversation.view",
       "count": 36,
       "size": "106x19",
@@ -595,6 +612,7 @@
     },
     {
       "key": "text label|span|",
+      "cls": "_text_1rdzk_17 WW4l1q_label",
       "slot": "conversation.view",
       "count": 36,
       "size": "84x19",
@@ -644,6 +662,7 @@
     },
     {
       "key": "panelTitle wide|span|",
+      "cls": "_2H3hWW_panelTitle _2H3hWW_wide",
       "slot": "sidebar",
       "count": 30,
       "size": "28x22",
@@ -673,6 +692,7 @@
     },
     {
       "key": "spinner|svg|",
+      "cls": "_spinner_1i3xo_37",
       "slot": "sidebar.workspaces",
       "count": 30,
       "size": "14x14",
@@ -717,6 +737,7 @@
     },
     {
       "key": "iconButton|button|",
+      "cls": "_9lTDKa_iconButton",
       "slot": "sidebar.workspaces",
       "count": 29,
       "size": "28x28",
@@ -738,15 +759,16 @@
       "coverage": "covered",
       "hits": [
         {
-          "where": "spec/20-controls.md",
-          "token": "iconButton",
+          "where": "components/layout/SidebarRow",
+          "token": "_9lTDKa_",
           "kind": "anchor",
-          "id": "28×28 图标按钮"
+          "id": "左栏搜索：输入框、清除按钮、分组标题与头部动作"
         }
       ]
     },
     {
       "key": "card|div|",
+      "cls": "RlGAzG_card",
       "slot": "conversation.composer.bar",
       "count": 29,
       "size": "780x114",
@@ -773,6 +795,7 @@
     },
     {
       "key": "lc-heat-cell lc-heat-1|button|",
+      "cls": "lc-heat-cell lc-heat-1",
       "slot": "shell.overlay",
       "count": 29,
       "size": "20x20",
@@ -798,6 +821,7 @@
     },
     {
       "key": "chevron|svg|",
+      "cls": "Hqq-bq_chevron",
       "slot": "conversation.composer",
       "count": 28,
       "size": "12x12",
@@ -810,24 +834,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "components/data-display/DisclosureRow/disclosure-row.module.css",
-          "token": "chevron",
-          "kind": "component",
-          "id": "disclosurerow"
-        },
-        {
-          "where": "components/data-display/DisclosureRow/SPEC.md",
-          "token": "chevron",
-          "kind": "component",
-          "id": "disclosurerow"
+          "where": "spec/10-frame-layout.md",
+          "token": "Hqq-bq_",
+          "kind": "anchor",
+          "id": "新会话页的工作区行与「预览版」徽标（Hqq-bq_workspace / previewBadge / folder）"
         }
       ]
     },
     {
       "key": "star|span|",
+      "cls": "nUhMVa_star",
       "slot": "settings.section",
       "count": 24,
       "size": "45x15",
@@ -876,6 +895,7 @@
     },
     {
       "key": "frame|div|",
+      "cls": "BynINW_frame",
       "slot": "root",
       "count": 22,
       "size": "1570x905",
@@ -920,6 +940,7 @@
     },
     {
       "key": "sidebarCol|div|",
+      "cls": "BynINW_sidebarCol",
       "slot": "root",
       "count": 22,
       "size": "280x905",
@@ -946,6 +967,7 @@
     },
     {
       "key": "root quietBars|div|",
+      "cls": "_2H3hWW_root _2H3hWW_quietBars",
       "slot": "sidebar",
       "count": 22,
       "size": "280x905",
@@ -990,6 +1012,7 @@
     },
     {
       "key": "iconButton toggle|button|",
+      "cls": "_2H3hWW_iconButton _2H3hWW_toggle",
       "slot": "sidebar",
       "count": 22,
       "size": "28x28",
@@ -1018,6 +1041,7 @@
     },
     {
       "key": "panelIcon|svg|",
+      "cls": "_2H3hWW_panelIcon",
       "slot": "sidebar",
       "count": 22,
       "size": "16x16",
@@ -1044,6 +1068,7 @@
     },
     {
       "key": "newSession|button|",
+      "cls": "_2H3hWW_newSession",
       "slot": "sidebar",
       "count": 22,
       "size": "252x38",
@@ -1072,6 +1097,7 @@
     },
     {
       "key": "searchButton|button|",
+      "cls": "_9lTDKa_searchButton",
       "slot": "sidebar.workspaces",
       "count": 22,
       "size": "28x28",
@@ -1091,15 +1117,16 @@
       "coverage": "covered",
       "hits": [
         {
-          "where": "spec/20-controls.md",
-          "token": "searchButton",
+          "where": "components/layout/SidebarRow",
+          "token": "_9lTDKa_",
           "kind": "anchor",
-          "id": "左栏搜索按钮"
+          "id": "左栏搜索：输入框、清除按钮、分组标题与头部动作"
         }
       ]
     },
     {
       "key": "duc-sidebar-entry|button|",
+      "cls": "duc-sidebar-entry",
       "slot": "sidebar.footer.action",
       "count": 22,
       "size": "260x34",
@@ -1128,6 +1155,7 @@
     },
     {
       "key": "duc-label|span|",
+      "cls": "duc-label",
       "slot": "sidebar.footer.action",
       "count": 22,
       "size": "56x22",
@@ -1156,6 +1184,7 @@
     },
     {
       "key": "lc-ov-entry|button|",
+      "cls": "lc-ov-entry",
       "slot": "sidebar.footer.action",
       "count": 22,
       "size": "260x42",
@@ -1184,6 +1213,7 @@
     },
     {
       "key": "lc-ov-entry-icon|svg|",
+      "cls": "lc-ov-entry-icon",
       "slot": "sidebar.footer.action",
       "count": 22,
       "size": "16x16",
@@ -1210,6 +1240,7 @@
     },
     {
       "key": "lc-ov-entry-label|span|",
+      "cls": "lc-ov-entry-label",
       "slot": "sidebar.footer.action",
       "count": 22,
       "size": "218x22",
@@ -1238,6 +1269,7 @@
     },
     {
       "key": "-ngf_W_triggerLabel|span|",
+      "cls": "-ngf_W_triggerLabel",
       "slot": "settings.trigger",
       "count": 22,
       "size": "28x22",
@@ -1254,11 +1286,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/layout/SettingsRow",
+          "token": "-ngf_W_triggerLabel",
+          "kind": "anchor",
+          "id": "左栏底部「设置」行的标签（14/22）"
+        }
+      ]
     },
     {
       "key": "|button|",
+      "cls": "",
       "slot": "",
       "count": 22,
       "size": "44x44",
@@ -1310,6 +1350,7 @@
     },
     {
       "key": "root|div|",
+      "cls": "Dc7zOa_root",
       "slot": "main.conversation",
       "count": 21,
       "size": "1290x905",
@@ -1354,6 +1395,7 @@
     },
     {
       "key": "input|div|textbox",
+      "cls": "RlGAzG_input",
       "slot": "conversation.composer.bar",
       "count": 21,
       "size": "776x52",
@@ -1401,6 +1443,7 @@
     },
     {
       "key": "placeholder|div|",
+      "cls": "RlGAzG_placeholder",
       "slot": "conversation.composer.bar",
       "count": 21,
       "size": "754x24",
@@ -1436,6 +1479,7 @@
     },
     {
       "key": "add|button|",
+      "cls": "RlGAzG_add",
       "slot": "conversation.composer.bar",
       "count": 21,
       "size": "28x28",
@@ -1482,6 +1526,7 @@
     },
     {
       "key": "dlU_AG_trigger|button|",
+      "cls": "dlU_AG_trigger",
       "slot": "conversation.input.permission",
       "count": 21,
       "size": "100x28",
@@ -1502,14 +1547,15 @@
       "hits": [
         {
           "where": "spec/20-controls.md",
-          "token": "dlU_AG_trigger",
+          "token": "dlU_AG_",
           "kind": "anchor",
-          "id": "输入区权限胶囊（完全权限 / 计划模式）"
+          "id": "输入区权限选择器与它的菜单选项（含 EXP 角标）"
         }
       ]
     },
     {
       "key": "primary|button|",
+      "cls": "RlGAzG_primary",
       "slot": "conversation.composer.bar",
       "count": 21,
       "size": "34x34",
@@ -1542,21 +1588,22 @@
           "id": "30-tokens"
         },
         {
+          "where": "spec/50-icons.md",
+          "token": "primary",
+          "kind": "spec",
+          "id": "50-icons"
+        },
+        {
           "where": "spec/60-accessibility.md",
           "token": "primary",
           "kind": "spec",
           "id": "60-accessibility"
-        },
-        {
-          "where": "spec/70-checklist.md",
-          "token": "primary",
-          "kind": "spec",
-          "id": "70-checklist"
         }
       ]
     },
     {
       "key": "tabs|div|tablist",
+      "cls": "Dc7zOa_tabs",
       "slot": "conversation.session.header",
       "count": 21,
       "size": "139x26",
@@ -1585,6 +1632,7 @@
     },
     {
       "key": "button ghost sm button|button|",
+      "cls": "_button_1rv3m_2 _ghost_1rv3m_45 _sm_1rv3m_28 dzXS4q_button",
       "slot": "conversation.session.header.corner",
       "count": 20,
       "size": "28x28",
@@ -1601,36 +1649,19 @@
         "打开右侧边栏"
       ],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/30-tokens.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "spec/50-icons.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "50-icons"
+          "where": "components/controls/Button",
+          "token": "1rv3m",
+          "kind": "anchor",
+          "id": "产品的 Button 模块（_button_1rv3m_2，含 md/sm/primary/ghost/outline/toolbar/icon 变体）"
         }
       ]
     },
     {
       "key": "dsx-stats-active|body|",
+      "cls": "dsx-stats-active",
       "slot": "",
       "count": 20,
       "size": "1570x905",
@@ -1657,6 +1688,7 @@
     },
     {
       "key": "header|header|",
+      "cls": "Dc7zOa_header",
       "slot": "conversation.header",
       "count": 20,
       "size": "1290x50",
@@ -1701,6 +1733,7 @@
     },
     {
       "key": "crumb crumbCurrent|span|",
+      "cls": "Dc7zOa_crumb Dc7zOa_crumbCurrent",
       "slot": "conversation.session.header",
       "count": 20,
       "size": "236x28",
@@ -1730,6 +1763,7 @@
     },
     {
       "key": "triggerLabel|span|",
+      "cls": "EBLgjq_triggerLabel",
       "slot": "conversation.session.header.actions",
       "count": 20,
       "size": "60x16",
@@ -1746,11 +1780,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "EBLgjq_",
+          "kind": "anchor",
+          "id": "会话头部 chip（智能体团队 / 标准模式）与其成员行"
+        }
+      ]
     },
     {
       "key": "tab tabActive|button|tab",
+      "cls": "Dc7zOa_tab Dc7zOa_tabActive",
       "slot": "conversation.session.header",
       "count": 20,
       "size": "26x26",
@@ -1779,6 +1821,7 @@
     },
     {
       "key": "split|div|",
+      "cls": "WgQWqa_split",
       "slot": "conversation.session.header.utilities",
       "count": 20,
       "size": "43x24",
@@ -1805,6 +1848,7 @@
     },
     {
       "key": "main|button|",
+      "cls": "WgQWqa_main",
       "slot": "conversation.session.header.utilities",
       "count": 20,
       "size": "23x22",
@@ -1833,6 +1877,7 @@
     },
     {
       "key": "chevron|button|",
+      "cls": "WgQWqa_chevron",
       "slot": "conversation.session.header.utilities",
       "count": 20,
       "size": "18x22",
@@ -1867,6 +1912,7 @@
     },
     {
       "key": "button ghost sm moreButton|button|",
+      "cls": "_button_1rv3m_2 _ghost_1rv3m_45 _sm_1rv3m_28 _4Nnt6q_moreButton",
       "slot": "conversation.session.header.utilities",
       "count": 20,
       "size": "28x28",
@@ -1883,36 +1929,19 @@
         "更多操作"
       ],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/30-tokens.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "spec/50-icons.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "50-icons"
+          "where": "components/controls/Button",
+          "token": "1rv3m",
+          "kind": "anchor",
+          "id": "产品的 Button 模块（_button_1rv3m_2，含 md/sm/primary/ghost/outline/toolbar/icon 变体）"
         }
       ]
     },
     {
       "key": "dsx-stats-capsule|button|",
+      "cls": "dsx-stats-capsule",
       "slot": "conversation.session.header.utilities",
       "count": 20,
       "size": "28x28",
@@ -1941,6 +1970,7 @@
     },
     {
       "key": "composerSeat|div|",
+      "cls": "Dc7zOa_composerSeat",
       "slot": "main.conversation",
       "count": 20,
       "size": "853x128",
@@ -1967,6 +1997,7 @@
     },
     {
       "key": "card|li|",
+      "cls": "RotMhW_card",
       "slot": "settings.plugins.tab",
       "count": 19,
       "size": "277x84",
@@ -1980,15 +2011,16 @@
       "coverage": "covered",
       "hits": [
         {
-          "where": "components/surfaces/Card",
-          "token": "card",
+          "where": "components/patterns/SettingsPage",
+          "token": "RotMhW_",
           "kind": "anchor",
-          "id": "卡片容器"
+          "id": "内置插件页的卡片与分组开关（groupToggle 76 × 22）"
         }
       ]
     },
     {
       "key": "dpp-chat-launcher__whale|span|",
+      "cls": "dpp-chat-launcher__whale",
       "slot": "",
       "count": 18,
       "size": "32x32",
@@ -2008,6 +2040,7 @@
     },
     {
       "key": "lc-ov-mini-label|span|",
+      "cls": "lc-ov-mini-label",
       "slot": "shell.overlay",
       "count": 18,
       "size": "22x15",
@@ -2033,6 +2066,7 @@
     },
     {
       "key": "lc-ov-mini-value|span|",
+      "cls": "lc-ov-mini-value",
       "slot": "shell.overlay",
       "count": 18,
       "size": "49x15",
@@ -2059,6 +2093,7 @@
     },
     {
       "key": "runningWhaleAnimated|span|",
+      "cls": "xz4KEq_runningWhaleAnimated",
       "slot": "conversation.view",
       "count": 16,
       "size": "14x14",
@@ -2085,6 +2120,7 @@
     },
     {
       "key": "text|span|",
+      "cls": "_text_1rdzk_17",
       "slot": "conversation.view",
       "count": 16,
       "size": "165x22",
@@ -2134,6 +2170,7 @@
     },
     {
       "key": "cardContent|button|",
+      "cls": "RotMhW_cardContent",
       "slot": "settings.plugins.tab",
       "count": 16,
       "size": "275x82",
@@ -2150,15 +2187,16 @@
       "coverage": "covered",
       "hits": [
         {
-          "where": "components/surfaces/Card",
-          "token": "card",
+          "where": "components/patterns/SettingsPage",
+          "token": "RotMhW_",
           "kind": "anchor",
-          "id": "卡片容器"
+          "id": "内置插件页的卡片与分组开关（groupToggle 76 × 22）"
         }
       ]
     },
     {
       "key": "cardTitle|strong|",
+      "cls": "RotMhW_cardTitle",
       "slot": "settings.plugins.tab",
       "count": 16,
       "size": "223x20",
@@ -2176,15 +2214,16 @@
       "coverage": "covered",
       "hits": [
         {
-          "where": "components/surfaces/Card",
-          "token": "card",
+          "where": "components/patterns/SettingsPage",
+          "token": "RotMhW_",
           "kind": "anchor",
-          "id": "卡片容器"
+          "id": "内置插件页的卡片与分组开关（groupToggle 76 × 22）"
         }
       ]
     },
     {
       "key": "brand wide|button|",
+      "cls": "_2H3hWW_brand _2H3hWW_wide",
       "slot": "sidebar",
       "count": 15,
       "size": "216x24",
@@ -2231,6 +2270,7 @@
     },
     {
       "key": "newSessionLabel wide|span|",
+      "cls": "_2H3hWW_newSessionLabel _2H3hWW_wide",
       "slot": "sidebar",
       "count": 15,
       "size": "42x22",
@@ -2259,6 +2299,7 @@
     },
     {
       "key": "list|div|tree",
+      "cls": "_9lTDKa_list",
       "slot": "sidebar.workspaces",
       "count": 15,
       "size": "270x527",
@@ -2275,36 +2316,19 @@
         "会话"
       ],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "list",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/10-frame-layout.md",
-          "token": "list",
-          "kind": "spec",
-          "id": "10-frame-layout"
-        },
-        {
-          "where": "spec/11-slot-seats.md",
-          "token": "list",
-          "kind": "spec",
-          "id": "11-slot-seats"
-        },
-        {
-          "where": "spec/70-checklist.md",
-          "token": "list",
-          "kind": "spec",
-          "id": "70-checklist"
+          "where": "components/layout/SidebarRow",
+          "token": "_9lTDKa_",
+          "kind": "anchor",
+          "id": "左栏搜索：输入框、清除按钮、分组标题与头部动作"
         }
       ]
     },
     {
       "key": "sessionOverflowButton|button|",
+      "cls": "_9lTDKa_sessionOverflowButton",
       "slot": "sidebar.workspaces",
       "count": 15,
       "size": "256x28",
@@ -2325,14 +2349,15 @@
       "hits": [
         {
           "where": "components/layout/SidebarRow",
-          "token": "sessionOverflow",
+          "token": "_9lTDKa_",
           "kind": "anchor",
-          "id": "会话行悬停才出现的「更多」按钮"
+          "id": "左栏搜索：输入框、清除按钮、分组标题与头部动作"
         }
       ]
     },
     {
       "key": "fade|span|",
+      "cls": "_9lTDKa_fade",
       "slot": "sidebar.workspaces",
       "count": 15,
       "size": "256x24",
@@ -2347,24 +2372,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "components/feedback/Toast/SPEC.md",
-          "token": "fade",
-          "kind": "component",
-          "id": "toast"
-        },
-        {
-          "where": "components/feedback/Toast/toast.module.css",
-          "token": "fade",
-          "kind": "component",
-          "id": "toast"
+          "where": "components/layout/SidebarRow",
+          "token": "_9lTDKa_",
+          "kind": "anchor",
+          "id": "左栏搜索：输入框、清除按钮、分组标题与头部动作"
         }
       ]
     },
     {
       "key": "cardDescription|span|",
+      "cls": "RotMhW_cardDescription",
       "slot": "settings.plugins.tab",
       "count": 15,
       "size": "247x36",
@@ -2382,15 +2402,16 @@
       "coverage": "covered",
       "hits": [
         {
-          "where": "components/surfaces/Card",
-          "token": "card",
+          "where": "components/patterns/SettingsPage",
+          "token": "RotMhW_",
           "kind": "anchor",
-          "id": "卡片容器"
+          "id": "内置插件页的卡片与分组开关（groupToggle 76 × 22）"
         }
       ]
     },
     {
       "key": "sectionLabel wide|span|",
+      "cls": "_9lTDKa_sectionLabel _9lTDKa_wide",
       "slot": "sidebar.workspaces",
       "count": 14,
       "size": "39x20",
@@ -2410,15 +2431,16 @@
       "coverage": "covered",
       "hits": [
         {
-          "where": "spec/10-frame-layout.md",
-          "token": "sectionLabel",
+          "where": "components/layout/SidebarRow",
+          "token": "_9lTDKa_",
           "kind": "anchor",
-          "id": "左栏分组小标题（工作区 / 未分组）"
+          "id": "左栏搜索：输入框、清除按钮、分组标题与头部动作"
         }
       ]
     },
     {
       "key": "iconButton wide|button|",
+      "cls": "_9lTDKa_iconButton _9lTDKa_wide",
       "slot": "sidebar.workspaces",
       "count": 14,
       "size": "28x28",
@@ -2438,15 +2460,16 @@
       "coverage": "covered",
       "hits": [
         {
-          "where": "spec/20-controls.md",
-          "token": "iconButton",
+          "where": "components/layout/SidebarRow",
+          "token": "_9lTDKa_",
           "kind": "anchor",
-          "id": "28×28 图标按钮"
+          "id": "左栏搜索：输入框、清除按钮、分组标题与头部动作"
         }
       ]
     },
     {
       "key": "sessionRow selected|div|treeitem",
+      "cls": "hIlkoa_sessionRow hIlkoa_selected",
       "slot": "sidebar.workspaces",
       "count": 14,
       "size": "256x32",
@@ -2473,6 +2496,7 @@
     },
     {
       "key": "title|div|",
+      "cls": "_3HsggG_title",
       "slot": "settings.general.item",
       "count": 14,
       "size": "398x22",
@@ -2518,6 +2542,7 @@
     },
     {
       "key": "duc-profile-row-label|span|",
+      "cls": "duc-profile-row-label",
       "slot": "shell.overlay",
       "count": 14,
       "size": "248x18",
@@ -2544,6 +2569,7 @@
     },
     {
       "key": "duc-profile-row-value|span|",
+      "cls": "duc-profile-row-value",
       "slot": "shell.overlay",
       "count": 14,
       "size": "40x17",
@@ -2570,6 +2596,7 @@
     },
     {
       "key": "lc-sl-dot|i|",
+      "cls": "lc-sl-dot",
       "slot": "shell.overlay",
       "count": 14,
       "size": "8x8",
@@ -2591,6 +2618,7 @@
     },
     {
       "key": "lc-sl-label|span|",
+      "cls": "lc-sl-label",
       "slot": "shell.overlay",
       "count": 14,
       "size": "130x15",
@@ -2617,6 +2645,7 @@
     },
     {
       "key": "lc-sl-pct|span|",
+      "cls": "lc-sl-pct",
       "slot": "shell.overlay",
       "count": 14,
       "size": "34x16",
@@ -2643,6 +2672,7 @@
     },
     {
       "key": "lc-sl-sub|div|",
+      "cls": "lc-sl-sub",
       "slot": "shell.overlay",
       "count": 14,
       "size": "170x14",
@@ -2669,6 +2699,7 @@
     },
     {
       "key": "lc-heat-cell lc-heat-2|button|",
+      "cls": "lc-heat-cell lc-heat-2",
       "slot": "shell.overlay",
       "count": 14,
       "size": "20x20",
@@ -2694,6 +2725,7 @@
     },
     {
       "key": "cardIcon|span|",
+      "cls": "fO69Vq_cardIcon",
       "slot": "main",
       "count": 13,
       "size": "50x50",
@@ -2715,6 +2747,7 @@
     },
     {
       "key": "cardTitle cardOpen|button|",
+      "cls": "fO69Vq_cardTitle fO69Vq_cardOpen",
       "slot": "main",
       "count": 13,
       "size": "70x20",
@@ -2745,6 +2778,7 @@
     },
     {
       "key": "dsx-trash|button|",
+      "cls": "dsx-trash",
       "slot": "settings.section",
       "count": 13,
       "size": "24x24",
@@ -2768,6 +2802,7 @@
     },
     {
       "key": "duc-heat-axis-label|span|",
+      "cls": "duc-heat-axis-label",
       "slot": "shell.overlay",
       "count": 13,
       "size": "22x13",
@@ -2794,6 +2829,7 @@
     },
     {
       "key": "cardDesc|span|",
+      "cls": "fO69Vq_cardDesc",
       "slot": "main",
       "count": 12,
       "size": "846x18",
@@ -2821,6 +2857,7 @@
     },
     {
       "key": "button outline sm|button|",
+      "cls": "_button_1rv3m_2 _outline_1rv3m_54 _sm_1rv3m_28",
       "slot": "settings.action",
       "count": 12,
       "size": "94x28",
@@ -2837,36 +2874,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/30-tokens.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "spec/50-icons.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "50-icons"
+          "where": "components/controls/Button",
+          "token": "1rv3m",
+          "kind": "anchor",
+          "id": "产品的 Button 模块（_button_1rv3m_2，含 md/sm/primary/ghost/outline/toolbar/icon 变体）"
         }
       ]
     },
     {
       "key": "tag|span|",
+      "cls": "_tag_brmue_4",
       "slot": "settings.plugins.tab",
       "count": 12,
       "size": "49x19",
@@ -2883,36 +2903,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "components/controls/Input/SPEC.md",
-          "token": "span",
-          "kind": "component",
-          "id": "input"
-        },
-        {
-          "where": "components/controls/Pill/SPEC.md",
-          "token": "span",
-          "kind": "component",
-          "id": "pill"
-        },
-        {
-          "where": "components/controls/Switch/SPEC.md",
-          "token": "span",
-          "kind": "component",
-          "id": "switch"
-        },
-        {
-          "where": "components/controls/Tag/SPEC.md",
-          "token": "span",
-          "kind": "component",
-          "id": "tag"
+          "where": "components/controls/Tag",
+          "token": "brmue",
+          "kind": "anchor",
+          "id": "产品的 Tag 模块（_tag_brmue_4，与 Button/Pill/Tabs 同批）"
         }
       ]
     },
     {
       "key": "switch|button|switch",
+      "cls": "_switch_1ik0f_5",
       "slot": "main",
       "count": 11,
       "size": "36x20",
@@ -2932,14 +2935,15 @@
       "hits": [
         {
           "where": "components/controls/Switch",
-          "token": "switch",
+          "token": "1ik0f",
           "kind": "anchor",
-          "id": "开关"
+          "id": "产品的 Switch 模块（_switch_1ik0f_5 / _thumb_1ik0f_33）"
         }
       ]
     },
     {
       "key": "thumb|span|",
+      "cls": "_thumb_1ik0f_33",
       "slot": "main",
       "count": 11,
       "size": "16x16",
@@ -2951,36 +2955,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "components/controls/Switch/SPEC.md",
-          "token": "thumb",
-          "kind": "component",
-          "id": "switch"
-        },
-        {
-          "where": "components/controls/Switch/switch.module.css",
-          "token": "thumb",
-          "kind": "component",
-          "id": "switch"
-        },
-        {
-          "where": "components/data-display/MiniBar/mini-bar.module.css",
-          "token": "thumb",
-          "kind": "component",
-          "id": "minibar"
-        },
-        {
-          "where": "components/data-display/MiniBar/SPEC.md",
-          "token": "thumb",
-          "kind": "component",
-          "id": "minibar"
+          "where": "components/controls/Switch",
+          "token": "1ik0f",
+          "kind": "anchor",
+          "id": "产品的 Switch 模块（_switch_1ik0f_5 / _thumb_1ik0f_33）"
         }
       ]
     },
     {
       "key": "overlay|div|presentation",
+      "cls": "wCInkW_overlay",
       "slot": "",
       "count": 11,
       "size": "1570x871",
@@ -3025,6 +3012,7 @@
     },
     {
       "key": "mask|div|",
+      "cls": "wCInkW_mask",
       "slot": "",
       "count": 11,
       "size": "1570x871",
@@ -3048,27 +3036,28 @@
           "id": "20-controls"
         },
         {
-          "where": "components/patterns/SettingsPage/SPEC.md",
+          "where": "spec/50-icons.md",
           "token": "mask",
-          "kind": "component",
-          "id": "settingspage"
+          "kind": "spec",
+          "id": "50-icons"
         },
         {
-          "where": "components/surfaces/Modal/modal.module.css",
+          "where": "components/controls/ShortcutKeys/README.md",
           "token": "mask",
           "kind": "component",
-          "id": "modal"
+          "id": "shortcutkeys"
         },
         {
-          "where": "components/surfaces/Modal/SPEC.md",
+          "where": "components/controls/ShortcutKeys/SPEC.md",
           "token": "mask",
           "kind": "component",
-          "id": "modal"
+          "id": "shortcutkeys"
         }
       ]
     },
     {
       "key": "panel|div|dialog",
+      "cls": "wCInkW_panel",
       "slot": "",
       "count": 11,
       "size": "800x800",
@@ -3086,6 +3075,12 @@
       "coverage": "referenced",
       "hits": [
         {
+          "where": "spec/20-controls.md",
+          "token": "dialog",
+          "kind": "spec",
+          "id": "20-controls"
+        },
+        {
           "where": "spec/40-motion.md",
           "token": "panel",
           "kind": "spec",
@@ -3102,17 +3097,12 @@
           "token": "panel",
           "kind": "component",
           "id": "pill"
-        },
-        {
-          "where": "components/controls/SegmentedControl/SPEC.md",
-          "token": "panel",
-          "kind": "component",
-          "id": "segmentedcontrol"
         }
       ]
     },
     {
       "key": "navCell active|button|",
+      "cls": "wCInkW_navCell wCInkW_active",
       "slot": "",
       "count": 11,
       "size": "164x40",
@@ -3139,6 +3129,7 @@
     },
     {
       "key": "close|button|",
+      "cls": "wCInkW_close",
       "slot": "",
       "count": 11,
       "size": "28x28",
@@ -3183,6 +3174,7 @@
     },
     {
       "key": "desc|div|",
+      "cls": "_3HsggG_desc",
       "slot": "settings.general.item",
       "count": 10,
       "size": "398x18",
@@ -3228,6 +3220,7 @@
     },
     {
       "key": "duc-stat-label|div|",
+      "cls": "duc-stat-label",
       "slot": "shell.overlay",
       "count": 9,
       "size": "173x18",
@@ -3254,6 +3247,7 @@
     },
     {
       "key": "lc-ov-usage-tick|span|",
+      "cls": "lc-ov-usage-tick",
       "slot": "shell.overlay",
       "count": 9,
       "size": "29x11",
@@ -3280,6 +3274,7 @@
     },
     {
       "key": "selector|button|",
+      "cls": "_3HsggG_selector",
       "slot": "settings.general.item",
       "count": 8,
       "size": "110x36",
@@ -3302,6 +3297,7 @@
     },
     {
       "key": "button ghost md helpButton|button|",
+      "cls": "_button_1rv3m_2 _ghost_1rv3m_45 _md_1rv3m_23 KZf9OG_helpButton",
       "slot": "settings.section",
       "count": 8,
       "size": "60x36",
@@ -3318,36 +3314,19 @@
         "模式说明: PTC 模式"
       ],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/30-tokens.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "spec/50-icons.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "50-icons"
+          "where": "components/patterns/SettingsPage",
+          "token": "KZf9OG_",
+          "kind": "anchor",
+          "id": "设置卡片与其分组标题（groupHead 564 × 16）"
         }
       ]
     },
     {
       "key": "pill interactive|button|",
+      "cls": "_pill_1bqmh_1 _interactive_1bqmh_16",
       "slot": "settings.section",
       "count": 8,
       "size": "86x24",
@@ -3374,6 +3353,7 @@
     },
     {
       "key": "nm nmLink|a|",
+      "cls": "nUhMVa_nm nUhMVa_nmLink",
       "slot": "settings.section",
       "count": 8,
       "size": "175x22",
@@ -3392,6 +3372,7 @@
     },
     {
       "key": "repoMark|svg|",
+      "cls": "nUhMVa_repoMark",
       "slot": "settings.section",
       "count": 8,
       "size": "12x12",
@@ -3406,6 +3387,7 @@
     },
     {
       "key": "av|img|",
+      "cls": "nUhMVa_av",
       "slot": "settings.section",
       "count": 8,
       "size": "16x16",
@@ -3433,6 +3415,7 @@
     },
     {
       "key": "owner|span|",
+      "cls": "nUhMVa_owner",
       "slot": "settings.section",
       "count": 8,
       "size": "53x15",
@@ -3459,6 +3442,7 @@
     },
     {
       "key": "desc descClamp|div|",
+      "cls": "nUhMVa_desc nUhMVa_descClamp",
       "slot": "settings.section",
       "count": 8,
       "size": "243x72",
@@ -3503,6 +3487,7 @@
     },
     {
       "key": "dsh_notification_toggleRow|label|",
+      "cls": "dsh_notification_toggleRow",
       "slot": "settings.section",
       "count": 8,
       "size": "530x43",
@@ -3517,6 +3502,7 @@
     },
     {
       "key": "dsh_notification_checkbox|input|",
+      "cls": "dsh_notification_checkbox",
       "slot": "settings.section",
       "count": 8,
       "size": "16x16",
@@ -3531,6 +3517,7 @@
     },
     {
       "key": "dsh_notification_toggleLabel|span|",
+      "cls": "dsh_notification_toggleLabel",
       "slot": "settings.section",
       "count": 8,
       "size": "312x22",
@@ -3550,6 +3537,7 @@
     },
     {
       "key": "duc-nav-cell|button|",
+      "cls": "duc-nav-cell",
       "slot": "shell.overlay",
       "count": 8,
       "size": "164x40",
@@ -3571,6 +3559,7 @@
     },
     {
       "key": "duc-seg-btn|button|",
+      "cls": "duc-seg-btn",
       "slot": "shell.overlay",
       "count": 8,
       "size": "44x24",
@@ -3597,6 +3586,7 @@
     },
     {
       "key": "duc-stat-value|div|",
+      "cls": "duc-stat-value",
       "slot": "shell.overlay",
       "count": 8,
       "size": "173x30",
@@ -3623,6 +3613,7 @@
     },
     {
       "key": "duc-heat-cell l1|div|",
+      "cls": "duc-heat-cell l1",
       "slot": "shell.overlay",
       "count": 8,
       "size": "15x15",
@@ -3644,6 +3635,7 @@
     },
     {
       "key": "duc-heat-cell l4|div|",
+      "cls": "duc-heat-cell l4",
       "slot": "shell.overlay",
       "count": 8,
       "size": "15x15",
@@ -3665,6 +3657,7 @@
     },
     {
       "key": "duc-heat-cell l2|div|",
+      "cls": "duc-heat-cell l2",
       "slot": "shell.overlay",
       "count": 8,
       "size": "15x15",
@@ -3686,6 +3679,7 @@
     },
     {
       "key": "duc-heat-cell l3|div|",
+      "cls": "duc-heat-cell l3",
       "slot": "shell.overlay",
       "count": 8,
       "size": "15x15",
@@ -3707,6 +3701,7 @@
     },
     {
       "key": "duc-heat-cell l5|div|",
+      "cls": "duc-heat-cell l5",
       "slot": "shell.overlay",
       "count": 8,
       "size": "15x15",
@@ -3728,6 +3723,7 @@
     },
     {
       "key": "duc-profile-kv-label|span|",
+      "cls": "duc-profile-kv-label",
       "slot": "shell.overlay",
       "count": 8,
       "size": "260x18",
@@ -3754,6 +3750,7 @@
     },
     {
       "key": "|b|",
+      "cls": "",
       "slot": "shell.overlay",
       "count": 8,
       "size": "25x14",
@@ -3798,6 +3795,7 @@
     },
     {
       "key": "duc-profile-kv-value|span|",
+      "cls": "duc-profile-kv-value",
       "slot": "shell.overlay",
       "count": 7,
       "size": "28x18",
@@ -3824,6 +3822,7 @@
     },
     {
       "key": "lc-ov-usage-day|span|",
+      "cls": "lc-ov-usage-day",
       "slot": "shell.overlay",
       "count": 7,
       "size": "66x11",
@@ -3850,6 +3849,7 @@
     },
     {
       "key": "lc-heat-cell lc-heat-0|span|",
+      "cls": "lc-heat-cell lc-heat-0",
       "slot": "shell.overlay",
       "count": 7,
       "size": "20x20",
@@ -3871,6 +3871,7 @@
     },
     {
       "key": "cc-miniMeterLabel|span|",
+      "cls": "cc-miniMeterLabel",
       "slot": "settings.section",
       "count": 6,
       "size": "58x18",
@@ -3889,6 +3890,7 @@
     },
     {
       "key": "cc-miniMeterValue|span|",
+      "cls": "cc-miniMeterValue",
       "slot": "settings.section",
       "count": 6,
       "size": "23x18",
@@ -3908,6 +3910,7 @@
     },
     {
       "key": "hostRequirement|span|",
+      "cls": "nUhMVa_hostRequirement",
       "slot": "settings.section",
       "count": 6,
       "size": "91x20",
@@ -3926,6 +3929,7 @@
     },
     {
       "key": "favoriteBtn|button|",
+      "cls": "nUhMVa_favoriteBtn",
       "slot": "settings.section",
       "count": 6,
       "size": "14x14",
@@ -3942,6 +3946,7 @@
     },
     {
       "key": "commentsLink|button|",
+      "cls": "nUhMVa_commentsLink",
       "slot": "settings.section",
       "count": 6,
       "size": "22x16",
@@ -3958,6 +3963,7 @@
     },
     {
       "key": "cardMore|button|",
+      "cls": "nUhMVa_cardMore",
       "slot": "settings.section",
       "count": 6,
       "size": "16x16",
@@ -3983,6 +3989,7 @@
     },
     {
       "key": "button primary sm installBtn|button|",
+      "cls": "_button_1rv3m_2 _primary_1rv3m_36 _sm_1rv3m_28 nUhMVa_installBtn",
       "slot": "settings.section",
       "count": 6,
       "size": "64x28",
@@ -3994,36 +4001,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/30-tokens.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "spec/50-icons.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "50-icons"
+          "where": "components/controls/Button",
+          "token": "1rv3m",
+          "kind": "anchor",
+          "id": "产品的 Button 模块（_button_1rv3m_2，含 md/sm/primary/ghost/outline/toolbar/icon 变体）"
         }
       ]
     },
     {
       "key": "duc-profile-title|div|",
+      "cls": "duc-profile-title",
       "slot": "shell.overlay",
       "count": 6,
       "size": "296x18",
@@ -4050,6 +4040,7 @@
     },
     {
       "key": "lc-gran-btn|button|",
+      "cls": "lc-gran-btn",
       "slot": "shell.overlay",
       "count": 6,
       "size": "67x17",
@@ -4076,6 +4067,7 @@
     },
     {
       "key": "lc-stat lc-ov-kpi|div|",
+      "cls": "lc-stat lc-ov-kpi",
       "slot": "shell.overlay",
       "count": 6,
       "size": "171x79",
@@ -4097,6 +4089,7 @@
     },
     {
       "key": "lc-stat-label|span|",
+      "cls": "lc-stat-label",
       "slot": "shell.overlay",
       "count": 6,
       "size": "44x15",
@@ -4123,6 +4116,7 @@
     },
     {
       "key": "lc-stat-value|span|",
+      "cls": "lc-stat-value",
       "slot": "shell.overlay",
       "count": 6,
       "size": "24x27",
@@ -4149,6 +4143,7 @@
     },
     {
       "key": "lc-stat-sub|span|",
+      "cls": "lc-stat-sub",
       "slot": "shell.overlay",
       "count": 6,
       "size": "46x15",
@@ -4175,6 +4170,7 @@
     },
     {
       "key": "lc-ov-usage-bar lc-ov-usage-tokens|span|",
+      "cls": "lc-ov-usage-bar lc-ov-usage-tokens",
       "slot": "shell.overlay",
       "count": 6,
       "size": "10x36",
@@ -4196,6 +4192,7 @@
     },
     {
       "key": "lc-ov-session|button|",
+      "cls": "lc-ov-session",
       "slot": "shell.overlay",
       "count": 6,
       "size": "366x174",
@@ -4217,6 +4214,7 @@
     },
     {
       "key": "lc-ov-session-title|span|",
+      "cls": "lc-ov-session-title",
       "slot": "shell.overlay",
       "count": 6,
       "size": "270x17",
@@ -4243,6 +4241,7 @@
     },
     {
       "key": "lc-ov-session-time|span|",
+      "cls": "lc-ov-session-time",
       "slot": "shell.overlay",
       "count": 6,
       "size": "48x15",
@@ -4269,6 +4268,7 @@
     },
     {
       "key": "lc-ov-session-created|span|",
+      "cls": "lc-ov-session-created",
       "slot": "shell.overlay",
       "count": 6,
       "size": "51x14",
@@ -4293,6 +4293,7 @@
     },
     {
       "key": "lc-ov-crumb-project|span|",
+      "cls": "lc-ov-crumb-project",
       "slot": "shell.overlay",
       "count": 6,
       "size": "104x16",
@@ -4316,6 +4317,7 @@
     },
     {
       "key": "lc-ov-session-preview|span|",
+      "cls": "lc-ov-session-preview",
       "slot": "shell.overlay",
       "count": 6,
       "size": "340x24",
@@ -4337,6 +4339,7 @@
     },
     {
       "key": "lc-ov-session-preview-label|span|",
+      "cls": "lc-ov-session-preview-label",
       "slot": "shell.overlay",
       "count": 6,
       "size": "40x14",
@@ -4360,6 +4363,7 @@
     },
     {
       "key": "lc-ov-session-preview-text|span|",
+      "cls": "lc-ov-session-preview-text",
       "slot": "shell.overlay",
       "count": 6,
       "size": "294x17",
@@ -4386,6 +4390,7 @@
     },
     {
       "key": "tab|button|",
+      "cls": "nUhMVa_tab",
       "slot": "settings.section",
       "count": 5,
       "size": "50x33",
@@ -4412,6 +4417,7 @@
     },
     {
       "key": "dsh_notification_card|div|",
+      "cls": "dsh_notification_card",
       "slot": "settings.section",
       "count": 5,
       "size": "564x73",
@@ -4433,6 +4439,7 @@
     },
     {
       "key": "lc-heat-cell lc-heat-3|button|",
+      "cls": "lc-heat-cell lc-heat-3",
       "slot": "shell.overlay",
       "count": 5,
       "size": "20x20",
@@ -4458,6 +4465,7 @@
     },
     {
       "key": "lc-ov-chip|button|",
+      "cls": "lc-ov-chip",
       "slot": "shell.overlay",
       "count": 5,
       "size": "64x23",
@@ -4479,6 +4487,7 @@
     },
     {
       "key": "tag statusTag|span|",
+      "cls": "_tag_brmue_4 fO69Vq_statusTag",
       "slot": "main",
       "count": 4,
       "size": "44x18",
@@ -4493,15 +4502,16 @@
       "coverage": "covered",
       "hits": [
         {
-          "where": "spec/20-controls.md",
-          "token": "statusTag",
+          "where": "components/controls/Tag",
+          "token": "brmue",
           "kind": "anchor",
-          "id": "插件行标题旁的「实验性」标签（高 18、圆角 999、底色为状态色 10%）"
+          "id": "产品的 Tag 模块（_tag_brmue_4，与 Button/Pill/Tabs 同批）"
         }
       ]
     },
     {
       "key": "themeCube|button|",
+      "cls": "v01cdW_themeCube",
       "slot": "settings.general.item",
       "count": 4,
       "size": "183x84",
@@ -4524,6 +4534,7 @@
     },
     {
       "key": "uitw-stepper|div|",
+      "cls": "uitw-stepper",
       "slot": "settings.general.item",
       "count": 4,
       "size": "72x36",
@@ -4539,6 +4550,7 @@
     },
     {
       "key": "uitw-stepper-value|span|",
+      "cls": "uitw-stepper-value",
       "slot": "settings.general.item",
       "count": 4,
       "size": "23x22",
@@ -4557,6 +4569,7 @@
     },
     {
       "key": "uitw-stepper-unit|span|",
+      "cls": "uitw-stepper-unit",
       "slot": "settings.general.item",
       "count": 4,
       "size": "15x22",
@@ -4574,6 +4587,7 @@
     },
     {
       "key": "cc-groupTitle|h3|",
+      "cls": "cc-groupTitle",
       "slot": "settings.section",
       "count": 4,
       "size": "28x22",
@@ -4593,6 +4607,7 @@
     },
     {
       "key": "cc-rowTitle|label|",
+      "cls": "cc-rowTitle",
       "slot": "settings.section",
       "count": 4,
       "size": "98x22",
@@ -4612,6 +4627,7 @@
     },
     {
       "key": "cardMain|button|",
+      "cls": "KZf9OG_cardMain",
       "slot": "settings.section",
       "count": 4,
       "size": "274x119",
@@ -4628,15 +4644,16 @@
       "coverage": "covered",
       "hits": [
         {
-          "where": "components/surfaces/Card",
-          "token": "card",
+          "where": "components/patterns/SettingsPage",
+          "token": "KZf9OG_",
           "kind": "anchor",
-          "id": "卡片容器"
+          "id": "设置卡片与其分组标题（groupHead 564 × 16）"
         }
       ]
     },
     {
       "key": "cardName|span|",
+      "cls": "KZf9OG_cardName",
       "slot": "settings.section",
       "count": 4,
       "size": "60x21",
@@ -4654,15 +4671,16 @@
       "coverage": "covered",
       "hits": [
         {
-          "where": "components/surfaces/Card",
-          "token": "card",
+          "where": "components/patterns/SettingsPage",
+          "token": "KZf9OG_",
           "kind": "anchor",
-          "id": "卡片容器"
+          "id": "设置卡片与其分组标题（groupHead 564 × 16）"
         }
       ]
     },
     {
       "key": "cardId|code|",
+      "cls": "KZf9OG_cardId",
       "slot": "settings.section",
       "count": 4,
       "size": "44x21",
@@ -4680,15 +4698,16 @@
       "coverage": "covered",
       "hits": [
         {
-          "where": "components/surfaces/Card",
-          "token": "card",
+          "where": "components/patterns/SettingsPage",
+          "token": "KZf9OG_",
           "kind": "anchor",
-          "id": "卡片容器"
+          "id": "设置卡片与其分组标题（groupHead 564 × 16）"
         }
       ]
     },
     {
       "key": "cardFoot|div|",
+      "cls": "KZf9OG_cardFoot",
       "slot": "settings.section",
       "count": 4,
       "size": "274x49",
@@ -4701,15 +4720,16 @@
       "coverage": "covered",
       "hits": [
         {
-          "where": "components/surfaces/Card",
-          "token": "card",
+          "where": "components/patterns/SettingsPage",
+          "token": "KZf9OG_",
           "kind": "anchor",
-          "id": "卡片容器"
+          "id": "设置卡片与其分组标题（groupHead 564 × 16）"
         }
       ]
     },
     {
       "key": "dsh_notification_cardTitle|div|",
+      "cls": "dsh_notification_cardTitle",
       "slot": "settings.section",
       "count": 4,
       "size": "530x22",
@@ -4736,6 +4756,7 @@
     },
     {
       "key": "lc-card-title-text|span|",
+      "cls": "lc-card-title-text",
       "slot": "shell.overlay",
       "count": 4,
       "size": "66x17",
@@ -4762,6 +4783,7 @@
     },
     {
       "key": "lc-ov-chip-n|span|",
+      "cls": "lc-ov-chip-n",
       "slot": "shell.overlay",
       "count": 4,
       "size": "16x15",
@@ -4788,6 +4810,7 @@
     },
     {
       "key": "cell|button|menuitem",
+      "cls": "wq12jW_cell",
       "slot": "",
       "count": 4,
       "size": "240x34",
@@ -4810,6 +4833,7 @@
     },
     {
       "key": "cellLabel|span|",
+      "cls": "wq12jW_cellLabel",
       "slot": "",
       "count": 4,
       "size": "26x20",
@@ -4823,11 +4847,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/20-controls.md",
+          "token": "cellLabel",
+          "kind": "anchor",
+          "id": "选择型菜单单元的左标签（13/20 主色）"
+        }
+      ]
     },
     {
       "key": "cellValue|span|",
+      "cls": "wq12jW_cellValue",
       "slot": "",
       "count": 4,
       "size": "174x20",
@@ -4841,11 +4873,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/20-controls.md",
+          "token": "cellValue",
+          "kind": "anchor",
+          "id": "选择型菜单单元的当前值（13/20 三级色）"
+        }
+      ]
     },
     {
       "key": "cellChevron|svg|",
+      "cls": "wq12jW_cellChevron",
       "slot": "",
       "count": 4,
       "size": "12x12",
@@ -4856,11 +4896,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/20-controls.md",
+          "token": "cellChevron",
+          "kind": "anchor",
+          "id": "选择型菜单单元的折叠角（12×12）"
+        }
+      ]
     },
     {
       "key": "count|span|",
+      "cls": "fO69Vq_count",
       "slot": "main",
       "count": 3,
       "size": "8x19",
@@ -4905,6 +4953,7 @@
     },
     {
       "key": "enhc-page-title|h2|",
+      "cls": "enhc-page-title",
       "slot": "settings.general.item",
       "count": 3,
       "size": "564x26",
@@ -4931,6 +4980,7 @@
     },
     {
       "key": "enhc-page-intro|p|",
+      "cls": "enhc-page-intro",
       "slot": "settings.general.item",
       "count": 3,
       "size": "564x33",
@@ -4957,6 +5007,7 @@
     },
     {
       "key": "intro enhc-page-intro|p|",
+      "cls": "_3nPmjq_intro enhc-page-intro",
       "slot": "settings.section",
       "count": 3,
       "size": "564x33",
@@ -4972,18 +5023,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "components/patterns/SettingsPage/SPEC.md",
-          "token": "intro",
-          "kind": "component",
-          "id": "settingspage"
+          "where": "components/patterns/SettingsPage",
+          "token": "_3nPmjq_",
+          "kind": "anchor",
+          "id": "设置卡片：卡片圆角、行名 14/22 · 500、次要按钮 46 × 28"
         }
       ]
     },
     {
       "key": "rowCard|li|",
+      "cls": "_3nPmjq_rowCard",
       "slot": "settings.section",
       "count": 3,
       "size": "564x54",
@@ -4996,15 +5048,16 @@
       "coverage": "covered",
       "hits": [
         {
-          "where": "components/surfaces/Card",
-          "token": "rowCard",
+          "where": "components/patterns/SettingsPage",
+          "token": "_3nPmjq_",
           "kind": "anchor",
-          "id": "设置页成行卡片"
+          "id": "设置卡片：卡片圆角、行名 14/22 · 500、次要按钮 46 × 28"
         }
       ]
     },
     {
       "key": "rowName|span|",
+      "cls": "_3nPmjq_rowName",
       "slot": "settings.section",
       "count": 3,
       "size": "95x22",
@@ -5018,11 +5071,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/patterns/SettingsPage",
+          "token": "_3nPmjq_",
+          "kind": "anchor",
+          "id": "设置卡片：卡片圆角、行名 14/22 · 500、次要按钮 46 × 28"
+        }
+      ]
     },
     {
       "key": "secondaryButton|button|",
+      "cls": "_3nPmjq_secondaryButton",
       "slot": "settings.section",
       "count": 3,
       "size": "46x28",
@@ -5038,11 +5099,19 @@
         "编辑 Command Code (commandcode)"
       ],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/patterns/SettingsPage",
+          "token": "_3nPmjq_",
+          "kind": "anchor",
+          "id": "设置卡片：卡片圆角、行名 14/22 · 500、次要按钮 46 × 28"
+        }
+      ]
     },
     {
       "key": "cc-group cc-groupDivided|section|",
+      "cls": "cc-group cc-groupDivided",
       "slot": "settings.section",
       "count": 3,
       "size": "564x225",
@@ -5061,6 +5130,7 @@
     },
     {
       "key": "cc-rowDesc|div|",
+      "cls": "cc-rowDesc",
       "slot": "settings.section",
       "count": 3,
       "size": "488x18",
@@ -5079,6 +5149,7 @@
     },
     {
       "key": "cc-toggle|input|switch",
+      "cls": "cc-toggle",
       "slot": "settings.section",
       "count": 3,
       "size": "36x20",
@@ -5100,6 +5171,7 @@
     },
     {
       "key": "dsx-tab|button|",
+      "cls": "dsx-tab",
       "slot": "settings.section",
       "count": 3,
       "size": "56x34",
@@ -5125,6 +5197,7 @@
     },
     {
       "key": "dsh_notification_toggleDesc|span|",
+      "cls": "dsh_notification_toggleDesc",
       "slot": "settings.section",
       "count": 3,
       "size": "312x20",
@@ -5143,6 +5216,7 @@
     },
     {
       "key": "dsh_notification_cardDesc|div|",
+      "cls": "dsh_notification_cardDesc",
       "slot": "settings.section",
       "count": 3,
       "size": "530x20",
@@ -5168,6 +5242,7 @@
     },
     {
       "key": "lc-gran-btn lc-gran-on|button|",
+      "cls": "lc-gran-btn lc-gran-on",
       "slot": "shell.overlay",
       "count": 3,
       "size": "56x17",
@@ -5193,6 +5268,7 @@
     },
     {
       "key": "lc-heat-wd|span|",
+      "cls": "lc-heat-wd",
       "slot": "shell.overlay",
       "count": 3,
       "size": "27x20",
@@ -5218,6 +5294,7 @@
     },
     {
       "key": "lc-heat-mon|span|",
+      "cls": "lc-heat-mon",
       "slot": "shell.overlay",
       "count": 3,
       "size": "15x18",
@@ -5243,6 +5320,7 @@
     },
     {
       "key": "panel panelCompact|div|dialog",
+      "cls": "EBLgjq_panel EBLgjq_panelCompact",
       "slot": "",
       "count": 3,
       "size": "320x141",
@@ -5256,36 +5334,19 @@
         "智能体团队"
       ],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "spec/40-motion.md",
-          "token": "panel",
-          "kind": "spec",
-          "id": "40-motion"
-        },
-        {
-          "where": "spec/50-icons.md",
-          "token": "panel",
-          "kind": "spec",
-          "id": "50-icons"
-        },
-        {
-          "where": "components/controls/Pill/SPEC.md",
-          "token": "panel",
-          "kind": "component",
-          "id": "pill"
-        },
-        {
-          "where": "components/controls/SegmentedControl/SPEC.md",
-          "token": "panel",
-          "kind": "component",
-          "id": "segmentedcontrol"
+          "where": "spec/10-frame-layout.md",
+          "token": "EBLgjq_",
+          "kind": "anchor",
+          "id": "会话头部 chip（智能体团队 / 标准模式）与其成员行"
         }
       ]
     },
     {
       "key": "member|button|",
+      "cls": "EBLgjq_member",
       "slot": "",
       "count": 3,
       "size": "288x52",
@@ -5297,11 +5358,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/20-controls.md",
+          "token": "EBLgjq_member",
+          "kind": "anchor",
+          "id": "会话头部 chip 展开后的成员行（288 × 52、圆角 8）"
+        }
+      ]
     },
     {
       "key": "inactiveIcon|svg|",
+      "cls": "EBLgjq_inactiveIcon",
       "slot": "",
       "count": 3,
       "size": "14x14",
@@ -5313,11 +5382,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "EBLgjq_",
+          "kind": "anchor",
+          "id": "会话头部 chip（智能体团队 / 标准模式）与其成员行"
+        }
+      ]
     },
     {
       "key": "memberNameText|span|",
+      "cls": "EBLgjq_memberNameText",
       "slot": "",
       "count": 3,
       "size": "25x17",
@@ -5331,11 +5408,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/20-controls.md",
+          "token": "EBLgjq_member",
+          "kind": "anchor",
+          "id": "会话头部 chip 展开后的成员行（288 × 52、圆角 8）"
+        }
+      ]
     },
     {
       "key": "tag currentTag|span|",
+      "cls": "_tag_brmue_4 EBLgjq_currentTag",
       "slot": "",
       "count": 3,
       "size": "48x15",
@@ -5349,11 +5434,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/controls/Tag",
+          "token": "brmue",
+          "kind": "anchor",
+          "id": "产品的 Tag 模块（_tag_brmue_4，与 Button/Pill/Tabs 同批）"
+        }
+      ]
     },
     {
       "key": "emptyNotice|p|",
+      "cls": "EBLgjq_emptyNotice",
       "slot": "",
       "count": 3,
       "size": "284x16",
@@ -5370,15 +5463,16 @@
       "coverage": "covered",
       "hits": [
         {
-          "where": "components/feedback/EmptyState",
-          "token": "empty",
+          "where": "spec/10-frame-layout.md",
+          "token": "EBLgjq_",
           "kind": "anchor",
-          "id": "空状态"
+          "id": "会话头部 chip（智能体团队 / 标准模式）与其成员行"
         }
       ]
     },
     {
       "key": "material|div|",
+      "cls": "_material_ri079_21",
       "slot": "",
       "count": 3,
       "size": "248x76",
@@ -5389,11 +5483,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/20-controls.md",
+          "token": "material|div|",
+          "kind": "anchor",
+          "id": "菜单浮层的 material 底（圆角 16、rgba(248,249,250,.58)）"
+        }
+      ]
     },
     {
       "key": "item|button|menuitem",
+      "cls": "_item_4ub78_90",
       "slot": "",
       "count": 3,
       "size": "136x34",
@@ -5415,6 +5517,7 @@
     },
     {
       "key": "itemLabel|span|",
+      "cls": "_itemLabel_4ub78_190",
       "slot": "",
       "count": 3,
       "size": "100x20",
@@ -5458,6 +5561,7 @@
     },
     {
       "key": "entry|button|",
+      "cls": "unKlVG_entry",
       "slot": "sidebar.right.tab.guide.entry",
       "count": 3,
       "size": "380x68",
@@ -5467,36 +5571,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "entry",
-          "kind": "spec",
-          "id": "10-frame-layout"
-        },
-        {
-          "where": "spec/11-slot-seats.md",
-          "token": "entry",
-          "kind": "spec",
-          "id": "11-slot-seats"
-        },
-        {
-          "where": "spec/70-checklist.md",
-          "token": "entry",
-          "kind": "spec",
-          "id": "70-checklist"
-        },
-        {
-          "where": "spec/80-conflicts.md",
-          "token": "entry",
-          "kind": "spec",
-          "id": "80-conflicts"
+          "token": "unKlVG_",
+          "kind": "anchor",
+          "id": "右栏 pane 标签上的图标（16 × 16）"
         }
       ]
     },
     {
       "key": "dsx-stats-no-session|body|",
+      "cls": "dsx-stats-no-session",
       "slot": "",
       "count": 2,
       "size": "1570x905",
@@ -5519,6 +5606,7 @@
     },
     {
       "key": "bubble|div|",
+      "cls": "cJsG2q_bubble",
       "slot": "conversation.chat.node",
       "count": 2,
       "size": "525x64",
@@ -5541,6 +5629,7 @@
     },
     {
       "key": "plainRun|span|",
+      "cls": "_plainRun_fbulu_6",
       "slot": "conversation.chat.node",
       "count": 2,
       "size": "480x41",
@@ -5553,11 +5642,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "plainRun",
+          "kind": "anchor",
+          "id": "消息正文里的纯文本片段（带 @ 引用时被切出来的那几段）"
+        }
+      ]
     },
     {
       "key": "xD_KDq_timeStart|span|",
+      "cls": "xD_KDq_timeStart",
       "slot": "conversation.chat.node",
       "count": 2,
       "size": "43x24",
@@ -5582,6 +5679,7 @@
     },
     {
       "key": "xD_KDq_action|button|",
+      "cls": "xD_KDq_action",
       "slot": "conversation.chat.node",
       "count": 2,
       "size": "28x28",
@@ -5606,6 +5704,7 @@
     },
     {
       "key": "groupTitle|h3|",
+      "cls": "fO69Vq_groupTitle",
       "slot": "main",
       "count": 2,
       "size": "28x22",
@@ -5618,11 +5717,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/patterns/ListRowGroup",
+          "token": "fO69Vq_groupTitle",
+          "kind": "anchor",
+          "id": "列表分组标题（插件页「官方 / 已安装」）"
+        }
+      ]
     },
     {
       "key": "Hefa_q_title|div|",
+      "cls": "Hefa_q_title",
       "slot": "settings.general.item",
       "count": 2,
       "size": "426x22",
@@ -5635,11 +5742,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/layout/SettingsRow",
+          "token": "Hefa_q_",
+          "kind": "anchor",
+          "id": "设置行的标题 / 选择器 / 折叠角（每个 section 一套哈希，形态与 SettingsRow 相同）"
+        }
+      ]
     },
     {
       "key": "Hefa_q_selector|button|",
+      "cls": "Hefa_q_selector",
       "slot": "settings.general.item",
       "count": 2,
       "size": "82x36",
@@ -5650,11 +5765,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/layout/SettingsRow",
+          "token": "Hefa_q_",
+          "kind": "anchor",
+          "id": "设置行的标题 / 选择器 / 折叠角（每个 section 一套哈希，形态与 SettingsRow 相同）"
+        }
+      ]
     },
     {
       "key": "Hefa_q_chevron|svg|",
+      "cls": "Hefa_q_chevron",
       "slot": "settings.general.item",
       "count": 2,
       "size": "14x14",
@@ -5665,11 +5788,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/layout/SettingsRow",
+          "token": "Hefa_q_",
+          "kind": "anchor",
+          "id": "设置行的标题 / 选择器 / 折叠角（每个 section 一套哈希，形态与 SettingsRow 相同）"
+        }
+      ]
     },
     {
       "key": "themeCube selected|button|",
+      "cls": "v01cdW_themeCube v01cdW_selected",
       "slot": "settings.general.item",
       "count": 2,
       "size": "183x84",
@@ -5692,6 +5823,7 @@
     },
     {
       "key": "stepper|div|",
+      "cls": "_0Fr0Ha_stepper",
       "slot": "settings.general.item",
       "count": 2,
       "size": "72x36",
@@ -5702,11 +5834,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/layout/SettingsRow",
+          "token": "_0Fr0Ha_",
+          "kind": "anchor",
+          "id": "数字设置行：微调器 72 × 36、单位、上下箭头"
+        }
+      ]
     },
     {
       "key": "value|span|",
+      "cls": "_0Fr0Ha_value",
       "slot": "settings.general.item",
       "count": 2,
       "size": "18x22",
@@ -5719,36 +5859,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "components/controls/Input/SPEC.md",
-          "token": "value",
-          "kind": "component",
-          "id": "input"
-        },
-        {
-          "where": "components/controls/SegmentedControl/SPEC.md",
-          "token": "value",
-          "kind": "component",
-          "id": "segmentedcontrol"
-        },
-        {
-          "where": "components/data-display/KeyValueList/key-value-list.module.css",
-          "token": "value",
-          "kind": "component",
-          "id": "keyvaluelist"
-        },
-        {
-          "where": "components/data-display/KeyValueList/README.md",
-          "token": "value",
-          "kind": "component",
-          "id": "keyvaluelist"
+          "where": "components/layout/SettingsRow",
+          "token": "_0Fr0Ha_",
+          "kind": "anchor",
+          "id": "数字设置行：微调器 72 × 36、单位、上下箭头"
         }
       ]
     },
     {
       "key": "unit|span|",
+      "cls": "_0Fr0Ha_unit",
       "slot": "settings.general.item",
       "count": 2,
       "size": "15x22",
@@ -5761,11 +5884,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/layout/SettingsRow",
+          "token": "_0Fr0Ha_",
+          "kind": "anchor",
+          "id": "数字设置行：微调器 72 × 36、单位、上下箭头"
+        }
+      ]
     },
     {
       "key": "description|div|",
+      "cls": "PgWN5G_description",
       "slot": "settings.general.item",
       "count": 2,
       "size": "351x18",
@@ -5808,6 +5939,7 @@
     },
     {
       "key": "settingTitle|div|",
+      "cls": "_3Y3Nma_settingTitle",
       "slot": "settings.general.item",
       "count": 2,
       "size": "410x22",
@@ -5820,11 +5952,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/layout/SettingsRow",
+          "token": "_3Y3Nma_",
+          "kind": "anchor",
+          "id": "设置行的标题 14/22 与说明 12/18"
+        }
+      ]
     },
     {
       "key": "settingDescription|p|",
+      "cls": "_3Y3Nma_settingDescription",
       "slot": "settings.general.item",
       "count": 2,
       "size": "410x18",
@@ -5837,11 +5977,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/layout/SettingsRow",
+          "token": "_3Y3Nma_",
+          "kind": "anchor",
+          "id": "设置行的标题 14/22 与说明 12/18"
+        }
+      ]
     },
     {
       "key": "button|button|",
+      "cls": "_3Y3Nma_button",
       "slot": "settings.general.item",
       "count": 2,
       "size": "98x36",
@@ -5856,36 +6004,19 @@
         "编辑快捷键"
       ],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/30-tokens.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "spec/50-icons.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "50-icons"
+          "where": "components/layout/SettingsRow",
+          "token": "_3Y3Nma_",
+          "kind": "anchor",
+          "id": "设置行的标题 14/22 与说明 12/18"
         }
       ]
     },
     {
       "key": "title enhc-page-title|h2|",
+      "cls": "_3nPmjq_title enhc-page-title",
       "slot": "settings.section",
       "count": 2,
       "size": "564x26",
@@ -5899,36 +6030,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "spec/30-tokens.md",
-          "token": "title",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "components/brand/FishMark/SPEC.md",
-          "token": "title",
-          "kind": "component",
-          "id": "fishmark"
-        },
-        {
-          "where": "components/brand/Wordmark/SPEC.md",
-          "token": "title",
-          "kind": "component",
-          "id": "wordmark"
-        },
-        {
-          "where": "components/controls/Switch/SPEC.md",
-          "token": "title",
-          "kind": "component",
-          "id": "switch"
+          "where": "components/patterns/SettingsPage",
+          "token": "_3nPmjq_",
+          "kind": "anchor",
+          "id": "设置卡片：卡片圆角、行名 14/22 · 500、次要按钮 46 × 28"
         }
       ]
     },
     {
       "key": "credentialDot credentialDotConfigured|span|img",
+      "cls": "_3nPmjq_credentialDot _3nPmjq_credentialDotConfigured",
       "slot": "settings.section",
       "count": 2,
       "size": "8x8",
@@ -5940,24 +6054,19 @@
         "API 密钥已配置"
       ],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "components/brand/FishMark/SPEC.md",
-          "token": "img",
-          "kind": "component",
-          "id": "fishmark"
-        },
-        {
-          "where": "components/brand/Wordmark/SPEC.md",
-          "token": "img",
-          "kind": "component",
-          "id": "wordmark"
+          "where": "components/patterns/SettingsPage",
+          "token": "_3nPmjq_",
+          "kind": "anchor",
+          "id": "设置卡片：卡片圆角、行名 14/22 · 500、次要按钮 46 × 28"
         }
       ]
     },
     {
       "key": "cc-linkButton|button|",
+      "cls": "cc-linkButton",
       "slot": "settings.section",
       "count": 2,
       "size": "44x28",
@@ -5975,6 +6084,7 @@
     },
     {
       "key": "cc-accountToggle|button|",
+      "cls": "cc-accountToggle",
       "slot": "settings.section",
       "count": 2,
       "size": "502x22",
@@ -5989,6 +6099,7 @@
     },
     {
       "key": "cc-accountName|span|",
+      "cls": "cc-accountName",
       "slot": "settings.section",
       "count": 2,
       "size": "56x22",
@@ -6006,6 +6117,7 @@
     },
     {
       "key": "cc-usageAccount|span|",
+      "cls": "cc-usageAccount",
       "slot": "settings.section",
       "count": 2,
       "size": "54x18",
@@ -6023,6 +6135,7 @@
     },
     {
       "key": "cc-usagePlan|span|",
+      "cls": "cc-usagePlan",
       "slot": "settings.section",
       "count": 2,
       "size": "45x19",
@@ -6039,6 +6152,7 @@
     },
     {
       "key": "cc-iconButton|button|",
+      "cls": "cc-iconButton",
       "slot": "settings.section",
       "count": 2,
       "size": "28x28",
@@ -6063,6 +6177,7 @@
     },
     {
       "key": "groupHead|h3|",
+      "cls": "KZf9OG_groupHead",
       "slot": "settings.section",
       "count": 2,
       "size": "564x16",
@@ -6075,11 +6190,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/patterns/SettingsPage",
+          "token": "KZf9OG_",
+          "kind": "anchor",
+          "id": "设置卡片与其分组标题（groupHead 564 × 16）"
+        }
+      ]
     },
     {
       "key": "enhc-doctor-btn|button|",
+      "cls": "enhc-doctor-btn",
       "slot": "settings.section",
       "count": 2,
       "size": "86x38",
@@ -6097,6 +6220,7 @@
     },
     {
       "key": "button primary sm|button|",
+      "cls": "_button_1rv3m_2 _primary_1rv3m_36 _sm_1rv3m_28",
       "slot": "settings.section",
       "count": 2,
       "size": "92x28",
@@ -6109,36 +6233,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/30-tokens.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "spec/50-icons.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "50-icons"
+          "where": "components/controls/Button",
+          "token": "1rv3m",
+          "kind": "anchor",
+          "id": "产品的 Button 模块（_button_1rv3m_2，含 md/sm/primary/ghost/outline/toolbar/icon 变体）"
         }
       ]
     },
     {
       "key": "okState|span|",
+      "cls": "nUhMVa_okState",
       "slot": "settings.section",
       "count": 2,
       "size": "48x17",
@@ -6155,6 +6262,7 @@
     },
     {
       "key": "dsh_notification_button dsh_notification_buttonGhost|button|",
+      "cls": "dsh_notification_button dsh_notification_buttonGhost",
       "slot": "settings.section",
       "count": 2,
       "size": "108x28",
@@ -6172,6 +6280,7 @@
     },
     {
       "key": "dsh_notification_button dsh_notification_buttonPrimary|button|",
+      "cls": "dsh_notification_button dsh_notification_buttonPrimary",
       "slot": "settings.section",
       "count": 2,
       "size": "106x28",
@@ -6189,6 +6298,7 @@
     },
     {
       "key": "duc-seg|div|group",
+      "cls": "duc-seg",
       "slot": "shell.overlay",
       "count": 2,
       "size": "234x28",
@@ -6213,6 +6323,7 @@
     },
     {
       "key": "duc-seg-thumb|span|",
+      "cls": "duc-seg-thumb",
       "slot": "shell.overlay",
       "count": 2,
       "size": "42x24",
@@ -6234,6 +6345,7 @@
     },
     {
       "key": "duc-seg-btn active|button|",
+      "cls": "duc-seg-btn active",
       "slot": "shell.overlay",
       "count": 2,
       "size": "42x24",
@@ -6258,6 +6370,7 @@
     },
     {
       "key": "duc-card-title|div|",
+      "cls": "duc-card-title",
       "slot": "shell.overlay",
       "count": 2,
       "size": "74x22",
@@ -6282,6 +6395,7 @@
     },
     {
       "key": "duc-heat-total|span|",
+      "cls": "duc-heat-total",
       "slot": "shell.overlay",
       "count": 2,
       "size": "128x16",
@@ -6306,6 +6420,7 @@
     },
     {
       "key": "duc-profile-note|div|",
+      "cls": "duc-profile-note",
       "slot": "shell.overlay",
       "count": 2,
       "size": "296x15",
@@ -6330,6 +6445,7 @@
     },
     {
       "key": "lc-ov-usage-key-label|span|",
+      "cls": "lc-ov-usage-key-label",
       "slot": "shell.overlay",
       "count": 2,
       "size": "23x12",
@@ -6354,6 +6470,7 @@
     },
     {
       "key": "lc-card lc-col-stats lc-col-donut flex-1 min-w-[min(360px,100%)]|div|",
+      "cls": "lc-card lc-col-stats lc-col-donut flex-1 min-w-[min(360px,100%)]",
       "slot": "shell.overlay",
       "count": 2,
       "size": "530x202",
@@ -6375,6 +6492,7 @@
     },
     {
       "key": "lc-gran|div|group",
+      "cls": "lc-gran",
       "slot": "shell.overlay",
       "count": 2,
       "size": "82x21",
@@ -6399,6 +6517,7 @@
     },
     {
       "key": "lc-heat-key|span|",
+      "cls": "lc-heat-key",
       "slot": "shell.overlay",
       "count": 2,
       "size": "9x12",
@@ -6423,6 +6542,7 @@
     },
     {
       "key": "lc-ov-running|span|",
+      "cls": "lc-ov-running",
       "slot": "shell.overlay",
       "count": 2,
       "size": "7x7",
@@ -6444,6 +6564,7 @@
     },
     {
       "key": "surface menu|div|menu",
+      "cls": "_surface_ri079_1 wq12jW_menu",
       "slot": "",
       "count": 2,
       "size": "248x76",
@@ -6468,6 +6589,7 @@
     },
     {
       "key": "header headerBlank|header|",
+      "cls": "Dc7zOa_header Dc7zOa_headerBlank",
       "slot": "conversation.header",
       "count": 1,
       "size": "1290x40",
@@ -6507,6 +6629,7 @@
     },
     {
       "key": "fish|svg|",
+      "cls": "Hqq-bq_fish",
       "slot": "conversation.hero.brand.mark",
       "count": 1,
       "size": "34x25",
@@ -6516,36 +6639,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "components/brand/FishMark/fishmark.module.css",
-          "token": "fish",
-          "kind": "component",
-          "id": "fishmark"
-        },
-        {
-          "where": "components/brand/FishMark/README.md",
-          "token": "fish",
-          "kind": "component",
-          "id": "fishmark"
-        },
-        {
-          "where": "components/brand/FishMark/SPEC.md",
-          "token": "fish",
-          "kind": "component",
-          "id": "fishmark"
-        },
-        {
-          "where": "components/brand/Wordmark/SPEC.md",
-          "token": "fish",
-          "kind": "component",
-          "id": "wordmark"
+          "where": "spec/10-frame-layout.md",
+          "token": "Hqq-bq_",
+          "kind": "anchor",
+          "id": "新会话页的工作区行与「预览版」徽标（Hqq-bq_workspace / previewBadge / folder）"
         }
       ]
     },
     {
       "key": "previewBadge|span|",
+      "cls": "Hqq-bq_previewBadge",
       "slot": "conversation.composer",
       "count": 1,
       "size": "52x21",
@@ -6557,11 +6663,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "Hqq-bq_",
+          "kind": "anchor",
+          "id": "新会话页的工作区行与「预览版」徽标（Hqq-bq_workspace / previewBadge / folder）"
+        }
+      ]
     },
     {
       "key": "workspace|button|",
+      "cls": "Hqq-bq_workspace",
       "slot": "conversation.composer",
       "count": 1,
       "size": "162x28",
@@ -6573,11 +6687,19 @@
         "选择工作区"
       ],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "Hqq-bq_",
+          "kind": "anchor",
+          "id": "新会话页的工作区行与「预览版」徽标（Hqq-bq_workspace / previewBadge / folder）"
+        }
+      ]
     },
     {
       "key": "folder|svg|",
+      "cls": "Hqq-bq_folder",
       "slot": "conversation.composer",
       "count": 1,
       "size": "16x16",
@@ -6587,11 +6709,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "Hqq-bq_",
+          "kind": "anchor",
+          "id": "新会话页的工作区行与「预览版」徽标（Hqq-bq_workspace / previewBadge / folder）"
+        }
+      ]
     },
     {
       "key": "workspaceLabel|span|",
+      "cls": "Hqq-bq_workspaceLabel",
       "slot": "conversation.composer",
       "count": 1,
       "size": "110x20",
@@ -6603,11 +6733,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "Hqq-bq_",
+          "kind": "anchor",
+          "id": "新会话页的工作区行与「预览版」徽标（Hqq-bq_workspace / previewBadge / folder）"
+        }
+      ]
     },
     {
       "key": "seat|button|",
+      "cls": "_oGoKq_seat",
       "slot": "conversation.hero.agentPreset",
       "count": 1,
       "size": "106x28",
@@ -6617,36 +6755,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "seat",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
           "where": "spec/10-frame-layout.md",
-          "token": "seat",
-          "kind": "spec",
-          "id": "10-frame-layout"
-        },
-        {
-          "where": "components/patterns/PanelSeat/panel-seat.module.css",
-          "token": "seat",
-          "kind": "component",
-          "id": "panelseat"
-        },
-        {
-          "where": "components/patterns/PanelSeat/README.md",
-          "token": "seat",
-          "kind": "component",
-          "id": "panelseat"
+          "token": "_oGoKq_",
+          "kind": "anchor",
+          "id": "新会话页的 Agent 预设座位（图标 + 标签 + 折叠角）"
         }
       ]
     },
     {
       "key": "seatIcon|svg|",
+      "cls": "_oGoKq_seatIcon",
       "slot": "conversation.hero.agentPreset",
       "count": 1,
       "size": "16x16",
@@ -6656,11 +6777,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "_oGoKq_",
+          "kind": "anchor",
+          "id": "新会话页的 Agent 预设座位（图标 + 标签 + 折叠角）"
+        }
+      ]
     },
     {
       "key": "seatLabel|span|",
+      "cls": "_oGoKq_seatLabel",
       "slot": "conversation.hero.agentPreset",
       "count": 1,
       "size": "52x20",
@@ -6672,11 +6801,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "_oGoKq_",
+          "kind": "anchor",
+          "id": "新会话页的 Agent 预设座位（图标 + 标签 + 折叠角）"
+        }
+      ]
     },
     {
       "key": "search searchExpanded|div|",
+      "cls": "_9lTDKa_search _9lTDKa_searchExpanded",
       "slot": "sidebar.workspaces",
       "count": 1,
       "size": "252x30",
@@ -6686,36 +6823,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "search",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/80-conflicts.md",
-          "token": "search",
-          "kind": "spec",
-          "id": "80-conflicts"
-        },
-        {
-          "where": "components/controls/Input/SPEC.md",
-          "token": "search",
-          "kind": "component",
-          "id": "input"
-        },
-        {
-          "where": "components/data-display/KeyValueList/SPEC.md",
-          "token": "search",
-          "kind": "component",
-          "id": "keyvaluelist"
+          "where": "components/layout/SidebarRow",
+          "token": "_9lTDKa_",
+          "kind": "anchor",
+          "id": "左栏搜索：输入框、清除按钮、分组标题与头部动作"
         }
       ]
     },
     {
       "key": "searchInput|input|",
+      "cls": "_9lTDKa_searchInput",
       "slot": "sidebar.workspaces",
       "count": 1,
       "size": "196x20",
@@ -6725,11 +6845,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/layout/SidebarRow",
+          "token": "_9lTDKa_",
+          "kind": "anchor",
+          "id": "左栏搜索：输入框、清除按钮、分组标题与头部动作"
+        }
+      ]
     },
     {
       "key": "clearButton|button|",
+      "cls": "_9lTDKa_clearButton",
       "slot": "sidebar.workspaces",
       "count": 1,
       "size": "24x24",
@@ -6741,11 +6869,19 @@
         "清除搜索"
       ],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/layout/SidebarRow",
+          "token": "_9lTDKa_",
+          "kind": "anchor",
+          "id": "左栏搜索：输入框、清除按钮、分组标题与头部动作"
+        }
+      ]
     },
     {
       "key": "panelRow panelActive|button|",
+      "cls": "_2H3hWW_panelRow _2H3hWW_panelActive",
       "slot": "sidebar",
       "count": 1,
       "size": "252x36",
@@ -6769,6 +6905,7 @@
     },
     {
       "key": "pageTitle|h1|",
+      "cls": "fO69Vq_pageTitle",
       "slot": "main",
       "count": 1,
       "size": "154x28",
@@ -6798,6 +6935,7 @@
     },
     {
       "key": "button ghost sm infoButton|button|",
+      "cls": "_button_1rv3m_2 _ghost_1rv3m_45 _sm_1rv3m_28 fO69Vq_infoButton",
       "slot": "main",
       "count": 1,
       "size": "20x20",
@@ -6809,36 +6947,19 @@
         "插件说明"
       ],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/30-tokens.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "spec/50-icons.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "50-icons"
+          "where": "components/controls/Button",
+          "token": "1rv3m",
+          "kind": "anchor",
+          "id": "产品的 Button 模块（_button_1rv3m_2，含 md/sm/primary/ghost/outline/toolbar/icon 变体）"
         }
       ]
     },
     {
       "key": "button primary sm addButton|button|",
+      "cls": "_button_1rv3m_2 _primary_1rv3m_36 _sm_1rv3m_28 fO69Vq_addButton",
       "slot": "main",
       "count": 1,
       "size": "96x32",
@@ -6848,36 +6969,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/30-tokens.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "spec/50-icons.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "50-icons"
+          "where": "components/controls/Button",
+          "token": "1rv3m",
+          "kind": "anchor",
+          "id": "产品的 Button 模块（_button_1rv3m_2，含 md/sm/primary/ghost/outline/toolbar/icon 变体）"
         }
       ]
     },
     {
       "key": "spinner triggerDot|svg|",
+      "cls": "_spinner_1i3xo_37 foD-wG_triggerDot",
       "slot": "conversation.session.header.actions",
       "count": 1,
       "size": "14x14",
@@ -6917,6 +7021,7 @@
     },
     {
       "key": "addButton|button|",
+      "cls": "_3nPmjq_addButton",
       "slot": "settings.section",
       "count": 1,
       "size": "564x44",
@@ -6926,11 +7031,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/patterns/SettingsPage",
+          "token": "_3nPmjq_",
+          "kind": "anchor",
+          "id": "设置卡片：卡片圆角、行名 14/22 · 500、次要按钮 46 × 28"
+        }
+      ]
     },
     {
       "key": "cc-title enhc-page-title|h2|",
+      "cls": "cc-title enhc-page-title",
       "slot": "settings.section",
       "count": 1,
       "size": "564x26",
@@ -6954,6 +7067,7 @@
     },
     {
       "key": "cc-intro enhc-page-intro|p|",
+      "cls": "cc-intro enhc-page-intro",
       "slot": "settings.section",
       "count": 1,
       "size": "564x53",
@@ -6977,6 +7091,7 @@
     },
     {
       "key": "cc-groupDesc|p|",
+      "cls": "cc-groupDesc",
       "slot": "settings.section",
       "count": 1,
       "size": "564x18",
@@ -6993,6 +7108,7 @@
     },
     {
       "key": "cc-accountItem cc-accountItemActive|div|",
+      "cls": "cc-accountItem cc-accountItemActive",
       "slot": "settings.section",
       "count": 1,
       "size": "564x82",
@@ -7007,6 +7123,7 @@
     },
     {
       "key": "cc-tabDot cc-tabDotOk|span|",
+      "cls": "cc-tabDot cc-tabDotOk",
       "slot": "settings.section",
       "count": 1,
       "size": "8x8",
@@ -7028,6 +7145,7 @@
     },
     {
       "key": "cc-badge|span|",
+      "cls": "cc-badge",
       "slot": "settings.section",
       "count": 1,
       "size": "64x19",
@@ -7044,6 +7162,7 @@
     },
     {
       "key": "cc-accountItem|div|",
+      "cls": "cc-accountItem",
       "slot": "settings.section",
       "count": 1,
       "size": "564x82",
@@ -7058,6 +7177,7 @@
     },
     {
       "key": "cc-addButton|button|",
+      "cls": "cc-addButton",
       "slot": "settings.section",
       "count": 1,
       "size": "564x44",
@@ -7072,6 +7192,7 @@
     },
     {
       "key": "|p|",
+      "cls": "",
       "slot": "settings.section",
       "count": 1,
       "size": "288x54",
@@ -7113,6 +7234,7 @@
     },
     {
       "key": "cc-selector|button|",
+      "cls": "cc-selector",
       "slot": "settings.section",
       "count": 1,
       "size": "160x36",
@@ -7127,6 +7249,7 @@
     },
     {
       "key": "cc-selectorText|span|",
+      "cls": "cc-selectorText",
       "slot": "settings.section",
       "count": 1,
       "size": "113x22",
@@ -7143,6 +7266,7 @@
     },
     {
       "key": "heading enhc-page-title|h2|",
+      "cls": "amjGKq_heading enhc-page-title",
       "slot": "settings.section",
       "count": 1,
       "size": "564x26",
@@ -7184,6 +7308,7 @@
     },
     {
       "key": "panel|div|tabpanel",
+      "cls": "amjGKq_panel",
       "slot": "settings.section",
       "count": 1,
       "size": "564x1715",
@@ -7205,6 +7330,7 @@
     },
     {
       "key": "search|label|",
+      "cls": "RotMhW_search",
       "slot": "settings.plugins.tab",
       "count": 1,
       "size": "564x36",
@@ -7214,36 +7340,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "search",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/80-conflicts.md",
-          "token": "search",
-          "kind": "spec",
-          "id": "80-conflicts"
-        },
-        {
-          "where": "components/controls/Input/SPEC.md",
-          "token": "search",
-          "kind": "component",
-          "id": "input"
-        },
-        {
-          "where": "components/data-display/KeyValueList/SPEC.md",
-          "token": "search",
-          "kind": "component",
-          "id": "keyvaluelist"
+          "where": "components/patterns/SettingsPage",
+          "token": "RotMhW_",
+          "kind": "anchor",
+          "id": "内置插件页的卡片与分组开关（groupToggle 76 × 22）"
         }
       ]
     },
     {
       "key": "|input|",
+      "cls": "",
       "slot": "settings.plugins.tab",
       "count": 1,
       "size": "564x36",
@@ -7285,6 +7394,7 @@
     },
     {
       "key": "groupToggle|button|",
+      "cls": "RotMhW_groupToggle",
       "slot": "settings.plugins.tab",
       "count": 1,
       "size": "76x22",
@@ -7294,11 +7404,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/patterns/SettingsPage",
+          "token": "RotMhW_",
+          "kind": "anchor",
+          "id": "内置插件页的卡片与分组开关（groupToggle 76 × 22）"
+        }
+      ]
     },
     {
       "key": "groupTitle|span|",
+      "cls": "RotMhW_groupTitle",
       "slot": "settings.plugins.tab",
       "count": 1,
       "size": "56x22",
@@ -7310,11 +7428,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/patterns/SettingsPage",
+          "token": "RotMhW_",
+          "kind": "anchor",
+          "id": "内置插件页的卡片与分组开关（groupToggle 76 × 22）"
+        }
+      ]
     },
     {
       "key": "switcher|button|",
+      "cls": "RotMhW_switcher",
       "slot": "settings.plugins.tab",
       "count": 1,
       "size": "166x36",
@@ -7329,15 +7455,16 @@
       "coverage": "covered",
       "hits": [
         {
-          "where": "components/controls/Switch",
-          "token": "switch",
+          "where": "components/patterns/SettingsPage",
+          "token": "RotMhW_",
           "kind": "anchor",
-          "id": "开关"
+          "id": "内置插件页的卡片与分组开关（groupToggle 76 × 22）"
         }
       ]
     },
     {
       "key": "switcherLabel|span|",
+      "cls": "RotMhW_switcherLabel",
       "slot": "settings.plugins.tab",
       "count": 1,
       "size": "112x22",
@@ -7352,15 +7479,16 @@
       "coverage": "covered",
       "hits": [
         {
-          "where": "components/controls/Switch",
-          "token": "switch",
+          "where": "components/patterns/SettingsPage",
+          "token": "RotMhW_",
           "kind": "anchor",
-          "id": "开关"
+          "id": "内置插件页的卡片与分组开关（groupToggle 76 × 22）"
         }
       ]
     },
     {
       "key": "card cardActive|li|",
+      "cls": "KZf9OG_card KZf9OG_cardActive",
       "slot": "settings.section",
       "count": 1,
       "size": "276x170",
@@ -7373,15 +7501,16 @@
       "coverage": "covered",
       "hits": [
         {
-          "where": "components/surfaces/Card",
-          "token": "card",
+          "where": "components/patterns/SettingsPage",
+          "token": "KZf9OG_",
           "kind": "anchor",
-          "id": "卡片容器"
+          "id": "设置卡片与其分组标题（groupHead 564 × 16）"
         }
       ]
     },
     {
       "key": "creatorButton|button|",
+      "cls": "KZf9OG_creatorButton",
       "slot": "settings.section",
       "count": 1,
       "size": "564x44",
@@ -7391,11 +7520,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/patterns/SettingsPage",
+          "token": "KZf9OG_",
+          "kind": "anchor",
+          "id": "设置卡片与其分组标题（groupHead 564 × 16）"
+        }
+      ]
     },
     {
       "key": "dsx-page-title enhc-page-title|h2|",
+      "cls": "dsx-page-title enhc-page-title",
       "slot": "settings.section",
       "count": 1,
       "size": "564x26",
@@ -7419,6 +7556,7 @@
     },
     {
       "key": "dsx-page-intro enhc-page-intro|p|",
+      "cls": "dsx-page-intro enhc-page-intro",
       "slot": "settings.section",
       "count": 1,
       "size": "564x33",
@@ -7442,6 +7580,7 @@
     },
     {
       "key": "enhc-doctor-btn enhc-doctor-btn-quiet|button|",
+      "cls": "enhc-doctor-btn enhc-doctor-btn-quiet",
       "slot": "settings.section",
       "count": 1,
       "size": "128x38",
@@ -7458,6 +7597,7 @@
     },
     {
       "key": "enhc-doctor-empty|p|",
+      "cls": "enhc-doctor-empty",
       "slot": "settings.section",
       "count": 1,
       "size": "564x20",
@@ -7481,6 +7621,7 @@
     },
     {
       "key": "title|h2|",
+      "cls": "nUhMVa_title",
       "slot": "settings.section",
       "count": 1,
       "size": "64x24",
@@ -7522,6 +7663,7 @@
     },
     {
       "key": "repoLink|a|",
+      "cls": "nUhMVa_repoLink",
       "slot": "settings.section",
       "count": 1,
       "size": "61x20",
@@ -7538,6 +7680,7 @@
     },
     {
       "key": "version|span|",
+      "cls": "nUhMVa_version",
       "slot": "settings.section",
       "count": 1,
       "size": "37x20",
@@ -7554,6 +7697,7 @@
     },
     {
       "key": "button ghost sm|button|",
+      "cls": "_button_1rv3m_2 _ghost_1rv3m_45 _sm_1rv3m_28",
       "slot": "settings.section",
       "count": 1,
       "size": "92x28",
@@ -7565,36 +7709,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/30-tokens.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "spec/50-icons.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "50-icons"
+          "where": "components/controls/Button",
+          "token": "1rv3m",
+          "kind": "anchor",
+          "id": "产品的 Button 模块（_button_1rv3m_2，含 md/sm/primary/ghost/outline/toolbar/icon 变体）"
         }
       ]
     },
     {
       "key": "submitLink|a|",
+      "cls": "nUhMVa_submitLink",
       "slot": "settings.section",
       "count": 1,
       "size": "77x18",
@@ -7611,6 +7738,7 @@
     },
     {
       "key": "button outline sm exportLogBtn|button|",
+      "cls": "_button_1rv3m_2 _outline_1rv3m_54 _sm_1rv3m_28 nUhMVa_exportLogBtn",
       "slot": "settings.section",
       "count": 1,
       "size": "90x28",
@@ -7620,36 +7748,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/30-tokens.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "spec/50-icons.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "50-icons"
+          "where": "components/controls/Button",
+          "token": "1rv3m",
+          "kind": "anchor",
+          "id": "产品的 Button 模块（_button_1rv3m_2，含 md/sm/primary/ghost/outline/toolbar/icon 变体）"
         }
       ]
     },
     {
       "key": "tab on|button|",
+      "cls": "nUhMVa_tab nUhMVa_on",
       "slot": "settings.section",
       "count": 1,
       "size": "50x33",
@@ -7673,6 +7784,7 @@
     },
     {
       "key": "opEntry opEntryQuiet|button|",
+      "cls": "nUhMVa_opEntry nUhMVa_opEntryQuiet",
       "slot": "settings.section",
       "count": 1,
       "size": "46x26",
@@ -7689,6 +7801,7 @@
     },
     {
       "key": "stickyHead|div|",
+      "cls": "nUhMVa_stickyHead",
       "slot": "settings.section",
       "count": 1,
       "size": "556x116",
@@ -7703,6 +7816,7 @@
     },
     {
       "key": "wrap searchInput|span|",
+      "cls": "_wrap_14sgc_1 nUhMVa_searchInput",
       "slot": "settings.section",
       "count": 1,
       "size": "548x32",
@@ -7742,6 +7856,7 @@
     },
     {
       "key": "input|input|",
+      "cls": "_input_14sgc_25",
       "slot": "settings.section",
       "count": 1,
       "size": "482x24",
@@ -7781,6 +7896,7 @@
     },
     {
       "key": "pill interactive active|button|",
+      "cls": "_pill_1bqmh_1 _interactive_1bqmh_16 _active_1bqmh_24",
       "slot": "settings.section",
       "count": 1,
       "size": "72x24",
@@ -7804,6 +7920,7 @@
     },
     {
       "key": "button ghost sm catsToggle|button|",
+      "cls": "_button_1rv3m_2 _ghost_1rv3m_45 _sm_1rv3m_28 nUhMVa_catsToggle",
       "slot": "settings.section",
       "count": 1,
       "size": "28x26",
@@ -7815,36 +7932,19 @@
         "更多分类"
       ],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/30-tokens.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "spec/50-icons.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "50-icons"
+          "where": "components/controls/Button",
+          "token": "1rv3m",
+          "kind": "anchor",
+          "id": "产品的 Button 模块（_button_1rv3m_2，含 md/sm/primary/ghost/outline/toolbar/icon 变体）"
         }
       ]
     },
     {
       "key": "dsh_notification_title|h2|",
+      "cls": "dsh_notification_title",
       "slot": "settings.section",
       "count": 1,
       "size": "564x26",
@@ -7861,6 +7961,7 @@
     },
     {
       "key": "dsh_notification_subtitle|p|",
+      "cls": "dsh_notification_subtitle",
       "slot": "settings.section",
       "count": 1,
       "size": "564x40",
@@ -7877,6 +7978,7 @@
     },
     {
       "key": "dsh_notification_badge dsh_notification_badgeDefault|span|",
+      "cls": "dsh_notification_badge dsh_notification_badgeDefault",
       "slot": "settings.section",
       "count": 1,
       "size": "56x22",
@@ -7893,6 +7995,7 @@
     },
     {
       "key": "dsh_notification_empty|div|",
+      "cls": "dsh_notification_empty",
       "slot": "settings.section",
       "count": 1,
       "size": "530x20",
@@ -7916,6 +8019,7 @@
     },
     {
       "key": "duc-mask|div|",
+      "cls": "duc-mask",
       "slot": "shell.overlay",
       "count": 1,
       "size": "1570x871",
@@ -7937,6 +8041,7 @@
     },
     {
       "key": "duc-panel|div|dialog",
+      "cls": "duc-panel",
       "slot": "shell.overlay",
       "count": 1,
       "size": "1180x807",
@@ -7958,6 +8063,7 @@
     },
     {
       "key": "duc-nav-title|div|",
+      "cls": "duc-nav-title",
       "slot": "shell.overlay",
       "count": 1,
       "size": "164x24",
@@ -7981,6 +8087,7 @@
     },
     {
       "key": "duc-nav-cell active|button|",
+      "cls": "duc-nav-cell active",
       "slot": "shell.overlay",
       "count": 1,
       "size": "164x40",
@@ -8002,6 +8109,7 @@
     },
     {
       "key": "duc-icon-btn|button|",
+      "cls": "duc-icon-btn",
       "slot": "shell.overlay",
       "count": 1,
       "size": "28x28",
@@ -8025,6 +8133,7 @@
     },
     {
       "key": "duc-icon-btn duc-close|button|",
+      "cls": "duc-icon-btn duc-close",
       "slot": "shell.overlay",
       "count": 1,
       "size": "28x28",
@@ -8048,6 +8157,7 @@
     },
     {
       "key": "duc-page-title|h2|",
+      "cls": "duc-page-title",
       "slot": "shell.overlay",
       "count": 1,
       "size": "698x26",
@@ -8071,6 +8181,7 @@
     },
     {
       "key": "duc-page-desc|p|",
+      "cls": "duc-page-desc",
       "slot": "shell.overlay",
       "count": 1,
       "size": "698x20",
@@ -8094,6 +8205,7 @@
     },
     {
       "key": "duc-stat-unit|span|",
+      "cls": "duc-stat-unit",
       "slot": "shell.overlay",
       "count": 1,
       "size": "11x15",
@@ -8117,6 +8229,7 @@
     },
     {
       "key": "duc-overview-delta|div|",
+      "cls": "duc-overview-delta",
       "slot": "shell.overlay",
       "count": 1,
       "size": "944x29",
@@ -8140,6 +8253,7 @@
     },
     {
       "key": "duc-heat-cell l6|div|",
+      "cls": "duc-heat-cell l6",
       "slot": "shell.overlay",
       "count": 1,
       "size": "15x15",
@@ -8161,6 +8275,7 @@
     },
     {
       "key": "duc-heat-swatch l0|span|",
+      "cls": "duc-heat-swatch l0",
       "slot": "shell.overlay",
       "count": 1,
       "size": "11x11",
@@ -8182,6 +8297,7 @@
     },
     {
       "key": "duc-heat-swatch l1|span|",
+      "cls": "duc-heat-swatch l1",
       "slot": "shell.overlay",
       "count": 1,
       "size": "11x11",
@@ -8203,6 +8319,7 @@
     },
     {
       "key": "duc-heat-swatch l2|span|",
+      "cls": "duc-heat-swatch l2",
       "slot": "shell.overlay",
       "count": 1,
       "size": "11x11",
@@ -8224,6 +8341,7 @@
     },
     {
       "key": "duc-heat-swatch l3|span|",
+      "cls": "duc-heat-swatch l3",
       "slot": "shell.overlay",
       "count": 1,
       "size": "11x11",
@@ -8245,6 +8363,7 @@
     },
     {
       "key": "duc-heat-swatch l4|span|",
+      "cls": "duc-heat-swatch l4",
       "slot": "shell.overlay",
       "count": 1,
       "size": "11x11",
@@ -8266,6 +8385,7 @@
     },
     {
       "key": "duc-heat-swatch l5|span|",
+      "cls": "duc-heat-swatch l5",
       "slot": "shell.overlay",
       "count": 1,
       "size": "11x11",
@@ -8287,6 +8407,7 @@
     },
     {
       "key": "duc-heat-swatch l6|span|",
+      "cls": "duc-heat-swatch l6",
       "slot": "shell.overlay",
       "count": 1,
       "size": "11x11",
@@ -8308,6 +8429,7 @@
     },
     {
       "key": "lc-ov-backdrop|div|",
+      "cls": "lc-ov-backdrop",
       "slot": "shell.overlay",
       "count": 1,
       "size": "1570x871",
@@ -8329,6 +8451,7 @@
     },
     {
       "key": "lc-ov-card|div|",
+      "cls": "lc-ov-card",
       "slot": "shell.overlay",
       "count": 1,
       "size": "1120x791",
@@ -8350,6 +8473,7 @@
     },
     {
       "key": "lc-ov-head-icon|svg|",
+      "cls": "lc-ov-head-icon",
       "slot": "shell.overlay",
       "count": 1,
       "size": "18x18",
@@ -8371,6 +8495,7 @@
     },
     {
       "key": "lc-ov-title|span|",
+      "cls": "lc-ov-title",
       "slot": "shell.overlay",
       "count": 1,
       "size": "75x20",
@@ -8394,6 +8519,7 @@
     },
     {
       "key": "lc-gran lc-ov-range|div|group",
+      "cls": "lc-gran lc-ov-range",
       "slot": "shell.overlay",
       "count": 1,
       "size": "221x21",
@@ -8417,6 +8543,7 @@
     },
     {
       "key": "lc-modal-close hover:text-(--dsw-alias-label-primary) hover:bg-(--dsw-alias-bg-layer-2)|button|",
+      "cls": "lc-modal-close hover:text-(--dsw-alias-label-primary) hover:bg-(--dsw-alias-bg-layer-2)",
       "slot": "shell.overlay",
       "count": 1,
       "size": "24x22",
@@ -8442,6 +8569,7 @@
     },
     {
       "key": "lc-card lc-ov-usage|div|",
+      "cls": "lc-card lc-ov-usage",
       "slot": "shell.overlay",
       "count": 1,
       "size": "530x166",
@@ -8463,6 +8591,7 @@
     },
     {
       "key": "lc-ov-usage-plot|div|group",
+      "cls": "lc-ov-usage-plot",
       "slot": "shell.overlay",
       "count": 1,
       "size": "496x84",
@@ -8486,6 +8615,7 @@
     },
     {
       "key": "lc-ov-usage-swatch lc-ov-usage-tokens|span|",
+      "cls": "lc-ov-usage-swatch lc-ov-usage-tokens",
       "slot": "shell.overlay",
       "count": 1,
       "size": "10x8",
@@ -8507,6 +8637,7 @@
     },
     {
       "key": "lc-ov-usage-swatch lc-ov-usage-cost|span|",
+      "cls": "lc-ov-usage-swatch lc-ov-usage-cost",
       "slot": "shell.overlay",
       "count": 1,
       "size": "10x8",
@@ -8528,6 +8659,7 @@
     },
     {
       "key": "lc-timing-tps|span|",
+      "cls": "lc-timing-tps",
       "slot": "shell.overlay",
       "count": 1,
       "size": "69x22",
@@ -8551,6 +8683,7 @@
     },
     {
       "key": "lc-card lc-ov-heat-card|div|",
+      "cls": "lc-card lc-ov-heat-card",
       "slot": "shell.overlay",
       "count": 1,
       "size": "318x263",
@@ -8572,6 +8705,7 @@
     },
     {
       "key": "lc-card-sub|span|",
+      "cls": "lc-card-sub",
       "slot": "shell.overlay",
       "count": 1,
       "size": "60x16",
@@ -8595,6 +8729,7 @@
     },
     {
       "key": "lc-heat|div|group",
+      "cls": "lc-heat",
       "slot": "shell.overlay",
       "count": 1,
       "size": "284x176",
@@ -8618,6 +8753,7 @@
     },
     {
       "key": "lc-heat-cell lc-heat-4|button|",
+      "cls": "lc-heat-cell lc-heat-4",
       "slot": "shell.overlay",
       "count": 1,
       "size": "20x20",
@@ -8641,6 +8777,7 @@
     },
     {
       "key": "lc-heat-cell lc-heat-1|span|",
+      "cls": "lc-heat-cell lc-heat-1",
       "slot": "shell.overlay",
       "count": 1,
       "size": "20x20",
@@ -8662,6 +8799,7 @@
     },
     {
       "key": "lc-heat-cell lc-heat-2|span|",
+      "cls": "lc-heat-cell lc-heat-2",
       "slot": "shell.overlay",
       "count": 1,
       "size": "20x20",
@@ -8683,6 +8821,7 @@
     },
     {
       "key": "lc-heat-cell lc-heat-3|span|",
+      "cls": "lc-heat-cell lc-heat-3",
       "slot": "shell.overlay",
       "count": 1,
       "size": "20x20",
@@ -8704,6 +8843,7 @@
     },
     {
       "key": "lc-heat-cell lc-heat-4|span|",
+      "cls": "lc-heat-cell lc-heat-4",
       "slot": "shell.overlay",
       "count": 1,
       "size": "20x20",
@@ -8725,6 +8865,7 @@
     },
     {
       "key": "lc-ov-settings|button|",
+      "cls": "lc-ov-settings",
       "slot": "shell.overlay",
       "count": 1,
       "size": "318x36",
@@ -8746,6 +8887,7 @@
     },
     {
       "key": "lc-ov-settings-hint|span|",
+      "cls": "lc-ov-settings-hint",
       "slot": "shell.overlay",
       "count": 1,
       "size": "240x16",
@@ -8769,6 +8911,7 @@
     },
     {
       "key": "lc-ov-list-title|span|",
+      "cls": "lc-ov-list-title",
       "slot": "shell.overlay",
       "count": 1,
       "size": "26x17",
@@ -8792,6 +8935,7 @@
     },
     {
       "key": "lc-ov-list-count|span|",
+      "cls": "lc-ov-list-count",
       "slot": "shell.overlay",
       "count": 1,
       "size": "32x17",
@@ -8815,6 +8959,7 @@
     },
     {
       "key": "lc-ov-search|input|",
+      "cls": "lc-ov-search",
       "slot": "shell.overlay",
       "count": 1,
       "size": "426x26",
@@ -8838,6 +8983,7 @@
     },
     {
       "key": "lc-ov-groups|div|group",
+      "cls": "lc-ov-groups",
       "slot": "shell.overlay",
       "count": 1,
       "size": "741x23",
@@ -8861,6 +9007,7 @@
     },
     {
       "key": "lc-ov-chip lc-ov-chip-on|button|",
+      "cls": "lc-ov-chip lc-ov-chip-on",
       "slot": "shell.overlay",
       "count": 1,
       "size": "65x23",
@@ -8882,6 +9029,7 @@
     },
     {
       "key": "surface list scrollable portal|div|menu",
+      "cls": "_surface_ri079_1 _list_4ub78_7 _scrollable_4ub78_19 _portal_4ub78_41",
       "slot": "",
       "count": 1,
       "size": "144x144",
@@ -8903,6 +9051,7 @@
     },
     {
       "key": "viewport|div|presentation",
+      "cls": "_viewport_4ub78_19",
       "slot": "",
       "count": 1,
       "size": "136x136",
@@ -8930,6 +9079,7 @@
     },
     {
       "key": "item selected|button|menuitem",
+      "cls": "_item_4ub78_90 _selected_4ub78_216",
       "slot": "",
       "count": 1,
       "size": "136x34",
@@ -8951,6 +9101,7 @@
     },
     {
       "key": "check|svg|",
+      "cls": "_check_4ub78_179",
       "slot": "",
       "count": 1,
       "size": "14x14",
@@ -8990,6 +9141,7 @@
     },
     {
       "key": "dlU_AG_optionLabelText|span|",
+      "cls": "dlU_AG_optionLabelText",
       "slot": "",
       "count": 1,
       "size": "68x20",
@@ -9001,11 +9153,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/20-controls.md",
+          "token": "dlU_AG_",
+          "kind": "anchor",
+          "id": "输入区权限选择器与它的菜单选项（含 EXP 角标）"
+        }
+      ]
     },
     {
       "key": "dlU_AG_badge|sup|",
+      "cls": "dlU_AG_badge",
       "slot": "",
       "count": 1,
       "size": "14x10",
@@ -9017,11 +9177,19 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/20-controls.md",
+          "token": "dlU_AG_",
+          "kind": "anchor",
+          "id": "输入区权限选择器与它的菜单选项（含 EXP 角标）"
+        }
+      ]
     },
     {
       "key": "tabHost pane|section|",
+      "cls": "_tabHost_6nhg2_162 _pane_6nhg2_209",
       "slot": "rightbar.session",
       "count": 1,
       "size": "707x871",
@@ -9035,14 +9203,15 @@
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "tab",
+          "token": "6nhg2",
           "kind": "anchor",
-          "id": "会话头部页签（对话 / 轨迹 / 上下文）"
+          "id": "右侧边栏的标签页与图标按钮（_addTab_6nhg2 / _iconButton_6nhg2）"
         }
       ]
     },
     {
       "key": "tabStrip|div|tablist",
+      "cls": "_tabStrip_6nhg2_237",
       "slot": "rightbar.session",
       "count": 1,
       "size": "706x38",
@@ -9056,14 +9225,15 @@
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "tab",
+          "token": "6nhg2",
           "kind": "anchor",
-          "id": "会话头部页签（对话 / 轨迹 / 上下文）"
+          "id": "右侧边栏的标签页与图标按钮（_addTab_6nhg2 / _iconButton_6nhg2）"
         }
       ]
     },
     {
       "key": "stripTabs|div|presentation",
+      "cls": "_stripTabs_6nhg2_257",
       "slot": "rightbar.session",
       "count": 1,
       "size": "100x28",
@@ -9077,14 +9247,15 @@
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "tab",
+          "token": "6nhg2",
           "kind": "anchor",
-          "id": "会话头部页签（对话 / 轨迹 / 上下文）"
+          "id": "右侧边栏的标签页与图标按钮（_addTab_6nhg2 / _iconButton_6nhg2）"
         }
       ]
     },
     {
       "key": "tab tabActive tabQuiet|div|tab",
+      "cls": "_tab_6nhg2_134 _tabActive_6nhg2_346 _tabQuiet_6nhg2_488",
       "slot": "rightbar.session",
       "count": 1,
       "size": "100x28",
@@ -9098,14 +9269,15 @@
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "tab",
+          "token": "6nhg2",
           "kind": "anchor",
-          "id": "会话头部页签（对话 / 轨迹 / 上下文）"
+          "id": "右侧边栏的标签页与图标按钮（_addTab_6nhg2 / _iconButton_6nhg2）"
         }
       ]
     },
     {
       "key": "titleIcon|svg|",
+      "cls": "unKlVG_titleIcon",
       "slot": "sidebar.right.pane.tab.title",
       "count": 1,
       "size": "16x16",
@@ -9115,11 +9287,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "unKlVG_",
+          "kind": "anchor",
+          "id": "右栏 pane 标签上的图标（16 × 16）"
+        }
+      ]
     },
     {
       "key": "collapseGlyph|svg|",
+      "cls": "OUqwTW_collapseGlyph",
       "slot": "rightbar.session",
       "count": 1,
       "size": "15x15",
@@ -9129,11 +9309,19 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "OUqwTW_",
+          "kind": "anchor",
+          "id": "右栏的折叠字形与图标按钮（15 × 15）"
+        }
+      ]
     },
     {
       "key": "entry|div|",
+      "cls": "zpy3TW_entry",
       "slot": "sidebar.right.tab.guide.entry",
       "count": 1,
       "size": "380x68",
@@ -9173,6 +9361,7 @@
     },
     {
       "key": "button ghost md main|button|",
+      "cls": "_button_1rv3m_2 _ghost_1rv3m_45 _md_1rv3m_23 zpy3TW_main",
       "slot": "sidebar.right.tab.guide.entry",
       "count": 1,
       "size": "378x66",
@@ -9184,31 +9373,13 @@
         "新建终端 在会话工作区运行命令"
       ],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/10-frame-layout.md",
-          "token": "main",
-          "kind": "spec",
-          "id": "10-frame-layout"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/30-tokens.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "30-tokens"
+          "where": "components/controls/Button",
+          "token": "1rv3m",
+          "kind": "anchor",
+          "id": "产品的 Button 模块（_button_1rv3m_2，含 md/sm/primary/ghost/outline/toolbar/icon 变体）"
         }
       ]
     }

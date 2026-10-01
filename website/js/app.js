@@ -1359,9 +1359,11 @@
          * @returns 插件名，或 null。
          */
         function pluginOf(row) {
-            var key = row.key.toLowerCase()
+            /* 类名要一起看：有些插件元素的归一化身份里只有通用词（如 `tag currentTag`），
+             * 真正的出处写在没被剥掉的那半截类名里（`_tag_brmue_4`）。 */
+            var hay = (row.key + ' ' + (row.cls || '')).toLowerCase()
             for (var i = 0; i < families.length; i++) {
-                if (key.indexOf(String(families[i].match).toLowerCase()) !== -1) return families[i].plugin
+                if (hay.indexOf(String(families[i].match).toLowerCase()) !== -1) return families[i].plugin
             }
             return row.pluginOwned === true ? t('inventory.pluginUnknown') : null
         }

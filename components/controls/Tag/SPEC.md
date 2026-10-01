@@ -18,6 +18,19 @@
 | `background: var(--dsw-alias-label-primary)` / `color: var(--dsw-alias-bg-layer-3)` | `Tag.module.css` → `.tag[data-tone='solid']` |
 | `background: var(--dsw-alias-bg-module-platform)` / `color: var(--dsw-alias-label-secondary)` | `Tag.module.css` → `.tag[data-tone='neutral']` |
 | `color: var(--dsw-alias-label-tertiary)` | `Tag.module.css` → `.tag[data-tone='quiet']` |
+
+### 产品里的第二档：紧凑标签（实测，非 primitives）
+
+产品自己那套 Tag（客户端模块 `_tag_brmue_4`，与 Button / Pill / Tabs 同批）在会话头部等密集行里用的是紧凑档：
+
+| 数值 | 出处 |
+| --- | --- |
+| `border-radius: 999px` / `padding: 0 4px` / `font-size: 10px` / `line-height: 15px` / `font-weight: 500` | `_tag_brmue_4`（实测「当前会话」标签 48 × 15 @ 会话头部 chip 面板） |
+| `background: color(srgb 0.254902 0.462745 0.901961 / 0.1)` / `color: rgb(65, 118, 230)` | 同一处（品牌蓝 10% 底 + 品牌蓝字，即 `--dsw-alias-state-business-primary` 一族） |
+
+**判定（官方自身两套）**：primitives 的 `Tag.module.css` 是 11/17 + `padding 1px 8px`，产品客户端自己那套是 10/15 + `padding 0 4px`。两者不是同一档，也都不算错——**密集行（会话头部、列表行内）用紧凑档，独立出现用 primitives 档**；插件作者按所在位置选一档，不要自造第三档（例如 10/17 这种混搭）。
+
+### 其余取值（本仓库组件按 primitives 档实现）
 | `color-mix(in srgb, var(--dsw-alias-state-success-primary) 10%, transparent)` + 同色文字 | `Tag.module.css` → `.tag[data-tone='success']` |
 | `color-mix(in srgb, var(--dsw-alias-state-business-primary) 10%, transparent)` + 同色文字 | `Tag.module.css` → `.tag[data-tone='info']` |
 | `color-mix(in srgb, var(--dsw-alias-state-warn-primary) 12%, transparent)` + 同色文字 | `Tag.module.css` → `.tag[data-tone='warning']` |
