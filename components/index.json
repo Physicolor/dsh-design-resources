@@ -56,6 +56,24 @@
             ]
         },
         {
+            "id": "shortcut-keys",
+            "name": "ShortcutKeys",
+            "category": "controls",
+            "path": "components/controls/ShortcutKeys/",
+            "summary": "快捷键按键帽：一串 <kbd>，`+` 也渲染成一枚 kbd（分隔符）。；三种官方形态：plain（纯文字，无底色无圆角）/ tooltip（每枚键 16 高、圆角 4、带浅底）/ joined（整组一层浅底）。；零依赖，只用到 react 和 CSS Modules。；它不可点，容器固定 aria-hidden——键位由触发元素的 aria-keyshortcuts 提供",
+            "whenToUse": "按钮或菜单项有真实快捷键，把键位写在它行尾。；工具提示里说明「按这个键更快」——用 tooltip 形态。；一组键要作为一个整体出现在密集位置——用 joined 形态。",
+            "whenNotToUse": "没有真正实现的快捷键：写了按不动，比不写更糟。；一行里出现两组以上：键位是辅注不是正文。；平排形态加底色或圆角：那是提示气泡形态的样子，加了底像一排小按钮。；当标签用：标状态用 Tag，要点用 Pill / Button。；给读屏念键位：容器 aria-hidden，键位写 aria-keyshortcuts。",
+            "geometrySource": "全部采自运行中的产品（docs/reference/plugin-row.json、01-hero.png 与产品 bundle 的 CSS 文本）：.keys gap 3 / 12-16 / 色 --dsw-alias-label-tertiary ← _keys_38b9q_1（实测键帽 19 × 16、bg 透明、radius 0）；.tooltip .key min-width 16 / height 16 / padding 0 2 / 圆角 4 / 底 --dsw-alias-tooltip-key-bg ← _tooltip_38b9q_20 ._key_38b9q_1；.joined height 16 / padding 0 4 / 圆角 4 ← _joined_38b9q_32；使用侧的显隐 opacity 0 → hover / focus-visible 1 与文字 mask-image 渐隐 ← _2H3hWW_newSessionShortcut（规范见 spec/20-controls.md 的 CT-MF-17/18/19）",
+            "tags": [
+                "控件",
+                "零依赖",
+                "快捷键",
+                "按键帽",
+                "kbd",
+                "shortcut-keys"
+            ]
+        },
+        {
             "id": "segmentedcontrol",
             "name": "SegmentedControl",
             "category": "controls",

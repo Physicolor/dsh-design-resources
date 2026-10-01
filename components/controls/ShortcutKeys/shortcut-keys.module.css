@@ -1,0 +1,72 @@
+/* ShortcutKeys 快捷键按键帽 —— 几何全部来自运行中的产品：
+ *   docs/reference/plugin-row.json、01-hero.png，以及产品客户端 CSS 模块 `_keys_38b9q_1`
+ *
+ *   平排 .keys     inline-flex · align-items center · gap 3px · 12/16 ·
+ *                  色 --dsw-alias-label-tertiary · nowrap
+ *   平排 .key     box-sizing border-box · inline-flex · 居中 · font: inherit
+ *                  —— 没有底色、没有圆角、没有内边距（采集：bg 透明、radius 0、pad 0）
+ *   提示气泡       font-size 11px · line-height 14px · gap 2px；
+ *                  .tooltip .key min-width 16px · height 16px · padding 0 2px ·
+ *                  border-radius 4px · 底 --dsw-alias-tooltip-key-bg
+ *   连排          height 16px · padding 0 4px · border-radius 4px · 底同提示气泡；
+ *                  内部 .key 去掉自己的底
+ *   分隔符        `+` 与普通键同字号，独立一枚 kbd（采集：宽 8px）
+ *
+ * 实现为本仓库原创：类名与声明值逐条对齐产品，但未复制官方 CSS 源码。 */
+
+.keys {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 3px;
+  color: var(--dsw-alias-label-tertiary);
+  font-size: 12px;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+.key {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: inherit;
+}
+
+.separator {
+  font: inherit;
+}
+
+/* 工具提示形态：键位缩到 11/14，每枚键自带一层底。 */
+.tooltip {
+  color: inherit;
+  gap: 2px;
+  font-size: 11px;
+  line-height: 14px;
+}
+
+.tooltip .key {
+  min-width: 16px;
+  height: 16px;
+  padding: 0 2px;
+  border: 0;
+  border-radius: 4px;
+  background: var(--dsw-alias-tooltip-key-bg);
+}
+
+/* 连排形态：整组键共用一层底，键自己不带底。 */
+.joined {
+  box-sizing: border-box;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 4px;
+  background: var(--dsw-alias-tooltip-key-bg);
+}
+
+.joined .key {
+  min-width: 0;
+  height: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}

@@ -37,6 +37,9 @@ node scripts/capture-dsh.mjs 01-hero 06-plugins
 | `11-status-line` | `status-line.json` | 卡下方 dock 的每一项：文字、字号、颜色、容器链与间距 |
 | `12-conversation-geometry` | `conversation-geometry.json` | 会话区子树：阅读列、气泡、活动行、输入区、dock |
 | `13-top-strip` | `top-strip.json` | 首行按像素位置扫出来的全部控件 |
+| `14-settings-panel` | `settings-panel.json` | 设置窗口（800 × 800）：遮罩、导航列、内容行、选择器、主题方块 |
+| `15-plugin-row` | `plugin-row.json` | 插件列表一行：应用图标方块、标题、状态标签、说明、开关 |
+| `16-running-row` | `running-row.json` | 左栏会话行首的运行字形（转圈环）与它的动画 |
 
 ## 插件的部分不算产品的
 
