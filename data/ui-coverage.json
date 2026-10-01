@@ -1,13 +1,13 @@
 {
   "$comment": "清单里的每个身份在规范/组件语料里有没有位置。covered = 人工锚点命中（described 表示目标文件里写下了它的实测尺寸）；referenced = 语料里出现过这个词（要复核）；missing = 待办。",
-  "generatedAt": "2026-10-01T17:41:13.367Z",
+  "generatedAt": "2026-10-01T17:56:42.861Z",
   "counts": {
     "identities": 355,
-    "covered": 251,
-    "described": 42,
-    "coveredNotDescribed": 209,
-    "referenced": 54,
-    "missing": 50,
+    "covered": 297,
+    "described": 55,
+    "coveredNotDescribed": 183,
+    "referenced": 17,
+    "missing": 41,
     "pluginOwned": 119
   },
   "coverage": [
@@ -28,32 +28,14 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "spec/30-tokens.md",
-          "token": "svg",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "spec/50-icons.md",
-          "token": "svg",
-          "kind": "spec",
-          "id": "50-icons"
-        },
-        {
-          "where": "spec/70-checklist.md",
-          "token": "svg",
-          "kind": "spec",
-          "id": "70-checklist"
-        },
-        {
-          "where": "components/brand/FishMark/fishmark.module.css",
-          "token": "svg",
-          "kind": "component",
-          "id": "fishmark"
+          "where": "components/brand/FishMark",
+          "token": "sidebar.brand.mark",
+          "kind": "anchor",
+          "id": "左栏品牌鱼标（渲染盒 24 × 18，随品牌行高度）"
         }
       ]
     },
@@ -102,32 +84,14 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "spec/30-tokens.md",
-          "token": "title",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "components/brand/FishMark/SPEC.md",
-          "token": "title",
-          "kind": "component",
-          "id": "fishmark"
-        },
-        {
-          "where": "components/brand/Wordmark/SPEC.md",
-          "token": "title",
-          "kind": "component",
-          "id": "wordmark"
-        },
-        {
-          "where": "components/controls/Switch/SPEC.md",
-          "token": "title",
-          "kind": "component",
-          "id": "switch"
+          "where": "components/layout/SidebarRow",
+          "token": "title|span|",
+          "kind": "anchor",
+          "id": "会话行 / 工作区行的标题文字（宽度随文字）"
         }
       ]
     },
@@ -153,14 +117,14 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "components/patterns/SettingsPage/SPEC.md",
-          "token": "navlabel",
-          "kind": "component",
-          "id": "settingspage"
+          "where": "components/patterns/SettingsPage",
+          "token": "navLabel",
+          "kind": "anchor",
+          "id": "设置导航格里的标签（14/22，宽度随文字）"
         }
       ]
     },
@@ -186,32 +150,14 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
-      "described": null,
+      "coverage": "covered",
+      "described": false,
       "hits": [
         {
-          "where": "components/controls/Input/SPEC.md",
-          "token": "span",
-          "kind": "component",
-          "id": "input"
-        },
-        {
-          "where": "components/controls/Pill/SPEC.md",
-          "token": "span",
-          "kind": "component",
-          "id": "pill"
-        },
-        {
-          "where": "components/controls/ShortcutKeys/SPEC.md",
-          "token": "span",
-          "kind": "component",
-          "id": "shortcutkeys"
-        },
-        {
-          "where": "components/controls/Switch/SPEC.md",
-          "token": "span",
-          "kind": "component",
-          "id": "switch"
+          "where": "spec/10-frame-layout.md",
+          "token": "composer",
+          "kind": "anchor",
+          "id": "输入区"
         }
       ]
     },
@@ -446,13 +392,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": true,
+      "described": null,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "tab",
+          "token": "conversation.session.header",
           "kind": "anchor",
-          "id": "会话头部页签（对话 / 轨迹 / 上下文）"
+          "id": "会话头部里的字形与按钮（15 × 15 等，尺寸随字形）"
         }
       ]
     },
@@ -476,32 +422,14 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "spec/20-controls.md",
-          "token": "div",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/70-checklist.md",
-          "token": "div",
-          "kind": "spec",
-          "id": "70-checklist"
-        },
-        {
-          "where": "components/controls/SegmentedControl/SPEC.md",
-          "token": "div",
-          "kind": "component",
-          "id": "segmentedcontrol"
-        },
-        {
-          "where": "components/data-display/DisclosureRow/SPEC.md",
-          "token": "div",
-          "kind": "component",
-          "id": "disclosurerow"
+          "where": "components/layout/SettingsRow",
+          "token": "settings.general.item",
+          "kind": "anchor",
+          "id": "设置行的文字容器与右侧控件（宽度随文字与控件）"
         }
       ]
     },
@@ -522,32 +450,14 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "icon",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "icon",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/50-icons.md",
-          "token": "icon",
-          "kind": "spec",
-          "id": "50-icons"
-        },
-        {
-          "where": "components/brand/FishMark/SPEC.md",
-          "token": "icon",
-          "kind": "component",
-          "id": "fishmark"
+          "where": "spec/10-frame-layout.md",
+          "token": "conversation.session.header",
+          "kind": "anchor",
+          "id": "会话头部里的字形与按钮（15 × 15 等，尺寸随字形）"
         }
       ]
     },
@@ -600,32 +510,14 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "spec/30-tokens.md",
-          "token": "title",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "components/brand/FishMark/SPEC.md",
-          "token": "title",
-          "kind": "component",
-          "id": "fishmark"
-        },
-        {
-          "where": "components/brand/Wordmark/SPEC.md",
-          "token": "title",
-          "kind": "component",
-          "id": "wordmark"
-        },
-        {
-          "where": "components/controls/Switch/SPEC.md",
-          "token": "title",
-          "kind": "component",
-          "id": "switch"
+          "where": "spec/10-frame-layout.md",
+          "token": "title|button|",
+          "kind": "anchor",
+          "id": "活动行折叠按钮"
         }
       ]
     },
@@ -651,32 +543,14 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "spec/20-controls.md",
-          "token": "label",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/30-tokens.md",
-          "token": "label",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "spec/60-accessibility.md",
-          "token": "label",
-          "kind": "spec",
-          "id": "60-accessibility"
-        },
-        {
-          "where": "components/brand/FishMark/SPEC.md",
-          "token": "label",
-          "kind": "component",
-          "id": "fishmark"
+          "where": "spec/10-frame-layout.md",
+          "token": "text label|span|",
+          "kind": "anchor",
+          "id": "活动行标签"
         }
       ]
     },
@@ -728,32 +602,14 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
-      "described": null,
+      "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "spec/20-controls.md",
-          "token": "spinner",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/40-motion.md",
-          "token": "spinner",
-          "kind": "spec",
-          "id": "40-motion"
-        },
-        {
-          "where": "components/data-display/StateDot/SPEC.md",
-          "token": "spinner",
-          "kind": "component",
-          "id": "statedot"
-        },
-        {
-          "where": "components/feedback/RunningRing/running-ring.module.css",
-          "token": "spinner",
-          "kind": "component",
-          "id": "runningring"
+          "where": "components/feedback/RunningRing",
+          "token": "spinner|svg|",
+          "kind": "anchor",
+          "id": "运行圆环（14 × 14）"
         }
       ]
     },
@@ -937,32 +793,14 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
-      "described": null,
+      "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "frame",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
           "where": "spec/10-frame-layout.md",
-          "token": "frame",
-          "kind": "spec",
-          "id": "10-frame-layout"
-        },
-        {
-          "where": "spec/40-motion.md",
-          "token": "frame",
-          "kind": "spec",
-          "id": "40-motion"
-        },
-        {
-          "where": "components/data-display/StateDot/SPEC.md",
-          "token": "frame",
-          "kind": "component",
-          "id": "statedot"
+          "token": "frame|div|",
+          "kind": "anchor",
+          "id": "三列框架（1570 × 905）"
         }
       ]
     },
@@ -1011,32 +849,14 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
-      "described": null,
+      "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "spec/11-slot-seats.md",
-          "token": "root",
-          "kind": "spec",
-          "id": "11-slot-seats"
-        },
-        {
-          "where": "spec/30-tokens.md",
-          "token": "root",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "components/brand/Wordmark/SPEC.md",
-          "token": "root",
-          "kind": "component",
-          "id": "wordmark"
-        },
-        {
-          "where": "components/data-display/DisclosureRow/disclosure-row.module.css",
-          "token": "root",
-          "kind": "component",
-          "id": "disclosurerow"
+          "where": "spec/10-frame-layout.md",
+          "token": "root quietBars",
+          "kind": "anchor",
+          "id": "左栏容器（280 × 905）"
         }
       ]
     },
@@ -1088,7 +908,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -1406,32 +1226,14 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
-      "described": null,
+      "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "spec/11-slot-seats.md",
-          "token": "root",
-          "kind": "spec",
-          "id": "11-slot-seats"
-        },
-        {
-          "where": "spec/30-tokens.md",
-          "token": "root",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "components/brand/Wordmark/SPEC.md",
-          "token": "root",
-          "kind": "component",
-          "id": "wordmark"
-        },
-        {
-          "where": "components/data-display/DisclosureRow/disclosure-row.module.css",
-          "token": "root",
-          "kind": "component",
-          "id": "disclosurerow"
+          "where": "spec/10-frame-layout.md",
+          "token": "root|div|",
+          "kind": "anchor",
+          "id": "中栏容器（1290 × 905）"
         }
       ]
     },
@@ -1455,32 +1257,14 @@
         "发消息或创建任务, / 调用指令, @ 文件或对话"
       ],
       "pluginOwned": false,
-      "coverage": "referenced",
-      "described": null,
+      "coverage": "covered",
+      "described": true,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "input",
-          "kind": "spec",
-          "id": "10-frame-layout"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "input",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/70-checklist.md",
-          "token": "input",
-          "kind": "spec",
-          "id": "70-checklist"
-        },
-        {
-          "where": "components/controls/Input/input.module.css",
-          "token": "input",
-          "kind": "component",
-          "id": "input"
+          "token": "input|div|textbox",
+          "kind": "anchor",
+          "id": "输入卡里的输入区（776 × 52）"
         }
       ]
     },
@@ -1504,20 +1288,14 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "components/controls/Input/input.module.css",
-          "token": "placeholder",
-          "kind": "component",
-          "id": "input"
-        },
-        {
-          "where": "components/controls/Input/SPEC.md",
-          "token": "placeholder",
-          "kind": "component",
-          "id": "input"
+          "where": "spec/10-frame-layout.md",
+          "token": "placeholder|div|",
+          "kind": "anchor",
+          "id": "占位文本行（754 × 24，宽度随文字）"
         }
       ]
     },
@@ -1540,32 +1318,14 @@
         "添加文件或调用指令"
       ],
       "pluginOwned": false,
-      "coverage": "referenced",
-      "described": null,
+      "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/30-tokens.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "spec/50-icons.md",
-          "token": "button",
-          "kind": "spec",
-          "id": "50-icons"
+          "where": "spec/10-frame-layout.md",
+          "token": "add|button|",
+          "kind": "anchor",
+          "id": "输入卡左侧圆形加号（28 × 28）"
         }
       ]
     },
@@ -1619,32 +1379,14 @@
         "停止生成"
       ],
       "pluginOwned": false,
-      "coverage": "referenced",
-      "described": null,
+      "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "spec/20-controls.md",
-          "token": "primary",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/30-tokens.md",
-          "token": "primary",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "spec/50-icons.md",
-          "token": "primary",
-          "kind": "spec",
-          "id": "50-icons"
-        },
-        {
-          "where": "spec/60-accessibility.md",
-          "token": "primary",
-          "kind": "spec",
-          "id": "60-accessibility"
+          "where": "spec/10-frame-layout.md",
+          "token": "primary|button|",
+          "kind": "anchor",
+          "id": "发送圆钮（34 × 34）"
         }
       ]
     },
@@ -1668,13 +1410,13 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": true,
+      "described": null,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "tab",
+          "token": "conversation.session.header",
           "kind": "anchor",
-          "id": "会话头部页签（对话 / 轨迹 / 上下文）"
+          "id": "会话头部里的字形与按钮（15 × 15 等，尺寸随字形）"
         }
       ]
     },
@@ -1698,13 +1440,13 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": true,
+      "described": null,
       "hits": [
         {
-          "where": "components/controls/Button",
-          "token": "1rv3m",
+          "where": "spec/10-frame-layout.md",
+          "token": "conversation.session.header",
           "kind": "anchor",
-          "id": "产品的 Button 模块（_button_1rv3m_2，含 md/sm/primary/ghost/outline/toolbar/icon 变体）"
+          "id": "会话头部里的字形与按钮（15 × 15 等，尺寸随字形）"
         }
       ]
     },
@@ -1753,32 +1495,14 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
-      "described": null,
+      "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "header",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
           "where": "spec/10-frame-layout.md",
-          "token": "header",
-          "kind": "spec",
-          "id": "10-frame-layout"
-        },
-        {
-          "where": "spec/11-slot-seats.md",
-          "token": "header",
-          "kind": "spec",
-          "id": "11-slot-seats"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "header",
-          "kind": "spec",
-          "id": "20-controls"
+          "token": "header|header|",
+          "kind": "anchor",
+          "id": "会话头部（1290 × 50）"
         }
       ]
     },
@@ -1803,13 +1527,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
-          "where": "components/patterns/SettingsPage",
-          "token": "crumb",
+          "where": "spec/10-frame-layout.md",
+          "token": "conversation.session.header",
           "kind": "anchor",
-          "id": "设置窗口里的分区面包屑"
+          "id": "会话头部里的字形与按钮（15 × 15 等，尺寸随字形）"
         }
       ]
     },
@@ -1833,13 +1557,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "EBLgjq_",
+          "token": "conversation.session.header",
           "kind": "anchor",
-          "id": "会话头部 chip（智能体团队 / 标准模式）与其成员行"
+          "id": "会话头部里的字形与按钮（15 × 15 等，尺寸随字形）"
         }
       ]
     },
@@ -1863,13 +1587,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": true,
+      "described": null,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "tab",
+          "token": "conversation.session.header",
           "kind": "anchor",
-          "id": "会话头部页签（对话 / 轨迹 / 上下文）"
+          "id": "会话头部里的字形与按钮（15 × 15 等，尺寸随字形）"
         }
       ]
     },
@@ -1891,13 +1615,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": true,
+      "described": null,
       "hits": [
         {
-          "where": "spec/20-controls.md",
-          "token": "split|div",
+          "where": "spec/10-frame-layout.md",
+          "token": "conversation.session.header",
           "kind": "anchor",
-          "id": "分段按钮的中缝容器（打开方式 / 视图切换）"
+          "id": "会话头部里的字形与按钮（15 × 15 等，尺寸随字形）"
         }
       ]
     },
@@ -1920,14 +1644,14 @@
         "用 文件资源管理器 打开"
       ],
       "pluginOwned": false,
-      "coverage": "referenced",
-      "described": null,
+      "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "spec/10-frame-layout.md",
-          "token": "main",
-          "kind": "spec",
-          "id": "10-frame-layout"
+          "where": "spec/20-controls.md",
+          "token": "main|button|",
+          "kind": "anchor",
+          "id": "打开方式分段按钮的左半（23 × 22）"
         }
       ]
     },
@@ -1950,20 +1674,14 @@
         "更多打开方式"
       ],
       "pluginOwned": false,
-      "coverage": "referenced",
-      "described": null,
+      "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "components/data-display/DisclosureRow/disclosure-row.module.css",
-          "token": "chevron",
-          "kind": "component",
-          "id": "disclosurerow"
-        },
-        {
-          "where": "components/data-display/DisclosureRow/SPEC.md",
-          "token": "chevron",
-          "kind": "component",
-          "id": "disclosurerow"
+          "where": "spec/20-controls.md",
+          "token": "chevron|button|",
+          "kind": "anchor",
+          "id": "打开方式分段按钮的右半（18 × 22）"
         }
       ]
     },
@@ -1987,13 +1705,13 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": true,
+      "described": null,
       "hits": [
         {
-          "where": "components/controls/Button",
-          "token": "1rv3m",
+          "where": "spec/10-frame-layout.md",
+          "token": "conversation.session.header",
           "kind": "anchor",
-          "id": "产品的 Button 模块（_button_1rv3m_2，含 md/sm/primary/ghost/outline/toolbar/icon 变体）"
+          "id": "会话头部里的字形与按钮（15 × 15 等，尺寸随字形）"
         }
       ]
     },
@@ -2017,13 +1735,13 @@
       ],
       "pluginOwned": true,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
-          "where": "plugins/dsh-widgets",
-          "token": "dsx-",
+          "where": "spec/10-frame-layout.md",
+          "token": "conversation.session.header",
           "kind": "anchor",
-          "id": "插件 dsh-widgets 的界面"
+          "id": "会话头部里的字形与按钮（15 × 15 等，尺寸随字形）"
         }
       ]
     },
@@ -2045,7 +1763,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -2205,32 +1923,14 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "components/data-display/KeyValueList/key-value-list.module.css",
-          "token": "text",
-          "kind": "component",
-          "id": "keyvaluelist"
-        },
-        {
-          "where": "components/data-display/KeyValueList/SPEC.md",
-          "token": "text",
-          "kind": "component",
-          "id": "keyvaluelist"
-        },
-        {
-          "where": "components/data-display/MiniBar/SPEC.md",
-          "token": "text",
-          "kind": "component",
-          "id": "minibar"
-        },
-        {
-          "where": "components/feedback/EmptyState/empty-state.module.css",
-          "token": "text",
-          "kind": "component",
-          "id": "emptystate"
+          "where": "spec/10-frame-layout.md",
+          "token": "text|span|",
+          "kind": "anchor",
+          "id": "活动行标题（宽度随文字）"
         }
       ]
     },
@@ -2308,32 +2008,14 @@
         "新建会话"
       ],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "spec/20-controls.md",
-          "token": "brand",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/30-tokens.md",
-          "token": "brand",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "spec/60-accessibility.md",
-          "token": "brand",
-          "kind": "spec",
-          "id": "60-accessibility"
-        },
-        {
-          "where": "spec/70-checklist.md",
-          "token": "brand",
-          "kind": "spec",
-          "id": "70-checklist"
+          "where": "components/brand/Wordmark",
+          "token": "brand wide|button|",
+          "kind": "anchor",
+          "id": "左栏品牌按钮（216 × 24）"
         }
       ]
     },
@@ -2473,13 +2155,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
-          "where": "components/patterns/SettingsPage",
-          "token": "RotMhW_",
+          "where": "spec/50-icons.md",
+          "token": "cardDesc",
           "kind": "anchor",
-          "id": "内置插件页的卡片与分组开关（groupToggle 76 × 22）"
+          "id": "插件行说明（13/18，宽度随文字）"
         }
       ]
     },
@@ -2589,32 +2271,14 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "spec/30-tokens.md",
-          "token": "title",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "components/brand/FishMark/SPEC.md",
-          "token": "title",
-          "kind": "component",
-          "id": "fishmark"
-        },
-        {
-          "where": "components/brand/Wordmark/SPEC.md",
-          "token": "title",
-          "kind": "component",
-          "id": "wordmark"
-        },
-        {
-          "where": "components/controls/Switch/SPEC.md",
-          "token": "title",
-          "kind": "component",
-          "id": "switch"
+          "where": "components/layout/SettingsRow",
+          "token": "settings.general.item",
+          "kind": "anchor",
+          "id": "设置行的文字容器与右侧控件（宽度随文字与控件）"
         }
       ]
     },
@@ -2820,9 +2484,16 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "described": null,
-      "hits": []
+      "coverage": "covered",
+      "described": true,
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "cardIcon",
+          "kind": "anchor",
+          "id": "插件行的应用图标容器（50 × 50 · 圆角 16）"
+        }
+      ]
     },
     {
       "key": "cardTitle cardOpen|button|",
@@ -2845,14 +2516,14 @@
         "查看 自动化任务"
       ],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "components/surfaces/Card/SPEC.md",
-          "token": "cardtitle",
-          "kind": "component",
-          "id": "card"
+          "where": "spec/50-icons.md",
+          "token": "cardTitle cardOpen",
+          "kind": "anchor",
+          "id": "插件行标题（14/20 · 500，宽度随文字）"
         }
       ]
     },
@@ -2927,9 +2598,16 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
+      "coverage": "covered",
       "described": null,
-      "hits": []
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "cardDesc",
+          "kind": "anchor",
+          "id": "插件行说明（13/18，宽度随文字）"
+        }
+      ]
     },
     {
       "key": "button outline sm|button|",
@@ -3062,32 +2740,14 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "overlay",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/10-frame-layout.md",
-          "token": "overlay",
-          "kind": "spec",
-          "id": "10-frame-layout"
-        },
-        {
-          "where": "spec/11-slot-seats.md",
-          "token": "overlay",
-          "kind": "spec",
-          "id": "11-slot-seats"
-        },
-        {
-          "where": "spec/30-tokens.md",
-          "token": "overlay",
-          "kind": "spec",
-          "id": "30-tokens"
+          "where": "components/patterns/SettingsPage",
+          "token": "overlay|div|presentation",
+          "kind": "anchor",
+          "id": "浮层根（铺满视口）"
         }
       ]
     },
@@ -3108,32 +2768,14 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "spec/20-controls.md",
-          "token": "mask",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/50-icons.md",
-          "token": "mask",
-          "kind": "spec",
-          "id": "50-icons"
-        },
-        {
-          "where": "components/controls/ShortcutKeys/README.md",
-          "token": "mask",
-          "kind": "component",
-          "id": "shortcutkeys"
-        },
-        {
-          "where": "components/controls/ShortcutKeys/SPEC.md",
-          "token": "mask",
-          "kind": "component",
-          "id": "shortcutkeys"
+          "where": "components/patterns/SettingsPage",
+          "token": "mask|div|",
+          "kind": "anchor",
+          "id": "遮罩（铺满视口，尺寸随窗口）"
         }
       ]
     },
@@ -3154,32 +2796,14 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
-      "described": null,
+      "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "spec/20-controls.md",
-          "token": "dialog",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/40-motion.md",
-          "token": "panel",
-          "kind": "spec",
-          "id": "40-motion"
-        },
-        {
-          "where": "spec/50-icons.md",
-          "token": "panel",
-          "kind": "spec",
-          "id": "50-icons"
-        },
-        {
-          "where": "components/controls/Pill/SPEC.md",
-          "token": "panel",
-          "kind": "component",
-          "id": "pill"
+          "where": "components/patterns/SettingsPage",
+          "token": "panel|div|dialog",
+          "kind": "anchor",
+          "id": "设置窗口（800 × 800、圆角 28）"
         }
       ]
     },
@@ -3228,32 +2852,14 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
-      "described": null,
+      "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "spec/50-icons.md",
-          "token": "close",
-          "kind": "spec",
-          "id": "50-icons"
-        },
-        {
-          "where": "components/layout/PanelHeader/SPEC.md",
-          "token": "close",
-          "kind": "component",
-          "id": "panelheader"
-        },
-        {
-          "where": "components/layout/SettingsRow/SPEC.md",
-          "token": "close",
-          "kind": "component",
-          "id": "settingsrow"
-        },
-        {
-          "where": "components/surfaces/Card/card.module.css",
-          "token": "close",
-          "kind": "component",
-          "id": "card"
+          "where": "spec/20-controls.md",
+          "token": "close|button|",
+          "kind": "anchor",
+          "id": "图标按钮（28 × 28 · 圆角 8）"
         }
       ]
     },
@@ -3275,32 +2881,14 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "components/controls/Input/SPEC.md",
-          "token": "desc",
-          "kind": "component",
-          "id": "input"
-        },
-        {
-          "where": "components/feedback/EmptyState/empty-state.module.css",
-          "token": "desc",
-          "kind": "component",
-          "id": "emptystate"
-        },
-        {
-          "where": "components/feedback/EmptyState/SPEC.md",
-          "token": "desc",
-          "kind": "component",
-          "id": "emptystate"
-        },
-        {
-          "where": "components/layout/PanelHeader/panelheader.module.css",
-          "token": "desc",
-          "kind": "component",
-          "id": "panelheader"
+          "where": "components/layout/SettingsRow",
+          "token": "settings.general.item",
+          "kind": "anchor",
+          "id": "设置行的文字容器与右侧控件（宽度随文字与控件）"
         }
       ]
     },
@@ -3373,14 +2961,14 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "components/surfaces/Modal/SPEC.md",
-          "token": "selector",
-          "kind": "component",
-          "id": "modal"
+          "where": "components/patterns/SettingsPage",
+          "token": "selector|button|",
+          "kind": "anchor",
+          "id": "设置行右侧选择器（高 36、圆角 12，宽度随文字）"
         }
       ]
     },
@@ -4350,13 +3938,13 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
-          "where": "plugins/dsh-usage-center",
-          "token": "lc-",
+          "where": "components/layout/SidebarRow",
+          "token": "title|span|",
           "kind": "anchor",
-          "id": "插件 dsh-usage-center 的界面"
+          "id": "会话行 / 工作区行的标题文字（宽度随文字）"
         }
       ]
     },
@@ -4429,13 +4017,13 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "components/patterns/SettingsPage",
           "token": "crumb",
           "kind": "anchor",
-          "id": "设置窗口里的分区面包屑"
+          "id": "设置窗口里的面包屑（236 × 28，宽度随文字）"
         }
       ]
     },
@@ -4505,13 +4093,13 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
-          "where": "plugins/dsh-usage-center",
-          "token": "lc-",
+          "where": "spec/10-frame-layout.md",
+          "token": "text|span|",
           "kind": "anchor",
-          "id": "插件 dsh-usage-center 的界面"
+          "id": "活动行标题（宽度随文字）"
         }
       ]
     },
@@ -4648,13 +4236,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": true,
+      "described": null,
       "hits": [
         {
-          "where": "components/patterns/SettingsPage",
-          "token": "themeCube",
+          "where": "components/layout/SettingsRow",
+          "token": "settings.general.item",
           "kind": "anchor",
-          "id": "设置页外观那三张主题方块（183 × 84、圆角 20）"
+          "id": "设置行的文字容器与右侧控件（宽度随文字与控件）"
         }
       ]
     },
@@ -4671,9 +4259,16 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
+      "coverage": "covered",
       "described": null,
-      "hits": []
+      "hits": [
+        {
+          "where": "components/layout/SettingsRow",
+          "token": "settings.general.item",
+          "kind": "anchor",
+          "id": "设置行的文字容器与右侧控件（宽度随文字与控件）"
+        }
+      ]
     },
     {
       "key": "uitw-stepper-value|span|",
@@ -4691,9 +4286,16 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
+      "coverage": "covered",
       "described": null,
-      "hits": []
+      "hits": [
+        {
+          "where": "components/layout/SettingsRow",
+          "token": "settings.general.item",
+          "kind": "anchor",
+          "id": "设置行的文字容器与右侧控件（宽度随文字与控件）"
+        }
+      ]
     },
     {
       "key": "uitw-stepper-unit|span|",
@@ -4710,9 +4312,16 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
+      "coverage": "covered",
       "described": null,
-      "hits": []
+      "hits": [
+        {
+          "where": "components/layout/SettingsRow",
+          "token": "settings.general.item",
+          "kind": "anchor",
+          "id": "设置行的文字容器与右侧控件（宽度随文字与控件）"
+        }
+      ]
     },
     {
       "key": "cc-groupTitle|h3|",
@@ -4776,10 +4385,10 @@
       "described": false,
       "hits": [
         {
-          "where": "components/patterns/SettingsPage",
-          "token": "KZf9OG_",
+          "where": "spec/20-controls.md",
+          "token": "main|button|",
           "kind": "anchor",
-          "id": "设置卡片与其分组标题（groupHead 564 × 16）"
+          "id": "打开方式分段按钮的左半（23 × 22）"
         }
       ]
     },
@@ -4901,13 +4510,13 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
-          "where": "plugins/dsh-usage-center",
-          "token": "lc-",
+          "where": "spec/10-frame-layout.md",
+          "token": "text|span|",
           "kind": "anchor",
-          "id": "插件 dsh-usage-center 的界面"
+          "id": "活动行标题（宽度随文字）"
         }
       ]
     },
@@ -5104,14 +4713,14 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "components/patterns/SettingsPage/SPEC.md",
-          "token": "enhc-page-title",
-          "kind": "component",
-          "id": "settingspage"
+          "where": "components/layout/SettingsRow",
+          "token": "settings.general.item",
+          "kind": "anchor",
+          "id": "设置行的文字容器与右侧控件（宽度随文字与控件）"
         }
       ]
     },
@@ -5132,14 +4741,14 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "components/patterns/SettingsPage/SPEC.md",
-          "token": "enhc-page-intro",
-          "kind": "component",
-          "id": "settingspage"
+          "where": "components/layout/SettingsRow",
+          "token": "settings.general.item",
+          "kind": "anchor",
+          "id": "设置行的文字容器与右侧控件（宽度随文字与控件）"
         }
       ]
     },
@@ -5377,9 +4986,16 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
+      "coverage": "covered",
       "described": null,
-      "hits": []
+      "hits": [
+        {
+          "where": "spec/50-icons.md",
+          "token": "cardDesc",
+          "kind": "anchor",
+          "id": "插件行说明（13/18，宽度随文字）"
+        }
+      ]
     },
     {
       "key": "lc-gran-btn lc-gran-on|button|",
@@ -5556,13 +5172,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
-          "where": "spec/20-controls.md",
-          "token": "EBLgjq_member",
+          "where": "spec/10-frame-layout.md",
+          "token": "text|span|",
           "kind": "anchor",
-          "id": "会话头部 chip 展开后的成员行（288 × 52、圆角 8）"
+          "id": "活动行标题（宽度随文字）"
         }
       ]
     },
@@ -5683,32 +5299,14 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "components/layout/SidebarRow/sidebarrow.module.css",
-          "token": "itemlabel",
-          "kind": "component",
-          "id": "sidebarrow"
-        },
-        {
-          "where": "components/layout/SidebarRow/SPEC.md",
-          "token": "itemlabel",
-          "kind": "component",
-          "id": "sidebarrow"
-        },
-        {
-          "where": "components/patterns/ListRowGroup/list-row-group.module.css",
-          "token": "itemlabel",
-          "kind": "component",
-          "id": "listrowgroup"
-        },
-        {
-          "where": "components/patterns/ListRowGroup/SPEC.md",
-          "token": "itemlabel",
-          "kind": "component",
-          "id": "listrowgroup"
+          "where": "components/layout/SidebarRow",
+          "token": "itemLabel|span|",
+          "kind": "anchor",
+          "id": "侧栏行标签"
         }
       ]
     },
@@ -5903,13 +5501,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "components/layout/SettingsRow",
-          "token": "Hefa_q_",
+          "token": "settings.general.item",
           "kind": "anchor",
-          "id": "设置行的标题 / 选择器 / 折叠角（每个 section 一套哈希，形态与 SettingsRow 相同）"
+          "id": "设置行的文字容器与右侧控件（宽度随文字与控件）"
         }
       ]
     },
@@ -5927,13 +5525,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
-          "where": "components/layout/SettingsRow",
-          "token": "Hefa_q_",
+          "where": "components/patterns/SettingsPage",
+          "token": "selector|button|",
           "kind": "anchor",
-          "id": "设置行的标题 / 选择器 / 折叠角（每个 section 一套哈希，形态与 SettingsRow 相同）"
+          "id": "设置行右侧选择器（高 36、圆角 12，宽度随文字）"
         }
       ]
     },
@@ -5951,13 +5549,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "components/layout/SettingsRow",
-          "token": "Hefa_q_",
+          "token": "settings.general.item",
           "kind": "anchor",
-          "id": "设置行的标题 / 选择器 / 折叠角（每个 section 一套哈希，形态与 SettingsRow 相同）"
+          "id": "设置行的文字容器与右侧控件（宽度随文字与控件）"
         }
       ]
     },
@@ -5975,13 +5573,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": true,
+      "described": null,
       "hits": [
         {
-          "where": "components/patterns/SettingsPage",
-          "token": "themeCube",
+          "where": "components/layout/SettingsRow",
+          "token": "settings.general.item",
           "kind": "anchor",
-          "id": "设置页外观那三张主题方块（183 × 84、圆角 20）"
+          "id": "设置行的文字容器与右侧控件（宽度随文字与控件）"
         }
       ]
     },
@@ -5999,13 +5597,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "components/layout/SettingsRow",
-          "token": "_0Fr0Ha_",
+          "token": "settings.general.item",
           "kind": "anchor",
-          "id": "数字设置行：微调器 72 × 36、单位、上下箭头"
+          "id": "设置行的文字容器与右侧控件（宽度随文字与控件）"
         }
       ]
     },
@@ -6025,13 +5623,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "components/layout/SettingsRow",
-          "token": "_0Fr0Ha_",
+          "token": "settings.general.item",
           "kind": "anchor",
-          "id": "数字设置行：微调器 72 × 36、单位、上下箭头"
+          "id": "设置行的文字容器与右侧控件（宽度随文字与控件）"
         }
       ]
     },
@@ -6051,13 +5649,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "components/layout/SettingsRow",
-          "token": "_0Fr0Ha_",
+          "token": "settings.general.item",
           "kind": "anchor",
-          "id": "数字设置行：微调器 72 × 36、单位、上下箭头"
+          "id": "设置行的文字容器与右侧控件（宽度随文字与控件）"
         }
       ]
     },
@@ -6076,32 +5674,14 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "components/feedback/EmptyState/empty-state.module.css",
-          "token": "description",
-          "kind": "component",
-          "id": "emptystate"
-        },
-        {
-          "where": "components/feedback/EmptyState/SPEC.md",
-          "token": "description",
-          "kind": "component",
-          "id": "emptystate"
-        },
-        {
-          "where": "components/layout/PanelHeader/panelheader.module.css",
-          "token": "description",
-          "kind": "component",
-          "id": "panelheader"
-        },
-        {
-          "where": "components/layout/PanelHeader/SPEC.md",
-          "token": "description",
-          "kind": "component",
-          "id": "panelheader"
+          "where": "components/layout/SettingsRow",
+          "token": "settings.general.item",
+          "kind": "anchor",
+          "id": "设置行的文字容器与右侧控件（宽度随文字与控件）"
         }
       ]
     },
@@ -6121,13 +5701,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "components/layout/SettingsRow",
-          "token": "_3Y3Nma_",
+          "token": "settings.general.item",
           "kind": "anchor",
-          "id": "设置行的标题 14/22 与说明 12/18"
+          "id": "设置行的文字容器与右侧控件（宽度随文字与控件）"
         }
       ]
     },
@@ -6147,13 +5727,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "components/layout/SettingsRow",
-          "token": "_3Y3Nma_",
+          "token": "settings.general.item",
           "kind": "anchor",
-          "id": "设置行的标题 14/22 与说明 12/18"
+          "id": "设置行的文字容器与右侧控件（宽度随文字与控件）"
         }
       ]
     },
@@ -6175,13 +5755,13 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
           "where": "components/layout/SettingsRow",
-          "token": "_3Y3Nma_",
+          "token": "settings.general.item",
           "kind": "anchor",
-          "id": "设置行的标题 14/22 与说明 12/18"
+          "id": "设置行的文字容器与右侧控件（宽度随文字与控件）"
         }
       ]
     },
@@ -6344,7 +5924,7 @@
       ],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -6477,9 +6057,16 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
-      "described": null,
-      "hits": []
+      "coverage": "covered",
+      "described": false,
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "primary|button|",
+          "kind": "anchor",
+          "id": "发送圆钮（34 × 34）"
+        }
+      ]
     },
     {
       "key": "duc-seg|div|group",
@@ -6796,32 +6383,14 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
-      "described": null,
+      "coverage": "covered",
+      "described": true,
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "header",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
           "where": "spec/10-frame-layout.md",
-          "token": "header",
-          "kind": "spec",
-          "id": "10-frame-layout"
-        },
-        {
-          "where": "spec/11-slot-seats.md",
-          "token": "header",
-          "kind": "spec",
-          "id": "11-slot-seats"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "header",
-          "kind": "spec",
-          "id": "20-controls"
+          "token": "headerBlank",
+          "kind": "anchor",
+          "id": "新会话页的空头部（1290 × 40）"
         }
       ]
     },
@@ -6911,7 +6480,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -6982,7 +6551,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -7204,32 +6773,14 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
+      "coverage": "covered",
       "described": null,
       "hits": [
         {
-          "where": "spec/20-controls.md",
-          "token": "spinner",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/40-motion.md",
-          "token": "spinner",
-          "kind": "spec",
-          "id": "40-motion"
-        },
-        {
-          "where": "components/data-display/StateDot/SPEC.md",
-          "token": "spinner",
-          "kind": "component",
-          "id": "statedot"
-        },
-        {
-          "where": "components/feedback/RunningRing/running-ring.module.css",
-          "token": "spinner",
-          "kind": "component",
-          "id": "runningring"
+          "where": "spec/10-frame-layout.md",
+          "token": "conversation.session.header",
+          "kind": "anchor",
+          "id": "会话头部里的字形与按钮（15 × 15 等，尺寸随字形）"
         }
       ]
     },
@@ -7468,9 +7019,16 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
+      "coverage": "covered",
       "described": null,
-      "hits": []
+      "hits": [
+        {
+          "where": "components/patterns/SettingsPage",
+          "token": "selector|button|",
+          "kind": "anchor",
+          "id": "设置行右侧选择器（高 36、圆角 12，宽度随文字）"
+        }
+      ]
     },
     {
       "key": "cc-selectorText|span|",
@@ -7486,9 +7044,16 @@
       ],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "missing",
+      "coverage": "covered",
       "described": null,
-      "hits": []
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "text|span|",
+          "kind": "anchor",
+          "id": "活动行标题（宽度随文字）"
+        }
+      ]
     },
     {
       "key": "heading enhc-page-title|h2|",
@@ -7593,32 +7158,14 @@
         "搜索插件"
       ],
       "pluginOwned": false,
-      "coverage": "referenced",
-      "described": null,
+      "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "input",
-          "kind": "spec",
-          "id": "10-frame-layout"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "input",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/70-checklist.md",
-          "token": "input",
-          "kind": "spec",
-          "id": "70-checklist"
-        },
-        {
-          "where": "components/controls/Input/input.module.css",
-          "token": "input",
-          "kind": "component",
-          "id": "input"
+          "token": "tab",
+          "kind": "anchor",
+          "id": "会话头部页签（对话 / 轨迹 / 上下文）"
         }
       ]
     },
@@ -7660,13 +7207,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
-          "where": "components/patterns/SettingsPage",
-          "token": "RotMhW_",
+          "where": "components/layout/SidebarRow",
+          "token": "title|span|",
           "kind": "anchor",
-          "id": "内置插件页的卡片与分组开关（groupToggle 76 × 22）"
+          "id": "会话行 / 工作区行的标题文字（宽度随文字）"
         }
       ]
     },
@@ -8287,13 +7834,13 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
-          "where": "plugins/dsh-usage-center",
-          "token": "duc-",
+          "where": "components/patterns/SettingsPage",
+          "token": "mask|div|",
           "kind": "anchor",
-          "id": "插件 dsh-usage-center 的热力图"
+          "id": "遮罩（铺满视口，尺寸随窗口）"
         }
       ]
     },
@@ -8313,10 +7860,10 @@
       "described": false,
       "hits": [
         {
-          "where": "plugins/dsh-usage-center",
-          "token": "duc-",
+          "where": "components/patterns/SettingsPage",
+          "token": "panel|div|dialog",
           "kind": "anchor",
-          "id": "插件 dsh-usage-center 的热力图"
+          "id": "设置窗口（800 × 800、圆角 28）"
         }
       ]
     },
@@ -8408,13 +7955,13 @@
       ],
       "pluginOwned": true,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
-          "where": "plugins/dsh-usage-center",
-          "token": "duc-",
+          "where": "spec/20-controls.md",
+          "token": "close|button|",
           "kind": "anchor",
-          "id": "插件 dsh-usage-center 的热力图"
+          "id": "图标按钮（28 × 28 · 圆角 8）"
         }
       ]
     },
@@ -8786,13 +8333,13 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
-          "where": "plugins/dsh-usage-center",
-          "token": "lc-",
+          "where": "components/layout/SidebarRow",
+          "token": "title|span|",
           "kind": "anchor",
-          "id": "插件 dsh-usage-center 的界面"
+          "id": "会话行 / 工作区行的标题文字（宽度随文字）"
         }
       ]
     },
@@ -9220,13 +8767,13 @@
       "arias": [],
       "pluginOwned": true,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
-          "where": "plugins/dsh-usage-center",
-          "token": "lc-",
+          "where": "components/layout/SidebarRow",
+          "token": "title|span|",
           "kind": "anchor",
-          "id": "插件 dsh-usage-center 的界面"
+          "id": "会话行 / 工作区行的标题文字（宽度随文字）"
         }
       ]
     },
@@ -9459,13 +9006,13 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": null,
       "hits": [
         {
-          "where": "spec/20-controls.md",
-          "token": "dlU_AG_",
+          "where": "spec/10-frame-layout.md",
+          "token": "text|span|",
           "kind": "anchor",
-          "id": "输入区权限选择器与它的菜单选项（含 EXP 角标）"
+          "id": "活动行标题（宽度随文字）"
         }
       ]
     },
@@ -9599,7 +9146,7 @@
       "arias": [],
       "pluginOwned": false,
       "coverage": "covered",
-      "described": false,
+      "described": true,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -9644,32 +9191,14 @@
       "texts": [],
       "arias": [],
       "pluginOwned": false,
-      "coverage": "referenced",
-      "described": null,
+      "coverage": "covered",
+      "described": false,
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
-          "token": "entry",
-          "kind": "spec",
-          "id": "10-frame-layout"
-        },
-        {
-          "where": "spec/11-slot-seats.md",
-          "token": "entry",
-          "kind": "spec",
-          "id": "11-slot-seats"
-        },
-        {
-          "where": "spec/70-checklist.md",
-          "token": "entry",
-          "kind": "spec",
-          "id": "70-checklist"
-        },
-        {
-          "where": "spec/80-conflicts.md",
-          "token": "entry",
-          "kind": "spec",
-          "id": "80-conflicts"
+          "token": "tab",
+          "kind": "anchor",
+          "id": "会话头部页签（对话 / 轨迹 / 上下文）"
         }
       ]
     },
@@ -9691,10 +9220,10 @@
       "described": false,
       "hits": [
         {
-          "where": "components/controls/Button",
-          "token": "1rv3m",
+          "where": "spec/20-controls.md",
+          "token": "main|button|",
           "kind": "anchor",
-          "id": "产品的 Button 模块（_button_1rv3m_2，含 md/sm/primary/ghost/outline/toolbar/icon 变体）"
+          "id": "打开方式分段按钮的左半（23 × 22）"
         }
       ]
     }

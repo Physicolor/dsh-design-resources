@@ -265,9 +265,10 @@ function scoreCoverage(elements) {
   return elements.map(el => {
     const tokens = keyTokens(el.key)
     const pluginOwned = /dsx-|lc-|duc-|dye-|mrat-|_6nhg2/i.test(el.cls)
-    /* 锚点要连着原始类名一起匹配：身份里的哈希已经被剥掉了（`_0Fr0Ha_stepper` → `stepper`），
-     * 而「这个 section 是哪套模块」这条线索只在没剥的那半截里。 */
-    const hay = `${el.key} ${el.cls ?? ''}`.toLowerCase()
+    /* 锚点要连着原始类名与座位一起匹配：身份里的哈希已经被剥掉了（`_0Fr0Ha_stepper` → `stepper`），
+     * 「这个 section 是哪套模块」这条线索只在没剥的那半截里；而匿名元素（没有类名的 svg / span）
+     * 只能靠座位认领。 */
+    const hay = `${el.key} ${el.cls ?? ''} ${el.slot ?? ''}`.toLowerCase()
     const anchor = anchors.find(a => hay.includes(String(a.match).toLowerCase()))
     const base = {
       key: el.key, cls: el.cls ?? '', slot: el.slot, count: el.count, size: el.style?.size ?? '',
@@ -275,7 +276,9 @@ function scoreCoverage(elements) {
       pluginOwned,
     }
     if (anchor !== undefined) {
-      const described = describedIn(textByFile, anchor.where, el.style?.size)
+      /* `flexible: true` 的锚点表示「这件东西的尺寸随内容走」（会话标题、状态文字……），
+       * 规范不该为它写死一个数——深度检查对这类返回 null，不计入待办。 */
+      const described = anchor.flexible === true ? null : describedIn(textByFile, anchor.where, el.style?.size)
       return {
         ...base,
         coverage: 'covered',
