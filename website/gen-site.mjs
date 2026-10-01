@@ -370,6 +370,9 @@ const data = {
   },
   i18n,
   demos: loadDemos(),
+  /* The shell's stylesheet travels with the data because the shell renders into
+   * a shadow root, where a <link> to the page's stylesheets would not apply. */
+  shellCss: readText('website/shell/shell.css'),
   icons: iconItems,
   brand: {
     fish: readText('icons/brand/fish.svg'),

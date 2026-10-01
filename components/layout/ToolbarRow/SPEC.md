@@ -3,7 +3,7 @@
 - id: toolbarrow
 - category: layout
 - source: `components/layout/ToolbarRow/`（`index.tsx` / `toolbarrow.module.css`）
-- official-counterpart: 无同名组件；几何锚点取自 `@deepseek-ai/dsh-client-ui-primitives/lib/` 的 `ConnectionIndicator.module.css` / `Button.module.css` / `Menu.module.css`
+- official-counterpart: 官方没有这个组件；几何锚点取自 `@deepseek-ai/dsh-client-ui-primitives/lib/` 的 `ConnectionIndicator.module.css` / `Button.module.css` / `Menu.module.css`
 - human-doc: `README.md`（判断与取舍；本文件只放事实）
 
 ## geometry-source

@@ -116,6 +116,18 @@ DSH 语义 token（均可在 `data/tokens.json` 中查到）：
 
 - `components/data-display/StateDot/demo.html`
 
+## 真实场景（docs/reference 截图核对）
+
+| 图 | 区域 | 上下文 | 实拍 |
+| --- | --- | --- | --- |
+| `04-settings-models.png` | 模型提供商行，「DeepSeek」之后 | 绿色实心点 | 实心核 **8 × 8** |
+| `04-settings-models.png` | 模型提供商行，「Command Code」之后 | 绿色实心点 | 实心核 **8 × 8** |
+
+### 已知偏差（截图核对新增）
+
+- 实拍实心核 **8 × 8**。按 `.dot::after { inset: 20% }`（核心 = 外径的 60%）反推，外径约 **13.3px**，而 SPEC 记录的默认外径是 **10px**（Figma 尺寸），`a11y` 一节也写着「官方没有给出 10px 以外尺寸的用例」。说明该使用处传了比默认更大的 `size`。本仓库 demo 仍按默认 10px 复现，并在该组标注实拍值；**不据此改动默认值**。
+- `02-session.png` 会话页头部「1 个后台任务运行中」左侧是一个**空心圆环**（约 13px、等宽描边、spinner 观感），**不是 StateDot**（StateDot 是实心核 + 10% 光环，任何状态下都不会是空心环）。不要把它当成本组件的用例。
+
 ## 相关
 
 - 人读版：`README.md`

@@ -198,43 +198,35 @@ body {
   border-radius: 6px;
   background: color-mix(in srgb, var(--dsw-alias-label-primary) 7%, transparent);
 }
+
+/* 输入卡工具行：胶囊落在白色卡面上，浅色主题的 bg-layer-2 也是白，所以只看得见内容、看不见底色。 */
+.chip-row { display: flex; align-items: center; gap: 12px; }
 </style>
 </head>
 <body>
-  <div class="demo-canvas">
-    <div class="demo-group">
-      <p class="demo-label">span · h24 r12 · pad 0 8 · font 12/18</p>
-      <div class="demo-row">
-        <span class="pill">全部</span>
-        <span class="pill">未读</span>
-        <span class="pill">已归档</span>
-      </div>
-    </div>
+<!-- 真实用例只有一处：01-hero / 07-composer 输入卡底部工具行的两枚胶囊。 -->
 
-    <div class="demo-group">
-      <p class="demo-label">button · interactive · hover interactive-bg-hover</p>
-      <div class="demo-row">
-        <button type="button" class="pill interactive">全部</button>
-        <button type="button" class="pill interactive">未读</button>
-        <button type="button" class="pill interactive">已归档</button>
-      </div>
+  <div class="demo-group">
+    <p class="demo-label">07-composer · 输入卡工具行 · interactive · h24 r12 pad 0 8 gap 4 font 12/18</p>
+    <div class="chip-row">
+      <button type="button" class="pill interactive"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.6 3.2 3.4v4.2c0 3 2 5.6 4.8 6.8 2.8-1.2 4.8-3.8 4.8-6.8V3.4z" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M7.2 5.2h1.6v3.2H7.2zm0 4h1.6v1.6H7.2z" fill="currentColor"/></svg></span>完全权限<span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3.9 6.1 8 10.2l4.1-4.1 1.1 1.1L8 12.4 2.8 7.2z" fill="currentColor"/></svg></span></button>
+      <button type="button" class="pill interactive">DeepSeek V4.1 Flash High<span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3.9 6.1 8 10.2l4.1-4.1 1.1 1.1L8 12.4 2.8 7.2z" fill="currentColor"/></svg></span></button>
     </div>
+  </div>
 
-    <div class="demo-group">
-      <p class="demo-label">active · ghost-active-fill + inset 0 0 0 1px</p>
-      <div class="demo-row">
-        <button type="button" class="pill interactive active" aria-pressed="true">全部</button>
-        <button type="button" class="pill interactive" aria-pressed="false">未读</button>
-        <button type="button" class="pill interactive" aria-pressed="false">已归档</button>
-      </div>
+  <div class="demo-group">
+    <p class="demo-label">同一处 · 底色 bg-layer-2 在白卡上等于白 —— 截图实测无可见填充，组件的填充只在有色底上才显形</p>
+    <div class="chip-row">
+      <span class="pill">静态 span · 同一几何</span>
+      <button type="button" class="pill interactive"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.6 3.2 3.4v4.2c0 3 2 5.6 4.8 6.8 2.8-1.2 4.8-3.8 4.8-6.8V3.4z" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M7.2 5.2h1.6v3.2H7.2zm0 4h1.6v1.6H7.2z" fill="currentColor"/></svg></span>完全权限<span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3.9 6.1 8 10.2l4.1-4.1 1.1 1.1L8 12.4 2.8 7.2z" fill="currentColor"/></svg></span></button>
     </div>
+  </div>
 
-    <div class="demo-group">
-      <p class="demo-label">icon 16×16 · gap 4</p>
-      <div class="demo-row">
-        <button type="button" class="pill interactive"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M13.1 4.6 6.4 11.3 2.9 7.8l1.1-1.1 2.4 2.4 5.6-5.6z" fill="currentColor"/></svg></span>已启用</button>
-        <button type="button" class="pill interactive active" aria-pressed="true"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.6a4 4 0 0 1 4 4v2.4l1.2 2.4H2.8L4 8V5.6a4 4 0 0 1 4-4zm0 12.8a1.6 1.6 0 0 1-1.6-1.6h3.2A1.6 1.6 0 0 1 8 14.4z" fill="currentColor"/></svg></span>订阅中</button>
-      </div>
+  <div class="demo-group">
+    <p class="demo-label">截图未覆盖 · active 态（ghost-active-fill + inset 0 0 0 1px），截图里没有任何一枚胶囊处于选中态</p>
+    <div class="chip-row">
+      <button type="button" class="pill interactive active" aria-pressed="true">选项一</button>
+      <button type="button" class="pill interactive" aria-pressed="false">选项二</button>
     </div>
   </div>
 </body>

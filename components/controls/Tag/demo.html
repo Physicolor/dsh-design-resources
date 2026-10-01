@@ -200,36 +200,43 @@ body {
   border-radius: 6px;
   background: color-mix(in srgb, var(--dsw-alias-label-primary) 7%, transparent);
 }
+
+.plugin-line { display: flex; align-items: center; gap: 6px; }
+.plugin-line .plugin-name { font-size: 14px; line-height: 22px; color: var(--dsw-alias-label-primary); }
+.hero-line { display: flex; align-items: center; gap: 8px; }
+.hero-line .hero-title { font-size: 26px; line-height: 34px; font-weight: 600; color: var(--dsw-alias-label-primary); }
 </style>
 </head>
 <body>
+<!-- 截图中出现过的两枚标签都是同一 tone（info）；其余 tone 没有实拍依据。 -->
+
   <div class="demo-group">
-    <p class="demo-label">半径 999px · pad 1px 8px · font 11/17 · weight 500</p>
-    <div class="demo-row">
-      <span class="tag" data-tone="outline">草稿</span>
-      <span class="tag" data-tone="solid">当前</span>
-      <span class="tag" data-tone="neutral">本地</span>
-      <span class="tag" data-tone="quiet">只读</span>
+    <p class="demo-label">06-plugins · 官方分组行 · 插件名之后 · tone=info（实拍 42×18）</p>
+    <div class="demo-stack" style="gap:12px">
+      <div class="plugin-line"><span class="plugin-name">智能体团队</span><span class="tag" data-tone="info">实验性</span></div>
+      <div class="plugin-line"><span class="plugin-name">自动授权审查</span><span class="tag" data-tone="info">实验性</span></div>
+      <div class="plugin-line"><span class="plugin-name">语音输入</span><span class="tag" data-tone="info">实验性</span></div>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">success 10% · info 10% · warning 12% · danger 10%</p>
-    <div class="demo-row">
-      <span class="tag" data-tone="success">已启用</span>
-      <span class="tag" data-tone="info">已同步</span>
-      <span class="tag" data-tone="warning">待确认</span>
-      <span class="tag" data-tone="danger">构建失败</span>
+    <p class="demo-label">01-hero · Hero 标语之后 · tone=info（实拍 50×19）</p>
+    <div class="hero-line">
+      <span class="hero-title">探索未至之境</span>
+      <span class="tag" data-tone="info">预览版</span>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">pad 1px 8px · font 11/17 · 同一几何 · 同行混排</p>
+    <p class="demo-label">截图未覆盖 · outline / solid / neutral / quiet / success / warning / danger —— 几何同一，只有配色不同</p>
     <div class="demo-row" style="gap:6px">
-      <span class="tag" data-tone="neutral">v4.1.0</span>
-      <span class="tag" data-tone="success">稳定</span>
-      <span class="tag" data-tone="outline">MIT</span>
-      <span class="tag" data-tone="quiet">3 天前</span>
+      <span class="tag" data-tone="outline">示例</span>
+      <span class="tag" data-tone="solid">示例</span>
+      <span class="tag" data-tone="neutral">示例</span>
+      <span class="tag" data-tone="quiet">示例</span>
+      <span class="tag" data-tone="success">示例</span>
+      <span class="tag" data-tone="warning">示例</span>
+      <span class="tag" data-tone="danger">示例</span>
     </div>
   </div>
 </body>

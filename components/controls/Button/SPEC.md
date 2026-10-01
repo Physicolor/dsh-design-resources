@@ -116,6 +116,23 @@ DSH 语义 token（均可在 `data/tokens.json` 中查到）：
 
 - `components/controls/Button/demo.html`
 
+## 真实场景（docs/reference 截图核对）
+
+demo 不再凭源码想象，改为对着 `docs/reference/*.png` 里的真实位置复现。逐处核对：
+
+| 图 | 区域 | 上下文 | 实拍尺寸 |
+| --- | --- | --- | --- |
+| `06-plugins.png` | 页头右上 | 「＋ 添加插件」primary + 前置加号 | 96 × 32 |
+| `03-settings-open.png` | 设置面板页头右侧 | 「打开配置文件」outline | 94 × 28（= `sm`） |
+| `03-settings-open.png` | 通用设置「快捷键」行尾 | 「编辑快捷键」outline | 97 × 36（= `md`） |
+| `04-settings-models.png` | 模型提供商行尾 | 「编辑」outline | 47 × 28，圆角约 8px |
+
+### 已知偏差（截图核对新增）
+
+- `04-settings-models.png` 行尾的「编辑」实拍约 47×28、圆角约 **8px**，既不是 `sm` 的 `r14` 也不是 `md` 的 `r18`。`Button.module.css` 顶部注释已声明「使用方对宽形态自行设定 radius / width」，所以这不是本组件基类的取值，**不应据此改写 `.sm`**；demo 里没有收录这一处。
+- `06-plugins.png` 页头主按钮实拍 **96 × 32**，比 `md` 的 `36px` 矮 4px。demo 用 `--dsh-btn-height: 32px` 的 owner 覆写复现这一处，**不改 `.md` 的 36px**。
+- 侧栏「新会话」按钮在 `01-hero.png` 里实拍 **252 × 38**、`border-radius: 12px`（`geometry.json` 的 `_2H3hWW_newSession`）。它是侧栏自有的类，不是本组件；但 `Button.module.css` 顶部注释说宽形态的 New Session 是「r24 at h38」，与这一枚实测的 12px 圆角对不上。两者是否指同一个按钮**未确认**，照实记录待查，不据此改任何数值。
+
 ## 相关
 
 - 人读版：`README.md`

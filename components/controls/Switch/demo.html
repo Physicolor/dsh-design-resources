@@ -191,44 +191,52 @@ body {
   border-radius: 6px;
   background: color-mix(in srgb, var(--dsw-alias-label-primary) 7%, transparent);
 }
+
+.setting-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 520px; max-width: 100%; }
+.setting-text { display: flex; flex-direction: column; min-width: 0; }
+.setting-title { font-size: 14px; line-height: 22px; color: var(--dsw-alias-label-primary); }
+.setting-desc { font-size: 12px; line-height: 18px; color: var(--dsw-alias-label-tertiary); }
+.plugin-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 520px; max-width: 100%; }
+.plugin-name { font-size: 14px; line-height: 22px; color: var(--dsw-alias-label-primary); }
 </style>
 </head>
 <body>
+<!-- 开关在截图里出现两处：设置页的整行开关，与插件列表的行尾开关。 -->
+
   <div class="demo-group">
-    <p class="demo-label">off · on — 36×20 · pad 2 · r10 · thumb 16</p>
-    <div class="demo-row" style="gap:16px">
-      <button type="button" class="switch" role="switch" aria-checked="false" aria-label="自动保存"><span class="thumb"></span></button>
-      <button type="button" class="switch" role="switch" aria-checked="true" aria-label="自动保存"><span class="thumb"></span></button>
+    <p class="demo-label">03-settings-open · 通用设置「显示代码工作视图」行 · 开（实拍 36×20）</p>
+    <div class="setting-row">
+      <span class="setting-text">
+        <span class="setting-title">显示代码工作视图</span>
+        <span class="setting-desc">开启后，显示轨迹、本轮代码差异，可选择完整的 Agent 预设切换</span>
+      </span>
+      <button type="button" class="switch" role="switch" aria-checked="true" aria-label="显示代码工作视图"><span class="thumb"></span></button>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">focus-visible · 2px brand-primary + offset 2</p>
-    <div class="demo-row" style="gap:16px">
-      <button type="button" class="switch" role="switch" aria-checked="false" aria-label="按 Tab 聚焦"><span class="thumb"></span></button>
-      <button type="button" class="switch" role="switch" aria-checked="true" aria-label="按 Tab 聚焦"><span class="thumb"></span></button>
+    <p class="demo-label">06-plugins · 插件列表行尾 · 开 / 关 / 关（实拍 36×20）</p>
+    <div class="demo-stack" style="gap:12px">
+      <div class="plugin-row">
+        <span class="plugin-name">智能体团队</span>
+        <button type="button" class="switch" role="switch" aria-checked="true" aria-label="智能体团队"><span class="thumb"></span></button>
+      </div>
+      <div class="plugin-row">
+        <span class="plugin-name">语音输入</span>
+        <button type="button" class="switch" role="switch" aria-checked="false" aria-label="语音输入"><span class="thumb"></span></button>
+      </div>
+      <div class="plugin-row">
+        <span class="plugin-name">Better Sidebar</span>
+        <button type="button" class="switch" role="switch" aria-checked="false" aria-label="Better Sidebar"><span class="thumb"></span></button>
+      </div>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">disabled · opacity 0.5</p>
+    <p class="demo-label">截图未覆盖 · disabled（opacity 0.5）/ focus-visible（2px brand-primary + offset 2）</p>
     <div class="demo-row" style="gap:16px">
       <button type="button" class="switch" role="switch" aria-checked="false" aria-label="已锁定" title="正在写入配置" disabled><span class="thumb"></span></button>
       <button type="button" class="switch" role="switch" aria-checked="true" aria-label="已锁定" title="正在写入配置" disabled><span class="thumb"></span></button>
-    </div>
-  </div>
-
-  <div class="demo-group">
-    <p class="demo-label">行内用法 · 文字 + switch</p>
-    <div class="demo-stack">
-      <span style="display:flex;align-items:center;justify-content:space-between;gap:12px;width:240px">
-        <span>自动保存</span>
-        <button type="button" class="switch" role="switch" aria-checked="true" aria-label="自动保存"><span class="thumb"></span></button>
-      </span>
-      <span style="display:flex;align-items:center;justify-content:space-between;gap:12px;width:240px">
-        <span>深色模式</span>
-        <button type="button" class="switch" role="switch" aria-checked="false" aria-label="深色模式"><span class="thumb"></span></button>
-      </span>
     </div>
   </div>
 </body>

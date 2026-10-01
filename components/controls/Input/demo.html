@@ -204,33 +204,36 @@ body {
 </style>
 </head>
 <body>
+<!-- 7 张截图里没有出现官方 Input 的观感（白底 + 0.5px 描边 + h32）。
+       设置·通用「字号大小」的数字框实拍 72×36、浅灰填充、无描边，几何对不上，不认作本组件用例。
+       所以本页全部是几何复现，没有真实场景可指。 -->
+
   <div class="demo-group">
-    <p class="demo-label">h32 r8 · pad 0 8 · gap 6 · border .5px l4</p>
+    <p class="demo-label">截图未覆盖 · 此场景未在截图中出现，仅按 Input.module.css 几何复现：h32 · pad 0 8 · gap 6 · r8 · 0.5px border-l4</p>
     <div class="demo-row">
-      <span class="wrap" style="width:220px"><input class="input" placeholder="搜索会话" aria-label="搜索会话"></span>
-      <span class="wrap" style="width:220px"><input class="input" value="deepseek-v4" aria-label="模型"></span>
+      <span class="wrap" style="width:220px"><input class="input" placeholder="示例文本" aria-label="示例文本"></span>
+      <span class="wrap" style="width:220px"><input class="input" value="示例值" aria-label="示例值"></span>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">icon 16×16 · label-tertiary</p>
+    <p class="demo-label">截图未覆盖 · icon 16×16 · label-tertiary</p>
     <div class="demo-row">
-      <span class="wrap" style="width:220px"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6.8 1.6a5.2 5.2 0 1 0 3.06 9.4l3.07 3.07 1.13-1.13-3.07-3.07A5.2 5.2 0 0 0 6.8 1.6zm0 1.6a3.6 3.6 0 1 1 0 7.2 3.6 3.6 0 0 1 0-7.2z" fill="currentColor"/></svg></span><input class="input" placeholder="搜索" aria-label="搜索"></span>
-      <span class="wrap" style="width:220px"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6.4 9.6a2.4 2.4 0 0 1 0-3.4l2-2a2.4 2.4 0 0 1 3.4 3.4l-.7.7-1.13-1.13.7-.7a.8.8 0 0 0-1.14-1.14l-2 2a.8.8 0 0 0 0 1.14z" fill="currentColor"/><path d="M9.6 6.4a2.4 2.4 0 0 1 0 3.4l-2 2a2.4 2.4 0 0 1-3.4-3.4l.7-.7 1.13 1.13-.7.7a.8.8 0 0 0 1.14 1.14l2-2a.8.8 0 0 0 0-1.14z" fill="currentColor"/></svg></span><input class="input" value="https://dsh.local" aria-label="地址"></span>
+      <span class="wrap" style="width:220px"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6.8 1.6a5.2 5.2 0 1 0 3.06 9.4l3.07 3.07 1.13-1.13-3.07-3.07A5.2 5.2 0 0 0 6.8 1.6zm0 1.6a3.6 3.6 0 1 1 0 7.2 3.6 3.6 0 0 1 0-7.2z" fill="currentColor"/></svg></span><input class="input" placeholder="示例文本" aria-label="带图标示例"></span>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">focus-within · border-color brand-primary</p>
+    <p class="demo-label">截图未覆盖 · focus-within → border-color brand-primary</p>
     <div class="demo-row">
-      <span class="wrap" style="width:220px"><input class="input" placeholder="点一下，或按 Tab" aria-label="聚焦示例"></span>
+      <span class="wrap" style="width:220px"><input class="input" placeholder="按 Tab 聚焦" aria-label="聚焦示例"></span>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">disabled · opacity 0.4</p>
+    <p class="demo-label">截图未覆盖 · disabled → opacity 0.4（本仓库建议值）</p>
     <div class="demo-row">
-      <span class="wrap" style="width:220px"><input class="input" value="写入中" disabled aria-label="禁用示例"></span>
+      <span class="wrap" style="width:220px"><input class="input" value="示例值" disabled aria-label="禁用示例"></span>
     </div>
   </div>
 </body>

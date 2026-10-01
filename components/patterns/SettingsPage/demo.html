@@ -1,3 +1,4 @@
+<!-- 本组件官方没有对应物，这是本仓库建议的实现；预览为几何展示，不代表产品界面。 -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
@@ -270,28 +271,28 @@ body {
   <div class="demo-group">
     <p class="demo-label">导航列 218px · pad 4 r12 · 内容列 max 640 · 两列 gap 32 · 页面 pad 24</p>
     <div class="page" style="max-width:720px">
-      <nav class="nav" aria-label="设置分区">
+      <nav class="nav" aria-label="分区导航">
         <div class="navInner">
-          <button type="button" class="navItem navItemActive" aria-current="page"><span class="navItemIcon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6.9 1.6h2.2l.3 1.7 1.2.5 1.5-.9 1.6 1.6-.9 1.5.5 1.2 1.7.3v2.2l-1.7.3-.5 1.2.9 1.5-1.6 1.6-1.5-.9-1.2.5-.3 1.7H6.9l-.3-1.7-1.2-.5-1.5.9-1.6-1.6.9-1.5-.5-1.2L1 9.1V6.9l1.7-.3.5-1.2-.9-1.5 1.6-1.6 1.5.9 1.2-.5zM8 6.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6z" fill="currentColor"/></svg></span><span class="navItemLabel">通用</span></button>
-          <button type="button" class="navItem"><span class="navItemIcon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.6a6.4 6.4 0 0 0 0 12.8c.9 0 1.4-.6 1.4-1.2 0-.4-.2-.7-.4-1-.2-.2-.3-.5-.3-.8 0-.7.5-1.2 1.2-1.2h1.3A3.2 3.2 0 0 0 14.4 7C14.4 4 11.5 1.6 8 1.6zM4.6 8.4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm1.6-2.8a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm3.2-.4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm2.8 2.4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" fill="currentColor"/></svg></span><span class="navItemLabel">外观</span></button>
-          <button type="button" class="navItem"><span class="navItemIcon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M1.6 3.2h4.4l1.2 1.6h7.2v8H1.6z" fill="currentColor"/></svg></span><span class="navItemLabel">工作区</span></button>
+          <button type="button" class="navItem navItemActive" aria-current="page"><span class="navItemIcon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6.9 1.6h2.2l.3 1.7 1.2.5 1.5-.9 1.6 1.6-.9 1.5.5 1.2 1.7.3v2.2l-1.7.3-.5 1.2.9 1.5-1.6 1.6-1.5-.9-1.2.5-.3 1.7H6.9l-.3-1.7-1.2-.5-1.5.9-1.6-1.6.9-1.5-.5-1.2L1 9.1V6.9l1.7-.3.5-1.2-.9-1.5 1.6-1.6 1.5.9 1.2-.5zM8 6.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6z" fill="currentColor"/></svg></span><span class="navItemLabel">分区一</span></button>
+          <button type="button" class="navItem"><span class="navItemIcon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.6a6.4 6.4 0 0 0 0 12.8c.9 0 1.4-.6 1.4-1.2 0-.4-.2-.7-.4-1-.2-.2-.3-.5-.3-.8 0-.7.5-1.2 1.2-1.2h1.3A3.2 3.2 0 0 0 14.4 7C14.4 4 11.5 1.6 8 1.6zM4.6 8.4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm1.6-2.8a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm3.2-.4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm2.8 2.4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" fill="currentColor"/></svg></span><span class="navItemLabel">分区二</span></button>
+          <button type="button" class="navItem"><span class="navItemIcon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M1.6 3.2h4.4l1.2 1.6h7.2v8H1.6z" fill="currentColor"/></svg></span><span class="navItemLabel">分区三</span></button>
         </div>
       </nav>
       <div class="content">
-        <h2 class="pageTitle">设置</h2>
-        <p class="pageDescription">以下改动会立即生效</p>
+        <h2 class="pageTitle">页面标题</h2>
+        <p class="pageDescription">页面说明文字</p>
         <div class="contentBody">
           <section class="section" aria-labelledby="sec-a">
             <div class="sectionHeader">
-              <h2 class="sectionTitle" id="sec-a">通用</h2>
-              <div class="sectionActions"><button type="button" class="button sm ghost">重置</button></div>
+              <h2 class="sectionTitle" id="sec-a">分区一</h2>
+              <div class="sectionActions"><button type="button" class="button sm ghost">操作</button></div>
             </div>
-            <p class="sectionDescription">对所有会话生效</p>
-            <div class="sectionBody" style="font-size:13px;line-height:20px;color:var(--dsw-alias-label-secondary)">启动行为 · 语言 · 自动保存</div>
+            <p class="sectionDescription">分区说明文字</p>
+            <div class="sectionBody" style="font-size:13px;line-height:20px;color:var(--dsw-alias-label-secondary)">条目一 · 条目二 · 条目三</div>
           </section>
           <section class="section" aria-labelledby="sec-b">
-            <div class="sectionHeader"><h2 class="sectionTitle" id="sec-b">外观</h2></div>
-            <div class="sectionBody" style="font-size:13px;line-height:20px;color:var(--dsw-alias-label-secondary)">主题 · 字号 · 密度</div>
+            <div class="sectionHeader"><h2 class="sectionTitle" id="sec-b">分区二</h2></div>
+            <div class="sectionBody" style="font-size:13px;line-height:20px;color:var(--dsw-alias-label-secondary)">条目一 · 条目二 · 条目三</div>
           </section>
         </div>
       </div>
@@ -301,15 +302,15 @@ body {
   <div class="demo-group">
     <p class="demo-label">无 title / description · contentBody 直接开始 · gap 24</p>
     <div class="page" style="max-width:720px">
-      <nav class="nav" aria-label="设置分区">
+      <nav class="nav" aria-label="分区导航">
         <div class="navInner">
-          <button type="button" class="navItem navItemActive" aria-current="page"><span class="navItemLabel">通用</span></button>
+          <button type="button" class="navItem navItemActive" aria-current="page"><span class="navItemLabel">分区一</span></button>
         </div>
       </nav>
       <div class="content">
         <div class="contentBody" style="margin-top:0">
           <section class="section">
-            <div class="sectionHeader"><h2 class="sectionTitle">通用</h2></div>
+            <div class="sectionHeader"><h2 class="sectionTitle">分区一</h2></div>
             <div class="sectionBody" style="font-size:13px;line-height:20px;color:var(--dsw-alias-label-secondary)">只渲染内容列时的骨架</div>
           </section>
         </div>

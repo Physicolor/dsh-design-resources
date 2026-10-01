@@ -336,8 +336,109 @@ if (browserPath === null) {
     await goto(base + '#/spec/10-frame-layout')
     const demoCount = await evaluate(`document.querySelectorAll('[data-inline-demo]').length`)
     check('layout doc embeds live demos', demoCount === 3, String(demoCount))
-    check('embedded demos mount into shadow roots', await evaluate(`(function(){var h=document.querySelectorAll('[data-inline-demo]');if(h.length===0)return false;var ok=0;Array.prototype.forEach.call(h,function(n){if(n.shadowRoot&&n.shadowRoot.querySelectorAll('*').length>3)ok++});return ok===h.length})()`))
+    /* A demo mounts into a shadow root; a demo that declares `data-shell` then
+     * mounts the reproduced interface into a shadow root of its own. Both count
+     * as mounted — the second just has one more level. */
+    check('declared demos mount', await evaluate(`(function(){
+        var stages = document.querySelectorAll('[data-inline-demo]');
+        if (stages.length === 0) return false;
+        var ok = 0;
+        Array.prototype.forEach.call(stages, function (stage) {
+            var sr = stage.shadowRoot;
+            if (!sr) return;
+            var shell = sr.querySelector('[data-shell]');
+            if (shell && shell.shadowRoot && shell.shadowRoot.querySelector('.sh-root')) { ok++; return }
+            if (sr.querySelectorAll('*').length > 4) ok++;
+        });
+        return ok === stages.length;
+    })()`))
     check('embedded demos carry a caption', await evaluate(`document.querySelectorAll('.demo figcaption').length === document.querySelectorAll('[data-inline-demo]').length`))
+
+    /* The product-shell reproduction: a document declares `data-shell`, and the
+     * page mounts a measured copy of the real interface into a shadow root. */
+    const shellInfo = await evaluate(`(function(){
+        var stages = document.querySelectorAll('[data-inline-demo]');
+        for (var i = 0; i < stages.length; i++) {
+            var stage = stages[i].shadowRoot;
+            if (!stage) continue;
+            var host = stage.querySelector('[data-shell]');
+            if (!host || !host.shadowRoot) continue;
+            var sr = host.shadowRoot;
+            var root = sr.querySelector('.sh-root');
+            if (!root) continue;
+            var side = sr.querySelector('.sh-side');
+            var center = sr.querySelector('.sh-center');
+            var head = sr.querySelector('.sh-head');
+            return {
+                root: Math.round(root.getBoundingClientRect().width),
+                side: side ? Math.round(side.getBoundingClientRect().width) : -1,
+                center: center ? Math.round(center.getBoundingClientRect().width) : -1,
+                head: head ? Math.round(head.getBoundingClientRect().height) : -1,
+                sessions: sr.querySelectorAll('.sh-session').length
+            };
+        }
+        return null;
+    })()`)
+    check('shell reproduction mounts', shellInfo !== null, JSON.stringify(shellInfo))
+    check('shell left rail is 280px', shellInfo !== null && Math.abs(shellInfo.side - 280) <= 2, shellInfo === null ? 'n/a' : shellInfo.side + 'px')
+    check('shell header is 40px', shellInfo !== null && Math.abs(shellInfo.head - 40) <= 2, shellInfo === null ? 'n/a' : shellInfo.head + 'px')
+    check('shell shows demo sessions', shellInfo !== null && shellInfo.sessions >= 3, shellInfo === null ? 'n/a' : String(shellInfo.sessions))
+
+    const shellToggle = await evaluate(`(function(){
+        var stages = document.querySelectorAll('[data-inline-demo]');
+        for (var i = 0; i < stages.length; i++) {
+            var stage = stages[i].shadowRoot;
+            if (!stage) continue;
+            var host = stage.querySelector('[data-shell]');
+            if (!host || !host.shadowRoot) continue;
+            var sr = host.shadowRoot;
+            var root = sr.querySelector('.sh-root');
+            if (!root) continue;
+            var button = sr.querySelector('[data-action="toggle-left"]');
+            if (!button) return 'no button';
+            button.click();
+            var after = root.getAttribute('data-left');
+            button.click();
+            return after + '->' + root.getAttribute('data-left');
+        }
+        return 'no shell';
+    })()`)
+    check('shell side rail folds and unfolds', shellToggle === 'closed->open', shellToggle)
+
+    /* The rail width animates, so set it, let the transition finish, then read
+     * the box — reading immediately returns the old width. */
+    await evaluate(`(function(){
+        var stages = document.querySelectorAll('[data-inline-demo]');
+        for (var i = 0; i < stages.length; i++) {
+            var stage = stages[i].shadowRoot;
+            if (!stage) continue;
+            var host = stage.querySelector('[data-shell]');
+            if (!host || !host.shadowRoot) continue;
+            var root = host.shadowRoot.querySelector('.sh-root');
+            if (!root) continue;
+            root.style.setProperty('--sh-side-w', '320px');
+            return 1;
+        }
+        return 0;
+    })()`)
+    await new Promise(resolve => setTimeout(resolve, 600))
+    const shellResize = await evaluate(`(function(){
+        var stages = document.querySelectorAll('[data-inline-demo]');
+        for (var i = 0; i < stages.length; i++) {
+            var stage = stages[i].shadowRoot;
+            if (!stage) continue;
+            var host = stage.querySelector('[data-shell]');
+            if (!host || !host.shadowRoot) continue;
+            var sr = host.shadowRoot;
+            var root = sr.querySelector('.sh-root');
+            var side = sr.querySelector('.sh-side');
+            if (!root || !side) continue;
+            return getComputedStyle(root).getPropertyValue('--sh-side-w').trim()
+                + '|' + Math.round(side.getBoundingClientRect().width) + 'px';
+        }
+        return 'no shell';
+    })()`)
+    check('shell side rail responds to a width change', shellResize === '320px|320px', shellResize)
     await evaluate(`(function(){var a=document.querySelector('.aside .outline__item a');if(a)a.click();return 1})()`)
     /* smooth scrolling is animated, so give it time before measuring */
     await new Promise(resolve => setTimeout(resolve, 900))

@@ -112,6 +112,21 @@ DSH 语义 token（均可在 `data/tokens.json` 中查到）：
 
 - `components/controls/Pill/demo.html`
 
+## 真实场景（docs/reference 截图核对）
+
+| 图 | 区域 | 上下文 | 实拍 |
+| --- | --- | --- | --- |
+| `07-composer.png` | 输入卡底部工具行 | 「完全权限」（盾牌图标 + 文案 + 下拉箭头） | 高 24 |
+| `07-composer.png` | 输入卡底部工具行 | 「DeepSeek V4.1 Flash High」+ 下拉箭头 | 高 24 |
+| `01-hero.png` | 新会话页输入卡 | 同上的两枚 | 高 24 |
+
+### 已知偏差（截图核对新增）
+
+- 两处胶囊都落在**白色卡片**上，而浅色主题的 `--dsw-alias-bg-layer-2` 就是 `#fff` —— 截图上因此**看不到填充边界**，只能量到内容（图标 16 / 文案 / 箭头）的墨迹。也就是说：不能靠「有没有底色」判断页面上有没有 Pill。
+- 「外观」三选一（浅色 / 深色 / 跟随系统）在 `03-settings-open.png` 里实拍是 **185 × 72 的带框图块**，不是 Pill；那个控件在本仓库归 `proposed` 的 `SegmentedControl`。`Pill` 与它无关。
+- `06-plugins.png` 每行插件名后的「实验性」是 **Tag**（`tone=info`），也不是 Pill —— 两者高 24 与高 19、填充色完全不同。
+- 截图里没有任何一枚胶囊处于选中态，`.active` 的观感（`ghost-active-fill` + `inset 0 0 0 1px`）没有实拍依据。
+
 ## 相关
 
 - 人读版：`README.md`

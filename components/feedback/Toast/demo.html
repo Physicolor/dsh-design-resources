@@ -222,38 +222,38 @@ body {
 </style>
 </head>
 <body>
+<!-- 7 张截图顶部中央都没有横幅，Toast 需要交互才出现 —— 此场景未在截图中出现。
+       下面是静态复现（.toast-static 只关掉 fixed / 动画，几何数值不动），文案中性。 -->
+
   <div class="demo-group">
-    <p class="demo-label">静态复现 · pad 12 16 · r14 · gap 10 · font 14/22 · shadow lv3</p>
+    <p class="demo-label">截图未覆盖 · 此场景未在截图中出现，仅按 Toast.module.css 几何复现：pad 12 16 · r14 · gap 10 · font 14/22 · shadow lv3</p>
     <div class="demo-row" style="justify-content:center">
       <div class="toast toast-static" role="alert">
         <span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.6 15 14H1zM8 5.6 4.6 12h6.8zM7.2 7.2h1.6v2.4H7.2zm0 3.2h1.6v1.6H7.2z" fill="currentColor"/></svg></span>
-        <span class="text">已重新连接</span>
+        <span class="text">示例提示文本</span>
       </div>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">无图标 · 仅文案</p>
+    <p class="demo-label">截图未覆盖 · 无图标 · 仅文案</p>
     <div class="demo-row" style="justify-content:center">
-      <div class="toast toast-static" role="alert"><span class="text">已保存</span></div>
+      <div class="toast toast-static" role="alert"><span class="text">示例提示文本</span></div>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">长文案 · max-width min(640px, 100vw − 48px)</p>
+    <p class="demo-label">截图未覆盖 · 长文案 · max-width min(640px, calc(100vw − 48px))</p>
     <div class="demo-row" style="justify-content:center">
       <div class="toast toast-static" role="alert" style="width:min(640px,100%)">
         <span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.6 15 14H1zM8 5.6 4.6 12h6.8zM7.2 7.2h1.6v2.4H7.2zm0 3.2h1.6v1.6H7.2z" fill="currentColor"/></svg></span>
-        <span class="text">写入配置失败：目标目录不可写。请检查权限后重试，或改用其他工作目录。</span>
+        <span class="text">示例提示文本，用来撑到 max-width 上限，检验换行与内边距。</span>
       </div>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">fixed · top 40 · z-index 1100 · pointer-events none · hold 3000ms</p>
-    <div class="demo-row" style="gap:12px;font-size:12px;line-height:18px;color:var(--dsw-alias-label-tertiary)">
-      <span>top 40px</span><span>left 50%</span><span>translateX(−50%)</span><span>fade 1000ms</span>
-    </div>
+    <p class="demo-label">几何事实 · position fixed · top 40 · left 50% · translateX(−50%) · z-index 1100 · pointer-events none · 入场 160ms · 淡出 1000ms + hold 3000ms</p>
   </div>
 </body>
 </html>

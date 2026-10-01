@@ -102,9 +102,13 @@
      * @returns the icon record, or null.
      */
     function icon(short) {
+        /* Some icons carry an authored name (`ic_ds_close_outline_16`), others
+         * only a component name (`IconAlarmClockOutline16`) — match either, and
+         * ignore separators so a caller can write `alarm-clock`. */
+        var needle = String(short).replace(/[_-]/gu, '').toLowerCase()
         for (var i = 0; i < ICONS.length; i++) {
-            var name = ICONS[i].name || ''
-            if (name.indexOf(short.replace(/-/gu, '_')) !== -1) return ICONS[i]
+            var hay = ((ICONS[i].name || '') + ' ' + (ICONS[i].component || '')).replace(/[_-]/gu, '').toLowerCase()
+            if (hay.indexOf(needle) !== -1) return ICONS[i]
         }
         return null
     }
@@ -698,6 +702,34 @@
         + '</style>'
 
     /**
+     * Mount every product-shell instance a document declares.
+     *
+     * A document asks for one with `data-shell='{"highlight":"composer"}'`. The
+     * shell renders into its own shadow root, so its styles cannot leak into the
+     * page and the page's cannot leak into it.
+     * @param root - subtree to scan; a shadow root works too.
+     */
+    function mountShells(root) {
+        if (window.DSHShell === undefined) return
+        Array.prototype.forEach.call(root.querySelectorAll('[data-shell]'), function (host) {
+            if (host.shadowRoot !== null && host.shadowRoot !== undefined) return
+            var options = {}
+            try { options = JSON.parse(host.getAttribute('data-shell') || '{}') } catch (e) { options = {} }
+            window.DSHShell.mount(host, {
+                css: D.shellCss || '',
+                icon: function (name) { return iconSvg(name) },
+                esc: esc,
+                brandMark: (D.brand && D.brand.fish) || '',
+                left: options.left === 'closed' ? 'closed' : 'open',
+                right: options.right === 'open' ? 'open' : 'closed',
+                highlight: options.highlight || null,
+                highlightOnHover: options.hover === true,
+                docks: options.docks === true,
+            })
+        })
+    }
+
+    /**
      * Mount every staged demo into its own shadow root.
      *
      * Two kinds share this path: the component specimens collected from each
@@ -727,6 +759,7 @@
                 fresh.textContent = old.textContent
                 old.parentNode.replaceChild(fresh, old)
             })
+            mountShells(shadow)
         }
 
         Array.prototype.forEach.call(root.querySelectorAll('[data-demo-id]'), function (host) {

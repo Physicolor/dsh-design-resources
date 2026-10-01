@@ -144,6 +144,20 @@ DSH 语义 token：
 
 - `components/brand/Wordmark/demo.html`
 
+## 真实场景（docs/reference 截图核对）
+
+| 图 | 区域 | 上下文 | 实拍 ink |
+| --- | --- | --- | --- |
+| `01-hero.png` | 左栏品牌行 | 鱼标 + 「deepseek」+ 反色「HARNESS」角标 | **187 × 18 @ (16, 28)** |
+| `06-plugins.png` | 左栏品牌行 | 同上 | 同上 |
+
+核对结论：`size = 24` 的 182 × 24 视框里，墨迹范围约 x 0.14–181.35 / y 3.52–20.56（约 181 × 17）；按 `y = 24` 摆放时落在 y 27.5–44.6，与实拍 (28…45) 吻合。宽度差 187 − 181 = 6px 落在抗锯齿量级内。
+
+### 已知偏差（截图核对新增）
+
+- `01-hero.png` Hero 居中处的「探索未至之境」**不是 Wordmark**：官方 BrandWordmark 只有 `deepseek` + `HARNESS` 那一套路径（`WORDMARK_VIEWBOX.withMark = '0 0 182 24'`），中文标语是页面自己的文字，demo 里没有收录到本组件。
+- 截图里只出现过侧栏那一处 `size = 24`、`includeMark = true` 的形态。`includeMark={false}` 与 `size` 32 / 48 在 demo 中已标注「截图未覆盖」。
+
 ## 相关
 
 - 人读版：`README.md`

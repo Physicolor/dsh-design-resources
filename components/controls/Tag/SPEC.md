@@ -112,6 +112,21 @@ DSH 语义 token：
 
 - `components/controls/Tag/demo.html`
 
+## 真实场景（docs/reference 截图核对）
+
+| 图 | 区域 | 上下文 | 实拍 | tone |
+| --- | --- | --- | --- | --- |
+| `06-plugins.png` | 官方分组行，插件名之后 | 「实验性」 | 42 × 18 | `info` |
+| `01-hero.png` | Hero 标语「探索未至之境」之后 | 「预览版」 | 50 × 19 | `info` |
+
+核对结论：源码几何 `padding 1px 8px` + `line-height 17px` = **19px** 高，与实拍 18–19px 一致；3 个汉字实拍墨迹宽 30px（≈ 11px/字），与 `font-size: 11px` 一致。
+
+### 已知偏差（截图核对新增）
+
+- 横向内边距实测约 **6px**（`预览版`：50 − 36 = 14，两侧各 7）；源码写的是 `8px`。差 1–2px，落在浅色底与抗锯齿混合后被阈值切掉的量级内，**未改动源码数值**，仅记录。
+- 截图里只出现过 `info` 一种 tone。其余 7 个 tone（`outline` / `solid` / `neutral` / `quiet` / `success` / `warning` / `danger`）在 demo 中已标注「截图未覆盖」。
+- `06-plugins.png` 的「官方 8」「已安装 11」是分组标题里的计数文字，不是 Tag。
+
 ## 相关
 
 - 人读版：`README.md`

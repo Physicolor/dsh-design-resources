@@ -1,0 +1,567 @@
+/**
+ * website/shell — 产品界面的复刻骨架
+ *
+ * 这不是设计稿的近似，而是**照着运行中的产品量出来的**。每个数值的来源写在
+ * 下方注释里，格式为「数值 ← 节点/选择器」，取值来自 `docs/reference/`：
+ *
+ *   - `geometry.json` 是脚本从真实 DOM 走一遍采集的（盒子 + 计算样式）；
+ *   - `*.png` 是同一批场景的截图，用来确认"这里到底有什么"。
+ *
+ * 复刻规矩：**先截图 → 再量几何 → 才动手**。任何改动如果在本文件里找不到
+ * 出处，就应该先去 `scripts/capture-dsh.mjs` 补一次采集。
+ *
+ * 命名一律 `sh-` 前缀；变量一律 `--sh-*`，默认值就是产品真实取值，因此本模块
+ * 不依赖站点样式，单独放进 shadow root 也能正确渲染。
+ */
+
+/**
+ * 注册侧栏宽度变量。
+ *
+ * 不注册的话，`grid-template-columns: var(--sh-side-w)` 在运行时改这个变量时
+ * 不会重新求值——变量读出来是新值，栅格却按旧值布局（实测：变量 320px，
+ * 栅格仍是 280px）。注册成 <length> 之后它才是一个真正可参与布局与过渡的属性。
+ */
+@property --sh-side-w {
+    syntax: '<length>';
+    inherits: true;
+    initial-value: 280px;
+}
+
+@property --sh-right-w {
+    syntax: '<length>';
+    inherits: true;
+    initial-value: 0px;
+}
+
+:host {
+    /* 颜色 ← geometry.json 的真实计算值 */
+    --sh-bg: #ffffff;                    /* frame backgroundColor */
+    --sh-side-bg: #f9fafb;               /* sidebarCol rgb(249,250,251) */
+    --sh-ink: #0f1115;                   /* 全局文字色 rgb(15,17,21) */
+    --sh-ink-2: #61666b;                 /* toggle 图标色 rgb(97,102,107) */
+    --sh-ink-3: #81858c;                 /* sectionHeader 文字 rgb(129,133,140) */
+    --sh-line: rgb(0 0 0 / 12%);         /* newSession 边框 rgba(0,0,0,0.12) */
+    --sh-line-soft: rgb(0 0 0 / 7%);
+    --sh-hover: rgb(0 0 0 / 4%);
+    --sh-active: rgb(0 0 0 / 7%);
+
+    /* 尺寸 ← geometry.json 的 rect */
+    --sh-side-w: 280px;                  /* sidebarCol 280x905 */
+    --sh-right-w: 0px;                   /* 右栏默认收起，打开时 348px */
+    --sh-handle-w: 8px;                  /* handle 8x905 @ x=276 */
+    --sh-head-h: 40px;                   /* Dc7zOa_header 1290x40 */
+    --sh-logo-h: 60px;                   /* logoRow 256x60 */
+    --sh-new-h: 38px;                    /* newSession 252x38 */
+    --sh-row-h: 36px;                    /* panelRow 252x36 */
+    --sh-nav-gap: 4px;                   /* panelList gap 4 */
+    --sh-foot-action-h: 42px;            /* lc-ov-entry 260x42 */
+    --sh-settings-h: 34px;               /* triggerRow 260x34 */
+
+    --sh-radius: 12px;                   /* panelRow / newSession borderRadius 12px */
+    --sh-radius-card: 28px;              /* 输入卡圆角，实测 28px */
+    --sh-radius-pill: 999px;
+
+    --sh-font: 'HarmonyOS Sans SC', 'HarmonyOS Sans', -apple-system, BlinkMacSystemFont,
+        'Segoe UI', 'Microsoft YaHei', 'PingFang SC', 'Noto Sans SC', sans-serif;
+    --sh-font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+
+    --sh-ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --sh-dur: 340ms;                     /* 站点 .shell 的面板开合时长 */
+    --sh-dur-fast: 140ms;
+
+    display: block;
+    font-family: var(--sh-font);
+    color: var(--sh-ink);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+:host * { box-sizing: border-box; }
+.sh-root *, .sh-root *::before, .sh-root *::after { box-sizing: border-box; }
+
+/* ── 框架：三列栅格 ← frame display:grid ───────────────────────────── */
+
+.sh-root {
+    position: relative;
+    /* 三列用 flex 而不是 grid：实测 `grid-template-columns: var(…)` 在运行时
+     * 改变量时不会重新求值——变量读出来是新值，栅格却仍按旧值布局
+     * （320px 的变量、280px 的列）。换成 flex + width 之后拖拽才真正跟手。 */
+    display: flex;
+    width: 100%;
+    aspect-ratio: 1570 / 905;             /* 采集视口，保持真实比例 */
+    min-height: 380px;
+    background: var(--sh-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    font-family: var(--sh-font);
+}
+.sh-root[data-left='closed'] { --sh-side-w: 0px; }
+.sh-root[data-right='open'] { --sh-right-w: 348px; }
+
+/* 侧栏拖拽手柄 ← handle 8x905 @ x=276 */
+.sh-handle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(var(--sh-side-w) - var(--sh-handle-w) / 2);
+    width: var(--sh-handle-w);
+    cursor: col-resize;
+    z-index: 3;
+    transition: left var(--sh-dur) var(--sh-ease), background var(--sh-dur-fast) var(--sh-ease);
+}
+.sh-root[data-left='closed'] .sh-handle { display: none; }
+.sh-handle:hover, .sh-handle[data-active='true'] { background: rgb(77 107 254 / 30%); }
+
+/* ── 左栏 ← sidebarCol 280x905 / sideRoot padding 6/12 ─────────────── */
+
+.sh-side {
+    display: flex;
+    flex-direction: column;
+    flex: none;
+    width: var(--sh-side-w);
+    min-width: 0;
+    padding: 6px 12px;                    /* sideRoot padding 6px 12px */
+    background: var(--sh-side-bg);
+    border-right: 1px solid var(--sh-line-soft);
+    overflow: hidden;
+    transition: width var(--sh-dur) var(--sh-ease);
+}
+.sh-root[data-left='closed'] .sh-side { visibility: hidden; }
+
+.sh-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: var(--sh-logo-h);
+    padding: 8px 0 8px 4px;               /* logoRow padding 8px 0 8px 4px */
+    flex: none;
+}
+.sh-brand { display: flex; align-items: center; gap: 6px; min-width: 0; }
+.sh-brand__mark { display: block; width: 24px; height: auto; flex: none; color: var(--sh-ink); }
+.sh-brand__name {
+    font-size: 18px;                      /* brandName fontSize 18px */
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+}
+.sh-brand__badge {
+    padding: 1px 4px;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #fff;
+    background: var(--sh-ink);
+    border-radius: 3px;
+}
+.sh-logo__spacer { flex: 1; }
+.sh-icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;                          /* toggle 28x28 */
+    height: 28px;
+    flex: none;
+    padding: 0;
+    color: var(--sh-ink-2);
+    background: transparent;
+    border: none;
+    border-radius: 8px;                   /* toggle borderRadius 8px */
+    cursor: pointer;
+    transition: background var(--sh-dur-fast) var(--sh-ease);
+}
+.sh-icon-button:hover { background: var(--sh-hover); }
+.sh-icon-button svg { width: 16px; height: 16px; display: block; }
+
+.sh-new {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: var(--sh-new-h);              /* newSession 252x38 */
+    padding: 8px 12px;
+    flex: none;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--sh-ink);
+    background: var(--sh-bg);
+    border: 1px solid var(--sh-line);
+    border-radius: var(--sh-radius);      /* newSession borderRadius 12px */
+    cursor: pointer;
+    transition: background var(--sh-dur-fast) var(--sh-ease);
+}
+.sh-new:hover { background: #f4f5f6; }
+.sh-new svg { width: 14px; height: 14px; flex: none; }
+.sh-new__keys { margin-left: auto; display: flex; gap: 2px; }
+.sh-new__keys kbd {
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    font-family: var(--sh-font-mono);
+    font-size: 10px;
+    line-height: 16px;
+    text-align: center;
+    color: var(--sh-ink-3);
+    background: #f1f2f3;
+    border-radius: 4px;
+}
+
+.sh-panels {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sh-nav-gap);               /* panelList gap 4 */
+    margin-top: 12px;
+    flex: none;
+}
+.sh-panel {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: var(--sh-row-h);              /* panelRow 252x36 */
+    padding: 7px 8px;                     /* panelRow padding 7px 8px */
+    font-size: 14px;
+    color: var(--sh-ink);
+    background: transparent;
+    border: none;
+    border-radius: var(--sh-radius);
+    text-align: left;
+    cursor: pointer;
+    transition: background var(--sh-dur-fast) var(--sh-ease);
+}
+.sh-panel:hover { background: var(--sh-hover); }
+.sh-panel[aria-current='true'] { background: var(--sh-active); font-weight: 500; }
+.sh-panel svg { width: 16px; height: 16px; flex: none; color: var(--sh-ink-2); }
+
+.sh-region {
+    flex: 1;
+    min-height: 0;
+    margin-top: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.sh-section {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: var(--sh-row-h);              /* sectionHeader 260x36 */
+    padding: 0 4px;
+    flex: none;
+    font-size: 13px;                      /* sectionHeader fontSize 13px */
+    color: var(--sh-ink-3);               /* sectionHeader color */
+}
+.sh-section__spacer { flex: 1; }
+.sh-section__action {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    color: var(--sh-ink-3);
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.sh-section__action:hover { background: var(--sh-hover); color: var(--sh-ink); }
+
+.sh-list { overflow: hidden; display: flex; flex-direction: column; gap: 1px; }
+.sh-session {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 30px;
+    padding: 0 8px 0 10px;
+    font-size: 14px;
+    color: var(--sh-ink);
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    text-align: left;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: background var(--sh-dur-fast) var(--sh-ease);
+}
+.sh-session:hover { background: var(--sh-hover); }
+.sh-session[aria-current='true'] { background: var(--sh-active); }
+.sh-session__title { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.sh-session__time { flex: none; font-size: 12px; color: var(--sh-ink-3); }
+.sh-session__more { flex: none; font-size: 12px; color: var(--sh-ink-3); }
+
+.sh-foot { flex: none; margin-top: 8px; }
+.sh-foot__action {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    height: var(--sh-foot-action-h);      /* lc-ov-entry 260x42 */
+    padding: 0 10px;
+    font-size: 14px;
+    color: var(--sh-ink);
+    background: transparent;
+    border: none;
+    border-radius: var(--sh-radius);
+    cursor: pointer;
+    transition: background var(--sh-dur-fast) var(--sh-ease);
+}
+.sh-foot__action:hover { background: var(--sh-hover); }
+.sh-foot__action svg { width: 16px; height: 16px; flex: none; color: var(--sh-ink-2); }
+.sh-settings {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    height: var(--sh-settings-h);         /* triggerRow 260x34 */
+    padding: 0 10px;
+    font-size: 14px;
+    color: var(--sh-ink);
+    background: transparent;
+    border: none;
+    border-radius: var(--sh-radius);
+    cursor: pointer;
+    transition: background var(--sh-dur-fast) var(--sh-ease);
+}
+.sh-settings:hover { background: var(--sh-hover); }
+.sh-settings svg { width: 16px; height: 16px; flex: none; color: var(--sh-ink-2); }
+
+/* ── 中栏 ← centerCol 1290x905 / header 1290x40 ───────────────────── */
+
+.sh-center {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-width: 0;
+    background: var(--sh-bg);
+}
+
+.sh-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 8px;
+    height: var(--sh-head-h);             /* header 1290x40 */
+    padding: 10px 28px 0 20px;            /* header padding 10px 28px 0 20px */
+    flex: none;
+    background: var(--sh-bg);
+}
+.sh-head__title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sh-head__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 1px 6px;
+    font-size: 12px;
+    color: var(--sh-ink-3);
+    border-radius: 6px;
+}
+.sh-head__views { display: flex; align-items: center; gap: 12px; font-size: 13px; }
+.sh-head__view { color: var(--sh-ink-3); cursor: default; }
+.sh-head__view[aria-current='true'] {
+    color: var(--sh-ink);
+    font-weight: 500;
+    box-shadow: inset 0 -2px 0 var(--sh-ink);
+}
+.sh-head__tools { display: flex; align-items: center; gap: 6px; }
+
+.sh-body {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.sh-flow {
+    flex: 1;
+    min-height: 0;
+    padding: 8px 28px 0 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.sh-msg { display: flex; gap: 10px; max-width: 100%; }
+.sh-msg--user { justify-content: flex-end; }
+.sh-msg__bubble {
+    max-width: 76%;
+    padding: 10px 14px;
+    font-size: 14px;
+    line-height: 1.6;
+    border-radius: 16px;
+    background: #f2f3f5;
+}
+.sh-msg--user .sh-msg__bubble { background: #e9ebef; }
+.sh-msg__bubble p { margin: 0; }
+.sh-msg__bubble p + p { margin-top: 8px; }
+
+.sh-tool {
+    border: 1px solid var(--sh-line-soft);
+    border-radius: var(--sh-radius);
+    overflow: hidden;
+}
+.sh-tool__head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--sh-ink-3);
+    background: #f7f8f9;
+}
+.sh-tool__body { padding: 10px 12px; font-size: 13px; color: var(--sh-ink-2); }
+
+/* ── 输入区 ← composerSeat 1283x238，输入卡 780x114 r28 ────────────── */
+
+.sh-composer {
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 28px 20px 20px;
+}
+.sh-card {
+    width: min(780px, 100%);              /* 实测 780x114 */
+    padding: 8px 0;                       /* 实测 padding 8px 0 */
+    background: var(--sh-bg);
+    border: 1px solid var(--sh-line);
+    border-radius: var(--sh-radius-card); /* 实测圆角 28px */
+}
+.sh-card__input {
+    padding: 8px 20px 6px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--sh-ink-3);
+}
+.sh-tools {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px 4px;
+}
+.sh-tools__spacer { flex: 1; }
+
+/* 座位标注条：只在讲输入区纵向结构时出现 */
+.sh-dock {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: min(780px, 100%);
+    padding: 5px 12px;
+    font-size: 11px;
+    color: #4d6bfe;
+    background: rgb(77 107 254 / 7%);
+    border: 1px dashed rgb(77 107 254 / 45%);
+    border-radius: 10px;
+}
+.sh-dock--inside { width: auto; margin: 0 12px 4px; }
+.sh-dock__seat { font-family: var(--sh-font-mono); font-weight: 600; white-space: nowrap; }
+.sh-dock__note { color: var(--sh-ink-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sh-round {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    color: var(--sh-ink-2);
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background var(--sh-dur-fast) var(--sh-ease);
+}
+.sh-round:hover { background: var(--sh-hover); }
+.sh-round--send { background: #d7dbe2; color: #fff; cursor: default; }
+.sh-round svg { width: 16px; height: 16px; }
+.sh-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    height: 26px;
+    padding: 0 8px;
+    font-size: 13px;
+    color: var(--sh-ink-2);
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background var(--sh-dur-fast) var(--sh-ease);
+}
+.sh-chip:hover { background: var(--sh-hover); }
+.sh-chip svg { width: 14px; height: 14px; flex: none; }
+
+/* ── 右栏（产品自身可开合）────────────────────────────────────────── */
+
+.sh-right {
+    display: flex;
+    flex-direction: column;
+    flex: none;
+    width: var(--sh-right-w);
+    min-width: 0;
+    background: var(--sh-bg);
+    border-left: 1px solid var(--sh-line-soft);
+    overflow: hidden;
+    transition: width var(--sh-dur) var(--sh-ease);
+}
+.sh-root[data-right='closed'] .sh-right { visibility: hidden; }
+.sh-right__head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: var(--sh-head-h);
+    padding: 0 12px;
+    flex: none;
+    border-bottom: 1px solid var(--sh-line-soft);
+    font-size: 13px;
+    color: var(--sh-ink-2);
+}
+.sh-right__body { flex: 1; min-height: 0; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.sh-right__card {
+    padding: 12px;
+    border: 1px solid var(--sh-line-soft);
+    border-radius: var(--sh-radius);
+    font-size: 13px;
+    color: var(--sh-ink-2);
+}
+
+/* ── 演示辅助：高亮某个区域 ────────────────────────────────────────── */
+
+.sh-root[data-demo='true'] .sh-side,
+.sh-root[data-demo='true'] .sh-center,
+.sh-root[data-demo='true'] .sh-right,
+.sh-root[data-demo='true'] .sh-composer,
+.sh-root[data-demo='true'] .sh-head,
+.sh-root[data-demo='true'] .sh-flow {
+    transition: box-shadow var(--sh-dur-fast) var(--sh-ease), outline-color var(--sh-dur-fast) var(--sh-ease);
+    outline: 2px solid transparent;
+    outline-offset: -2px;
+}
+.sh-root[data-hl='side'] .sh-side,
+.sh-root[data-hl='center'] .sh-center,
+.sh-root[data-hl='right'] .sh-right,
+.sh-root[data-hl='composer'] .sh-composer,
+.sh-root[data-hl='head'] .sh-head,
+.sh-root[data-hl='flow'] .sh-flow {
+    outline-color: #4d6bfe;
+    box-shadow: inset 0 0 0 999px rgb(77 107 254 / 6%);
+}
+
+/* 座席标记：演示里给某块加一枚小标签 */
+.sh-tag {
+    position: absolute;
+    z-index: 4;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #fff;
+    background: #4d6bfe;
+    border-radius: 6px;
+    pointer-events: none;
+    white-space: nowrap;
+}

@@ -1,3 +1,4 @@
+<!-- 本组件官方没有对应物，这是本仓库建议的实现；预览为几何展示，不代表产品界面。 -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
@@ -232,16 +233,16 @@ body {
 </head>
 <body>
   <div class="demo-group">
-    <p class="demo-label">md · 段 h36 r8 · 容器 pad 4 r12 · gap 0</p>
+    <p class="demo-label">md · 段 h36 r8 · 容器 pad 4 r12 · gap 0 · 两段与三段</p>
     <div class="demo-row" style="gap:16px">
-      <div class="control" role="radiogroup" aria-label="视图" aria-orientation="horizontal">
-        <button type="button" role="radio" aria-checked="true" tabindex="0" class="option">列表</button>
-        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option">网格</button>
+      <div class="control" role="radiogroup" aria-label="视图选项组" aria-orientation="horizontal">
+        <button type="button" role="radio" aria-checked="true" tabindex="0" class="option">选项一</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option">选项二</button>
       </div>
-      <div class="control" role="radiogroup" aria-label="区间" aria-orientation="horizontal">
-        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option">1 天</button>
-        <button type="button" role="radio" aria-checked="true" tabindex="0" class="option">7 天</button>
-        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option">30 天</button>
+      <div class="control" role="radiogroup" aria-label="区间选项组" aria-orientation="horizontal">
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option">选项一</button>
+        <button type="button" role="radio" aria-checked="true" tabindex="0" class="option">选项二</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option">选项三</button>
       </div>
     </div>
   </div>
@@ -249,10 +250,10 @@ body {
   <div class="demo-group">
     <p class="demo-label">sm · 段 h28 · pad 0 10 · font 12/18</p>
     <div class="demo-row">
-      <div class="control sm" role="radiogroup" aria-label="区间" aria-orientation="horizontal">
-        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option">1 天</button>
-        <button type="button" role="radio" aria-checked="true" tabindex="0" class="option">7 天</button>
-        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option">30 天</button>
+      <div class="control sm" role="radiogroup" aria-label="区间选项组" aria-orientation="horizontal">
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option">选项一</button>
+        <button type="button" role="radio" aria-checked="true" tabindex="0" class="option">选项二</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option">选项三</button>
       </div>
     </div>
   </div>
@@ -260,9 +261,9 @@ body {
   <div class="demo-group">
     <p class="demo-label">icon 16×16 · aria-hidden</p>
     <div class="demo-row">
-      <div class="control" role="radiogroup" aria-label="视图" aria-orientation="horizontal">
-        <button type="button" role="radio" aria-checked="true" tabindex="0" class="option"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M13.1 4.6 6.4 11.3 2.9 7.8l1.1-1.1 2.4 2.4 5.6-5.6z" fill="currentColor"/></svg></span>已启用</button>
-        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.6a4 4 0 0 1 4 4v2.4l1.2 2.4H2.8L4 8V5.6a4 4 0 0 1 4-4zm0 12.8a1.6 1.6 0 0 1-1.6-1.6h3.2A1.6 1.6 0 0 1 8 14.4z" fill="currentColor"/></svg></span>通知</button>
+      <div class="control" role="radiogroup" aria-label="视图选项组" aria-orientation="horizontal">
+        <button type="button" role="radio" aria-checked="true" tabindex="0" class="option"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M13.1 4.6 6.4 11.3 2.9 7.8l1.1-1.1 2.4 2.4 5.6-5.6z" fill="currentColor"/></svg></span>选项一</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.6a4 4 0 0 1 4 4v2.4l1.2 2.4H2.8L4 8V5.6a4 4 0 0 1 4-4zm0 12.8a1.6 1.6 0 0 1-1.6-1.6h3.2A1.6 1.6 0 0 1 8 14.4z" fill="currentColor"/></svg></span>选项二</button>
       </div>
     </div>
   </div>
@@ -270,9 +271,9 @@ body {
   <div class="demo-group">
     <p class="demo-label">disabled · 文字 label-tertiary · 保留选中填充</p>
     <div class="demo-row">
-      <div class="control disabled" role="radiogroup" aria-label="视图" aria-orientation="horizontal" aria-disabled="true">
-        <button type="button" role="radio" aria-checked="true" tabindex="-1" class="option" disabled>列表</button>
-        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option" disabled>网格</button>
+      <div class="control disabled" role="radiogroup" aria-label="视图选项组" aria-orientation="horizontal" aria-disabled="true">
+        <button type="button" role="radio" aria-checked="true" tabindex="-1" class="option" disabled>选项一</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option" disabled>选项二</button>
       </div>
     </div>
   </div>

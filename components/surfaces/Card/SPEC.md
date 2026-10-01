@@ -3,7 +3,7 @@
 - id: card
 - category: surfaces
 - source: `components/surfaces/Card/`（`index.tsx` / `card.module.css`）
-- official-counterpart: 官方 `@deepseek-ai/dsh-client-ui-primitives/lib/` 下没有内联卡片组件；几何逐条借用已核实选择器，见 `geometry-source`
+- official-counterpart: 官方没有这个组件——`@deepseek-ai/dsh-client-ui-primitives/lib/` 下没有任何卡片实现；几何逐条借用已核实选择器，见 `geometry-source`
 - human-doc: `README.md`（判断与取舍；本文件只放事实）
 
 ## geometry-source

@@ -3,7 +3,7 @@
 - id: settingsrow
 - category: layout
 - source: `components/layout/SettingsRow/`（`index.tsx` / `settingsrow.module.css`）
-- official-counterpart: 无同名组件；几何锚点取自 `@deepseek-ai/dsh-client-ui-primitives/lib/` 的 `Button.module.css` / `Modal.module.css` / `Menu.module.css` / `ReadBlock.module.css`
+- official-counterpart: 官方没有这个组件；几何锚点取自 `@deepseek-ai/dsh-client-ui-primitives/lib/` 的 `Button.module.css` / `Modal.module.css` / `Menu.module.css` / `ReadBlock.module.css`
 - human-doc: `README.md`（判断与取舍；本文件只放事实）
 
 ## geometry-source

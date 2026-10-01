@@ -3,7 +3,7 @@
 - id: panelheader
 - category: layout
 - source: `components/layout/PanelHeader/`（`index.tsx` / `panelheader.module.css`）
-- official-counterpart: 无同名组件；几何锚点取自 `@deepseek-ai/dsh-client-ui-primitives/lib/` 的 `Modal.module.css` / `Button.module.css` / `Menu.module.css` / `DisclosureRow.module.css`
+- official-counterpart: 官方没有这个组件；几何锚点取自 `@deepseek-ai/dsh-client-ui-primitives/lib/` 的 `Modal.module.css` / `Button.module.css` / `Menu.module.css` / `DisclosureRow.module.css`
 - human-doc: `README.md`（判断与取舍；本文件只放事实）
 
 ## geometry-source

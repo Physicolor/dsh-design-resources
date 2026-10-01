@@ -213,54 +213,41 @@ body {
   border-radius: 6px;
   background: color-mix(in srgb, var(--dsw-alias-label-primary) 7%, transparent);
 }
+
+/* § 场景实测：06-plugins 页头主操作实拍 96×32，比 md（36）矮 4px —— 按 owner 覆写高度复现。 */
+.btn-page { --dsh-btn-height: 32px; }
 </style>
 </head>
 <body>
+<!-- 以下三组各对应 docs/reference 里真实出现过的一处按钮，文案与尺寸照抄截图。 -->
+
   <div class="demo-group">
-    <p class="demo-label">primary · ghost · outline · toolbar — md · h36 r18 · pad 0 14</p>
+    <p class="demo-label">06-plugins · 插件页页头右上 · primary + 16px icon（实拍 96×32）</p>
     <div class="demo-row">
-      <button type="button" class="button primary">主要操作</button>
+      <button type="button" class="button primary btn-page"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M7.2 1.6h1.6v5.6h5.6v1.6H8.8v5.6H7.2V8.8H1.6V7.2h5.6V1.6z" fill="currentColor"/></svg></span>添加插件</button>
+    </div>
+  </div>
+
+  <div class="demo-group">
+    <p class="demo-label">03-settings-open · 设置面板页头右侧 · outline sm（实拍 94×28）</p>
+    <div class="demo-row">
+      <button type="button" class="button outline sm">打开配置文件</button>
+    </div>
+  </div>
+
+  <div class="demo-group">
+    <p class="demo-label">03-settings-open · 通用设置「快捷键」行尾 · outline md（实拍 97×36）</p>
+    <div class="demo-row">
+      <button type="button" class="button outline">编辑快捷键</button>
+    </div>
+  </div>
+
+  <div class="demo-group">
+    <p class="demo-label">截图未覆盖 · ghost / toolbar / disabled —— 仅按源码的 hover 与禁用规则复现，不代表真实位置</p>
+    <div class="demo-row">
       <button type="button" class="button ghost">次要操作</button>
-      <button type="button" class="button outline">取消</button>
       <button type="button" class="button toolbar">工具条</button>
-    </div>
-  </div>
-
-  <div class="demo-group">
-    <p class="demo-label">sm · h28 r14 · pad 0 10 · font 12/18</p>
-    <div class="demo-row">
-      <button type="button" class="button primary sm">保存</button>
-      <button type="button" class="button ghost sm">重试</button>
-      <button type="button" class="button outline sm">取消</button>
-      <button type="button" class="button toolbar sm">设置</button>
-    </div>
-  </div>
-
-  <div class="demo-group">
-    <p class="demo-label">icon 16×16 · gap 4 · md primary / md ghost / sm outline / sm toolbar</p>
-    <div class="demo-row">
-      <button type="button" class="button primary"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M7.2 1.6h1.6v5.6h5.6v1.6H8.8v5.6H7.2V8.8H1.6V7.2h5.6V1.6z" fill="currentColor"/></svg></span>新建会话</button>
-      <button type="button" class="button ghost"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 2.4a5.6 5.6 0 1 1-5.52 4.64h1.61A4 4 0 1 0 8 4z" fill="currentColor"/><path d="M7.2 0.8 10.4 3.2 7.2 5.6z" fill="currentColor"/></svg></span>刷新</button>
-      <button type="button" class="button outline sm"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3.5 2.4 8 6.9l4.5-4.5 1.1 1.1L9.1 8l4.5 4.5-1.1 1.1L8 9.1l-4.5 4.5-1.1-1.1L6.9 8 2.4 3.5z" fill="currentColor"/></svg></span>取消</button>
-      <button type="button" class="button toolbar sm"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M13.1 4.6 6.4 11.3 2.9 7.8l1.1-1.1 2.4 2.4 5.6-5.6z" fill="currentColor"/></svg></span>应用</button>
-    </div>
-  </div>
-
-  <div class="demo-group">
-    <p class="demo-label">icon-only · 28×28 · 需 aria-label</p>
-    <div class="demo-row">
-      <button type="button" class="button ghost sm icon-only" aria-label="更多操作"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><circle cx="3" cy="8" r="1.4" fill="currentColor"/><circle cx="8" cy="8" r="1.4" fill="currentColor"/><circle cx="13" cy="8" r="1.4" fill="currentColor"/></svg></span></button>
-      <button type="button" class="button toolbar sm icon-only" aria-label="关闭"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3.5 2.4 8 6.9l4.5-4.5 1.1 1.1L9.1 8l4.5 4.5-1.1 1.1L8 9.1l-4.5 4.5-1.1-1.1L6.9 8 2.4 3.5z" fill="currentColor"/></svg></span></button>
-      <button type="button" class="button primary sm icon-only" aria-label="添加"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M7.2 1.6h1.6v5.6h5.6v1.6H8.8v5.6H7.2V8.8H1.6V7.2h5.6V1.6z" fill="currentColor"/></svg></span></button>
-    </div>
-  </div>
-
-  <div class="demo-group">
-    <p class="demo-label">disabled · opacity 0.4</p>
-    <div class="demo-row">
       <button type="button" class="button primary" disabled>主要操作</button>
-      <button type="button" class="button ghost" disabled>次要操作</button>
-      <button type="button" class="button outline" disabled>取消</button>
     </div>
   </div>
 </body>

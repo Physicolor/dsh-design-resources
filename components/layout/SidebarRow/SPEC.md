@@ -3,7 +3,7 @@
 - id: sidebarrow
 - category: layout
 - source: `components/layout/SidebarRow/`（`index.tsx` / `sidebarrow.module.css`）
-- official-counterpart: 无同名组件；几何逐条锚定 `@deepseek-ai/dsh-client-ui-primitives/lib/Menu.module.css` 的 `.item` 家族
+- official-counterpart: 官方没有这个组件；几何逐条锚定 `@deepseek-ai/dsh-client-ui-primitives/lib/Menu.module.css` 的 `.item` 家族
 - human-doc: `README.md`（判断与取舍；本文件只放事实）
 
 ## geometry-source

@@ -3,7 +3,7 @@
 - id: loading-dots
 - category: feedback
 - source: `components/feedback/LoadingDots/`（`index.tsx` / `loading-dots.module.css`）
-- official-counterpart: 无同名组件；时序派生自 `@deepseek-ai/dsh-client-ui-primitives/lib/ConnectionIndicator.module.css` 的 `.dots` / `.secondDot` / `.thirdDot`
+- official-counterpart: 官方没有这个组件；时序派生自 `@deepseek-ai/dsh-client-ui-primitives/lib/ConnectionIndicator.module.css` 的 `.dots` / `.secondDot` / `.thirdDot`
 - human-doc: `README.md`（判断与取舍；本文件只放事实）
 
 ## geometry-source

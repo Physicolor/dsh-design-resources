@@ -116,6 +116,21 @@ DSH 语义 token：
 
 - `components/controls/Switch/demo.html`
 
+## 真实场景（docs/reference 截图核对）
+
+| 图 | 区域 | 上下文 | 实拍 |
+| --- | --- | --- | --- |
+| `03-settings-open.png` | 通用设置「显示代码工作视图」行右 | 开 | **36 × 20** |
+| `06-plugins.png` | 官方分组 · 智能体团队 / 自动授权审查 / 自动化任务 行尾 | 开 | **36 × 20** |
+| `06-plugins.png` | 官方分组 · 语音输入 行尾 | 关 | **36 × 20** |
+| `06-plugins.png` | 已安装分组 · Better Sidebar 行尾 | 关 | **36 × 20** |
+
+核对结论：实拍 **36 × 20** 与 `Switch.module.css` 的 `.switch`（36 × 20 / padding 2px / r10）逐条吻合，无需修正。
+
+### 已知偏差（截图核对新增）
+
+- 开态的轨道底色是 `--dsw-alias-brand-primary`，在浅色主题里是**近黑**（`#0f1115`），不是常见的品牌蓝。「显示代码工作视图」那一枚实拍就是纯黑胶囊 + 白滑块，可作为该 token 取值的旁证。
+
 ## 相关
 
 - 人读版：`README.md`

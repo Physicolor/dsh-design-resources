@@ -144,6 +144,18 @@ DSH 语义 token：
 
 - `components/surfaces/Modal/demo.html`
 
+## 真实场景（docs/reference 截图核对）
+
+**截图未覆盖**：7 张截图里没有任何一处是 Modal。
+
+逐一排除过的候选：
+
+| 候选 | 图 | 实拍 | 为什么不是本组件 |
+| --- | --- | --- | --- |
+| 设置面板 | `03-settings-open.png` / `04-settings-models.png` / `05-settings-components.png` | 约 790 × 800，**背后内容没有被压暗或模糊**（无 mask） | 宽度不是 `min(380px, 100%)`；没有 `bg-mask-1` 遮罩层；它是另一个表面，不是 dialog |
+
+处理规则：demo 只做**中性几何复现**（标题写「示例标题」、按钮写「取消 / 确定」），并在页面上注明「此场景未在截图中出现，仅按几何复现」，不编任何使用场合。
+
 ## 相关
 
 - 人读版：`README.md`

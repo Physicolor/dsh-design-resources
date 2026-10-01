@@ -125,6 +125,20 @@ DSH 语义 token（均可在 `data/tokens.json` 中查到）：
 
 - `components/data-display/DisclosureRow/demo.html`
 
+## 真实场景（docs/reference 截图核对）
+
+| 图 | 区域 | 上下文 | 实拍 |
+| --- | --- | --- | --- |
+| `02-session.png` | 会话流，每次工具调用之前 | 「已完成分析」/「已读取文件」/「已写入文件并执行了命令」/「修改了文件并执行了命令」/「正在运行命令」 | 行高 24；前置盒 16×16（内嵌图标约 14）；图标到文字 6px；标题 13px `label-secondary` |
+| `07-composer.png` | 输入区上方 | 「深度求索中，用时 7 分 25 秒 …」 | 同几何，但图标与文字是蓝色 |
+
+核对结论：前置 16×16 + `margin-right: 6px` + 标题 13px 与 `.leading` / `.title` 逐条吻合。
+
+### 已知偏差（截图核对新增）
+
+- 「深度求索中，用时 X 分 X 秒 …」那一行**几何与本组件一致**，但图标和文字被染成了业务蓝，不是 `.title` 的 `label-secondary`。它是使用方对 title 的染色用法，**不计入本组件的默认观感**，demo 里没有收录。
+- 截图拍到的**全是折叠态**：`.row:hover` 的 `iconIdle → chevronHover` 换形、以及展开体（`data-expandable` + `aria-expanded="true"`）在截图里都没有依据，demo 中相应分组已标注「截图未覆盖」。
+
 ## 相关
 
 - 人读版：`README.md`

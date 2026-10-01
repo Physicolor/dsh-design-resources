@@ -3,7 +3,7 @@
 - id: inline-notice
 - category: feedback
 - source: `components/feedback/InlineNotice/`（`index.tsx` / `inline-notice.module.css`）
-- official-counterpart: `@deepseek-ai/dsh-client-ui-primitives/lib/ConnectionIndicator.module.css`（单行几何与 warn / success 配色）+ `Tag.module.css`（`color-mix` 派生底色的既有手法）
+- official-counterpart: 官方没有这个组件。单行几何与 warn / success 配色借用 `@deepseek-ai/dsh-client-ui-primitives/lib/ConnectionIndicator.module.css`，派生底色的手法借用 `Tag.module.css` 的 `color-mix`；产品里并没有这个界面元素
 - human-doc: `README.md`（判断与取舍；本文件只放事实）
 
 ## geometry-source

@@ -219,47 +219,52 @@ body {
 </style>
 </head>
 <body>
-  <div class="demo-group" style="max-width:340px">
-    <p class="demo-label">折叠 · expandable · leading 16×16 · margin-right 6 · 行高 24</p>
+<!-- 真实用例在 02-session.png 的会话流里：每一次工具调用前都有一行可展开的标题行。
+       截图拍到的全是折叠态。 -->
+
+  <div class="demo-group" style="max-width:520px">
+    <p class="demo-label">02-session · 会话流工具调用行 · 折叠态 · leading 16×16 + margin-right 6 · title 13/24 secondary · 行高 24</p>
     <div class="root">
       <div class="demo-row" data-disclosure-row data-expandable="" role="button" tabindex="0" aria-expanded="false" style="cursor:pointer">
-        <span class="leading"><span class="iconIdle"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.6 3.2h4.4l1.2 1.6h7.2v8H1.6z" fill="currentColor"/></svg></span><span class="chevronHover"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.4 5.4 7 9l3.6-3.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
-        <span class="title">已修改文件</span>
+        <span class="leading"><span class="iconIdle"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.4 2.4h2.4v2.4H2.4zm4.4 0h2.4v2.4H6.8zm4.4 0h2.4v2.4h-2.4zM2.4 6.8h2.4v2.4H2.4zm4.4 0h2.4v2.4H6.8zm4.4 0h2.4v2.4h-2.4zM2.4 11.2h2.4v2.4H2.4zm4.4 0h2.4v2.4H6.8zm4.4 0h2.4v2.4h-2.4z" fill="currentColor"/></svg></span><span class="chevronHover"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.4 5.4 7 9l3.6-3.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+        <span class="title">已完成分析</span>
+      </div>
+      <div class="demo-row" data-disclosure-row data-expandable="" role="button" tabindex="0" aria-expanded="false" style="cursor:pointer">
+        <span class="leading"><span class="iconIdle"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.6 1.6h5.6L12.4 5v9.4H3.6zm5.2 1v2.2h2.2z" fill="currentColor"/></svg></span><span class="chevronHover"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.4 5.4 7 9l3.6-3.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+        <span class="title">已读取文件</span>
+      </div>
+      <div class="demo-row" data-disclosure-row data-expandable="" role="button" tabindex="0" aria-expanded="false" style="cursor:pointer">
+        <span class="leading"><span class="iconIdle"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11.4 1.8 14.2 4.6 6.4 12.4 2.8 13.2l.8-3.6zM4.2 8.9l-.4 1.7 1.7-.4z" fill="currentColor"/></svg></span><span class="chevronHover"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.4 5.4 7 9l3.6-3.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+        <span class="title">已写入文件并执行了命令</span>
+      </div>
+      <div class="demo-row" data-disclosure-row data-expandable="" role="button" tabindex="0" aria-expanded="false" style="cursor:pointer">
+        <span class="leading"><span class="iconIdle"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M11.4 1.8 14.2 4.6 6.4 12.4 2.8 13.2l.8-3.6zM4.2 8.9l-.4 1.7 1.7-.4z" fill="currentColor"/></svg></span><span class="chevronHover"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.4 5.4 7 9l3.6-3.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+        <span class="title">修改了文件并执行了命令</span>
+      </div>
+      <div class="demo-row" data-disclosure-row data-expandable="" role="button" tabindex="0" aria-expanded="false" style="cursor:pointer">
+        <span class="leading"><span class="iconIdle"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.6 3 4.5 4.1 8.4 8l-3.9 3.9L5.6 13l5-5z" fill="currentColor"/></svg></span><span class="chevronHover"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.4 5.4 7 9l3.6-3.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span>
+        <span class="title">正在运行命令</span>
       </div>
     </div>
   </div>
 
-  <div class="demo-group" style="max-width:340px">
-    <p class="demo-label">展开 · aria-expanded true · 箭头不旋转</p>
+  <div class="demo-group" style="max-width:520px">
+    <p class="demo-label">截图未覆盖 · 展开态（aria-expanded true）—— 截图里没有一行是展开的，展开体样式按 SPEC</p>
     <div class="root">
       <div class="demo-row" data-disclosure-row data-expandable="" role="button" tabindex="0" aria-expanded="true" style="cursor:pointer">
         <span class="leading"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.4 5.4 7 9l3.6-3.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        <span class="title">已修改文件</span>
+        <span class="title">已读取文件</span>
       </div>
-      <div class="disclosureBody">src/app.js · src/theme.css · README.md</div>
+      <div class="disclosureBody">示例文件 A · 示例文件 B</div>
     </div>
   </div>
 
-  <div class="demo-group" style="max-width:340px">
-    <p class="demo-label">仅图标按钮 · leading 16×16 · 热区 inset −4 · focus 环内偏移</p>
+  <div class="demo-group" style="max-width:520px">
+    <p class="demo-label">截图未覆盖 · hover 换形（iconIdle 隐 / chevronHover 显）与 leading 为 &lt;button&gt; 时的 16×16 热区</p>
     <div class="root">
       <div class="demo-row" data-disclosure-row>
         <button type="button" class="leading" aria-expanded="false"><span class="iconIdle"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.6 3.2h4.4l1.2 1.6h7.2v8H1.6z" fill="currentColor"/></svg></span><span class="chevronHover"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.4 5.4 7 9l3.6-3.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-        <span class="title">构建产物</span>
-      </div>
-      <div class="demo-row" data-disclosure-row>
-        <button type="button" class="leading" aria-expanded="false"><span class="iconIdle"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.6 1.6h5.6L12.4 5v9.4H3.6z" fill="currentColor"/></svg></span><span class="chevronHover"><svg viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.4 5.4 7 9l3.6-3.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></button>
-        <span class="title">日志</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="demo-group" style="max-width:340px">
-    <p class="demo-label">不可展开 · 无箭头 · 无交互语义</p>
-    <div class="root">
-      <div class="demo-row" data-disclosure-row>
-        <span class="leading"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M13.1 4.6 6.4 11.3 2.9 7.8l1.1-1.1 2.4 2.4 5.6-5.6z" fill="currentColor"/></svg></span>
-        <span class="title">已完成</span>
+        <span class="title">示例标题</span>
       </div>
     </div>
   </div>

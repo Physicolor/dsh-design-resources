@@ -3,7 +3,7 @@
 - id: sectionheader
 - category: surfaces
 - source: `components/surfaces/SectionHeader/`（`index.tsx` / `sectionheader.module.css`）
-- official-counterpart: 官方 primitives 包内无同名组件；副标题与 hairline 借用已核实的官方选择器，标题字号来自官方设置页实测（见下）
+- official-counterpart: 官方没有这个组件；副标题与 hairline 借用已核实的官方选择器，标题字号来自官方设置页实测（见下）
 - human-doc: `README.md`（判断与取舍；本文件只放事实）
 
 ## geometry-source

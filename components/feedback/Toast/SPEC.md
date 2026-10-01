@@ -125,6 +125,12 @@ DSH 语义 token（均可在 `data/tokens.json` 中查到）：
 
 - `components/feedback/Toast/demo.html`
 
+## 真实场景（docs/reference 截图核对）
+
+**截图未覆盖**：7 张截图顶部中央都没有横幅。Toast 由交互触发（写入失败一类），而采集脚本全程只读、不改设置、不发消息，所以拍不到。
+
+处理规则：demo 用 `.toast-static` 关掉 `position: fixed` 与两段动画（**几何数值一个不动**）做静态复现，文案一律「示例提示文本」，并注明「此场景未在截图中出现，仅按几何复现」。
+
 ## 相关
 
 - 人读版：`README.md`
