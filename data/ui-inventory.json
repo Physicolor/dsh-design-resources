@@ -1,6 +1,6 @@
 {
   "$comment": "由 scripts/scan-ui.mjs 从运行中的产品采集。key 是剥掉 CSS Modules 哈希后的身份；不要手改。",
-  "generatedAt": "2026-10-01T15:49:16.918Z",
+  "generatedAt": "2026-10-01T16:46:55.369Z",
   "viewport": {
     "w": 1570,
     "h": 905
@@ -97,8 +97,8 @@
   ],
   "counts": {
     "samples": 22,
-    "nodes": 5486,
-    "identities": 369
+    "nodes": 4283,
+    "identities": 355
   },
   "elements": [
     {
@@ -127,7 +127,7 @@
         24,
         18
       ],
-      "count": 838,
+      "count": 576,
       "steps": [
         "新会话页",
         "会话页 · 顶部",
@@ -177,11 +177,11 @@
       },
       "rect": [
         429,
-        467,
+        485,
         15,
         15
       ],
-      "count": 326,
+      "count": 325,
       "steps": [
         "用量中心（插件）"
       ],
@@ -214,7 +214,7 @@
         218,
         20
       ],
-      "count": 243,
+      "count": 181,
       "steps": [
         "新会话页",
         "会话页 · 顶部",
@@ -230,14 +230,7 @@
         "设置 · 科研",
         "设置 · UI 兼容性",
         "设置 · 插件市场",
-        "设置 · 通知",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
+        "设置 · 通知"
       ],
       "texts": [
         ".codex",
@@ -245,278 +238,6 @@
         "Thesis",
         "DeepSeek-Harness"
       ],
-      "arias": []
-    },
-    {
-      "key": "time|span|",
-      "tag": "span",
-      "role": "",
-      "cls": "hIlkoa_time",
-      "slot": "sidebar.workspaces",
-      "viewBox": "",
-      "style": {
-        "display": "block",
-        "position": "static",
-        "font": "12px/16px 400",
-        "color": "rgb(129, 133, 140)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "0px none rgb(129, 133, 140)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "32x16"
-      },
-      "rect": [
-        228,
-        438,
-        32,
-        16
-      ],
-      "count": 132,
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code",
-        "设置 · 内置插件",
-        "设置 · Agent 预设",
-        "设置 · 组件",
-        "设置 · 科研",
-        "设置 · UI 兼容性",
-        "设置 · 插件市场",
-        "设置 · 通知",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [
-        "7分钟",
-        "8分钟",
-        "43分钟",
-        "2小时"
-      ],
-      "arias": []
-    },
-    {
-      "key": "|span|",
-      "tag": "span",
-      "role": "",
-      "cls": "",
-      "slot": "conversation.composer",
-      "viewBox": "",
-      "style": {
-        "display": "block",
-        "position": "static",
-        "font": "26px/32px 500",
-        "color": "rgb(15, 17, 21)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "0px none rgb(15, 17, 21)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "156x32"
-      },
-      "rect": [
-        836,
-        354,
-        156,
-        32
-      ],
-      "count": 120,
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code",
-        "设置 · 内置插件",
-        "设置 · Agent 预设",
-        "设置 · 组件",
-        "设置 · 科研",
-        "设置 · UI 兼容性",
-        "设置 · 插件市场",
-        "设置 · 通知",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [
-        "探索未至之境",
-        "≈$0.09",
-        "16%",
-        "安装、启用和配置插件"
-      ],
-      "arias": []
-    },
-    {
-      "key": "dsx-stats-card-title|span|",
-      "tag": "span",
-      "role": "",
-      "cls": "dsx-stats-card-title",
-      "slot": "",
-      "viewBox": "",
-      "style": {
-        "display": "block",
-        "position": "static",
-        "font": "11px/13.2px 400",
-        "color": "rgb(65, 118, 230)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "0px none rgb(65, 118, 230)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "79x13"
-      },
-      "rect": [
-        1161,
-        61,
-        79,
-        13
-      ],
-      "count": 117,
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [
-        "Command Code",
-        "额度预测",
-        "Token 用量",
-        "峰谷定价"
-      ],
-      "arias": []
-    },
-    {
-      "key": "sessionRow|div|treeitem",
-      "tag": "div",
-      "role": "treeitem",
-      "cls": "hIlkoa_sessionRow",
-      "slot": "sidebar.workspaces",
-      "viewBox": "",
-      "style": {
-        "display": "flex",
-        "position": "static",
-        "font": "14px/normal 400",
-        "color": "rgb(15, 17, 21)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "12px",
-        "border": "0px none rgb(15, 17, 21)",
-        "shadow": "",
-        "pad": "0px 8px 0px 8px",
-        "gap": "0px",
-        "size": "256x32"
-      },
-      "rect": [
-        12,
-        430,
-        256,
-        32
-      ],
-      "count": 112,
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code",
-        "设置 · 内置插件",
-        "设置 · Agent 预设",
-        "设置 · 组件",
-        "设置 · 科研",
-        "设置 · UI 兼容性",
-        "设置 · 插件市场",
-        "设置 · 通知",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [],
-      "arias": []
-    },
-    {
-      "key": "projectRow|div|treeitem",
-      "tag": "div",
-      "role": "treeitem",
-      "cls": "hIlkoa_projectRow",
-      "slot": "sidebar.workspaces",
-      "viewBox": "",
-      "style": {
-        "display": "flex",
-        "position": "static",
-        "font": "14px/normal 400",
-        "color": "rgb(15, 17, 21)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "12px",
-        "border": "0px none rgb(15, 17, 21)",
-        "shadow": "",
-        "pad": "0px 8px 0px 8px",
-        "gap": "6px",
-        "size": "256x34"
-      },
-      "rect": [
-        12,
-        246,
-        256,
-        34
-      ],
-      "count": 110,
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code",
-        "设置 · 内置插件",
-        "设置 · Agent 预设",
-        "设置 · 组件",
-        "设置 · 科研",
-        "设置 · UI 兼容性",
-        "设置 · 插件市场",
-        "设置 · 通知",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [],
       "arias": []
     },
     {
@@ -568,32 +289,32 @@
       "arias": []
     },
     {
-      "key": "trigger|button|",
-      "tag": "button",
+      "key": "|span|",
+      "tag": "span",
       "role": "",
-      "cls": "wCInkW_trigger",
-      "slot": "settings.launcher",
+      "cls": "",
+      "slot": "conversation.composer",
       "viewBox": "",
       "style": {
-        "display": "flex",
+        "display": "block",
         "position": "static",
-        "font": "14px/22px 400",
+        "font": "26px/32px 500",
         "color": "rgb(15, 17, 21)",
         "bg": "rgba(0, 0, 0, 0)",
-        "radius": "12px",
+        "radius": "0px",
         "border": "0px none rgb(15, 17, 21)",
         "shadow": "",
-        "pad": "0px 10px 0px 8px",
-        "gap": "8px",
-        "size": "260x34"
+        "pad": "0px 0px 0px 0px",
+        "gap": "",
+        "size": "156x32"
       },
       "rect": [
-        10,
-        861,
-        260,
-        34
+        836,
+        354,
+        156,
+        32
       ],
-      "count": 99,
+      "count": 106,
       "steps": [
         "新会话页",
         "会话页 · 顶部",
@@ -618,12 +339,65 @@
         "会话标题菜单 / 输入区菜单 · 第 3 步",
         "右侧边栏"
       ],
-      "texts": [],
-      "arias": [
-        "设置",
-        "选择模型，当前 DeepSeek V4.1 Flash，推理等级 High",
-        "智能体团队"
-      ]
+      "texts": [
+        "探索未至之境",
+        "≈$0.04",
+        "14%",
+        "安装、启用和配置插件"
+      ],
+      "arias": []
+    },
+    {
+      "key": "time|span|",
+      "tag": "span",
+      "role": "",
+      "cls": "hIlkoa_time",
+      "slot": "sidebar.workspaces",
+      "viewBox": "",
+      "style": {
+        "display": "block",
+        "position": "static",
+        "font": "12px/16px 400",
+        "color": "rgb(129, 133, 140)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "0px",
+        "border": "0px none rgb(129, 133, 140)",
+        "shadow": "",
+        "pad": "0px 0px 0px 0px",
+        "gap": "",
+        "size": "38x16"
+      },
+      "rect": [
+        222,
+        438,
+        38,
+        16
+      ],
+      "count": 105,
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code",
+        "设置 · 内置插件",
+        "设置 · Agent 预设",
+        "设置 · 组件",
+        "设置 · 科研",
+        "设置 · UI 兼容性",
+        "设置 · 插件市场",
+        "设置 · 通知"
+      ],
+      "texts": [
+        "10分钟",
+        "11分钟",
+        "39分钟",
+        "1小时"
+      ],
+      "arias": []
     },
     {
       "key": "navCell|button|",
@@ -669,88 +443,48 @@
       "arias": []
     },
     {
-      "key": "dsx-stats-card-legend|span|",
-      "tag": "span",
-      "role": "",
-      "cls": "dsx-stats-card-legend",
-      "slot": "",
-      "viewBox": "",
-      "style": {
-        "display": "block",
-        "position": "static",
-        "font": "9px/normal 500",
-        "color": "rgb(129, 133, 140)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "0px none rgb(129, 133, 140)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "108x12"
-      },
-      "rect": [
-        1161,
-        76,
-        108,
-        12
-      ],
-      "count": 90,
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [
-        "用量环形图 · AllUser",
-        "credits",
-        "账期 10-10",
-        "632M  12797M"
-      ],
-      "arias": []
-    },
-    {
-      "key": "dsx-stats-card dsx-squircle|div|",
+      "key": "sessionRow|div|treeitem",
       "tag": "div",
-      "role": "",
-      "cls": "dsx-stats-card dsx-squircle",
-      "slot": "",
+      "role": "treeitem",
+      "cls": "hIlkoa_sessionRow",
+      "slot": "sidebar.workspaces",
       "viewBox": "",
       "style": {
         "display": "flex",
-        "position": "relative",
-        "font": "16px/normal 400",
+        "position": "static",
+        "font": "14px/normal 400",
         "color": "rgb(15, 17, 21)",
-        "bg": "rgb(255, 255, 255)",
-        "radius": "21px",
-        "border": "1px solid rgba(0, 0, 0, 0.1)",
-        "shadow": "rgba(0, 0, 0, 0.02) 0px 4px 12px 0px, rgba(0, 0, 0, 0.04) 0px 2px 8px 0px",
-        "pad": "10px 10px 10px 10px",
-        "gap": "",
-        "size": "130x130"
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "12px",
+        "border": "0px none rgb(15, 17, 21)",
+        "shadow": "",
+        "pad": "0px 8px 0px 8px",
+        "gap": "0px",
+        "size": "256x32"
       },
       "rect": [
-        1150,
-        190,
-        130,
-        130
+        12,
+        430,
+        256,
+        32
       ],
-      "count": 90,
+      "count": 92,
       "steps": [
+        "新会话页",
         "会话页 · 顶部",
         "左栏 · 搜索展开",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
+        "插件页（官方 / 已安装）",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code",
+        "设置 · 内置插件",
+        "设置 · Agent 预设",
+        "设置 · 组件",
+        "设置 · 科研",
+        "设置 · UI 兼容性",
+        "设置 · 插件市场",
+        "设置 · 通知"
       ],
       "texts": [],
       "arias": []
@@ -799,32 +533,32 @@
       "arias": []
     },
     {
-      "key": "key|kbd|",
-      "tag": "kbd",
+      "key": "trigger|button|",
+      "tag": "button",
       "role": "",
-      "cls": "_key_38b9q_1",
-      "slot": "sidebar",
+      "cls": "wCInkW_trigger",
+      "slot": "settings.launcher",
       "viewBox": "",
       "style": {
         "display": "flex",
         "position": "static",
-        "font": "12px/16px 400",
-        "color": "rgb(129, 133, 140)",
+        "font": "14px/22px 400",
+        "color": "rgb(15, 17, 21)",
         "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "0px none rgb(129, 133, 140)",
+        "radius": "12px",
+        "border": "0px none rgb(15, 17, 21)",
         "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "19x16"
+        "pad": "0px 10px 0px 8px",
+        "gap": "8px",
+        "size": "260x34"
       },
       "rect": [
-        182,
-        81,
-        19,
-        16
+        10,
+        861,
+        260,
+        34
       ],
-      "count": 66,
+      "count": 84,
       "steps": [
         "新会话页",
         "会话页 · 顶部",
@@ -849,41 +583,45 @@
         "会话标题菜单 / 输入区菜单 · 第 3 步",
         "右侧边栏"
       ],
-      "texts": [
-        "Ctrl",
-        "Alt",
-        "N"
-      ],
-      "arias": []
+      "texts": [],
+      "arias": [
+        "设置",
+        "选择模型，当前 DeepSeek V4.1 Flash，推理等级 High",
+        "智能体团队"
+      ]
     },
     {
-      "key": "mark|button|",
-      "tag": "button",
-      "role": "",
-      "cls": "xpvNua_mark",
-      "slot": "conversation.view",
+      "key": "projectRow|div|treeitem",
+      "tag": "div",
+      "role": "treeitem",
+      "cls": "hIlkoa_projectRow",
+      "slot": "sidebar.workspaces",
       "viewBox": "",
       "style": {
-        "display": "block",
-        "position": "absolute",
-        "font": "13.3333px/normal 400",
-        "color": "rgb(0, 0, 0)",
+        "display": "flex",
+        "position": "static",
+        "font": "14px/normal 400",
+        "color": "rgb(15, 17, 21)",
         "bg": "rgba(0, 0, 0, 0)",
-        "radius": "8px",
-        "border": "0px none rgb(0, 0, 0)",
+        "radius": "12px",
+        "border": "0px none rgb(15, 17, 21)",
         "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "28x10"
+        "pad": "0px 8px 0px 8px",
+        "gap": "6px",
+        "size": "256x34"
       },
       "rect": [
-        1523,
-        367,
-        28,
-        10
+        12,
+        246,
+        256,
+        34
       ],
-      "count": 55,
+      "count": 75,
       "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）",
         "设置 · 打开",
         "设置 · 通用设置",
         "设置 · 模型",
@@ -897,176 +635,6 @@
         "设置 · 通知"
       ],
       "texts": [],
-      "arias": [
-        "跳转到第 1 轮",
-        "跳转到第 2 轮",
-        "跳转到第 3 轮"
-      ]
-    },
-    {
-      "key": "xD_KDq_action|button|",
-      "tag": "button",
-      "role": "",
-      "cls": "xD_KDq_action",
-      "slot": "conversation.chat.node",
-      "viewBox": "",
-      "style": {
-        "display": "flex",
-        "position": "static",
-        "font": "13.3333px/normal 400",
-        "color": "rgb(129, 133, 140)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "8px",
-        "border": "0px none rgb(129, 133, 140)",
-        "shadow": "",
-        "pad": "6px 6px 6px 6px",
-        "gap": "",
-        "size": "28x28"
-      },
-      "rect": [
-        327,
-        733,
-        28,
-        28
-      ],
-      "count": 53,
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code",
-        "设置 · 内置插件",
-        "设置 · Agent 预设",
-        "设置 · 组件",
-        "设置 · 科研",
-        "设置 · UI 兼容性",
-        "设置 · 插件市场",
-        "设置 · 通知",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [],
-      "arias": [
-        "复制",
-        "在新对话中分支"
-      ]
-    },
-    {
-      "key": "action|button|",
-      "tag": "button",
-      "role": "",
-      "cls": "vpunvW_action",
-      "slot": "conversation.chat.assistant-actions",
-      "viewBox": "",
-      "style": {
-        "display": "flex",
-        "position": "static",
-        "font": "13.3333px/normal 400",
-        "color": "rgb(129, 133, 140)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "8px",
-        "border": "0px none rgb(129, 133, 140)",
-        "shadow": "",
-        "pad": "6px 6px 6px 6px",
-        "gap": "",
-        "size": "28x28"
-      },
-      "rect": [
-        363,
-        733,
-        28,
-        28
-      ],
-      "count": 46,
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code",
-        "设置 · 内置插件",
-        "设置 · Agent 预设",
-        "设置 · 组件",
-        "设置 · 科研",
-        "设置 · UI 兼容性",
-        "设置 · 插件市场",
-        "设置 · 通知",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [],
-      "arias": [
-        "好的回答",
-        "有问题的回答"
-      ]
-    },
-    {
-      "key": "separator|kbd|",
-      "tag": "kbd",
-      "role": "",
-      "cls": "_separator_38b9q_30",
-      "slot": "sidebar",
-      "viewBox": "",
-      "style": {
-        "display": "block",
-        "position": "static",
-        "font": "12px/16px 400",
-        "color": "rgb(129, 133, 140)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "0px none rgb(129, 133, 140)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "8x16"
-      },
-      "rect": [
-        204,
-        81,
-        8,
-        16
-      ],
-      "count": 44,
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code",
-        "设置 · 内置插件",
-        "设置 · Agent 预设",
-        "设置 · 组件",
-        "设置 · 科研",
-        "设置 · UI 兼容性",
-        "设置 · 插件市场",
-        "设置 · 通知",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [
-        "+"
-      ],
       "arias": []
     },
     {
@@ -1127,58 +695,6 @@
       ]
     },
     {
-      "key": "block md-code-block card|div|",
-      "tag": "div",
-      "role": "",
-      "cls": "_block_7gxqk_4 md-code-block _card_7gxqk_107",
-      "slot": "conversation.chat.node",
-      "viewBox": "",
-      "style": {
-        "display": "block",
-        "position": "relative",
-        "font": "14px/24px 400",
-        "color": "rgb(15, 17, 21)",
-        "bg": "rgb(249, 250, 251)",
-        "radius": "16px",
-        "border": "0px none rgb(15, 17, 21)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "748x258"
-      },
-      "rect": [
-        333,
-        -198,
-        748,
-        258
-      ],
-      "count": 43,
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code",
-        "设置 · 内置插件",
-        "设置 · Agent 预设",
-        "设置 · 组件",
-        "设置 · 科研",
-        "设置 · UI 兼容性",
-        "设置 · 插件市场",
-        "设置 · 通知",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [],
-      "arias": []
-    },
-    {
       "key": "tab|button|tab",
       "tag": "button",
       "role": "tab",
@@ -1199,7 +715,7 @@
         "size": "26x26"
       },
       "rect": [
-        789,
+        783,
         12,
         26,
         26
@@ -1233,47 +749,6 @@
         "插件列表",
         "插件市场"
       ],
-      "arias": []
-    },
-    {
-      "key": "dsx-lane-seg|div|",
-      "tag": "div",
-      "role": "",
-      "cls": "dsx-lane-seg",
-      "slot": "",
-      "viewBox": "",
-      "style": {
-        "display": "block",
-        "position": "absolute",
-        "font": "16px/normal 400",
-        "color": "rgb(15, 17, 21)",
-        "bg": "color(srgb 0.532549 0.418824 0.682353)",
-        "radius": "1px",
-        "border": "0px none rgb(15, 17, 21)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "7x25"
-      },
-      "rect": [
-        1350,
-        538,
-        7,
-        25
-      ],
-      "count": 42,
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [],
       "arias": []
     },
     {
@@ -1421,40 +896,39 @@
       ],
       "texts": [],
       "arias": [
-        "6 轮 49 步 · 169 tok/s",
-        "4.5M tok · 缓存命中 96%",
-        "5 轮 393 步 · 244 tok/s"
+        "1 轮 45 步 · 199 tok/s",
+        "3.1M tok · 缓存命中 96%",
+        "1 轮 46 步 · 199 tok/s"
       ]
     },
     {
-      "key": "card|div|",
-      "tag": "div",
+      "key": "title|button|",
+      "tag": "button",
       "role": "",
-      "cls": "RlGAzG_card",
-      "slot": "conversation.composer.bar",
+      "cls": "WW4l1q_title",
+      "slot": "conversation.view",
       "viewBox": "",
       "style": {
         "display": "flex",
-        "position": "relative",
-        "font": "14px/24px 400",
-        "color": "rgb(15, 17, 21)",
-        "bg": "rgb(255, 255, 255)",
-        "radius": "28px",
-        "border": "0px none rgb(15, 17, 21)",
-        "shadow": "rgba(0, 0, 0, 0.1) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.03) 0px 4px 16px 0px, rgba(0, 0, 0, 0.03) 0px 0px 24px 0px",
-        "pad": "8px 0px 0px 0px",
-        "gap": "12px",
-        "size": "780x114"
+        "position": "static",
+        "font": "14px/normal 400",
+        "color": "rgb(129, 133, 140)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "0px",
+        "border": "0px none rgb(129, 133, 140)",
+        "shadow": "",
+        "pad": "0px 0px 0px 0px",
+        "gap": "6px",
+        "size": "106x19"
       },
       "rect": [
-        532,
-        446,
-        780,
-        114
+        333,
+        331,
+        106,
+        19
       ],
       "count": 36,
       "steps": [
-        "新会话页",
         "会话页 · 顶部",
         "左栏 · 搜索展开",
         "设置 · 打开",
@@ -1480,37 +954,46 @@
       "arias": []
     },
     {
-      "key": "chevron|svg|",
-      "tag": "svg",
+      "key": "text label|span|",
+      "tag": "span",
       "role": "",
-      "cls": "Hqq-bq_chevron",
-      "slot": "conversation.composer",
-      "viewBox": "0 0 16 16",
+      "cls": "_text_1rdzk_17 WW4l1q_label",
+      "slot": "conversation.view",
+      "viewBox": "",
       "style": {
         "display": "block",
         "position": "static",
-        "font": "13px/20px 500",
-        "color": "rgb(173, 178, 184)",
+        "font": "14px/normal 400",
+        "color": "rgb(129, 133, 140)",
         "bg": "rgba(0, 0, 0, 0)",
         "radius": "0px",
-        "border": "0px none rgb(173, 178, 184)",
+        "border": "0px none rgb(129, 133, 140)",
         "shadow": "",
         "pad": "0px 0px 0px 0px",
         "gap": "",
-        "size": "12x12"
+        "size": "84x19"
       },
       "rect": [
-        677,
-        418,
-        12,
-        12
+        355,
+        331,
+        84,
+        19
       ],
-      "count": 35,
+      "count": 36,
       "steps": [
-        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
         "设置 · 打开",
         "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code",
         "设置 · 内置插件",
+        "设置 · Agent 预设",
+        "设置 · 组件",
+        "设置 · 科研",
+        "设置 · UI 兼容性",
+        "设置 · 插件市场",
+        "设置 · 通知",
         "用量中心（插件）",
         "上下文洞察（插件）",
         "会话标题菜单 / 输入区菜单 · 基视图",
@@ -1519,7 +1002,12 @@
         "会话标题菜单 / 输入区菜单 · 第 3 步",
         "右侧边栏"
       ],
-      "texts": [],
+      "texts": [
+        "正在分析请求",
+        "准备运行命令",
+        "准备写入文件",
+        "已完成分析"
+      ],
       "arias": []
     },
     {
@@ -1570,6 +1058,53 @@
         "插件",
         "自动化任务"
       ],
+      "arias": []
+    },
+    {
+      "key": "spinner|svg|",
+      "tag": "svg",
+      "role": "",
+      "cls": "_spinner_1i3xo_37",
+      "slot": "sidebar.workspaces",
+      "viewBox": "0 0 24 24",
+      "style": {
+        "display": "block",
+        "position": "static",
+        "font": "14px/normal 400",
+        "color": "rgb(129, 133, 140)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "0px",
+        "border": "0px none rgb(129, 133, 140)",
+        "shadow": "",
+        "pad": "0px 0px 0px 0px",
+        "gap": "",
+        "size": "14x14"
+      },
+      "rect": [
+        21,
+        439,
+        14,
+        14
+      ],
+      "count": 30,
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code",
+        "设置 · 内置插件",
+        "设置 · Agent 预设",
+        "设置 · 组件",
+        "设置 · 科研",
+        "设置 · UI 兼容性",
+        "设置 · 插件市场",
+        "设置 · 通知"
+      ],
+      "texts": [],
       "arias": []
     },
     {
@@ -1630,33 +1165,47 @@
       ]
     },
     {
-      "key": "title|button|",
-      "tag": "button",
+      "key": "card|div|",
+      "tag": "div",
       "role": "",
-      "cls": "WW4l1q_title",
-      "slot": "conversation.view",
+      "cls": "RlGAzG_card",
+      "slot": "conversation.composer.bar",
       "viewBox": "",
       "style": {
         "display": "flex",
-        "position": "static",
-        "font": "14px/normal 400",
-        "color": "rgb(129, 133, 140)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "0px none rgb(129, 133, 140)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "6px",
-        "size": "92x19"
+        "position": "relative",
+        "font": "14px/24px 400",
+        "color": "rgb(15, 17, 21)",
+        "bg": "rgb(255, 255, 255)",
+        "radius": "28px",
+        "border": "0px none rgb(15, 17, 21)",
+        "shadow": "rgba(0, 0, 0, 0.1) 0px 0px 0px 0.5px, rgba(0, 0, 0, 0.03) 0px 4px 16px 0px, rgba(0, 0, 0, 0.03) 0px 0px 24px 0px",
+        "pad": "8px 0px 0px 0px",
+        "gap": "12px",
+        "size": "780x114"
       },
       "rect": [
-        548,
-        219,
-        92,
-        19
+        532,
+        446,
+        780,
+        114
       ],
       "count": 29,
       "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code",
+        "设置 · 内置插件",
+        "设置 · Agent 预设",
+        "设置 · 组件",
+        "设置 · 科研",
+        "设置 · UI 兼容性",
+        "设置 · 插件市场",
+        "设置 · 通知",
         "用量中心（插件）",
         "上下文洞察（插件）",
         "会话标题菜单 / 输入区菜单 · 基视图",
@@ -1666,50 +1215,6 @@
         "右侧边栏"
       ],
       "texts": [],
-      "arias": []
-    },
-    {
-      "key": "text label|span|",
-      "tag": "span",
-      "role": "",
-      "cls": "_text_1rdzk_17 WW4l1q_label",
-      "slot": "conversation.view",
-      "viewBox": "",
-      "style": {
-        "display": "block",
-        "position": "static",
-        "font": "14px/normal 400",
-        "color": "rgb(129, 133, 140)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "0px none rgb(129, 133, 140)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "70x19"
-      },
-      "rect": [
-        570,
-        219,
-        70,
-        19
-      ],
-      "count": 29,
-      "steps": [
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [
-        "已完成分析",
-        "已访问网页并搜索网页",
-        "已调用工具",
-        "已搜索代码，已读取文件，已写入文件等"
-      ],
       "arias": []
     },
     {
@@ -1738,7 +1243,7 @@
         20,
         20
       ],
-      "count": 28,
+      "count": 29,
       "steps": [
         "上下文洞察（插件）"
       ],
@@ -1750,42 +1255,37 @@
       ]
     },
     {
-      "key": "dsx-stats-card dsx-squircle dsx-cyclable|div|",
-      "tag": "div",
+      "key": "chevron|svg|",
+      "tag": "svg",
       "role": "",
-      "cls": "dsx-stats-card dsx-squircle dsx-cyclable",
-      "slot": "",
-      "viewBox": "",
+      "cls": "Hqq-bq_chevron",
+      "slot": "conversation.composer",
+      "viewBox": "0 0 16 16",
       "style": {
-        "display": "flex",
-        "position": "relative",
-        "font": "16px/normal 400",
-        "color": "rgb(15, 17, 21)",
-        "bg": "rgb(255, 255, 255)",
-        "radius": "21px",
-        "border": "1px solid rgba(0, 0, 0, 0.1)",
-        "shadow": "rgba(0, 0, 0, 0.02) 0px 4px 12px 0px, rgba(0, 0, 0, 0.04) 0px 2px 8px 0px",
-        "pad": "10px 10px 10px 10px",
+        "display": "block",
+        "position": "static",
+        "font": "13px/20px 500",
+        "color": "rgb(173, 178, 184)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "0px",
+        "border": "0px none rgb(173, 178, 184)",
+        "shadow": "",
+        "pad": "0px 0px 0px 0px",
         "gap": "",
-        "size": "130x130"
+        "size": "12x12"
       },
       "rect": [
-        1150,
-        50,
-        130,
-        130
+        677,
+        418,
+        12,
+        12
       ],
-      "count": 27,
+      "count": 28,
       "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
+        "新会话页",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 内置插件"
       ],
       "texts": [],
       "arias": []
@@ -1831,160 +1331,6 @@
         "npm 近30天滚动下载量：173082。这不是累计下载量，也不代表独立用户数。",
         "npm 近30天滚动下载量：170905。这不是累计下载量，也不代表独立用户数。"
       ]
-    },
-    {
-      "key": "|p|",
-      "tag": "p",
-      "role": "",
-      "cls": "",
-      "slot": "conversation.chat.node",
-      "viewBox": "",
-      "style": {
-        "display": "block",
-        "position": "static",
-        "font": "14px/24px 400",
-        "color": "rgb(15, 17, 21)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "0px none rgb(15, 17, 21)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "748x24"
-      },
-      "rect": [
-        548,
-        69,
-        748,
-        24
-      ],
-      "count": 24,
-      "steps": [
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [
-        "两点收尾提示：",
-        "剩下唯一的真问题还是备份：D 盘可用 105 GB，装不下 316 GB 的第二份。接一块外置盘或 NAS 之后，用 r",
-        "Laya 的可行性要用上游 PyTorch 版本来判断，我先把它的真实接口和限制查准。",
-        "Laya 上游（不是 MLX 版）是官方支持 Windows 的，我把它的真实能力边界查清楚了。"
-      ],
-      "arias": []
-    },
-    {
-      "key": "lc-jump hover:bg-(--dsw-alias-interactive-bg-hover) hover:text-(--dsw-alias-label-secondary)|button|",
-      "tag": "button",
-      "role": "",
-      "cls": "lc-jump hover:bg-(--dsw-alias-interactive-bg-hover) hover:text-(--dsw-alias-label-secondary)",
-      "slot": "conversation.chat.assistant-actions",
-      "viewBox": "",
-      "style": {
-        "display": "flex",
-        "position": "static",
-        "font": "13.3333px/normal 400",
-        "color": "rgb(129, 133, 140)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "28px",
-        "border": "0px none rgb(129, 133, 140)",
-        "shadow": "",
-        "pad": "6px 6px 6px 6px",
-        "gap": "",
-        "size": "28x28"
-      },
-      "rect": [
-        435,
-        733,
-        28,
-        28
-      ],
-      "count": 23,
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code",
-        "设置 · 内置插件",
-        "设置 · Agent 预设",
-        "设置 · 组件",
-        "设置 · 科研",
-        "设置 · UI 兼容性",
-        "设置 · 插件市场",
-        "设置 · 通知",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [],
-      "arias": [
-        "在上下文视图中查看此轮"
-      ]
-    },
-    {
-      "key": "xD_KDq_timeEnd|span|",
-      "tag": "span",
-      "role": "",
-      "cls": "xD_KDq_timeEnd",
-      "slot": "conversation.chat.node",
-      "viewBox": "",
-      "style": {
-        "display": "block",
-        "position": "static",
-        "font": "12px/24px 400",
-        "color": "rgb(129, 133, 140)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "0px none rgb(129, 133, 140)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "28x24"
-      },
-      "rect": [
-        632,
-        735,
-        28,
-        24
-      ],
-      "count": 23,
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code",
-        "设置 · 内置插件",
-        "设置 · Agent 预设",
-        "设置 · 组件",
-        "设置 · 科研",
-        "设置 · UI 兼容性",
-        "设置 · 插件市场",
-        "设置 · 通知",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [
-        "23:42",
-        "23:39",
-        "23:47"
-      ],
-      "arias": []
     },
     {
       "key": "frame|div|",
@@ -2369,226 +1715,6 @@
       "arias": [
         "搜索会话"
       ]
-    },
-    {
-      "key": "list|div|tree",
-      "tag": "div",
-      "role": "tree",
-      "cls": "_9lTDKa_list",
-      "slot": "sidebar.workspaces",
-      "viewBox": "",
-      "style": {
-        "display": "block",
-        "position": "static",
-        "font": "14px/normal 400",
-        "color": "rgb(15, 17, 21)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "0px none rgb(15, 17, 21)",
-        "shadow": "",
-        "pad": "0px 5px 16px 4px",
-        "gap": "",
-        "size": "270x527"
-      },
-      "rect": [
-        8,
-        246,
-        270,
-        527
-      ],
-      "count": 22,
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code",
-        "设置 · 内置插件",
-        "设置 · Agent 预设",
-        "设置 · 组件",
-        "设置 · 科研",
-        "设置 · UI 兼容性",
-        "设置 · 插件市场",
-        "设置 · 通知",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [],
-      "arias": [
-        "会话"
-      ]
-    },
-    {
-      "key": "spinner|svg|",
-      "tag": "svg",
-      "role": "",
-      "cls": "_spinner_1i3xo_37",
-      "slot": "sidebar.workspaces",
-      "viewBox": "0 0 24 24",
-      "style": {
-        "display": "block",
-        "position": "static",
-        "font": "14px/normal 400",
-        "color": "rgb(129, 133, 140)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "0px none rgb(129, 133, 140)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "14x14"
-      },
-      "rect": [
-        21,
-        507,
-        14,
-        14
-      ],
-      "count": 22,
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code",
-        "设置 · 内置插件",
-        "设置 · Agent 预设",
-        "设置 · 组件",
-        "设置 · 科研",
-        "设置 · UI 兼容性",
-        "设置 · 插件市场",
-        "设置 · 通知",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [],
-      "arias": []
-    },
-    {
-      "key": "sessionOverflowButton|button|",
-      "tag": "button",
-      "role": "",
-      "cls": "_9lTDKa_sessionOverflowButton",
-      "slot": "sidebar.workspaces",
-      "viewBox": "",
-      "style": {
-        "display": "inline-block",
-        "position": "static",
-        "font": "12px/normal 400",
-        "color": "rgb(129, 133, 140)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "8px",
-        "border": "0px none rgb(129, 133, 140)",
-        "shadow": "",
-        "pad": "0px 12px 0px 28px",
-        "gap": "",
-        "size": "256x28"
-      },
-      "rect": [
-        12,
-        632,
-        256,
-        28
-      ],
-      "count": 22,
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code",
-        "设置 · 内置插件",
-        "设置 · Agent 预设",
-        "设置 · 组件",
-        "设置 · 科研",
-        "设置 · UI 兼容性",
-        "设置 · 插件市场",
-        "设置 · 通知",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [
-        "展开其余 96 个会话"
-      ],
-      "arias": []
-    },
-    {
-      "key": "fade|span|",
-      "tag": "span",
-      "role": "",
-      "cls": "_9lTDKa_fade",
-      "slot": "sidebar.workspaces",
-      "viewBox": "",
-      "style": {
-        "display": "block",
-        "position": "absolute",
-        "font": "14px/normal 400",
-        "color": "rgb(15, 17, 21)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "0px none rgb(15, 17, 21)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "256x24"
-      },
-      "rect": [
-        12,
-        749,
-        256,
-        24
-      ],
-      "count": 22,
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code",
-        "设置 · 内置插件",
-        "设置 · Agent 预设",
-        "设置 · 组件",
-        "设置 · 科研",
-        "设置 · UI 兼容性",
-        "设置 · 插件市场",
-        "设置 · 通知",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [],
-      "arias": []
     },
     {
       "key": "duc-sidebar-entry|button|",
@@ -2982,59 +2108,6 @@
       ]
     },
     {
-      "key": "sessionRow selected|div|treeitem",
-      "tag": "div",
-      "role": "treeitem",
-      "cls": "hIlkoa_sessionRow hIlkoa_selected",
-      "slot": "sidebar.workspaces",
-      "viewBox": "",
-      "style": {
-        "display": "flex",
-        "position": "static",
-        "font": "14px/normal 400",
-        "color": "rgb(15, 17, 21)",
-        "bg": "rgba(38, 49, 72, 0.06)",
-        "radius": "12px",
-        "border": "0px none rgb(15, 17, 21)",
-        "shadow": "",
-        "pad": "0px 8px 0px 8px",
-        "gap": "0px",
-        "size": "256x32"
-      },
-      "rect": [
-        12,
-        396,
-        256,
-        32
-      ],
-      "count": 21,
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code",
-        "设置 · 内置插件",
-        "设置 · Agent 预设",
-        "设置 · 组件",
-        "设置 · 科研",
-        "设置 · UI 兼容性",
-        "设置 · 插件市场",
-        "设置 · 通知",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [],
-      "arias": []
-    },
-    {
       "key": "root|div|",
       "tag": "div",
       "role": "",
@@ -3361,7 +2434,8 @@
       ],
       "texts": [],
       "arias": [
-        "发送消息"
+        "发送消息",
+        "停止生成"
       ]
     },
     {
@@ -3385,7 +2459,7 @@
         "size": "139x26"
       },
       "rect": [
-        739,
+        733,
         12,
         139,
         26
@@ -3473,6 +2547,58 @@
       ]
     },
     {
+      "key": "dsx-stats-active|body|",
+      "tag": "body",
+      "role": "",
+      "cls": "dsx-stats-active",
+      "slot": "",
+      "viewBox": "",
+      "style": {
+        "display": "block",
+        "position": "static",
+        "font": "16px/normal 400",
+        "color": "rgb(15, 17, 21)",
+        "bg": "rgb(255, 255, 255)",
+        "radius": "0px",
+        "border": "0px none rgb(15, 17, 21)",
+        "shadow": "",
+        "pad": "0px 0px 0px 0px",
+        "gap": "",
+        "size": "1570x905"
+      },
+      "rect": [
+        0,
+        0,
+        1570,
+        905
+      ],
+      "count": 20,
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code",
+        "设置 · 内置插件",
+        "设置 · Agent 预设",
+        "设置 · 组件",
+        "设置 · 科研",
+        "设置 · UI 兼容性",
+        "设置 · 插件市场",
+        "设置 · 通知",
+        "用量中心（插件）",
+        "上下文洞察（插件）",
+        "会话标题菜单 / 输入区菜单 · 基视图",
+        "会话标题菜单 / 输入区菜单 · 第 1 步",
+        "会话标题菜单 / 输入区菜单 · 第 2 步",
+        "会话标题菜单 / 输入区菜单 · 第 3 步",
+        "右侧边栏"
+      ],
+      "texts": [],
+      "arias": []
+    },
+    {
       "key": "header|header|",
       "tag": "header",
       "role": "",
@@ -3542,12 +2668,12 @@
         "shadow": "",
         "pad": "4px 8px 4px 8px",
         "gap": "",
-        "size": "135x28"
+        "size": "236x28"
       },
       "rect": [
         300,
         11,
-        135,
+        236,
         28
       ],
       "count": 20,
@@ -3574,7 +2700,7 @@
         "右侧边栏"
       ],
       "texts": [
-        "Laya与RRSI必要性",
+        "我部署了Agents Anywhere并且连接D",
         "我正在优化dsh-widgets，有几个"
       ],
       "arias": []
@@ -3600,7 +2726,7 @@
         "size": "60x16"
       },
       "rect": [
-        471,
+        572,
         17,
         60,
         16
@@ -3654,7 +2780,7 @@
         "size": "26x26"
       },
       "rect": [
-        739,
+        733,
         12,
         26,
         26
@@ -3686,6 +2812,166 @@
         "对话"
       ],
       "arias": []
+    },
+    {
+      "key": "split|div|",
+      "tag": "div",
+      "role": "",
+      "cls": "WgQWqa_split",
+      "slot": "conversation.session.header.utilities",
+      "viewBox": "",
+      "style": {
+        "display": "flex",
+        "position": "static",
+        "font": "16px/normal 400",
+        "color": "rgb(15, 17, 21)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "8px",
+        "border": "1px solid rgba(0, 0, 0, 0.16)",
+        "shadow": "",
+        "pad": "0px 0px 0px 0px",
+        "gap": "",
+        "size": "43x24"
+      },
+      "rect": [
+        1407,
+        13,
+        43,
+        24
+      ],
+      "count": 20,
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code",
+        "设置 · 内置插件",
+        "设置 · Agent 预设",
+        "设置 · 组件",
+        "设置 · 科研",
+        "设置 · UI 兼容性",
+        "设置 · 插件市场",
+        "设置 · 通知",
+        "用量中心（插件）",
+        "上下文洞察（插件）",
+        "会话标题菜单 / 输入区菜单 · 基视图",
+        "会话标题菜单 / 输入区菜单 · 第 1 步",
+        "会话标题菜单 / 输入区菜单 · 第 2 步",
+        "会话标题菜单 / 输入区菜单 · 第 3 步",
+        "右侧边栏"
+      ],
+      "texts": [],
+      "arias": []
+    },
+    {
+      "key": "main|button|",
+      "tag": "button",
+      "role": "",
+      "cls": "WgQWqa_main",
+      "slot": "conversation.session.header.utilities",
+      "viewBox": "",
+      "style": {
+        "display": "flex",
+        "position": "static",
+        "font": "11px/16px 400",
+        "color": "rgb(15, 17, 21)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "0px",
+        "border": "0px none rgb(15, 17, 21)",
+        "shadow": "",
+        "pad": "3px 5px 3px 5px",
+        "gap": "4px",
+        "size": "23x22"
+      },
+      "rect": [
+        1408,
+        14,
+        23,
+        22
+      ],
+      "count": 20,
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code",
+        "设置 · 内置插件",
+        "设置 · Agent 预设",
+        "设置 · 组件",
+        "设置 · 科研",
+        "设置 · UI 兼容性",
+        "设置 · 插件市场",
+        "设置 · 通知",
+        "用量中心（插件）",
+        "上下文洞察（插件）",
+        "会话标题菜单 / 输入区菜单 · 基视图",
+        "会话标题菜单 / 输入区菜单 · 第 1 步",
+        "会话标题菜单 / 输入区菜单 · 第 2 步",
+        "会话标题菜单 / 输入区菜单 · 第 3 步",
+        "右侧边栏"
+      ],
+      "texts": [],
+      "arias": [
+        "用 文件资源管理器 打开"
+      ]
+    },
+    {
+      "key": "chevron|button|",
+      "tag": "button",
+      "role": "",
+      "cls": "WgQWqa_chevron",
+      "slot": "conversation.session.header.utilities",
+      "viewBox": "",
+      "style": {
+        "display": "flex",
+        "position": "static",
+        "font": "11px/16px 400",
+        "color": "rgb(97, 102, 107)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "0px",
+        "border": "0px none rgb(97, 102, 107)",
+        "shadow": "",
+        "pad": "3px 4px 3px 3px",
+        "gap": "",
+        "size": "18x22"
+      },
+      "rect": [
+        1431,
+        14,
+        18,
+        22
+      ],
+      "count": 20,
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code",
+        "设置 · 内置插件",
+        "设置 · Agent 预设",
+        "设置 · 组件",
+        "设置 · 科研",
+        "设置 · UI 兼容性",
+        "设置 · 插件市场",
+        "设置 · 通知",
+        "用量中心（插件）",
+        "上下文洞察（插件）",
+        "会话标题菜单 / 输入区菜单 · 基视图",
+        "会话标题菜单 / 输入区菜单 · 第 1 步",
+        "会话标题菜单 / 输入区菜单 · 第 2 步",
+        "会话标题菜单 / 输入区菜单 · 第 3 步",
+        "右侧边栏"
+      ],
+      "texts": [],
+      "arias": [
+        "更多打开方式"
+      ]
     },
     {
       "key": "button ghost sm moreButton|button|",
@@ -3882,59 +3168,6 @@
       "arias": []
     },
     {
-      "key": "count|span|",
-      "tag": "span",
-      "role": "",
-      "cls": "foD-wG_count",
-      "slot": "conversation.session.header.actions",
-      "viewBox": "",
-      "style": {
-        "display": "block",
-        "position": "static",
-        "font": "12px/18px 400",
-        "color": "rgb(129, 133, 140)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "0px none rgb(129, 133, 140)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "70x18"
-      },
-      "rect": [
-        629,
-        16,
-        70,
-        18
-      ],
-      "count": 18,
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code",
-        "设置 · 内置插件",
-        "设置 · Agent 预设",
-        "设置 · 组件",
-        "设置 · 科研",
-        "设置 · UI 兼容性",
-        "设置 · 插件市场",
-        "设置 · 通知",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "右侧边栏"
-      ],
-      "texts": [
-        "2 个后台任务",
-        "8",
-        "12"
-      ],
-      "arias": []
-    },
-    {
       "key": "dpp-chat-launcher__whale|span|",
       "tag": "span",
       "role": "",
@@ -4052,10 +3285,111 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "6 轮 49 步",
-        "4.5M",
+        "1 轮 50 步",
+        "3.8M",
         "—",
-        "5 轮 393 步"
+        "9 轮 511 步"
+      ],
+      "arias": []
+    },
+    {
+      "key": "runningWhaleAnimated|span|",
+      "tag": "span",
+      "role": "",
+      "cls": "xz4KEq_runningWhaleAnimated",
+      "slot": "conversation.view",
+      "viewBox": "",
+      "style": {
+        "display": "block",
+        "position": "absolute",
+        "font": "12px/22px 400",
+        "color": "color(srgb 0.20549 0.367451 0.730196)",
+        "bg": "color(srgb 0.20549 0.367451 0.730196)",
+        "radius": "0px",
+        "border": "0px none color(srgb 0.20549 0.367451 0.730196)",
+        "shadow": "",
+        "pad": "0px 0px 0px 0px",
+        "gap": "",
+        "size": "14x14"
+      },
+      "rect": [
+        333,
+        385,
+        14,
+        14
+      ],
+      "count": 16,
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code",
+        "设置 · 内置插件",
+        "设置 · Agent 预设",
+        "设置 · 组件",
+        "设置 · 科研",
+        "设置 · UI 兼容性",
+        "设置 · 插件市场",
+        "设置 · 通知",
+        "用量中心（插件）",
+        "上下文洞察（插件）",
+        "右侧边栏"
+      ],
+      "texts": [],
+      "arias": []
+    },
+    {
+      "key": "text|span|",
+      "tag": "span",
+      "role": "",
+      "cls": "_text_1rdzk_17",
+      "slot": "conversation.view",
+      "viewBox": "",
+      "style": {
+        "display": "block",
+        "position": "static",
+        "font": "12px/22px 400",
+        "color": "color(srgb 0.20549 0.367451 0.730196)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "0px",
+        "border": "0px none color(srgb 0.20549 0.367451 0.730196)",
+        "shadow": "",
+        "pad": "0px 0px 0px 0px",
+        "gap": "",
+        "size": "165x22"
+      },
+      "rect": [
+        353,
+        381,
+        165,
+        22
+      ],
+      "count": 16,
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code",
+        "设置 · 内置插件",
+        "设置 · Agent 预设",
+        "设置 · 组件",
+        "设置 · 科研",
+        "设置 · UI 兼容性",
+        "设置 · 插件市场",
+        "设置 · 通知",
+        "用量中心（插件）",
+        "上下文洞察（插件）",
+        "右侧边栏"
+      ],
+      "texts": [
+        "深度求索中，用时 10分16秒 ···",
+        "深度求索中，用时 10分22秒 ···",
+        "深度求索中，用时 10分31秒 ···",
+        "深度求索中，用时 10分32秒 ···"
       ],
       "arias": []
     },
@@ -4233,6 +3567,151 @@
       "arias": []
     },
     {
+      "key": "list|div|tree",
+      "tag": "div",
+      "role": "tree",
+      "cls": "_9lTDKa_list",
+      "slot": "sidebar.workspaces",
+      "viewBox": "",
+      "style": {
+        "display": "block",
+        "position": "static",
+        "font": "14px/normal 400",
+        "color": "rgb(15, 17, 21)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "0px",
+        "border": "0px none rgb(15, 17, 21)",
+        "shadow": "",
+        "pad": "0px 5px 16px 4px",
+        "gap": "",
+        "size": "270x527"
+      },
+      "rect": [
+        8,
+        246,
+        270,
+        527
+      ],
+      "count": 15,
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code",
+        "设置 · 内置插件",
+        "设置 · Agent 预设",
+        "设置 · 组件",
+        "设置 · 科研",
+        "设置 · UI 兼容性",
+        "设置 · 插件市场",
+        "设置 · 通知"
+      ],
+      "texts": [],
+      "arias": [
+        "会话"
+      ]
+    },
+    {
+      "key": "sessionOverflowButton|button|",
+      "tag": "button",
+      "role": "",
+      "cls": "_9lTDKa_sessionOverflowButton",
+      "slot": "sidebar.workspaces",
+      "viewBox": "",
+      "style": {
+        "display": "inline-block",
+        "position": "static",
+        "font": "12px/normal 400",
+        "color": "rgb(129, 133, 140)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "8px",
+        "border": "0px none rgb(129, 133, 140)",
+        "shadow": "",
+        "pad": "0px 12px 0px 28px",
+        "gap": "",
+        "size": "256x28"
+      },
+      "rect": [
+        12,
+        666,
+        256,
+        28
+      ],
+      "count": 15,
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code",
+        "设置 · 内置插件",
+        "设置 · Agent 预设",
+        "设置 · 组件",
+        "设置 · 科研",
+        "设置 · UI 兼容性",
+        "设置 · 插件市场",
+        "设置 · 通知"
+      ],
+      "texts": [
+        "展开其余 96 个会话"
+      ],
+      "arias": []
+    },
+    {
+      "key": "fade|span|",
+      "tag": "span",
+      "role": "",
+      "cls": "_9lTDKa_fade",
+      "slot": "sidebar.workspaces",
+      "viewBox": "",
+      "style": {
+        "display": "block",
+        "position": "absolute",
+        "font": "14px/normal 400",
+        "color": "rgb(15, 17, 21)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "0px",
+        "border": "0px none rgb(15, 17, 21)",
+        "shadow": "",
+        "pad": "0px 0px 0px 0px",
+        "gap": "",
+        "size": "256x24"
+      },
+      "rect": [
+        12,
+        749,
+        256,
+        24
+      ],
+      "count": 15,
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code",
+        "设置 · 内置插件",
+        "设置 · Agent 预设",
+        "设置 · 组件",
+        "设置 · 科研",
+        "设置 · UI 兼容性",
+        "设置 · 插件市场",
+        "设置 · 通知"
+      ],
+      "texts": [],
+      "arias": []
+    },
+    {
       "key": "cardDescription|span|",
       "tag": "span",
       "role": "",
@@ -4367,6 +3846,52 @@
       ]
     },
     {
+      "key": "sessionRow selected|div|treeitem",
+      "tag": "div",
+      "role": "treeitem",
+      "cls": "hIlkoa_sessionRow hIlkoa_selected",
+      "slot": "sidebar.workspaces",
+      "viewBox": "",
+      "style": {
+        "display": "flex",
+        "position": "static",
+        "font": "14px/normal 400",
+        "color": "rgb(15, 17, 21)",
+        "bg": "rgba(38, 49, 72, 0.06)",
+        "radius": "12px",
+        "border": "0px none rgb(15, 17, 21)",
+        "shadow": "",
+        "pad": "0px 8px 0px 8px",
+        "gap": "0px",
+        "size": "256x32"
+      },
+      "rect": [
+        12,
+        396,
+        256,
+        32
+      ],
+      "count": 14,
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code",
+        "设置 · 内置插件",
+        "设置 · Agent 预设",
+        "设置 · 组件",
+        "设置 · 科研",
+        "设置 · UI 兼容性",
+        "设置 · 插件市场",
+        "设置 · 通知"
+      ],
+      "texts": [],
+      "arias": []
+    },
+    {
       "key": "title|div|",
       "tag": "div",
       "role": "",
@@ -4402,50 +3927,6 @@
         "外观",
         "字号大小",
         "工作步骤展示"
-      ],
-      "arias": []
-    },
-    {
-      "key": "durationNumber|span|",
-      "tag": "span",
-      "role": "",
-      "cls": "_4AI11G_durationNumber",
-      "slot": "conversation.chat.node",
-      "viewBox": "",
-      "style": {
-        "display": "inline",
-        "position": "static",
-        "font": "14px/24px 400",
-        "color": "rgb(129, 133, 140)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "0px none rgb(129, 133, 140)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "9x17"
-      },
-      "rect": [
-        635,
-        103,
-        9,
-        17
-      ],
-      "count": 14,
-      "steps": [
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [
-        "1",
-        "27",
-        "8",
-        "19"
       ],
       "arias": []
     },
@@ -4518,10 +3999,10 @@
         "用量中心（插件）"
       ],
       "texts": [
-        "39.99亿",
-        "5825.6万",
-        "14,440 次",
-        "499 次"
+        "39.51亿",
+        "3482.0万",
+        "14,142 次",
+        "327 次"
       ],
       "arias": []
     },
@@ -4630,7 +4111,7 @@
         "1.3%",
         "4.4%",
         "0.8%",
-        "4.6%"
+        "4.5%"
       ],
       "arias": []
     },
@@ -4665,10 +4146,10 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "≈98.2M",
-        "≈323.2M",
-        "≈61.3M",
-        "≈336.1M"
+        "≈98.7M",
+        "≈325.4M",
+        "≈61.7M",
+        "≈336.7M"
       ],
       "arias": []
     },
@@ -5056,51 +4537,6 @@
       "arias": []
     },
     {
-      "key": "mark markActive|button|",
-      "tag": "button",
-      "role": "",
-      "cls": "xpvNua_mark xpvNua_markActive",
-      "slot": "conversation.view",
-      "viewBox": "",
-      "style": {
-        "display": "block",
-        "position": "absolute",
-        "font": "13.3333px/normal 400",
-        "color": "rgb(0, 0, 0)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "8px",
-        "border": "0px none rgb(0, 0, 0)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "28x10"
-      },
-      "rect": [
-        1523,
-        417,
-        28,
-        10
-      ],
-      "count": 11,
-      "steps": [
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code",
-        "设置 · 内置插件",
-        "设置 · Agent 预设",
-        "设置 · 组件",
-        "设置 · 科研",
-        "设置 · UI 兼容性",
-        "设置 · 插件市场",
-        "设置 · 通知"
-      ],
-      "texts": [],
-      "arias": [
-        "跳转到第 6 轮"
-      ]
-    },
-    {
       "key": "overlay|div|presentation",
       "tag": "div",
       "role": "presentation",
@@ -5355,258 +4791,6 @@
       "arias": []
     },
     {
-      "key": "dsx-stats-active|body|",
-      "tag": "body",
-      "role": "",
-      "cls": "dsx-stats-active",
-      "slot": "",
-      "viewBox": "",
-      "style": {
-        "display": "block",
-        "position": "static",
-        "font": "16px/normal 400",
-        "color": "rgb(15, 17, 21)",
-        "bg": "rgb(255, 255, 255)",
-        "radius": "0px",
-        "border": "0px none rgb(15, 17, 21)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "1570x905"
-      },
-      "rect": [
-        0,
-        0,
-        1570,
-        905
-      ],
-      "count": 9,
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [],
-      "arias": []
-    },
-    {
-      "key": "split|div|",
-      "tag": "div",
-      "role": "",
-      "cls": "WgQWqa_split",
-      "slot": "conversation.session.header.utilities",
-      "viewBox": "",
-      "style": {
-        "display": "flex",
-        "position": "static",
-        "font": "16px/normal 400",
-        "color": "rgb(15, 17, 21)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "8px",
-        "border": "1px solid rgba(0, 0, 0, 0.16)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "43x24"
-      },
-      "rect": [
-        1407,
-        13,
-        43,
-        24
-      ],
-      "count": 9,
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [],
-      "arias": []
-    },
-    {
-      "key": "main|button|",
-      "tag": "button",
-      "role": "",
-      "cls": "WgQWqa_main",
-      "slot": "conversation.session.header.utilities",
-      "viewBox": "",
-      "style": {
-        "display": "flex",
-        "position": "static",
-        "font": "11px/16px 400",
-        "color": "rgb(15, 17, 21)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "0px none rgb(15, 17, 21)",
-        "shadow": "",
-        "pad": "3px 5px 3px 5px",
-        "gap": "4px",
-        "size": "23x22"
-      },
-      "rect": [
-        1408,
-        14,
-        23,
-        22
-      ],
-      "count": 9,
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [],
-      "arias": [
-        "用 文件资源管理器 打开"
-      ]
-    },
-    {
-      "key": "chevron|button|",
-      "tag": "button",
-      "role": "",
-      "cls": "WgQWqa_chevron",
-      "slot": "conversation.session.header.utilities",
-      "viewBox": "",
-      "style": {
-        "display": "flex",
-        "position": "static",
-        "font": "11px/16px 400",
-        "color": "rgb(97, 102, 107)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "0px none rgb(97, 102, 107)",
-        "shadow": "",
-        "pad": "3px 4px 3px 3px",
-        "gap": "",
-        "size": "18x22"
-      },
-      "rect": [
-        1431,
-        14,
-        18,
-        22
-      ],
-      "count": 9,
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [],
-      "arias": [
-        "更多打开方式"
-      ]
-    },
-    {
-      "key": "dsx-stats-card-value|div|",
-      "tag": "div",
-      "role": "",
-      "cls": "dsx-stats-card-value",
-      "slot": "",
-      "viewBox": "",
-      "style": {
-        "display": "block",
-        "position": "static",
-        "font": "17px/21.25px 600",
-        "color": "rgb(15, 17, 21)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "0px none rgb(15, 17, 21)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "108x21"
-      },
-      "rect": [
-        1301,
-        288,
-        108,
-        21
-      ],
-      "count": 9,
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [
-        "CHEAP"
-      ],
-      "arias": []
-    },
-    {
-      "key": "dsx-stats-card-corner|button|",
-      "tag": "button",
-      "role": "",
-      "cls": "dsx-stats-card-corner",
-      "slot": "",
-      "viewBox": "",
-      "style": {
-        "display": "flex",
-        "position": "absolute",
-        "font": "9px/normal 400",
-        "color": "rgb(255, 255, 255)",
-        "bg": "rgb(65, 118, 230)",
-        "radius": "18px",
-        "border": "0px none rgb(255, 255, 255)",
-        "shadow": "rgba(0, 0, 0, 0.05) 0px 2px 4px 0px",
-        "pad": "1px 6px 1px 6px",
-        "gap": "",
-        "size": "36x36"
-      },
-      "rect": [
-        1513,
-        621,
-        36,
-        36
-      ],
-      "count": 9,
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [],
-      "arias": []
-    },
-    {
       "key": "duc-stat-label|div|",
       "tag": "div",
       "role": "",
@@ -5675,10 +4859,10 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "117.9M",
-        "235.9M",
-        "353.8M",
-        "471.7M"
+        "122.5M",
+        "245.0M",
+        "367.5M",
+        "490.1M"
       ],
       "arias": []
     },
@@ -5715,44 +4899,6 @@
       ],
       "texts": [],
       "arias": []
-    },
-    {
-      "key": "uitw-stepper-arrow|button|",
-      "tag": "button",
-      "role": "",
-      "cls": "uitw-stepper-arrow",
-      "slot": "settings.general.item",
-      "viewBox": "",
-      "style": {
-        "display": "flex",
-        "position": "static",
-        "font": "13.3333px/normal 400",
-        "color": "rgb(15, 17, 21)",
-        "bg": "color(srgb 1 1 1 / 0.75)",
-        "radius": "4px",
-        "border": "0px none rgb(15, 17, 21)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "17x12"
-      },
-      "rect": [
-        1113,
-        951,
-        17,
-        12
-      ],
-      "count": 8,
-      "steps": [
-        "设置 · 打开",
-        "设置 · 通用设置"
-      ],
-      "texts": [],
-      "arias": [
-        "+4 px",
-        "-4 px",
-        "+1 px"
-      ]
     },
     {
       "key": "button ghost md helpButton|button|",
@@ -6217,9 +5363,9 @@
         "用量中心（插件）"
       ],
       "texts": [
-        "127.97亿",
-        "14,939",
-        "126",
+        "129.37亿",
+        "14,469",
+        "121",
         "98.5%"
       ],
       "arias": []
@@ -6313,6 +5459,39 @@
       "rect": [
         1251,
         431,
+        15,
+        15
+      ],
+      "count": 8,
+      "steps": [
+        "用量中心（插件）"
+      ],
+      "texts": [],
+      "arias": []
+    },
+    {
+      "key": "duc-heat-cell l3|div|",
+      "tag": "div",
+      "role": "",
+      "cls": "duc-heat-cell l3",
+      "slot": "shell.overlay",
+      "viewBox": "",
+      "style": {
+        "display": "block",
+        "position": "absolute",
+        "font": "13px/19.5px 400",
+        "color": "rgb(15, 17, 21)",
+        "bg": "color(srgb 0.621961 0.723765 0.936627)",
+        "radius": "4px",
+        "border": "0px none rgb(15, 17, 21)",
+        "shadow": "",
+        "pad": "0px 0px 0px 0px",
+        "gap": "",
+        "size": "15x15"
+      },
+      "rect": [
+        1268,
+        467,
         15,
         15
       ],
@@ -6425,164 +5604,11 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "7.3B",
-        "136h17m",
-        "126.5k",
-        "560.4k"
+        "7.4B",
+        "138h2m",
+        "115.6k",
+        "664.9k"
       ],
-      "arias": []
-    },
-    {
-      "key": "|h2|",
-      "tag": "h2",
-      "role": "",
-      "cls": "",
-      "slot": "conversation.chat.node",
-      "viewBox": "",
-      "style": {
-        "display": "block",
-        "position": "static",
-        "font": "19px/28px 700",
-        "color": "rgb(15, 17, 21)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "0px none rgb(15, 17, 21)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "748x28"
-      },
-      "rect": [
-        548,
-        531,
-        748,
-        28
-      ],
-      "count": 8,
-      "steps": [
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步"
-      ],
-      "texts": [
-        "量到的两个数",
-        "为什么不能直接设成 11"
-      ],
-      "arias": []
-    },
-    {
-      "key": "xD_KDq_timeStart|span|",
-      "tag": "span",
-      "role": "",
-      "cls": "xD_KDq_timeStart",
-      "slot": "conversation.chat.node",
-      "viewBox": "",
-      "style": {
-        "display": "block",
-        "position": "static",
-        "font": "13px/24px 400",
-        "color": "rgb(129, 133, 140)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "0px none rgb(129, 133, 140)",
-        "shadow": "",
-        "pad": "0px 12px 0px 0px",
-        "gap": "",
-        "size": "43x24"
-      },
-      "rect": [
-        1217,
-        57,
-        43,
-        24
-      ],
-      "count": 7,
-      "steps": [
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [
-        "23:41",
-        "23:39"
-      ],
-      "arias": []
-    },
-    {
-      "key": "root|button|",
-      "tag": "button",
-      "role": "",
-      "cls": "_4AI11G_root",
-      "slot": "conversation.chat.node",
-      "viewBox": "",
-      "style": {
-        "display": "flex",
-        "position": "static",
-        "font": "14px/normal 400",
-        "color": "rgb(129, 133, 140)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "0px none rgb(129, 133, 140)",
-        "shadow": "",
-        "pad": "0px 0px 8px 0px",
-        "gap": "",
-        "size": "748x33"
-      },
-      "rect": [
-        548,
-        99,
-        748,
-        33
-      ],
-      "count": 7,
-      "steps": [
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步",
-        "右侧边栏"
-      ],
-      "texts": [],
-      "arias": []
-    },
-    {
-      "key": "duc-heat-cell l3|div|",
-      "tag": "div",
-      "role": "",
-      "cls": "duc-heat-cell l3",
-      "slot": "shell.overlay",
-      "viewBox": "",
-      "style": {
-        "display": "block",
-        "position": "absolute",
-        "font": "13px/19.5px 400",
-        "color": "rgb(15, 17, 21)",
-        "bg": "color(srgb 0.621961 0.723765 0.936627)",
-        "radius": "4px",
-        "border": "0px none rgb(15, 17, 21)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "15x15"
-      },
-      "rect": [
-        1268,
-        467,
-        15,
-        15
-      ],
-      "count": 7,
-      "steps": [
-        "用量中心（插件）"
-      ],
-      "texts": [],
       "arias": []
     },
     {
@@ -6616,10 +5642,10 @@
         "用量中心（插件）"
       ],
       "texts": [
-        "33 天",
+        "34 天",
         "09:00 · 1,319 次",
-        "2,134",
-        "126"
+        "2,067",
+        "121"
       ],
       "arias": []
     },
@@ -6654,10 +5680,10 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "09-25",
         "09-26",
         "09-27",
-        "09-28"
+        "09-28",
+        "09-29"
       ],
       "arias": []
     },
@@ -6692,6 +5718,81 @@
         "上下文洞察（插件）"
       ],
       "texts": [],
+      "arias": []
+    },
+    {
+      "key": "cc-miniMeterLabel|span|",
+      "tag": "span",
+      "role": "",
+      "cls": "cc-miniMeterLabel",
+      "slot": "settings.section",
+      "viewBox": "",
+      "style": {
+        "display": "block",
+        "position": "static",
+        "font": "12px/18px 400",
+        "color": "rgb(129, 133, 140)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "0px",
+        "border": "0px none rgb(129, 133, 140)",
+        "shadow": "",
+        "pad": "0px 0px 0px 0px",
+        "gap": "",
+        "size": "58x18"
+      },
+      "rect": [
+        628,
+        360,
+        58,
+        18
+      ],
+      "count": 6,
+      "steps": [
+        "设置 · Command Code"
+      ],
+      "texts": [
+        "5 小时窗口",
+        "每周窗口",
+        "月额度剩余"
+      ],
+      "arias": []
+    },
+    {
+      "key": "cc-miniMeterValue|span|",
+      "tag": "span",
+      "role": "",
+      "cls": "cc-miniMeterValue",
+      "slot": "settings.section",
+      "viewBox": "",
+      "style": {
+        "display": "block",
+        "position": "static",
+        "font": "12px/18px 400",
+        "color": "rgb(97, 102, 107)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "0px",
+        "border": "0px none rgb(97, 102, 107)",
+        "shadow": "",
+        "pad": "0px 0px 0px 0px",
+        "gap": "",
+        "size": "23x18"
+      },
+      "rect": [
+        766,
+        360,
+        23,
+        18
+      ],
+      "count": 6,
+      "steps": [
+        "设置 · Command Code"
+      ],
+      "texts": [
+        "20%",
+        "8%",
+        "$4.56",
+        "0%"
+      ],
       "arias": []
     },
     {
@@ -7038,12 +6139,12 @@
         "shadow": "",
         "pad": "0px 0px 0px 0px",
         "gap": "",
-        "size": "27x27"
+        "size": "24x27"
       },
       "rect": [
-        316,
+        318,
         119,
-        27,
+        24,
         27
       ],
       "count": 6,
@@ -7051,10 +6152,10 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "110",
-        "7.3B",
+        "111",
+        "7.4B",
         "¥63.37",
-        "98.87%"
+        "98.88%"
       ],
       "arias": []
     },
@@ -7089,10 +6190,10 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "共 166 个",
-        "轮次 690",
-        "已计价 17/110 个会话",
-        "含 86 个会话"
+        "共 167 个",
+        "轮次 696",
+        "已计价 17/111 个会话",
+        "含 87 个会话"
       ],
       "arias": []
     },
@@ -7114,13 +6215,13 @@
         "shadow": "",
         "pad": "0px 0px 0px 0px",
         "gap": "",
-        "size": "10x25"
+        "size": "10x36"
       },
       "rect": [
         863,
-        188,
+        177,
         10,
-        25
+        36
       ],
       "count": 6,
       "steps": [
@@ -7180,12 +6281,12 @@
         "shadow": "",
         "pad": "0px 0px 0px 0px",
         "gap": "",
-        "size": "283x17"
+        "size": "270x17"
       },
       "rect": [
-        585,
+        598,
         559,
-        283,
+        270,
         17
       ],
       "count": 6,
@@ -7193,10 +6294,10 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "Laya与RRSI必要性",
+        "我部署了Agents Anywhere并且连接D",
         "我正在优化dsh-widgets，有几个",
         "这 5 个分别是什么，为什么要",
-        "D磁盘空间清理"
+        "Laya与RRSI必要性"
       ],
       "arias": []
     },
@@ -7218,12 +6319,12 @@
         "shadow": "",
         "pad": "0px 0px 0px 0px",
         "gap": "",
-        "size": "42x15"
+        "size": "48x15"
       },
       "rect": [
-        882,
+        876,
         559,
-        42,
+        48,
         15
       ],
       "count": 6,
@@ -7231,10 +6332,10 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "8 分钟前",
-        "9 分钟前",
-        "44 分钟前",
-        "2 小时前"
+        "10 分钟前",
+        "12 分钟前",
+        "40 分钟前",
+        "1 小时前"
       ],
       "arias": []
     },
@@ -7269,8 +6370,8 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "2026-10-01",
-        "2026-09-30"
+        "2026-10-02",
+        "2026-10-01"
       ],
       "arias": []
     },
@@ -7408,48 +6509,10 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "不用管。现在聊一下Laya，不是Mlx不关键。我只是关心这个决策模型是否可以部署，是否需要部署，对我平时的工作流是否有帮",
-        "我感觉整个组件区域离顶部菜单栏的间距稍微有点大，默认改成和组件按钮离窗口顶部相同的距离让我看看效果",
-        "设置页这个也要用真实的窗口来演示！给你看图二，要用这个来演示。 这个加载肯定有！图四这个不就是加载中和运行状态的转圈圈吗",
-        "先帮我检查一下D磁盘的空间为什么只剩这么少了，之前清理了不少模型权重但是现在又多了好多东西，进行一次完整审计并由我决策删"
-      ],
-      "arias": []
-    },
-    {
-      "key": "cc-rowTitle|label|",
-      "tag": "label",
-      "role": "",
-      "cls": "cc-rowTitle",
-      "slot": "settings.section",
-      "viewBox": "",
-      "style": {
-        "display": "block",
-        "position": "static",
-        "font": "14px/22px 400",
-        "color": "rgb(15, 17, 21)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "0px none rgb(15, 17, 21)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "98x22"
-      },
-      "rect": [
-        597,
-        584,
-        98,
-        22
-      ],
-      "count": 5,
-      "steps": [
-        "设置 · Command Code"
-      ],
-      "texts": [
-        "隐藏套餐外模型",
-        "模型白名单",
-        "零数据保留（ZDR）",
-        "用 Command Code 承载联网搜索"
+        "我部署了Agents Anywhere并且连接DeepSeek Harness，为啥显示正在等待本地DSH Bridge",
+        "不要任何淡入淡出效果，我只要纯粹的放大缩小和位移，只不过是不同组件的动画时机不一致而已，这个难度应该不大的",
+        "其它第三方插件不是官方UI的先看看有没有哪些没有对齐，或者说哪些是官方没有开发的，比如滑动条，就先统计并搁置，我们优先整",
+        "不用管。现在聊一下Laya，不是Mlx不关键。我只是关心这个决策模型是否可以部署，是否需要部署，对我平时的工作流是否有帮"
       ],
       "arias": []
     },
@@ -7664,43 +6727,6 @@
       "arias": []
     },
     {
-      "key": "arrow|button|",
-      "tag": "button",
-      "role": "",
-      "cls": "_0Fr0Ha_arrow",
-      "slot": "settings.general.item",
-      "viewBox": "",
-      "style": {
-        "display": "flex",
-        "position": "static",
-        "font": "13.3333px/normal 400",
-        "color": "rgb(15, 17, 21)",
-        "bg": "color(srgb 1 1 1 / 0.75)",
-        "radius": "4px",
-        "border": "0px none rgb(15, 17, 21)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "17x12"
-      },
-      "rect": [
-        1113,
-        491,
-        17,
-        12
-      ],
-      "count": 4,
-      "steps": [
-        "设置 · 打开",
-        "设置 · 通用设置"
-      ],
-      "texts": [],
-      "arias": [
-        "增大字号",
-        "减小字号"
-      ]
-    },
-    {
       "key": "uitw-stepper|div|",
       "tag": "div",
       "role": "",
@@ -7846,74 +6872,41 @@
       "arias": []
     },
     {
-      "key": "cc-rowDesc|div|",
-      "tag": "div",
+      "key": "cc-rowTitle|label|",
+      "tag": "label",
       "role": "",
-      "cls": "cc-rowDesc",
+      "cls": "cc-rowTitle",
       "slot": "settings.section",
       "viewBox": "",
       "style": {
         "display": "block",
         "position": "static",
-        "font": "12px/18px 400",
-        "color": "rgb(129, 133, 140)",
+        "font": "14px/22px 400",
+        "color": "rgb(15, 17, 21)",
         "bg": "rgba(0, 0, 0, 0)",
         "radius": "0px",
-        "border": "0px none rgb(129, 133, 140)",
+        "border": "0px none rgb(15, 17, 21)",
         "shadow": "",
         "pad": "0px 0px 0px 0px",
         "gap": "",
-        "size": "488x18"
+        "size": "98x22"
       },
       "rect": [
         597,
-        610,
-        488,
-        18
+        622,
+        98,
+        22
       ],
       "count": 4,
       "steps": [
         "设置 · Command Code"
       ],
       "texts": [
-        "只显示套餐内模型；按需余额账户仍显示全部。",
-        "仅使用不留存、不训练的上游；可用模型可能更少且价格通常更高。",
-        "使用同一密钥承载 dsh 的 web_search；关闭后恢复原搜索后端。",
-        "在侧边栏底部显示套餐与额度卡片，点击可打开完整仪表盘。默认关闭，关闭时不会为它后台刷新用量。"
+        "隐藏套餐外模型",
+        "模型白名单",
+        "零数据保留（ZDR）",
+        "用 Command Code 承载联网搜索"
       ],
-      "arias": []
-    },
-    {
-      "key": "cc-toggle|input|switch",
-      "tag": "input",
-      "role": "switch",
-      "cls": "cc-toggle",
-      "slot": "settings.section",
-      "viewBox": "",
-      "style": {
-        "display": "block",
-        "position": "relative",
-        "font": "13.3333px/normal 400",
-        "color": "rgb(0, 0, 0)",
-        "bg": "rgb(15, 17, 21)",
-        "radius": "10px",
-        "border": "0px none rgb(0, 0, 0)",
-        "shadow": "",
-        "pad": "2px 2px 2px 2px",
-        "gap": "",
-        "size": "36x20"
-      },
-      "rect": [
-        1125,
-        596,
-        36,
-        20
-      ],
-      "count": 4,
-      "steps": [
-        "设置 · Command Code"
-      ],
-      "texts": [],
       "arias": []
     },
     {
@@ -8169,85 +7162,11 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "110",
+        "111",
         "21",
-        "71",
+        "72",
         "16"
       ],
-      "arias": []
-    },
-    {
-      "key": "header|button|",
-      "tag": "button",
-      "role": "",
-      "cls": "kuvljq_header",
-      "slot": "conversation.chat.turnTail",
-      "viewBox": "",
-      "style": {
-        "display": "flex",
-        "position": "static",
-        "font": "16px/normal 400",
-        "color": "rgb(15, 17, 21)",
-        "bg": "rgb(250, 250, 250)",
-        "radius": "0px",
-        "border": "0px none rgb(15, 17, 21)",
-        "shadow": "",
-        "pad": "8px 10px 8px 10px",
-        "gap": "10px",
-        "size": "746x60"
-      },
-      "rect": [
-        549,
-        612,
-        746,
-        60
-      ],
-      "count": 4,
-      "steps": [
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步"
-      ],
-      "texts": [],
-      "arias": [
-        "在侧边栏查看本轮改动"
-      ]
-    },
-    {
-      "key": "list|ul|",
-      "tag": "ul",
-      "role": "",
-      "cls": "kuvljq_list",
-      "slot": "conversation.chat.turnTail",
-      "viewBox": "",
-      "style": {
-        "display": "block",
-        "position": "static",
-        "font": "16px/normal 400",
-        "color": "rgb(15, 17, 21)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "1px solid rgba(0, 0, 0, 0.1)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "746x129"
-      },
-      "rect": [
-        549,
-        672,
-        746,
-        129
-      ],
-      "count": 4,
-      "steps": [
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步"
-      ],
-      "texts": [],
       "arias": []
     },
     {
@@ -8390,6 +7309,44 @@
         "会话标题菜单 / 输入区菜单 · 第 3 步"
       ],
       "texts": [],
+      "arias": []
+    },
+    {
+      "key": "count|span|",
+      "tag": "span",
+      "role": "",
+      "cls": "fO69Vq_count",
+      "slot": "main",
+      "viewBox": "",
+      "style": {
+        "display": "block",
+        "position": "static",
+        "font": "14px/normal 400",
+        "color": "rgb(173, 178, 184)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "0px",
+        "border": "0px none rgb(173, 178, 184)",
+        "shadow": "",
+        "pad": "0px 0px 0px 0px",
+        "gap": "",
+        "size": "8x19"
+      },
+      "rect": [
+        481,
+        113,
+        8,
+        19
+      ],
+      "count": 3,
+      "steps": [
+        "插件页（官方 / 已安装）",
+        "设置 · 通用设置"
+      ],
+      "texts": [
+        "8",
+        "12",
+        "1 个后台任务运行中"
+      ],
       "arias": []
     },
     {
@@ -8634,13 +7591,13 @@
         "shadow": "",
         "pad": "20px 0px 0px 0px",
         "gap": "",
-        "size": "564x207"
+        "size": "564x225"
       },
       "rect": [
         597,
-        519,
+        557,
         564,
-        207
+        225
       ],
       "count": 3,
       "steps": [
@@ -8652,6 +7609,76 @@
         "隐私与安全",
         "集成与显示"
       ]
+    },
+    {
+      "key": "cc-rowDesc|div|",
+      "tag": "div",
+      "role": "",
+      "cls": "cc-rowDesc",
+      "slot": "settings.section",
+      "viewBox": "",
+      "style": {
+        "display": "block",
+        "position": "static",
+        "font": "12px/18px 400",
+        "color": "rgb(129, 133, 140)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "0px",
+        "border": "0px none rgb(129, 133, 140)",
+        "shadow": "",
+        "pad": "0px 0px 0px 0px",
+        "gap": "",
+        "size": "488x18"
+      },
+      "rect": [
+        597,
+        648,
+        488,
+        18
+      ],
+      "count": 3,
+      "steps": [
+        "设置 · Command Code"
+      ],
+      "texts": [
+        "只显示套餐内模型；按需余额账户仍显示全部。",
+        "仅使用不留存、不训练的上游；可用模型可能更少且价格通常更高。",
+        "使用同一密钥承载 dsh 的 web_search；关闭后恢复原搜索后端。"
+      ],
+      "arias": []
+    },
+    {
+      "key": "cc-toggle|input|switch",
+      "tag": "input",
+      "role": "switch",
+      "cls": "cc-toggle",
+      "slot": "settings.section",
+      "viewBox": "",
+      "style": {
+        "display": "block",
+        "position": "relative",
+        "font": "13.3333px/normal 400",
+        "color": "rgb(0, 0, 0)",
+        "bg": "rgb(15, 17, 21)",
+        "radius": "10px",
+        "border": "0px none rgb(0, 0, 0)",
+        "shadow": "",
+        "pad": "2px 2px 2px 2px",
+        "gap": "",
+        "size": "36x20"
+      },
+      "rect": [
+        1125,
+        634,
+        36,
+        20
+      ],
+      "count": 3,
+      "steps": [
+        "设置 · Command Code"
+      ],
+      "texts": [],
+      "arias": []
     },
     {
       "key": "dsx-tab|button|",
@@ -8761,78 +7788,6 @@
         "通知需要浏览器授权。点击下方按钮授权，然后发送一条测试通知确认生效。",
         "选择哪些结束状态触发通知。",
         "规则匹配该轮回复文本与调用过的工具名。包含规则：命中任一才通知；排除规则：命中即不通知。"
-      ],
-      "arias": []
-    },
-    {
-      "key": "bubble|div|",
-      "tag": "div",
-      "role": "",
-      "cls": "cJsG2q_bubble",
-      "slot": "conversation.chat.node",
-      "viewBox": "",
-      "style": {
-        "display": "block",
-        "position": "static",
-        "font": "14px/22px 400",
-        "color": "rgb(15, 17, 21)",
-        "bg": "rgb(237, 243, 254)",
-        "radius": "20px",
-        "border": "0px none rgb(15, 17, 21)",
-        "shadow": "",
-        "pad": "10px 16px 10px 16px",
-        "gap": "",
-        "size": "525x86"
-      },
-      "rect": [
-        770,
-        -37,
-        525,
-        86
-      ],
-      "count": 3,
-      "steps": [
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "右侧边栏"
-      ],
-      "texts": [],
-      "arias": []
-    },
-    {
-      "key": "plainRun|span|",
-      "tag": "span",
-      "role": "",
-      "cls": "_plainRun_fbulu_6",
-      "slot": "conversation.chat.node",
-      "viewBox": "",
-      "style": {
-        "display": "inline",
-        "position": "static",
-        "font": "14px/22px 400",
-        "color": "rgb(15, 17, 21)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "0px none rgb(15, 17, 21)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "489x63"
-      },
-      "rect": [
-        786,
-        -26,
-        489,
-        63
-      ],
-      "count": 3,
-      "steps": [
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "右侧边栏"
-      ],
-      "texts": [
-        "不用管。现在聊一下Laya，不是Mlx不关键。我只是关心这个决策模型是否可以部署，是否需要部署，对我平时的工作流是否有帮"
       ],
       "arias": []
     },
@@ -9335,6 +8290,148 @@
       ],
       "texts": [],
       "arias": []
+    },
+    {
+      "key": "bubble|div|",
+      "tag": "div",
+      "role": "",
+      "cls": "cJsG2q_bubble",
+      "slot": "conversation.chat.node",
+      "viewBox": "",
+      "style": {
+        "display": "block",
+        "position": "static",
+        "font": "14px/22px 400",
+        "color": "rgb(15, 17, 21)",
+        "bg": "rgb(237, 243, 254)",
+        "radius": "20px",
+        "border": "0px none rgb(15, 17, 21)",
+        "shadow": "",
+        "pad": "10px 16px 10px 16px",
+        "gap": "",
+        "size": "525x64"
+      },
+      "rect": [
+        555,
+        217,
+        525,
+        64
+      ],
+      "count": 2,
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开"
+      ],
+      "texts": [],
+      "arias": []
+    },
+    {
+      "key": "plainRun|span|",
+      "tag": "span",
+      "role": "",
+      "cls": "_plainRun_fbulu_6",
+      "slot": "conversation.chat.node",
+      "viewBox": "",
+      "style": {
+        "display": "inline",
+        "position": "static",
+        "font": "14px/22px 400",
+        "color": "rgb(15, 17, 21)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "0px",
+        "border": "0px none rgb(15, 17, 21)",
+        "shadow": "",
+        "pad": "0px 0px 0px 0px",
+        "gap": "",
+        "size": "480x41"
+      },
+      "rect": [
+        571,
+        228,
+        480,
+        41
+      ],
+      "count": 2,
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开"
+      ],
+      "texts": [
+        "我部署了Agents Anywhere并且连接DeepSeek Harness，为啥显示正在等待本地DSH Bridge"
+      ],
+      "arias": []
+    },
+    {
+      "key": "xD_KDq_timeStart|span|",
+      "tag": "span",
+      "role": "",
+      "cls": "xD_KDq_timeStart",
+      "slot": "conversation.chat.node",
+      "viewBox": "",
+      "style": {
+        "display": "block",
+        "position": "static",
+        "font": "13px/24px 400",
+        "color": "rgb(129, 133, 140)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "0px",
+        "border": "0px none rgb(129, 133, 140)",
+        "shadow": "",
+        "pad": "0px 12px 0px 0px",
+        "gap": "",
+        "size": "43x24"
+      },
+      "rect": [
+        1002,
+        289,
+        43,
+        24
+      ],
+      "count": 2,
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开"
+      ],
+      "texts": [
+        "00:35"
+      ],
+      "arias": []
+    },
+    {
+      "key": "xD_KDq_action|button|",
+      "tag": "button",
+      "role": "",
+      "cls": "xD_KDq_action",
+      "slot": "conversation.chat.node",
+      "viewBox": "",
+      "style": {
+        "display": "flex",
+        "position": "static",
+        "font": "13.3333px/normal 400",
+        "color": "rgb(129, 133, 140)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "8px",
+        "border": "0px none rgb(129, 133, 140)",
+        "shadow": "",
+        "pad": "6px 6px 6px 6px",
+        "gap": "",
+        "size": "28x28"
+      },
+      "rect": [
+        1053,
+        287,
+        28,
+        28
+      ],
+      "count": 2,
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开"
+      ],
+      "texts": [],
+      "arias": [
+        "复制"
+      ]
     },
     {
       "key": "groupTitle|h3|",
@@ -9871,39 +8968,6 @@
       "arias": []
     },
     {
-      "key": "cc-accountItem|div|",
-      "tag": "div",
-      "role": "",
-      "cls": "cc-accountItem",
-      "slot": "settings.section",
-      "viewBox": "",
-      "style": {
-        "display": "flex",
-        "position": "static",
-        "font": "16px/normal 400",
-        "color": "rgb(15, 17, 21)",
-        "bg": "rgba(0, 0, 0, 0)",
-        "radius": "16px",
-        "border": "1px solid rgba(0, 0, 0, 0.16)",
-        "shadow": "",
-        "pad": "12px 14px 12px 14px",
-        "gap": "10px",
-        "size": "564x54"
-      },
-      "rect": [
-        597,
-        327,
-        564,
-        54
-      ],
-      "count": 2,
-      "steps": [
-        "设置 · Command Code"
-      ],
-      "texts": [],
-      "arias": []
-    },
-    {
       "key": "cc-accountToggle|button|",
       "tag": "button",
       "role": "",
@@ -9925,7 +8989,7 @@
       },
       "rect": [
         612,
-        343,
+        325,
         502,
         22
       ],
@@ -9958,7 +9022,7 @@
       },
       "rect": [
         628,
-        343,
+        325,
         56,
         22
       ],
@@ -9969,6 +9033,77 @@
       "texts": [
         "默认账户",
         "GMail"
+      ],
+      "arias": []
+    },
+    {
+      "key": "cc-usageAccount|span|",
+      "tag": "span",
+      "role": "",
+      "cls": "cc-usageAccount",
+      "slot": "settings.section",
+      "viewBox": "",
+      "style": {
+        "display": "block",
+        "position": "static",
+        "font": "12px/18px 400",
+        "color": "rgb(129, 133, 140)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "0px",
+        "border": "0px none rgb(129, 133, 140)",
+        "shadow": "",
+        "pad": "0px 0px 0px 0px",
+        "gap": "",
+        "size": "54x18"
+      },
+      "rect": [
+        692,
+        327,
+        54,
+        18
+      ],
+      "count": 2,
+      "steps": [
+        "设置 · Command Code"
+      ],
+      "texts": [
+        "Physicolor",
+        "sparxie"
+      ],
+      "arias": []
+    },
+    {
+      "key": "cc-usagePlan|span|",
+      "tag": "span",
+      "role": "",
+      "cls": "cc-usagePlan",
+      "slot": "settings.section",
+      "viewBox": "",
+      "style": {
+        "display": "block",
+        "position": "static",
+        "font": "11px/17px 500",
+        "color": "rgb(97, 102, 107)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "999px",
+        "border": "1px solid rgba(0, 0, 0, 0.12)",
+        "shadow": "",
+        "pad": "0px 7px 0px 7px",
+        "gap": "",
+        "size": "45x19"
+      },
+      "rect": [
+        754,
+        326,
+        45,
+        19
+      ],
+      "count": 2,
+      "steps": [
+        "设置 · Command Code"
+      ],
+      "texts": [
+        "GOAT"
       ],
       "arias": []
     },
@@ -9994,7 +9129,7 @@
       },
       "rect": [
         1118,
-        340,
+        322,
         28,
         28
       ],
@@ -10395,8 +9530,8 @@
         "用量中心（插件）"
       ],
       "texts": [
-        "窗口内合计 127.97亿 Token",
-        "48 天有记录 · 当前连续 33 天 · 最长 33 天"
+        "窗口内合计 129.35亿 Token",
+        "49 天有记录 · 当前连续 34 天 · 最长 34 天"
       ],
       "arias": []
     },
@@ -10575,6 +9710,39 @@
         "少",
         "多"
       ],
+      "arias": []
+    },
+    {
+      "key": "lc-ov-running|span|",
+      "tag": "span",
+      "role": "",
+      "cls": "lc-ov-running",
+      "slot": "shell.overlay",
+      "viewBox": "",
+      "style": {
+        "display": "block",
+        "position": "static",
+        "font": "13px/normal 400",
+        "color": "rgb(15, 17, 21)",
+        "bg": "oklch(0.723 0.219 149.579)",
+        "radius": "50%",
+        "border": "0px none rgb(15, 17, 21)",
+        "shadow": "",
+        "pad": "0px 0px 0px 0px",
+        "gap": "",
+        "size": "7x7"
+      },
+      "rect": [
+        585,
+        559,
+        7,
+        7
+      ],
+      "count": 2,
+      "steps": [
+        "上下文洞察（插件）"
+      ],
+      "texts": [],
       "arias": []
     },
     {
@@ -11158,6 +10326,39 @@
       "arias": []
     },
     {
+      "key": "spinner triggerDot|svg|",
+      "tag": "svg",
+      "role": "",
+      "cls": "_spinner_1i3xo_37 foD-wG_triggerDot",
+      "slot": "conversation.session.header.actions",
+      "viewBox": "0 0 24 24",
+      "style": {
+        "display": "block",
+        "position": "static",
+        "font": "12px/18px 400",
+        "color": "rgb(129, 133, 140)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "0px",
+        "border": "0px none rgb(129, 133, 140)",
+        "shadow": "",
+        "pad": "0px 0px 0px 0px",
+        "gap": "",
+        "size": "14x14"
+      },
+      "rect": [
+        725,
+        18,
+        14,
+        14
+      ],
+      "count": 1,
+      "steps": [
+        "设置 · 通用设置"
+      ],
+      "texts": [],
+      "arias": []
+    },
+    {
       "key": "addButton|button|",
       "tag": "button",
       "role": "",
@@ -11296,38 +10497,137 @@
       "arias": []
     },
     {
-      "key": "cc-rowError|p|status",
-      "tag": "p",
-      "role": "status",
-      "cls": "cc-rowError",
+      "key": "cc-accountItem cc-accountItemActive|div|",
+      "tag": "div",
+      "role": "",
+      "cls": "cc-accountItem cc-accountItemActive",
       "slot": "settings.section",
       "viewBox": "",
       "style": {
-        "display": "block",
+        "display": "flex",
         "position": "static",
-        "font": "12px/18px 400",
-        "color": "rgb(236, 19, 19)",
+        "font": "16px/normal 400",
+        "color": "rgb(15, 17, 21)",
         "bg": "rgba(0, 0, 0, 0)",
-        "radius": "0px",
-        "border": "0px none rgb(236, 19, 19)",
+        "radius": "16px",
+        "border": "1px solid rgb(173, 178, 184)",
         "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "564x18"
+        "pad": "12px 14px 12px 14px",
+        "gap": "10px",
+        "size": "564x82"
       },
       "rect": [
         597,
         309,
         564,
-        18
+        82
+      ],
+      "count": 1,
+      "steps": [
+        "设置 · Command Code"
+      ],
+      "texts": [],
+      "arias": []
+    },
+    {
+      "key": "cc-tabDot cc-tabDotOk|span|",
+      "tag": "span",
+      "role": "",
+      "cls": "cc-tabDot cc-tabDotOk",
+      "slot": "settings.section",
+      "viewBox": "",
+      "style": {
+        "display": "block",
+        "position": "static",
+        "font": "16px/normal 400",
+        "color": "rgb(15, 17, 21)",
+        "bg": "rgb(34, 197, 94)",
+        "radius": "50%",
+        "border": "0px none rgb(15, 17, 21)",
+        "shadow": "",
+        "pad": "0px 0px 0px 0px",
+        "gap": "",
+        "size": "8x8"
+      },
+      "rect": [
+        612,
+        332,
+        8,
+        8
+      ],
+      "count": 1,
+      "steps": [
+        "设置 · Command Code"
+      ],
+      "texts": [],
+      "arias": []
+    },
+    {
+      "key": "cc-badge|span|",
+      "tag": "span",
+      "role": "",
+      "cls": "cc-badge",
+      "slot": "settings.section",
+      "viewBox": "",
+      "style": {
+        "display": "flex",
+        "position": "static",
+        "font": "12px/17px 500",
+        "color": "rgb(97, 102, 107)",
+        "bg": "rgb(245, 246, 247)",
+        "radius": "999px",
+        "border": "0px none rgb(97, 102, 107)",
+        "shadow": "",
+        "pad": "1px 8px 1px 8px",
+        "gap": "",
+        "size": "64x19"
+      },
+      "rect": [
+        807,
+        326,
+        64,
+        19
       ],
       "count": 1,
       "steps": [
         "设置 · Command Code"
       ],
       "texts": [
-        "用量获取失败 — client api: commandcode/report failed: Failed to fe"
+        "当前使用"
       ],
+      "arias": []
+    },
+    {
+      "key": "cc-accountItem|div|",
+      "tag": "div",
+      "role": "",
+      "cls": "cc-accountItem",
+      "slot": "settings.section",
+      "viewBox": "",
+      "style": {
+        "display": "flex",
+        "position": "static",
+        "font": "16px/normal 400",
+        "color": "rgb(15, 17, 21)",
+        "bg": "rgba(0, 0, 0, 0)",
+        "radius": "16px",
+        "border": "1px solid rgba(0, 0, 0, 0.16)",
+        "shadow": "",
+        "pad": "12px 14px 12px 14px",
+        "gap": "10px",
+        "size": "564x82"
+      },
+      "rect": [
+        597,
+        399,
+        564,
+        82
+      ],
+      "count": 1,
+      "steps": [
+        "设置 · Command Code"
+      ],
+      "texts": [],
       "arias": []
     },
     {
@@ -11352,7 +10652,7 @@
       },
       "rect": [
         597,
-        451,
+        489,
         564,
         44
       ],
@@ -11364,37 +10664,37 @@
       "arias": []
     },
     {
-      "key": "cc-rowError|p|",
+      "key": "|p|",
       "tag": "p",
       "role": "",
-      "cls": "cc-rowError",
+      "cls": "",
       "slot": "settings.section",
       "viewBox": "",
       "style": {
         "display": "block",
         "position": "static",
         "font": "12px/18px 400",
-        "color": "rgb(236, 19, 19)",
+        "color": "rgb(129, 133, 140)",
         "bg": "rgba(0, 0, 0, 0)",
         "radius": "0px",
-        "border": "0px none rgb(236, 19, 19)",
+        "border": "0px none rgb(129, 133, 140)",
         "shadow": "",
         "pad": "0px 0px 0px 0px",
         "gap": "",
-        "size": "288x36"
+        "size": "288x54"
       },
       "rect": [
         597,
-        678,
+        716,
         288,
-        36
+        54
       ],
       "count": 1,
       "steps": [
         "设置 · Command Code"
       ],
       "texts": [
-        "模型目录获取失败，暂时无法选择模型；已保存的设置仍会生效。"
+        "勾选要保留的模型，模型选择器就只列出这些；一个都不勾选时则显示全部模型。保存后，下次打开模型选择器生效。"
       ],
       "arias": []
     },
@@ -11420,7 +10720,7 @@
       },
       "rect": [
         1001,
-        665,
+        712,
         160,
         36
       ],
@@ -11453,7 +10753,7 @@
       },
       "rect": [
         1015,
-        672,
+        719,
         113,
         22
       ],
@@ -12873,7 +12173,7 @@
         "用量中心（插件）"
       ],
       "texts": [
-        "对比上一等长周期：总 Token +45.8% · 请求 +45.9%"
+        "对比上一等长周期：总 Token +66.0% · 请求 +66.0%"
       ],
       "arias": []
     },
@@ -13512,7 +12812,7 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "179 tok/s"
+        "180 tok/s"
       ],
       "arias": []
     },
@@ -13920,7 +13220,7 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "110"
+        "111"
       ],
       "arias": []
     },
@@ -14019,39 +13319,6 @@
         515,
         65,
         23
-      ],
-      "count": 1,
-      "steps": [
-        "上下文洞察（插件）"
-      ],
-      "texts": [],
-      "arias": []
-    },
-    {
-      "key": "lc-ov-running|span|",
-      "tag": "span",
-      "role": "",
-      "cls": "lc-ov-running",
-      "slot": "shell.overlay",
-      "viewBox": "",
-      "style": {
-        "display": "block",
-        "position": "static",
-        "font": "13px/normal 400",
-        "color": "rgb(15, 17, 21)",
-        "bg": "oklch(0.723 0.219 149.579)",
-        "radius": "50%",
-        "border": "0px none rgb(15, 17, 21)",
-        "shadow": "",
-        "pad": "0px 0px 0px 0px",
-        "gap": "",
-        "size": "7x7"
-      },
-      "rect": [
-        585,
-        742,
-        7,
-        7
       ],
       "count": 1,
       "steps": [

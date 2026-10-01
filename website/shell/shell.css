@@ -217,19 +217,34 @@
 }
 .sh-new:hover { background: #f4f5f6; }
 .sh-new svg { width: 14px; height: 14px; flex: none; }
-.sh-new__keys { margin-left: auto; display: flex; gap: 2px; }
-.sh-new__keys kbd {
-    min-width: 16px;
-    height: 16px;
-    padding: 0 4px;
-    font-family: var(--sh-font-mono);
-    font-size: 10px;
+/* 快捷键提示 ← 产品客户端 CSS 模块 `_keys_38b9q_1` 与 `newSessionShortcut`：
+ *   .keys   inline-flex · align-items center · gap 3 · 12/16 · 色 label-tertiary
+ *   .key    只做居中与 font:inherit —— 平排形态没有底色、圆角、内边距
+ *   平时不可见：newSessionShortcut { opacity: 0; pointer-events: none }，
+ *   按钮 :hover / :focus-visible 时才 opacity: 1（采集：01-hero.png 上它不可见） */
+.sh-new__keys {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 3px;
+    margin-left: auto;
+    font-size: 12px;
     line-height: 16px;
-    text-align: center;
+    white-space: nowrap;
     color: var(--sh-ink-3);
-    background: #f1f2f3;
-    border-radius: 4px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--sh-dur-fast) var(--sh-ease);
 }
+.sh-new:hover .sh-new__keys,
+.sh-new:focus-visible .sh-new__keys { opacity: 1; }
+.sh-new__keys kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font: inherit;
+}
+.sh-new__sep { font: inherit; }
 
 .sh-panels {
     display: flex;

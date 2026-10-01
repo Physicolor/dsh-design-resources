@@ -166,7 +166,13 @@ const INVENTORY_PROBE = `(() => {
      * 计算样式会让探针超时，而它们本来就不该出现在「界面上有什么」的清单里。 */
     if (r.bottom < -200 || r.top > innerHeight + 200 || r.right < -200 || r.left > innerWidth + 200) return
     const cs = getComputedStyle(el)
-    const visible = r.width > 6 && r.height > 6 && cs.visibility !== 'hidden' && cs.display !== 'none' && Number(cs.opacity) > 0.05
+    /* 光看自己和 visibility 不够：父级 opacity:0 的子树里，子元素的计算 opacity 仍是 1，
+     * 于是「悬停才出现」的东西（新会话按钮行尾的快捷键、悬停才露出的行内动作）会被
+     * 当成常驻元素登记进来。checkVisibility 会把祖先的 opacity / visibility 一起算。 */
+    const shown = typeof el.checkVisibility === 'function'
+      ? el.checkVisibility({ opacityProperty: true, visibilityProperty: true, contentVisibilityAuto: true })
+      : (cs.visibility !== 'hidden' && Number(cs.opacity) > 0.05)
+    const visible = r.width > 6 && r.height > 6 && shown && cs.display !== 'none'
     const isIcon = tag === 'svg'
     const isControl = ['button','a','input','textarea','select','label'].includes(tag) || el.getAttribute('role') !== null
     const hasSurface = cs.backgroundColor !== 'rgba(0, 0, 0, 0)' || parseFloat(cs.borderTopWidth) > 0 || cs.boxShadow !== 'none' || cs.backgroundImage !== 'none'
@@ -211,6 +217,76 @@ const INVENTORY_PROBE = `(() => {
   walk(document.body, 0, '')
   return JSON.stringify({ viewport: { w: innerWidth, h: innerHeight }, nodes: out })
 })()`
+
+/**
+ * 给清单打分：每个身份在规范/组件语料里有没有位置。
+ *
+ * 先问人工锚点（产品叫什么 ↔ 仓库里叫什么），再去语料里做包含判断。包含判断只能
+ * 给线索——命中的可能是真覆盖，也可能是碰巧同名——所以命中处一并写进结果，留给人复核。
+ * @param elements - 清单条目（data/ui-inventory.json 的 elements）。
+ * @returns 对照结果。
+ */
+function scoreCoverage(elements) {
+  const corpus = readCorpus()
+  const anchors = readAnchors()
+  return elements.map(el => {
+    const tokens = keyTokens(el.key)
+    const pluginOwned = /dsx-|lc-|duc-|dye-|mrat-|_6nhg2/i.test(el.cls)
+    const anchor = anchors.find(a => el.key.toLowerCase().includes(String(a.match).toLowerCase()))
+    const base = {
+      key: el.key, slot: el.slot, count: el.count, size: el.style?.size ?? '',
+      steps: (el.steps ?? []).slice(0, 6), texts: el.texts ?? [], arias: el.arias ?? [],
+      pluginOwned,
+    }
+    if (anchor !== undefined) {
+      return { ...base, coverage: 'covered', hits: [{ where: anchor.where, token: anchor.match, kind: 'anchor', id: anchor.note }] }
+    }
+    const hits = []
+    for (const item of corpus) {
+      const token = tokens.find(t => item.text.includes(t))
+      if (token !== undefined && hits.length < 4) hits.push({ where: item.file, token, kind: item.kind, id: item.id })
+    }
+    return { ...base, coverage: hits.length === 0 ? 'missing' : 'referenced', hits }
+  })
+}
+
+/**
+ * 写 data/ui-coverage.json 并打印一行摘要。
+ * @param elements - 清单条目。
+ */
+async function writeCoverage(elements) {
+  const coverage = scoreCoverage(elements)
+  await mkdir(OUT, { recursive: true })
+  await writeFile(join(OUT, 'ui-coverage.json'), `${JSON.stringify({
+    $comment: '清单里的每个身份在规范/组件语料里有没有位置。covered = 人工锚点命中；referenced = 语料里出现过这个词（要复核）；missing = 待办。',
+    generatedAt: new Date().toISOString(),
+    counts: {
+      identities: coverage.length,
+      covered: coverage.filter(c => c.coverage === 'covered').length,
+      referenced: coverage.filter(c => c.coverage === 'referenced').length,
+      missing: coverage.filter(c => c.coverage === 'missing').length,
+      pluginOwned: coverage.filter(c => c.pluginOwned).length,
+    },
+    coverage,
+  }, null, 2)}\n`, 'utf8')
+  const count = kind => coverage.filter(c => c.coverage === kind).length
+  console.log(`coverage  identities=${coverage.length}  covered=${count('covered')}  referenced=${count('referenced')}  missing=${count('missing')}`)
+}
+
+/* `--coverage-only`：只重算对照，不开浏览器。
+ * 锚点表是手写的，改一条就要重扫十来分钟没有道理——采集与打分拆开，
+ * 手工判断可以随时重算。 */
+if (process.argv.includes('--coverage-only')) {
+  const file = join(OUT, 'ui-inventory.json')
+  if (!existsSync(file)) {
+    console.error('data/ui-inventory.json 不存在：先跑一次 node scripts/scan-ui.mjs')
+    process.exit(1)
+  }
+  const inventory = JSON.parse(readFileSync(file, 'utf8'))
+  await writeCoverage(inventory.elements ?? [])
+  console.log('wrote data/ui-coverage.json（未重新采集）')
+  process.exit(0)
+}
 
 /* ── 浏览器 ─────────────────────────────────────────────────────────── */
 
@@ -481,36 +557,6 @@ try {
 
   const elements = [...byKey.values()].sort((a, b) => b.count - a.count)
 
-  /* 对照：先问人工锚点，再去语料里找有没有它的位置。 */
-  const corpus = readCorpus()
-  const anchors = readAnchors()
-  const coverage = elements.map(el => {
-    const tokens = keyTokens(el.key)
-    const pluginOwned = /dsx-|lc-|duc-|dye-|mrat-|_6nhg2/i.test(el.cls)
-    const anchor = anchors.find(a => el.key.toLowerCase().includes(String(a.match).toLowerCase()))
-    if (anchor !== undefined) {
-      return {
-        key: el.key, slot: el.slot, count: el.count, size: el.style.size,
-        steps: el.steps.slice(0, 6), texts: el.texts, arias: el.arias,
-        coverage: 'covered',
-        pluginOwned,
-        hits: [{ where: anchor.where, token: anchor.match, kind: 'anchor', id: anchor.note }],
-      }
-    }
-    const hits = []
-    for (const item of corpus) {
-      const token = tokens.find(t => item.text.includes(t))
-      if (token !== undefined && hits.length < 4) hits.push({ where: item.file, token, kind: item.kind, id: item.id })
-    }
-    return {
-      key: el.key, slot: el.slot, count: el.count, size: el.style.size,
-      steps: el.steps.slice(0, 6), texts: el.texts, arias: el.arias,
-      coverage: hits.length === 0 ? 'missing' : 'referenced',
-      pluginOwned,
-      hits,
-    }
-  })
-
   await mkdir(OUT, { recursive: true })
   await writeFile(join(OUT, 'ui-inventory.json'), `${JSON.stringify({
     $comment: '由 scripts/scan-ui.mjs 从运行中的产品采集。key 是剥掉 CSS Modules 哈希后的身份；不要手改。',
@@ -521,21 +567,8 @@ try {
     elements,
   }, null, 2)}\n`, 'utf8')
 
-  await writeFile(join(OUT, 'ui-coverage.json'), `${JSON.stringify({
-    $comment: '清单里的每个身份在规范/组件语料里有没有位置。referenced 只是「语料里出现过这个词」，要人复核；missing 才是待办。',
-    generatedAt: new Date().toISOString(),
-    counts: {
-      identities: coverage.length,
-      referenced: coverage.filter(c => c.coverage === 'referenced').length,
-      missing: coverage.filter(c => c.coverage === 'missing').length,
-      pluginOwned: coverage.filter(c => c.pluginOwned).length,
-    },
-    coverage,
-  }, null, 2)}\n`, 'utf8')
-
-  const referenced = coverage.filter(c => c.coverage === 'referenced').length
-  console.log(`\nidentities=${elements.length}  referenced=${referenced}  missing=${coverage.length - referenced}`)
-  console.log('wrote data/ui-inventory.json + data/ui-coverage.json')
+  await writeCoverage(elements)
+  console.log('\nwrote data/ui-inventory.json + data/ui-coverage.json')
 } catch (error) {
   console.error(`scan failed: ${error.message}`)
   process.exitCode = 1

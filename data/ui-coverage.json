@@ -1,17 +1,18 @@
 {
-  "$comment": "清单里的每个身份在规范/组件语料里有没有位置。referenced 只是「语料里出现过这个词」，要人复核；missing 才是待办。",
-  "generatedAt": "2026-10-01T15:49:16.923Z",
+  "$comment": "清单里的每个身份在规范/组件语料里有没有位置。covered = 人工锚点命中；referenced = 语料里出现过这个词（要复核）；missing = 待办。",
+  "generatedAt": "2026-10-01T16:53:11.406Z",
   "counts": {
-    "identities": 369,
-    "referenced": 86,
-    "missing": 101,
-    "pluginOwned": 127
+    "identities": 355,
+    "covered": 192,
+    "referenced": 81,
+    "missing": 82,
+    "pluginOwned": 119
   },
   "coverage": [
     {
       "key": "|svg|",
       "slot": "sidebar.brand.mark",
-      "count": 838,
+      "count": 576,
       "size": "24x18",
       "steps": [
         "新会话页",
@@ -23,8 +24,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/30-tokens.md",
@@ -55,15 +56,15 @@
     {
       "key": "duc-heat-cell l0|div|",
       "slot": "shell.overlay",
-      "count": 326,
+      "count": 325,
       "size": "15x15",
       "steps": [
         "用量中心（插件）"
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -76,7 +77,7 @@
     {
       "key": "title|span|",
       "slot": "sidebar.workspaces",
-      "count": 243,
+      "count": 181,
       "size": "218x20",
       "steps": [
         "新会话页",
@@ -93,8 +94,8 @@
         "DeepSeek-Harness"
       ],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/30-tokens.md",
@@ -123,33 +124,40 @@
       ]
     },
     {
-      "key": "time|span|",
-      "slot": "sidebar.workspaces",
-      "count": 132,
-      "size": "32x16",
+      "key": "navLabel|span|",
+      "slot": "",
+      "count": 110,
+      "size": "112x22",
       "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
         "设置 · 打开",
-        "设置 · 通用设置"
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code",
+        "设置 · 内置插件",
+        "设置 · Agent 预设"
       ],
       "texts": [
-        "7分钟",
-        "8分钟",
-        "43分钟",
-        "2小时"
+        "通用设置",
+        "模型",
+        "Command Code",
+        "内置插件"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
-      "hits": []
+      "coverage": "referenced",
+      "hits": [
+        {
+          "where": "components/patterns/SettingsPage/SPEC.md",
+          "token": "navlabel",
+          "kind": "component",
+          "id": "settingspage"
+        }
+      ]
     },
     {
       "key": "|span|",
       "slot": "conversation.composer",
-      "count": 120,
+      "count": 106,
       "size": "156x32",
       "steps": [
         "新会话页",
@@ -161,13 +169,13 @@
       ],
       "texts": [
         "探索未至之境",
-        "≈$0.09",
-        "16%",
+        "≈$0.04",
+        "14%",
         "安装、启用和配置插件"
       ],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "components/controls/Input/SPEC.md",
@@ -196,41 +204,10 @@
       ]
     },
     {
-      "key": "dsx-stats-card-title|span|",
-      "slot": "",
-      "count": 117,
-      "size": "79x13",
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步"
-      ],
-      "texts": [
-        "Command Code",
-        "额度预测",
-        "Token 用量",
-        "峰谷定价"
-      ],
-      "arias": [],
-      "coverage": "covered",
-      "pluginOwned": true,
-      "hits": [
-        {
-          "where": "components/surfaces/Card",
-          "token": "card",
-          "kind": "anchor",
-          "id": "卡片容器"
-        }
-      ]
-    },
-    {
-      "key": "sessionRow|div|treeitem",
+      "key": "time|span|",
       "slot": "sidebar.workspaces",
-      "count": 112,
-      "size": "256x32",
+      "count": 105,
+      "size": "38x16",
       "steps": [
         "新会话页",
         "会话页 · 顶部",
@@ -239,98 +216,23 @@
         "设置 · 打开",
         "设置 · 通用设置"
       ],
-      "texts": [],
+      "texts": [
+        "10分钟",
+        "11分钟",
+        "39分钟",
+        "1小时"
+      ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/layout/SidebarRow",
-          "token": "sessionRow",
+          "token": "time|span",
           "kind": "anchor",
-          "id": "左栏会话行（含运行态圆环、时间、悬停更多）"
+          "id": "会话行右侧的相对时间"
         }
       ]
-    },
-    {
-      "key": "projectRow|div|treeitem",
-      "slot": "sidebar.workspaces",
-      "count": 110,
-      "size": "256x34",
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置"
-      ],
-      "texts": [],
-      "arias": [],
-      "coverage": "covered",
-      "pluginOwned": false,
-      "hits": [
-        {
-          "where": "components/layout/SidebarRow",
-          "token": "projectRow",
-          "kind": "anchor",
-          "id": "左栏工作区行"
-        }
-      ]
-    },
-    {
-      "key": "navLabel|span|",
-      "slot": "",
-      "count": 110,
-      "size": "112x22",
-      "steps": [
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code",
-        "设置 · 内置插件",
-        "设置 · Agent 预设"
-      ],
-      "texts": [
-        "通用设置",
-        "模型",
-        "Command Code",
-        "内置插件"
-      ],
-      "arias": [],
-      "coverage": "referenced",
-      "pluginOwned": false,
-      "hits": [
-        {
-          "where": "components/patterns/SettingsPage/SPEC.md",
-          "token": "navlabel",
-          "kind": "component",
-          "id": "settingspage"
-        }
-      ]
-    },
-    {
-      "key": "trigger|button|",
-      "slot": "settings.launcher",
-      "count": 99,
-      "size": "260x34",
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置"
-      ],
-      "texts": [],
-      "arias": [
-        "设置",
-        "选择模型，当前 DeepSeek V4.1 Flash，推理等级 High",
-        "智能体团队"
-      ],
-      "coverage": "missing",
-      "pluginOwned": false,
-      "hits": []
     },
     {
       "key": "navCell|button|",
@@ -347,64 +249,40 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
-      "hits": []
-    },
-    {
-      "key": "dsx-stats-card-legend|span|",
-      "slot": "",
-      "count": 90,
-      "size": "108x12",
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步"
-      ],
-      "texts": [
-        "用量环形图 · AllUser",
-        "credits",
-        "账期 10-10",
-        "632M  12797M"
-      ],
-      "arias": [],
       "coverage": "covered",
-      "pluginOwned": true,
       "hits": [
         {
-          "where": "components/surfaces/Card",
-          "token": "card",
+          "where": "components/patterns/SettingsPage",
+          "token": "navCell",
           "kind": "anchor",
-          "id": "卡片容器"
+          "id": "设置窗口左侧导航格（164 × 40、圆角 12）"
         }
       ]
     },
     {
-      "key": "dsx-stats-card dsx-squircle|div|",
-      "slot": "",
-      "count": 90,
-      "size": "130x130",
+      "key": "sessionRow|div|treeitem",
+      "slot": "sidebar.workspaces",
+      "count": 92,
+      "size": "256x32",
       "steps": [
+        "新会话页",
         "会话页 · 顶部",
         "左栏 · 搜索展开",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步"
+        "插件页（官方 / 已安装）",
+        "设置 · 打开",
+        "设置 · 通用设置"
       ],
       "texts": [],
       "arias": [],
+      "pluginOwned": false,
       "coverage": "covered",
-      "pluginOwned": true,
       "hits": [
         {
-          "where": "components/surfaces/Card",
-          "token": "card",
+          "where": "components/layout/SidebarRow",
+          "token": "sessionRow",
           "kind": "anchor",
-          "id": "卡片容器"
+          "id": "左栏会话行（含运行态圆环、时间、悬停更多）"
         }
       ]
     },
@@ -423,15 +301,22 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/patterns/SettingsPage",
+          "token": "navIcon",
+          "kind": "anchor",
+          "id": "设置导航格里的 16×16 字形"
+        }
+      ]
     },
     {
-      "key": "key|kbd|",
-      "slot": "sidebar",
-      "count": 66,
-      "size": "19x16",
+      "key": "trigger|button|",
+      "slot": "settings.launcher",
+      "count": 84,
+      "size": "260x34",
       "steps": [
         "新会话页",
         "会话页 · 顶部",
@@ -440,138 +325,28 @@
         "设置 · 打开",
         "设置 · 通用设置"
       ],
-      "texts": [
-        "Ctrl",
-        "Alt",
-        "N"
-      ],
-      "arias": [],
-      "coverage": "missing",
-      "pluginOwned": false,
-      "hits": []
-    },
-    {
-      "key": "mark|button|",
-      "slot": "conversation.view",
-      "count": 55,
-      "size": "28x10",
-      "steps": [
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code",
-        "设置 · 内置插件",
-        "设置 · Agent 预设"
-      ],
       "texts": [],
       "arias": [
-        "跳转到第 1 轮",
-        "跳转到第 2 轮",
-        "跳转到第 3 轮"
+        "设置",
+        "选择模型，当前 DeepSeek V4.1 Flash，推理等级 High",
+        "智能体团队"
       ],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "mark",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/80-conflicts.md",
-          "token": "mark",
-          "kind": "spec",
-          "id": "80-conflicts"
-        },
-        {
-          "where": "components/brand/FishMark/fishmark.module.css",
-          "token": "mark",
-          "kind": "component",
-          "id": "fishmark"
-        },
-        {
-          "where": "components/brand/FishMark/README.md",
-          "token": "mark",
-          "kind": "component",
-          "id": "fishmark"
+          "where": "components/layout/SettingsRow",
+          "token": "trigger|button|",
+          "kind": "anchor",
+          "id": "左栏底部「设置」行（triggerRow 去掉哈希后的身份）"
         }
       ]
     },
     {
-      "key": "xD_KDq_action|button|",
-      "slot": "conversation.chat.node",
-      "count": 53,
-      "size": "28x28",
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code"
-      ],
-      "texts": [],
-      "arias": [
-        "复制",
-        "在新对话中分支"
-      ],
-      "coverage": "missing",
-      "pluginOwned": false,
-      "hits": []
-    },
-    {
-      "key": "action|button|",
-      "slot": "conversation.chat.assistant-actions",
-      "count": 46,
-      "size": "28x28",
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code"
-      ],
-      "texts": [],
-      "arias": [
-        "好的回答",
-        "有问题的回答"
-      ],
-      "coverage": "referenced",
-      "pluginOwned": false,
-      "hits": [
-        {
-          "where": "spec/10-frame-layout.md",
-          "token": "action",
-          "kind": "spec",
-          "id": "10-frame-layout"
-        },
-        {
-          "where": "spec/11-slot-seats.md",
-          "token": "action",
-          "kind": "spec",
-          "id": "11-slot-seats"
-        },
-        {
-          "where": "spec/70-checklist.md",
-          "token": "action",
-          "kind": "spec",
-          "id": "70-checklist"
-        },
-        {
-          "where": "components/feedback/EmptyState/empty-state.module.css",
-          "token": "action",
-          "kind": "component",
-          "id": "emptystate"
-        }
-      ]
-    },
-    {
-      "key": "separator|kbd|",
-      "slot": "sidebar",
-      "count": 44,
-      "size": "8x16",
+      "key": "projectRow|div|treeitem",
+      "slot": "sidebar.workspaces",
+      "count": 75,
+      "size": "256x34",
       "steps": [
         "新会话页",
         "会话页 · 顶部",
@@ -580,36 +355,16 @@
         "设置 · 打开",
         "设置 · 通用设置"
       ],
-      "texts": [
-        "+"
-      ],
+      "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
-          "where": "components/layout/PanelHeader/panelheader.module.css",
-          "token": "separator",
-          "kind": "component",
-          "id": "panelheader"
-        },
-        {
-          "where": "components/layout/PanelHeader/SPEC.md",
-          "token": "separator",
-          "kind": "component",
-          "id": "panelheader"
-        },
-        {
-          "where": "components/layout/SettingsRow/SPEC.md",
-          "token": "separator",
-          "kind": "component",
-          "id": "settingsrow"
-        },
-        {
-          "where": "components/layout/ToolbarRow/SPEC.md",
-          "token": "separator",
-          "kind": "component",
-          "id": "toolbarrow"
+          "where": "components/layout/SidebarRow",
+          "token": "projectRow",
+          "kind": "anchor",
+          "id": "左栏工作区行"
         }
       ]
     },
@@ -631,40 +386,14 @@
         "插件",
         "自动化任务"
       ],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
           "token": "panelRow",
           "kind": "anchor",
           "id": "左栏面板导航行（插件 / 自动化任务）"
-        }
-      ]
-    },
-    {
-      "key": "block md-code-block card|div|",
-      "slot": "conversation.chat.node",
-      "count": 43,
-      "size": "748x258",
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code"
-      ],
-      "texts": [],
-      "arias": [],
-      "coverage": "covered",
-      "pluginOwned": false,
-      "hits": [
-        {
-          "where": "components/surfaces/Card",
-          "token": "card",
-          "kind": "anchor",
-          "id": "卡片容器"
         }
       ]
     },
@@ -688,40 +417,14 @@
         "插件市场"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
           "token": "tab",
           "kind": "anchor",
           "id": "会话头部页签（对话 / 轨迹 / 上下文）"
-        }
-      ]
-    },
-    {
-      "key": "dsx-lane-seg|div|",
-      "slot": "",
-      "count": 42,
-      "size": "7x25",
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步"
-      ],
-      "texts": [],
-      "arias": [],
-      "coverage": "covered",
-      "pluginOwned": true,
-      "hits": [
-        {
-          "where": "plugins/dsh-widgets",
-          "token": "dsx-",
-          "kind": "anchor",
-          "id": "插件 dsh-widgets 的界面"
         }
       ]
     },
@@ -743,8 +446,8 @@
         "左侧工作区列表、按钮与图标的整体大小"
       ],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -787,8 +490,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -831,12 +534,12 @@
       ],
       "texts": [],
       "arias": [
-        "6 轮 49 步 · 169 tok/s",
-        "4.5M tok · 缓存命中 96%",
-        "5 轮 393 步 · 244 tok/s"
+        "1 轮 45 步 · 199 tok/s",
+        "3.1M tok · 缓存命中 96%",
+        "1 轮 46 步 · 199 tok/s"
       ],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/controls/Pill",
@@ -847,139 +550,22 @@
       ]
     },
     {
-      "key": "card|div|",
-      "slot": "conversation.composer.bar",
-      "count": 36,
-      "size": "780x114",
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型"
-      ],
-      "texts": [],
-      "arias": [],
-      "coverage": "covered",
-      "pluginOwned": false,
-      "hits": [
-        {
-          "where": "components/surfaces/Card",
-          "token": "card",
-          "kind": "anchor",
-          "id": "卡片容器"
-        }
-      ]
-    },
-    {
-      "key": "chevron|svg|",
-      "slot": "conversation.composer",
-      "count": 35,
-      "size": "12x12",
-      "steps": [
-        "新会话页",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 内置插件",
-        "用量中心（插件）",
-        "上下文洞察（插件）"
-      ],
-      "texts": [],
-      "arias": [],
-      "coverage": "referenced",
-      "pluginOwned": false,
-      "hits": [
-        {
-          "where": "components/data-display/DisclosureRow/disclosure-row.module.css",
-          "token": "chevron",
-          "kind": "component",
-          "id": "disclosurerow"
-        },
-        {
-          "where": "components/data-display/DisclosureRow/SPEC.md",
-          "token": "chevron",
-          "kind": "component",
-          "id": "disclosurerow"
-        }
-      ]
-    },
-    {
-      "key": "panelTitle wide|span|",
-      "slot": "sidebar",
-      "count": 30,
-      "size": "28x22",
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置"
-      ],
-      "texts": [
-        "插件",
-        "自动化任务"
-      ],
-      "arias": [],
-      "coverage": "covered",
-      "pluginOwned": false,
-      "hits": [
-        {
-          "where": "components/layout/PanelHeader",
-          "token": "panelTitle",
-          "kind": "anchor",
-          "id": "面板标题（含分组标题行）"
-        }
-      ]
-    },
-    {
-      "key": "iconButton|button|",
-      "slot": "sidebar.workspaces",
-      "count": 29,
-      "size": "28x28",
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型"
-      ],
-      "texts": [],
-      "arias": [
-        "添加工作区",
-        "刷新",
-        "查看配置: 标准模式"
-      ],
-      "coverage": "covered",
-      "pluginOwned": false,
-      "hits": [
-        {
-          "where": "spec/20-controls.md",
-          "token": "iconButton",
-          "kind": "anchor",
-          "id": "28×28 图标按钮"
-        }
-      ]
-    },
-    {
       "key": "title|button|",
       "slot": "conversation.view",
-      "count": 29,
-      "size": "92x19",
+      "count": 36,
+      "size": "106x19",
       "steps": [
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步"
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code"
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/30-tokens.md",
@@ -1010,25 +596,25 @@
     {
       "key": "text label|span|",
       "slot": "conversation.view",
-      "count": 29,
-      "size": "70x19",
+      "count": 36,
+      "size": "84x19",
       "steps": [
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步"
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code"
       ],
       "texts": [
-        "已完成分析",
-        "已访问网页并搜索网页",
-        "已调用工具",
-        "已搜索代码，已读取文件，已写入文件等"
+        "正在分析请求",
+        "准备运行命令",
+        "准备写入文件",
+        "已完成分析"
       ],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -1057,9 +643,138 @@
       ]
     },
     {
+      "key": "panelTitle wide|span|",
+      "slot": "sidebar",
+      "count": 30,
+      "size": "28x22",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）",
+        "设置 · 打开",
+        "设置 · 通用设置"
+      ],
+      "texts": [
+        "插件",
+        "自动化任务"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/layout/PanelHeader",
+          "token": "panelTitle",
+          "kind": "anchor",
+          "id": "面板标题（含分组标题行）"
+        }
+      ]
+    },
+    {
+      "key": "spinner|svg|",
+      "slot": "sidebar.workspaces",
+      "count": 30,
+      "size": "14x14",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）",
+        "设置 · 打开",
+        "设置 · 通用设置"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "referenced",
+      "hits": [
+        {
+          "where": "spec/20-controls.md",
+          "token": "spinner",
+          "kind": "spec",
+          "id": "20-controls"
+        },
+        {
+          "where": "spec/40-motion.md",
+          "token": "spinner",
+          "kind": "spec",
+          "id": "40-motion"
+        },
+        {
+          "where": "components/data-display/StateDot/SPEC.md",
+          "token": "spinner",
+          "kind": "component",
+          "id": "statedot"
+        },
+        {
+          "where": "components/feedback/RunningRing/running-ring.module.css",
+          "token": "spinner",
+          "kind": "component",
+          "id": "runningring"
+        }
+      ]
+    },
+    {
+      "key": "iconButton|button|",
+      "slot": "sidebar.workspaces",
+      "count": 29,
+      "size": "28x28",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "插件页（官方 / 已安装）",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型"
+      ],
+      "texts": [],
+      "arias": [
+        "添加工作区",
+        "刷新",
+        "查看配置: 标准模式"
+      ],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/20-controls.md",
+          "token": "iconButton",
+          "kind": "anchor",
+          "id": "28×28 图标按钮"
+        }
+      ]
+    },
+    {
+      "key": "card|div|",
+      "slot": "conversation.composer.bar",
+      "count": 29,
+      "size": "780x114",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/surfaces/Card",
+          "token": "card",
+          "kind": "anchor",
+          "id": "卡片容器"
+        }
+      ]
+    },
+    {
       "key": "lc-heat-cell lc-heat-1|button|",
       "slot": "shell.overlay",
-      "count": 28,
+      "count": 29,
       "size": "20x20",
       "steps": [
         "上下文洞察（插件）"
@@ -1070,8 +785,8 @@
         "2026-08-19\n1 个活跃会话\n199 步",
         "2026-08-20\n8 个活跃会话\n585 步"
       ],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -1082,28 +797,32 @@
       ]
     },
     {
-      "key": "dsx-stats-card dsx-squircle dsx-cyclable|div|",
-      "slot": "",
-      "count": 27,
-      "size": "130x130",
+      "key": "chevron|svg|",
+      "slot": "conversation.composer",
+      "count": 28,
+      "size": "12x12",
       "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步"
+        "新会话页",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 内置插件"
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
-      "pluginOwned": true,
+      "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
-          "where": "components/surfaces/Card",
-          "token": "card",
-          "kind": "anchor",
-          "id": "卡片容器"
+          "where": "components/data-display/DisclosureRow/disclosure-row.module.css",
+          "token": "chevron",
+          "kind": "component",
+          "id": "disclosurerow"
+        },
+        {
+          "where": "components/data-display/DisclosureRow/SPEC.md",
+          "token": "chevron",
+          "kind": "component",
+          "id": "disclosurerow"
         }
       ]
     },
@@ -1126,8 +845,8 @@
         "npm 近30天滚动下载量：173082。这不是累计下载量，也不代表独立用户数。",
         "npm 近30天滚动下载量：170905。这不是累计下载量，也不代表独立用户数。"
       ],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "components/controls/Input/SPEC.md",
@@ -1156,106 +875,6 @@
       ]
     },
     {
-      "key": "|p|",
-      "slot": "conversation.chat.node",
-      "count": 24,
-      "size": "748x24",
-      "steps": [
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步"
-      ],
-      "texts": [
-        "两点收尾提示：",
-        "剩下唯一的真问题还是备份：D 盘可用 105 GB，装不下 316 GB 的第二份。接一块外置盘或 NAS 之后，用 r",
-        "Laya 的可行性要用上游 PyTorch 版本来判断，我先把它的真实接口和限制查准。",
-        "Laya 上游（不是 MLX 版）是官方支持 Windows 的，我把它的真实能力边界查清楚了。"
-      ],
-      "arias": [],
-      "coverage": "referenced",
-      "pluginOwned": false,
-      "hits": [
-        {
-          "where": "spec/00-overview.md",
-          "token": "p",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/10-frame-layout.md",
-          "token": "p",
-          "kind": "spec",
-          "id": "10-frame-layout"
-        },
-        {
-          "where": "spec/11-slot-seats.md",
-          "token": "p",
-          "kind": "spec",
-          "id": "11-slot-seats"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "p",
-          "kind": "spec",
-          "id": "20-controls"
-        }
-      ]
-    },
-    {
-      "key": "lc-jump hover:bg-(--dsw-alias-interactive-bg-hover) hover:text-(--dsw-alias-label-secondary)|button|",
-      "slot": "conversation.chat.assistant-actions",
-      "count": 23,
-      "size": "28x28",
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code"
-      ],
-      "texts": [],
-      "arias": [
-        "在上下文视图中查看此轮"
-      ],
-      "coverage": "covered",
-      "pluginOwned": true,
-      "hits": [
-        {
-          "where": "plugins/dsh-usage-center",
-          "token": "lc-",
-          "kind": "anchor",
-          "id": "插件 dsh-usage-center 的界面"
-        }
-      ]
-    },
-    {
-      "key": "xD_KDq_timeEnd|span|",
-      "slot": "conversation.chat.node",
-      "count": 23,
-      "size": "28x24",
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code"
-      ],
-      "texts": [
-        "23:42",
-        "23:39",
-        "23:47"
-      ],
-      "arias": [],
-      "coverage": "missing",
-      "pluginOwned": false,
-      "hits": []
-    },
-    {
       "key": "frame|div|",
       "slot": "root",
       "count": 22,
@@ -1270,8 +889,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -1286,13 +905,13 @@
           "id": "10-frame-layout"
         },
         {
-          "where": "components/data-display/StateDot/SPEC.md",
+          "where": "spec/40-motion.md",
           "token": "frame",
-          "kind": "component",
-          "id": "statedot"
+          "kind": "spec",
+          "id": "40-motion"
         },
         {
-          "where": "components/data-display/StateDot/state-dot.module.css",
+          "where": "components/data-display/StateDot/SPEC.md",
           "token": "frame",
           "kind": "component",
           "id": "statedot"
@@ -1314,9 +933,16 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "sidebarCol",
+          "kind": "anchor",
+          "id": "左栏容器 280×905"
+        }
+      ]
     },
     {
       "key": "root quietBars|div|",
@@ -1333,8 +959,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/11-slot-seats.md",
@@ -1379,8 +1005,8 @@
       "arias": [
         "收起侧边栏"
       ],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -1405,9 +1031,16 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "panelIcon",
+          "kind": "anchor",
+          "id": "顶栏右侧边栏开关的字形"
+        }
+      ]
     },
     {
       "key": "newSession|button|",
@@ -1426,8 +1059,8 @@
       "arias": [
         "新建会话"
       ],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -1454,139 +1087,14 @@
       "arias": [
         "搜索会话"
       ],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/20-controls.md",
           "token": "searchButton",
           "kind": "anchor",
           "id": "左栏搜索按钮"
-        }
-      ]
-    },
-    {
-      "key": "list|div|tree",
-      "slot": "sidebar.workspaces",
-      "count": 22,
-      "size": "270x527",
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置"
-      ],
-      "texts": [],
-      "arias": [
-        "会话"
-      ],
-      "coverage": "referenced",
-      "pluginOwned": false,
-      "hits": [
-        {
-          "where": "spec/00-overview.md",
-          "token": "list",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/10-frame-layout.md",
-          "token": "list",
-          "kind": "spec",
-          "id": "10-frame-layout"
-        },
-        {
-          "where": "spec/11-slot-seats.md",
-          "token": "list",
-          "kind": "spec",
-          "id": "11-slot-seats"
-        },
-        {
-          "where": "spec/70-checklist.md",
-          "token": "list",
-          "kind": "spec",
-          "id": "70-checklist"
-        }
-      ]
-    },
-    {
-      "key": "spinner|svg|",
-      "slot": "sidebar.workspaces",
-      "count": 22,
-      "size": "14x14",
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置"
-      ],
-      "texts": [],
-      "arias": [],
-      "coverage": "referenced",
-      "pluginOwned": false,
-      "hits": [
-        {
-          "where": "components/data-display/StateDot/SPEC.md",
-          "token": "spinner",
-          "kind": "component",
-          "id": "statedot"
-        }
-      ]
-    },
-    {
-      "key": "sessionOverflowButton|button|",
-      "slot": "sidebar.workspaces",
-      "count": 22,
-      "size": "256x28",
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置"
-      ],
-      "texts": [
-        "展开其余 96 个会话"
-      ],
-      "arias": [],
-      "coverage": "missing",
-      "pluginOwned": false,
-      "hits": []
-    },
-    {
-      "key": "fade|span|",
-      "slot": "sidebar.workspaces",
-      "count": 22,
-      "size": "256x24",
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置"
-      ],
-      "texts": [],
-      "arias": [],
-      "coverage": "referenced",
-      "pluginOwned": false,
-      "hits": [
-        {
-          "where": "components/feedback/Toast/SPEC.md",
-          "token": "fade",
-          "kind": "component",
-          "id": "toast"
-        },
-        {
-          "where": "components/feedback/Toast/toast.module.css",
-          "token": "fade",
-          "kind": "component",
-          "id": "toast"
         }
       ]
     },
@@ -1607,8 +1115,8 @@
       "arias": [
         "用量中心"
       ],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -1635,8 +1143,8 @@
         "用量中心"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -1663,8 +1171,8 @@
       "arias": [
         "上下文洞察"
       ],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -1689,8 +1197,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -1717,8 +1225,8 @@
         "上下文洞察"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -1745,8 +1253,8 @@
         "设置"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -1771,8 +1279,8 @@
       "arias": [
         "Open DS++ Chat"
       ],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -1801,32 +1309,6 @@
       ]
     },
     {
-      "key": "sessionRow selected|div|treeitem",
-      "slot": "sidebar.workspaces",
-      "count": 21,
-      "size": "256x32",
-      "steps": [
-        "新会话页",
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型"
-      ],
-      "texts": [],
-      "arias": [],
-      "coverage": "covered",
-      "pluginOwned": false,
-      "hits": [
-        {
-          "where": "components/layout/SidebarRow",
-          "token": "sessionRow",
-          "kind": "anchor",
-          "id": "左栏会话行（含运行态圆环、时间、悬停更多）"
-        }
-      ]
-    },
-    {
       "key": "root|div|",
       "slot": "main.conversation",
       "count": 21,
@@ -1841,8 +1323,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/11-slot-seats.md",
@@ -1888,8 +1370,8 @@
         "描述你想要构建的内容, / 调用指令, @ 文件或对话",
         "发消息或创建任务, / 调用指令, @ 文件或对话"
       ],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -1935,8 +1417,8 @@
         "发消息或创建任务, / 调用指令, @ 文件或对话"
       ],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "components/controls/Input/input.module.css",
@@ -1969,8 +1451,8 @@
       "arias": [
         "添加文件或调用指令"
       ],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -2015,9 +1497,16 @@
       "arias": [
         "访问模式，当前：完全权限"
       ],
-      "coverage": "missing",
       "pluginOwned": false,
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/20-controls.md",
+          "token": "dlU_AG_trigger",
+          "kind": "anchor",
+          "id": "输入区权限胶囊（完全权限 / 计划模式）"
+        }
+      ]
     },
     {
       "key": "primary|button|",
@@ -2034,10 +1523,11 @@
       ],
       "texts": [],
       "arias": [
-        "发送消息"
+        "发送消息",
+        "停止生成"
       ],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -2082,8 +1572,8 @@
       "arias": [
         "插件视图"
       ],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -2110,8 +1600,8 @@
       "arias": [
         "打开右侧边栏"
       ],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -2140,6 +1630,32 @@
       ]
     },
     {
+      "key": "dsx-stats-active|body|",
+      "slot": "",
+      "count": 20,
+      "size": "1570x905",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": true,
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "plugins/dsh-widgets",
+          "token": "dsx-",
+          "kind": "anchor",
+          "id": "插件 dsh-widgets 的界面"
+        }
+      ]
+    },
+    {
       "key": "header|header|",
       "slot": "conversation.header",
       "count": 20,
@@ -2154,8 +1670,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -2187,7 +1703,7 @@
       "key": "crumb crumbCurrent|span|",
       "slot": "conversation.session.header",
       "count": 20,
-      "size": "135x28",
+      "size": "236x28",
       "steps": [
         "会话页 · 顶部",
         "左栏 · 搜索展开",
@@ -2197,13 +1713,20 @@
         "设置 · Command Code"
       ],
       "texts": [
-        "Laya与RRSI必要性",
+        "我部署了Agents Anywhere并且连接D",
         "我正在优化dsh-widgets，有几个"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/patterns/SettingsPage",
+          "token": "crumb",
+          "kind": "anchor",
+          "id": "设置窗口里的分区面包屑"
+        }
+      ]
     },
     {
       "key": "triggerLabel|span|",
@@ -2222,8 +1745,8 @@
         "智能体团队"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -2243,14 +1766,102 @@
         "对话"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
           "token": "tab",
           "kind": "anchor",
           "id": "会话头部页签（对话 / 轨迹 / 上下文）"
+        }
+      ]
+    },
+    {
+      "key": "split|div|",
+      "slot": "conversation.session.header.utilities",
+      "count": 20,
+      "size": "43x24",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/20-controls.md",
+          "token": "split|div",
+          "kind": "anchor",
+          "id": "分段按钮的中缝容器（打开方式 / 视图切换）"
+        }
+      ]
+    },
+    {
+      "key": "main|button|",
+      "slot": "conversation.session.header.utilities",
+      "count": 20,
+      "size": "23x22",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code"
+      ],
+      "texts": [],
+      "arias": [
+        "用 文件资源管理器 打开"
+      ],
+      "pluginOwned": false,
+      "coverage": "referenced",
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "main",
+          "kind": "spec",
+          "id": "10-frame-layout"
+        }
+      ]
+    },
+    {
+      "key": "chevron|button|",
+      "slot": "conversation.session.header.utilities",
+      "count": 20,
+      "size": "18x22",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code"
+      ],
+      "texts": [],
+      "arias": [
+        "更多打开方式"
+      ],
+      "pluginOwned": false,
+      "coverage": "referenced",
+      "hits": [
+        {
+          "where": "components/data-display/DisclosureRow/disclosure-row.module.css",
+          "token": "chevron",
+          "kind": "component",
+          "id": "disclosurerow"
+        },
+        {
+          "where": "components/data-display/DisclosureRow/SPEC.md",
+          "token": "chevron",
+          "kind": "component",
+          "id": "disclosurerow"
         }
       ]
     },
@@ -2271,8 +1882,8 @@
       "arias": [
         "更多操作"
       ],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -2317,8 +1928,8 @@
       "arias": [
         "组件"
       ],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-widgets",
@@ -2343,8 +1954,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -2365,62 +1976,14 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/surfaces/Card",
           "token": "card",
           "kind": "anchor",
           "id": "卡片容器"
-        }
-      ]
-    },
-    {
-      "key": "count|span|",
-      "slot": "conversation.session.header.actions",
-      "count": 18,
-      "size": "70x18",
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "插件页（官方 / 已安装）",
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型"
-      ],
-      "texts": [
-        "2 个后台任务",
-        "8",
-        "12"
-      ],
-      "arias": [],
-      "coverage": "referenced",
-      "pluginOwned": false,
-      "hits": [
-        {
-          "where": "components/brand/FishMark/SPEC.md",
-          "token": "count",
-          "kind": "component",
-          "id": "fishmark"
-        },
-        {
-          "where": "components/brand/Wordmark/SPEC.md",
-          "token": "count",
-          "kind": "component",
-          "id": "wordmark"
-        },
-        {
-          "where": "components/controls/Button/SPEC.md",
-          "token": "count",
-          "kind": "component",
-          "id": "button"
-        },
-        {
-          "where": "components/controls/Input/SPEC.md",
-          "token": "count",
-          "kind": "component",
-          "id": "input"
         }
       ]
     },
@@ -2439,8 +2002,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -2457,8 +2020,8 @@
         "费用"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -2477,20 +2040,95 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "6 轮 49 步",
-        "4.5M",
+        "1 轮 50 步",
+        "3.8M",
         "—",
-        "5 轮 393 步"
+        "9 轮 511 步"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
           "token": "lc-",
           "kind": "anchor",
           "id": "插件 dsh-usage-center 的界面"
+        }
+      ]
+    },
+    {
+      "key": "runningWhaleAnimated|span|",
+      "slot": "conversation.view",
+      "count": 16,
+      "size": "14x14",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/40-motion.md",
+          "token": "runningWhale",
+          "kind": "anchor",
+          "id": "「深度求索中」的运行鲸鱼动画"
+        }
+      ]
+    },
+    {
+      "key": "text|span|",
+      "slot": "conversation.view",
+      "count": 16,
+      "size": "165x22",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型",
+        "设置 · Command Code"
+      ],
+      "texts": [
+        "深度求索中，用时 10分16秒 ···",
+        "深度求索中，用时 10分22秒 ···",
+        "深度求索中，用时 10分31秒 ···",
+        "深度求索中，用时 10分32秒 ···"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "referenced",
+      "hits": [
+        {
+          "where": "components/data-display/KeyValueList/key-value-list.module.css",
+          "token": "text",
+          "kind": "component",
+          "id": "keyvaluelist"
+        },
+        {
+          "where": "components/data-display/KeyValueList/SPEC.md",
+          "token": "text",
+          "kind": "component",
+          "id": "keyvaluelist"
+        },
+        {
+          "where": "components/data-display/MiniBar/SPEC.md",
+          "token": "text",
+          "kind": "component",
+          "id": "minibar"
+        },
+        {
+          "where": "components/feedback/EmptyState/empty-state.module.css",
+          "token": "text",
+          "kind": "component",
+          "id": "emptystate"
         }
       ]
     },
@@ -2508,8 +2146,8 @@
         "agent-instructions, 已启用",
         "tool-bash, 已停用"
       ],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/surfaces/Card",
@@ -2534,8 +2172,8 @@
         "tool-pwsh"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/surfaces/Card",
@@ -2562,8 +2200,8 @@
       "arias": [
         "新建会话"
       ],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -2608,14 +2246,120 @@
         "新会话"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/20-controls.md",
           "token": "newSession",
           "kind": "anchor",
           "id": "新会话按钮"
+        }
+      ]
+    },
+    {
+      "key": "list|div|tree",
+      "slot": "sidebar.workspaces",
+      "count": 15,
+      "size": "270x527",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）",
+        "设置 · 打开",
+        "设置 · 通用设置"
+      ],
+      "texts": [],
+      "arias": [
+        "会话"
+      ],
+      "pluginOwned": false,
+      "coverage": "referenced",
+      "hits": [
+        {
+          "where": "spec/00-overview.md",
+          "token": "list",
+          "kind": "spec",
+          "id": "00-overview"
+        },
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "list",
+          "kind": "spec",
+          "id": "10-frame-layout"
+        },
+        {
+          "where": "spec/11-slot-seats.md",
+          "token": "list",
+          "kind": "spec",
+          "id": "11-slot-seats"
+        },
+        {
+          "where": "spec/70-checklist.md",
+          "token": "list",
+          "kind": "spec",
+          "id": "70-checklist"
+        }
+      ]
+    },
+    {
+      "key": "sessionOverflowButton|button|",
+      "slot": "sidebar.workspaces",
+      "count": 15,
+      "size": "256x28",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）",
+        "设置 · 打开",
+        "设置 · 通用设置"
+      ],
+      "texts": [
+        "展开其余 96 个会话"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/layout/SidebarRow",
+          "token": "sessionOverflow",
+          "kind": "anchor",
+          "id": "会话行悬停才出现的「更多」按钮"
+        }
+      ]
+    },
+    {
+      "key": "fade|span|",
+      "slot": "sidebar.workspaces",
+      "count": 15,
+      "size": "256x24",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "插件页（官方 / 已安装）",
+        "设置 · 打开",
+        "设置 · 通用设置"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "referenced",
+      "hits": [
+        {
+          "where": "components/feedback/Toast/SPEC.md",
+          "token": "fade",
+          "kind": "component",
+          "id": "toast"
+        },
+        {
+          "where": "components/feedback/Toast/toast.module.css",
+          "token": "fade",
+          "kind": "component",
+          "id": "toast"
         }
       ]
     },
@@ -2634,8 +2378,8 @@
         "Model-facing pwsh tool over the bash executor seam"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/surfaces/Card",
@@ -2662,9 +2406,16 @@
         "工作区"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "sectionLabel",
+          "kind": "anchor",
+          "id": "左栏分组小标题（工作区 / 未分组）"
+        }
+      ]
     },
     {
       "key": "iconButton wide|button|",
@@ -2683,14 +2434,40 @@
       "arias": [
         "视图选项"
       ],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/20-controls.md",
           "token": "iconButton",
           "kind": "anchor",
           "id": "28×28 图标按钮"
+        }
+      ]
+    },
+    {
+      "key": "sessionRow selected|div|treeitem",
+      "slot": "sidebar.workspaces",
+      "count": 14,
+      "size": "256x32",
+      "steps": [
+        "新会话页",
+        "会话页 · 顶部",
+        "左栏 · 搜索展开",
+        "设置 · 打开",
+        "设置 · 通用设置",
+        "设置 · 模型"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/layout/SidebarRow",
+          "token": "sessionRow",
+          "kind": "anchor",
+          "id": "左栏会话行（含运行态圆环、时间、悬停更多）"
         }
       ]
     },
@@ -2710,8 +2487,8 @@
         "工作步骤展示"
       ],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/30-tokens.md",
@@ -2740,30 +2517,6 @@
       ]
     },
     {
-      "key": "durationNumber|span|",
-      "slot": "conversation.chat.node",
-      "count": 14,
-      "size": "9x17",
-      "steps": [
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步"
-      ],
-      "texts": [
-        "1",
-        "27",
-        "8",
-        "19"
-      ],
-      "arias": [],
-      "coverage": "missing",
-      "pluginOwned": false,
-      "hits": []
-    },
-    {
       "key": "duc-profile-row-label|span|",
       "slot": "shell.overlay",
       "count": 14,
@@ -2778,8 +2531,8 @@
         "未记录"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -2798,14 +2551,14 @@
         "用量中心（插件）"
       ],
       "texts": [
-        "39.99亿",
-        "5825.6万",
-        "14,440 次",
-        "499 次"
+        "39.51亿",
+        "3482.0万",
+        "14,142 次",
+        "327 次"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -2825,8 +2578,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -2851,8 +2604,8 @@
         "注入内容"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -2874,11 +2627,11 @@
         "1.3%",
         "4.4%",
         "0.8%",
-        "4.6%"
+        "4.5%"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -2897,14 +2650,14 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "≈98.2M",
-        "≈323.2M",
-        "≈61.3M",
-        "≈336.1M"
+        "≈98.7M",
+        "≈325.4M",
+        "≈61.7M",
+        "≈336.7M"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -2928,8 +2681,8 @@
         "2026-08-17\n8 个活跃会话\n758 步",
         "2026-08-18\n6 个活跃会话\n893 步"
       ],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -2949,8 +2702,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/surfaces/Card",
@@ -2979,8 +2732,8 @@
         "查看 自动授权审查",
         "查看 自动化任务"
       ],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/surfaces/Card",
@@ -3002,8 +2755,8 @@
       "arias": [
         "移除"
       ],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-widgets",
@@ -3028,8 +2781,8 @@
         "1月"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -3055,8 +2808,8 @@
         "在本机使用 SenseVoice 转写录音，首次使用需安装依赖。"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/surfaces/Card",
@@ -3083,8 +2836,8 @@
         "打开配置文件"
       ],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -3129,8 +2882,8 @@
         "会话与消息"
       ],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "components/controls/Input/SPEC.md",
@@ -3174,8 +2927,8 @@
         "启用 自动授权审查",
         "启用 自动化任务"
       ],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/controls/Switch",
@@ -3197,8 +2950,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "components/controls/Switch/SPEC.md",
@@ -3227,52 +2980,6 @@
       ]
     },
     {
-      "key": "mark markActive|button|",
-      "slot": "conversation.view",
-      "count": 11,
-      "size": "28x10",
-      "steps": [
-        "设置 · 打开",
-        "设置 · 通用设置",
-        "设置 · 模型",
-        "设置 · Command Code",
-        "设置 · 内置插件",
-        "设置 · Agent 预设"
-      ],
-      "texts": [],
-      "arias": [
-        "跳转到第 6 轮"
-      ],
-      "coverage": "referenced",
-      "pluginOwned": false,
-      "hits": [
-        {
-          "where": "spec/00-overview.md",
-          "token": "mark",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/80-conflicts.md",
-          "token": "mark",
-          "kind": "spec",
-          "id": "80-conflicts"
-        },
-        {
-          "where": "components/brand/FishMark/fishmark.module.css",
-          "token": "mark",
-          "kind": "component",
-          "id": "fishmark"
-        },
-        {
-          "where": "components/brand/FishMark/README.md",
-          "token": "mark",
-          "kind": "component",
-          "id": "fishmark"
-        }
-      ]
-    },
-    {
       "key": "overlay|div|presentation",
       "slot": "",
       "count": 11,
@@ -3287,8 +2994,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -3331,9 +3038,21 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
+        {
+          "where": "spec/20-controls.md",
+          "token": "mask",
+          "kind": "spec",
+          "id": "20-controls"
+        },
+        {
+          "where": "components/patterns/SettingsPage/SPEC.md",
+          "token": "mask",
+          "kind": "component",
+          "id": "settingspage"
+        },
         {
           "where": "components/surfaces/Modal/modal.module.css",
           "token": "mask",
@@ -3363,8 +3082,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/40-motion.md",
@@ -3407,32 +3126,14 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
-          "where": "spec/00-overview.md",
-          "token": "active",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "active",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/30-tokens.md",
-          "token": "active",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "spec/70-checklist.md",
-          "token": "active",
-          "kind": "spec",
-          "id": "70-checklist"
+          "where": "components/patterns/SettingsPage",
+          "token": "navCell",
+          "kind": "anchor",
+          "id": "设置窗口左侧导航格（164 × 40、圆角 12）"
         }
       ]
     },
@@ -3451,8 +3152,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/50-icons.md",
@@ -3496,8 +3197,8 @@
         "对话中网页链接的打开位置"
       ],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "components/controls/Input/SPEC.md",
@@ -3526,167 +3227,6 @@
       ]
     },
     {
-      "key": "dsx-stats-active|body|",
-      "slot": "",
-      "count": 9,
-      "size": "1570x905",
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步"
-      ],
-      "texts": [],
-      "arias": [],
-      "coverage": "covered",
-      "pluginOwned": true,
-      "hits": [
-        {
-          "where": "plugins/dsh-widgets",
-          "token": "dsx-",
-          "kind": "anchor",
-          "id": "插件 dsh-widgets 的界面"
-        }
-      ]
-    },
-    {
-      "key": "split|div|",
-      "slot": "conversation.session.header.utilities",
-      "count": 9,
-      "size": "43x24",
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步"
-      ],
-      "texts": [],
-      "arias": [],
-      "coverage": "missing",
-      "pluginOwned": false,
-      "hits": []
-    },
-    {
-      "key": "main|button|",
-      "slot": "conversation.session.header.utilities",
-      "count": 9,
-      "size": "23x22",
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步"
-      ],
-      "texts": [],
-      "arias": [
-        "用 文件资源管理器 打开"
-      ],
-      "coverage": "referenced",
-      "pluginOwned": false,
-      "hits": [
-        {
-          "where": "spec/10-frame-layout.md",
-          "token": "main",
-          "kind": "spec",
-          "id": "10-frame-layout"
-        }
-      ]
-    },
-    {
-      "key": "chevron|button|",
-      "slot": "conversation.session.header.utilities",
-      "count": 9,
-      "size": "18x22",
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步"
-      ],
-      "texts": [],
-      "arias": [
-        "更多打开方式"
-      ],
-      "coverage": "referenced",
-      "pluginOwned": false,
-      "hits": [
-        {
-          "where": "components/data-display/DisclosureRow/disclosure-row.module.css",
-          "token": "chevron",
-          "kind": "component",
-          "id": "disclosurerow"
-        },
-        {
-          "where": "components/data-display/DisclosureRow/SPEC.md",
-          "token": "chevron",
-          "kind": "component",
-          "id": "disclosurerow"
-        }
-      ]
-    },
-    {
-      "key": "dsx-stats-card-value|div|",
-      "slot": "",
-      "count": 9,
-      "size": "108x21",
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步"
-      ],
-      "texts": [
-        "CHEAP"
-      ],
-      "arias": [],
-      "coverage": "covered",
-      "pluginOwned": true,
-      "hits": [
-        {
-          "where": "components/surfaces/Card",
-          "token": "card",
-          "kind": "anchor",
-          "id": "卡片容器"
-        }
-      ]
-    },
-    {
-      "key": "dsx-stats-card-corner|button|",
-      "slot": "",
-      "count": 9,
-      "size": "36x36",
-      "steps": [
-        "会话页 · 顶部",
-        "左栏 · 搜索展开",
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步"
-      ],
-      "texts": [],
-      "arias": [],
-      "coverage": "covered",
-      "pluginOwned": true,
-      "hits": [
-        {
-          "where": "components/surfaces/Card",
-          "token": "card",
-          "kind": "anchor",
-          "id": "卡片容器"
-        }
-      ]
-    },
-    {
       "key": "duc-stat-label|div|",
       "slot": "shell.overlay",
       "count": 9,
@@ -3701,8 +3241,8 @@
         "活跃天数"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -3721,14 +3261,14 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "117.9M",
-        "235.9M",
-        "353.8M",
-        "471.7M"
+        "122.5M",
+        "245.0M",
+        "367.5M",
+        "490.1M"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -3749,8 +3289,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "components/surfaces/Modal/SPEC.md",
@@ -3759,25 +3299,6 @@
           "id": "modal"
         }
       ]
-    },
-    {
-      "key": "uitw-stepper-arrow|button|",
-      "slot": "settings.general.item",
-      "count": 8,
-      "size": "17x12",
-      "steps": [
-        "设置 · 打开",
-        "设置 · 通用设置"
-      ],
-      "texts": [],
-      "arias": [
-        "+4 px",
-        "-4 px",
-        "+1 px"
-      ],
-      "coverage": "missing",
-      "pluginOwned": false,
-      "hits": []
     },
     {
       "key": "button ghost md helpButton|button|",
@@ -3796,8 +3317,8 @@
         "如何使用: 标准模式",
         "模式说明: PTC 模式"
       ],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -3840,8 +3361,8 @@
         "主题与外观"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/controls/Pill",
@@ -3865,8 +3386,8 @@
         "dsh-codex-ui — 在 GitHub 上查看仓库",
         "dsh-web#packages/dsh-task-board — 在 GitH"
       ],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -3879,8 +3400,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -3893,8 +3414,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "components/brand/FishMark/SPEC.md",
@@ -3925,8 +3446,8 @@
         "omdsh-dev"
       ],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "components/controls/Button/SPEC.md",
@@ -3951,8 +3472,8 @@
         "在设置里增加已归档会话页，可按工作区搜索、恢复和删除已归档会话。"
       ],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "components/controls/Input/SPEC.md",
@@ -3990,8 +3511,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -4004,8 +3525,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -4023,8 +3544,8 @@
         "被中止"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -4037,8 +3558,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4063,8 +3584,8 @@
         "全部"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4083,14 +3604,14 @@
         "用量中心（插件）"
       ],
       "texts": [
-        "127.97亿",
-        "14,939",
-        "126",
+        "129.37亿",
+        "14,469",
+        "121",
         "98.5%"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4110,8 +3631,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4131,8 +3652,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4152,8 +3673,29 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "plugins/dsh-usage-center",
+          "token": "duc-",
+          "kind": "anchor",
+          "id": "插件 dsh-usage-center 的热力图"
+        }
+      ]
+    },
+    {
+      "key": "duc-heat-cell l3|div|",
+      "slot": "shell.overlay",
+      "count": 8,
+      "size": "15x15",
+      "steps": [
+        "用量中心（插件）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4173,8 +3715,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4199,8 +3741,8 @@
         "日均请求"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4219,14 +3761,14 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "7.3B",
-        "136h17m",
-        "126.5k",
-        "560.4k"
+        "7.4B",
+        "138h2m",
+        "115.6k",
+        "664.9k"
       ],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -4255,138 +3797,6 @@
       ]
     },
     {
-      "key": "|h2|",
-      "slot": "conversation.chat.node",
-      "count": 8,
-      "size": "748x28",
-      "steps": [
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步"
-      ],
-      "texts": [
-        "量到的两个数",
-        "为什么不能直接设成 11"
-      ],
-      "arias": [],
-      "coverage": "referenced",
-      "pluginOwned": false,
-      "hits": [
-        {
-          "where": "spec/20-controls.md",
-          "token": "h2",
-          "kind": "spec",
-          "id": "20-controls"
-        },
-        {
-          "where": "spec/50-icons.md",
-          "token": "h2",
-          "kind": "spec",
-          "id": "50-icons"
-        },
-        {
-          "where": "spec/60-accessibility.md",
-          "token": "h2",
-          "kind": "spec",
-          "id": "60-accessibility"
-        },
-        {
-          "where": "components/controls/Button/button.module.css",
-          "token": "h2",
-          "kind": "component",
-          "id": "button"
-        }
-      ]
-    },
-    {
-      "key": "xD_KDq_timeStart|span|",
-      "slot": "conversation.chat.node",
-      "count": 7,
-      "size": "43x24",
-      "steps": [
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步"
-      ],
-      "texts": [
-        "23:41",
-        "23:39"
-      ],
-      "arias": [],
-      "coverage": "missing",
-      "pluginOwned": false,
-      "hits": []
-    },
-    {
-      "key": "root|button|",
-      "slot": "conversation.chat.node",
-      "count": 7,
-      "size": "748x33",
-      "steps": [
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步"
-      ],
-      "texts": [],
-      "arias": [],
-      "coverage": "referenced",
-      "pluginOwned": false,
-      "hits": [
-        {
-          "where": "spec/11-slot-seats.md",
-          "token": "root",
-          "kind": "spec",
-          "id": "11-slot-seats"
-        },
-        {
-          "where": "spec/30-tokens.md",
-          "token": "root",
-          "kind": "spec",
-          "id": "30-tokens"
-        },
-        {
-          "where": "components/brand/Wordmark/SPEC.md",
-          "token": "root",
-          "kind": "component",
-          "id": "wordmark"
-        },
-        {
-          "where": "components/data-display/DisclosureRow/disclosure-row.module.css",
-          "token": "root",
-          "kind": "component",
-          "id": "disclosurerow"
-        }
-      ]
-    },
-    {
-      "key": "duc-heat-cell l3|div|",
-      "slot": "shell.overlay",
-      "count": 7,
-      "size": "15x15",
-      "steps": [
-        "用量中心（插件）"
-      ],
-      "texts": [],
-      "arias": [],
-      "coverage": "covered",
-      "pluginOwned": true,
-      "hits": [
-        {
-          "where": "plugins/dsh-usage-center",
-          "token": "duc-",
-          "kind": "anchor",
-          "id": "插件 dsh-usage-center 的热力图"
-        }
-      ]
-    },
-    {
       "key": "duc-profile-kv-value|span|",
       "slot": "shell.overlay",
       "count": 7,
@@ -4395,14 +3805,14 @@
         "用量中心（插件）"
       ],
       "texts": [
-        "33 天",
+        "34 天",
         "09:00 · 1,319 次",
-        "2,134",
-        "126"
+        "2,067",
+        "121"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4421,14 +3831,14 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "09-25",
         "09-26",
         "09-27",
-        "09-28"
+        "09-28",
+        "09-29"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4448,8 +3858,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4458,6 +3868,43 @@
           "id": "插件 dsh-usage-center 的界面"
         }
       ]
+    },
+    {
+      "key": "cc-miniMeterLabel|span|",
+      "slot": "settings.section",
+      "count": 6,
+      "size": "58x18",
+      "steps": [
+        "设置 · Command Code"
+      ],
+      "texts": [
+        "5 小时窗口",
+        "每周窗口",
+        "月额度剩余"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "missing",
+      "hits": []
+    },
+    {
+      "key": "cc-miniMeterValue|span|",
+      "slot": "settings.section",
+      "count": 6,
+      "size": "23x18",
+      "steps": [
+        "设置 · Command Code"
+      ],
+      "texts": [
+        "20%",
+        "8%",
+        "$4.56",
+        "0%"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "missing",
+      "hits": []
     },
     {
       "key": "hostRequirement|span|",
@@ -4473,8 +3920,8 @@
         "DSH ^0.2.0-rc.1"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -4489,8 +3936,8 @@
       "arias": [
         "加入收藏"
       ],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -4505,8 +3952,8 @@
         "评论"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -4523,8 +3970,8 @@
       "arias": [
         "更多"
       ],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/surfaces/Card",
@@ -4546,8 +3993,8 @@
         "安装"
       ],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -4590,8 +4037,8 @@
         "已探索技能"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4616,8 +4063,8 @@
         "会话"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4637,8 +4084,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4663,8 +4110,8 @@
         "缓存命中"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4678,19 +4125,19 @@
       "key": "lc-stat-value|span|",
       "slot": "shell.overlay",
       "count": 6,
-      "size": "27x27",
+      "size": "24x27",
       "steps": [
         "上下文洞察（插件）"
       ],
       "texts": [
-        "110",
-        "7.3B",
+        "111",
+        "7.4B",
         "¥63.37",
-        "98.87%"
+        "98.88%"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4709,14 +4156,14 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "共 166 个",
-        "轮次 690",
-        "已计价 17/110 个会话",
-        "含 86 个会话"
+        "共 167 个",
+        "轮次 696",
+        "已计价 17/111 个会话",
+        "含 87 个会话"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4730,14 +4177,14 @@
       "key": "lc-ov-usage-bar lc-ov-usage-tokens|span|",
       "slot": "shell.overlay",
       "count": 6,
-      "size": "10x25",
+      "size": "10x36",
       "steps": [
         "上下文洞察（插件）"
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4757,8 +4204,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4772,19 +4219,19 @@
       "key": "lc-ov-session-title|span|",
       "slot": "shell.overlay",
       "count": 6,
-      "size": "283x17",
+      "size": "270x17",
       "steps": [
         "上下文洞察（插件）"
       ],
       "texts": [
-        "Laya与RRSI必要性",
+        "我部署了Agents Anywhere并且连接D",
         "我正在优化dsh-widgets，有几个",
         "这 5 个分别是什么，为什么要",
-        "D磁盘空间清理"
+        "Laya与RRSI必要性"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4798,25 +4245,25 @@
       "key": "lc-ov-session-time|span|",
       "slot": "shell.overlay",
       "count": 6,
-      "size": "42x15",
+      "size": "48x15",
       "steps": [
         "上下文洞察（插件）"
       ],
       "texts": [
-        "8 分钟前",
-        "9 分钟前",
-        "44 分钟前",
-        "2 小时前"
+        "10 分钟前",
+        "12 分钟前",
+        "40 分钟前",
+        "1 小时前"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
-          "where": "plugins/dsh-usage-center",
-          "token": "lc-",
+          "where": "components/layout/SidebarRow",
+          "token": "time|span",
           "kind": "anchor",
-          "id": "插件 dsh-usage-center 的界面"
+          "id": "会话行右侧的相对时间"
         }
       ]
     },
@@ -4829,12 +4276,12 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "2026-10-01",
-        "2026-09-30"
+        "2026-10-02",
+        "2026-10-01"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4856,14 +4303,14 @@
         "DeepSeek-Harness"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
-          "where": "plugins/dsh-usage-center",
-          "token": "lc-",
+          "where": "components/patterns/SettingsPage",
+          "token": "crumb",
           "kind": "anchor",
-          "id": "插件 dsh-usage-center 的界面"
+          "id": "设置窗口里的分区面包屑"
         }
       ]
     },
@@ -4877,8 +4324,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4900,8 +4347,8 @@
         "最后消息"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4920,14 +4367,14 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "不用管。现在聊一下Laya，不是Mlx不关键。我只是关心这个决策模型是否可以部署，是否需要部署，对我平时的工作流是否有帮",
-        "我感觉整个组件区域离顶部菜单栏的间距稍微有点大，默认改成和组件按钮离窗口顶部相同的距离让我看看效果",
-        "设置页这个也要用真实的窗口来演示！给你看图二，要用这个来演示。 这个加载肯定有！图四这个不就是加载中和运行状态的转圈圈吗",
-        "先帮我检查一下D磁盘的空间为什么只剩这么少了，之前清理了不少模型权重但是现在又多了好多东西，进行一次完整审计并由我决策删"
+        "我部署了Agents Anywhere并且连接DeepSeek Harness，为啥显示正在等待本地DSH Bridge",
+        "不要任何淡入淡出效果，我只要纯粹的放大缩小和位移，只不过是不同组件的动画时机不一致而已，这个难度应该不大的",
+        "其它第三方插件不是官方UI的先看看有没有哪些没有对齐，或者说哪些是官方没有开发的，比如滑动条，就先统计并搁置，我们优先整",
+        "不用管。现在聊一下Laya，不是Mlx不关键。我只是关心这个决策模型是否可以部署，是否需要部署，对我平时的工作流是否有帮"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -4936,25 +4383,6 @@
           "id": "插件 dsh-usage-center 的界面"
         }
       ]
-    },
-    {
-      "key": "cc-rowTitle|label|",
-      "slot": "settings.section",
-      "count": 5,
-      "size": "98x22",
-      "steps": [
-        "设置 · Command Code"
-      ],
-      "texts": [
-        "隐藏套餐外模型",
-        "模型白名单",
-        "零数据保留（ZDR）",
-        "用 Command Code 承载联网搜索"
-      ],
-      "arias": [],
-      "coverage": "missing",
-      "pluginOwned": false,
-      "hits": []
     },
     {
       "key": "tab|button|",
@@ -4971,8 +4399,8 @@
         "高级"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -4992,8 +4420,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/surfaces/Card",
@@ -5017,8 +4445,8 @@
         "2026-09-19\n3 个活跃会话\n1297 步",
         "2026-09-23\n7 个活跃会话\n1306 步"
       ],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -5038,8 +4466,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -5061,9 +4489,16 @@
         "实验性"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
-      "hits": []
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/20-controls.md",
+          "token": "statusTag",
+          "kind": "anchor",
+          "id": "插件行标题旁的「实验性」标签（高 18、圆角 999、底色为状态色 10%）"
+        }
+      ]
     },
     {
       "key": "themeCube|button|",
@@ -5076,50 +4511,14 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
-      "hits": []
-    },
-    {
-      "key": "arrow|button|",
-      "slot": "settings.general.item",
-      "count": 4,
-      "size": "17x12",
-      "steps": [
-        "设置 · 打开",
-        "设置 · 通用设置"
-      ],
-      "texts": [],
-      "arias": [
-        "增大字号",
-        "减小字号"
-      ],
-      "coverage": "referenced",
-      "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
-          "where": "components/controls/SegmentedControl/SPEC.md",
-          "token": "arrow",
-          "kind": "component",
-          "id": "segmentedcontrol"
-        },
-        {
-          "where": "components/layout/SidebarRow/README.md",
-          "token": "arrow",
-          "kind": "component",
-          "id": "sidebarrow"
-        },
-        {
-          "where": "components/layout/SidebarRow/SPEC.md",
-          "token": "arrow",
-          "kind": "component",
-          "id": "sidebarrow"
-        },
-        {
-          "where": "components/layout/ToolbarRow/README.md",
-          "token": "arrow",
-          "kind": "component",
-          "id": "toolbarrow"
+          "where": "components/patterns/SettingsPage",
+          "token": "themeCube",
+          "kind": "anchor",
+          "id": "设置页外观那三张主题方块（183 × 84、圆角 20）"
         }
       ]
     },
@@ -5134,8 +4533,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -5152,8 +4551,8 @@
         "14"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -5169,8 +4568,8 @@
         "px"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -5188,49 +4587,28 @@
         "集成与显示"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
-      "key": "cc-rowDesc|div|",
+      "key": "cc-rowTitle|label|",
       "slot": "settings.section",
       "count": 4,
-      "size": "488x18",
+      "size": "98x22",
       "steps": [
         "设置 · Command Code"
       ],
       "texts": [
-        "只显示套餐内模型；按需余额账户仍显示全部。",
-        "仅使用不留存、不训练的上游；可用模型可能更少且价格通常更高。",
-        "使用同一密钥承载 dsh 的 web_search；关闭后恢复原搜索后端。",
-        "在侧边栏底部显示套餐与额度卡片，点击可打开完整仪表盘。默认关闭，关闭时不会为它后台刷新用量。"
+        "隐藏套餐外模型",
+        "模型白名单",
+        "零数据保留（ZDR）",
+        "用 Command Code 承载联网搜索"
       ],
       "arias": [],
+      "pluginOwned": false,
       "coverage": "missing",
-      "pluginOwned": false,
       "hits": []
-    },
-    {
-      "key": "cc-toggle|input|switch",
-      "slot": "settings.section",
-      "count": 4,
-      "size": "36x20",
-      "steps": [
-        "设置 · Command Code"
-      ],
-      "texts": [],
-      "arias": [],
-      "coverage": "covered",
-      "pluginOwned": false,
-      "hits": [
-        {
-          "where": "components/controls/Switch",
-          "token": "switch",
-          "kind": "anchor",
-          "id": "开关"
-        }
-      ]
     },
     {
       "key": "cardMain|button|",
@@ -5246,8 +4624,8 @@
         "设为新任务默认: PTC 模式",
         "设为新任务默认: 极简模式"
       ],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/surfaces/Card",
@@ -5272,8 +4650,8 @@
         "创造模式"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/surfaces/Card",
@@ -5298,8 +4676,8 @@
         "cordis"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/surfaces/Card",
@@ -5319,8 +4697,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/surfaces/Card",
@@ -5345,8 +4723,8 @@
         "高级"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/surfaces/Card",
@@ -5371,8 +4749,8 @@
         "活跃度"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/surfaces/Card",
@@ -5391,106 +4769,20 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "110",
+        "111",
         "21",
-        "71",
+        "72",
         "16"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
           "token": "lc-",
           "kind": "anchor",
           "id": "插件 dsh-usage-center 的界面"
-        }
-      ]
-    },
-    {
-      "key": "header|button|",
-      "slot": "conversation.chat.turnTail",
-      "count": 4,
-      "size": "746x60",
-      "steps": [
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步"
-      ],
-      "texts": [],
-      "arias": [
-        "在侧边栏查看本轮改动"
-      ],
-      "coverage": "referenced",
-      "pluginOwned": false,
-      "hits": [
-        {
-          "where": "spec/00-overview.md",
-          "token": "header",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/10-frame-layout.md",
-          "token": "header",
-          "kind": "spec",
-          "id": "10-frame-layout"
-        },
-        {
-          "where": "spec/11-slot-seats.md",
-          "token": "header",
-          "kind": "spec",
-          "id": "11-slot-seats"
-        },
-        {
-          "where": "spec/20-controls.md",
-          "token": "header",
-          "kind": "spec",
-          "id": "20-controls"
-        }
-      ]
-    },
-    {
-      "key": "list|ul|",
-      "slot": "conversation.chat.turnTail",
-      "count": 4,
-      "size": "746x129",
-      "steps": [
-        "会话标题菜单 / 输入区菜单 · 基视图",
-        "会话标题菜单 / 输入区菜单 · 第 1 步",
-        "会话标题菜单 / 输入区菜单 · 第 2 步",
-        "会话标题菜单 / 输入区菜单 · 第 3 步"
-      ],
-      "texts": [],
-      "arias": [],
-      "coverage": "referenced",
-      "pluginOwned": false,
-      "hits": [
-        {
-          "where": "spec/00-overview.md",
-          "token": "list",
-          "kind": "spec",
-          "id": "00-overview"
-        },
-        {
-          "where": "spec/10-frame-layout.md",
-          "token": "list",
-          "kind": "spec",
-          "id": "10-frame-layout"
-        },
-        {
-          "where": "spec/11-slot-seats.md",
-          "token": "list",
-          "kind": "spec",
-          "id": "11-slot-seats"
-        },
-        {
-          "where": "spec/70-checklist.md",
-          "token": "list",
-          "kind": "spec",
-          "id": "70-checklist"
         }
       ]
     },
@@ -5505,8 +4797,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -5530,8 +4822,8 @@
         "推理等级"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -5548,8 +4840,8 @@
         "high"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -5563,9 +4855,53 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
+    },
+    {
+      "key": "count|span|",
+      "slot": "main",
+      "count": 3,
+      "size": "8x19",
+      "steps": [
+        "插件页（官方 / 已安装）",
+        "设置 · 通用设置"
+      ],
+      "texts": [
+        "8",
+        "12",
+        "1 个后台任务运行中"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "referenced",
+      "hits": [
+        {
+          "where": "spec/40-motion.md",
+          "token": "count",
+          "kind": "spec",
+          "id": "40-motion"
+        },
+        {
+          "where": "components/brand/FishMark/SPEC.md",
+          "token": "count",
+          "kind": "component",
+          "id": "fishmark"
+        },
+        {
+          "where": "components/brand/Wordmark/SPEC.md",
+          "token": "count",
+          "kind": "component",
+          "id": "wordmark"
+        },
+        {
+          "where": "components/controls/Button/SPEC.md",
+          "token": "count",
+          "kind": "component",
+          "id": "button"
+        }
+      ]
     },
     {
       "key": "enhc-page-title|h2|",
@@ -5582,9 +4918,16 @@
         "UI 兼容性检查"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
-      "hits": []
+      "coverage": "referenced",
+      "hits": [
+        {
+          "where": "components/patterns/SettingsPage/SPEC.md",
+          "token": "enhc-page-title",
+          "kind": "component",
+          "id": "settingspage"
+        }
+      ]
     },
     {
       "key": "enhc-page-intro|p|",
@@ -5601,9 +4944,16 @@
         "本机只读审计：本插件有哪些 CSS 规则已经失效、哪些地方在读其他插件的私有类、哪些表面被谁占用。数据不出本机，不联网、"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
-      "hits": []
+      "coverage": "referenced",
+      "hits": [
+        {
+          "where": "components/patterns/SettingsPage/SPEC.md",
+          "token": "enhc-page-intro",
+          "kind": "component",
+          "id": "settingspage"
+        }
+      ]
     },
     {
       "key": "intro enhc-page-intro|p|",
@@ -5621,9 +4971,16 @@
         "选择 Agent 的工具和工作方式。日常任务用「标准模式」，扩展 DSH 的能力用「创造模式」。"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
-      "hits": []
+      "coverage": "referenced",
+      "hits": [
+        {
+          "where": "components/patterns/SettingsPage/SPEC.md",
+          "token": "intro",
+          "kind": "component",
+          "id": "settingspage"
+        }
+      ]
     },
     {
       "key": "rowCard|li|",
@@ -5635,8 +4992,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/surfaces/Card",
@@ -5660,8 +5017,8 @@
         "Command Code"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -5680,15 +5037,15 @@
         "编辑 DeepSeek (deepseek-official)",
         "编辑 Command Code (commandcode)"
       ],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
       "key": "cc-group cc-groupDivided|section|",
       "slot": "settings.section",
       "count": 3,
-      "size": "564x207",
+      "size": "564x225",
       "steps": [
         "设置 · Command Code"
       ],
@@ -5698,9 +5055,48 @@
         "隐私与安全",
         "集成与显示"
       ],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
+    },
+    {
+      "key": "cc-rowDesc|div|",
+      "slot": "settings.section",
+      "count": 3,
+      "size": "488x18",
+      "steps": [
+        "设置 · Command Code"
+      ],
+      "texts": [
+        "只显示套餐内模型；按需余额账户仍显示全部。",
+        "仅使用不留存、不训练的上游；可用模型可能更少且价格通常更高。",
+        "使用同一密钥承载 dsh 的 web_search；关闭后恢复原搜索后端。"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "missing",
+      "hits": []
+    },
+    {
+      "key": "cc-toggle|input|switch",
+      "slot": "settings.section",
+      "count": 3,
+      "size": "36x20",
+      "steps": [
+        "设置 · Command Code"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "components/controls/Switch",
+          "token": "switch",
+          "kind": "anchor",
+          "id": "开关"
+        }
+      ]
     },
     {
       "key": "dsx-tab|button|",
@@ -5716,8 +5112,8 @@
         "组件设置"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -5741,8 +5137,8 @@
         "当前会话正在眼前时不提醒；页面在后台，或你正在查看其他会话、其他工作区时仍会提醒。"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -5759,8 +5155,8 @@
         "规则匹配该轮回复文本与调用过的工具名。包含规则：命中任一才通知；排除规则：命中即不通知。"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/surfaces/Card",
@@ -5769,47 +5165,6 @@
           "id": "卡片容器"
         }
       ]
-    },
-    {
-      "key": "bubble|div|",
-      "slot": "conversation.chat.node",
-      "count": 3,
-      "size": "525x86",
-      "steps": [
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "右侧边栏"
-      ],
-      "texts": [],
-      "arias": [],
-      "coverage": "covered",
-      "pluginOwned": false,
-      "hits": [
-        {
-          "where": "spec/10-frame-layout.md",
-          "token": "bubble",
-          "kind": "anchor",
-          "id": "用户消息气泡"
-        }
-      ]
-    },
-    {
-      "key": "plainRun|span|",
-      "slot": "conversation.chat.node",
-      "count": 3,
-      "size": "489x63",
-      "steps": [
-        "用量中心（插件）",
-        "上下文洞察（插件）",
-        "右侧边栏"
-      ],
-      "texts": [
-        "不用管。现在聊一下Laya，不是Mlx不关键。我只是关心这个决策模型是否可以部署，是否需要部署，对我平时的工作流是否有帮"
-      ],
-      "arias": [],
-      "coverage": "missing",
-      "pluginOwned": false,
-      "hits": []
     },
     {
       "key": "lc-gran-btn lc-gran-on|button|",
@@ -5825,8 +5180,8 @@
         "最近更新"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -5850,8 +5205,8 @@
         "星期五"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -5875,8 +5230,8 @@
         "10月"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -5900,8 +5255,8 @@
       "arias": [
         "智能体团队"
       ],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/40-motion.md",
@@ -5941,8 +5296,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -5957,8 +5312,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -5975,8 +5330,8 @@
         "lead"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -5993,8 +5348,8 @@
         "当前会话"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -6011,8 +5366,8 @@
         "暂无共享任务，可以通过对话创建"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/feedback/EmptyState",
@@ -6033,8 +5388,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -6047,8 +5402,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -6072,8 +5427,8 @@
         "完全权限"
       ],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "components/layout/SidebarRow/sidebarrow.module.css",
@@ -6111,8 +5466,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -6151,14 +5506,101 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-widgets",
           "token": "dsx-",
           "kind": "anchor",
           "id": "插件 dsh-widgets 的界面"
+        }
+      ]
+    },
+    {
+      "key": "bubble|div|",
+      "slot": "conversation.chat.node",
+      "count": 2,
+      "size": "525x64",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "bubble",
+          "kind": "anchor",
+          "id": "用户消息气泡"
+        }
+      ]
+    },
+    {
+      "key": "plainRun|span|",
+      "slot": "conversation.chat.node",
+      "count": 2,
+      "size": "480x41",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开"
+      ],
+      "texts": [
+        "我部署了Agents Anywhere并且连接DeepSeek Harness，为啥显示正在等待本地DSH Bridge"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "missing",
+      "hits": []
+    },
+    {
+      "key": "xD_KDq_timeStart|span|",
+      "slot": "conversation.chat.node",
+      "count": 2,
+      "size": "43x24",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开"
+      ],
+      "texts": [
+        "00:35"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "xD_KDq_",
+          "kind": "anchor",
+          "id": "消息级元信息与动作：时间戳、复制/重试按钮"
+        }
+      ]
+    },
+    {
+      "key": "xD_KDq_action|button|",
+      "slot": "conversation.chat.node",
+      "count": 2,
+      "size": "28x28",
+      "steps": [
+        "会话页 · 顶部",
+        "左栏 · 搜索展开"
+      ],
+      "texts": [],
+      "arias": [
+        "复制"
+      ],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "xD_KDq_",
+          "kind": "anchor",
+          "id": "消息级元信息与动作：时间戳、复制/重试按钮"
         }
       ]
     },
@@ -6175,8 +5617,8 @@
         "已安装"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -6192,8 +5634,8 @@
         "语言"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -6207,8 +5649,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -6222,8 +5664,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -6237,32 +5679,14 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
-          "where": "components/layout/SidebarRow/sidebarrow.module.css",
-          "token": "selected",
-          "kind": "component",
-          "id": "sidebarrow"
-        },
-        {
-          "where": "components/layout/SidebarRow/SPEC.md",
-          "token": "selected",
-          "kind": "component",
-          "id": "sidebarrow"
-        },
-        {
-          "where": "components/patterns/SettingsPage/settings-page.module.css",
-          "token": "selected",
-          "kind": "component",
-          "id": "settingspage"
-        },
-        {
-          "where": "components/patterns/SettingsPage/SPEC.md",
-          "token": "selected",
-          "kind": "component",
-          "id": "settingspage"
+          "where": "components/patterns/SettingsPage",
+          "token": "themeCube",
+          "kind": "anchor",
+          "id": "设置页外观那三张主题方块（183 × 84、圆角 20）"
         }
       ]
     },
@@ -6277,8 +5701,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -6294,8 +5718,8 @@
         "14"
       ],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "components/controls/Input/SPEC.md",
@@ -6336,8 +5760,8 @@
         "px"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -6353,8 +5777,8 @@
         "开启后，显示轨迹、本轮代码差异，可选择完整的 Agent 预设切换"
       ],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "components/feedback/EmptyState/empty-state.module.css",
@@ -6395,8 +5819,8 @@
         "快捷键"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -6412,8 +5836,8 @@
         "查看和编辑当前可用的快捷键和输入操作"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -6431,8 +5855,8 @@
       "arias": [
         "编辑快捷键"
       ],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -6474,8 +5898,8 @@
         "Agent 预设"
       ],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/30-tokens.md",
@@ -6515,8 +5939,8 @@
       "arias": [
         "API 密钥已配置"
       ],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "components/brand/FishMark/SPEC.md",
@@ -6545,22 +5969,8 @@
         "显示全部"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
-      "hits": []
-    },
-    {
-      "key": "cc-accountItem|div|",
-      "slot": "settings.section",
-      "count": 2,
-      "size": "564x54",
-      "steps": [
-        "设置 · Command Code"
-      ],
-      "texts": [],
-      "arias": [],
       "coverage": "missing",
-      "pluginOwned": false,
       "hits": []
     },
     {
@@ -6573,8 +5983,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -6590,8 +6000,41 @@
         "GMail"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
+      "hits": []
+    },
+    {
+      "key": "cc-usageAccount|span|",
+      "slot": "settings.section",
+      "count": 2,
+      "size": "54x18",
+      "steps": [
+        "设置 · Command Code"
+      ],
+      "texts": [
+        "Physicolor",
+        "sparxie"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "missing",
+      "hits": []
+    },
+    {
+      "key": "cc-usagePlan|span|",
+      "slot": "settings.section",
+      "count": 2,
+      "size": "45x19",
+      "steps": [
+        "设置 · Command Code"
+      ],
+      "texts": [
+        "GOAT"
+      ],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -6607,8 +6050,8 @@
         "默认账户 — 账户操作",
         "GMail — 账户操作"
       ],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -6631,8 +6074,8 @@
         "自定义"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -6648,8 +6091,8 @@
         "导出 Markdown"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -6665,8 +6108,8 @@
         "全部更新 (2)"
       ],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -6706,8 +6149,8 @@
         "✓ 已安装"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -6723,8 +6166,8 @@
         "添加规则"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -6740,8 +6183,8 @@
         "保存规则"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -6757,8 +6200,8 @@
         "时间范围",
         "热力图指标"
       ],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -6778,8 +6221,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -6802,8 +6245,8 @@
         "Token"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -6826,8 +6269,8 @@
         "活动洞察"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/surfaces/Card",
@@ -6846,12 +6289,12 @@
         "用量中心（插件）"
       ],
       "texts": [
-        "窗口内合计 127.97亿 Token",
-        "48 天有记录 · 当前连续 33 天 · 最长 33 天"
+        "窗口内合计 129.35亿 Token",
+        "49 天有记录 · 当前连续 34 天 · 最长 34 天"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -6874,8 +6317,8 @@
         "窗口内活跃会话调用过的技能 · 索引共记录 9 个技能 · 80 个工具"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -6898,8 +6341,8 @@
         "费用（仅含支持计价映射的模型）"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -6919,8 +6362,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/surfaces/Card",
@@ -6943,8 +6386,8 @@
         "指标",
         "排序"
       ],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -6967,14 +6410,35 @@
         "多"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
           "token": "lc-",
           "kind": "anchor",
           "id": "插件 dsh-usage-center 的界面"
+        }
+      ]
+    },
+    {
+      "key": "lc-ov-running|span|",
+      "slot": "shell.overlay",
+      "count": 2,
+      "size": "7x7",
+      "steps": [
+        "上下文洞察（插件）"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": true,
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/40-motion.md",
+          "token": "running",
+          "kind": "anchor",
+          "id": "运行中提示行（深度求索中…）"
         }
       ]
     },
@@ -6991,8 +6455,8 @@
       "arias": [
         "模型与推理等级"
       ],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -7012,8 +6476,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -7051,8 +6515,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "components/brand/FishMark/fishmark.module.css",
@@ -7092,8 +6556,8 @@
         "预览版"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -7108,8 +6572,8 @@
       "arias": [
         "选择工作区"
       ],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -7122,8 +6586,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -7138,8 +6602,8 @@
         "DeepSeek-Harness"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -7152,8 +6616,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -7191,8 +6655,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -7207,8 +6671,8 @@
         "标准模式"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -7221,8 +6685,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -7260,8 +6724,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -7276,8 +6740,8 @@
       "arias": [
         "清除搜索"
       ],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -7292,8 +6756,8 @@
       "arias": [
         "插件"
       ],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -7315,12 +6779,18 @@
         "插件"
       ],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "components/patterns/SettingsPage/settings-page.module.css",
           "token": "pagetitle",
+          "kind": "component",
+          "id": "settingspage"
+        },
+        {
+          "where": "components/patterns/SettingsPage/SPEC.md",
+          "token": "page-title",
           "kind": "component",
           "id": "settingspage"
         }
@@ -7338,8 +6808,8 @@
       "arias": [
         "插件说明"
       ],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -7377,8 +6847,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -7407,6 +6877,45 @@
       ]
     },
     {
+      "key": "spinner triggerDot|svg|",
+      "slot": "conversation.session.header.actions",
+      "count": 1,
+      "size": "14x14",
+      "steps": [
+        "设置 · 通用设置"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "referenced",
+      "hits": [
+        {
+          "where": "spec/20-controls.md",
+          "token": "spinner",
+          "kind": "spec",
+          "id": "20-controls"
+        },
+        {
+          "where": "spec/40-motion.md",
+          "token": "spinner",
+          "kind": "spec",
+          "id": "40-motion"
+        },
+        {
+          "where": "components/data-display/StateDot/SPEC.md",
+          "token": "spinner",
+          "kind": "component",
+          "id": "statedot"
+        },
+        {
+          "where": "components/feedback/RunningRing/running-ring.module.css",
+          "token": "spinner",
+          "kind": "component",
+          "id": "runningring"
+        }
+      ]
+    },
+    {
       "key": "addButton|button|",
       "slot": "settings.section",
       "count": 1,
@@ -7416,8 +6925,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -7432,9 +6941,16 @@
         "Command Code"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
-      "hits": []
+      "coverage": "referenced",
+      "hits": [
+        {
+          "where": "components/patterns/SettingsPage/SPEC.md",
+          "token": "enhc-page-title",
+          "kind": "component",
+          "id": "settingspage"
+        }
+      ]
     },
     {
       "key": "cc-intro enhc-page-intro|p|",
@@ -7448,9 +6964,16 @@
         "账户操作立即生效；其余设置修改后点击底部「保存」。API 密钥仅保存在本机凭据服务中，不会回显。"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
-      "hits": []
+      "coverage": "referenced",
+      "hits": [
+        {
+          "where": "components/patterns/SettingsPage/SPEC.md",
+          "token": "enhc-page-intro",
+          "kind": "component",
+          "id": "settingspage"
+        }
+      ]
     },
     {
       "key": "cc-groupDesc|p|",
@@ -7464,44 +6987,74 @@
         "账户操作立即生效。当前账户达到用量限额或密钥失效时，请求会按列表顺序自动切换到下一个可用账户。"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
-      "key": "cc-rowError|p|status",
+      "key": "cc-accountItem cc-accountItemActive|div|",
       "slot": "settings.section",
       "count": 1,
-      "size": "564x18",
+      "size": "564x82",
+      "steps": [
+        "设置 · Command Code"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "missing",
+      "hits": []
+    },
+    {
+      "key": "cc-tabDot cc-tabDotOk|span|",
+      "slot": "settings.section",
+      "count": 1,
+      "size": "8x8",
+      "steps": [
+        "设置 · Command Code"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "covered",
+      "hits": [
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "tab",
+          "kind": "anchor",
+          "id": "会话头部页签（对话 / 轨迹 / 上下文）"
+        }
+      ]
+    },
+    {
+      "key": "cc-badge|span|",
+      "slot": "settings.section",
+      "count": 1,
+      "size": "64x19",
       "steps": [
         "设置 · Command Code"
       ],
       "texts": [
-        "用量获取失败 — client api: commandcode/report failed: Failed to fe"
+        "当前使用"
       ],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
-      "hits": [
-        {
-          "where": "components/feedback/EmptyState/SPEC.md",
-          "token": "status",
-          "kind": "component",
-          "id": "emptystate"
-        },
-        {
-          "where": "components/feedback/InlineNotice/SPEC.md",
-          "token": "status",
-          "kind": "component",
-          "id": "inlinenotice"
-        },
-        {
-          "where": "components/feedback/LoadingDots/SPEC.md",
-          "token": "status",
-          "kind": "component",
-          "id": "loadingdots"
-        }
-      ]
+      "coverage": "missing",
+      "hits": []
+    },
+    {
+      "key": "cc-accountItem|div|",
+      "slot": "settings.section",
+      "count": 1,
+      "size": "564x82",
+      "steps": [
+        "设置 · Command Code"
+      ],
+      "texts": [],
+      "arias": [],
+      "pluginOwned": false,
+      "coverage": "missing",
+      "hits": []
     },
     {
       "key": "cc-addButton|button|",
@@ -7513,25 +7066,50 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
-      "key": "cc-rowError|p|",
+      "key": "|p|",
       "slot": "settings.section",
       "count": 1,
-      "size": "288x36",
+      "size": "288x54",
       "steps": [
         "设置 · Command Code"
       ],
       "texts": [
-        "模型目录获取失败，暂时无法选择模型；已保存的设置仍会生效。"
+        "勾选要保留的模型，模型选择器就只列出这些；一个都不勾选时则显示全部模型。保存后，下次打开模型选择器生效。"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
-      "hits": []
+      "coverage": "referenced",
+      "hits": [
+        {
+          "where": "spec/00-overview.md",
+          "token": "p",
+          "kind": "spec",
+          "id": "00-overview"
+        },
+        {
+          "where": "spec/10-frame-layout.md",
+          "token": "p",
+          "kind": "spec",
+          "id": "10-frame-layout"
+        },
+        {
+          "where": "spec/11-slot-seats.md",
+          "token": "p",
+          "kind": "spec",
+          "id": "11-slot-seats"
+        },
+        {
+          "where": "spec/20-controls.md",
+          "token": "p",
+          "kind": "spec",
+          "id": "20-controls"
+        }
+      ]
     },
     {
       "key": "cc-selector|button|",
@@ -7543,8 +7121,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -7559,8 +7137,8 @@
         "已选 5 个模型"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -7575,8 +7153,8 @@
         "内置插件"
       ],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "components/layout/PanelHeader/panelheader.module.css",
@@ -7614,8 +7192,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -7635,8 +7213,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -7676,8 +7254,8 @@
       "arias": [
         "搜索插件"
       ],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -7715,8 +7293,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -7731,8 +7309,8 @@
         "会话插件"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -7747,8 +7325,8 @@
       "arias": [
         "选择要查看的 Agent 预设"
       ],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/controls/Switch",
@@ -7770,8 +7348,8 @@
         "标准模式（默认）"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/controls/Switch",
@@ -7791,8 +7369,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/surfaces/Card",
@@ -7812,8 +7390,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -7828,8 +7406,8 @@
         "组件"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-widgets",
@@ -7851,8 +7429,8 @@
         "管理右侧栏中的小组件。"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-widgets",
@@ -7874,8 +7452,8 @@
         "清空跨视图记录"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -7890,8 +7468,8 @@
         "—"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/feedback/EmptyState",
@@ -7913,8 +7491,8 @@
         "插件市场"
       ],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/30-tokens.md",
@@ -7954,8 +7532,8 @@
         "dsh-market"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -7970,8 +7548,8 @@
         "v1.66.5"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -7986,8 +7564,8 @@
         "本次全部忽略"
       ],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -8027,8 +7605,8 @@
         "申请收录插件 ↗"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -8041,8 +7619,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -8082,8 +7660,8 @@
         "发现"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -8105,8 +7683,8 @@
         "任务"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -8119,8 +7697,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -8133,8 +7711,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -8149,16 +7727,16 @@
           "id": "11-slot-seats"
         },
         {
+          "where": "spec/20-controls.md",
+          "token": "wrap",
+          "kind": "spec",
+          "id": "20-controls"
+        },
+        {
           "where": "spec/70-checklist.md",
           "token": "wrap",
           "kind": "spec",
           "id": "70-checklist"
-        },
-        {
-          "where": "components/controls/Button/button.module.css",
-          "token": "wrap",
-          "kind": "component",
-          "id": "button"
         }
       ]
     },
@@ -8172,8 +7750,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -8213,8 +7791,8 @@
         "全部 (4.4k)"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/controls/Pill",
@@ -8236,8 +7814,8 @@
       "arias": [
         "更多分类"
       ],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -8277,8 +7855,8 @@
         "任务完成通知"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -8293,8 +7871,8 @@
         "当 DSH 完成一次操作时，通过浏览器系统通知提醒你；可以用关键词规则精确控制哪些消息需要提醒。"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -8309,8 +7887,8 @@
         "未授权"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -8325,8 +7903,8 @@
         "暂无规则，所有已启用的完成状态都会通知。"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/feedback/EmptyState",
@@ -8346,8 +7924,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8367,8 +7945,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8390,8 +7968,8 @@
         "用量中心"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8411,8 +7989,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8434,8 +8012,8 @@
       "arias": [
         "刷新"
       ],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8457,8 +8035,8 @@
       "arias": [
         "关闭"
       ],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8480,8 +8058,8 @@
         "总览"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8503,8 +8081,8 @@
         "当前时间窗口的用量、累计总额、Token 活动热力图与趋势，一屏读完。"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8526,8 +8104,8 @@
         "天"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8546,11 +8124,11 @@
         "用量中心（插件）"
       ],
       "texts": [
-        "对比上一等长周期：总 Token +45.8% · 请求 +45.9%"
+        "对比上一等长周期：总 Token +66.0% · 请求 +66.0%"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8570,8 +8148,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8591,8 +8169,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8612,8 +8190,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8633,8 +8211,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8654,8 +8232,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8675,8 +8253,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8696,8 +8274,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8717,8 +8295,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8738,8 +8316,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8759,8 +8337,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/surfaces/Card",
@@ -8780,8 +8358,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8803,8 +8381,8 @@
         "上下文洞察"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8826,8 +8404,8 @@
       "arias": [
         "统计范围"
       ],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8851,8 +8429,8 @@
       "arias": [
         "关闭"
       ],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8872,8 +8450,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/surfaces/Card",
@@ -8895,8 +8473,8 @@
       "arias": [
         "近 7 天用量"
       ],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8916,8 +8494,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8937,8 +8515,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8957,11 +8535,11 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "179 tok/s"
+        "180 tok/s"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -8981,8 +8559,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/surfaces/Card",
@@ -9004,8 +8582,8 @@
         "按日期筛选"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "components/surfaces/Card",
@@ -9027,8 +8605,8 @@
       "arias": [
         "活跃度"
       ],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -9050,8 +8628,8 @@
       "arias": [
         "2026-09-20\n10 个活跃会话\n2511 步"
       ],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -9071,8 +8649,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -9092,8 +8670,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -9113,8 +8691,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -9134,8 +8712,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -9155,8 +8733,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -9178,8 +8756,8 @@
         "打开插件设置"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -9201,8 +8779,8 @@
         "会话"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -9221,11 +8799,11 @@
         "上下文洞察（插件）"
       ],
       "texts": [
-        "110"
+        "111"
       ],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -9247,8 +8825,8 @@
       "arias": [
         "搜索标题 / 目录 / 最后消息…"
       ],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -9270,8 +8848,8 @@
       "arias": [
         "分组"
       ],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
@@ -9291,35 +8869,14 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "plugins/dsh-usage-center",
           "token": "lc-",
           "kind": "anchor",
           "id": "插件 dsh-usage-center 的界面"
-        }
-      ]
-    },
-    {
-      "key": "lc-ov-running|span|",
-      "slot": "shell.overlay",
-      "count": 1,
-      "size": "7x7",
-      "steps": [
-        "上下文洞察（插件）"
-      ],
-      "texts": [],
-      "arias": [],
-      "coverage": "covered",
-      "pluginOwned": true,
-      "hits": [
-        {
-          "where": "spec/40-motion.md",
-          "token": "running",
-          "kind": "anchor",
-          "id": "运行中提示行（深度求索中…）"
         }
       ]
     },
@@ -9333,8 +8890,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -9354,8 +8911,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "components/data-display/MiniBar/SPEC.md",
@@ -9381,8 +8938,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": false,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/20-controls.md",
@@ -9402,8 +8959,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",
@@ -9443,8 +9000,8 @@
         "Auto review"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -9459,8 +9016,8 @@
         "EXP"
       ],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -9473,8 +9030,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -9494,8 +9051,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -9515,8 +9072,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -9536,8 +9093,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "covered",
       "pluginOwned": true,
+      "coverage": "covered",
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -9557,8 +9114,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -9571,8 +9128,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "missing",
       "pluginOwned": false,
+      "coverage": "missing",
       "hits": []
     },
     {
@@ -9585,8 +9142,8 @@
       ],
       "texts": [],
       "arias": [],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/10-frame-layout.md",
@@ -9626,8 +9183,8 @@
       "arias": [
         "新建终端 在会话工作区运行命令"
       ],
-      "coverage": "referenced",
       "pluginOwned": false,
+      "coverage": "referenced",
       "hits": [
         {
           "where": "spec/00-overview.md",

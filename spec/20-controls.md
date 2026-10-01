@@ -60,3 +60,17 @@
 - `CT-RC-14`：同一行相邻控件的水平间距取 8px，不同组之间取 16px。无权威数值：DSH 官方 CSS 只公开控件内部 padding 与 gap（如 Button 的 `gap 4px`），未公开控件之间的间距 token。本仓库建议 8 / 16，理由：8 符合 [OH] 的 4/8 倍数与 8vp 基线网格；16 为 [OH] 官方自检项「间距小于 16vp 判过挤」的通过下限。
 - `CT-MF-15`：相邻独立控件之间的垂直间距小于 16px 判过挤。[OH]
 - `CT-MF-16`：同一区域内所有同级控件的间距必须相等；逐个手写不同 margin 判为缺陷（自动判定：同级控件间距值集合不唯一）。[本仓库建议]
+
+## 6. 快捷键按键帽（ShortcutKeys）
+
+产品里有这个控件：新会话按钮行尾的 `Ctrl Alt N`、菜单项行尾的快捷键、工具提示里的按键。几何读自客户端 CSS 模块 `_keys_38b9q_1`（与 `_dot_1i3xo_2`、`_spinner_1i3xo_37` 同批），共三种形态：
+
+| 形态 | 几何 | 用在哪 |
+| --- | --- | --- |
+| 平排（默认） | `.keys`：`display:inline-flex` · `align-items:center` · `gap:3px` · `font-size:12px` · `line-height:16px` · `white-space:nowrap` · 色 `--dsw-alias-label-tertiary`；每枚 `.key` 只做居中与 `font:inherit`（**没有底色、没有圆角、没有内边距**）；`+` 是一枚 `.separator` | 左栏新会话按钮行尾（采集：19 × 16、12/16、rgb(129,133,140)、bg 透明、radius 0） |
+| 提示气泡 | `.tooltip`：`font-size:11px` · `line-height:14px` · `gap:2px`；`.tooltip .key`：`min-width:16px` · `height:16px` · `padding:0 2px` · `border-radius:4px` · 底 `--dsw-alias-tooltip-key-bg`（解析为 `color-mix(in srgb, var(--dsw-alias-tooltip-bg), white 18%)`，浅色即 #2c2c2e 混白 18%） | 工具提示里的按键 |
+| 连排 | `.joined`：`height:16px` · `padding:0 4px` · `border-radius:4px` · 底 `--dsw-alias-tooltip-key-bg`，内部 `.key` 去掉自己的底 | 需要把一组键画成一个整体时 |
+
+- `CT-MF-17`：按键帽只有这三种形态，不得自造第四种。平排形态**禁止**加底色或圆角——那是提示气泡形态的样子。判定：扫描平排按键帽上的 `background` / `border-radius`。
+- `CT-MF-18`：按钮行尾的快捷键提示平时不可见。产品的写法是 `newSessionShortcut { opacity: 0; pointer-events: none }`，`newSession:is(:hover, :focus-visible)` 时才 `opacity: 1`；同一时刻给按钮文字加 `mask-image: linear-gradient(90deg, #000 calc(100% - 16px), #0000)`，让被挤到的文字渐隐而不是硬截断。判定：常驻可见的快捷键提示判违规。
+- `CT-MF-19`：按键帽对辅助技术是装饰（产品把它包在 `aria-hidden="true"` 的容器里）；键位本身要能被读屏念到，就写在按钮的 `aria-keyshortcuts` 上——产品在两处这么做：搜索会话 `Control+Alt+K`、添加工作区 `Control+Alt+O`。

@@ -75,7 +75,7 @@ window.DSHShellParts.railLeft = function (ctx) {
         + '<button class="sh-new" type="button" data-action="new-session">'
         + glyph('新会话', 'new-chat')
         + '<span>新会话</span>'
-        + '<span class="sh-new__keys"><kbd>Ctrl</kbd><kbd>N</kbd></span>'
+        + '<span class="sh-new__keys" aria-hidden="true"><kbd>Ctrl</kbd><kbd class="sh-new__sep">+</kbd><kbd>N</kbd></span>'
         + '</button>'
 
         + '<nav class="sh-panels">' + panels + '</nav>'
