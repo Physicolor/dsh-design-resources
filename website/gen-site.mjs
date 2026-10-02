@@ -426,7 +426,11 @@ const next = banner + body
 
 if (process.argv.includes('--check')) {
   const current = existsSync(OUT) ? readFileSync(OUT, 'utf8') : ''
-  const strip = s => s.replace(/Generated at: [^\n]+/u, 'Generated at: X')
+  /* 时间戳出现两次：横幅里的 `Generated at:` 和数据体里的 `"generatedAt"`。
+   * 只擦横幅的话，这个检查永远报 stale——它自己就成了一个假的告警。 */
+  const strip = s => s
+    .replace(/Generated at: [^\n]+/u, 'Generated at: X')
+    .replace(/"generatedAt":"[^"]*"/u, '"generatedAt":"X"')
   if (strip(current) !== strip(next)) {
     console.error('website/js/data.js is stale — run: node website/gen-site.mjs')
     process.exit(1)
