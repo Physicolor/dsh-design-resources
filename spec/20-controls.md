@@ -10,8 +10,8 @@
 
 | 控件 | 尺寸与几何 |
 | --- | --- |
-| Button（默认） | 高 36px，padding 0 14px，gap 4px，border-radius 18px，字号 14px / 行高 22px |
-| Button `.sm` | 高 28px，padding 0 10px，border-radius 14px，字号 12px / 行高 18px |
+| Button（默认） | 高 36px，padding 0 14px，gap 4px，border-radius `--dsw-radius-md`（12px），字号 14px / 行高 22px |
+| Button `.sm` | 高 28px，padding 0 10px，border-radius `--dsw-radius-sm`（8px），字号 12px / 行高 18px |
 | Button 内图标容器 | 16×16 |
 | Switch | 36×20 |
 | Tag | 11px 胶囊 |
@@ -19,7 +19,9 @@
 | DisclosureRow | 24px 紧凑折叠行 |
 | FileTypeIcon | 28px 文件／文件夹图标 |
 
-- `CT-MF-01`：实现上述控件时必须复用官方几何，不得自定义高度、圆角、内边距或字号。判定：Button 计算高度只允许 36 或 28；圆角只允许 18 或 14；Switch 只允许 36×20。
+- `CT-MF-01`：实现上述控件时必须复用官方几何，不得自定义高度、圆角、内边距或字号。判定：Button 计算高度只允许 36 或 28；圆角只允许 12 或 8（`--dsw-radius-md` / `--dsw-radius-sm`）；Switch 只允许 36×20。
+
+  [已知偏差] 本节此前记的是「圆角只允许 18 或 14」，来自 `%DSH_HOME%/profiles` 里那份**过期的 primitives 副本**。产品实际加载的 `app.asar` 内 `Button.module.css` 写的是 `border-radius: var(--dsw-radius-md)`（12px），`.sm` 用 `var(--dsw-radius-sm)`（8px），与官方 `docs/ui-radius.md` 的六档（4/8/12/16/20/28）一致。新写界面取档位值；沿用官方控件时不要改它的几何。
 - `CT-MF-02`：Button 内图标容器固定 16×16；图标不得改变按钮高度（不允许因图标更大而抬高行高）。
 - `CT-MF-03`：FileTypeIcon 固定 28px，不得缩放到列表行高之下；行高不足时调整行高，不缩图标。
 

@@ -115,6 +115,19 @@ function mdToHtml(md) {
       continue
     }
 
+    /* `<!-- component: id | caption -->` reuses a component's own demo.html as a
+     * live specimen inside a guide. Guides are supposed to show the pattern
+     * working, not describe it — and the component demos already exist, so the
+     * guide points at one instead of shipping a second copy that drifts. */
+    const componentRef = /^<!--\s*component:\s*([\w-]+)\s*(?:\|\s*(.*?))?\s*-->$/u.exec(line.trim())
+    if (componentRef !== null) {
+      html.push('<figure class="demo"><div class="demo__stage" data-inline-demo="component/' + esc(componentRef[1]) + '"></div>'
+        + (componentRef[2] === undefined || componentRef[2] === '' ? '' : '<figcaption>' + inline(componentRef[2]) + '</figcaption>')
+        + '</figure>')
+      i++
+      continue
+    }
+
     const heading = /^(#{1,4})\s+(.*)$/u.exec(line)
     if (heading !== null) {
       const level = heading[1].length
@@ -316,6 +329,8 @@ function loadSpecs() {
         short: meta.short,
         shortEn: meta.shortEn,
         group: meta.group,
+        /* 卡片上要有内容摘要而不是字数：读者挑的是「这一页解决什么问题」。 */
+        summary: firstParagraph(md),
         html,
         chars: md.length,
       }
@@ -335,6 +350,81 @@ function loadDemos() {
     out[basename(f, '.html')] = readFileSync(join(dir, f), 'utf8')
   }
   return out
+}
+
+/* ── guides ────────────────────────────────────────────────────────── */
+
+/**
+ * Guide presentation metadata.
+ *
+ * A guide answers a question an author actually has ("my plugin needs a
+ * settings page — what now?"), so the navigation names the question, not the
+ * file. `group` decides which navigation branch it sits in.
+ */
+const GUIDE_GROUPS = {
+  start: { zh: '开始这里', en: 'Start' },
+  principles: { zh: '设计原则', en: 'Principles' },
+  patterns: { zh: '界面模式', en: 'Patterns' },
+  integration: { zh: '座位与集成', en: 'Seats and integration' },
+  verify: { zh: '自检与来源', en: 'Verify and sources' },
+}
+
+/**
+ * Read one guide's short metadata out of its own prose.
+ *
+ * The guide is the source of truth: title from the `# heading`, the one-line
+ * summary from the first blockquote, the task list from the first `## 任务`
+ * section. Nothing is duplicated into a manifest that then drifts.
+ * @param md - markdown source.
+ * @returns { title, summary, tasks }.
+ */
+function guideMeta(md) {
+  const title = titleOf(md, '')
+  const quote = /^>\s*(.+)$/mu.exec(md)
+  const summary = quote === null ? '' : quote[1].trim()
+  const tasks = []
+  let inside = false
+  for (const line of md.split(/\r?\n/u)) {
+    const head = /^##\s+(.+?)\s*$/u.exec(line)
+    if (head !== null) { inside = /任务|读这一页能做什么|What this page gets you/u.test(head[1]); continue }
+    if (!inside) continue
+    const item = /^\s*[-*]\s+(.+)$/u.exec(line)
+    if (item !== null) tasks.push(item[1].trim())
+  }
+  return { title, summary, tasks }
+}
+
+/**
+ * Load every guide document.
+ * @returns guide records in filename order.
+ */
+function loadGuides() {
+  const dir = join(ROOT, 'guides')
+  if (!existsSync(dir)) return []
+  return readdirSync(dir)
+    .filter(f => f.endsWith('.md'))
+    .sort()
+    .map(f => {
+      const md = readFileSync(join(dir, f), 'utf8')
+      const id = basename(f, '.md')
+      const groupKey = /^0\d/u.test(id) ? 'start'
+        : /^1\d/u.test(id) ? 'principles'
+          : /^2\d/u.test(id) ? 'patterns'
+            : /^3\d/u.test(id) ? 'integration' : 'verify'
+      const meta = guideMeta(md)
+      const group = GUIDE_GROUPS[groupKey]
+      return {
+        id,
+        group: groupKey,
+        groupLabel: group.zh,
+        groupLabelEn: group.en,
+        title: meta.title,
+        summary: meta.summary,
+        tasks: meta.tasks,
+        html: mdToHtml(md).replace(/<h1([^>]*)>\s*\d+\s*/u, '<h1$1>'),
+        chars: md.length,
+      }
+    })
 }
 
 /**
@@ -362,7 +452,15 @@ const slots = readJson('data/slots.json', { seats: [], counts: {} })
 const tokens = readJson('data/tokens.json', { palette: {}, light: {}, dark: {}, resolved: { light: {}, dark: {} } })
 const components = loadComponents()
 const specs = loadSpecs()
+const guides = loadGuides()
 const i18n = loadI18n()
+
+/* 指南里用 `<!-- component: id -->` 复用组件自己的 demo：把每份组件 demo 也放进 demos，
+ * 键名 `component/<id>`，站点挂载时和其它 demo 走同一条路。 */
+const demos = loadDemos()
+for (const item of components.items) {
+  if (typeof item.demo === 'string' && item.demo !== '') demos['component/' + item.id] = item.demo
+}
 
 const data = {
   generatedAt: new Date().toISOString(),
@@ -371,9 +469,11 @@ const data = {
     seats: slots.seats?.length ?? 0,
     components: components.items.length,
     specs: specs.length,
+    guides: guides.length,
     palette: Object.keys(tokens.palette ?? {}).length,
     aliases: Object.keys(tokens.light ?? {}).length,
     darkAliases: Object.keys(tokens.dark ?? {}).length,
+    scale: Object.keys(tokens.scale ?? {}).length,
   },
   source: {
     icons: icons.source ?? null,
@@ -381,7 +481,10 @@ const data = {
     slots: slots.source ?? null,
   },
   i18n,
-  demos: loadDemos(),
+  demos,
+  /* 指南（guides/）：面向作者任务的内容层，和规范正文分开——规范回答「规则是什么」，
+   * 指南回答「我现在该做什么」。 */
+  guides,
   /* The reproduction draws its chrome from the live product: these are the SVGs
    * the real sidebar and header render, harvested by scripts/capture-dsh.mjs. */
   chrome: readJson('docs/reference/chrome.json', { icons: {}, header: [] }),

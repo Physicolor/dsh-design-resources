@@ -31,7 +31,19 @@
         "icons": "Official icon set",
         "tokens": "Design tokens"
     },
-    "groups": { "basics": "Foundations", "visual": "Visual language", "quality": "Quality" },
+    "groups": { "basics": "Foundations", "visual": "Visual language", "quality": "Quality", "start": "Start here", "principles": "Principles", "patterns": "Patterns", "integration": "Seats and integration", "verify": "Verify and sources" },
+    "markers": {
+        "source": "Official source",
+        "sourceNote": "A rule, token or component implementation from the official repository, with its file path.",
+        "measured": "Runtime measurement",
+        "measuredNote": "Geometry and pixels measured on the running Harness here; the method is reproducible.",
+        "external": "Borrowed principle",
+        "externalNote": "A transferable principle from Apple or Huawei guidance — the judgement, not the platform numbers.",
+        "proposed": "Proposed here",
+        "proposedNote": "Where the official material is silent, this repository gives the value and the reason.",
+        "deviation": "Known deviation",
+        "deviationNote": "Where the official UI contradicts itself or its own rules. Recorded, not promoted to best practice."
+    },
     "categories": {
         "layout": "Layout and organization",
         "controls": "Actions and input",
@@ -52,8 +64,15 @@
         "eyebrow": "DeepSeek Design Resources",
         "title": "Making community plugins<br>look like one product.",
         "lede": "By the fifth plugin, the interface stops looking like one product: buttons at different heights, every corner radius its own, a dialog that animates here and not there; and when two plugins both want the bottom of the sidebar, whichever loaded first sits on top. The product gives plugins somewhere to run, but no shared answer to how big a control is, how much space goes between two of them, how long a transition runs, or how to draw an icon. This resource supplies it: every number carries its source, and every component is ready to use.",
-        "sectionTitle": "What is in here",
-        "sectionHint": "Collected by scripts from a running harness; everything is reproducible",
+        "sectionTitle": "Go by task",
+        "sectionHint": "Find the task you have in hand, then read down from there",
+        "indexTitle": "Data and indexes",
+        "indexHint": "The raw material behind the specs: component sources, the seat directory, the icon set, tokens",
+        "markersTitle": "Why these numbers hold up",
+        "runtimeTitle": "Runtime in use here",
+        "runtime": "This machine runs @deepseek-ai/dsh-* 0.2.0-rc.2 (nightly channel, Windows x64 10.0.26200); data was collected 2026-10-01 to 10-02 at a 1570x905 viewport. The public repository github.com/deepseek-ai/deepseek-harness is also at 0.2.0-rc.2 on master — the version matches, but master is a floating ref, not this build snapshot.",
+        "verifyTitle": "How to verify",
+        "verify": "npm run build runs the structural, data and browser passes; npm run audit clicks every control in every demo in a real browser, checking for escaping overlays, containers blown open, and clicks that scroll the page. Method and calibers: see Verify and sources.",
         "cards": {
             "spec": { "title": "Spec", "body": "Page skeletons, controls, tokens, motion, icons, accessibility, and a checklist to run before you submit.", "note": "read this layer first" },
             "components": { "title": "Reusable source", "body": "React components sorted by category, built on official tokens, each with where its numbers came from and when to use it.", "note": "take it and go" },

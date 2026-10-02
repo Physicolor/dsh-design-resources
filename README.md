@@ -37,7 +37,8 @@ This repository supplies the missing layer. Three rules:
 | --- | --- |
 | [`spec/`](spec/) | 10 documents: frame layout, seat selection, controls, tokens, motion, icons, accessibility, checklist, conflict arbitration |
 | [`rules/`](rules/) | `rules.json` / `rules.csv` — the checklist in machine-readable form, for CI gates and auditors |
-| [`data/`](data/) | Real data collected from a running harness: icon inventory, 90 seats, 113 semantic tokens |
+| [`guides/`](guides/) | Task-oriented guides: start here, official basis, principles, five UI patterns, seats and integration, verify and sources |
+| [`data/`](data/) | Collected from a running harness: 75 icons, 90 seats, tokens (palette 77 / light aliases 115 / dark aliases 119 / scale and type 207) and the element inventory. Calibers and capture times: [`docs/FACTS-2026-10-02.md`](docs/FACTS-2026-10-02.md) |
 | [`icons/`](icons/) | 75 official icons plus brand marks, exported verbatim (see [`icons/README.md`](icons/README.md)) |
 | [`components/`](components/) | Reusable-source knowledge base: categorised, dependency-free React built on official tokens |
 | [`website/`](website/) | The live gallery: a three-column site where specimens render as native HTML, with search |

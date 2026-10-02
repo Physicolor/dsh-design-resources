@@ -9,7 +9,7 @@
             "summary": "一个 <button> 包装：四种视觉家族 + 两种尺寸 + 可选前置图标。；零依赖，只用到 react 和 CSS Modules",
             "whenToUse": "触发一个动作：提交、保存、删除、打开菜单、重试。；工具条里需要一组视觉权重明确的动作时，用 ghost + toolbar 分层",
             "whenNotToUse": "只是跳转链接：用 <a>，按钮的语义是「执行」不是「导航」。；切换开关状态：用 Switch。；在若干互斥选项间选择：用 Pill 或 SegmentedControl，按钮不表达「选中」。；静态标签：用 Tag。；一个动作还没准备好时不要把 primary 换成 ghost 来「禁用」——直接 disabled，否则用户无法分辨「不能用」和「不是主操作」",
-            "geometrySource": "全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/Button.module.css；height: 36px ← .md；padding: 0 14px、gap: 4px、border-radius: 18px、font-size: 14px、line-height: 22px ← .button；height: 28px、font-size: 12px、line-height: 18px、padding: 0 10px、border-radius: 14px ← .sm；图标容器 16×16 ← .icon",
+            "geometrySource": "全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/Button.module.css；height: 36px ← .md；padding: 0 14px、gap: 4px、border-radius: var(--dsw-radius-md)（12px）、font-size: 14px、line-height: 22px ← .button；height: 28px、font-size: 12px、line-height: 18px、padding: 0 10px、border-radius: var(--dsw-radius-sm)（8px） ← .sm；图标容器 16×16 ← .icon",
             "tags": [
                 "控件",
                 "零依赖",

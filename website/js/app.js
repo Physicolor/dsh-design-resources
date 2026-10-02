@@ -10,6 +10,8 @@
 
     var D = window.DSHDR || {}
     var SPECS = D.specs || []
+    /* 指南：按作者任务写的内容层（guides/）。规范回答「规则是什么」，指南回答「我现在该做什么」。 */
+    var GUIDES = D.guides || []
     var COMPONENTS = D.components || []
     var SEATS = D.seats || []
     var ICONS = D.icons || []
@@ -429,28 +431,40 @@
      */
     function navModel(path) {
         var groups = []
+        var guidesIn = function (group) { return GUIDES.filter(function (g) { return g.group === group }) }
+        var guideLink = function (g) {
+            return { href: href('/guide/' + g.id), label: g.title, active: path === '/guide/' + g.id }
+        }
+
+        /* 导航按作者的任务排，不按文件类型排：先「我在哪一步」，再「规则在哪」。
+         * 分组标题就是任务名，因此不再需要「概览 / 设计规范 / 资源」这种按内容类型分的桶。 */
         groups.push({
-            id: 'overview',
-            title: t('index.overview'),
-            links: [
-                { href: href('/'), label: t('index.home'), active: path === '/' },
+            id: 'start',
+            title: t('groups.start'),
+            links: guidesIn('start').map(guideLink).concat([
                 { href: href('/why'), label: t('index.why'), active: path === '/why' },
-            ],
+            ]),
         })
 
-        if (SPECS.length > 0) {
-            var byGroup = { basics: [], visual: [], quality: [] }
-            SPECS.forEach(function (spec) { (byGroup[spec.group] || byGroup.basics).push(spec) })
-            Object.keys(byGroup).forEach(function (key) {
-                if (byGroup[key].length === 0) return
-                groups.push({
-                    id: 'spec-' + key,
-                    title: t('groups.' + key),
-                    links: byGroup[key].map(function (spec) {
-                        return { href: href('/spec/' + spec.id), label: specTitle(spec), active: path === '/spec/' + spec.id }
-                    }),
-                })
+        if (guidesIn('principles').length > 0) {
+            groups.push({ id: 'principles', title: t('groups.principles'), links: guidesIn('principles').map(guideLink) })
+        }
+
+        /* 基础规范：规则正文（10 骨架 / 11 座位 / 20 控件 / 30 令牌 / 40 动效 / 50 图标 / 60 可访问性）。
+         * 总览归到「开始这里」，自检与冲突归到「自检与来源」。 */
+        var basics = SPECS.filter(function (s) { return ['10-frame-layout', '11-slot-seats', '20-controls', '30-tokens', '40-motion', '50-icons', '60-accessibility'].indexOf(s.id) !== -1 })
+        if (basics.length > 0) {
+            groups.push({
+                id: 'spec-basics',
+                title: t('groups.basics'),
+                links: basics.map(function (spec) {
+                    return { href: href('/spec/' + spec.id), label: specTitle(spec), active: path === '/spec/' + spec.id }
+                }),
             })
+        }
+
+        if (guidesIn('patterns').length > 0) {
+            groups.push({ id: 'patterns', title: t('groups.patterns'), links: guidesIn('patterns').map(guideLink) })
         }
 
         var byCategory = {}
@@ -493,14 +507,24 @@
         }
 
         groups.push({
-            id: 'resources',
-            title: t('index.resources'),
-            links: [
-                { href: href('/inventory'), label: t('index.inventory'), active: path === '/inventory' },
+            id: 'integration',
+            title: t('groups.integration'),
+            links: guidesIn('integration').map(guideLink).concat([
                 { href: href('/seats'), label: t('index.seats'), active: path === '/seats' },
+                { href: href('/inventory'), label: t('index.inventory'), active: path === '/inventory' },
+            ]),
+        })
+
+        var verifySpecs = SPECS.filter(function (s) { return ['70-checklist', '80-conflicts'].indexOf(s.id) !== -1 })
+        groups.push({
+            id: 'verify',
+            title: t('groups.verify'),
+            links: guidesIn('verify').map(guideLink).concat(verifySpecs.map(function (spec) {
+                return { href: href('/spec/' + spec.id), label: specTitle(spec), active: path === '/spec/' + spec.id }
+            })).concat([
                 { href: href('/icons'), label: t('index.icons'), active: path === '/icons' },
                 { href: href('/tokens'), label: t('index.tokens'), active: path === '/tokens' },
-            ],
+            ]),
         })
 
         return groups
@@ -891,19 +915,39 @@
             + '<section class="section">'
             + '<div class="section__head"><h2 class="section__title">' + esc(t('home.sectionTitle')) + '</h2>'
             + '<span class="section__hint">' + esc(t('home.sectionHint')) + '</span></div>'
+            + '<div class="cards">' + GUIDES.map(function (guide) {
+                return '<a class="card" href="' + esc(href('/guide/' + guide.id)) + '">'
+                    + '<p class="card__meta">' + esc(t('groups.' + guide.group)) + '</p>'
+                    + '<p class="card__title">' + esc(guide.title) + '</p>'
+                    + '<p class="card__body">' + esc(guide.summary) + '</p>'
+                    + (guide.tasks.length === 0 ? '' : '<ul class="card__tasks">' + guide.tasks.slice(0, 3).map(function (task) {
+                        return '<li>' + esc(task) + '</li>'
+                    }).join('') + '</ul>')
+                    + '</a>'
+            }).join('') + '</div></section>'
+            + '<section class="section">'
+            + '<div class="section__head"><h2 class="section__title">' + esc(t('home.indexTitle')) + '</h2>'
+            + '<span class="section__hint">' + esc(t('home.indexHint')) + '</span></div>'
             + '<div class="cards">'
             + card('home.cards.spec', (s.specs || 0) + ' ' + t('components.count'), '/spec')
             + card('home.cards.components', (s.components || 0) + ' ' + t('components.count'), '/components')
             + card('home.cards.seats', (s.seats || 0) + ' ' + t('components.count'), '/seats')
             + card('home.cards.icons', (s.icons || 0) + ' ' + t('components.count'), '/icons')
             + card('home.cards.tokens', (s.aliases || 0) + ' ' + t('components.count'), '/tokens')
-            + card('home.cards.why', '', '/why')
             + '</div></section></div>'
 
+        /* 右栏给的是「这里的东西凭什么可信」：五种来源标记的含义 + 本机运行版本。
+         * 采集时间、文件字数这类元数据不占右栏——读者判断内容时用不上它们。 */
         renderAside([
-            { title: t('tokens.sourceTitle'), html: p(t('tokens.source')) },
-            { title: t('tokens.depthTitle'), html: p(t('tokens.depth')) },
-            { title: t('footer.generated'), html: p(String(D.generatedAt || '').slice(0, 19).replace('T', ' ')) },
+            {
+                title: t('home.markersTitle'),
+                html: '<ul class="markers">' + ['source', 'measured', 'external', 'proposed', 'deviation'].map(function (key) {
+                    return '<li><span class="marker marker--' + key + '">' + esc(t('markers.' + key)) + '</span> '
+                        + esc(t('markers.' + key + 'Note')) + '</li>'
+                }).join('') + '</ul>',
+            },
+            { title: t('home.runtimeTitle'), html: p(t('home.runtime')) },
+            { title: t('home.verifyTitle'), html: p(t('home.verify')) },
         ])
     }
 
@@ -974,6 +1018,60 @@
     }
 
     /**
+     * A guide page: one author task, start to finish.
+     *
+     * Guides exist because a spec answers "what is the rule" while an author
+     * arrives with "my plugin needs to add a row to the settings page — what do
+     * I do". Same evidence, different order: task first, rule second.
+     * @param id - guide id, or null for the index.
+     */
+    function pageGuide(id) {
+        if (id == null || GUIDES.filter(function (g) { return g.id === id }).length === 0) { pageNotFound(); return }
+        var guide = GUIDES.filter(function (g) { return g.id === id })[0]
+
+        var outline = []
+        var re = /<h([23]) id="([^"]+)">([^<]*)<\/h\1>/gu
+        var m
+        while ((m = re.exec(guide.html)) !== null) outline.push({ level: Number(m[1]), id: m[2], text: m[3] })
+
+        var body = guide.html
+        var head = /<h1 id="h\d+">([\s\S]*?)<\/h1>/u.exec(body)
+        var titleHtml = head === null ? esc(guide.title) : head[1]
+        if (head !== null) body = body.slice(0, head.index) + body.slice(head.index + head[0].length)
+
+        var siblings = GUIDES.filter(function (g) { return g.group === guide.group && g.id !== guide.id })
+
+        mainEl.innerHTML = '<div class="main-inner">'
+            + '<div class="doc-head">'
+            + '<p class="doc-head__eyebrow">' + esc(t('groups.' + guide.group)) + '</p>'
+            + '<h1 class="doc-head__title">' + titleHtml + '</h1>'
+            + (guide.summary === '' ? '' : '<p class="doc-head__lede">' + esc(guide.summary) + '</p>')
+            + (guide.tasks.length === 0 ? '' : '<ul class="doc-head__tasks">' + guide.tasks.map(function (task) {
+                return '<li>' + esc(task) + '</li>'
+            }).join('') + '</ul>')
+            + '</div>'
+            + '<article class="prose">' + body + '</article>'
+            + '</div>'
+
+        /* 右栏只在能提供独立价值时出现：页内目录（长文才给）与同组的下一条任务。
+         * 不复制正文、不放字数、不放采集时间。 */
+        renderAside([
+            outline.length >= 4 ? {
+                title: t('spec.outline'),
+                html: '<ul class="outline">' + outline.map(function (item) {
+                    return '<li class="outline__item outline__item--h' + item.level + '">'
+                        + '<a href="' + esc(href('/guide/' + guide.id)) + '" data-jump="' + esc(item.id) + '">'
+                        + esc(item.text) + '</a></li>'
+                }).join('') + '</ul>',
+            } : null,
+            siblings.length > 0 ? {
+                title: t('groups.' + guide.group),
+                html: ulLinks(siblings.map(function (g) { return { label: g.title, hash: '/guide/' + g.id } })),
+            } : null,
+        ].filter(Boolean))
+    }
+
+    /**
      * The spec list, or one document.
      * @param id - document id, when selected.
      */
@@ -985,7 +1083,7 @@
                     return '<a class="card" href="' + esc(href('/spec/' + spec.id)) + '">'
                         + '<p class="card__meta">' + esc(t('groups.' + spec.group)) + ' · ' + String(i + 1).padStart(2, '0') + '</p>'
                         + '<p class="card__title">' + esc(specTitle(spec)) + '</p>'
-                        + '<p class="card__body">' + spec.chars + ' ' + esc(t('spec.chars')) + '</p>'
+                        + '<p class="card__body">' + esc(spec.summary || '') + '</p>'
                         + '</a>'
                 }).join('') + '</div></div>'
             renderAside([{ title: t('spec.relatedNote'), html: p(t('spec.lede')) }])
@@ -1432,6 +1530,7 @@
 
         if (path === '/') pageHome()
         else if (path === '/why') pageWhy()
+        else if (parts[0] === 'guide') pageGuide(parts[1] || null)
         else if (parts[0] === 'spec') pageSpec(parts[1] || null)
         else if (parts[0] === 'components') pageComponents(parts[1] || null)
         else if (parts[0] === 'component') pageComponents(parts[1] || null)

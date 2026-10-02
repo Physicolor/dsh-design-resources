@@ -31,7 +31,19 @@
         "icons": "官方图标集",
         "tokens": "设计令牌"
     },
-    "groups": { "basics": "基础", "visual": "视觉", "quality": "质量" },
+    "groups": { "basics": "基础规范", "visual": "视觉", "quality": "质量", "start": "开始这里", "principles": "设计原则", "patterns": "界面模式", "integration": "座位与集成", "verify": "自检与来源" },
+    "markers": {
+        "source": "官方源码",
+        "sourceNote": "官方仓库里的规则、token、组件实现（附文件路径）。",
+        "measured": "运行时实测",
+        "measuredNote": "在本机运行中的 Harness 上采集的几何与像素，方法可复现。",
+        "external": "外部指南借鉴",
+        "externalNote": "Apple / 华为官方设计指南里可迁移的原则，只借判断方式，不搬平台数值。",
+        "proposed": "本仓库建议",
+        "proposedNote": "官方没有明文的地方，本仓库给的取值与理由。",
+        "deviation": "已知偏差",
+        "deviationNote": "官方界面自身互相矛盾或与官方规则不符之处，记录，不当作最佳实践。"
+    },
     "categories": {
         "layout": "布局和组织",
         "controls": "操作与输入",
@@ -80,8 +92,15 @@
         "eyebrow": "DeepSeek Design Resources",
         "title": "让社区的插件<br>看起来像同一个产品。",
         "lede": "装到第五个插件，界面就开始不像一个产品：按钮高低不一，圆角各画各的，这个弹窗有动画那个没有；两个插件都想待在侧栏底部时，谁在上面取决于谁先加载。产品给了插件能跑起来的接口，却没给「按钮多大、间距多少、动效多长、图标怎么画」的共用答案。这份资源把它补上：每一条数值都写清出处，每个组件都能直接拿去用。",
-        "sectionTitle": "仓库里有什么",
-        "sectionHint": "全部由脚本从运行中的 Harness 采集，可以重新生成",
+        "sectionTitle": "按任务走",
+        "sectionHint": "先找到你手上这件事，再往下读",
+        "indexTitle": "数据与索引",
+        "indexHint": "规范正文之外的原始材料：组件源码、座位目录、图标集、令牌",
+        "markersTitle": "这里的数字凭什么可信",
+        "runtimeTitle": "本机运行版本",
+        "runtime": "本机运行的是 @deepseek-ai/dsh-* 0.2.0-rc.2（nightly 通道，Windows x64 10.0.26200）；数据采集于 2026-10-01 至 10-02，采集视口 1570×905。官方公开仓库 github.com/deepseek-ai/deepseek-harness 的 master 也是 0.2.0-rc.2——版本号一致，但 master 是浮动引用，不等于本机这个构建快照。",
+        "verifyTitle": "怎么验证",
+        "verify": "npm run build 跑结构、数据与浏览器渲染三层检查；npm run audit 在真实浏览器里逐页点开每个演示的每个控件，查浮层逃逸、容器被撑高、点击导致滚动。采集方法与口径见「自检与来源」。",
         "cards": {
             "spec": { "title": "规范", "body": "页面骨架、控件、令牌、动效、图标、无障碍，以及提交前的自检清单。", "note": "先把这一层读完再动手" },
             "components": { "title": "组件源码", "body": "按类别归档的 React 组件，只用官方令牌，并写明尺寸出处和什么时候该用它。", "note": "拿走就能用" },

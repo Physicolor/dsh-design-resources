@@ -747,6 +747,46 @@ code, .mono { font-family: var(--site-font-mono); font-size: 12px; }
     font-weight: 600;
     letter-spacing: -0.02em;
 }
+/* 指南页头：一句摘要 + 「读完能做什么」。这两样是导航卡片要显示的东西，
+   写在页头就等于写在卡片上，不用再维护第二份。 */
+.doc-head__lede {
+    margin: var(--site-s3) 0 0;
+    max-width: 72ch;
+    font-size: var(--site-text-card);
+    line-height: 1.6;
+    color: var(--site-label-2);
+}
+.doc-head__tasks {
+    margin: var(--site-s4) 0 0;
+    padding-left: 1.1em;
+    font-size: var(--site-text-note);
+    line-height: 1.7;
+    color: var(--site-label-2);
+}
+.card__tasks {
+    margin: var(--site-s2) 0 0;
+    padding-left: 1.1em;
+    font-size: var(--site-text-note);
+    color: var(--site-label-2);
+}
+.card__tasks li + li { margin-top: 2px; }
+
+/* 来源标记：首页右栏用来说明「这里的数字凭什么可信」 */
+.markers { list-style: none; margin: 0; padding: 0; font-size: var(--site-text-note); color: var(--site-label-2); }
+.markers li + li { margin-top: var(--site-s2); }
+.marker {
+    display: inline-block;
+    margin-right: 4px;
+    padding: 0 6px;
+    border-radius: 5px;
+    background: var(--site-bg-subtle);
+    color: var(--site-label);
+    font-size: var(--site-text-micro);
+}
+.marker--source { background: var(--site-accent-soft); color: var(--site-accent-ink); }
+.marker--measured { background: var(--site-good-soft); color: var(--site-good); }
+.marker--external { background: var(--site-warn-soft); color: var(--site-warn); }
+.marker--deviation { background: var(--site-bad-soft); color: var(--site-bad); }
 /* the article no longer starts with its own h1, so the first section must not
  * open with a section-sized top margin */
 .prose > h2:first-child { margin-top: 0; }

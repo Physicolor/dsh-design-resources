@@ -33,7 +33,8 @@ DeepSeek Harness 给插件作者提供了**技术栈与开发规范**：Cordis �
 | --- | --- |
 | [`spec/`](spec/) | 10 篇规范文档：主页面骨架、座位选择、控件、令牌、动效、图标、可访问性、自检清单、冲突裁决 |
 | [`rules/`](rules/) | `rules.json` / `rules.csv`——自检清单的机器可读形式，供 CI 与审计器消费 |
-| [`data/`](data/) | 从运行中的 Harness 采集的真实数据：图标清单、90 个座位、113 个语义令牌 |
+| [`guides/`](guides/) | 面向作者任务的指南：开始这里、官方依据、设计原则、五个界面模式、座位与集成、自检与来源 |
+| [`data/`](data/) | 从运行中的 Harness 采集的数据：75 个图标、90 个座位、令牌（色板 77 / 浅色别名 115 / 深色别名 119 / 尺度与排版 207）、元素清单。口径与采集时间见 [`docs/FACTS-2026-10-02.md`](docs/FACTS-2026-10-02.md) |
 | [`icons/`](icons/) | 75 个官方图标 + 品牌标识，SVG 原样导出（来源见 [`icons/README.md`](icons/README.md)） |
 | [`components/`](components/) | 可复用源码知识库：分类归档、零依赖、只用官方令牌的 React 实现 |
 | [`website/`](website/) | 实况组件画廊：Apple 风格三栏站，组件用原生 HTML 渲染，支持检索 |
