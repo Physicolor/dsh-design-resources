@@ -318,16 +318,32 @@ body[data-resizing] { cursor: col-resize; user-select: none; }
 }
 .index__group:first-child .index__title { margin-top: 0; }
 
-.index__row { width: 100%; text-align: left; font: inherit; cursor: pointer; }
+/* A branch row is a button, and a button brings its own border and background.
+ * Both must go: closed branches have to read exactly like their leaf siblings
+ * (text + chevron, nothing else). Only an *open* branch is filled, and it uses
+ * the same pill as the current page — one highlight language for the tree. */
+.index__row {
+    width: 100%;
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+    border: 0;
+    background: transparent;
+}
 
 /* Hover belongs to the row, not to the label: a highlight that stops before the
  * chevron reads as if the arrow were a separate control (it is not — the whole
  * row folds the branch). */
 .index__row:hover { background: var(--site-bg-subtle); color: var(--site-label); }
 
+/* 展开着的那一支：与「当前页」同一套胶囊，只是不加粗——加粗留给真正所在的那一行 */
+.index__branch[data-open='true'] > .index__row { background: var(--site-accent-soft); color: var(--site-accent-ink); }
+.index__branch[data-open='true'] > .index__row:hover { background: var(--site-accent-soft); }
+
 .index__chevron { display: block; flex: none; width: 12px; height: 12px; margin-left: 2px; color: var(--site-label-3); transition: transform var(--site-dur) var(--site-ease); }
 .index__chevron svg { width: 100%; height: 100%; display: block; }
 .index__branch[data-open='false'] .index__chevron { transform: rotate(-90deg); }
+.index__branch[data-open='true'] > .index__row .index__chevron { color: currentColor; }
 
 .index__children {
     display: grid;

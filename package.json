@@ -46,6 +46,7 @@
         "collect": "node scripts/collect-icons.mjs && node scripts/collect-tokens.mjs && node scripts/collect-slots.mjs && node scripts/gen-rules.mjs",
         "scan": "node scripts/scan-ui.mjs",
         "capture": "node scripts/capture-dsh.mjs",
+        "audit": "node scripts/audit-demos.mjs",
         "rules": "node scripts/gen-rules.mjs",
         "refs": "node scripts/check-refs.mjs",
         "site": "node website/gen-site.mjs",

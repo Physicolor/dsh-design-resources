@@ -719,9 +719,19 @@
      * Appended AFTER the embedded document so it wins the tie: the document
      * still owns its canvas colour, while the page owns the type and the text
      * colour, and no extra frame is wrapped around it.
+     *
+     * `position: relative` + `contain: layout` are load-bearing, not decoration.
+     * A shadow root is not a containing block by itself, so a demo that writes
+     * `position: fixed; inset: 0` (Modal, Toast) covered the *whole site window*
+     * with its mask, and a demo's visually-hidden checkbox landed at the top of
+     * the document — clicking its label then scrolled a column by ~950px, which
+     * reads as "the page went blank". Layout containment makes the stage the
+     * containing block for absolutely and fixed positioned descendants, so a
+     * demo's overlays stay inside the demo. Verified in a real browser: see
+     * `scripts/audit-demos.mjs`.
      */
     var SHADOW_RESET = '<style>'
-        + ':host{display:block;font-family:var(--site-font);font-size:var(--site-text-body);color:var(--site-label)}'
+        + ':host{display:block;position:relative;contain:layout;font-family:var(--site-font);font-size:var(--site-text-body);color:var(--site-label)}'
         + ':host *{box-sizing:border-box}'
         + '</style>'
 

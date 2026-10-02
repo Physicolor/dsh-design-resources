@@ -586,6 +586,29 @@ if (browserPath === null) {
      * without a word, so the demo silently loses that rule. */
     check('no selector was rewritten into an invalid one', await evaluate('(function(){var bad=0;Array.prototype.forEach.call(document.querySelectorAll("[data-demo-id],[data-inline-demo]"),function(host){if(!host.shadowRoot)return;Array.prototype.forEach.call(host.shadowRoot.querySelectorAll("style"),function(sheet){if(/[\\w#.-]:host/u.test(sheet.textContent))bad++})});return bad===0})()'))
     check('breadcrumb with a back control', await evaluate(`document.querySelectorAll('.crumbs__back').length === 1 && document.querySelectorAll('.crumbs a').length >= 1`))
+
+    /* 演示是活的界面，而 shadow root 本身不是包含块：对话框演示里 `position: fixed;
+     * inset: 0` 的遮罩会盖住整个站点窗口，视觉隐藏的 checkbox 会被丢到文档顶端、
+     * 点它的标签就把某一栏滚走——两样都在真实浏览器里复现过（scripts/audit-demos.mjs）。
+     * 这里把不变量钉住：演示框必须是绝对/固定定位后代的包含块，且没有后代逃出它。
+     * 用对话框页当样本，因为那是唯一真的写 fixed 全铺遮罩的演示。 */
+    await goto(base + '#/component/modal')
+    const stageGuard = await evaluate(`(function(){
+      var host = document.querySelector('[data-demo-id]');
+      if (!host || !host.shadowRoot) return null;
+      var cs = getComputedStyle(host);
+      var box = host.getBoundingClientRect();
+      var worst = null;
+      Array.prototype.forEach.call(host.shadowRoot.querySelectorAll('*'), function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.width < 1 && r.height < 1) return;
+        var over = Math.max(box.left - r.left, r.right - box.right, box.top - r.top, r.bottom - box.bottom);
+        if (worst === null || over > worst) worst = over;
+      });
+      return { position: cs.position, contain: cs.contain, over: Math.round(worst === null ? 0 : worst) };
+    })()`)
+    check('demo stage contains its overlays', stageGuard !== null && stageGuard.position === 'relative' && stageGuard.contain.indexOf('layout') !== -1, JSON.stringify(stageGuard))
+    check('no demo element escapes its stage', stageGuard !== null && stageGuard.over <= 60, stageGuard === null ? 'n/a' : `worst overflow ${stageGuard.over}px`)
     check('index marks the open component', await evaluate(`document.querySelector('.index__link--sub[aria-current="page"]') !== null`))
     check('exactly one row is current', await evaluate(`document.querySelectorAll('.index__link[aria-current="page"]').length === 1`), String(await evaluate(`document.querySelectorAll('.index__link[aria-current="page"]').length`)))
     check('nav groups are captions, not toggles', await evaluate(`document.querySelectorAll('.index__head').length === 0`))
@@ -641,6 +664,9 @@ if (browserPath === null) {
       ['spec-seats', '#/spec/11-slot-seats'], ['spec-a11y', '#/spec/60-accessibility'],
       ['spec-checklist', '#/spec/70-checklist'], ['spec-conflicts', '#/spec/80-conflicts'],
       ['spec-overview', '#/spec/00-overview'], ['component-settings-page', '#/component/settings-page'],
+      /* 演示容器与浮层：对话框的 fixed 遮罩、输入区选择器——都在这一组里核过 */
+      ['component-modal', '#/component/modal'], ['component-toast', '#/component/toast'],
+      ['spec-motion', '#/spec/40-motion'],
     ]) {
       await shoot(name, route)
     }
