@@ -3,7 +3,8 @@
 - id: panelheader
 - category: layout
 - source: `components/layout/PanelHeader/`（`index.tsx` / `panelheader.module.css`）
-- official-counterpart: 官方没有这个组件；几何锚点取自 `@deepseek-ai/dsh-client-ui-primitives/lib/` 的 `Modal.module.css` / `Button.module.css` / `Menu.module.css` / `DisclosureRow.module.css`
+- official-counterpart: **产品里有对应的界面**：设置窗口内容头 `wCInkW_header` 612 × 54（`padding 20px 14px 8px 10px` / `gap 8`）+ 关闭按钮 28 × 28 圆角 8；右栏头 `tabStrip` 706 × 38；左栏面板头 `panelTitle` 28 × 22（`docs/reference/settings-panel.json`、`data/ui-inventory.json`）。本组件是把这套头部抽成可复用骨架，其余几何锚点取自 `@deepseek-ai/dsh-client-ui-primitives/lib/` 的 `Modal.module.css` / `Button.module.css` / `Menu.module.css` / `DisclosureRow.module.css`
+- measured-2026-10-02: 本文档下面的建议值（`md` 44px / `sm` 36px）与实测（54 / 38）不一致。**有实测的场景以实测为准**；建议值只在本组件被当作独立骨架、且不与产品原生头部并排时适用（依据 00-overview §4.1「官方优先」）
 - human-doc: `README.md`（判断与取舍；本文件只放事实）
 
 ## geometry-source

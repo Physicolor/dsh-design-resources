@@ -3,7 +3,8 @@
 - id: toolbarrow
 - category: layout
 - source: `components/layout/ToolbarRow/`（`index.tsx` / `toolbarrow.module.css`）
-- official-counterpart: 官方没有这个组件；几何锚点取自 `@deepseek-ai/dsh-client-ui-primitives/lib/` 的 `ConnectionIndicator.module.css` / `Button.module.css` / `Menu.module.css`
+- official-counterpart: **产品里有对应的界面**：输入卡工具行 `RlGAzG_row` 780 × 42 · `padding 2px 8px 6px 8px` · `gap 12`，行内工具区 `RlGAzG_tools` 140 × 28；同座位控件 `RlGAzG_add` 28 × 28、`RlGAzG_primary` 34 × 34、`dlU_AG_trigger` 100 × 28（`docs/reference/composer-geometry.json`、`data/ui-inventory.json`）。本组件是把这一行抽成可复用容器，其余锚点取自 `@deepseek-ai/dsh-client-ui-primitives/lib/` 的 `ConnectionIndicator.module.css` / `Button.module.css` / `Menu.module.css`
+- measured-2026-10-02: 本文档下面的建议值（`md` 32 / `sm` 28 高）与实测（行高 42、行内控件 28）不一致。**有实测的场景以实测为准**；建议值只在作为独立骨架使用时适用（依据 00-overview §4.1「官方优先」）
 - human-doc: `README.md`（判断与取舍；本文件只放事实）
 
 ## geometry-source
@@ -13,7 +14,7 @@
 
 | 数值 | 出处 |
 | --- | --- |
-| `min-height: 32px`（`md`） | `ConnectionIndicator.module.css` → `.indicator`（`height: 32px`） |
+| `min-height: 28px`（`md`） | `ConnectionIndicator.module.css` → `.indicator`（`height: 28px`） |
 | `background: var(--dsw-alias-button-tool-bar-fill)`（`filled` 形态底色） | `Button.module.css` → `.toolbar` |
 | `gap: 4px`（默认间距） | `Button.module.css` → `.button`（`gap: 4px`） |
 | `min-height: 28px` + `gap: 4px`（`sm`） | `Button.module.css` → `.sm`（`height: 28px`）——`Button size="sm"` 放进 `sm` 档工具条刚好撑满 |
@@ -26,7 +27,7 @@
 
 ### 本仓库建议值（非官方数值）
 
-- `padding: 0 12px`（`md`）/ `0 8px`（`sm`）：官方没有工具条容器。12px 是 4 的倍数，并与官方 `ConnectionIndicator.module.css` `.indicator` 的 `padding: 0 10px` 保持同一量级（略宽，因为工具条内是多个元素而不是单个胶囊）。`sm` 取 8px 与 `sm` 档自身高度 28px 成比例。
+- `padding: 0 12px`（`md`）/ `0 8px`（`sm`）：官方没有工具条容器。12px 是 4 的倍数，并与官方 `ConnectionIndicator.module.css` `.indicator` 的 `padding: 0 8px` 保持同一量级（略宽，因为工具条内是多个元素而不是单个胶囊）。`sm` 取 8px 与 `sm` 档自身高度 28px 成比例。
 - `gap` 默认取 **4px**（官方 `Button.module.css` `.button` 的确切值）而不是 8px：工具条里相邻按钮通常已有自己的内边距，4px 的视觉分组更接近官方的工具条形态（官方把 4px 用在按钮内部 gap 与 Menu 分隔线四周）。`sm` 档同样是 4px。
 - `z-index: 1`（`sticky`）：官方菜单用 100 / 1100、Modal 用 1000，都是浮层层级。工具条只是盖住同容器内后续内容，1 足够，也不至于把菜单压住。
 - `flex-wrap: wrap`：官方没有列表容器可供参照，这是本仓库为保证窄容器可用的建议值；不接受换行的场景请自行传 `style` 覆盖为 `nowrap`，或写自己的容器。
@@ -57,7 +58,7 @@
 
 | 状态 | 触发条件 | 表现 |
 | --- | --- | --- |
-| 默认（`plain` + `md`） | `variant` / `size` 缺省 | `background: transparent`；`min-height: 32px`；`padding: 0 12px`；`gap: 4px` |
+| 默认（`plain` + `md`） | `variant` / `size` 缺省 | `background: transparent`；`min-height: 28px`；`padding: 0 12px`；`gap: 4px` |
 | `filled` | `variant="filled"` | `background: var(--dsw-alias-button-tool-bar-fill)`，`border-radius: 8px` 可见 |
 | `sm` | `size="sm"` | `min-height: 28px`；`padding: 0 8px`；`gap: 4px` |
 | 有分隔线 | `divider` 为真 | `border-bottom: 0.5px solid var(--dsw-alias-border-l1)` |

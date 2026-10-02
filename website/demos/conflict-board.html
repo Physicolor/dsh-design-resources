@@ -1,0 +1,155 @@
+<!-- 冲突裁决板：三张表用的都是真实占用登记（data/raw/occupancy-2026-10-01.json，2026-10-01 采集）：
+     shell.overlay 14 个占用者 / 11 个未声明 order；settings.section 11 个 / 三个同值 40；
+     conversation.session.header.utilities 4 个 / order −10 −5 空 5。
+     第一张表的「换个时序」按钮只做一件事：把未声明 order 的那些换个注册次序——可见顺序跟着变，
+     这就是「顺序不能依赖注册时序」这条规则要治的病。 -->
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>冲突裁决板 · DSH 设计资源</title>
+<style>
+:root {
+  --dsw-font-family: 'HarmonyOS Sans SC', 'HarmonyOS Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+  --line: var(--site-line-soft, #ebebef);
+  --line2: var(--site-line, #d6d6db);
+  --label: var(--site-label, #1d1d1f);
+  --label2: var(--site-label-2, #5f6062);
+  --label3: var(--site-label-3, #86868b);
+  --bg: var(--site-bg-subtle, #f4f4f6);
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 16px; font-family: var(--dsw-font-family); color: var(--label); font-size: 14px; line-height: 22px; }
+.demo-label { margin: 0 0 10px; font-size: 11px; line-height: 16px; color: var(--label3); }
+h3 { margin: 0 0 8px; font-size: 14px; font-weight: 600; }
+.group + .group { margin-top: 22px; }
+button.action {
+  height: 28px; padding: 0 12px; border: 1px solid var(--line2); border-radius: 14px;
+  background: transparent; color: var(--label); font: inherit; font-size: 12px; cursor: pointer; margin-bottom: 10px;
+}
+table { border-collapse: collapse; width: 100%; font-size: 12px; }
+th, td { padding: 5px 10px; border-bottom: 1px solid var(--line); text-align: left; font-variant-numeric: tabular-nums; }
+th { color: var(--label3); font-weight: 500; }
+td.id { font-family: ui-monospace, Consolas, monospace; }
+.warn { color: #b3271f; font-weight: 600; }
+.ok { color: #14663c; }
+.muted { color: var(--label3); }
+.badge2 { display: inline-flex; align-items: center; height: 18px; padding: 0 7px; border-radius: 999px; font-size: 11px; line-height: 14px; background: var(--bg); color: var(--label2); }
+.badge2--bad { background: #fdeae8; color: #b3271f; }
+.badge2--ok { background: #e9f7f0; color: #14663c; }
+tr.moved { background: #fdf1dd; }
+</style>
+</head>
+<body>
+
+  <div class="group">
+    <h3>1 · order 缺声明：同一座位，换个注册时序，可见顺序就变</h3>
+    <p class="demo-label">shell.overlay：14 个占用者，11 个未声明 order（落在默认值 0），实际层级顺序由注册时序决定——登记表里 3 个声明了值（10 / 30 / 100）</p>
+    <button class="action" type="button" data-shuffle>换个注册时序</button>
+    <table><thead><tr><th>#</th><th>占用者</th><th>注册方</th><th>order</th></tr></thead><tbody data-overlay></tbody></table>
+    <p class="demo-label" style="margin-top:8px">换个时序之后，橘色的那些换了位置——它们的 order 都是「未声明」，谁在前面只取决于谁先注册。规则（CF-MF-01）：任何可见顺序依赖注册时序的情形判为缺陷，责任在未声明 order 的一方。</p>
+  </div>
+
+  <div class="group">
+    <h3>2 · order 撞车：settings.section 三个 order 40</h3>
+    <p class="demo-label">11 个占用者，research-cordis / market / ui-harmony 三个都是 40——顺序无法解释</p>
+    <table><thead><tr><th>order</th><th>占用者</th><th>注册方</th><th>判定</th></tr></thead><tbody data-sections></tbody></table>
+    <p class="demo-label" style="margin-top:8px">新插件进这个座位要取现有最大值 +10（CF-MF-03），不能复刻已有值；撞车本身不是「人多」的错，是「没声明」的错。</p>
+  </div>
+
+  <div class="group">
+    <h3>3 · 声明清楚了长什么样</h3>
+    <p class="demo-label">conversation.session.header.utilities：4 个占用者，order −10 / −5 / 空 / 5——排布清晰，唯一的问题只是还有 1 个没声明</p>
+    <table><thead><tr><th>order</th><th>占用者</th><th>注册方</th><th>判定</th></tr></thead><tbody data-utils></tbody></table>
+  </div>
+
+<script>
+(function () {
+  'use strict'
+
+  /* 演示脚本跑在 shadow root 里，document.querySelector 看不到自己的标记；站点在挂载期
+     把当前根挂在 window.__DSH_DEMO_ROOT 上。 */
+  var root = window.__DSH_DEMO_ROOT || document
+
+  /* 逐条抄自 data/raw/occupancy-2026-10-01.json */
+  var OVERLAY = [
+    ['session-log-upload-toast', 'mf', null], ['shortcuts', 'mf', null], ['dsh-market-toast', 'dsh-market', null],
+    ['desktop-onboarding', 'mf', null], ['account.platform-page', 'mf', null], ['workspace.session-rename', 'mf', null],
+    ['workspace.session-archive', 'mf', null], ['workspace.row-toast', 'mf', null], ['plugin-manager.refresh-toast', 'mf', null],
+    ['chat.quota-notice', 'mf', null], ['schedule.delete-toast', 'mf', null], ['context-overview', 'dsh-context', 10],
+    ['enhancer-center-card', 'mf', 30], ['usage-center', 'mf', 100],
+  ]
+  var SECTIONS = [
+    ['-10', 'account', 'mf'], ['0', 'general', 'mf'], ['10', 'models', 'mf'], ['12', 'commandcode', 'mf'],
+    ['15', 'plugins', 'mf'], ['20', 'agent-presets', 'mf'], ['30', 'widgets', 'mf'],
+    ['40', 'research-cordis', 'mf'], ['40', 'market', 'dsh-market'], ['40', 'ui-harmony', 'mf'], ['60', 'notification', 'mf'],
+  ]
+  var UTILS = [
+    ['-10', 'open-in-app', 'mf'], ['-5', 'schedule-catalog', 'mf'], ['—', 'session-log-download', 'mf'], ['5', 'widgets-panel-toggle', 'mf'],
+  ]
+
+  var shuffleSeed = 0
+
+  /** 画 shell.overlay：声明了 order 的按值排，未声明的按当前注册时序排。 */
+  function drawOverlay() {
+    var declared = OVERLAY.filter(function (row) { return row[2] !== null })
+    var loose = OVERLAY.filter(function (row) { return row[2] === null })
+    /* 只动未声明的那 11 个：它们之间换次序，声明过的不受影响 */
+    var rotated = loose.slice(shuffleSeed % loose.length).concat(loose.slice(0, shuffleSeed % loose.length))
+    var ordered = declared.concat(rotated).sort(function (a, b) {
+      var av = a[2] === null ? 0 : a[2]
+      var bv = b[2] === null ? 0 : b[2]
+      if (av !== bv) return av - bv
+      return (a[2] === null ? rotated.indexOf(a) : declared.indexOf(a)) - (b[2] === null ? rotated.indexOf(b) : declared.indexOf(b))
+    })
+
+    var body = root.querySelector('[data-overlay]')
+    if (body === null) return
+    body.innerHTML = ordered.map(function (row, i) {
+      var loose2 = row[2] === null
+      return '<tr' + (loose2 ? ' class="moved"' : '') + '><td class="muted">' + (i + 1) + '</td>'
+        + '<td class="id">' + row[0] + '</td><td class="muted">' + row[1] + '</td>'
+        + '<td>' + (loose2 ? '<span class="warn">未声明（默认 0）</span>' : row[2]) + '</td></tr>'
+    }).join('')
+  }
+
+  /** 画另外两张表。 */
+  function drawStatic() {
+    var secBody = root.querySelector('[data-sections]')
+    if (secBody !== null) {
+      var forty = SECTIONS.filter(function (row) { return row[0] === '40' }).map(function (row) { return row[1] })
+      secBody.innerHTML = SECTIONS.map(function (row) {
+        var clash = row[0] === '40'
+        return '<tr' + (clash ? ' class="moved"' : '') + '><td>' + row[0] + '</td><td class="id">' + row[1] + '</td>'
+          + '<td class="muted">' + row[2] + '</td><td>' + (clash
+            ? '<span class="badge2 badge2--bad">撞车：' + forty.join(' / ') + '</span>'
+            : '<span class="badge2 badge2--ok">唯一</span>') + '</td></tr>'
+      }).join('')
+    }
+
+    var utilsBody = root.querySelector('[data-utils]')
+    if (utilsBody !== null) {
+      utilsBody.innerHTML = UTILS.map(function (row) {
+        var none = row[0] === '—'
+        return '<tr><td>' + row[0] + '</td><td class="id">' + row[1] + '</td><td class="muted">' + row[2] + '</td><td>'
+          + (none ? '<span class="badge2 badge2--bad">缺声明</span>' : '<span class="badge2 badge2--ok">声明了</span>')
+          + '</td></tr>'
+      }).join('')
+    }
+  }
+
+  var button = root.querySelector('[data-shuffle]')
+  if (button !== null) {
+    button.addEventListener('click', function () {
+      shuffleSeed = (shuffleSeed + 3) % 11
+      drawOverlay()
+    })
+  }
+
+  drawOverlay()
+  drawStatic()
+})();
+</script>
+</body>
+</html>

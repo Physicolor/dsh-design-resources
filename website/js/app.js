@@ -520,27 +520,29 @@
     }
 
     /**
-     * A branch row: the label navigates, the chevron at the right end folds it.
+     * A branch row: the whole row is the fold control.
+     *
+     * The label used to be a link with a separate chevron button beside it,
+     * which made both halves lie: hovering the label did not light the arrow,
+     * and clicking the title — the biggest target in the row — navigated
+     * instead of folding. A reader who wants the category page gets it from the
+     * component index ("查看全部 N"); a reader clicking a branch wants it open.
      *
      * Folded content is rendered and collapsed with `grid-template-rows`, so
      * opening a branch costs no re-render and the animation has something to
      * animate.
-     * @param link - { key, href, label, count, active, open, children }.
+     * @param link - { key, label, count, open, children }.
      * @param chevron - chevron SVG markup.
      * @returns html.
      */
     function branchRow(link, chevron) {
         return '<div class="index__branch" data-open="' + link.open + '" data-key="' + esc(link.key) + '">'
-            + '<div class="index__row">'
-            + '<a class="index__link index__link--parent" href="' + esc(link.href) + '"'
-            + (link.active ? ' aria-current="page"' : '') + '>'
+            + '<button class="index__link index__row" type="button" aria-expanded="' + link.open + '"'
+            + ' data-branch-toggle aria-label="' + esc(link.label) + '">'
             + '<span class="index__label">' + esc(link.label) + '</span>'
             + (link.count == null ? '' : '<span class="index__count">' + link.count + '</span>')
-            + '</a>'
-            + '<button class="index__disclosure" type="button" aria-expanded="' + link.open + '"'
-            + ' aria-label="' + esc(link.label) + '">'
-            + '<span class="index__chevron">' + chevron + '</span></button>'
-            + '</div>'
+            + '<span class="index__chevron">' + chevron + '</span>'
+            + '</button>'
             + '<div class="index__children"><div>'
             + (link.children || []).map(linkRow).join('')
             + '</div></div></div>'
@@ -566,9 +568,8 @@
                 + '</div>'
         }).join('')
 
-        Array.prototype.forEach.call(indexEl.querySelectorAll('.index__disclosure'), function (button) {
-            button.addEventListener('click', function (event) {
-                event.preventDefault()
+        Array.prototype.forEach.call(indexEl.querySelectorAll('[data-branch-toggle]'), function (button) {
+            button.addEventListener('click', function () {
                 var branch = button.closest('.index__branch')
                 var open = branch.getAttribute('data-open') !== 'true'
                 branch.setAttribute('data-open', String(open))
@@ -778,7 +779,16 @@
             hydrateIcons(shadow)
             /* `innerHTML` never executes a `<script>`, so an embedded demo would
              * be a picture of an interaction rather than an interaction. The
-             * nodes are rebuilt so the demo can actually be operated. */
+             * nodes are rebuilt so the demo can actually be operated.
+             *
+             * A rebuilt script executes *inside the shadow root*, where
+             * `document.querySelector` cannot see its own markup — the first
+             * version of every interactive demo silently did nothing for exactly
+             * this reason. So the root is published on `window` for the duration
+             * of the mount, and a demo script starts with
+             * `var root = window.__DSH_DEMO_ROOT || document`. */
+            var previousRoot = window.__DSH_DEMO_ROOT
+            window.__DSH_DEMO_ROOT = shadow
             Array.prototype.forEach.call(shadow.querySelectorAll('script'), function (old) {
                 var fresh = document.createElement('script')
                 for (var i = 0; i < old.attributes.length; i++) {
@@ -787,6 +797,7 @@
                 fresh.textContent = old.textContent
                 old.parentNode.replaceChild(fresh, old)
             })
+            window.__DSH_DEMO_ROOT = previousRoot
             mountShells(shadow)
         }
 
@@ -854,90 +865,6 @@
                 return '<a href="' + esc(href(item.hash)) + '">' + esc(item.label) + '</a><span class="crumbs__sep">/</span>'
             }).join('')
             + '</nav>'
-    }
-
-    /* ── motion bench ──────────────────────────────────────────────── */
-
-    /** The five durations the spec hands to plugin authors. */
-    var MOTION_DURATIONS = [100, 150, 200, 300, 350]
-
-    /** The two curves the spec names. */
-    var MOTION_CURVES = [
-        { id: 'standard', value: 'cubic-bezier(0.40, 0, 0.20, 1)' },
-        { id: 'linear', value: 'linear' },
-    ]
-
-    /**
-     * The interactive motion bench embedded in the motion spec.
-     *
-     * A spec that only states "200ms" asks the reader to imagine it. Letting them
-     * run two durations back to back is the one thing a paper document cannot do
-     * and an HTML one can — which is the whole reason this reference is a site.
-     * @returns html.
-     */
-    function motionLab() {
-        return '<section class="lab" data-lab>'
-            + '<p class="specimen__label"><span>' + esc(t('lab.motionTitle')) + '</span></p>'
-            + '<p class="lab__note">' + esc(t('lab.motionNote')) + '</p>'
-            + '<div class="lab__controls">'
-            + '<div class="lab__group"><span class="lab__caption">' + esc(t('lab.duration')) + '</span>'
-            + '<div class="segmented" data-lab-durations>' + MOTION_DURATIONS.map(function (ms) {
-                return '<button type="button" data-ms="' + ms + '" aria-selected="' + (ms === 200) + '">' + ms + 'ms</button>'
-            }).join('') + '</div></div>'
-            + '<div class="lab__group"><span class="lab__caption">' + esc(t('lab.curve')) + '</span>'
-            + '<div class="segmented" data-lab-curves>' + MOTION_CURVES.map(function (curve, i) {
-                return '<button type="button" data-curve="' + esc(curve.value) + '" aria-selected="' + (i === 0) + '">'
-                    + esc(t('lab.' + curve.id)) + '</button>'
-            }).join('') + '</div></div>'
-            + '<button class="lab__play" type="button" data-lab-play>' + esc(t('lab.play')) + '</button>'
-            + '</div>'
-            + '<div class="lab__stage" data-lab-stage><span class="lab__box" data-lab-box></span></div>'
-            + '</section>'
-    }
-
-    /** Wire the motion bench, if the current page has one. */
-    function mountMotionLab() {
-        var lab = document.querySelector('[data-lab]')
-        if (lab === null) return
-
-        var box = lab.querySelector('[data-lab-box]')
-        var stage = lab.querySelector('[data-lab-stage]')
-        var duration = 200
-        var curve = MOTION_CURVES[0].value
-        var moved = false
-
-        var play = function () {
-            var travel = Math.max(0, stage.clientWidth - box.offsetWidth - 12)
-            box.style.transition = 'transform ' + duration + 'ms ' + curve
-            box.style.transform = moved ? 'translateX(' + travel + 'px)' : 'translateX(0px)'
-        }
-
-        lab.querySelector('[data-lab-play]').addEventListener('click', function () {
-            moved = !moved
-            play()
-        })
-
-        Array.prototype.forEach.call(lab.querySelectorAll('[data-lab-durations] button'), function (button) {
-            button.addEventListener('click', function () {
-                duration = Number(button.getAttribute('data-ms'))
-                Array.prototype.forEach.call(button.parentElement.children, function (sibling) {
-                    sibling.setAttribute('aria-selected', String(sibling === button))
-                })
-                moved = !moved
-                play()
-            })
-        })
-
-        Array.prototype.forEach.call(lab.querySelectorAll('[data-lab-curves] button'), function (button) {
-            button.addEventListener('click', function () {
-                curve = button.getAttribute('data-curve')
-                Array.prototype.forEach.call(button.parentElement.children, function (sibling) {
-                    sibling.setAttribute('aria-selected', String(sibling === button))
-                })
-                moved = !moved
-                play()
-            })
-        })
     }
 
     /* ── pages ─────────────────────────────────────────────────────── */
@@ -1065,11 +992,21 @@
 
         var siblings = SPECS.filter(function (s) { return s.group === spec.group && s.id !== spec.id })
 
+        /* 文档自己的 `# 标题` 就是页面大标题，并且排在最前：页面顶部只认标题，
+         * 不认面包屑，也不认任何演示台——顶栏和左栏已经回答了「我在哪」。 */
+        var bodyHtml = spec.html
+        var head = /<h1 id="h\d+">([\s\S]*?)<\/h1>/u.exec(bodyHtml)
+        var titleHtml = head === null ? esc(specTitle(spec)) : head[1]
+        if (head !== null) bodyHtml = bodyHtml.slice(0, head.index) + bodyHtml.slice(head.index + head[0].length)
+
         mainEl.innerHTML = '<div class="main-inner">'
-            + crumbs([{ label: t('spec.title'), hash: '/spec' }, { label: specTitle(spec) }], '/spec')
+            + '<div class="doc-head">'
+            + '<p class="doc-head__eyebrow">' + esc(t('spec.title')) + ' · ' + esc(t('groups.' + spec.group)) + '</p>'
+            + '<h1 class="doc-head__title">' + titleHtml + '</h1>'
+            + '</div>'
+            + '<article class="prose">' + bodyHtml + '</article>'
             + (LANG === 'en' ? '<div class="callout"><span class="callout__mark">i</span><div><p>' + esc(t('spec.chineseOnly')) + '</p></div></div>' : '')
-            + (spec.id === '40-motion' ? motionLab() : '')
-            + '<article class="prose">' + spec.html + '</article></div>'
+            + '</div>'
 
         /* The right column carries what you need *while reading this document*:
          * where you can jump to inside it, and what to read next. The file name
@@ -1528,6 +1465,14 @@
                 location.hash = '#' + button.getAttribute('data-back')
             })
         })
+        /* 正文里的引用角标 [1] 与右栏目录用同一套跳转：只滚动，不动路由——
+         * 站点是 hash 路由，`#cite-1` 这样的链接会把路由本身顶掉。 */
+        Array.prototype.forEach.call(mainEl.querySelectorAll('[data-jump]'), function (node) {
+            node.addEventListener('click', function () {
+                var target = document.getElementById(node.getAttribute('data-jump'))
+                if (target !== null) target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            })
+        })
         Array.prototype.forEach.call(asideEl.querySelectorAll('[data-jump]'), function (node) {
             node.addEventListener('click', function (event) {
                 event.preventDefault()
@@ -1546,7 +1491,6 @@
         })
 
         mountDemos(mainEl)
-        mountMotionLab()
         mainEl.scrollTop = 0
         mainEl.focus({ preventScroll: true })
     }

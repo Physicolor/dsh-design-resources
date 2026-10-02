@@ -90,6 +90,12 @@ node scripts/capture-dsh.mjs 01-hero 06-plugins
 
 `[data-slot]` 节点是 `display: contents` 的**逻辑座位**，它们自己没有盒子——量出来全是 0。所以 `geometry.json` 量的是座位**渲染出来的元素**：从 `#root` 走一遍真实 DOM，留下每个占尺寸的节点及其计算样式（`geometry.json` 里 `nodes` 数组，每项含 `d` 深度、`cls` 类名、`rect` 盒子、`style` 计算样式）。
 
+## 找「官方有没有」时别只看 profiles 里那份 primitives（2026-10-02 复核）
+
+`D:\dsh-home\profiles\node_modules\@deepseek-ai\dsh-client-ui-primitives\lib` 是**旧版**（只有 24 个 CSS 模块，没有 `SegmentedControl` / `MenuGroup` / `SegmentedTabs` / `TextShimmer` / `SettingsForm` / `Checkbox`）。产品实际加载的是 `app.asar` 里那份新版（`node_modules/@deepseek-ai/dsh-client-ui-primitives/lib/`，可在 asar 文本里搜到模块清单与导出表）。
+
+**判定「官方有没有某个控件/字号/几何」必须查 `app.asar`**：只看 profiles 那份，会得出与事实相反的答案（本次复核就推翻了「官方没有 SegmentedControl」这条旧结论）。同一条复核还把 10 个此前记成「本仓库补充」的组件收回「产品里真实存在」——依据是产品自有 CSS 模块或官方 primitives 里的实现，逐条记在 `components/origins.json` 的 `scenes` 字段。
+
 ## 已量到的骨架（1580×905 视口）
 
 | 部位 | 数值 | 来源节点 |

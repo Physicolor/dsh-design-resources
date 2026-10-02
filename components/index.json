@@ -169,7 +169,7 @@
             "path": "components/feedback/EmptyState/",
             "summary": "一个垂直居中的块：图标? + 标题 + 说明? + 动作?。全部居中，宽度收紧到 280px 以内。；零依赖，只用到 react 和 CSS Modules",
             "whenToUse": "列表 / 面板第一次打开时什么都没有（首次使用）。；筛选、搜索之后没有匹配结果——这类文案要说明「是筛选条件导致的」，并给一个「清除筛选」的动作。；出错了但页面结构还在，用空状态 + 一个重试按钮承载。；功能被权限 / 配额挡住：说明原因和恢复方式",
-            "whenNotToUse": "数据还在加载：用骨架屏或 LoadingDots。把「还没加载」画成「空」会误导用户以为数据没了。；已经有内容、只是某一区块为空：先考虑这一块是否该整个隐藏，空状态会占掉宝贵的垂直空间。；需要用户做两件以上互斥的事（上传 / 导入 / 新建）：那是引导页而不是空状态，动作插槽里塞三个按钮会失去焦点。；一句话就能说清的错误，直接放在原位置（例如 InlineNotice），不要铺一整屏",
+            "whenNotToUse": "数据还在加载：用骨架屏或运行圆环（RunningRing）。把「还没加载」画成「空」会误导用户以为数据没了。；已经有内容、只是某一区块为空：先考虑这一块是否该整个隐藏，空状态会占掉宝贵的垂直空间。；需要用户做两件以上互斥的事（上传 / 导入 / 新建）：那是引导页而不是空状态，动作插槽里塞三个按钮会失去焦点。；一句话就能说清的错误，直接放在原位置（例如 InlineNotice），不要铺一整屏",
             "geometrySource": "官方没有 EmptyState 组件，@deepseek-ai/dsh-client-ui-primitives/lib/ 下没有任何同名文件。；标题 14px / 22px、font-weight: 500 ← 沿用官方合成 token 的层级：--dsw-font-s-14 即 14px/22px（官方 Button 的 .button 也是 14/22）。字重 500 取自官方 Modal.module.css 的 .title。；说明 font: var(--dsw-font-xs-13) ← 官方合成 token 13px/20px，本组件直接整条使用（含字体族）。；gap: 12px ← 建议值。4 的倍数",
             "tags": [
                 "反馈",
@@ -188,7 +188,7 @@
             "summary": "一个横向的提示条：图标? + 文案 + 关闭按钮?。；单行形态高 32px、圆角 8px、12/18 字号、字重 500，视觉上就是官方 ConnectionIndicator 那条断线提示的通用化版本。；零依赖，只用到 react 和 CSS Modules",
             "whenToUse": "页面里需要一段持续存在、用户可能慢慢读的状态说明：网络不稳定、配额快用完、保存到了哪里。；表单提交失败的整体原因（放在表单上方或下方）。；设置项的副作用提醒：「关闭后本地草稿会被清除」",
             "whenNotToUse": "一次性的成功反馈、说完就消失：用 Toast，它不占文档流。；有多个操作要选（重试 / 忽略 / 查看详情）：提示条只有文字和一个关闭，选不动；用带按钮的区域或对话框。；字段级的校验错误：直接贴在字段下方用一句红色的 <span> 和一个 aria-invalid，不要为每一行输入都套一个提示条。；全局的、需要用户立刻响应的错误：用对话框，InlineNotice 不会抢焦点。；一屏放三条以上：提示条一多就变成噪音，考虑合并成一条或收进设置页",
-            "geometrySource": "单行几何读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/ConnectionIndicator.module.css；height: 32px、padding: 0 10px、border-radius: 8px ← .indicator；box-sizing: border-box、border: none ← .indicator；font-size: 12px、font-weight: 500、line-height: 18px、white-space: nowrap ← .indicator",
+            "geometrySource": "单行几何读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/ConnectionIndicator.module.css；height: 28px、padding: 0 8px、border-radius: 8px ← .indicator；box-sizing: border-box、border: none ← .indicator；font-size: 12px、font-weight: 500、line-height: 18px、white-space: nowrap ← .indicator",
             "tags": [
                 "反馈",
                 "零依赖",
@@ -196,24 +196,6 @@
                 "状态",
                 "内联",
                 "inline-notice"
-            ]
-        },
-        {
-            "id": "loading-dots",
-            "name": "LoadingDots",
-            "category": "feedback",
-            "path": "components/feedback/LoadingDots/",
-            "summary": "inline-flex 的一行三个圆点，颜色继承父级 color，尺寸和间距由 props 控制。；三个点包在 aria-hidden=\"true\" 的视觉层里，只把一段视觉隐藏的文本交给屏幕阅读器朗读。；零依赖，只用到 react 和 CSS Modules",
-            "whenToUse": "一次请求 / 一次生成正在进行，但位置已知：紧跟在「正在生成回复」这类文案后面。；按钮内部短时等待（配 aria-busy 或改用按钮自己的 loading 态）。；工具条、状态行这种一行高的紧凑位置",
-            "whenNotToUse": "页面首次加载、大块区域还空着：用骨架屏（--dsw-alias-bg-skeleton 就是给它的），三点太小、不足以占位。；耗时可能超过几秒且进度可估：用进度条，三点不会告诉用户「还要多久」。；需要用户等待时不能做别的：这是阻塞式加载，应当给对话框或遮罩，而不是角落里转三个点。；只是装饰性的「活跃」标记：用 StateDot，它表达的是状态而不是加载",
-            "geometrySource": "官方没有 LoadingDots 组件，但 ConnectionIndicator.module.css 里有一套现成的三点时序，；「三点依次出现」这件事本身、动画周期 1.5s、infinite ← 官方 ConnectionIndicator.module.css 的 .secondDot / .thirdDot（animation: reveal-second-dot 1.5s step-end infinite）；产品里的加载/运行态另有一枚官方字形：见本目录的 RunningRing（左栏会话行首的运行圆环）",
-            "tags": [
-                "反馈",
-                "零依赖",
-                "加载",
-                "动画",
-                "三点",
-                "loading-dots"
             ]
         },
         {
@@ -332,7 +314,7 @@
             "summary": "一个不渲染任何交互的 <div> 头部容器：；左列 heading：title（14/22，字重 500）+ 可选 description（12/18）；右列 actions：任意节点，通常放若干 Button；底部 hairline：0.5px 的 var(--dsw-alias-border-l1)，可用 divider={false} 关掉",
             "whenToUse": "一个可关闭的面板、抽屉、侧栏、浮层的顶部标题区。；需要在标题右边放「关闭 / 更多 / 折叠」这类动作时。；面板内部按段分隔，需要一条与官方同款的细分割线时",
             "whenNotToUse": "对话框标题：官方 Modal.module.css 已有成套的 .header / .title（16/24/500，padding: 22px 14px 12px 24px），不要用本组件替代。；页面级大标题（<h1>）或导航栏：字号体系不同，这里固定 14/22。；只想放一条分割线：直接用 0.5px solid var(--dsw-alias-border-l1) 的 <hr> 或伪元素，不必套标题栏",
-            "geometrySource": "数值全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib；font-weight: 500、color: var(--dsw-alias-label-primary) ← Modal.module.css .title（原注释：figma wt510，渲染 500）；标题字号取 14px / 22px ← Button.module.css .button（font-size: 14px; line-height: 22px）——面板标题比对话框标题低一档，故不取 Modal 的 16/24",
+            "geometrySource": "头部几何采自运行中的产品（docs/reference/settings-panel.json）：内容头 wCInkW_header 612 × 54 · padding 20px 14px 8px 10px · gap 8；右侧动作区 wCInkW_actions 94 × 28（gap 8）与关闭按钮 wCInkW_close 28 × 28 圆角 8。右栏头实测 tabStrip 706 × 38（slot=rightbar.session）；左栏面板头 panelTitle 28 × 22（slot=sidebar）。字号与字重读自官方 @deepseek-ai/dsh-client-ui-primitives/lib：font-weight: 500、color: var(--dsw-alias-label-primary) ← Modal.module.css .title；标题 14px / 22px ← Button.module.css .button",
             "tags": [
                 "布局",
                 "零依赖",
@@ -350,7 +332,7 @@
             "summary": "根节点是 <label> 的布局行：；.text 竖排：标题（14/22）+ 可选说明（13/20）；.control：flex: none 的右侧控件区（Switch / Input / Button / <select>）；.divider：0.5px 的 var(--dsw-alias-border-l2)",
             "whenToUse": "设置面板 / 首选项页面里「一个开关控制一件事」的行。；需要标题 + 一行解释（13/20 灰色小字）的设置项。；一侧是标签、另一侧是输入框或下拉的表单行",
             "whenNotToUse": "侧边栏 / 导航列表的可选中行：用 SidebarRow（它是按钮，有选中语义）。；表单里的多字段堆叠（标签在上、输入在下）：用常规 <label> + 表单布局，本行是左右分栏。；一行里有多个并列控件时：control 里塞多个控件是允许的，但若彼此语义不相关，请拆成两行。；可点整行跳转的入口：那是 SidebarRow，设置行表达的是「改一个值」不是「去一个地方」",
-            "geometrySource": "标题 font-size: 14px; line-height: 22px ← Button.module.css .button（面板/设置项标题沿用这一档字号，与 PanelHeader 一致）；标题色 var(--dsw-alias-label-primary) ← Modal.module.css .title / Button.module.css .button",
+            "geometrySource": "行几何采自运行中的产品（docs/reference/settings-panel.json）：行本体 _3HsggG_row 564 × 77 · padding 16px 0 · gap 8；文字列 _3HsggG_rowText gap 4、标题 _3HsggG_title 398 × 22、说明 _3HsggG_desc 398 × 18（12px / 18px）、右侧选择器 _3HsggG_selector 110 × 36 圆角 12。同构行族共 8 处（Hefa_q_row 564 × 69、_0Fr0Ha_row / XZcbxG_row 564 × 77、PgWN5G_row 564 × 75、v01cdW_group 564 × 147 等）。标题字号 14px / 22px、色 var(--dsw-alias-label-primary) ← 官方 Button.module.css .button / Modal.module.css .title",
             "tags": [
                 "布局",
                 "零依赖",
@@ -367,7 +349,7 @@
             "summary": "一个 <button type=\"button\">，内部固定三段：前置图标（16×16）/ 标题（可省略号截断）/ 尾部（计数、快捷键、对勾）。；零依赖，只用到 react 和 CSS Modules",
             "whenToUse": "侧边栏的会话 / 文件 / 页面列表项。；任何需要在列表项右侧挂状态（计数、未读点、快捷键）的场景。；需要「当前选中项」的列表：用 selectionStyle=\"check\" 与官方 Menu 保持一致",
             "whenNotToUse": "弹出菜单里的项：用官方 Menu 的 .item，它自带 portal、方向键导航与子菜单。；只是跳转的外部链接：用 <a>，不要用按钮假装链接（那会丢掉「在新标签打开」等浏览器能力）。；一行里要塞多行内容（标题 + 说明 + 标签）：用 SettingsRow，它的结构是给设置项准备的。；纯展示、不可点的行：不要用本组件——一个永远可点但什么都不做的按钮是键盘用户的陷阱",
-            "geometrySource": "数值全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/Menu.module.css；min-height: 40px、padding: 8px 10px、border-radius: 10px、gap: 8px、font-size: 14px、line-height: 22px、color: var(--dsw-alias-label-primary)、text-align: left ← .item（原注释：figma .Menu_cell，min-h 40 / r10 / pad 10/8 / 14-22 / gap 8）",
+            "geometrySource": "行高采自运行中的产品（data/ui-inventory.json，左栏 22 处 sessionRow）：会话行 256 × 32 · 项目行 256 × 34 · 面板行 252 × 36 · 新会话按钮 252 × 38 · 溢出按钮 256 × 28 · 会话时间 32 × 16。菜单单元那套几何（min-height 40px、padding 8px 10px、border-radius 10px、gap 8px、14px / 22px ← Menu.module.css .item）只在「弹出菜单里的项」这个场景成立，左栏行不套用——它是 treeitem，不是 menuitem",
             "tags": [
                 "布局",
                 "零依赖",
@@ -385,7 +367,7 @@
             "summary": "一个纯布局的 <div>，本身不含任何按钮样式：；flex-wrap: wrap 默认开启，窗口变窄时按钮换行而不是溢出。零依赖，只用到 react 和 CSS Modules",
             "whenToUse": "一排并列的动作按钮（筛选 / 排序 / 格式化 / 刷新）。；需要吸顶的工具条：<ToolbarRow sticky divider size=\"sm\">。；浮在内容上方的悬浮工具条：variant=\"filled\" 配 Button variant=\"toolbar\"",
             "whenNotToUse": "一组互斥选项（今天 / 本周 / 全部）：那是 SegmentedControl 或 Pill 的语义，工具条不表达「选中」。；单一动作：直接放一个 Button，不要为它套一层容器。；需要自动折行到第二行的导航菜单：用 Menu，工具条不做菜单语义。；页面顶部的完整应用栏（含 logo、搜索）：那是导航栏，不是工具条",
-            "geometrySource": "数值全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib；min-height: 32px（md） ← ConnectionIndicator.module.css .indicator（height: 32px）；var(--dsw-alias-button-tool-bar-fill)（filled 形态的底色） ← Button.module.css .toolbar；gap: 4px（默认间距） ← Button.module.css .button（gap: 4px）",
+            "geometrySource": "工具行采自运行中的产品（docs/reference/composer-geometry.json）：行本体 RlGAzG_row 780 × 42 · padding 2px 8px 6px 8px · gap 12；行内工具区 RlGAzG_tools 140 × 28。同座位控件实测 RlGAzG_add 28 × 28、RlGAzG_primary 34 × 34、dlU_AG_trigger 100 × 28、wq12jW_trigger 180 × 28（slot=conversation.composer.bar，data/ui-inventory.json）。填充形态底色 var(--dsw-alias-button-tool-bar-fill) ← Button.module.css .toolbar；按钮内 gap 4px ← Button.module.css .button",
             "tags": [
                 "布局",
                 "零依赖",

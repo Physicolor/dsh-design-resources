@@ -14,11 +14,13 @@ DSH 官方为插件作者提供的兼容层覆盖技术栈：Cordis 插件系统
 | --- | --- | --- |
 | `shell.overlay` | 14 | 其中 11 个未声明 `order`，全部落在默认值 0，层级顺序由注册时序决定，不可预测 |
 | `settings.section` | 11 | research-cordis / dsh-market / ui-harmony 三者 order 均为 40，顺序无法解释 |
-| `conversation.session.header.utilities` | 4 | order 分别 -10 / -5 / 0 / 5，排布清晰，可解释 |
+| `conversation.session.header.utilities` | 4 | order 分别 -10 / -5 / 未声明（null）/ 5，排布清晰，可解释 |
 
 三个都是 `list` 座位，差别只在是否声明 order。这层空白就是本仓库要补的内容。
 
 ## 2. 效力层级
+
+<!-- demo: rule-legend | 规则与来源对照板：三档效力（MF / RC / AD）与五个来源标签按真渲染的样子排在这里——同一个标签在不同文档里长得一样、说法一样，才谈得上「可被引用」。 -->
 
 | 标记 | 名称 | 含义 | 违反时的处理 |
 | --- | --- | --- | --- |

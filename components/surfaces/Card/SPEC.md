@@ -3,7 +3,7 @@
 - id: card
 - category: surfaces
 - source: `components/surfaces/Card/`（`index.tsx` / `card.module.css`）
-- official-counterpart: 官方没有这个组件——`@deepseek-ai/dsh-client-ui-primitives/lib/` 下没有任何卡片实现；几何逐条借用已核实选择器，见 `geometry-source`
+- official-counterpart: **产品里有对应的界面**：产品客户端 CSS 模块在设置页 / 插件页 / 输入区三处渲染卡片表面——`.KZf9OG_card { border: .5px solid var(--dsw-alias-settings-card-stroke); border-radius: var(--dsw-radius-xl); background: var(--dsw-alias-settings-card-fill) }`（`--dsw-radius-xl` = 20px），插件页行 `fO69Vq_card` 976 × 66 圆角 20。官方 primitives 包里没有同名组件，其余几何逐条借用已核实选择器（见 geometry-source）
 - human-doc: `README.md`（判断与取舍；本文件只放事实）
 
 ## geometry-source

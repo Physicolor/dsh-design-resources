@@ -3,7 +3,7 @@
 - id: list-row-group
 - category: patterns
 - source: `components/patterns/ListRowGroup/`（`index.tsx` / `list-row-group.module.css`）
-- official-counterpart: 无。官方 `lib/index.js` 的导出列表里没有行组；每条几何取自官方 `Menu.module.css` 的对应单元
+- official-counterpart: **产品里有对应的界面**：带分组标题的行组由产品自有 CSS 模块渲染——`fO69Vq_groupTitle` 28 × 22 + `count` 8 × 19（slot=main）、`RotMhW_groupTitle` 56 × 22 + `groupToggle` 76 × 22（slot=settings.plugins.tab）、`cc-group` 564 × 225、`KZf9OG_groupHead` 564 × 16（slot=settings.section）。官方 `lib/index.js` 的导出列表里没有行组；每条几何取自官方 `Menu.module.css` 的对应单元
 - human-doc: `README.md`（判断与取舍；本文件只放事实）
 
 ## geometry-source

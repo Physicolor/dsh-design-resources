@@ -1,0 +1,79 @@
+<!-- 座位图：下面列出的 11 个代表座位都是真的（名字 / kind / scope / 子座位数 / 用途 / replaceRisk
+     逐条抄自 data/slots.json 的实测座位树，共 90 个，2026-10-01 采集），那扇界面也是真的——
+     站点把 website/shell 里那套产品复刻挂上来，指针扫到哪一栏就标哪一栏。 -->
+<div style="margin:0 0 14px">
+  <div data-shell='{"hover":true,"highlight":"left","right":"closed"}'>
+    <p style="margin:0;padding:24px;font:14px/1.6 sans-serif;color:#81858c">
+      此预览需要在 DeepSeek Design Resources 站内查看（座位是活的容器，不是图片）。
+    </p>
+  </div>
+</div>
+
+<style>
+.seats { font-family: 'HarmonyOS Sans SC', 'HarmonyOS Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif; font-size: 13px; line-height: 20px; }
+.seats__list { list-style: none; margin: 0; padding: 0; }
+.seats__node { border-left: 1px solid var(--site-line-soft, #ebebef); margin-left: 8px; padding-left: 12px; }
+.seats__node--root { border-left: 0; margin-left: 0; padding-left: 0; }
+.seats__row { display: flex; align-items: center; gap: 8px; min-height: 28px; }
+.seats__name { font-family: ui-monospace, Consolas, monospace; font-size: 12px; color: var(--site-label, #1d1d1f); }
+.seats__purpose { color: var(--site-label-3, #86868b); font-size: 12px; }
+.badge2 { display: inline-flex; align-items: center; height: 18px; padding: 0 7px; border-radius: 999px; font-size: 11px; line-height: 14px; background: var(--site-bg-subtle, #f4f4f6); color: var(--site-label-2, #5f6062); }
+.badge2--single { background: #eef2ff; color: #2b47c9; }
+.badge2--list { background: #e9f7f0; color: #14663c; }
+.badge2--risk { background: #fdeae8; color: #b3271f; }
+.seats__toggle { border: 0; background: transparent; padding: 0 4px; cursor: pointer; color: var(--site-label-3, #86868b); font: inherit; }
+.seats__child { display: none; }
+.seats__node[data-open='true'] > .seats__child { display: block; }
+</style>
+
+<div class="seats">
+  <p class="seats__purpose" data-seat-summary style="margin:0 0 10px"></p>
+  <ul class="seats__list" data-seat-tree></ul>
+</div>
+
+<script>
+(function () {
+  'use strict'
+
+  /* 演示脚本跑在 shadow root 里，document.querySelector 看不到自己的标记；站点在挂载期
+     把当前根挂在 window.__DSH_DEMO_ROOT 上。 */
+  var root = window.__DSH_DEMO_ROOT || document
+
+  /* 逐条抄自 data/slots.json（name / kind / scope / childCount / purpose） */
+  var SEATS = [
+    { name: 'root', kind: 'single', scope: 'root', children: 5, purpose: 'SlotCore 播下的渲染树根洞：壳自己渲染的那一个座位，也是其余所有座位的祖先。', replaceRisk: 'shadows-shipped-ui' },
+    { name: 'shell.overlay', kind: 'list', scope: 'root', children: 1, purpose: '横跨整个框架的悬浮层，盖在所有栏之上、且在各栏滚动容器之外。', replaceRisk: 'none' },
+    { name: 'sidebar', kind: 'single', scope: 'root', children: 7, purpose: '整条左栏。', replaceRisk: 'shadows-shipped-ui' },
+    { name: 'sidebar.workspaces', kind: 'single', scope: 'root', children: 5, purpose: '工作区 / 会话浏览区：分区标题、搜索、分组或平铺的会话列表。', replaceRisk: 'shadows-shipped-ui' },
+    { name: 'sidebar.footer.action', kind: 'list', scope: 'root', children: 0, purpose: '左栏底部「设置」旁边的可选动作。' },
+    { name: 'conversation.session.header.utilities', kind: 'list', scope: 'session', children: 0, purpose: '会话头部右侧的工具，按升序排列。' },
+    { name: 'conversation.composer.dock', kind: 'list', scope: 'session', children: 0, purpose: '输入卡下方的环境信息条目。' },
+    { name: 'conversation.chat.assistant-actions', kind: 'list', scope: 'session', children: 0, purpose: '一条已定稿的助手消息下的有序动作。' },
+    { name: 'rightbar.session', kind: 'single', scope: 'session', children: 3, purpose: '由根级右栏控制器选中的会话内容。', replaceRisk: 'shadows-shipped-ui' },
+    { name: 'settings.section', kind: 'list', scope: 'root', children: 4, purpose: '一个列表项一页设置。' },
+    { name: 'settings.trigger', kind: 'single', scope: 'root', children: 0, purpose: '左栏底部触发行的内容：图标 + 文字，作为插槽内容提供。', replaceRisk: 'shadows-shipped-ui' },
+  ]
+
+  /** 一行座位。 */
+  function rowHtml(seat) {
+    return '<div class="seats__row">'
+      + '<span class="badge2 badge2--' + seat.kind + '">' + seat.kind + '</span>'
+      + '<span class="seats__name">' + seat.name + '</span>'
+      + '<span class="badge2">' + seat.scope + '</span>'
+      + (seat.replaceRisk === 'shadows-shipped-ui' ? '<span class="badge2 badge2--risk">会遮住已发布界面</span>' : '')
+      + '<span class="seats__purpose">' + seat.purpose + '</span>'
+      + (seat.children > 0 ? '<span class="badge2">子座位 ' + seat.children + '</span>' : '')
+      + '</div>'
+  }
+
+  var root = root.querySelector('[data-seat-tree]')
+  if (root !== null) {
+    root.innerHTML = SEATS.map(function (seat) {
+      var isRoot = seat.name === 'root'
+      return '<li class="seats__node' + (isRoot ? ' seats__node--root' : '') + '" data-open="true">' + rowHtml(seat) + '</li>'
+    }).join('')
+    var summary = root.querySelector('[data-seat-summary]')
+    if (summary !== null) summary.textContent = '这里列出 11 个代表座位（实测座位树共 90 个，取自 data/slots.json 的 counts.seats：single 38 · list 34 · keyed 15 · chain 3；根作用域 42 · 会话作用域 43 · 会话内可选 5）。'
+  }
+})();
+</script>

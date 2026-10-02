@@ -3,7 +3,8 @@
 - id: settingsrow
 - category: layout
 - source: `components/layout/SettingsRow/`（`index.tsx` / `settingsrow.module.css`）
-- official-counterpart: 官方没有这个组件；几何锚点取自 `@deepseek-ai/dsh-client-ui-primitives/lib/` 的 `Button.module.css` / `Modal.module.css` / `Menu.module.css` / `ReadBlock.module.css`
+- official-counterpart: **产品里有对应的界面**：设置行本体 `_3HsggG_row` 564 × 77 · `padding 16px 0` · `gap 8`，文字列 `gap 4`、标题 398 × 22、说明 398 × 18（12px / 18px）、右侧选择器 110 × 36 圆角 12；同构行族 8 处（`docs/reference/settings-panel.json`）。本组件是把它抽成可复用的一行，其余几何锚点取自 `@deepseek-ai/dsh-client-ui-primitives/lib/` 的 `Button.module.css` / `Modal.module.css` / `Menu.module.css` / `ReadBlock.module.css`
+- measured-2026-10-02: 本文档下面的建议值（`min-height 44` / `padding 12` / `gap 12`）与实测（77 / `16px 0` / 8）不一致。**有实测的场景以实测为准**；建议值只在作为独立骨架使用时适用（依据 00-overview §4.1「官方优先」）
 - human-doc: `README.md`（判断与取舍；本文件只放事实）
 
 ## geometry-source

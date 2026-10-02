@@ -3,7 +3,7 @@
 - id: segmentedcontrol
 - category: controls
 - source: `components/controls/SegmentedControl/`（`index.tsx` / `segmentedcontrol.module.css`）
-- official-counterpart: 官方没有此控件。几何逐条借用官方 `Menu.module.css` / `Pill.module.css` / `Tag.module.css` / `Button.module.css` / `Input.module.css` 的选择器（见下）
+- official-counterpart: **官方有这个控件**：产品 `app.asar` 内 `@deepseek-ai/dsh-client-ui-primitives/lib/SegmentedControl.module.css`（2173 B）与导出表里的 `SegmentedControl` 都真实存在，模型设置页在渲染它（`<SegmentedControl id label value options>`）。本仓库实现的几何仍逐条锚定官方 `Menu.module.css` / `Pill.module.css` / `Tag.module.css` / `Button.module.css` / `Input.module.css`；实测另有插件侧 `duc-seg` 234 × 28 / `duc-seg-thumb` 42 × 24 / `duc-seg-btn` 44 × 24
 - human-doc: `README.md`（判断与取舍；本文件只放事实）
 
 ## geometry-source

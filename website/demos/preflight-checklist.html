@@ -1,0 +1,153 @@
+<!-- 自检清单：条目、条文号、检测方式逐条抄自 spec/70-checklist.md（A01–A51 / B01–B13）。
+     这里演示的是清单本身的机制——全部二元、必选组出现「否」即不得提交、推荐组为「否」需在 README 写理由；
+     条目是抽样（全表 64 条太长），每一条的条文号都可以回文档对。 -->
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>提交前自检 · DSH 设计资源</title>
+<style>
+:root {
+  --dsw-font-family: 'HarmonyOS Sans SC', 'HarmonyOS Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+  --line: var(--site-line-soft, #ebebef);
+  --line2: var(--site-line, #d6d6db);
+  --label: var(--site-label, #1d1d1f);
+  --label2: var(--site-label-2, #5f6062);
+  --label3: var(--site-label-3, #86868b);
+  --bg: var(--site-bg-subtle, #f4f4f6);
+  --accent: var(--site-accent, #4d6bfe);
+}
+* { box-sizing: border-box; }
+body { margin: 0; padding: 16px; font-family: var(--dsw-font-family); color: var(--label); font-size: 14px; line-height: 22px; }
+.demo-label { margin: 0 0 10px; font-size: 11px; line-height: 16px; color: var(--label3); }
+.tabs { display: flex; gap: 4px; margin-bottom: 12px; }
+.tabs button {
+  height: 28px; padding: 0 12px; border: 1px solid var(--line2); border-radius: 14px;
+  background: transparent; color: var(--label2); font: inherit; font-size: 12px; cursor: pointer;
+}
+.tabs button[aria-selected='true'] { background: var(--label); color: #fff; border-color: transparent; }
+.list { list-style: none; margin: 0; padding: 0; }
+.item { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.item:last-child { border-bottom: 0; }
+.item input { margin: 3px 0 0; width: 16px; height: 16px; flex: none; accent-color: var(--accent); }
+.item__body { min-width: 0; }
+.item__text { font-size: 13px; line-height: 20px; }
+.item__meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.chip { display: inline-flex; align-items: center; height: 18px; padding: 0 7px; border-radius: 999px; font-size: 11px; line-height: 14px; background: var(--bg); color: var(--label2); }
+.chip--auto { background: #e9f7f0; color: #14663c; }
+.chip--semi { background: #fdf1dd; color: #8a5a00; }
+.chip--human { background: #fdeae8; color: #b3271f; }
+.verdict { margin-top: 12px; padding: 10px 12px; border-radius: 10px; font-size: 13px; line-height: 20px; }
+.verdict--block { background: #fdeae8; color: #b3271f; }
+.verdict--ok { background: #e9f7f0; color: #14663c; }
+.verdict b { font-weight: 600; }
+meter { width: 100%; height: 6px; }
+</style>
+</head>
+<body>
+
+  <div class="tabs" data-tabs>
+    <button type="button" data-tab="A" aria-selected="true">A 必选（强制）</button>
+    <button type="button" data-tab="B" aria-selected="false">B 推荐</button>
+  </div>
+
+  <p class="demo-label" data-summary></p>
+  <ul class="list" data-items></ul>
+  <div class="verdict" data-verdict></div>
+
+<script>
+(function () {
+  'use strict'
+
+  /* 演示脚本跑在 shadow root 里，document.querySelector 看不到自己的标记；站点在挂载期
+     把当前根挂在 window.__DSH_DEMO_ROOT 上。 */
+  var root = window.__DSH_DEMO_ROOT || document
+
+  /* 抽样自 spec/70-checklist.md（id / 判定项 / 条文号 / 检测方式） */
+  var ITEMS = {
+    A: [
+      { id: 'A07', text: '所用座位 id 全部来自 DSH 官方声明，未自造', rule: 'SL-MF-01', how: '自动' },
+      { id: 'A09', text: '每个 list 座位 entry 都显式声明了 order', rule: 'SL-MF-03', how: '自动' },
+      { id: 'A10', text: 'order 与该座位现有占用者不撞车，且取现有最大值 +10', rule: 'SL-MF-05', how: '自动' },
+      { id: 'A15', text: '按钮高度只用 36 或 28，圆角只用 18 或 14', rule: 'CT-MF-01', how: '自动' },
+      { id: 'A23', text: '源码与构建产物中无硬编码色值（hex / rgb / hsl / 具名色）', rule: 'TK-MF-01', how: '自动' },
+      { id: 'A36', text: '图标渲染尺寸落在官方尺寸族（16/14/8×14/8.5×10.5/20）', rule: 'IC-MF-01', how: '自动' },
+      { id: 'A43', text: '可交互元素命中区 ≥20×20，常规控件达 28×28，相邻不重叠', rule: 'AC-MF-01 / AC-MF-03', how: '自动' },
+      { id: 'A45', text: '≤17pt 文本对比度 ≥4.5:1；≥18pt 或粗体 ≥3:1', rule: 'AC-MF-05', how: '自动' },
+      { id: 'A11', text: '占用 shadows-shipped-ui 座位时有显式声明与关闭开关', rule: 'SL-MF-08', how: '半自动' },
+      { id: 'A35', text: '交互类动画实测或评估达到 60FPS', rule: 'MO-MF-11', how: '人审' },
+      { id: 'A51', text: '窗口收窄时功能收起而非消失', rule: 'AC-MF-16', how: '人审' },
+    ],
+    B: [
+      { id: 'B01', text: '同一段内可见控件不超过 6 个', rule: 'FL-RC-05', how: '自动' },
+      { id: 'B04', text: '同一插件在同一座位不超过 3 个 entry', rule: 'SL-AD-07', how: '自动' },
+      { id: 'B05', text: '同一区域内主按钮至多 1 个', rule: 'CT-RC-10', how: '半自动' },
+      { id: 'B08', text: '正文 ≥14、辅助 ≥13、最小 12，无小于 12px 文本', rule: 'TK-RC-10', how: '自动' },
+      { id: 'B11', text: '同屏并发动画不超过 2 组，且首屏无动画', rule: 'MO-RC-12 / MO-RC-13', how: '半自动' },
+      { id: 'B13', text: '未用固定 px 高度夹死文本容器', rule: 'AC-RC-17', how: '半自动' },
+    ],
+  }
+  var HOW_CLASS = { '自动': 'auto', '半自动': 'semi', '人审': 'human' }
+  var state = { A: {}, B: {} }
+  var tab = 'A'
+
+  var listEl = root.querySelector('[data-items]')
+  var verdictEl = root.querySelector('[data-verdict]')
+  var summaryEl = root.querySelector('[data-summary]')
+
+  /** 画当前 tab 的清单与结论。 */
+  function render() {
+    var items = ITEMS[tab]
+    listEl.innerHTML = items.map(function (item) {
+      var checked = state[tab][item.id] === true
+      return '<li class="item"><input type="checkbox" id="chk-' + item.id + '" data-id="' + item.id + '"'
+        + (checked ? ' checked' : '') + '>'
+        + '<span class="item__body"><label class="item__text" for="chk-' + item.id + '">'
+        + item.id + ' · ' + item.text + '</label>'
+        + '<span class="item__meta"><span class="chip">' + item.rule + '</span>'
+        + '<span class="chip chip--' + HOW_CLASS[item.how] + '">' + item.how + '</span></span></span></li>'
+    }).join('')
+
+    var done = items.filter(function (item) { return state[tab][item.id] === true }).length
+    summaryEl.textContent = '共 ' + items.length + ' 条（本表是抽样，文档里 A 组 51 条、B 组 13 条）· 已确认 ' + done + ' 条'
+
+    if (tab === 'A') {
+      var missing = items.length - done
+      verdictEl.className = 'verdict ' + (missing === 0 ? 'verdict--ok' : 'verdict--block')
+      verdictEl.innerHTML = missing === 0
+        ? '<b>可以提交。</b>必选组全部为「是」。'
+        : '<b>不得提交。</b>必选组还有 ' + missing + ' 条没确认——必选组出现任一「否」即不得提交，这不是打分。'
+    } else {
+      var no = items.length - done
+      verdictEl.className = 'verdict ' + (no === 0 ? 'verdict--ok' : 'verdict--block')
+      verdictEl.innerHTML = no === 0
+        ? '<b>推荐组全部为「是」。</b>'
+        : '<b>推荐组有 ' + no + ' 条为「否」</b>——不阻塞提交，但需要在插件 README 写明理由。'
+    }
+  }
+
+  if (listEl !== null) {
+    listEl.addEventListener('change', function (event) {
+      var id = event.target.getAttribute('data-id')
+      if (id === null) return
+      state[tab][id] = event.target.checked
+      render()
+    })
+  }
+
+  Array.prototype.forEach.call(root.querySelectorAll('[data-tabs] button'), function (button) {
+    button.addEventListener('click', function () {
+      tab = button.getAttribute('data-tab')
+      Array.prototype.forEach.call(button.parentElement.children, function (sibling) {
+        sibling.setAttribute('aria-selected', String(sibling === button))
+      })
+      render()
+    })
+  })
+
+  render()
+})();
+</script>
+</body>
+</html>

@@ -318,28 +318,14 @@ body[data-resizing] { cursor: col-resize; user-select: none; }
 }
 .index__group:first-child .index__title { margin-top: 0; }
 
-.index__row { display: flex; align-items: center; }
-.index__link--parent { flex: 1; min-width: 0; }
+.index__row { width: 100%; text-align: left; font: inherit; cursor: pointer; }
 
-/* the fold control lives at the right end of the row, per the owner's call */
-.index__disclosure {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 22px;
-    height: 22px;
-    flex: none;
-    margin-right: 2px;
-    padding: 0;
-    background: transparent;
-    border: none;
-    border-radius: 6px;
-    color: var(--site-label-3);
-    cursor: pointer;
-    transition: background var(--site-dur-fast) var(--site-ease), color var(--site-dur-fast) var(--site-ease);
-}
-.index__disclosure:hover { background: var(--site-bg-subtle); color: var(--site-label); }
-.index__chevron { display: block; width: 12px; height: 12px; transition: transform var(--site-dur) var(--site-ease); }
+/* Hover belongs to the row, not to the label: a highlight that stops before the
+ * chevron reads as if the arrow were a separate control (it is not — the whole
+ * row folds the branch). */
+.index__row:hover { background: var(--site-bg-subtle); color: var(--site-label); }
+
+.index__chevron { display: block; flex: none; width: 12px; height: 12px; margin-left: 2px; color: var(--site-label-3); transition: transform var(--site-dur) var(--site-ease); }
 .index__chevron svg { width: 100%; height: 100%; display: block; }
 .index__branch[data-open='false'] .index__chevron { transform: rotate(-90deg); }
 
@@ -375,16 +361,6 @@ body[data-resizing] { cursor: col-resize; user-select: none; }
     font-variant-numeric: tabular-nums;
 }
 .index__link[aria-current='page'] .index__count { color: var(--site-accent-ink); }
-
-/* The fold control is part of the row, so the highlight wraps it too — a pill
- * that stops short of the affordance reads as if the arrow belonged to
- * something else. */
-.index__row:has(.index__link[aria-current='page']) {
-    background: var(--site-accent-soft);
-    border-radius: 7px;
-}
-.index__row:has(.index__link[aria-current='page']) .index__link[aria-current='page'] { background: transparent; }
-.index__row:has(.index__link[aria-current='page']) .index__disclosure { color: var(--site-accent-ink); }
 
 /* ── main ──────────────────────────────────────────────────────────── */
 
@@ -622,6 +598,17 @@ code, .mono { font-family: var(--site-font-mono); font-size: 12px; }
 /* jumped-to headings must clear the glass bar, or the outline lands you under it */
 .prose h2, .prose h3 { scroll-margin-top: calc(var(--site-topbar) + var(--site-s4)); }
 .prose h1 { margin: 0 0 var(--site-s4); font-size: var(--site-text-title); font-weight: 600; letter-spacing: -0.02em; }
+/* 引用角标：正文里标 [1]，文末列来源；角标只负责跳转，不改路由。 */
+.prose .cite {
+    margin-left: 2px;
+    font-size: 0.72em;
+    font-weight: 600;
+    color: var(--site-accent-ink);
+    cursor: pointer;
+    vertical-align: super;
+}
+.prose .cite:hover { text-decoration: underline; }
+.prose li[id^='cite-'] { scroll-margin-top: calc(var(--site-topbar) + var(--site-s4)); }
 .prose h2 { margin: var(--site-s6) 0 var(--site-s3); font-size: var(--site-text-section); font-weight: 600; }
 .prose h3 { margin: var(--site-s5) 0 var(--site-s2); font-size: var(--site-text-card); font-weight: 600; }
 .prose p { margin: 0 0 var(--site-s3); color: var(--site-label-2); }
@@ -727,50 +714,26 @@ code, .mono { font-family: var(--site-font-mono); font-size: 12px; }
     text-align: center;
 }
 
-/* ── motion bench (an interactive clause of the motion spec) ───────── */
+/* ── document head (spec pages lead with their own title) ──────────── */
 
-.lab {
-    margin-bottom: var(--site-s5);
-    padding: var(--site-s4);
-    background: var(--site-bg-sunken);
-    border: 1px solid var(--site-line-soft);
-    border-radius: var(--site-radius-m);
+.doc-head { margin: 0 0 var(--site-s5); }
+.doc-head__eyebrow {
+    margin: 0 0 var(--site-s2);
+    font-size: var(--site-text-micro);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--site-label-3);
 }
-.lab__note { margin: 0 0 var(--site-s4); font-size: var(--site-text-note); color: var(--site-label-2); }
-.lab__controls { display: flex; flex-wrap: wrap; align-items: center; gap: var(--site-s4); margin-bottom: var(--site-s4); }
-.lab__group { display: flex; align-items: center; gap: var(--site-s2); }
-.lab__caption { font-size: var(--site-text-micro); color: var(--site-label-3); }
-.lab__play {
-    height: 28px;
-    padding: 0 16px;
-    border: none;
-    border-radius: 14px;
-    background: var(--site-accent);
-    color: #fff;
-    font-size: var(--site-text-note);
-    cursor: pointer;
-    transition: filter var(--site-dur-fast) var(--site-ease);
+.doc-head__title {
+    margin: 0;
+    font-size: var(--site-text-title);
+    font-weight: 600;
+    letter-spacing: -0.02em;
 }
-.lab__play:hover { filter: brightness(1.08); }
-.lab__stage {
-    position: relative;
-    height: 46px;
-    border: 1px solid var(--site-line-soft);
-    border-radius: var(--site-radius-s);
-    background: var(--site-bg-raised);
-    overflow: hidden;
-}
-.lab__box {
-    position: absolute;
-    top: 50%;
-    left: 6px;
-    width: 26px;
-    height: 26px;
-    margin-top: -13px;
-    border-radius: 8px;
-    background: var(--site-accent);
-    will-change: transform;
-}
+/* the article no longer starts with its own h1, so the first section must not
+ * open with a section-sized top margin */
+.prose > h2:first-child { margin-top: 0; }
 
 /* ── guide / spec switch on a component page ───────────────────────── */
 

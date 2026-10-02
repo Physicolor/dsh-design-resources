@@ -1,0 +1,338 @@
+<!-- 应用图标（插件列表里那一层）的实测量板。
+     行几何逐条取自 docs/reference/plugin-row.json（插件页一行，1570×905 视口）：
+       li.card 976×66 圆角 20 → div.cardHead padding 8 / gap 14
+       span.cardIcon 50×50 圆角 16 / border 1px rgba(0,0,0,.12)
+       img.packageImage 36×36（452,157 − 445,150 = 四周各 7px）
+       div.cardTitle 14/20 500、span.cardDesc 13/18 400
+     图示用的图标是真实的插件图标文件本身（dsh-ui-harmonizer/icon.svg、dsh-widgets/icon.svg），
+     不是重画的示意图形；「墨迹」尺寸在浏览器里用 SVG.getBBox() 现测，不是写死的数字。 -->
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>应用图标量板 · DSH 设计资源</title>
+<style>
+:root {
+  --dsw-static-neutral-bluish-00: #fff;
+  --dsw-static-neutral-bluish-50: #f9fafb;
+  --dsw-static-neutral-bluish-100: #ebeef2;
+  --dsw-static-neutral-bluish-300: #cfd3d6;
+  --dsw-static-neutral-bluish-400: #adb2b8;
+  --dsw-static-neutral-bluish-600: #81858c;
+  --dsw-static-neutral-bluish-700: #61666b;
+  --dsw-static-neutral-bluish-1000: #0f1115;
+
+  --dsw-alias-bg-base: var(--dsw-static-neutral-bluish-00);
+  --dsw-alias-bg-layer-1: light-dark(#fff, #1c1c1f);
+  --dsw-alias-bg-module-platform: light-dark(#f5f6f7, #232326);
+  --dsw-alias-border-l1: light-dark(#0000000a, #ffffff0f);
+  --dsw-alias-border-l2: light-dark(#0000001a, #ffffff1f);
+  --dsw-alias-label-primary: light-dark(var(--dsw-static-neutral-bluish-1000), var(--dsw-static-neutral-bluish-50));
+  --dsw-alias-label-secondary: light-dark(var(--dsw-static-neutral-bluish-700), var(--dsw-static-neutral-bluish-300));
+  --dsw-alias-label-tertiary: light-dark(var(--dsw-static-neutral-bluish-600), var(--dsw-static-neutral-bluish-400));
+  --dsw-font-family: 'HarmonyOS Sans SC', 'HarmonyOS Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+}
+
+/* ---------------------------------------------------------------- demo 外壳 */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 16px;
+  color: var(--dsw-alias-label-primary);
+  font-family: var(--dsw-font-family);
+  font-size: 14px;
+  line-height: 22px;
+}
+.demo-label { margin: 0 0 10px; font-size: 11px; line-height: 16px; color: var(--dsw-alias-label-tertiary); }
+.block + .block { margin-top: 26px; }
+.block__title { margin: 0 0 6px; font-size: 14px; font-weight: 600; }
+.note { margin: 8px 0 0; font-size: 12px; line-height: 18px; color: var(--dsw-alias-label-secondary); }
+
+/* ------------------------------------------------- 1. 列表里那一层（实测行） */
+.row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  max-width: 976px;
+  min-height: 66px;
+  padding: 8px;
+  border-radius: 20px;
+}
+.row + .row { margin-top: 4px; }
+.row__icon {
+  position: relative;
+  flex: none;
+  width: 50px;
+  height: 50px;
+  /* 采集值就是这条字面量（plugin-row.json: border 1px solid rgba(0, 0, 0, .12)），不是某个 token */
+  border: 1px solid rgba(0, 0, 0, .12);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* 容器里的本体固定 36×36，四周各留 7px —— 不是把图形铺满 50×50 */
+.row__icon > svg { display: block; width: 36px; height: 36px; flex: none; }
+.row__main { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.row__title { font-size: 14px; line-height: 20px; font-weight: 500; }
+.row__desc { font-size: 13px; line-height: 18px; color: var(--dsw-alias-label-tertiary); }
+
+/* --------------------------------- 2. 量板：容器 / 画布 / 墨迹 / 外接圆（4×）
+   50×50 的容器放大 4 倍 = 200×200，好让 7px 的留白和 1px 的描边看得见。 */
+.measures { display: flex; flex-wrap: wrap; gap: 24px; }
+.measure { display: flex; flex-direction: column; gap: 8px; }
+.stage {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border: 4px solid var(--dsw-alias-label-tertiary); /* 容器 1px 描边 × 4 */
+  border-radius: 64px;                               /* 容器 16 × 4 */
+  background: var(--dsw-alias-bg-layer-1);
+}
+.stage__glyph {
+  position: absolute;
+  left: 28px;  /* 7px × 4 */
+  top: 28px;
+  width: 144px; /* 36px × 4 */
+  height: 144px;
+}
+.stage__glyph > svg { display: block; width: 100%; height: 100%; }
+.stage__canvas {
+  position: absolute;
+  left: 28px; top: 28px; width: 144px; height: 144px;
+  border: 1px dashed var(--dsw-alias-label-tertiary);
+}
+.stage__overlay { position: absolute; inset: 0; width: 200px; height: 200px; pointer-events: none; }
+.stage__overlay[hidden], .stage__canvas[hidden] { display: none; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; max-width: 260px; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--dsw-alias-bg-module-platform);
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--dsw-alias-label-secondary);
+  white-space: nowrap;
+}
+.chip b { font-weight: 600; color: var(--dsw-alias-label-primary); }
+.chip--ink { background: color-mix(in srgb, #4176e6 12%, transparent); color: #2b47c9; }
+.chip--circle { background: color-mix(in srgb, #c2410c 12%, transparent); color: #9a3412; }
+
+/* ------------------------------------------- 3. 浅色 / 深色两版（应用图标） */
+.plates { display: flex; flex-wrap: wrap; gap: 16px; }
+.plate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--dsw-alias-border-l2);
+}
+.plate--light { background: #fff; }
+.plate--dark { background: #0b0c0e; border-color: rgba(255, 255, 255, 0.14); }
+.plate svg { display: block; width: 96px; height: 96px; }
+.plate figcaption { font-size: 11px; line-height: 16px; color: var(--dsw-alias-label-tertiary); }
+.plate--dark figcaption { color: #adb2b8; }
+
+.controls { display: flex; align-items: center; gap: 10px; margin: 0 0 14px; }
+.toggle {
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 14px;
+  background: transparent;
+  color: var(--dsw-alias-label-primary);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+.toggle[aria-pressed='true'] { background: var(--dsw-alias-label-primary); color: var(--dsw-alias-bg-base); border-color: transparent; }
+</style>
+</head>
+<body>
+
+  <div class="controls">
+    <button class="toggle" type="button" data-toggle-annot aria-pressed="true">标注：开</button>
+    <span class="demo-label" style="margin:0">容器（灰框）· 文件画布 36×36（虚线）· 墨迹与外接圆（现测）</span>
+  </div>
+
+  <!-- 1 ─ 产品里这一行长什么样 -->
+  <div class="block">
+    <h3 class="block__title">1 · 插件列表里的一行（实测几何）</h3>
+    <p class="demo-label">行 976 × 66 · 圆角 20 · padding 8 · 行内 gap 14 · 图标容器 50 × 50 圆角 16（1px 描边）· 图标本体 36 × 36</p>
+
+    <div class="row">
+      <span class="row__icon">
+        <svg viewBox="0 0 36 36" fill="none" aria-hidden="true"><rect x="8" y="10" width="5.33" height="6.67" rx="1.96" fill="#7CB7FF"/><rect x="8" y="19.33" width="7.11" height="6.67" rx="1.96" fill="#45D9E7"/><rect x="16.8" y="8.22" width="2.84" height="19.56" rx="1.42" fill="url(#railRow)"/><rect x="21.78" y="10" width="6.22" height="6.67" rx="1.96" fill="#4A8CF7"/><rect x="21.78" y="19.33" width="6.22" height="6.67" rx="1.96" fill="url(#railRow)"/><defs><linearGradient id="railRow" x1="19.64" y1="8.22" x2="16.8" y2="27.78" gradientUnits="userSpaceOnUse"><stop stop-color="#8FC2FF"/><stop offset="1" stop-color="#145AF3"/></linearGradient></defs></svg>
+      </span>
+      <span class="row__main">
+        <span class="row__title">dsh-ui-harmonizer</span>
+        <span class="row__desc">对齐左栏与内容列的宽度，把各设置页的表头统一成官方一套</span>
+      </span>
+    </div>
+
+    <div class="row">
+      <span class="row__icon">
+        <svg viewBox="0 0 36 36" fill="none" aria-hidden="true"><rect x="8" y="8" width="8" height="8.8" rx="2.4" fill="#45D9E7"/><rect x="8" y="19.2" width="8" height="8.8" rx="2.4" fill="#F2AF63"/><rect x="18.6" y="8" width="9.4" height="11.4" rx="2.8" fill="url(#mainRow)"/><rect x="18.6" y="21.6" width="6.8" height="6.4" rx="2" fill="#7CB7FF"/><defs><linearGradient id="mainRow" x1="28" y1="8" x2="18.6" y2="19.4" gradientUnits="userSpaceOnUse"><stop stop-color="#8FC2FF"/><stop offset="1" stop-color="#145AF3"/></linearGradient></defs></svg>
+      </span>
+      <span class="row__main">
+        <span class="row__title">dsh-widgets</span>
+        <span class="row__desc">会话内的自定义小组件</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- 2 ─ 量一量：外接圆 / 内间距 -->
+  <div class="block">
+    <h3 class="block__title">2 · 外接圆与内间距（放大 4 倍，数字现测）</h3>
+    <p class="demo-label">两个图标文件都声明 36 × 36，但图形本身只占了画布的一部分——「墨迹」由浏览器按真实路径的 <code>getBBox()</code> 算出（行几何与 7px 内缩来自 docs/reference/plugin-row.json；容器那一行是把这份演示的 4 倍图量回去）</p>
+    <div class="measures">
+
+      <figure class="measure" data-measure data-viewbox="36">
+        <div class="stage">
+          <div class="stage__glyph">
+            <svg viewBox="0 0 36 36" fill="none" aria-hidden="true"><rect x="8" y="10" width="5.33" height="6.67" rx="1.96" fill="#7CB7FF"/><rect x="8" y="19.33" width="7.11" height="6.67" rx="1.96" fill="#45D9E7"/><rect x="16.8" y="8.22" width="2.84" height="19.56" rx="1.42" fill="url(#railM)"/><rect x="21.78" y="10" width="6.22" height="6.67" rx="1.96" fill="#4A8CF7"/><rect x="21.78" y="19.33" width="6.22" height="6.67" rx="1.96" fill="url(#railM)"/><defs><linearGradient id="railM" x1="19.64" y1="8.22" x2="16.8" y2="27.78" gradientUnits="userSpaceOnUse"><stop stop-color="#8FC2FF"/><stop offset="1" stop-color="#145AF3"/></linearGradient></defs></svg>
+          </div>
+          <div class="stage__canvas" data-canvas></div>
+          <svg class="stage__overlay" viewBox="0 0 50 50" data-overlay aria-hidden="true"></svg>
+        </div>
+        <figcaption class="chips" data-chips></figcaption>
+      </figure>
+
+      <figure class="measure" data-measure data-viewbox="36">
+        <div class="stage">
+          <div class="stage__glyph">
+            <svg viewBox="0 0 36 36" fill="none" aria-hidden="true"><rect x="8" y="8" width="8" height="8.8" rx="2.4" fill="#45D9E7"/><rect x="8" y="19.2" width="8" height="8.8" rx="2.4" fill="#F2AF63"/><rect x="18.6" y="8" width="9.4" height="11.4" rx="2.8" fill="url(#mainM)"/><rect x="18.6" y="21.6" width="6.8" height="6.4" rx="2" fill="#7CB7FF"/><defs><linearGradient id="mainM" x1="28" y1="8" x2="18.6" y2="19.4" gradientUnits="userSpaceOnUse"><stop stop-color="#8FC2FF"/><stop offset="1" stop-color="#145AF3"/></linearGradient></defs></svg>
+          </div>
+          <div class="stage__canvas" data-canvas></div>
+          <svg class="stage__overlay" viewBox="0 0 50 50" data-overlay aria-hidden="true"></svg>
+        </div>
+        <figcaption class="chips" data-chips></figcaption>
+      </figure>
+
+      <!-- 对照：界面语义图标（单色 / currentColor / 16 画布），量法完全相同 -->
+      <figure class="measure" data-measure data-viewbox="16">
+        <div class="stage">
+          <div class="stage__glyph" data-icon="sparkle"></div>
+          <div class="stage__canvas" data-canvas></div>
+          <svg class="stage__overlay" viewBox="0 0 50 50" data-overlay aria-hidden="true"></svg>
+        </div>
+        <figcaption class="chips" data-chips></figcaption>
+      </figure>
+
+    </div>
+    <p class="note">第三个是官方的界面语义图标（16 族，单色、走 <code>currentColor</code>）：同一个量法下它的墨迹几乎顶满自己的画布——两层图标的差别不在颜色，在「谁负责留白」。应用图标的留白是产品给的 7px <em>加上</em> 图标文件自己的内缩；语义图标的留白只有容器给的 16×16。</p>
+  </div>
+
+  <!-- 3 ─ 浅色 / 深色两版 -->
+  <div class="block">
+    <h3 class="block__title">3 · 浅色与深色是两版图形，不是同一个文件换个底</h3>
+    <p class="demo-label">同一套图形出两版：底板换色，个别色块也单独调过（例如右下的方块在浅色版是 #5B9BF5、深色版是 #7CB7FF）</p>
+    <div class="plates">
+      <figure class="plate plate--light">
+        <svg viewBox="0 0 512 512" role="img" aria-label="dsh-widgets 浅色版应用图标"><rect width="512" height="512" rx="118" fill="#FFFFFF"/><rect x="74" y="140" width="137" height="137" rx="40" fill="#45D9E7"/><rect x="84" y="301" width="127" height="127" rx="38" fill="#F2AF63"/><rect x="235" y="74" width="203" height="203" rx="58" fill="url(#mainL)"/><rect x="235" y="301" width="137" height="137" rx="40" fill="#5B9BF5"/><defs><linearGradient id="mainL" x1="438" y1="74" x2="235" y2="277" gradientUnits="userSpaceOnUse"><stop stop-color="#8FC2FF"/><stop offset="1" stop-color="#145AF3"/></linearGradient></defs></svg>
+        <figcaption>浅色版 · app-icon-light.svg</figcaption>
+      </figure>
+      <figure class="plate plate--dark">
+        <svg viewBox="0 0 512 512" role="img" aria-label="dsh-widgets 深色版应用图标"><rect width="512" height="512" rx="118" fill="#0B0C0E"/><rect x="74" y="140" width="137" height="137" rx="40" fill="#45D9E7"/><rect x="84" y="301" width="127" height="127" rx="38" fill="#F2AF63"/><rect x="235" y="74" width="203" height="203" rx="58" fill="url(#mainD)"/><rect x="235" y="301" width="137" height="137" rx="40" fill="#7CB7FF"/><defs><linearGradient id="mainD" x1="438" y1="74" x2="235" y2="277" gradientUnits="userSpaceOnUse"><stop stop-color="#8FC2FF"/><stop offset="1" stop-color="#145AF3"/></linearGradient></defs></svg>
+        <figcaption>深色版 · app-icon-dark.svg</figcaption>
+      </figure>
+    </div>
+    <p class="note">产品自己也是这么做的：前端图标随系统深浅色切换（<code>favicon.svg</code> 与 <code>favicon-dark.svg</code>，两个文件、媒体查询选一个），而不是让同一个文件去猜底色。</p>
+  </div>
+
+<script>
+(function () {
+  'use strict'
+
+  /* 演示脚本跑在 shadow root 里，document.querySelector 看不到自己的标记；站点在挂载期
+     把当前根挂在 window.__DSH_DEMO_ROOT 上。 */
+  var root = window.__DSH_DEMO_ROOT || document
+
+  /** 把 mm 一位小数，量板上的数字不许四舍五入成一个假整。 */
+  function n(v) { return (Math.round(v * 10) / 10).toFixed(1) }
+
+  /** 一枚 chip。 */
+  function chip(label, value, kind) {
+    return '<span class="chip' + (kind ? ' chip--' + kind : '') + '">' + label + (value === null ? '' : ' <b>' + value + '</b>') + '</span>'
+  }
+
+  var boxes = root.querySelectorAll('[data-measure]')
+  Array.prototype.forEach.call(boxes, function (box) {
+    var svg = box.querySelector('.stage__glyph svg')
+    if (svg === null || typeof svg.getBBox !== 'function') return
+
+    /* 图标文件声明的画布边长：应用图标 36、语义图标 16。墨迹量出来的是它在这块画布里的位置。 */
+    var canvas = Number(box.getAttribute('data-viewbox')) || 36
+    var box2 = svg.getBBox()
+    if (box2.width === 0 || box2.height === 0) return
+
+    /* 容器 50 里，本体占 36 且居中 → 本体左上角在 7,7；画布内部的坐标按 canvas 归一化。 */
+    var k = 36 / canvas
+    var x = 7 + box2.x * k
+    var y = 7 + box2.y * k
+    var w = box2.width * k
+    var h = box2.height * k
+    var cx = x + w / 2
+    var cy = y + h / 2
+    var rOut = Math.sqrt((w / 2) * (w / 2) + (h / 2) * (h / 2))   /* 外接圆：过墨迹外接框四角 */
+    var rIn = Math.min(w, h) / 2                                    /* 内切圆：只保证不碰宽边 */
+
+    var overlay = box.querySelector('[data-overlay]')
+    if (overlay !== null) {
+      overlay.innerHTML = ''
+      var NS = 'http://www.w3.org/2000/svg'
+      var add = function (tag, attrs) {
+        var el = document.createElementNS(NS, tag)
+        Object.keys(attrs).forEach(function (key) { el.setAttribute(key, String(attrs[key])) })
+        overlay.appendChild(el)
+        return el
+      }
+      add('rect', { x: x, y: y, width: w, height: h, fill: 'none', stroke: '#4176e6', 'stroke-width': 0.5 })
+      add('circle', { cx: cx, cy: cy, r: rOut, fill: 'none', stroke: '#c2410c', 'stroke-width': 0.5, 'stroke-dasharray': '1.5 1.5' })
+      add('circle', { cx: cx, cy: cy, r: rIn, fill: 'none', stroke: '#c2410c', 'stroke-width': 0.25, opacity: 0.5 })
+      add('line', { x1: 0, y1: cy, x2: 50, y2: cy, stroke: '#c2410c', 'stroke-width': 0.2, opacity: 0.45 })
+      add('line', { x1: cx, y1: 0, x2: cx, y2: 50, stroke: '#c2410c', 'stroke-width': 0.2, opacity: 0.45 })
+    }
+
+    /* 容器那两行也不写死：量板的容器是 50 × 50 放大 4 倍画出来的，
+       所以现量出来的边长除以 4 就该回到 50，圆角同理。 */
+    var stage = box.querySelector('.stage')
+    var stageStyle = stage === null ? null : getComputedStyle(stage)
+    var scale = 4
+    var containerW = stage === null ? null : Math.round(stage.getBoundingClientRect().width / scale)
+    var containerRadius = stageStyle === null ? null : Math.round(parseFloat(stageStyle.borderTopLeftRadius) / scale)
+
+    var chips = box.querySelector('[data-chips]')
+    if (chips !== null) {
+      chips.innerHTML = chip('容器', (containerW === null ? '—' : containerW + ' × ' + containerW) + ' · 圆角 ' + (containerRadius === null ? '—' : containerRadius))
+        + chip('文件画布', canvas + ' × ' + canvas)
+        + chip('墨迹', n(w) + ' × ' + n(h), 'ink')
+        + chip('画布内留白', n((canvas - box2.width) / 2))
+        + chip('容器边缘 → 墨迹', n(x))
+        + chip('外接圆', '⌀ ' + n(rOut * 2), 'circle')
+    }
+  })
+
+  var toggle = root.querySelector('[data-toggle-annot]')
+  if (toggle !== null) {
+    toggle.addEventListener('click', function () {
+      var on = toggle.getAttribute('aria-pressed') === 'true'
+      toggle.setAttribute('aria-pressed', String(!on))
+      toggle.textContent = '标注：' + (on ? '关' : '开')
+      Array.prototype.forEach.call(root.querySelectorAll('.stage__overlay, .stage__canvas'), function (el) {
+        el.hidden = on
+      })
+    })
+  }
+})();
+</script>
+</body>
+</html>

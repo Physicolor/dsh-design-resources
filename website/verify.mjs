@@ -82,6 +82,25 @@ if (data !== null) {
   check('every seat has a purpose', data.seats.every(s => typeof s.purpose === 'string' && s.purpose.length > 0))
   check('spec documents rendered', data.specs.length > 0, `${data.specs.length}`)
 
+  /* 图文并茂：每篇规范都要带至少一个能操作的演示——规范页只有文字的话，
+   * 「看规范」就退化成「读规范」。演示由 markdown 里的 `demo:` 标记嵌进来，
+   * 生成后是 `data-inline-demo` 的舞台。 */
+  const noDemo = data.specs.filter(s => !s.html.includes('data-inline-demo=')).map(s => s.id)
+  check('every spec carries an operable demo', noDemo.length === 0, noDemo.length === 0 ? `${data.specs.length}/${data.specs.length}` : noDemo.join(', '))
+
+  /* 组件的归属不能含糊：清单里的每个 id 要么在 official、要么在 proposed；
+   * proposed 必须写明它服务的真实场景（origins.json 的 scenes），
+   * 没有真实场景的界面不该留在这个仓库里——那是编造。 */
+  const originsJson = JSON.parse(await readFile(join(ROOT, 'components', 'origins.json'), 'utf8'))
+  const originIds = [...(originsJson.official ?? []), ...(originsJson.proposed ?? [])]
+  const componentIds = data.components.map(c => c.id)
+  const unknownOrigin = originIds.filter(id => !componentIds.includes(id))
+  check('origins lists only components that exist', unknownOrigin.length === 0, unknownOrigin.join(', '))
+  const unlabelled = componentIds.filter(id => !originIds.includes(id))
+  check('every component is labelled official or proposed', unlabelled.length === 0, unlabelled.join(', '))
+  const sceneMissing = (originsJson.proposed ?? []).filter(id => (originsJson.scenes ?? {})[id] === undefined)
+  check('every proposed component names its real scene', sceneMissing.length === 0, sceneMissing.join(', '))
+
   /* 元素清单的验收条件：产品侧每一个身份都要有家——要么规范里写下了它的尺寸，
    * 要么被明确判定「尺寸随内容走」。第三方插件的按插件搁置，不计入这条。
    * 这一条把「扫完并一一对应」变成 build 能判的断言，而不是一句自我评价。
@@ -504,15 +523,44 @@ if (browserPath === null) {
     check('outline jumps into the document', jumped !== null && jumped < 420, jumped === null ? 'n/a' : `heading at y=${jumped}`)
     check('theme icon shows the mode in force', await evaluate(`document.getElementById('themeIcon').innerHTML.indexOf('<svg') !== -1`))
 
-    // the motion spec carries a bench you can actually operate
+    /* 规范页的顶部只认大标题：演示台、试验台一律排到正文里，不许抢标题的位置。 */
     await goto(base + '#/spec/40-motion')
-    check('motion bench renders', await evaluate(`document.querySelectorAll('[data-lab]').length === 1`))
-    await evaluate(`document.querySelector('[data-lab-play]').click()`)
-    check('motion bench animates', await evaluate(`(document.querySelector('[data-lab-box]').style.transform || '').indexOf('translateX') === 0`))
-    await evaluate(`document.querySelector('[data-lab-durations] button[data-ms="350"]').click()`)
-    check('motion bench switches duration', await evaluate(`document.querySelector('[data-lab-box]').style.transition.indexOf('350ms') !== -1`))
-    await evaluate(`document.querySelector('[data-lab-curves] button[data-curve="linear"]').click()`)
-    check('motion bench switches curve', await evaluate(`document.querySelector('[data-lab-box]').style.transition.indexOf('linear') !== -1`))
+    check('spec page leads with its own title', await evaluate(`(function(){
+        var inner = document.querySelector('.main-inner');
+        if (!inner) return false;
+        var head = inner.firstElementChild;
+        return head !== null && head.classList.contains('doc-head') && head.querySelector('h1') !== null;
+    })()`))
+    check('spec page carries no invented bench', await evaluate(`document.querySelectorAll('[data-lab]').length === 0`))
+    check('spec title is not a breadcrumb', await evaluate(`document.querySelectorAll('.main-inner > .crumbs').length === 0`))
+
+    /* 图文并茂不能只是「插了一个空壳」：逐个规范页确认它的演示真的把内容算出来了。
+     * 脚本跑在 shadow root 里，必须用它自己的根查询（`window.__DSH_DEMO_ROOT`）——
+     * 这一条同时防住两类退化：演示没写、演示写了但脚本静默不跑。 */
+    const demoProbes = [
+      ['00-overview', '.tag', 8, '规则与来源对照板的标签'],
+      ['11-slot-seats', '[data-seat-tree] li', 11, '座位树 11 个代表座位'],
+      ['20-controls', '[data-read]', 9, '控件量板 9 格读数'],
+      ['30-tokens', '[data-radius]', 6, '圆角六档'],
+      ['50-icons', '[data-chips] .chip', 12, '应用图标量板的读数 chip'],
+      ['60-accessibility', '[data-contrast] tr', 5, '对比度实测表'],
+      ['70-checklist', '[data-items] li', 5, '自检清单条目'],
+      ['80-conflicts', '[data-overlay] tr', 14, 'shell.overlay 占用者 14 行'],
+    ]
+    for (const [id, selector, min, label] of demoProbes) {
+      await goto(base + '#/spec/' + id)
+      const counts = await evaluate(`(function(){
+        var stages = document.querySelectorAll('[data-inline-demo]');
+        var total = 0;
+        for (var i = 0; i < stages.length; i++) {
+          var sr = stages[i].shadowRoot;
+          if (sr) total += sr.querySelectorAll(${JSON.stringify(selector)}).length;
+        }
+        return total;
+      })()`)
+      check(`spec demo renders — ${id}`, counts >= min, `${label}: ${counts} ≥ ${min}`)
+    }
+    await goto(base + '#/spec/40-motion')
 
     // bilingual switch
     await goto(base)
@@ -541,7 +589,8 @@ if (browserPath === null) {
     check('index marks the open component', await evaluate(`document.querySelector('.index__link--sub[aria-current="page"]') !== null`))
     check('exactly one row is current', await evaluate(`document.querySelectorAll('.index__link[aria-current="page"]').length === 1`), String(await evaluate(`document.querySelectorAll('.index__link[aria-current="page"]').length`)))
     check('nav groups are captions, not toggles', await evaluate(`document.querySelectorAll('.index__head').length === 0`))
-    check('branches fold from the right-end control', await evaluate(`(function(){var b=document.querySelector('.index__branch');if(!b)return false;var was=b.getAttribute('data-open');b.querySelector('.index__disclosure').click();var now=b.getAttribute('data-open');return was!==now})()`))
+    check('a branch row folds from the row itself', await evaluate(`(function(){var b=document.querySelector('.index__branch');if(!b)return false;var was=b.getAttribute('data-open');b.querySelector('.index__row').click();var now=b.getAttribute('data-open');return was!==now})()`))
+    check('the fold control is the row, not a second target', await evaluate(`document.querySelectorAll('.index__row .index__disclosure').length === 0 && document.querySelectorAll('.index__row[aria-expanded]').length > 0`))
     check('folded branches keep their children', await evaluate(`(function(){var b=document.querySelector('.index__branch[data-open="false"]');return b!==null&&b.querySelectorAll('.index__children .index__link').length>0})()`))
     check('tooltip bubble is self-drawn', await evaluate(`document.querySelectorAll('body > .tip').length === 1`))
     check('source is folded by default', await evaluate(`document.querySelectorAll('.code[data-fold="true"]').length >= 1`))
@@ -582,7 +631,17 @@ if (browserPath === null) {
       }
     }
 
-    for (const [name, route] of [['home', '#/'], ['components', '#/components'], ['component', '#/component/button'], ['icons', '#/icons'], ['seats', '#/seats'], ['spec', '#/spec'], ['frame-layout', '#/spec/10-frame-layout'], ['icon-anatomy', '#/spec/50-icons'], ['tokens', '#/tokens']]) {
+    for (const [name, route] of [
+      ['home', '#/'], ['components', '#/components'], ['component', '#/component/button'],
+      ['icons', '#/icons'], ['seats', '#/seats'], ['spec', '#/spec'],
+      ['frame-layout', '#/spec/10-frame-layout'], ['icon-anatomy', '#/spec/50-icons'],
+      ['tokens', '#/tokens'],
+      /* 图文并茂那一轮的记录：每篇规范都带演示，截图也得留下它们的样子 */
+      ['spec-controls', '#/spec/20-controls'], ['spec-tokens', '#/spec/30-tokens'],
+      ['spec-seats', '#/spec/11-slot-seats'], ['spec-a11y', '#/spec/60-accessibility'],
+      ['spec-checklist', '#/spec/70-checklist'], ['spec-conflicts', '#/spec/80-conflicts'],
+      ['spec-overview', '#/spec/00-overview'], ['component-settings-page', '#/component/settings-page'],
+    ]) {
       await shoot(name, route)
     }
 

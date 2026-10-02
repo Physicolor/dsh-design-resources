@@ -226,15 +226,6 @@
         "source": "Spec and data taken from a running DeepSeek Harness, with the source of every item recorded",
         "generated": "Data generated"
     },
-    "lab": {
-        "motionTitle": "Motion bench",
-        "motionNote": "Pick a duration and a curve, then press play: the block runs once. A duration on paper means nothing; put two side by side and 350 milliseconds against 100 reads in one glance.",
-        "play": "Play",
-        "duration": "Duration",
-        "curve": "Curve",
-        "standard": "Standard",
-        "linear": "Linear"
-    },
     "notFound": {
         "title": "No such page",
         "lede": "That link points at something that has not been generated yet. Head home, or use the search above."

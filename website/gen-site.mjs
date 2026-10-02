@@ -53,7 +53,12 @@ function esc(s) {
 }
 
 /**
- * Inline markdown: code spans, bold, links.
+ * Inline markdown: code spans, bold, links, citation markers.
+ *
+ * `[^1]` is a citation marker: it renders as a superscript and points at the
+ * numbered source list at the end of the document, so prose can name the
+ * authority instead of paraphrasing it ("[HIG] 讲的是同一件事…" cannot be
+ * checked; "[1]" can).
  * @param s - raw inline text.
  * @returns HTML.
  */
@@ -61,6 +66,7 @@ function inline(s) {
   let out = esc(s)
   out = out.replace(/`([^`]+)`/gu, (_m, c) => `<code>${c}</code>`)
   out = out.replace(/\*\*([^*]+)\*\*/gu, '<strong>$1</strong>')
+  out = out.replace(/\[\^(\d+)\]/gu, (_m, num) => `<sup class="cite" data-jump="cite-${num}" title="引用 ${num}">[${num}]</sup>`)
   out = out.replace(/\[([^\]]+)\]\(([^)\s]+)\)/gu, (_m, text, href) => `<a href="${href}">${text}</a>`)
   return out
 }
@@ -148,7 +154,13 @@ function mdToHtml(md) {
         i++
       }
       const tag = ordered ? 'ol' : 'ul'
-      html.push(`<${tag}>` + items.map(t => `<li>${inline(t)}</li>`).join('') + `</${tag}>`)
+      /* An item that opens with `[1]` is a cited source: it carries the anchor
+       * the superscript marker in the prose jumps to. */
+      html.push(`<${tag}>` + items.map(t => {
+        const cite = /^\[(\d+)\]/u.exec(t)
+        const id = cite === null ? '' : ` id="cite-${cite[1]}"`
+        return `<li${id}>${inline(t)}</li>`
+      }).join('') + `</${tag}>`)
       continue
     }
 

@@ -6,6 +6,8 @@
 
 ## 1. 冲突类型
 
+<!-- demo: conflict-board | 冲突裁决板：三张表用的都是真实占用登记（`data/raw/occupancy-2026-10-01.json`）——「换个时序」按钮把未声明 order 的那些换个注册次序，可见顺序跟着变，这就是这条规则要治的病；另两张表分别是三个 order 40 撞车、和一份声明清楚的对照。 -->
+
 | 类型 | 表现 | 可否自动发现 |
 | --- | --- | --- |
 | 未声明 order | entry 落在默认值 0，顺序由注册时序决定 | 可 |
@@ -20,7 +22,7 @@
 | --- | --- |
 | `shell.overlay` | 14 个占用者，其中 11 个未声明 order，全部落在默认值 0；层级顺序由注册时序决定，不可预测 |
 | `settings.section` | 11 个占用者，其中 research-cordis / dsh-market / ui-harmony 三个 order 均为 40，顺序无法解释 |
-| `conversation.session.header.utilities` | 4 个占用者，order 为 -10 / -5 / 0 / 5，排布清晰 |
+| `conversation.session.header.utilities` | 4 个占用者，order 为 -10 / -5 / 未声明（null）/ 5，排布清晰 |
 
 结论：冲突的根因不是「占用者多」，而是「未声明 order」。同一座位 11 个占用者若各自声明不同的 order，本身并不构成缺陷。
 

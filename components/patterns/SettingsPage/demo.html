@@ -1,9 +1,14 @@
 <!-- 预览是产品里那个设置窗口的复刻：800 × 800、圆角 28、188 导航列 + 612 内容列，
-     数值逐条来自 docs/reference/settings-panel.json。本组件（骨架）官方 primitives 包里
-     没有对应物，但产品里的设置窗口是真实存在的界面。
-     注意：表头那两行（分区标题 18/26/600 + 说明 13/20 + hairline）是本机 dsh-ui-harmonizer
-     规范化之后的样子；官方各页自己的表头并不统一（模型页 16/500 + 14/22），要产品原样得先
-     关掉插件样式再采一次。 -->
+     数值逐条来自 docs/reference/settings-panel.json（2026-10-02 复采）。本组件（骨架）官方
+     primitives 包里没有对应物，但产品里的设置窗口是真实存在的界面。
+     字体用产品自己的字体栈（HarmonyOS Sans SC 起头），不再退到 -apple-system。
+     导航列：前 10 项逐条采自 settings-panel.json；「账号与余额」的依据是产品 bundle 内 i18n 的
+     分区名（中文 nav「账号与余额」/ 英文「Account」，以及「设置 → 账号与余额 进行充值」这句文案）
+     与占用登记里 settings.section 的首个占用者 account（order −10）；它不在本次采集到的导航列表里，
+     为什么缺席本仓库没有证据（推断是与登录态有关，未验证）。
+     表头那两行（分区标题 18/26/600 + 说明 13/20）是本机 dsh-ui-harmonizer 规范化之后的样子；
+     官方各页自己的表头并不统一（模型页 16/500 + 14/22）。文件末尾那张三块对照把这条契约变成
+     可以现测的读数：缺标题、缺描述都会当场判 ✗。 -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
@@ -110,7 +115,9 @@
   --dsw-shadow-lv2: 0 4px 12px 0 rgba(0, 0, 0, .02), 0 2px 8px 0 rgba(0, 0, 0, .04);
   --dsw-shadow-lv3: 0 0 1px 0 rgba(0, 0, 0, .2), 0 0 4px 0 rgba(0, 0, 0, .02), 0 12px 32px 0 rgba(0, 0, 0, .08);
   --dsw-mask-blur: none;
-  --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* 产品 UI 用的就是 HarmonyOS Sans SC（插件作者手册 §2.3 的官方字体栈）。窗口里排版必须
+     跟真机一致，所以这份 demo 不再退到 -apple-system 上。 */
+  --dsw-font-family: 'HarmonyOS Sans SC', 'HarmonyOS Sans', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   /* 官方把这两条写成 font 简写合成 token，这里展开以便 demo 单条使用。 */
   --dsw-font-s-14: 14px/22px var(--dsw-font-family);
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
@@ -214,7 +221,27 @@
 .options { flex: 1; min-height: 0; box-sizing: border-box; padding: 0 24px 24px; overflow: hidden; }
 
 .pageTitle { margin: 0; font-size: 18px; line-height: 26px; font-weight: 600; }
-.pageIntro { margin: 0; padding-bottom: 12px; font-size: 13px; line-height: 20px; color: var(--dsw-alias-label-secondary); }
+/* 描述色 ← 采集 rgb(129,133,140) = 三级文字，不是二级 */
+.pageIntro { margin: 0; padding-bottom: 12px; font-size: 13px; line-height: 20px; color: var(--dsw-alias-label-tertiary); border-bottom: 1px solid var(--dsw-alias-border-l2); }
+
+/* 表头契约的三块对照：读数由文件末尾的脚本现测，不写死结论 */
+.heads { display: flex; flex-wrap: wrap; gap: 16px; }
+.head {
+  flex: 1 1 240px;
+  margin: 0;
+  min-width: 220px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.head--bad .headStage { background: color-mix(in srgb, #b3271f 6%, transparent); }
+.headStage { padding: 16px; }
+.headChecks { display: flex; flex-direction: column; gap: 4px; padding: 10px 16px 14px; border-top: 1px solid var(--dsw-alias-border-l2); }
+.check { font-size: 11px; line-height: 16px; color: var(--dsw-alias-label-secondary); }
+.check b { font-weight: 600; }
+.check i { font-style: normal; color: var(--dsw-alias-label-tertiary); }
+.check--ok b { color: #14663c; }
+.check--bad b { color: #b3271f; }
 
 /* 设置行 ← 采集：padding 16px 0、行间一条 hairline、文字列右侧留 48、控件贴右 */
 .row {
@@ -391,6 +418,11 @@ body {
         <nav class="nav" aria-label="设置分区">
           <div class="navTitle">设置</div>
           <div class="navList">
+            <!-- 分区列表 = 官方设置窗口里那一列。前 10 项逐条采自 docs/reference/settings-panel.json
+                 （2026-10-02 复采）。「账号与余额」是产品文案里点名的分区（bundle 内 i18n：
+                 onboardingNoCreditDescription「稍后前往 设置 → 账号与余额 进行充值」、账号菜单 nav），
+                 未登录实例的导航列里不出现，故不在采集文件里；条目本身以产品文案 + 用户截图为准。 -->
+            <button type="button" class="navItem"><span class="navItemIcon" data-icon="user"></span><span class="navItemLabel">账号与余额</span></button>
             <button type="button" class="navItem" aria-current="page"><span class="navItemIcon" data-icon="settings"></span><span class="navItemLabel">通用设置</span></button>
             <button type="button" class="navItem"><span class="navItemIcon" data-icon="gauge"></span><span class="navItemLabel">模型</span></button>
             <button type="button" class="navItem"><span class="navItemIcon" data-icon="api"></span><span class="navItemLabel">Command Code</span></button>
@@ -496,5 +528,81 @@ body {
       </div>
     </div>
   </div>
+
+  <div class="demo-group">
+    <p class="demo-label">分区表头的契约 · 往设置页里注册一个分区时，<b>大标题与子描述两件都不能缺</b>：标题 18/26/600、描述 13/20 三级色 + 底部 hairline、两者相距 12px。下面三块是同一套写法的三种情况，读数由浏览器现测。</p>
+    <div class="heads">
+      <figure class="head" data-head data-expect="ok">
+        <div class="headStage">
+          <h2 class="pageTitle">通用设置</h2>
+          <p class="pageIntro">管理语言、外观、界面与对话行为等基础偏好。</p>
+        </div>
+        <figcaption class="headChecks" data-checks></figcaption>
+      </figure>
+      <figure class="head" data-head data-expect="no-intro">
+        <div class="headStage">
+          <h2 class="pageTitle">我的插件</h2>
+        </div>
+        <figcaption class="headChecks" data-checks></figcaption>
+      </figure>
+      <figure class="head" data-head data-expect="no-title">
+        <div class="headStage">
+          <p class="pageIntro">只有一段说明，整页没有大标题。</p>
+        </div>
+        <figcaption class="headChecks" data-checks></figcaption>
+      </figure>
+    </div>
+    <p class="demo-label">缺标题时页面在大纲里没有入口，缺描述时读者不知道这一页管什么；两者都不属于「装饰可以省」。官方各页自己的数值并不统一（模型页 16/500 + 14/22），本页给的是规范化之后统一采用的一套。实测差异记录：2026-10-02 采集到的 <code>p.enhc-page-intro</code> 计算样式为 <code>padding-bottom:12px</code>、<code>border:0 none</code>——描述下那条 hairline 按规范器文档的契约画，采集里没有量到。</p>
+  </div>
+
+<script>
+(function () {
+  'use strict'
+
+  /* 演示脚本跑在 shadow root 里，document.querySelector 看不到自己的标记；站点在挂载期
+     把当前根挂在 window.__DSH_DEMO_ROOT 上。 */
+  var root = window.__DSH_DEMO_ROOT || document
+
+  /** 一行读数。 */
+  function line(ok, label, actual) {
+    var mark = ok ? '✓' : '✗'
+    var cls = ok ? 'check check--ok' : 'check check--bad'
+    return '<span class="' + cls + '"><b>' + mark + '</b> ' + label + ' <i>' + actual + '</i></span>'
+  }
+
+  var heads = root.querySelectorAll('[data-head]')
+  Array.prototype.forEach.call(heads, function (head) {
+    var h2 = head.querySelector('h2')
+    var p = head.querySelector('p')
+    var out = []
+
+    if (h2 === null) {
+      out.push(line(false, '大标题 h2', '缺失'))
+    } else {
+      var hs = getComputedStyle(h2)
+      out.push(line(hs.fontSize === '18px' && hs.lineHeight === '26px' && hs.fontWeight === '600',
+        '大标题 18/26 · 600', hs.fontSize + '/' + hs.lineHeight + ' · ' + hs.fontWeight))
+    }
+
+    if (p === null) {
+      out.push(line(false, '子描述 p', '缺失'))
+    } else {
+      var ps = getComputedStyle(p)
+      var hairline = parseFloat(ps.borderBottomWidth) > 0 && ps.borderBottomStyle !== 'none'
+      out.push(line(ps.fontSize === '13px' && ps.lineHeight === '20px', '子描述 13/20', ps.fontSize + '/' + ps.lineHeight))
+      out.push(line(hairline && ps.paddingBottom === '12px', '描述下 12px + hairline',
+        ps.paddingBottom + (hairline ? ' + 1px' : ' · 无底边')))
+    }
+
+    if (h2 !== null && p !== null) {
+      var gap = Math.round(p.getBoundingClientRect().top - h2.getBoundingClientRect().bottom)
+      out.push(line(Math.abs(gap - 12) <= 1, '标题 → 描述 12px', gap + 'px'))
+    }
+
+    var box = head.querySelector('[data-checks]')
+    if (box !== null) box.innerHTML = out.join('')
+  })
+})();
+</script>
 </body>
 </html>

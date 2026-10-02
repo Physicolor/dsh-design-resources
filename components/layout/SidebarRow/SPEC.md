@@ -3,7 +3,8 @@
 - id: sidebarrow
 - category: layout
 - source: `components/layout/SidebarRow/`（`index.tsx` / `sidebarrow.module.css`）
-- official-counterpart: 官方没有这个组件；几何逐条锚定 `@deepseek-ai/dsh-client-ui-primitives/lib/Menu.module.css` 的 `.item` 家族
+- official-counterpart: **产品里有对应的界面**：左栏行由产品自有 CSS 模块渲染——会话行 `sessionRow` 256 × 32（`role=treeitem`，22 处）、项目行 256 × 34、面板行 252 × 36、新会话按钮 252 × 38、溢出按钮 256 × 28（`data/ui-inventory.json`）。菜单单元那套几何（`Menu.module.css` 的 `.item`：min-height 40 / padding 8px 10px / radius 10 / gap 8）只适用于「弹出菜单里的项」，本组件的左栏行不套用它
+- measured-2026-10-02: 下面 geometry-source 里那张表引用的是 `Menu.module.css` `.item`（40px）——那是弹出菜单的单元，不是左栏行。**左栏场景以本文第 1 节的实测值为准**
 - human-doc: `README.md`（判断与取舍；本文件只放事实）
 
 ## 产品里的左栏行（实测）

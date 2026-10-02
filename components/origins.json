@@ -1,6 +1,7 @@
 {
-    "$comment": "哪些组件的实现对应官方已有组件，哪些是本仓库补充的。判断依据是每个组件 SPEC.md 的 official-counterpart 字段：official 表示这件东西在产品界面里真实存在（官方 primitives 包里有同名组件，或者产品客户端自己的 CSS 模块在渲染它——例如运行圆环 running-ring），网站上看到的就是用户会遇到的控件；proposed 表示产品里没有这个界面，几何是逐条锚定官方选择器拼出来的实现建议。网站必须把两者区分显示——把 proposed 当官方界面展示，等于编造 UI。",
-    "source": "components/*/*/SPEC.md 的 official-counterpart 字段，2026-10 汇总",
+    "$comment": "哪些组件的实现对应官方已有组件，哪些是本仓库补充的。判断依据是每个组件 SPEC.md 的 official-counterpart 字段，以及 2026-10-02 的一次独立复核（逐条回到产品与实测数据）。official 表示这件东西在产品界面里真实存在（官方 primitives 包里有同名组件，或者产品客户端自己的 CSS 模块在渲染它——例如运行圆环 running-ring、设置窗口 settings-page）；proposed 表示产品里没有这个界面，几何是逐条锚定官方选择器拼出来的实现建议，必须写明它服务的真实场景（scene）。网站必须把两者区分显示——把 proposed 当官方界面展示，等于编造 UI。",
+    "source": "components/*/*/SPEC.md 的 official-counterpart 字段 + 2026-10-02 独立复核（app.asar 新版 primitives、data/ui-inventory.json、docs/reference/*.json）",
+    "revision": "2026-10-02 · 复核把 10 个此前挂在 proposed 里的真实界面收回 official（依据见 scene 字段），并删除没有任何产品对应物的 loading-dots（三点顺序出现只存在于官方 ConnectionIndicator 的「重连中」分支，产品没有独立的加载点组件）",
     "official": [
         "button",
         "input",
@@ -14,22 +15,36 @@
         "state-dot",
         "running-ring",
         "fishmark",
-        "wordmark"
-    ],
-    "proposed": [
+        "wordmark",
         "segmentedcontrol",
         "card",
         "empty-state",
         "inline-notice",
-        "loading-dots",
-        "key-value-list",
-        "mini-bar",
         "panelheader",
         "settingsrow",
         "sidebarrow",
         "toolbarrow",
         "list-row-group",
-        "panel-seat",
         "settings-page"
-    ]
+    ],
+    "proposed": [
+        "key-value-list",
+        "mini-bar",
+        "panel-seat"
+    ],
+    "scenes": {
+        "segmentedcontrol": "官方 primitives 新版（app.asar 内 @deepseek-ai/dsh-client-ui-primitives）有 SegmentedControl.module.css 并导出 SegmentedControl；产品模型页用 <SegmentedControl> 渲染模式切换，用量面板实测 duc-seg 234×28 / duc-seg-thumb 42×24 / duc-seg-btn 44×24",
+        "card": "产品自有 CSS 模块在设置页/插件页/输入区三处渲染卡片表面：.KZf9OG_card（.5px settings-card-stroke、radius-xl=20px、settings-card-fill）、fO69Vq_card 976×66 圆角 20（docs/reference/plugin-row.json）",
+        "empty-state": "实测 EBLgjq_emptyNotice（284×16）、dsh_notification_empty（settings.section，530×20）、enhc-doctor-empty（564×20）——空状态文案在产品里真实渲染；组件那套「图标+标题+说明+动作」的组合未被实测，见其 SPEC 的已知偏差",
+        "inline-notice": "产品挂载官方 ConnectionIndicator（state/disconnectedLabel/onReconnect），单行几何见产品 app.asar 内 lib/ConnectionIndicator.module.css（h28 / padding 0 8 / radius 8 / 12-18-500；2026-10-02 复核更正旧版的 h32 / 0 10）；info、error 两种语气没有产品对应物",
+        "panelheader": "设置窗口 wCInkW_header 612×54（padding 20 14 8 10 / gap 8）+ wCInkW_close 28×28 圆角 8；右栏 tabStrip 706×38；左栏 panelTitle 28×22（docs/reference/settings-panel.json、data/ui-inventory.json）",
+        "settingsrow": "实测 _3HsggG_row 564×77（padding 16px 0 / gap 8），内含 rowText（gap 4）/ title 398×22 / desc 398×18 / selector 110×36 圆角 12；同构行族 Hefa_q_row、v01cdW_group 等 8 处（docs/reference/settings-panel.json）",
+        "sidebarrow": "左栏行由产品自有 CSS 模块渲染：sessionRow 256×32（role=treeitem，22 处）、projectRow 256×34、panelRow 252×36、newSession 252×38、time 32×16（data/ui-inventory.json、data/ui-coverage.json）",
+        "toolbarrow": "输入卡工具行 RlGAzG_row 780×42（padding 2 8 6 8 / gap 12）＋ RlGAzG_tools 140×28；同座位 RlGAzG_add 28×28、RlGAzG_primary 34×34、dlU_AG_trigger 100×28（docs/reference/composer-geometry.json、data/ui-inventory.json）",
+        "list-row-group": "分组标题在产品里原生渲染：fO69Vq_groupTitle 28×22 + count 8×19（slot=main）、RotMhW_groupTitle 56×22 + groupToggle 76×22（slot=settings.plugins.tab）、cc-group 564×225、KZf9OG_groupHead 564×16（data/ui-inventory.json）",
+        "settings-page": "800×800 设置窗口本体：wCInkW_panel 圆角 28（docs/reference/settings-panel.json，遮罩在采集里是 1570×905；data/ui-inventory.json 另记 1570×871，两个口径分别来自一次采集与一次扫描）、导航列 188×800、导航格 wCInkW_navCell 164×40 圆角 12、内容列 612×800（docs/reference/settings-panel.json）",
+        "key-value-list": "产品自有代码里没有键值列表，但用量面板这个真实位置里插件在渲染键—值行：duc-profile-kv-label 260×18 / duc-profile-kv-value 28×18（slot=shell.overlay）",
+        "mini-bar": "比例读数的真实位置存在：cc-miniMeterLabel 58×18 / cc-miniMeterValue 16×18（slot=settings.section，文本「5 小时窗口 0%」）、lc-ov-usage-bar 10×36；条本体（track/fill）没有被实测到",
+        "panel-seat": "座位系统真实（data/slots.json 90 个座位，shell.overlay 14 个占用者），会话流座位里确有插件元素实测（lc-jump 28×28 @ conversation.chat.assistant-actions、dsx-stats-capsule 28×28 @ conversation.session.header.utilities）；但「插件插入的块」本体没有被实测到"
+    }
 }

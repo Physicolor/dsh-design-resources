@@ -54,7 +54,6 @@
         "modal": "对话框",
         "empty-state": "空状态",
         "inline-notice": "内联提示",
-        "loading-dots": "加载点",
         "toast": "轻提示",
         "disclosure-row": "折叠行",
         "key-value-list": "键值列表",
@@ -254,15 +253,6 @@
         "name": "DeepSeek Design Resources",
         "source": "规范与数据取自运行中的 DeepSeek Harness，逐条标注来源",
         "generated": "数据生成于"
-    },
-    "lab": {
-        "motionTitle": "动效档位试验台",
-        "motionNote": "选一个时长和一条曲线，点播放，方块走一次。时长写在纸上没有感觉，摆在一起比一比：350 毫秒和 100 毫秒的差别，看一眼比读十行字清楚。",
-        "play": "播放",
-        "duration": "时长",
-        "curve": "曲线",
-        "standard": "标准",
-        "linear": "线性"
     },
     "notFound": {
         "title": "没有这一页",

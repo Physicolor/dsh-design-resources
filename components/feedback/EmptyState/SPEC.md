@@ -3,7 +3,7 @@
 - id: empty-state
 - category: feedback
 - source: `components/feedback/EmptyState/`（`index.tsx` / `empty-state.module.css`）
-- official-counterpart: 无。`@deepseek-ai/dsh-client-ui-primitives/lib/` 下没有任何同名文件
+- official-counterpart: **产品里有对应的界面**：空状态文案在产品里真实渲染——`EBLgjq_emptyNotice` 284 × 16、`dsh_notification_empty` 530 × 20（`settings.section`）、`enhc-doctor-empty` 564 × 20。官方 primitives 包没有 EmptyState 组件；那套「图标 + 标题 + 说明 + 动作」的组合形态在产品里没有被实测到，见「已知偏差」
 - human-doc: `README.md`（判断与取舍；本文件只放事实）
 
 ## geometry-source

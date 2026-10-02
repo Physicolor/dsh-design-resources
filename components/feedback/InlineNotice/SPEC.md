@@ -3,7 +3,8 @@
 - id: inline-notice
 - category: feedback
 - source: `components/feedback/InlineNotice/`（`index.tsx` / `inline-notice.module.css`）
-- official-counterpart: 官方没有这个组件。单行几何与 warn / success 配色借用 `@deepseek-ai/dsh-client-ui-primitives/lib/ConnectionIndicator.module.css`，派生底色的手法借用 `Tag.module.css` 的 `color-mix`；产品里并没有这个界面元素
+- official-counterpart: **产品里有对应的界面**：官方 `ConnectionIndicator`（断连 / 重连提示）被客户端真实挂载（`state` / `disconnectedLabel` / `onReconnect`）。单行几何实测为 `height: 28px` / `padding: 0 8px` / `border-radius: var(--dsw-radius-sm)`（8px）/ `font 12px 500 / 18px` / `display: inline-grid` + `14px max-content` + `column-gap: 4px`，取自产品 `app.asar` 内的 `@deepseek-ai/dsh-client-ui-primitives/lib/ConnectionIndicator.module.css`（2026-10-02 复核，替换掉旧版采集的 32px / 0 10px）。warn / success 用语气的三级底色，派生手法借用 `Tag.module.css` 的 `color-mix`；info / error 两种语气产品里没有对应物。
+- 与本组件的差别（有意，不是抄错）：官方 `ConnectionIndicator` 是 14px 图标 + 一段状态文字的连接指示器，实测单行 **28 高 / padding 0 8px**；本组件是通用提示条，单行取 **32 高 / padding 0 10px**（本仓库建议值，20×20 的关闭控件要塞进去，推导见下）。要与产品原生提示并排时，改用官方的 28 / 0 8
 - human-doc: `README.md`（判断与取舍；本文件只放事实）
 
 ## geometry-source
@@ -13,7 +14,7 @@
 
 | 数值 | 出处 |
 | --- | --- |
-| `height: 32px` / `padding: 0 10px` / `border-radius: 8px` | `ConnectionIndicator.module.css` → `.indicator` |
+| `height: 28px` / `padding: 0 8px` / `border-radius: 8px` | `ConnectionIndicator.module.css` → `.indicator` |
 | `box-sizing: border-box` / `border: none` | `ConnectionIndicator.module.css` → `.indicator` |
 | `font-size: 12px` / `font-weight: 500` / `line-height: 18px` / `white-space: nowrap` | `ConnectionIndicator.module.css` → `.indicator` |
 | `display: inline-grid` / `grid-template-columns: 14px max-content` / `column-gap: 4px` / `align-items: center` | `ConnectionIndicator.module.css` → `.indicator` |
@@ -39,7 +40,7 @@
 - **`info` / `error` 的底色**：官方没有「三级底 + 主色」的完整组合可用——
   `--dsw-alias-state-success-tertiary` / `--dsw-alias-state-warn-tertiary` 都存在，`--dsw-alias-state-business-tertiary`（= `--dsw-static-deepseek-100`）虽然存在，但它在 dark 主题下被定义成 `--dsw-static-deepseek-800` 这类「深色底」，直接当浅色提示条的底色会在 light 主题下显得过深；`--dsw-alias-state-error` 则根本没有 tertiary 变体，只有 `primary` / `secondary`。
   为了一条规则覆盖两种主题，本仓库不新增任何 token，改用官方 `Tag.module.css` 已经用过的手法 `color-mix(in srgb, 主色 10%, transparent)` 从对应主色派生底色。
-- **多行形态 `.multiline`**：官方 ConnectionIndicator 只有单行 32px。高度改 `auto` + `min-height: 32px`，上下内边距取 `6px`。
+- **多行形态 `.multiline`**：官方 ConnectionIndicator 只有单行 28px。高度改 `auto` + `min-height: 32px`，上下内边距取 `6px`。
   6px 的来历：单行形态把 18px 行高在 32px 里居中后，上下各留 `(32 - 18) / 2 = 7px`；自造间距按本仓库规则取 4 的倍数，4px 比原形态更紧，所以取 6px 作为「介于 4 与 7 之间、视觉上不松」的值，同时仍让单行时总高回到 32px 附近（6 + 18 + 6 = 30 < 32，靠 `min-height` 兜底到 32）。
 - **多行时图标的 `margin-top: 2px`**：文案首行行高 18px、图标 14px，居中差为 `(18 - 14) / 2 = 2px`。这是从官方数值推导出来的，不是新造尺寸。
 - **关闭控件 `.dismiss`**：官方没有关闭态。20×20 热区、圆角 6px、`margin: 0 -4px 0 2px`（右侧负外边距抵掉一部分 10px 内边距，让图标视觉上仍贴着右边缘）、默认 `opacity: 0.75`、hover 底色 `color-mix(in srgb, currentColor 12%, transparent)`。

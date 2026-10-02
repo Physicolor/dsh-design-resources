@@ -67,22 +67,29 @@
 
 ## 6. 应用图标（插件列表里那一层）
 
-前五节讲的是**界面语义图标**：单色、走 `currentColor`、按 16 / 14 族选尺寸。产品里还有另一层图标——插件列表每行左侧那块彩色图标，它是插件的**身份标识**，规则完全不同。采集自 `docs/reference/plugin-row.json`（插件页一行，1570×905 视口）：
+前五节讲的是**界面语义图标**：单色、走 `currentColor`、按 16 / 14 族选尺寸。产品里还有另一层图标——插件列表每行左侧那块彩色图标，它是插件的**身份标识**，规则完全不同。
+
+<!-- demo: app-icon-board | 真实插件图标 + 实测行几何：容器 50 × 50 圆角 16、本体 36 × 36（四周各 7px）。下面三个量板按图标文件的真实路径现算「文件画布 / 墨迹外接框 / 外接圆」，可一键关掉标注对照原图。 -->
+
+采集自 `docs/reference/plugin-row.json`（插件页一行，1570 × 905 视口）：
 
 | 部位 | 实测值 |
 | --- | --- |
-| 行卡片 | 976 × 66 · 圆角 20 · `padding 8px` · 行内 `gap 14px` |
-| 图标容器 | **50 × 50 · 圆角 16** · 底色透明（颜色由图标自己带） |
+| 行卡片 | 976 × 66 · 圆角 20（`padding 8px` / `gap 14px` 在行内的内容容器上，行本体 padding 为 0） |
+| 图标容器 | **50 × 50 · 圆角 16** · 1px `rgba(0,0,0,.12)` 描边 · 底色透明（颜色由图标自己带） |
 | 图标本体 | **36 × 36**，在容器里居中 → 四周各留 **7px** |
-| 图标来源 | 插件自己的 `icon.svg`，产品把它内联成 `data:` URI 渲染（不是图标集的字形） |
+| 图标来源 | 插件自己的 `icon.svg`，产品内联成 `data:image/svg+xml;base64` 渲染（不是图标集的字形） |
 | 标题 | **14 / 20 · 500** |
 | 说明 | **13 / 18 · 400** |
 
-- `IC-MF-13`：应用图标必须画在 **50 × 50、圆角 16** 的容器里，图标本体 **36 × 36** 居中；不得把图形铺满容器。理由见下面的 HIG 判定。
+- `IC-MF-13`：应用图标必须画在 **50 × 50、圆角 16** 的容器里，图标本体 **36 × 36** 居中；不得把图形铺满容器。
 - `IC-MF-14`：**应用图标允许、也应当是多色的**——它是身份标识，不是界面语义。`IC-MF-08`（图标必须走 `currentColor`）只约束界面语义图标；把应用图标也做成单色，插件之间就只剩形状差别，列表里一眼分不出谁是谁。
 - `IC-MF-15`：同一条列表里所有应用图标共用同一个容器尺寸与圆角，图形本体的视觉重量允许不同——容器统一，图标才不会被看出是两套东西。
+- `IC-RC-18`：应用图标应出**浅色、深色两版**，而不是让同一个文件去猜底色。实测依据：产品自己的前端图标就是这么做的——`favicon.svg` 与 `favicon-dark.svg` 两个文件，用 `media="(prefers-color-scheme: dark)"` 选一个（见本机 `app.asar` 内 `dsh-web-frontend/dist/index.html`）。深色版不是把浅色版反色：本机 `dsh-widgets` 的两版里，右下角方块浅色版 `#5B9BF5`、深色版 `#7CB7FF`，底板由 `#FFFFFF` 换成 `#0B0C0E`。
 
-**为什么容器里要留 7px（按 Apple HIG 判定）**：HIG《App icons》讲的是同一件事——[App icons](https://developer.apple.com/cn/design/human-interface-guidelines/app-icons) 里两条直接对上：「Keep primary content centered to avoid truncation when the system adjusts corners or applies masking」（内容居中，别贴边，因为形状是被外面裁出来的）与「Prefer a simple background … you don't need to fill the entire icon canvas with content」（不需要把画布填满）。**所以 36/50 这个比例是有意的留白，不是空间利用率不足**；反过来，把图形顶到边上，圆角一裁就会啃掉内容的角。
+**留白不是空间利用率不足**。[实测] 容器到本体那 7px 由产品给出（50 − 36 = 14，两侧各 7）；本体到图形外缘还有一圈是图标文件自己的内缩——演示里两个 36 × 36 的插件图标，墨迹实际只有 20 × 20 上下（浏览器按真实路径现测）。两段留白叠起来，图形距容器边缘约 15px。
+
+产品为什么这么留，DSH 没有写；能引的是同一条道理在 Apple 的 App 图标指南里的表述：内容要居中，「避免系统调整圆角或施加遮罩时被截断」[^1]；背景保持简单，「不必把整块画布填满」[^1]。**本条只把它记为「同源」，不声称 DSH 是有意照它设计的**——仓库里只有几何证据：图形若顶到边上，圆角一裁就会啃掉内容的角，这一点与平台无关。
 
 对照两层的分工（这也是 DSH 自身没有写清、由本节补齐的地方）：
 
@@ -115,3 +122,9 @@
 
 - `IC-MF-16`：**不要照抄内联字形**。它们没有授权名、没有多尺寸族，也没有像图标集那样统一过内缩与描边；要一个「搜索」「设置」这样的字形，去 §1 的 75 个文件里找同义的，或按 §3 / §4 自绘。
 - `IC-MF-17`：内联字形里那几个 10 × 10 / 15 × 15 / 12 × 16（折叠角、省略号、箭头）属于 `IC-MF-01` 的例外——**它们是随字号缩放的字形，不是独立图标**；插件自绘图标时仍按 16 / 14 / 8×14 / 8.5×10.5 / 20 这五个族取值。
+
+## 8. 引用来源
+
+正文里的 `[n]` 角标指到这里。引文只用于判定 DSH 自身没写清的地方，DSH 已有明文的一律以 DSH 为准。
+
+- [1] Apple Inc. *App icons*, Human Interface Guidelines. <https://developer.apple.com/cn/design/human-interface-guidelines/app-icons>（2026-10-02 取自同站数据接口 `…/tutorials/data/design/human-interface-guidelines/app-icons.json`）。§6 引用的两句原文：*"Keep primary content centered to avoid truncation when the system adjusts corners or applies masking."* 与 *"Prefer a simple background … you don't need to fill the entire icon canvas with content."*

@@ -6,7 +6,9 @@
 
 ## 1. 座位模型
 
-[实测] DSH 官方声明了约 64 个 UI 座位。座位有四种类型、三种作用域，并带 `replaceRisk` 标注。
+<!-- demo: seat-map | 座位图：树里每个座位的名字、kind、作用域、子座位数与用途都抄自实测座位树（`data/slots.json`，共 90 个）；上面那扇界面是产品复刻，指针扫到哪一栏就标哪一栏——座位是活的容器，不是示意图上的方框。 -->
+
+[实测] DSH 官方声明了 90 个 UI 座位（`data/slots.json` 的 `counts.seats`，2026-10-01 采集：`single` 38 · `list` 34 · `keyed` 15 · `chain` 3）。座位有四种类型、三种作用域，并带 `replaceRisk` 标注。
 
 | 类型 | 语义 | 多插件关系 |
 | --- | --- | --- |
@@ -40,7 +42,7 @@
 
 ## 3. list 座位的 order 规范
 
-- `SL-MF-03`：[实测] `list` 座位必须显式声明 order，禁止依赖默认 0。证据：`shell.overlay` 14 个占用者中 11 个未声明 order，全部落在默认值 0，层级顺序由注册时序决定，不可预测；反例是 `conversation.session.header.utilities`，4 个占用者显式 -10 / -5 / 0 / 5，顺序可解释。占用者快照见 `data/raw/occupancy-2026-10-01.json`（采集时间 2026-10-01；数字随本机启用了哪些插件而变，引用时须注明时间）。
+- `SL-MF-03`：[实测] `list` 座位必须显式声明 order，禁止依赖默认 0。证据：`shell.overlay` 14 个占用者中 11 个未声明 order，全部落在默认值 0，层级顺序由注册时序决定，不可预测；反例是 `conversation.session.header.utilities`：4 个占用者里三个显式声明了 -10 / -5 / 5，顺序可解释，剩下一个仍缺声明。占用者快照见 `data/raw/occupancy-2026-10-01.json`（采集时间 2026-10-01；数字随本机启用了哪些插件而变，引用时须注明时间）。
 - `SL-RC-04`：order 建议分段。无权威数值，本仓库建议如下，理由：让「忘记声明」与「有意居中」可区分，并给后续插入留出空间。
 
 | 区间 | 用途 |
@@ -52,7 +54,7 @@
 | ≥ 100 | 保留，阻止用户级插入 |
 
 - `SL-MF-05`：新增到已有占用者的座位时，取该座位当前最大 order + 10。与现有值相撞视为缺陷（处置见 80-conflicts.md）。[本仓库建议]
-- `SL-RC-06`：同一 bundle 在同一座位的多个 entry，相邻 order 间隔 ≥5。理由：[实测] 官方样板 `conversation.session.header.utilities` 的步长即为 5（-10 / -5 / 0 / 5）。间隔要求为本仓库建议。
+- `SL-RC-06`：同一 bundle 在同一座位的多个 entry，相邻 order 间隔 ≥5。理由：[实测] 官方样板 `conversation.session.header.utilities` 的步长即为 5（-10 / -5 / 5）。间隔要求为本仓库建议。
 - `SL-AD-07`：同一插件在同一座位不得注册超过 3 个 entry。超出说明该座位被当作菜单使用，应改用 `keyed` 或自带弹出层。[本仓库建议]
 
 ## 4. single 与 shadows-shipped-ui 占用纪律
