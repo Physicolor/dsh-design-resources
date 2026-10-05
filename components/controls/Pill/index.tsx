@@ -2,67 +2,67 @@ import { forwardRef, type ButtonHTMLAttributes, type HTMLAttributes, type ReactN
 import styles from './pill.module.css';
 
 /**
- * 可交互胶囊的公共属性。
+ * Props shared by interactive pills.
  *
- * `active` 为受控值：组件只负责把选中态画出来，状态本身由调用方持有。
+ * `active` is a controlled value: the component only draws the selected state, the state itself lives with the caller.
  */
 export interface PillBaseProps {
-  /** 是否处于选中（激活）态，默认 `false`。受控。 */
+  /** Whether it is selected (active), defaults to `false`. Controlled. */
   active?: boolean;
-  /** 追加到根节点的 class，用于外部布局定位。 */
+  /** Class appended to the root node, for external layout positioning. */
   className?: string;
-  /** 胶囊内容，通常是短文本或「图标 + 短文本」。 */
+  /** Pill content, usually a short text or "icon + short text". */
   children?: ReactNode;
 }
 
 /**
- * 可点击胶囊：有 `onClick` 时渲染 `<button type="button">`，
- * 因此可以透传全部 `button` 原生属性。
+ * Clickable pill: with `onClick` it renders `<button type="button">`,
+ * and can therefore forward every native `button` attribute.
  */
 export interface InteractivePillProps extends PillBaseProps, Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'className'> {
-  /** 点击回调。存在即代表这是一枚可交互胶囊。 */
+  /** Click callback. Its presence is what makes this an interactive pill. */
   onClick: ButtonHTMLAttributes<HTMLButtonElement>['onClick'];
 }
 
 /**
- * 静态胶囊：没有 `onClick` 时渲染 `<span>`，
- * 只能透传 `span` 原生属性，`onClick` 被类型层面禁掉。
+ * Static pill: without `onClick` it renders `<span>`,
+ * forwards only native `span` attributes, and `onClick` is ruled out at the type level.
  */
 export interface StaticPillProps extends PillBaseProps, Omit<HTMLAttributes<HTMLSpanElement>, 'children' | 'className'> {
   onClick?: undefined;
 }
 
 /**
- * 胶囊属性：判别联合。
+ * Pill props: a discriminated union.
  *
- * 判别键就是 `onClick` —— 有它 → button 分支；没有 → span 分支。
- * 这样可以保证「能点的胶囊拿得到 button 属性，静态胶囊拿不到 button 属性」。
+ * The discriminant key is `onClick` — present → the button branch; absent → the span branch.
+ * That guarantees "a clickable pill gets button attributes, a static pill does not".
  */
 export type PillProps
   = | (InteractivePillProps & { onClick: NonNullable<InteractivePillProps['onClick']> })
     | StaticPillProps;
 
-/** 拼 class，避免引入 clsx 之类的依赖。 */
+/** Join class names, without pulling in a dependency like clsx. */
 function cx(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
 /**
- * 胶囊小标签（chip）。可交互时是一枚按钮，静态时是一段文本。
+ * Pill chip. Interactive it is a button, static it is a piece of text.
  *
- * 几何参照官方 `Pill.module.css` 的 `.pill`（h24 / padding 0 8px / gap 4px /
- * radius 12px / 12-18）与 `.interactive:hover`、`.active`，实现为本仓库原创。
+ * Geometry follows the official `Pill.module.css` `.pill` (h24 / padding 0 8px / gap 4px /
+ * radius 12px / 12-18) plus `.interactive:hover` and `.active`; the implementation is original to this repository.
  *
- * 选中态画法（官方 `.active`）：文字升到 `label-primary`，底色换成
- * `button-ghost-active-fill`，并叠一圈 `inset 0 0 0 1px` 的内描边。
- *
- * @example
- * // 可交互：渲染 <button type="button">
- * <Pill active={tab === 'all'} onClick={() => setTab('all')}>全部</Pill>
+ * The selected state (the official `.active`): the text steps up to `label-primary`, the background becomes
+ * `button-ghost-active-fill`, and an `inset 0 0 0 1px` stroke is laid inside.
  *
  * @example
- * // 静态：渲染 <span>
- * <Pill>只读</Pill>
+ * // Interactive: renders <button type="button">
+ * <Pill active={tab === 'all'} onClick={() => setTab('all')}>All</Pill>
+ *
+ * @example
+ * // Static: renders <span>
+ * <Pill>Read only</Pill>
  */
 export const Pill = forwardRef<HTMLButtonElement | HTMLSpanElement, PillProps>(function Pill(props, ref) {
   const { active = false, className, children } = props;

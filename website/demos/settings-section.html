@@ -1,0 +1,51 @@
+<style>
+/* The demo board: the settings window on the left, our annotation aside on the right. */
+* { box-sizing: border-box; }
+body { margin: 0; padding: 16px; color: var(--dsw-alias-label-primary); font: 14px/22px var(--dsw-font-family); }
+.section-board { display: grid; grid-template-columns: 848px 260px; gap: 16px; align-items: start; width: max-content; max-width: 100%; }
+.window { display: flex; width: 800px; height: 800px; overflow: hidden; border-radius: 28px; background: var(--dsw-alias-bg-layer-1); box-shadow: var(--dsw-elevation-prominent); }
+.nav { flex: 0 0 188px; padding: 18px 12px; border-right: .5px solid var(--dsw-alias-border-l2); }
+.nav-title { margin: 0 0 14px 10px; font-size: 14px; line-height: 22px; font-weight: 500; }
+.nav-item { display: flex; align-items: center; height: 40px; padding: 0 10px; border-radius: 12px; color: var(--dsw-alias-label-secondary); font-size: 14px; line-height: 22px; }
+.nav-item + .nav-item { margin-top: 4px; }
+.nav-item[aria-current="page"] { background: #ebeef2; color: var(--dsw-alias-label-primary); }
+.content { flex: 1; min-width: 0; padding: 20px 24px; }
+.content-head { display: flex; justify-content: flex-end; align-items: center; height: 32px; gap: 12px; }
+.action { height: 28px; padding: 0 10px; border: .5px solid var(--dsw-alias-border-l3); border-radius: 8px; background: transparent; color: var(--dsw-alias-label-primary); font: 12px/18px var(--dsw-font-family); }
+.close { width: 28px; height: 28px; border: 0; background: transparent; color: var(--dsw-alias-label-secondary); font-size: 20px; }
+.page-title { margin: 12px 0 4px; font-size: 18px; line-height: 26px; font-weight: 600; }
+.page-description { margin: 0 0 22px; color: var(--dsw-alias-label-secondary); font-size: 13px; line-height: 20px; }
+.provider { display: flex; align-items: center; justify-content: space-between; min-height: 54px; padding: 0 14px; border: .5px solid var(--dsw-alias-border-l2); border-radius: 16px; }
+.provider + .provider { margin-top: 10px; }
+.provider-name { display: flex; align-items: center; gap: 8px; font-weight: 500; }
+.state-dot { width: 8px; height: 8px; border-radius: 50%; background: #2db55d; }
+.add-provider { display: flex; align-items: center; justify-content: center; width: 100%; height: 44px; margin-top: 10px; border: 1px dashed var(--dsw-alias-border-l2); border-radius: 12px; background: transparent; color: var(--dsw-alias-label-primary); font: 14px/22px var(--dsw-font-family); }
+.section-note { padding: 14px; border: 1px solid var(--dsw-alias-border-l2); border-radius: 12px; background: var(--dsw-alias-bg-layer-1); color: var(--dsw-alias-label-secondary); font-size: 12px; line-height: 18px; }
+.section-note h3 { margin: 0 0 8px; color: var(--dsw-alias-label-primary); font-size: 14px; line-height: 20px; font-weight: 600; }
+.section-note p { margin: 0; }
+</style>
+<div class="section-board">
+  <!-- The window pane below is a verbatim replay of the product's settings window (Models page). -->
+  <div class="window" role="dialog" aria-label="Settings" data-t-aria="demo.settings-section.settingsWindowLabel">
+    <nav class="nav" aria-label="Settings section" data-t-aria="demo.settings-section.sidebarLabel">
+      <p class="nav-title" data-capture="settings window, sidebar heading">设置</p>
+      <div class="nav-item" data-capture="settings window, sidebar entry">通用设置</div>
+      <div class="nav-item" aria-current="page" data-capture="settings window, sidebar entry">模型</div>
+      <div class="nav-item" data-capture="settings window, sidebar entry">内置插件</div>
+      <div class="nav-item" data-capture="settings window, sidebar entry">Agent 预设</div>
+    </nav>
+    <section class="content">
+      <div class="content-head"><button type="button" class="action" data-capture="settings window, header action button">打开配置文件</button><button type="button" class="close" aria-label="Close settings" data-t-aria="demo.settings-section.closeSettings">×</button></div>
+      <h2 class="page-title" data-capture="Models page title">模型</h2>
+      <p class="page-description" data-capture="Models page description">填入各提供商的 API 密钥即可使用其模型。</p>
+      <div class="provider"><span class="provider-name" data-capture="model provider row, provider name">DeepSeek 账号</span><button type="button" class="action" data-capture="model provider row, action button">编辑</button></div>
+      <div class="provider"><span class="provider-name" data-capture="model provider row, provider name">DeepSeek <span class="state-dot" aria-hidden="true"></span></span><button type="button" class="action" data-capture="model provider row, action button">编辑</button></div>
+      <button type="button" class="add-provider" data-capture="Models page, add-provider row">＋ 添加模型提供商</button>
+    </section>
+  </div>
+  <!-- Our own annotation: it explains where a plugin's settings page goes; it is not product UI. -->
+  <aside class="section-note">
+    <h3 data-t="demo.settings-section.sectionNoteTitle">插件页应落在哪层</h3>
+    <p><span data-t="demo.settings-section.sectionNoteBody">这里是 DSH 宿主的真实「模型」页，只用于说明设置窗口的菜单列与内容列。插件增加一页时注册 settings.section，让宿主承载该页；不要再套一层完整设置窗口。</span></p>
+  </aside>
+</div>

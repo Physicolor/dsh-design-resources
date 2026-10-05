@@ -1,41 +1,41 @@
 import { forwardRef, type HTMLAttributes } from 'react';
 import styles from './mini-bar.module.css';
 
-/** 填充色的语义色调，取官方状态主色 token。 */
+/** The semantic tone of the fill, taken from the official state-primary tokens. */
 export type MiniBarTone = 'business' | 'success' | 'warn' | 'error';
 
 export interface MiniBarProps extends HTMLAttributes<HTMLDivElement> {
-  /** 当前值。超出 `[0, max]` 会被夹紧；非有限数按 0 处理。 */
+  /** The current value. Anything outside `[0, max]` is clamped; a non-finite number counts as 0. */
   value: number;
-  /** 满值，默认 100。小于等于 0 时按 0 处理（进度恒为 0）。 */
+  /** The full value, 100 by default. At 0 or less it counts as 0 (progress stays at 0). */
   max?: number;
-  /** 是否在条形右侧显示百分比文本（取整）。默认不显示。 */
+  /** Whether to show a percentage text to the right of the bar (rounded). Hidden by default. */
   showPercent?: boolean;
-  /** 语义色，默认 `business`。 */
+  /** The semantic colour, `business` by default. */
   tone?: MiniBarTone;
-  /** 进度条的可访问名称，例如「上下文占用」。 */
+  /** The accessible name of the progress bar, for example "Context usage". */
   label?: string;
 }
 
-/** 拼 class，避免引入 clsx 之类的依赖。 */
+/** Join class names without pulling in a dependency such as clsx. */
 function cx(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
 /**
- * 迷你条形图 / 进度条：一条水平轨道 + 填充。
+ * Mini bar chart / progress bar: one horizontal track plus a fill.
  *
- * 官方 `@deepseek-ai/dsh-client-ui-primitives` 没有对应组件，几何按以下官方出处拼装：
- * 圆角 999px 来自 Tag `.tag`（胶囊语义），
- * 填充色取官方状态主色 token（Tag 的 tone 用的是同一批），
- * 过渡时长 120ms ease 来自 Switch `.thumb`。
- * 实现为本仓库原创。
- *
- * @example
- * <MiniBar value={82} label="缓存命中率" />
+ * The official `@deepseek-ai/dsh-client-ui-primitives` has no matching component, so the geometry
+ * is assembled from these official sources: the 999px corner radius comes from Tag `.tag`
+ * (capsule semantics), the fill colour comes from the official state-primary tokens (the same
+ * batch Tag's tones use), and the 120ms ease duration comes from Switch `.thumb`.
+ * The implementation is original to this repository.
  *
  * @example
- * <MiniBar value={41} max={64} tone="warn" showPercent label="上下文占用" />
+ * <MiniBar value={82} label="Cache hit rate" />
+ *
+ * @example
+ * <MiniBar value={41} max={64} tone="warn" showPercent label="Context usage" />
  */
 export const MiniBar = forwardRef<HTMLDivElement, MiniBarProps>(function MiniBar(
   {
@@ -70,7 +70,7 @@ export const MiniBar = forwardRef<HTMLDivElement, MiniBarProps>(function MiniBar
         <div className={styles.fill} data-tone={tone} style={{ width: `${percent}%` }} />
       </div>
       {showPercent ? (
-        // 数值已经通过 aria-valuenow / aria-valuemax 暴露，这行可见文本对读屏是重复信息。
+        // The value is already exposed through aria-valuenow / aria-valuemax, so this visible text is duplicate information for a screen reader.
         <span className={styles.percent} aria-hidden="true">
           {`${Math.round(percent)}%`}
         </span>

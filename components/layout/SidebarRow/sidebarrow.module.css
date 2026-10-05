@@ -1,4 +1,4 @@
-/* 几何几乎逐条锚定官方 @deepseek-ai/dsh-client-ui-primitives/lib/Menu.module.css：
+/* The geometry is anchored almost item by item to the official @deepseek-ai/dsh-client-ui-primitives/lib/Menu.module.css:
  *   .item          → min-height 40px / padding 8px 10px / border-radius 10px
  *                    / gap 8px / font-size 14px / line-height 22px
  *                    / color var(--dsw-alias-label-primary) / text-align left
@@ -9,9 +9,9 @@
  *                    / white-space nowrap
  *   .check         → flex none / color var(--dsw-alias-label-primary)
  *   .selectedFill  → background var(--dsw-alias-interactive-bg-hover)
- *   .selected      → background transparent（官方：选中态标记是尾部对勾，不是填充）
- * 唯一的建议值是 checkbox 的尺寸与行内间距，见 README「本仓库建议值」。
- * 实现为本仓库原创：CSS 变量承载几何 + 语义 token 承载颜色，未复制官方 CSS 源码。 */
+ *   .selected      → background transparent (official: the selected marker is the trailing check, not a fill)
+ * The only proposed values are the checkbox size and the spacing inside the row; see "proposed values in this repository" in the README.
+ * The implementation here is original: CSS variables carry the geometry, semantic tokens carry the colour, and no official CSS source is copied. */
 
 .row {
   --dsh-sb-min-height: 40px;
@@ -43,9 +43,9 @@
   background: var(--dsw-alias-interactive-bg-hover);
 }
 
-/* 选中态被点击时的按压反馈：官方只定义了 hover，取交互语义族里的 active。
- * 已核对 website/css/dsh-tokens.css 中 --dsw-alias-interactive-bg-active 存在
- * （官方 Button.module.css 的 .ghost:active 亦使用该 token）。 */
+/* The press feedback when a selected row is clicked: the official CSS defines hover only, so this takes active from the interaction semantic family.
+ * Checked that --dsw-alias-interactive-bg-active exists in website/css/dsh-tokens.css
+ * (the official Button.module.css .ghost:active uses that token too). */
 .row:active:not(:disabled) {
   background: var(--dsw-alias-interactive-bg-active);
 }
@@ -55,26 +55,26 @@
   opacity: 0.4;
 }
 
-/* 官方 Menu.module.css 未定义行内焦点样式；本仓库建议值，写法对齐官方
- * Switch.module.css / ConnectionIndicator.module.css 的 :focus-visible。 */
+/* The official Menu.module.css defines no in-row focus style; this is a value proposed here, written to match
+ * :focus-visible in the official Switch.module.css / ConnectionIndicator.module.css. */
 .row:focus-visible {
   outline: 2px solid var(--dsw-alias-brand-primary);
   outline-offset: -2px;
 }
 
-/* ------------------------------------------------------------------ 选中态 */
+/* ------------------------------------------------------------------ selected state */
 
-/* 官方 Menu.module.css 的 .selectedFill：整行铺 hover 底色。 */
+/* The official Menu.module.css's .selectedFill: the whole row takes the hover ground. */
 .selectedFill {
   background: var(--dsw-alias-interactive-bg-hover);
 }
 
-/* 填充态被悬停时的加深：官方 .selectedFill 没写 hover，沿用上面 :active 的取值。 */
+/* The deepening when the fill state is hovered: the official .selectedFill writes no hover, so this reuses the value from :active above. */
 .selectedFill:hover:not(:disabled) {
   background: var(--dsw-alias-interactive-bg-active);
 }
 
-/* ------------------------------------------------------------------ 内容 */
+/* ------------------------------------------------------------------ content */
 
 .leading {
   display: inline-flex;
@@ -111,10 +111,10 @@
   color: var(--dsw-alias-label-primary);
 }
 
-/* 建议值：官方 Menu 没有复选框行。16×16 与 accent-color 对齐官方
- * RiskConfirmation.module.css 的 .acknowledgement input
- * （width 16px / height 16px / accent-color var(--dsw-alias-button-primary-fill)），
- * 那也是一处「行内的原生复选框」。 */
+/* Proposed values: the official Menu has no checkbox row. The 16×16 and accent-color follow the official
+ * RiskConfirmation.module.css's .acknowledgement input
+ * (width 16px / height 16px / accent-color var(--dsw-alias-button-primary-fill)),
+ * which is also a "native checkbox inside a row". */
 .checkbox {
   flex: none;
   width: 16px;

@@ -1,0 +1,24 @@
+{
+    "zh": {
+        "notCapturedDefault": "截图未覆盖 · 此场景未在截图中出现，仅按 Input.module.css 几何复现：h32 · pad 0 8 · gap 6 · r8 · 0.5px border-l4",
+        "notCapturedIcon": "截图未覆盖 · icon 16×16 · label-tertiary",
+        "notCapturedFocus": "截图未覆盖 · focus-within → border-color brand-primary",
+        "notCapturedDisabled": "截图未覆盖 · disabled → opacity 0.4（本仓库建议值）",
+        "exampleTextAria": "示例文本",
+        "exampleValueAria": "示例值",
+        "iconExampleAria": "带图标示例",
+        "focusExampleAria": "聚焦示例",
+        "disabledExampleAria": "禁用示例"
+    },
+    "en": {
+        "notCapturedDefault": "Not captured · this scene does not appear in the screenshots, so the geometry is reproduced from Input.module.css only: h32 · pad 0 8 · gap 6 · r8 · 0.5px border-l4",
+        "notCapturedIcon": "Not captured · icon 16×16 · label-tertiary",
+        "notCapturedFocus": "Not captured · focus-within → border-color brand-primary",
+        "notCapturedDisabled": "Not captured · disabled → opacity 0.4 (proposed here)",
+        "exampleTextAria": "Example text",
+        "exampleValueAria": "Example value",
+        "iconExampleAria": "Example with a leading icon",
+        "focusExampleAria": "Focus example",
+        "disabledExampleAria": "Disabled example"
+    }
+}

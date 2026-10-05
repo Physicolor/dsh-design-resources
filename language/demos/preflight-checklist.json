@@ -1,0 +1,10 @@
+{
+  "zh": {
+    "tabRequired": "A 必选（强制）",
+    "tabRecommended": "B 推荐"
+  },
+  "en": {
+    "tabRequired": "A Required (mandatory)",
+    "tabRecommended": "B Recommended"
+  }
+}

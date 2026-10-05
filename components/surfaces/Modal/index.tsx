@@ -3,37 +3,39 @@ import { createPortal } from 'react-dom';
 import styles from './modal.module.css';
 
 export interface ModalProps {
-  /** 是否显示。为 `false` 时不渲染任何内容（也不会留下 DOM 残留）。 */
+  /** Whether to show it. At `false` nothing renders (and no DOM residue is left behind). */
   open: boolean;
-  /** 关闭回调：Escape、点击遮罩、点击右上角关闭按钮都会调用它。 */
+  /** Close callback: Escape, a click on the mask and a click on the top-right close button all call it. */
   onClose: () => void;
   /**
-   * 对话框标题。
-   * 必须是字符串：官方用 `aria-label={title}` 给对话框命名，
-   * 传节点会让屏幕阅读器读不出这个对话框叫什么。
+   * The dialog title.
+   * It has to be a string: the official source names the dialog with
+   * `aria-label={title}`, and a node would leave screen readers unable to say
+   * what the dialog is called.
    */
   title: string;
   /**
-   * 关闭按钮的可访问名（必填，如「关闭」/「Close」）。
-   * 关闭按钮里只有一个图标，没有它屏幕阅读器只会读出一个空按钮。
+   * The close button's accessible name (required, e.g. `Close`).
+   * The close button holds an icon only; without this name a screen reader
+   * announces an empty button.
    */
   closeLabel: string;
-  /** 标题下方的一句话说明，可不传。 */
+  /** One line of description below the title; optional. */
   description?: ReactNode;
-  /** 主体内容（表单、列表等），可不传。 */
+  /** The main content (forms, lists and so on); optional. */
   children?: ReactNode;
-  /** 底部操作行（取消 / 确认），右对齐，可不传。 */
+  /** The footer action row (cancel / confirm), right-aligned; optional. */
   footer?: ReactNode;
-  /** 追加到对话框本体的类名，用于拉宽或自定义背景。 */
+  /** Class name appended to the dialog itself, to widen it or give it a custom background. */
   className?: string;
 }
 
-/** 拼 class，避免引入 clsx 之类的依赖。 */
+/** Joins class names, so no dependency such as clsx is needed. */
 function cx(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
-/** 焦点陷阱里可 Tab 到的元素。 */
+/** The elements inside the focus trap that Tab can reach. */
 const FOCUSABLE_SELECTOR = [
   'a[href]',
   'button:not([disabled])',
@@ -44,9 +46,9 @@ const FOCUSABLE_SELECTOR = [
 ].join(',');
 
 /**
- * 取容器内当前可聚焦的元素。
- * @param root - 焦点陷阱的容器。
- * @returns 按 DOM 顺序排列的可聚焦元素。
+ * Gets the focusable elements currently inside the container.
+ * @param root - the focus trap's container.
+ * @returns The focusable elements, in DOM order.
  */
 function getFocusable(root: HTMLElement): HTMLElement[] {
   return Array.from(root.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)).filter(
@@ -54,7 +56,7 @@ function getFocusable(root: HTMLElement): HTMLElement[] {
   );
 }
 
-/** 关闭图标（14px，官方 JS 传给 close 图标组件的 size）。 */
+/** Close icon (14px, the size the official JS passes to the close icon component). */
 function CloseIcon() {
   return (
     <svg className={styles.icon} viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -64,26 +66,28 @@ function CloseIcon() {
 }
 
 /**
- * 居中对话框：遮罩 + 卡片，portal 到 `document.body`。
+ * Centred dialog: a mask plus a card, portalled to `document.body`.
  *
- * 几何逐条对齐官方 Modal（`.root` / `.mask` / `.dialog` / `.header` / `.title` /
- * `.close` / `.description` / `.body` / `.footer`，见 README「几何来源」表格）。
- * 在那之上补了一个官方没有的焦点陷阱（打开时把焦点移进对话框、Tab 在其中循环、
- * 关闭后把焦点还给触发元素），这一部分是本仓库建议值。实现为本仓库原创。
+ * The geometry matches the official Modal item by item (`.root` / `.mask` / `.dialog` /
+ * `.header` / `.title` / `.close` / `.description` / `.body` / `.footer`, see the geometry
+ * table in the README). On top of that it adds a focus trap the official source does not
+ * have (focus moves into the dialog when it opens, Tab cycles inside it, and focus goes
+ * back to the trigger when it closes) — that part is proposed here. The implementation is
+ * original to this repository.
  *
  * @example
  * <Modal
  *   open={open}
  *   onClose={() => setOpen(false)}
- *   title="新建会话"
- *   closeLabel="关闭"
- *   description="会话会使用当前工作目录的默认设置。"
+ *   title="New conversation"
+ *   closeLabel="Close"
+ *   description="The conversation uses the default settings of the current working directory."
  *   footer={<>
- *     <button type="button" onClick={() => setOpen(false)}>取消</button>
- *     <button type="button" onClick={create}>创建</button>
+ *     <button type="button" onClick={() => setOpen(false)}>Cancel</button>
+ *     <button type="button" onClick={create}>Create</button>
  *   </>}
  * >
- *   <input aria-label="会话名称" />
+ *   <input aria-label="Conversation name" />
  * </Modal>
  */
 export const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
@@ -92,7 +96,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
 ) {
   const dialogRef = useRef<HTMLDivElement | null>(null);
 
-  /** 同时喂给内部焦点陷阱与外抛的 ref。 */
+  /** Feeds both the internal focus trap and the forwarded ref. */
   const setDialogRef = useCallback(
     (node: HTMLDivElement | null) => {
       dialogRef.current = node;
@@ -102,7 +106,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
     [ref],
   );
 
-  // Escape 关闭：对齐官方 Modal 的 document keydown 监听。
+  // Escape closes: matches the official Modal's document keydown listener.
   useEffect(() => {
     if (!open) return;
     const onKeyDown = (event: KeyboardEvent) => {
@@ -112,15 +116,15 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
     return () => document.removeEventListener('keydown', onKeyDown);
   }, [open, onClose]);
 
-  // § 本仓库建议值：焦点陷阱。官方 Modal 没有做（官方只监听 Escape，
-  // 焦点会顺着 Tab 跑到遮罩背后的页面上）。aria-modal="true" 已经向辅助技术
-  // 承诺了「焦点被限制在对话框内」，这里把它兑现。
+  // § Proposed here: the focus trap. The official Modal has none (it listens for Escape
+  // only, so Tab sends focus onto the page behind the mask). aria-modal="true" already
+  // promises assistive technology that focus stays inside the dialog; this delivers it.
   useEffect(() => {
     if (!open) return;
     const restore = document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const dialog = dialogRef.current;
 
-    // 打开时把焦点移进对话框：优先第一个可聚焦元素，没有则落在对话框本体上。
+    // On open, move focus into the dialog: the first focusable element, or the dialog itself when there is none.
     if (dialog !== null) {
       const first = getFocusable(dialog)[0];
       (first ?? dialog).focus();
@@ -154,7 +158,7 @@ export const Modal = forwardRef<HTMLDivElement, ModalProps>(function Modal(
     document.addEventListener('keydown', onKeyDown);
     return () => {
       document.removeEventListener('keydown', onKeyDown);
-      // 关闭后把焦点还给触发元素，键盘用户不会被打回页面顶部。
+      // When it closes, give focus back to the trigger, so keyboard users are not dropped at the top of the page.
       restore?.focus();
     };
   }, [open]);

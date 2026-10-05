@@ -1,14 +1,14 @@
 import { forwardRef, useId, type ComponentPropsWithoutRef } from 'react';
 import styles from './wordmark.module.css';
 
-/** 字标的两个视框与对应宽度（用户单位），与官方 BrandWordmark 的取值一致。 */
+/** The wordmark's two view boxes and their widths (user units), matching the official BrandWordmark values. */
 const WORDMARK_VIEWBOX = { withMark: '0 0 182 24', withoutMark: '26 0 156 24' } as const;
 const WORDMARK_WIDTH = { withMark: 182, withoutMark: 156 } as const;
 
-/** 字标的基准高度：官方 `size = 24` 时宽度正好等于 182 / 156。 */
+/** Base height of the wordmark: at the official `size = 24` the width comes out exactly 182 / 156. */
 const WORDMARK_BASE_HEIGHT = 24;
 
-/** 文字部分（deepseek）的 9 条路径，`fill="currentColor"`。 */
+/** The 9 paths of the text part (deepseek), `fill="currentColor"`. */
 const INK_PATHS: readonly string[] = [
   'M68.416 18.2447H67.0501V16.1272H68.416C69.2619 16.1272 70.1166 15.9163 70.6671 15.3304C71.2181 14.7444 71.426 13.8455 71.426 12.9471C71.426 12.0487 71.2268 11.1498 70.6671 10.5643C70.1083 9.97831 69.2619 9.76744 68.416 9.76744C67.5701 9.76744 66.7154 9.97831 66.1639 10.5643C65.6129 11.1503 65.4049 12.0487 65.4049 12.9471V21.6435H63.009V7.6582H65.4049V8.54883H65.8442C65.8918 8.49393 65.9394 8.44728 65.9875 8.40064C66.5871 7.85353 67.5049 7.6582 68.4072 7.6582C69.8212 7.6582 71.2341 8.00998 72.1607 8.98662C73.0868 9.96325 73.4143 11.4632 73.4143 12.9558C73.4143 14.4485 73.0785 15.9406 72.1607 16.925C71.2424 17.9094 69.8212 18.2457 68.416 18.2457V18.2447Z',
   'M31.9551 8.03497H33.3204V10.1525H31.9551C31.1087 10.1525 30.2545 10.3633 29.7035 10.9493C29.1525 11.5353 28.945 12.4342 28.945 13.3326C28.945 14.231 29.1447 15.1294 29.7035 15.7154C30.2623 16.3014 31.1087 16.5122 31.9551 16.5122C32.8015 16.5122 33.6562 16.3014 34.2072 15.7154C34.7582 15.1294 34.9657 14.231 34.9657 13.3326V4.62842H37.3611V18.6219H34.9657V17.7313H34.5264C34.4783 17.7857 34.4307 17.8329 34.3826 17.8795C33.7835 18.4261 32.8652 18.6219 31.9629 18.6219C30.5494 18.6219 29.136 18.2707 28.2099 17.294C27.2838 16.3174 26.9563 14.817 26.9563 13.3248C26.9563 11.8327 27.2916 10.34 28.2099 9.35561C29.136 8.37898 30.5494 8.03497 31.9551 8.03497Z',
@@ -21,10 +21,10 @@ const INK_PATHS: readonly string[] = [
   'M117.589 12.8154L121.517 18.6208H118.554L114.625 12.8154L118.554 8.15088H121.517L117.589 12.8154Z'
 ];
 
-/** 含 mark 版本里那条缩小的鱼形路径（官方用 clipPath 修边）。 */
+/** The scaled-down fish path in the version that includes the mark (officially trimmed with clipPath). */
 const MARK_PATH = 'M23.0584 4.95203C22.8129 4.83203 22.7074 5.06103 22.5639 5.17704C22.5149 5.21454 22.4734 5.26354 22.4319 5.30854C22.0734 5.69155 21.6543 5.94306 21.1073 5.91306C20.3073 5.86806 19.6243 6.11957 19.0203 6.73158C18.8918 5.97706 18.4652 5.52655 17.8162 5.23754C17.4767 5.08753 17.1332 4.93703 16.8952 4.61052C16.7292 4.37801 16.6837 4.11901 16.6007 3.8635C16.5477 3.70949 16.4952 3.55199 16.3177 3.52549C16.1252 3.49549 16.0497 3.65699 15.9742 3.792C15.6722 4.34401 15.5552 4.95203 15.5667 5.56805C15.5932 6.95359 16.1782 8.05712 17.3407 8.84215C17.4727 8.93215 17.5067 9.02215 17.4652 9.15366C17.3857 9.42416 17.2917 9.68667 17.2087 9.95718C17.1557 10.1297 17.0767 10.1677 16.8917 10.0922C16.2537 9.82568 15.7027 9.43117 15.2156 8.95465C14.3891 8.15513 13.6416 7.2726 12.7096 6.58158C12.4906 6.42007 12.2716 6.27007 12.045 6.12707C11.094 5.20354 12.1696 4.44502 12.4186 4.35501C12.6791 4.26101 12.5091 3.938 11.6675 3.942C10.826 3.9455 10.056 4.22751 9.07446 4.60302C8.93096 4.65952 8.77995 4.70052 8.62545 4.73452C7.73492 4.56552 6.80989 4.52802 5.84386 4.63702C4.02481 4.83953 2.57177 5.69955 1.50373 7.1676C0.220694 8.93215 -0.0813148 10.9372 0.288196 13.0283C0.676708 15.2323 1.80174 17.0569 3.53029 18.4834C5.32285 19.9625 7.38741 20.6875 9.74298 20.5485C11.1735 20.466 12.7661 20.2745 14.5626 18.7539C15.0156 18.9795 15.4912 19.0695 16.2797 19.137C16.8872 19.1935 17.4722 19.107 17.9252 19.013C18.6347 18.8629 18.5857 18.2059 18.3292 18.0854C16.2497 17.1169 16.7062 17.5109 16.2912 17.1919C17.3477 15.9419 18.9618 13.7198 19.4598 10.6942C19.5088 10.3602 19.5713 9.88968 19.5638 9.61917C19.5598 9.45417 19.5978 9.39016 19.7863 9.37116C20.3073 9.31116 20.8128 9.16866 21.2773 8.91315C22.6249 8.17713 23.1684 6.96809 23.2964 5.51905C23.3154 5.29754 23.2924 5.06853 23.0584 4.95203ZM11.3165 17.9954C9.30097 16.4109 8.32344 15.8894 7.91992 15.9119C7.54241 15.9344 7.61042 16.3664 7.69342 16.6479C7.78042 16.9259 7.89342 17.1174 8.05193 17.3614C8.16143 17.5229 8.23694 17.7629 7.94243 17.9434C7.29341 18.3449 6.16487 17.8084 6.11187 17.7819C4.79833 17.0084 3.7003 15.9874 2.92628 14.5908C2.17875 13.2468 1.74474 11.8047 1.67324 10.2657C1.65424 9.89418 1.76374 9.76267 2.13375 9.69517C2.62077 9.60517 3.12278 9.58617 3.6093 9.65767C5.66636 9.95818 7.41741 10.8777 8.88545 12.3348C9.72348 13.1643 10.3575 14.1558 11.0105 15.1243C11.705 16.1529 12.4521 17.1329 13.4036 17.9364C13.7396 18.2179 14.0076 18.4319 14.2641 18.5899C13.4906 18.6764 12.1996 18.6949 11.3165 17.9964V17.9954ZM12.2826 11.7817C12.2826 11.6167 12.4146 11.4852 12.5806 11.4852C12.6181 11.4852 12.6521 11.4927 12.6826 11.5037C12.7241 11.5187 12.7621 11.5412 12.7921 11.5752C12.8451 11.6277 12.8751 11.7027 12.8751 11.7817C12.8751 11.9467 12.7431 12.0782 12.5771 12.0782C12.4111 12.0782 12.2826 11.9467 12.2826 11.7817ZM15.2831 13.3208C15.0906 13.3998 14.8981 13.4673 14.7131 13.4748C14.4261 13.4898 14.1131 13.3733 13.9431 13.2308C13.6791 13.0093 13.4901 12.8853 13.4111 12.4988C13.3771 12.3338 13.3961 12.0782 13.4261 11.9317C13.4941 11.6162 13.4186 11.4137 13.1961 11.2297C13.0151 11.0797 12.7846 11.0382 12.5316 11.0382C12.4371 11.0382 12.3506 10.9967 12.2861 10.9632C12.1806 10.9107 12.0936 10.7792 12.1766 10.6177C12.2031 10.5652 12.3316 10.4377 12.3616 10.4152C12.7051 10.2197 13.1011 10.2837 13.4676 10.4302C13.8071 10.5692 14.0641 10.8242 14.4336 11.1847C14.8111 11.6202 14.8791 11.7402 15.0941 12.0672C15.2641 12.3228 15.4186 12.5853 15.5247 12.8858C15.5887 13.0733 15.5057 13.2268 15.2831 13.3208Z';
 
-/** 角标矩形里的 7 条字母路径（HARNESS），官方用 `var(--dsw-alias-label-primary-inverted)` 上色。 */
+/** The 7 letter paths (HARNESS) inside the badge rectangle; officially coloured with `var(--dsw-alias-label-primary-inverted)`. */
 const BADGE_LETTER_PATHS: readonly string[] = [
   'M132.848 8.93205H134.08V16.137H132.848V8.93205ZM136.5 8.93205H137.732V16.137H136.5V8.93205ZM133.365 13.024V11.99H137.193V13.024H133.365Z',
   'M140.397 14.432L140.672 13.453H143.202L143.532 14.432H140.397ZM140.287 16.137H139.055L141.277 8.93205H142.201L142.146 9.74605L140.947 13.915H140.969L140.287 16.137ZM145.039 16.137H143.741L143.07 13.948L143.081 13.937L141.871 9.74605L141.926 8.93205H142.817L145.039 16.137Z',
@@ -38,39 +38,40 @@ const BADGE_LETTER_PATHS: readonly string[] = [
 export interface WordmarkProps
   extends Omit<ComponentPropsWithoutRef<'svg'>, 'width' | 'height' | 'title' | 'children'> {
   /**
-   * 高度（px），默认 24。
-   * 宽度 = size × 182 / 24（含 mark）或 size × 156 / 24（不含 mark），保持官方比例。
+   * Height in px, 24 by default.
+   * Width = size × 182 / 24 (with mark) or size × 156 / 24 (without mark), keeping the official ratio.
    */
   size?: number;
-  /** 是否绘制前面的鱼标，默认 `true`。关闭时视框切到 `26 0 156 24`，只剩文字。 */
+  /** Whether to draw the leading fish mark, `true` by default. When off, the view box switches to `26 0 156 24` and only the text remains. */
   includeMark?: boolean;
   /**
-   * 可选的无障碍标题。
-   * 传了渲染 `role="img"` + `<title>`（图形可被读出）；不传则 `aria-hidden="true"`（纯装饰）。
+   * Optional accessible title.
+   * When passed, renders `role="img"` + `<title>` so the graphic can be read out; when omitted,
+   * `aria-hidden="true"` (purely decorative).
    */
   title?: string;
 }
 
-/** 拼 class，避免引入 clsx 之类的依赖。 */
+/** Joins class names, avoiding a dependency such as clsx. */
 function cx(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
 /**
- * 官方品牌字标：鲸鱼 + “deepseek” 文字 + 右侧 HARNESS 角标，纯内联 SVG。
+ * The official brand wordmark: whale + “deepseek” text + the HARNESS badge on the right, plain inline SVG.
  *
- * 几何参照官方 BrandWordmark（`lib/index.js` 的 `BrandWordmark.js` 区域）：
- * 视框 182 × 24 / 156 × 24、角标矩形 x129.348 y5.5 52 × 14 rx2、两处 clipPath 尺寸，
- * 实现为本仓库原创。文字与鱼标用 `currentColor`，角标字母用
- * `var(--dsw-alias-label-primary-inverted)`（本仓库提升为 `--dsh-wordmark-badge-ink`，
- * 便于在不寻常底色上覆盖，见 README）。
+ * Geometry follows the official BrandWordmark (the `BrandWordmark.js` region of `lib/index.js`):
+ * view boxes 182 × 24 / 156 × 24, badge rectangle x129.348 y5.5 52 × 14 rx2, and the two clipPath
+ * sizes; the implementation is original to this repository. The text and fish mark use
+ * `currentColor`, and the badge letters use `var(--dsw-alias-label-primary-inverted)` (promoted here
+ * to `--dsh-wordmark-badge-ink`, so it can be overridden on unusual backgrounds; see the README).
  *
  * @example
- * // 默认 24px 高（宽 182px），颜色跟随外层文字色
+ * // 24px high by default (182px wide), colour follows the surrounding text colour
  * <Wordmark />
  *
  * @example
- * // 32px 高、不带鱼标、并作为图形被读出
+ * // 32px high, without the fish mark, read out as a graphic
  * <Wordmark size={32} includeMark={false} title="DeepSeek Harness" />
  */
 export const Wordmark = forwardRef<SVGSVGElement, WordmarkProps>(function Wordmark(
@@ -78,7 +79,7 @@ export const Wordmark = forwardRef<SVGSVGElement, WordmarkProps>(function Wordma
   ref,
 ) {
   const labelled = title != null && title !== '';
-  // 剪裁路径的 id 必须唯一：同一页面出现多个字标时，固定 id 会重复。
+  // Clip-path ids must be unique: with several wordmarks on one page, a fixed id would be repeated.
   const uid = useId().replace(/[^a-zA-Z0-9_-]/g, '');
   const whaleClipId = `dsh-wordmark-whale-clip-${uid}`;
   const badgeClipId = `dsh-wordmark-badge-clip-${uid}`;

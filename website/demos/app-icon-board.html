@@ -1,17 +1,17 @@
-<!-- 应用图标（插件列表里那一层）的实测量板。
-     行几何逐条取自 docs/reference/plugin-row.json（插件页一行，1570×905 视口）：
-       li.card 976×66 圆角 20 → div.cardHead padding 8 / gap 14
-       span.cardIcon 50×50 圆角 16 / border 1px rgba(0,0,0,.12)
-       img.packageImage 36×36（452,157 − 445,150 = 四周各 7px）
-       div.cardTitle 14/20 500、span.cardDesc 13/18 400
-     图示用的图标是真实的插件图标文件本身（dsh-ui-harmonizer/icon.svg、dsh-widgets/icon.svg），
-     不是重画的示意图形；「墨迹」尺寸在浏览器里用 SVG.getBBox() 现测，不是写死的数字。 -->
+<!-- The measured board for app icons — the layer you see in the plugin list.
+     Every row figure comes from docs/reference/plugin-row.json (one row of the plugins page, 1570×905 viewport):
+       li.card 976×66 radius 20 → div.cardHead padding 8 / gap 14
+       span.cardIcon 50×50 radius 16 / border 1px rgba(0,0,0,.12)
+       img.packageImage 36×36 (452,157 − 445,150 = 7px on every side)
+       div.cardTitle 14/20 500, span.cardDesc 13/18 400
+     The icons shown are the real plugin icon files themselves (dsh-ui-harmonizer/icon.svg, dsh-widgets/icon.svg),
+     not redrawn stand-ins; the "ink" size is measured live in the browser with SVG.getBBox(), not a hard-coded number. -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>应用图标量板 · DSH 设计资源</title>
+<title data-t="demo.app-icon-board.title">应用图标量板 · DSH 设计资源</title>
 <style>
 :root {
   --dsw-static-neutral-bluish-00: #fff;
@@ -34,7 +34,7 @@
   --dsw-font-family: 'HarmonyOS Sans SC', 'HarmonyOS Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
 }
 
-/* ---------------------------------------------------------------- demo 外壳 */
+/* ---------------------------------------------------------------- demo shell */
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -49,7 +49,7 @@ body {
 .block__title { margin: 0 0 6px; font-size: 14px; font-weight: 600; }
 .note { margin: 8px 0 0; font-size: 12px; line-height: 18px; color: var(--dsw-alias-label-secondary); }
 
-/* ------------------------------------------------- 1. 列表里那一层（实测行） */
+/* ------------------------------------------------ 1. the list layer (measured row) */
 .row {
   display: flex;
   align-items: center;
@@ -66,29 +66,29 @@ body {
   flex: none;
   width: 50px;
   height: 50px;
-  /* 采集值就是这条字面量（plugin-row.json: border 1px solid rgba(0, 0, 0, .12)），不是某个 token */
+  /* The captured value is this literal (plugin-row.json: border 1px solid rgba(0, 0, 0, .12)), not a token */
   border: 1px solid rgba(0, 0, 0, .12);
   border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-/* 容器里的本体固定 36×36，四周各留 7px —— 不是把图形铺满 50×50 */
+/* The artwork inside the container is a fixed 36×36, with 7px on every side — it does not fill the 50×50 */
 .row__icon > svg { display: block; width: 36px; height: 36px; flex: none; }
 .row__main { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .row__title { font-size: 14px; line-height: 20px; font-weight: 500; }
 .row__desc { font-size: 13px; line-height: 18px; color: var(--dsw-alias-label-tertiary); }
 
-/* --------------------------------- 2. 量板：容器 / 画布 / 墨迹 / 外接圆（4×）
-   50×50 的容器放大 4 倍 = 200×200，好让 7px 的留白和 1px 的描边看得见。 */
+/* -------------------------- 2. measuring board: container / canvas / ink / circumscribed circle (4×)
+   The 50×50 container at 4× = 200×200, so the 7px of whitespace and the 1px stroke are visible. */
 .measures { display: flex; flex-wrap: wrap; gap: 24px; }
 .measure { display: flex; flex-direction: column; gap: 8px; }
 .stage {
   position: relative;
   width: 200px;
   height: 200px;
-  border: 4px solid var(--dsw-alias-label-tertiary); /* 容器 1px 描边 × 4 */
-  border-radius: 64px;                               /* 容器 16 × 4 */
+  border: 4px solid var(--dsw-alias-label-tertiary); /* container 1px stroke × 4 */
+  border-radius: 64px;                               /* container 16 × 4 */
   background: var(--dsw-alias-bg-layer-1);
 }
 .stage__glyph {
@@ -124,7 +124,7 @@ body {
 .chip--ink { background: color-mix(in srgb, #4176e6 12%, transparent); color: #2b47c9; }
 .chip--circle { background: color-mix(in srgb, #c2410c 12%, transparent); color: #9a3412; }
 
-/* ------------------------------------------- 3. 浅色 / 深色两版（应用图标） */
+/* ------------------------------------------ 3. light / dark are two versions (app icon) */
 .plates { display: flex; flex-wrap: wrap; gap: 16px; }
 .plate {
   display: flex;
@@ -159,14 +159,14 @@ body {
 <body>
 
   <div class="controls">
-    <button class="toggle" type="button" data-toggle-annot aria-pressed="true">标注：开</button>
-    <span class="demo-label" style="margin:0">容器（灰框）· 文件画布 36×36（虚线）· 墨迹与外接圆（现测）</span>
+    <button class="toggle" type="button" data-toggle-annot aria-pressed="true" data-t="demo.app-icon-board.annotateOn">标注：开</button>
+    <span class="demo-label" style="margin:0" data-t="demo.app-icon-board.legend">容器（灰框）· 文件画布 36×36（虚线）· 墨迹与外接圆（现测）</span>
   </div>
 
-  <!-- 1 ─ 产品里这一行长什么样 -->
+  <!-- 1 ─ what this row looks like inside the product -->
   <div class="block">
-    <h3 class="block__title">1 · 插件列表里的一行（实测几何）</h3>
-    <p class="demo-label">行 976 × 66 · 圆角 20 · padding 8 · 行内 gap 14 · 图标容器 50 × 50 圆角 16（1px 描边）· 图标本体 36 × 36</p>
+    <h3 class="block__title" data-t="demo.app-icon-board.block1Title">1 · 插件列表里的一行（实测几何）</h3>
+    <p class="demo-label" data-t="demo.app-icon-board.block1Lead">行 976 × 66 · 圆角 20 · padding 8 · 行内 gap 14 · 图标容器 50 × 50 圆角 16（1px 描边）· 图标本体 36 × 36</p>
 
     <div class="row">
       <span class="row__icon">
@@ -174,7 +174,7 @@ body {
       </span>
       <span class="row__main">
         <span class="row__title">dsh-ui-harmonizer</span>
-        <span class="row__desc">对齐左栏与内容列的宽度，把各设置页的表头统一成官方一套</span>
+        <span class="row__desc" data-t="demo.app-icon-board.harmonizerDesc">对齐左栏与内容列的宽度，把各设置页的表头统一成官方一套</span>
       </span>
     </div>
 
@@ -184,15 +184,15 @@ body {
       </span>
       <span class="row__main">
         <span class="row__title">dsh-widgets</span>
-        <span class="row__desc">会话内的自定义小组件</span>
+        <span class="row__desc" data-t="demo.app-icon-board.widgetsDesc">会话内的自定义小组件</span>
       </span>
     </div>
   </div>
 
-  <!-- 2 ─ 量一量：外接圆 / 内间距 -->
+  <!-- 2 ─ measure it: circumscribed circle / inner inset -->
   <div class="block">
-    <h3 class="block__title">2 · 外接圆与内间距（放大 4 倍，数字现测）</h3>
-    <p class="demo-label">两个图标文件都声明 36 × 36，但图形本身只占了画布的一部分——「墨迹」由浏览器按真实路径的 <code>getBBox()</code> 算出（行几何与 7px 内缩来自 docs/reference/plugin-row.json；容器那一行是把这份演示的 4 倍图量回去）</p>
+    <h3 class="block__title" data-t="demo.app-icon-board.block2Title">2 · 外接圆与内间距（放大 4 倍，数字现测）</h3>
+    <p class="demo-label"><span data-t="demo.app-icon-board.block2Lead1">两个图标文件都声明 36 × 36，但图形本身只占了画布的一部分——「墨迹」由浏览器按真实路径的</span> <code>getBBox()</code> <span data-t="demo.app-icon-board.block2Lead2">算出（行几何与 7px 内缩来自 docs/reference/plugin-row.json；容器那一行是把这份演示的 4 倍图量回去）</span></p>
     <div class="measures">
 
       <figure class="measure" data-measure data-viewbox="36">
@@ -217,7 +217,7 @@ body {
         <figcaption class="chips" data-chips></figcaption>
       </figure>
 
-      <!-- 对照：界面语义图标（单色 / currentColor / 16 画布），量法完全相同 -->
+      <!-- For comparison: an interface semantic icon (single colour / currentColor / 16 canvas), measured exactly the same way -->
       <figure class="measure" data-measure data-viewbox="16">
         <div class="stage">
           <div class="stage__glyph" data-icon="sparkle"></div>
@@ -228,38 +228,38 @@ body {
       </figure>
 
     </div>
-    <p class="note">第三个是官方的界面语义图标（16 族，单色、走 <code>currentColor</code>）：同一个量法下它的墨迹几乎顶满自己的画布——两层图标的差别不在颜色，在「谁负责留白」。应用图标的留白是产品给的 7px <em>加上</em> 图标文件自己的内缩；语义图标的留白只有容器给的 16×16。</p>
+    <p class="note"><span data-t="demo.app-icon-board.block2Note1">第三个是官方的界面语义图标（16 族，单色、走</span> <code>currentColor</code><span data-t="demo.app-icon-board.block2Note2">）：同一个量法下它的墨迹几乎顶满自己的画布——两层图标的差别不在颜色，在「谁负责留白」。应用图标的留白是产品给的 7px</span> <em data-t="demo.app-icon-board.block2NotePlus">加上</em> <span data-t="demo.app-icon-board.block2Note3">图标文件自己的内缩；语义图标的留白只有容器给的 16×16。</span></p>
   </div>
 
-  <!-- 3 ─ 浅色 / 深色两版 -->
+  <!-- 3 ─ light / dark two versions -->
   <div class="block">
-    <h3 class="block__title">3 · 浅色与深色是两版图形，不是同一个文件换个底</h3>
-    <p class="demo-label">同一套图形出两版：底板换色，个别色块也单独调过（例如右下的方块在浅色版是 #5B9BF5、深色版是 #7CB7FF）</p>
+    <h3 class="block__title" data-t="demo.app-icon-board.block3Title">3 · 浅色与深色是两版图形，不是同一个文件换个底</h3>
+    <p class="demo-label" data-t="demo.app-icon-board.block3Lead">同一套图形出两版：底板换色，个别色块也单独调过（例如右下的方块在浅色版是 #5B9BF5、深色版是 #7CB7FF）</p>
     <div class="plates">
       <figure class="plate plate--light">
-        <svg viewBox="0 0 512 512" role="img" aria-label="dsh-widgets 浅色版应用图标"><rect width="512" height="512" rx="118" fill="#FFFFFF"/><rect x="74" y="140" width="137" height="137" rx="40" fill="#45D9E7"/><rect x="84" y="301" width="127" height="127" rx="38" fill="#F2AF63"/><rect x="235" y="74" width="203" height="203" rx="58" fill="url(#mainL)"/><rect x="235" y="301" width="137" height="137" rx="40" fill="#5B9BF5"/><defs><linearGradient id="mainL" x1="438" y1="74" x2="235" y2="277" gradientUnits="userSpaceOnUse"><stop stop-color="#8FC2FF"/><stop offset="1" stop-color="#145AF3"/></linearGradient></defs></svg>
-        <figcaption>浅色版 · app-icon-light.svg</figcaption>
+        <svg viewBox="0 0 512 512" role="img" aria-label="dsh-widgets 浅色版应用图标" data-t-aria="demo.app-icon-board.lightAria"><rect width="512" height="512" rx="118" fill="#FFFFFF"/><rect x="74" y="140" width="137" height="137" rx="40" fill="#45D9E7"/><rect x="84" y="301" width="127" height="127" rx="38" fill="#F2AF63"/><rect x="235" y="74" width="203" height="203" rx="58" fill="url(#mainL)"/><rect x="235" y="301" width="137" height="137" rx="40" fill="#5B9BF5"/><defs><linearGradient id="mainL" x1="438" y1="74" x2="235" y2="277" gradientUnits="userSpaceOnUse"><stop stop-color="#8FC2FF"/><stop offset="1" stop-color="#145AF3"/></linearGradient></defs></svg>
+        <figcaption data-t="demo.app-icon-board.lightCaption">浅色版 · app-icon-light.svg</figcaption>
       </figure>
       <figure class="plate plate--dark">
-        <svg viewBox="0 0 512 512" role="img" aria-label="dsh-widgets 深色版应用图标"><rect width="512" height="512" rx="118" fill="#0B0C0E"/><rect x="74" y="140" width="137" height="137" rx="40" fill="#45D9E7"/><rect x="84" y="301" width="127" height="127" rx="38" fill="#F2AF63"/><rect x="235" y="74" width="203" height="203" rx="58" fill="url(#mainD)"/><rect x="235" y="301" width="137" height="137" rx="40" fill="#7CB7FF"/><defs><linearGradient id="mainD" x1="438" y1="74" x2="235" y2="277" gradientUnits="userSpaceOnUse"><stop stop-color="#8FC2FF"/><stop offset="1" stop-color="#145AF3"/></linearGradient></defs></svg>
-        <figcaption>深色版 · app-icon-dark.svg</figcaption>
+        <svg viewBox="0 0 512 512" role="img" aria-label="dsh-widgets 深色版应用图标" data-t-aria="demo.app-icon-board.darkAria"><rect width="512" height="512" rx="118" fill="#0B0C0E"/><rect x="74" y="140" width="137" height="137" rx="40" fill="#45D9E7"/><rect x="84" y="301" width="127" height="127" rx="38" fill="#F2AF63"/><rect x="235" y="74" width="203" height="203" rx="58" fill="url(#mainD)"/><rect x="235" y="301" width="137" height="137" rx="40" fill="#7CB7FF"/><defs><linearGradient id="mainD" x1="438" y1="74" x2="235" y2="277" gradientUnits="userSpaceOnUse"><stop stop-color="#8FC2FF"/><stop offset="1" stop-color="#145AF3"/></linearGradient></defs></svg>
+        <figcaption data-t="demo.app-icon-board.darkCaption">深色版 · app-icon-dark.svg</figcaption>
       </figure>
     </div>
-    <p class="note">产品自己也是这么做的：前端图标随系统深浅色切换（<code>favicon.svg</code> 与 <code>favicon-dark.svg</code>，两个文件、媒体查询选一个），而不是让同一个文件去猜底色。</p>
+    <p class="note"><span data-t="demo.app-icon-board.block3Note1">产品自己也是这么做的：前端图标随系统深浅色切换（</span><code>favicon.svg</code> <span data-t="demo.app-icon-board.block3Note2">与</span> <code>favicon-dark.svg</code><span data-t="demo.app-icon-board.block3Note3">，两个文件、媒体查询选一个），而不是让同一个文件去猜底色。</span></p>
   </div>
 
 <script>
 (function () {
   'use strict'
 
-  /* 演示脚本跑在 shadow root 里，document.querySelector 看不到自己的标记；站点在挂载期
-     把当前根挂在 window.__DSH_DEMO_ROOT 上。 */
+  /* The demo script runs inside a shadow root, where document.querySelector cannot see its own
+     markup; the site hangs the current root on window.__DSH_DEMO_ROOT while mounting. */
   var root = window.__DSH_DEMO_ROOT || document
 
-  /** 把 mm 一位小数，量板上的数字不许四舍五入成一个假整。 */
+  /** One decimal place for mm; a number on the measuring board must not be rounded into a fake integer. */
   function n(v) { return (Math.round(v * 10) / 10).toFixed(1) }
 
-  /** 一枚 chip。 */
+  /** One chip. */
   function chip(label, value, kind) {
     return '<span class="chip' + (kind ? ' chip--' + kind : '') + '">' + label + (value === null ? '' : ' <b>' + value + '</b>') + '</span>'
   }
@@ -269,12 +269,12 @@ body {
     var svg = box.querySelector('.stage__glyph svg')
     if (svg === null || typeof svg.getBBox !== 'function') return
 
-    /* 图标文件声明的画布边长：应用图标 36、语义图标 16。墨迹量出来的是它在这块画布里的位置。 */
+    /* The canvas edge length the icon file declares: 36 for app icons, 16 for semantic icons. The ink is measured as its position inside that canvas. */
     var canvas = Number(box.getAttribute('data-viewbox')) || 36
     var box2 = svg.getBBox()
     if (box2.width === 0 || box2.height === 0) return
 
-    /* 容器 50 里，本体占 36 且居中 → 本体左上角在 7,7；画布内部的坐标按 canvas 归一化。 */
+    /* Inside the 50 container the artwork takes 36 and sits centred → the artwork's top-left is at 7,7; coordinates inside the canvas are normalised by canvas. */
     var k = 36 / canvas
     var x = 7 + box2.x * k
     var y = 7 + box2.y * k
@@ -282,8 +282,8 @@ body {
     var h = box2.height * k
     var cx = x + w / 2
     var cy = y + h / 2
-    var rOut = Math.sqrt((w / 2) * (w / 2) + (h / 2) * (h / 2))   /* 外接圆：过墨迹外接框四角 */
-    var rIn = Math.min(w, h) / 2                                    /* 内切圆：只保证不碰宽边 */
+    var rOut = Math.sqrt((w / 2) * (w / 2) + (h / 2) * (h / 2))   /* circumscribed circle: through the four corners of the ink bounding box */
+    var rIn = Math.min(w, h) / 2                                    /* inscribed circle: only guaranteed not to touch the wide edges */
 
     var overlay = box.querySelector('[data-overlay]')
     if (overlay !== null) {
@@ -302,8 +302,8 @@ body {
       add('line', { x1: cx, y1: 0, x2: cx, y2: 50, stroke: '#c2410c', 'stroke-width': 0.2, opacity: 0.45 })
     }
 
-    /* 容器那两行也不写死：量板的容器是 50 × 50 放大 4 倍画出来的，
-       所以现量出来的边长除以 4 就该回到 50，圆角同理。 */
+    /* The two container rows are not hard-coded either: the board's container is drawn at 4× the
+       real 50 × 50, so a live edge length divided by 4 has to land back on 50, and the radius the same. */
     var stage = box.querySelector('.stage')
     var stageStyle = stage === null ? null : getComputedStyle(stage)
     var scale = 4

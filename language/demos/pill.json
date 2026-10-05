@@ -1,0 +1,18 @@
+{
+    "zh": {
+        "composerToolRow": "07-composer · 输入卡工具行 · interactive · h24 r12 pad 0 8 gap 4 font 12/18",
+        "identicalSurface": "同一处 · 底色 bg-layer-2 在白卡上等于白 —— 截图实测无可见填充，组件的填充只在有色底上才显形",
+        "staticSameGeometry": "静态 span · 同一几何",
+        "activeUncaptured": "截图未覆盖 · active 态（ghost-active-fill + inset 0 0 0 1px），截图里没有任何一枚胶囊处于选中态",
+        "optionOne": "选项一",
+        "optionTwo": "选项二"
+    },
+    "en": {
+        "composerToolRow": "07-composer · composer tool row · interactive · h24 r12 pad 0 8 gap 4 font 12/18",
+        "identicalSurface": "Same place · bg-layer-2 is white on a white card — the capture shows no visible fill, so the component's fill only appears on a coloured surface",
+        "staticSameGeometry": "Static span · same geometry",
+        "activeUncaptured": "Not in the capture · active state (ghost-active-fill + inset 0 0 0 1px); no capsule in the screenshots is selected",
+        "optionOne": "Option one",
+        "optionTwo": "Option two"
+    }
+}

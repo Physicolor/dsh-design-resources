@@ -1,0 +1,34 @@
+{
+    "zh": {
+        "mdRow": "min-height 40 · pad 8 10 · gap 8 · r10 · 图标 16×16",
+        "exampleItemOne": "示例条目一",
+        "exampleItemTwo": "示例条目二",
+        "exampleItemThree": "示例条目三",
+        "exampleItemFour": "示例条目四",
+        "checkRow": "selected · selectionStyle check · 透明底 + 尾部对勾",
+        "fillRow": "selected · selectionStyle fill · 整行 interactive-bg-hover",
+        "checkboxRow": "checkbox · 16×16 accent-color · aria-label",
+        "selectItemFiveAria": "选择 示例条目五",
+        "exampleItemFive": "示例条目五",
+        "selectItemSixAria": "选择 示例条目六",
+        "exampleItemSix": "示例条目六",
+        "disabledRow": "disabled · opacity 0.4 · cursor not-allowed",
+        "exampleItemSeven": "示例条目七"
+    },
+    "en": {
+        "mdRow": "min-height 40 · pad 8 10 · gap 8 · r10 · icon 16×16",
+        "exampleItemOne": "Example item one",
+        "exampleItemTwo": "Example item two",
+        "exampleItemThree": "Example item three",
+        "exampleItemFour": "Example item four",
+        "checkRow": "selected · selectionStyle check · transparent fill + trailing tick",
+        "fillRow": "selected · selectionStyle fill · the whole row takes interactive-bg-hover",
+        "checkboxRow": "checkbox · 16×16 accent-color · aria-label",
+        "selectItemFiveAria": "Select example item five",
+        "exampleItemFive": "Example item five",
+        "selectItemSixAria": "Select example item six",
+        "exampleItemSix": "Example item six",
+        "disabledRow": "disabled · opacity 0.4 · cursor not-allowed",
+        "exampleItemSeven": "Example item seven"
+    }
+}

@@ -1,12 +1,14 @@
-<!-- 可访问性量板：这一页的判据本来就写着「可自动检测」，那就现场算给你看——
-     命中区按渲染后的盒模型量、对比度按 WCAG 公式从计算色值算、焦点环按 Tab 走一遍、
-     灰度用 filter 真的把彩色抽掉。数字全部现算，写死的只有阈值本身（20/28、4.5:1、3:1）。 -->
+<!-- Accessibility measurement board: this page's criteria already say "machine-checkable", so
+     compute them on the spot — hit areas measured off the rendered box model, contrast computed
+     from the resolved colour values with the WCAG formula, the focus ring walked with Tab, and
+     greyscale really stripping the colour out through filter. Every number is computed live; the
+     only hard-coded values are the thresholds themselves (20/28, 4.5:1, 3:1). -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>可访问性量板 · DSH 设计资源</title>
+<title>Accessibility measurement board · Design Resources</title>
 <style>
 :root {
   --dsw-static-neutral-bluish-00: #fff;
@@ -25,7 +27,7 @@
   --dsw-alias-label-primary: light-dark(var(--dsw-static-neutral-bluish-1000), var(--dsw-static-neutral-bluish-50));
   --dsw-alias-label-secondary: light-dark(var(--dsw-static-neutral-bluish-700), var(--dsw-static-neutral-bluish-300));
   --dsw-alias-label-tertiary: light-dark(var(--dsw-static-neutral-bluish-600), var(--dsw-static-neutral-bluish-400));
-  --dsw-alias-state-success-primary: #22c55e;   /* green-500，深浅同值（dsh-tokens.css:380/496） */
+  --dsw-alias-state-success-primary: #22c55e;   /* green-500, the same value in light and dark (dsh-tokens.css:380/496) */
   --dsw-alias-state-error-primary: light-dark(#ec1313, #f25a5a);
   --dsw-font-family: 'HarmonyOS Sans SC', 'HarmonyOS Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
 }
@@ -51,7 +53,7 @@ body {
 .verdict--bad { color: #b3271f; }
 .verdict--warn { color: #8a5a00; }
 
-/* 命中区：可见 16×16，热区靠 ::before 扩到 28×28（AC-MF-01 / AC-MF-02） */
+/* Hit area: 16×16 visible, the hot zone stretches to 28×28 through ::before (AC-MF-01 / AC-MF-02) */
 .iconBtn {
   position: relative;
   display: inline-flex;
@@ -77,19 +79,19 @@ body {
 
 .toolRow { display: flex; align-items: center; gap: 12px; padding: 4px; }
 
-/* 焦点环（AC-MF-10 / 11 / 12） */
+/* Focus ring (AC-MF-10 / 11 / 12) */
 .focusDemo { display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: 8px; background: var(--dsw-alias-bg-layer-2); }
 .focusDemo button { height: 28px; padding: 0 12px; border: 0; border-radius: 14px; background: var(--dsw-alias-bg-layer-1); color: var(--dsw-alias-label-primary); font: inherit; font-size: 12px; cursor: pointer; }
 .focusDemo button:focus-visible { outline: 2px solid var(--dsw-alias-label-primary); outline-offset: 2px; }
 .clip { overflow: hidden; height: 36px; padding: 4px; }
 .clip button:focus-visible { outline-offset: -2px; }
 
-/* 对比度表 */
+/* Contrast table */
 table.contrast { border-collapse: collapse; font-size: 12px; }
 table.contrast th, table.contrast td { padding: 6px 10px; border-bottom: 1px solid var(--dsw-alias-border-l2); text-align: left; font-variant-numeric: tabular-nums; }
 .sample { display: inline-block; padding: 0 6px; border-radius: 4px; background: var(--dsw-alias-bg-base); }
 
-/* 灰度对照（AC-MF-07） */
+/* Greyscale comparison (AC-MF-07) */
 .stateRow { display: flex; gap: 12px; align-items: center; padding: 8px; border-radius: 8px; background: var(--dsw-alias-bg-layer-2); }
 .state { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; }
 .state__dot { width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
@@ -101,49 +103,49 @@ table.contrast th, table.contrast td { padding: 6px 10px; border-bottom: 1px sol
 <body>
 
   <div class="group">
-    <h3 class="group__title">1 · 对比度（AC-MF-05 / 06）</h3>
-    <p class="demo-label">阈值：≤17pt 文本 4.5:1、≥18pt 或粗体 3:1、非文本 3:1。比值按 WCAG 相对亮度公式从计算色值现算</p>
-    <table class="contrast"><thead><tr><th>用例</th><th>实测比值</th><th>判定</th></tr></thead><tbody data-contrast></tbody></table>
-    <p class="demo-label" style="margin-top:8px">这是量出来的，不是评出来的：三级文字（13px 说明、10px 状态标签用的都是它）在浅色底上约 3.7:1，够不到 4.5:1；hairline 分隔线本来就不在白名单里（WCAG 对纯装饰性分隔不设阈值），列出来只为对照 3:1 那条建议。产品自身如此，本仓库不覆盖官方控件（见 00-overview 的冲突处理），按「已知偏差」记录。</p>
+    <h3 class="group__title" data-t="demo.a11y-board.contrastTitle">1 · 对比度（AC-MF-05 / 06）</h3>
+    <p class="demo-label" data-t="demo.a11y-board.contrastThreshold">阈值：≤17pt 文本 4.5:1、≥18pt 或粗体 3:1、非文本 3:1。比值按 WCAG 相对亮度公式从计算色值现算</p>
+    <table class="contrast"><thead><tr><th data-t="demo.a11y-board.contrastColCase">用例</th><th data-t="demo.a11y-board.contrastColRatio">实测比值</th><th data-t="demo.a11y-board.contrastColVerdict">判定</th></tr></thead><tbody data-contrast></tbody></table>
+    <p class="demo-label" style="margin-top:8px" data-t="demo.a11y-board.contrastNote">这是量出来的，不是评出来的：三级文字（13px 说明、10px 状态标签用的都是它）在浅色底上约 3.7:1，够不到 4.5:1；hairline 分隔线本来就不在白名单里（WCAG 对纯装饰性分隔不设阈值），列出来只为对照 3:1 那条建议。产品自身如此，本仓库不覆盖官方控件（见 00-overview 的冲突处理），按「已知偏差」记录。</p>
   </div>
 
   <div class="group">
-    <h3 class="group__title">2 · 命中区（AC-MF-01 / 02 / 04）</h3>
-    <p class="demo-label">左：16 × 16 的图标按钮只有视觉尺寸，热区就是 16 × 16 → 小于最小 20 × 20。右：同一个按钮用 ::before 把热区扩到 28 × 28（inset −6px），视觉尺寸没变</p>
+    <h3 class="group__title" data-t="demo.a11y-board.hitTitle">2 · 命中区（AC-MF-01 / 02 / 04）</h3>
+    <p class="demo-label" data-t="demo.a11y-board.hitIntro">左：16 × 16 的图标按钮只有视觉尺寸，热区就是 16 × 16 → 小于最小 20 × 20。右：同一个按钮用 ::before 把热区扩到 28 × 28（inset −6px），视觉尺寸没变</p>
     <div class="row">
       <div class="toolRow" data-hit="none">
-        <button class="iconBtn" type="button" aria-label="未扩热区" data-icon="sparkle"></button>
+        <button class="iconBtn" type="button" aria-label="未扩热区" data-t-aria="demo.a11y-board.hitAreaPlainAria" data-icon="sparkle"></button>
         <span class="verdict" data-read></span>
       </div>
       <div class="toolRow" data-hit="extended">
-        <button class="iconBtn iconBtn--hit" type="button" aria-label="已扩热区" data-icon="sparkle"></button>
+        <button class="iconBtn iconBtn--hit" type="button" aria-label="已扩热区" data-t-aria="demo.a11y-board.hitAreaExtendedAria" data-icon="sparkle"></button>
         <span class="verdict" data-read></span>
       </div>
     </div>
   </div>
 
   <div class="group">
-    <h3 class="group__title">3 · 焦点（AC-MF-10 / 11 / 12）</h3>
-    <p class="demo-label">按 Tab 走进这两组按钮：上面一组的焦点环完整；下面一组被容器 <code>overflow:hidden</code> 裁掉一半，所以规范要求改用内偏移（outline-offset 为负）</p>
+    <h3 class="group__title" data-t="demo.a11y-board.focusTitle">3 · 焦点（AC-MF-10 / 11 / 12）</h3>
+    <p class="demo-label"><span data-t="demo.a11y-board.focusIntroLead">按 Tab 走进这两组按钮：上面一组的焦点环完整；下面一组被容器 </span><code>overflow:hidden</code><span data-t="demo.a11y-board.focusIntroTail"> 裁掉一半，所以规范要求改用内偏移（outline-offset 为负）</span></p>
     <div class="row">
-      <div class="focusDemo"><button type="button">取消</button><button type="button">保存</button></div>
-      <div class="focusDemo clip"><button type="button">取消</button><button type="button">保存</button></div>
+      <div class="focusDemo"><button type="button" data-t="demo.a11y-board.cancel">取消</button><button type="button" data-t="demo.a11y-board.save">保存</button></div>
+      <div class="focusDemo clip"><button type="button" data-t="demo.a11y-board.cancel">取消</button><button type="button" data-t="demo.a11y-board.save">保存</button></div>
     </div>
   </div>
 
   <div class="group">
-    <h3 class="group__title">4 · 颜色是不是唯一的信息载体（AC-MF-07）</h3>
-    <p class="demo-label">点按钮把彩色抽掉：只靠颜色的那一行，灰度后两个状态会变得难以区分；带图标的那一行不会</p>
+    <h3 class="group__title" data-t="demo.a11y-board.grayTitle">4 · 颜色是不是唯一的信息载体（AC-MF-07）</h3>
+    <p class="demo-label" data-t="demo.a11y-board.grayIntro">点按钮把彩色抽掉：只靠颜色的那一行，灰度后两个状态会变得难以区分；带图标的那一行不会</p>
     <div class="row" data-gray>
       <div class="stateRow">
-        <span class="state state--ok"><span class="state__dot"></span>仅颜色 · 成功</span>
-        <span class="state state--bad"><span class="state__dot"></span>仅颜色 · 失败</span>
+        <span class="state state--ok"><span class="state__dot"></span><span data-t="demo.a11y-board.stateColourOnlyOk">仅颜色 · 成功</span></span>
+        <span class="state state--bad"><span class="state__dot"></span><span data-t="demo.a11y-board.stateColourOnlyBad">仅颜色 · 失败</span></span>
       </div>
       <div class="stateRow">
-        <span class="state state--ok"><span class="state__dot"></span>✓ 成功</span>
-        <span class="state state--bad"><span class="state__dot"></span>✗ 失败</span>
+        <span class="state state--ok"><span class="state__dot"></span><span data-t="demo.a11y-board.stateIconOk">✓ 成功</span></span>
+        <span class="state state--bad"><span class="state__dot"></span><span data-t="demo.a11y-board.stateIconBad">✗ 失败</span></span>
       </div>
-      <button type="button" class="focusDemo" style="height:28px;border:0;border-radius:14px;cursor:pointer;font:inherit;font-size:12px;padding:0 12px" data-gray-toggle aria-pressed="false">抽掉彩色</button>
+      <button type="button" class="focusDemo" style="height:28px;border:0;border-radius:14px;cursor:pointer;font:inherit;font-size:12px;padding:0 12px" data-gray-toggle aria-pressed="false" data-t="demo.a11y-board.grayToggle">抽掉彩色</button>
     </div>
   </div>
 
@@ -151,24 +153,26 @@ table.contrast th, table.contrast td { padding: 6px 10px; border-bottom: 1px sol
 (function () {
   'use strict'
 
-  /* 演示脚本跑在 shadow root 里，document.querySelector 看不到自己的标记；站点在挂载期
-     把当前根挂在 window.__DSH_DEMO_ROOT 上。 */
+  /* The demo script runs inside a shadow root, where document.querySelector cannot see the
+     demo's own markup; the site publishes the current root on window.__DSH_DEMO_ROOT while it
+     mounts. */
   var root = window.__DSH_DEMO_ROOT || document
 
-  /** sRGB 单通道 → 线性。 */
+  /** One sRGB channel → linear. */
   function lin(c) { return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4) }
 
-  /** 相对亮度。 */
+  /** Relative luminance. */
   function lum(rgb) { return 0.2126 * lin(rgb[0] / 255) + 0.7152 * lin(rgb[1] / 255) + 0.0722 * lin(rgb[2] / 255) }
 
   /**
-   * 解析 rgb()/rgba() 为 [r,g,b]。
+   * Parse rgb()/rgba() into [r,g,b].
    *
-   * 半透明色必须先在背景上合成再算亮度：`--dsw-alias-border-l2` 是 `#0000001a`
-   * 这种带 alpha 的值，直接丢掉 alpha 会把它当成纯黑，得出 21:1 这种假达标。
-   * @param value - 计算样式里的颜色字符串。
-   * @param over - 背景 rgb，用于合成半透明色。
-   * @returns [r,g,b]。
+   * A translucent colour has to be composited over its background before the luminance is
+   * computed: `--dsw-alias-border-l2` is a value with alpha such as `#0000001a`, and throwing
+   * the alpha away treats it as pure black and reports a false pass such as 21:1.
+   * @param value - the colour string from the computed style.
+   * @param over - background rgb, used to composite a translucent colour.
+   * @returns [r,g,b].
    */
   function parse(value, over) {
     var m = String(value).match(/rgba?\(([^)]+)\)/u)
@@ -180,7 +184,7 @@ table.contrast th, table.contrast td { padding: 6px 10px; border-bottom: 1px sol
     return rgb.map(function (c, i) { return Math.round(c * alpha + over[i] * (1 - alpha)) })
   }
 
-  /** 对比度比值。 */
+  /** Contrast ratio. */
   function ratio(fg, bg) {
     var back = parse(bg)
     var a = lum(parse(fg, back)) + 0.05
@@ -188,7 +192,7 @@ table.contrast th, table.contrast td { padding: 6px 10px; border-bottom: 1px sol
     return Math.round((Math.max(a, b) / Math.min(a, b)) * 100) / 100
   }
 
-  /* 1 · 对比度：拿真实计算色值算，不查表 */
+  /* 1 · Contrast: computed from the real resolved colour values, not looked up in a table */
   var cases = [
     { label: '正文 14px · label-primary', prop: 'label-primary', need: 4.5 },
     { label: '说明 13px · label-secondary', prop: 'label-secondary', need: 4.5 },
@@ -198,8 +202,8 @@ table.contrast th, table.contrast td { padding: 6px 10px; border-bottom: 1px sol
   ]
   var body = root.querySelector('[data-contrast]')
   if (body !== null) {
-    /* :host 就是这份演示的 body——站点把 demo 的 body 选择器改写成 :host，
-       所以底色要从宿主元素上读，不能读站点的 document.body。 */
+    /* :host is this demo's body — the site rewrites a demo's body selector to :host, so the
+       surface colour has to be read off the host element, not the site's document.body. */
     var surface = root.host !== undefined ? root.host : document.body
     var base = getComputedStyle(surface).backgroundColor
     body.innerHTML = cases.map(function (item) {
@@ -218,23 +222,25 @@ table.contrast th, table.contrast td { padding: 6px 10px; border-bottom: 1px sol
     }).join('')
   }
 
-  /* 2 · 命中区：按渲染后盒模型量（热区含 ::before 扩展时用元素的取整外框近似） */
+  /* 2 · Hit area: measured off the rendered box model (when the hot zone includes a ::before
+     extension the element's rounded outer box is used as an approximation) */
   Array.prototype.forEach.call(root.querySelectorAll('[data-hit]'), function (group) {
     var btn = group.querySelector('button')
     var out = group.querySelector('[data-read]')
     if (btn === null || out === null) return
     var rect = btn.getBoundingClientRect()
     var hit = Math.round(rect.width)
-    if (group.getAttribute('data-hit') === 'extended') hit = hit + 12  /* inset:-6px 两侧各 6 */
+    if (group.getAttribute('data-hit') === 'extended') hit = hit + 12  /* inset:-6px, 6 on each side */
     var ok = hit >= 20
     out.className = 'verdict verdict--' + (ok ? 'ok' : 'bad')
-    /* 热区读数 = 现量的视觉尺寸 + CSS 里 ::before 的 inset:-6px 两侧 —— 那一对常量来自样式表，
-       不是量出来的，所以在这里写清来源，别让它冒充测量结果。 */
+    /* The hit-area readout = the live-measured visual size + the CSS ::before inset:-6px on both
+       sides. That pair of constants comes from the stylesheet, not from a measurement, so the
+       source is spelled out here rather than passed off as a measured result. */
     out.textContent = (ok ? '✓' : '✗') + ' 视觉 ' + Math.round(rect.width) + ' × ' + Math.round(rect.height)
       + ' · 热区 ' + hit + ' × ' + hit + '（= 视觉尺寸 + CSS inset −6px × 2；最小 20 × 20）'
   })
 
-  /* 4 · 灰度：真的把彩色抽掉 */
+  /* 4 · Greyscale: really strips the colour out */
   var toggle = root.querySelector('[data-gray-toggle]')
   if (toggle !== null) {
     toggle.addEventListener('click', function () {

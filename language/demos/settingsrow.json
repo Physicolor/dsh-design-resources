@@ -1,0 +1,28 @@
+{
+    "zh": {
+        "legendHeading": "设置行怎么读",
+        "legendTitleTerm": "选项标题",
+        "legendTitleBody": "说明改变什么，例如「权限」。",
+        "legendDescTerm": "选项说明",
+        "legendDescBody": "解释影响范围，例如「选择新会话的默认权限模式」。",
+        "legendControlTerm": "右侧控件",
+        "legendControlBody": "展示当前值或可执行动作。",
+        "legendDividerBody": "分隔线属于相邻行之间的布局，不写成行内文字或状态标签。",
+        "legendNote": "设置行是结构建议；文字与控件摘自 DSH 干净实景。",
+        "rowListAria": "通用设置真实行摘录",
+        "switchAria": "显示代码工作视图"
+    },
+    "en": {
+        "legendHeading": "How to read a settings row",
+        "legendTitleTerm": "Option title",
+        "legendTitleBody": "says what changes, for example Permissions.",
+        "legendDescTerm": "Option description",
+        "legendDescBody": "explains the scope of the effect, for example the default permission mode for new conversations.",
+        "legendControlTerm": "The control on the right",
+        "legendControlBody": "shows the current value or the action you can run.",
+        "legendDividerBody": "The divider belongs to the layout between neighbouring rows; it is not written as in-row text or a state label.",
+        "legendNote": "The settings row is a structural proposal; the text and controls are taken from a clean DSH capture.",
+        "rowListAria": "Excerpt of real rows in General settings",
+        "switchAria": "Show the code workspace view"
+    }
+}

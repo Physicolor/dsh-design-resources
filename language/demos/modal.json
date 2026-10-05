@@ -1,0 +1,26 @@
+{
+  "zh": {
+    "uncapturedScene": "截图未覆盖 · 此场景未在截图中出现，仅按 Modal.module.css 几何复现：w min(380px,100%) · r24 · gap 20 · header 22/14/12/24 · footer gap 8",
+    "titleOnlyLabel": "截图未覆盖 · 仅标题 · 无 description / body",
+    "geometryFacts": "几何事实 · mask rgba(0,0,0,.24) + backdrop blur(none) · root padding 24 · z-index 1000 · close 28×28 r8 · 内容列 24px 侧边距",
+    "dialogAria": "示例对话框",
+    "dialogTitle": "示例标题",
+    "closeAria": "关闭",
+    "description": "示例说明文本，占位 description 的 24px 侧边距。",
+    "inputAria": "示例值",
+    "cancel": "取消",
+    "confirm": "确定"
+  },
+  "en": {
+    "uncapturedScene": "Not captured · this scene does not appear in the screenshots, so the geometry is reproduced from Modal.module.css only: w min(380px,100%) · r24 · gap 20 · header 22/14/12/24 · footer gap 8",
+    "titleOnlyLabel": "Not captured · title only · no description / body",
+    "geometryFacts": "geometry facts · mask rgba(0,0,0,.24) + backdrop blur(none) · root padding 24 · z-index 1000 · close 28×28 r8 · content column 24px side padding",
+    "dialogAria": "Example dialog",
+    "dialogTitle": "Example title",
+    "closeAria": "Close",
+    "description": "Example description text, occupying the description's 24px side padding.",
+    "inputAria": "Example value",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  }
+}

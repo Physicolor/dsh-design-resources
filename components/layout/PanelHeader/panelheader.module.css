@@ -1,12 +1,12 @@
-/* 几何锚点全部来自官方 @deepseek-ai/dsh-client-ui-primitives/lib 下已核实的值：
+/* Every geometry anchor comes from values verified in the official @deepseek-ai/dsh-client-ui-primitives/lib:
  *   Modal.module.css  .title  → font-size 16px / line-height 24px / font-weight 500
  *                               / color var(--dsw-alias-label-primary)
  *   Modal.module.css  .header → display flex / align-items center / justify-content space-between
  *                               / gap 8px
  *   Menu.module.css   .separator → height 0.5px / background var(--dsw-alias-border-l1)
- *   Button.module.css .button   → font-size 14px / line-height 22px（面板标题取这一档字号）
- * 高度、内边距、标题与动作区之间的间距为本仓库建议值（4 的倍数），README 单列。
- * 实现为本仓库原创：用 CSS 变量承载几何 + 语义 token 承载颜色，未复制官方 CSS 源码。 */
+ *   Button.module.css .button   → font-size 14px / line-height 22px (the panel title takes this size step)
+ * The height, the padding, and the spacing between the title and the action area are values proposed here (multiples of 4); the README lists them separately.
+ * The implementation here is original: CSS variables carry the geometry, semantic tokens carry the colour, and no official CSS source is copied. */
 
 .header {
   --dsh-ph-height: 44px;
@@ -25,8 +25,8 @@
   font-family: inherit;
 }
 
-/* 底部 hairline：写法与官方 Menu.module.css 的 .separator 一致
- * （0.5px + border-l1）。选 l1 而不是 l2 的理由见 README「几何来源」。 */
+/* Bottom hairline: written the same way as .separator in the official Menu.module.css
+ * (0.5px + border-l1). For why l1 rather than l2, see "geometry source" in the README. */
 .divider {
   box-shadow: inset 0 -0.5px 0 0 var(--dsw-alias-border-l1);
 }
@@ -35,14 +35,14 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 4px; /* § 本仓库建议值：自造间距统一取 4 的倍数 */
+  gap: 4px; /* § Value proposed here: spacing invented here is always a multiple of 4 */
   min-width: 0;
 }
 
 .title {
   overflow: hidden;
   font-size: var(--dsh-ph-title-size);
-  font-weight: 500; /* 官方 Modal.module.css .title 的注释：figma wt510，渲染 500 */
+  font-weight: 500; /* the comment on the official Modal.module.css .title: figma wt510, rendered 500 */
   line-height: var(--dsh-ph-title-line);
   color: var(--dsw-alias-label-primary);
   text-overflow: ellipsis;
@@ -63,10 +63,10 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 4px; /* 官方 Button.module.css .button 的 gap 值 */
+  gap: 4px; /* the gap value of .button in the official Button.module.css */
 }
 
-/* ------------------------------------------------------------------ 尺寸 */
+/* ------------------------------------------------------------------ size */
 
 .sm {
   --dsh-ph-height: 36px;

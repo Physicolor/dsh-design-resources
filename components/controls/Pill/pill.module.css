@@ -1,11 +1,11 @@
-/* 几何全部来自官方 Pill.module.css：
+/* All geometry comes from the official Pill.module.css:
  *   .pill        → h24 / padding 0 8px / gap 4px / radius 12px / font 12-18
- *                  底色 var(--dsw-alias-bg-layer-2)、文字 var(--dsw-alias-label-secondary)
+ *                  background var(--dsw-alias-bg-layer-2), text var(--dsw-alias-label-secondary)
  *   .interactive → cursor: pointer
  *   .interactive:hover → var(--dsw-alias-interactive-bg-hover)
- *   .active      → 文字 label-primary + 底色 button-ghost-active-fill
+ *   .active      → text label-primary + background button-ghost-active-fill
  *                  + inset 0 0 0 1px button-ghost-active-border
- * 实现为本仓库原创（CSS 变量承载几何 + 两个状态类），未复制官方 CSS 源码。 */
+ * The implementation is original to this repository (CSS variables carry the geometry, two state classes), and is not a copy of the official CSS. */
 
 .pill {
   --dsh-pill-height: 24px;
@@ -31,7 +31,7 @@
   white-space: nowrap;
 }
 
-/* 只有 button 形态才给 pointer；官方同款规则落在 .interactive 上。 */
+/* Only the button form gets the pointer cursor; the same rule lands on .interactive in the official CSS. */
 .interactive {
   cursor: pointer;
 }
@@ -40,16 +40,16 @@
   background: var(--dsw-alias-interactive-bg-hover);
 }
 
-/* 选中态：底色 + 内描边，数值来自官方 .active。 */
+/* Selected state: background + inset stroke, values taken from the official .active. */
 .active {
   color: var(--dsw-alias-label-primary);
   background: var(--dsw-alias-button-ghost-active-fill);
   box-shadow: inset 0 0 0 1px var(--dsw-alias-button-ghost-active-border);
 }
 
-/* § 本仓库建议值：官方 Pill 未定义焦点样式。可点击胶囊是键盘可达的按钮，
- * 没有可见焦点环键盘用户会迷失位置。写法对齐官方 Switch.module.css 的
- * :focus-visible（2px brand-primary + offset 2px），保持全库一致。 */
+/* § Proposed by this repository: the official Pill defines no focus style. A clickable pill is a keyboard-reachable button,
+ * and with no visible focus ring a keyboard user loses track of where they are. The pattern mirrors :focus-visible in
+ * the official Switch.module.css (2px brand-primary + offset 2px), keeping the whole library consistent. */
 .interactive:focus-visible {
   outline: 2px solid var(--dsw-alias-brand-primary);
   outline-offset: 2px;

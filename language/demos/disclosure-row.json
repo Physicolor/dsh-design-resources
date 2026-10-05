@@ -1,0 +1,18 @@
+{
+  "zh": {
+    "title": "DisclosureRow · DSH 设计资源",
+    "collapsedLabel": "02-session · 会话流工具调用行 · 折叠态 · leading 16×16 + margin-right 6 · title 13/24 secondary · 行高 24",
+    "expandedLabel": "截图未覆盖 · 展开态（aria-expanded true）—— 截图里没有一行是展开的，展开体样式按 SPEC",
+    "hoverLabel": "截图未覆盖 · hover 换形（iconIdle 隐 / chevronHover 显）与 leading 为 <button> 时的 16×16 热区",
+    "bodyFiles": "示例文件 A · 示例文件 B",
+    "sampleTitle": "示例标题"
+  },
+  "en": {
+    "title": "DisclosureRow · DSH Design Resources",
+    "collapsedLabel": "02-session · conversation-stream tool-call row · collapsed · leading 16×16 + margin-right 6 · title 13/24 secondary · row height 24",
+    "expandedLabel": "Not covered by the screenshots · expanded state (aria-expanded true) — no row in the screenshots is expanded, so the expanded body follows the SPEC",
+    "hoverLabel": "Not covered by the screenshots · the hover shape swap (iconIdle out / chevronHover in) and the 16×16 hit area when leading is a <button>",
+    "bodyFiles": "Sample file A · Sample file B",
+    "sampleTitle": "Sample title"
+  }
+}

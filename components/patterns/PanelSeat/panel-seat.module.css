@@ -1,26 +1,29 @@
-/* 几何锚点（逐条，详见 README「几何来源」）：
- *   容器圆角 12px        官方 ReadBlock.module.css .block (--dsl-read-radius: 12px)
- *   容器底色（surface）  官方 ReadBlock.module.css .block background
- *   容器内边距 12px 16px 官方 HoverCard.module.css .card padding（同为浮层内边距，借用量级）
- *   标题行 gap 12px      官方 ReadBlock.module.css .banner gap
- *   标题行 hairline      官方 Menu.module.css .separator（0.5px + var(--dsw-alias-border-l1)），
- *                        本组件改用 border-bottom 承载同宽度同颜色
- *   标题 14-22 / 500     官方 Button .button(14-22) + Modal .title(font-weight 500)
- *   操作区 gap 4px       官方 Button.module.css .button gap
- * § 标记的为「本仓库建议值」：官方没有 PanelSeat 对应物，这些数值在官方侧没有直接来源，理由见 README。
- * 实现为本仓库原创（变量承载几何 + 单类切换），未复制官方 CSS 源码。 */
+/* Geometry anchors (item by item, see the README's "geometry-source"):
+ *   Container corner radius 12px   Official ReadBlock.module.css .block (--dsl-read-radius: 12px)
+ *   Container background (surface) Official ReadBlock.module.css .block background
+ *   Container padding 12px 16px    Official HoverCard.module.css .card padding (also an overlay padding; the magnitude is borrowed)
+ *   Title row gap 12px             Official ReadBlock.module.css .banner gap
+ *   Title row hairline             Official Menu.module.css .separator (0.5px + var(--dsw-alias-border-l1)),
+ *                                  this component carries the same width and colour on a border-bottom
+ *   Title 14-22 / 500              Official Button .button(14-22) + Modal .title(font-weight 500)
+ *   Action area gap 4px            Official Button.module.css .button gap
+ * § marks the values proposed here: the official side has no PanelSeat equivalent, so these
+ * numbers have no direct official source; the reasoning is in the README.
+ * The implementation is original to this repository (geometry carried by CSS variables + a single
+ * class toggle); no official CSS source was copied. */
 
 .seat {
-  --dsh-pseat-radius: 12px; /* 官方 ReadBlock .block */
-  --dsh-pseat-pad-x: 16px; /* 官方 HoverCard .card */
-  --dsh-pseat-pad-y: 12px; /* 官方 HoverCard .card */
-  --dsh-pseat-gap: 12px; /* 官方 ReadBlock .banner */
-  --dsh-pseat-header-gap: 8px; /* § 建议值 */
-  --dsh-pseat-action-gap: 4px; /* 官方 Button .button */
-  --dsh-pseat-body-gap: 12px; /* § 建议值 */
+  --dsh-pseat-radius: 12px; /* Official ReadBlock .block */
+  --dsh-pseat-pad-x: 16px; /* Official HoverCard .card */
+  --dsh-pseat-pad-y: 12px; /* Official HoverCard .card */
+  --dsh-pseat-gap: 12px; /* Official ReadBlock .banner */
+  --dsh-pseat-header-gap: 8px; /* § proposed here */
+  --dsh-pseat-action-gap: 4px; /* Official Button .button */
+  --dsh-pseat-body-gap: 12px; /* § proposed here */
 
   box-sizing: border-box;
-  /* § 建议值：会话流里按内容宽度收缩，不铺满整行（需要撑满时由父容器给 width）。 */
+  /* § proposed here: inside the conversation flow it shrinks to its content width and does not
+     fill the row (give width on the parent container when it must fill). */
   display: inline-flex;
   flex-direction: column;
   max-width: 100%;
@@ -31,7 +34,7 @@
   line-height: 22px;
 }
 
-/* § 建议值：内边距取官方 HoverCard .card 的 12px 16px（同为浮起内容块）。 */
+/* § proposed here: the padding takes the official HoverCard .card 12px 16px (also a raised content block). */
 .inset {
   padding: var(--dsh-pseat-pad-y) var(--dsh-pseat-pad-x);
 }
@@ -40,13 +43,13 @@
   background: var(--dsw-alias-markdown-code-block);
 }
 
-/* --------------------------------------------------------------- 标题行 */
+/* --------------------------------------------------------------- title row */
 
 .header {
   display: flex;
   align-items: center;
   gap: var(--dsh-pseat-gap);
-  /* § 建议值：4 的倍数，让 hairline 与标题文字之间留出呼吸。 */
+  /* § proposed here: a multiple of 4, leaving the hairline room to breathe below the title text. */
   padding-bottom: var(--dsh-pseat-header-gap);
   border-bottom: 0.5px solid var(--dsw-alias-border-l1);
 }
@@ -72,14 +75,14 @@
   margin-left: auto;
 }
 
-/* ----------------------------------------------------------------- 正文 */
+/* ----------------------------------------------------------------- body */
 
 .body {
   min-width: 0;
   padding-top: var(--dsh-pseat-body-gap);
 }
 
-/* 正文首尾元素不留外margin，避免和容器的内边距叠加出双层留白。 */
+/* The first and last body elements carry no outer margin, so they do not stack double white space with the container's padding. */
 .body > :first-child {
   margin-top: 0;
 }

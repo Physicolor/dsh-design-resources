@@ -1,0 +1,14 @@
+{
+  "zh": {
+    "heroRow": "01-hero / 06-plugins · 左栏品牌行 · size 24 · 实拍 ink 187×18 @ (16,28)",
+    "uncoveredSizes": "截图未覆盖 · includeMark=false（156×24）与 size 32 / 48 —— 截图里只出现侧栏那一处 24 高",
+    "uncoveredColour": "截图未覆盖 · currentColor（label-secondary / link）与 role=\"img\" + &lt;title&gt;",
+    "geometryFacts": "几何事实 · 角标矩形 x129.348 y5.5 w52 h14 rx2 · clipPath 46 × 14 · 鱼标 clip 23.16 × 17.0435"
+  },
+  "en": {
+    "heroRow": "01-hero / 06-plugins · brand row in the left sidebar · size 24 · captured ink 187×18 @ (16,28)",
+    "uncoveredSizes": "Not covered by the screenshot · includeMark=false (156×24) and sizes 32 / 48 — only the 24-high instance in the sidebar appears in the capture",
+    "uncoveredColour": "Not covered by the screenshot · currentColor (label-secondary / link) and role=\"img\" + &lt;title&gt;",
+    "geometryFacts": "Geometry facts · badge rect x129.348 y5.5 w52 h14 rx2 · clipPath 46 × 14 · whale-mark clip 23.16 × 17.0435"
+  }
+}

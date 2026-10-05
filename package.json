@@ -1,7 +1,7 @@
 {
     "name": "dsh-design-resources",
     "version": "0.1.0",
-    "description": "DeepSeek Design Resources — 界面规范、可复用源码知识库与实况组件画廊，供 DeepSeek Harness 插件作者使用。",
+    "description": "DeepSeek Design Resources — the interface spec, the reusable-source knowledge base and the live component gallery for DeepSeek Harness plugin authors.",
     "type": "module",
     "license": "MIT",
     "author": "Physicolor",
@@ -26,6 +26,7 @@
         "README.zh-CN.md",
         "LICENSE",
         "spec/**/*.md",
+        "guides/**/*.md",
         "rules/**/*.json",
         "data/**/*.json",
         "language/**/*.json",
@@ -49,10 +50,13 @@
         "audit": "node scripts/audit-demos.mjs",
         "rules": "node scripts/gen-rules.mjs",
         "refs": "node scripts/check-refs.mjs",
+        "i18n": "node scripts/check-i18n.mjs",
+        "i18n:update": "node scripts/check-i18n.mjs --update",
+        "demos": "node scripts/check-demos-i18n.mjs",
         "site": "node website/gen-site.mjs",
         "verify": "node website/verify.mjs",
         "serve": "node scripts/serve.mjs",
-        "build": "node scripts/gen-rules.mjs && node website/gen-site.mjs && node scripts/check-refs.mjs && node website/verify.mjs"
+        "build": "node scripts/gen-rules.mjs && node scripts/check-i18n.mjs && node scripts/check-demos-i18n.mjs && node website/gen-site.mjs && node scripts/check-refs.mjs && node website/verify.mjs"
     },
     "devDependencies": {},
     "dependencies": {}

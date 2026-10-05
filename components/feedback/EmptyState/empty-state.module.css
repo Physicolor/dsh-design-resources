@@ -1,9 +1,11 @@
-/* 官方没有 EmptyState 组件，本文件所有数值均为「本仓库建议值」，理由逐条写在 README。
- * 唯一沿用官方数值的是文字层级：标题 14/22、说明 13/20，来自官方合成 token
+/* The official set has no EmptyState component, so every value in this file is proposed here,
+ * with the reasoning written out item by item in the README.
+ * The only values carried over from the official set are the type scale: title 14/22, description 13/20,
+ * from the official composite tokens
  *   --dsw-font-s-14 → 14px/22px
  *   --dsw-font-xs-13 → 13px/20px
- * 以及官方 Button 的尺寸体系（动作插槽里放 Button 时不受本文件影响）。
- * 间距一律取 4 的倍数。 */
+ * plus the official Button size system (a Button in the action slot is unaffected by this file).
+ * Every spacing value is a multiple of 4. */
 
 .empty {
   --dsh-empty-icon-slot: 32px;
@@ -30,7 +32,7 @@
   flex: none;
   width: var(--dsh-empty-icon-slot);
   height: var(--dsh-empty-icon-slot);
-  /* 让调用方传进来的图标继承次级文字色，而不是默认的黑色描边。 */
+  /* Let a caller-supplied icon inherit the tertiary text colour instead of the default black stroke. */
   color: var(--dsw-alias-label-tertiary);
 }
 
@@ -46,12 +48,12 @@
 }
 
 .description {
-  /* 标题与说明之间的间距是 6px，比 flex 的 12px 紧，
-     靠负外边距抵消掉一半的 gap：-(12 - 6) = -6px。 */
+  /* The gap between title and description is 6px, tighter than the flex 12px,
+     so a negative margin cancels half of the gap: -(12 - 6) = -6px. */
   margin: calc(-1 * var(--dsh-empty-gap) + var(--dsh-empty-title-desc-gap)) 0 0;
   max-width: var(--dsh-empty-max-w);
   color: var(--dsw-alias-label-secondary);
-  /* 13/20 是官方合成 token，含字体族，直接整条使用。 */
+  /* 13/20 is an official composite token; it includes the font family, so use it whole. */
   font: var(--dsw-font-xs-13);
   text-wrap: pretty;
 }

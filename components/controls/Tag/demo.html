@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tag · DSH 设计资源</title>
+<title>Tag · DSH Design Resources</title>
 <style>
 :root {
   --dsw-static-neutral-bluish-00: #fff;
@@ -105,15 +105,17 @@
   --dsw-shadow-lv3: 0 0 1px 0 rgba(0, 0, 0, .2), 0 0 4px 0 rgba(0, 0, 0, .02), 0 12px 32px 0 rgba(0, 0, 0, .08);
   --dsw-mask-blur: none;
   --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  /* 官方把这两条写成 font 简写合成 token，这里展开以便 demo 单条使用。 */
+  /* The product declares these two as font-shorthand composite tokens; they are expanded here
+     so the demo can use each one on its own. */
   --dsw-font-s-14: 14px/22px var(--dsw-font-family);
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
 }
 
-/* 深色主题：站点把深色 token 挂在 body[data-ds-dark-theme] 上，Shadow DOM 里选择不到它，
-   而 :host 自己的自定义属性又会盖过继承值——所以深色值在文件内自带一份，用 light-dark()
-   依据宿主继承下来的 color-scheme 选择。只列本页用到、且深浅两套取值不同的 token；
-   数值逐条取自 website/css/dsh-tokens.css。 */
+/* Dark theme: the site hangs its dark tokens on body[data-ds-dark-theme], which a shadow DOM
+   cannot select, and :host custom properties would override the inherited values — so the dark
+   values are carried in this file and chosen with light-dark() from the color-scheme the host
+   inherits. Only tokens this page uses whose light and dark values differ are listed; every
+   value comes from website/css/dsh-tokens.css. */
 :root {
   --dsw-alias-bg-layer-3: light-dark(var(--dsw-static-neutral-bluish-00), var(--dsw-static-neutral-bluish-800));
   --dsw-alias-bg-module-platform: light-dark(var(--dsw-static-neutral-bluish-60), var(--dsw-static-neutral-bluish-800));
@@ -125,9 +127,9 @@
   --dsw-alias-state-error-primary: light-dark(var(--dsw-static-red-600), var(--dsw-static-red-400));
 }
 
-/* --------------------------------------------------- 组件几何
-   数值逐条取自同目录 tag.module.css（CSS Modules 的哈希类名已去掉），
-   规则重新组织过，声明值未改。 */
+/* --------------------------------------------------- component geometry
+   Every value comes from tag.module.css in this directory (the CSS Modules hashed class
+   names are dropped); the rules are reorganised, the declared values are unchanged. */
 .tag {
   --dsh-tag-radius: 999px;
   --dsh-tag-pad-y: 1px;
@@ -174,9 +176,10 @@
   color: var(--dsw-alias-state-error-primary);
 }
 
-/* ------------------------------------------------------------------ demo 外壳
-   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
-   .demo-label 是本页唯一允许出现的文字，只写客观事实（尺寸 / 状态名）。 */
+/* ------------------------------------------------------------------ demo shell
+   body sets only the 16px padding and the text colour, never a background: the site (the shadow
+   host) supplies that. .demo-label is the only text this page allows, and it states facts only
+   (sizes and state names). */
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -208,35 +211,36 @@ body {
 </style>
 </head>
 <body>
-<!-- 截图中出现过的两枚标签都是同一 tone（info）；其余 tone 没有实拍依据。 -->
+<!-- The two tags that appear in the captures are the same tone (info); the other tones have no
+     capture behind them. -->
 
   <div class="demo-group">
-    <p class="demo-label">06-plugins · 官方分组行 · 插件名之后 · tone=info（实拍 42×18）</p>
+    <p class="demo-label" data-t="demo.tag.pluginRowLabel">06-plugins · 官方分组行 · 插件名之后 · tone=info（实拍 42×18）</p>
     <div class="demo-stack" style="gap:12px">
-      <div class="plugin-line"><span class="plugin-name">智能体团队</span><span class="tag" data-tone="info">实验性</span></div>
-      <div class="plugin-line"><span class="plugin-name">自动授权审查</span><span class="tag" data-tone="info">实验性</span></div>
-      <div class="plugin-line"><span class="plugin-name">语音输入</span><span class="tag" data-tone="info">实验性</span></div>
+      <div class="plugin-line"><span class="plugin-name" data-capture="plugin list row, plugin name, 06-plugins capture">智能体团队</span><span class="tag" data-tone="info" data-capture="plugin list row, experimental tag, 06-plugins capture">实验性</span></div>
+      <div class="plugin-line"><span class="plugin-name" data-capture="plugin list row, plugin name, 06-plugins capture">自动授权审查</span><span class="tag" data-tone="info" data-capture="plugin list row, experimental tag, 06-plugins capture">实验性</span></div>
+      <div class="plugin-line"><span class="plugin-name" data-capture="plugin list row, plugin name, 06-plugins capture">语音输入</span><span class="tag" data-tone="info" data-capture="plugin list row, experimental tag, 06-plugins capture">实验性</span></div>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">01-hero · Hero 标语之后 · tone=info（实拍 50×19）</p>
+    <p class="demo-label" data-t="demo.tag.heroRowLabel">01-hero · Hero 标语之后 · tone=info（实拍 50×19）</p>
     <div class="hero-line">
-      <span class="hero-title">探索未至之境</span>
-      <span class="tag" data-tone="info">预览版</span>
+      <span class="hero-title" data-capture="hero slogan, 01-hero capture">探索未至之境</span>
+      <span class="tag" data-tone="info" data-capture="hero tag, 01-hero capture">预览版</span>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">截图未覆盖 · outline / solid / neutral / quiet / success / warning / danger —— 几何同一，只有配色不同</p>
+    <p class="demo-label" data-t="demo.tag.uncapturedTones">截图未覆盖 · outline / solid / neutral / quiet / success / warning / danger —— 几何同一，只有配色不同</p>
     <div class="demo-row" style="gap:6px">
-      <span class="tag" data-tone="outline">示例</span>
-      <span class="tag" data-tone="solid">示例</span>
-      <span class="tag" data-tone="neutral">示例</span>
-      <span class="tag" data-tone="quiet">示例</span>
-      <span class="tag" data-tone="success">示例</span>
-      <span class="tag" data-tone="warning">示例</span>
-      <span class="tag" data-tone="danger">示例</span>
+      <span class="tag" data-tone="outline" data-t="demo.tag.sample">示例</span>
+      <span class="tag" data-tone="solid" data-t="demo.tag.sample">示例</span>
+      <span class="tag" data-tone="neutral" data-t="demo.tag.sample">示例</span>
+      <span class="tag" data-tone="quiet" data-t="demo.tag.sample">示例</span>
+      <span class="tag" data-tone="success" data-t="demo.tag.sample">示例</span>
+      <span class="tag" data-tone="warning" data-t="demo.tag.sample">示例</span>
+      <span class="tag" data-tone="danger" data-t="demo.tag.sample">示例</span>
     </div>
   </div>
 </body>

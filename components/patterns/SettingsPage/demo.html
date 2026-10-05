@@ -1,20 +1,28 @@
-<!-- 预览是产品里那个设置窗口的复刻：800 × 800、圆角 28、188 导航列 + 612 内容列，
-     数值逐条来自 docs/reference/settings-panel.json（2026-10-02 复采）。本组件（骨架）官方
-     primitives 包里没有对应物，但产品里的设置窗口是真实存在的界面。
-     字体用产品自己的字体栈（HarmonyOS Sans SC 起头），不再退到 -apple-system。
-     导航列：前 10 项逐条采自 settings-panel.json；「账号与余额」的依据是产品 bundle 内 i18n 的
-     分区名（中文 nav「账号与余额」/ 英文「Account」，以及「设置 → 账号与余额 进行充值」这句文案）
-     与占用登记里 settings.section 的首个占用者 account（order −10）；它不在本次采集到的导航列表里，
-     为什么缺席本仓库没有证据（推断是与登录态有关，未验证）。
-     表头那两行（分区标题 18/26/600 + 说明 13/20）是本机 dsh-ui-harmonizer 规范化之后的样子；
-     官方各页自己的表头并不统一（模型页 16/500 + 14/22）。文件末尾那张三块对照把这条契约变成
-     可以现测的读数：缺标题、缺描述都会当场判 ✗。 -->
+<!-- The preview is a replay of the product's settings window: 800 × 800, radius 28,
+     188 nav column + 612 content column, the values taken one by one from
+     docs/reference/settings-panel.json (re-captured 2026-10-02). This component (the
+     skeleton) has no counterpart in the official primitives package, but the settings
+     window in the product is a real interface.
+     The font is the product's own font stack (starting with HarmonyOS Sans SC); this demo
+     does not fall back to -apple-system.
+     Nav column: the first 10 entries are taken one by one from settings-panel.json. The
+     evidence for the account row (the Chinese nav entry meaning "Account & balance", the
+     English one being "Account", plus the copy "Settings → Account & balance to top up")
+     is the section name in the product bundle's i18n and account, the first occupant of
+     settings.section in the occupancy register (order −10); it is not in the nav list
+     captured this time, and why it is missing has no evidence in this repository
+     (inferred to be related to the signed-in state, not verified).
+     The two header lines (section title 18/26/600 + description 13/20) are what this
+     machine's dsh-ui-harmonizer looks like after normalisation; the official pages' own
+     headers are not uniform (the Models page is 16/500 + 14/22). The three-block
+     comparison at the end of the file turns that contract into readings that can be
+     measured on the spot: a missing title or description is judged ✗ right there. -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SettingsPage · DSH 设计资源</title>
+<title>SettingsPage · DSH Design Resources</title>
 <style>
 :root {
   --dsw-static-neutral-bluish-00: #fff;
@@ -115,18 +123,21 @@
   --dsw-shadow-lv2: 0 4px 12px 0 rgba(0, 0, 0, .02), 0 2px 8px 0 rgba(0, 0, 0, .04);
   --dsw-shadow-lv3: 0 0 1px 0 rgba(0, 0, 0, .2), 0 0 4px 0 rgba(0, 0, 0, .02), 0 12px 32px 0 rgba(0, 0, 0, .08);
   --dsw-mask-blur: none;
-  /* 产品 UI 用的就是 HarmonyOS Sans SC（插件作者手册 §2.3 的官方字体栈）。窗口里排版必须
-     跟真机一致，所以这份 demo 不再退到 -apple-system 上。 */
+  /* The product UI itself uses HarmonyOS Sans SC (the official font stack in the plugin
+     author's handbook §2.3). Type in the window has to match the real machine, so this
+     demo does not fall back to -apple-system. */
   --dsw-font-family: 'HarmonyOS Sans SC', 'HarmonyOS Sans', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  /* 官方把这两条写成 font 简写合成 token，这里展开以便 demo 单条使用。 */
+  /* The official stylesheet writes these two as shorthand `font` composite tokens; they are expanded here so a demo can use one at a time. */
   --dsw-font-s-14: 14px/22px var(--dsw-font-family);
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
 }
 
-/* 深色主题：站点把深色 token 挂在 body[data-ds-dark-theme] 上，Shadow DOM 里选择不到它，
-   而 :host 自己的自定义属性又会盖过继承值——所以深色值在文件内自带一份，用 light-dark()
-   依据宿主继承下来的 color-scheme 选择。只列本页用到、且深浅两套取值不同的 token；
-   数值逐条取自 website/css/dsh-tokens.css。 */
+/* Dark theme: the site hangs the dark tokens on body[data-ds-dark-theme], which is not
+   selectable from inside a Shadow DOM, and :host custom properties would override the
+   inherited values anyway — so the dark values are carried in this file and picked with
+   light-dark() from the color-scheme inherited from the host. Only the tokens this page
+   uses that differ between light and dark are listed; the values are taken one by one
+   from website/css/dsh-tokens.css. */
 :root {
   --dsw-alias-bg-module-platform: light-dark(var(--dsw-static-neutral-bluish-60), var(--dsw-static-neutral-bluish-800));
   --dsw-alias-brand-primary: light-dark(var(--dsw-static-neutral-bluish-1000), var(--dsw-static-neutral-bluish-50));
@@ -138,26 +149,27 @@
   --dsw-alias-label-tertiary: light-dark(var(--dsw-static-neutral-bluish-600), var(--dsw-static-neutral-bluish-400));
 }
 
-/* --------------------------------------------------- 真实窗口的几何
-   这一段不再写「本仓库建议值」：数值逐条取自运行中的产品
-   （docs/reference/settings-panel.json；1570×905 视口，采集时窗口盒子 [385, 53, 800, 800]）。
+/* --------------------------------------------------- the real window's geometry
+   This block no longer writes "a value proposed by this repository": the values are taken
+   one by one from the running product (docs/reference/settings-panel.json; a 1570×905
+   viewport, with the window box at [385, 53, 800, 800] at capture time).
 
-   遮罩      全屏 --dsw-alias-bg-mask-1（实测 rgba(0,0,0,.24)）
-   窗口      800 × 800 · 圆角 28 · 白底 · box-shadow = --dsw-elevation-prominent
-   导航列    188 宽 · padding 22px 12px 0 · 标题与列表 gap 18 · 列表行距 4
-   导航格    164 × 40 · 圆角 12 · padding 9px 16px 9px 12px · gap 8 · 选中底 rgb(235,238,242)
-   内容列    612 宽 · 头部 54 高（padding 20px 14px 8px 10px）· 选项区 padding 0 24px 24px
-   分区标题  18/26 · 600　说明 13/20 · 下方 12
-   设置行    padding 16px 0 · 标题 14/22 · 说明 12/18 · 行间一条 hairline
-   选择器    高 36 · 圆角 12 · padding 0 14 · gap 12 · 底 rgb(245,246,247) · 折角 14×14
-   主题方块  183 × 84 · 圆角 20 · padding 20px 32px · 选中底 rgb(245,246,247)
-   开关      36 × 20 · 圆角 999 · 滑块 16 · 打开时 brand-primary
-   数字微调  上下两枚 17 × 12 箭头 · 圆角 4 */
+   mask         full screen --dsw-alias-bg-mask-1 (measured rgba(0,0,0,.24))
+   window       800 × 800 · radius 28 · white ground · box-shadow = --dsw-elevation-prominent
+   nav column   188 wide · padding 22px 12px 0 · gap 18 between title and list · 4 between rows
+   nav cell     164 × 40 · radius 12 · padding 9px 16px 9px 12px · gap 8 · selected ground rgb(235,238,242)
+   content column  612 wide · header 54 high (padding 20px 14px 8px 10px) · options area padding 0 24px 24px
+   section title  18/26 · 600 · description 13/20 · 12 below
+   settings row  padding 16px 0 · title 14/22 · description 12/18 · one hairline between rows
+   selector     height 36 · radius 12 · padding 0 14 · gap 12 · ground rgb(245,246,247) · chevron 14×14
+   theme cube   183 × 84 · radius 20 · padding 20px 32px · selected ground rgb(245,246,247)
+   switch       36 × 20 · radius 999 · thumb 16 · brand-primary when on
+   stepper      two 17 × 12 arrows, up and down · radius 4 */
 
 .window {
-  /* 三处实测底色（不是 token），就地标注出处 */
-  --dsh-nav-active: #ebeef2;      /* ← 采集 rgb(235,238,242) */
-  --dsh-selector-fill: #f5f6f7;   /* ← 采集 rgb(245,246,247) */
+  /* Three measured ground colours (not tokens), with where they came from noted here */
+  --dsh-nav-active: #ebeef2;      /* ← captured rgb(235,238,242) */
+  --dsh-selector-fill: #f5f6f7;   /* ← captured rgb(245,246,247) */
 
   box-sizing: border-box;
   display: flex;
@@ -220,11 +232,8 @@
 }
 .options { flex: 1; min-height: 0; box-sizing: border-box; padding: 0 24px 24px; overflow: hidden; }
 
-.pageTitle { margin: 0; font-size: 18px; line-height: 26px; font-weight: 600; }
-/* 描述色 ← 采集 rgb(129,133,140) = 三级文字，不是二级 */
-.pageIntro { margin: 0; padding-bottom: 12px; font-size: 13px; line-height: 20px; color: var(--dsw-alias-label-tertiary); border-bottom: 1px solid var(--dsw-alias-border-l2); }
 
-/* 表头契约的三块对照：读数由文件末尾的脚本现测，不写死结论 */
+/* The three-block comparison for the header contract: the readings are measured on the spot by the script at the end of the file, not written in as conclusions */
 .heads { display: flex; flex-wrap: wrap; gap: 16px; }
 .head {
   flex: 1 1 240px;
@@ -243,7 +252,7 @@
 .check--ok b { color: #14663c; }
 .check--bad b { color: #b3271f; }
 
-/* 设置行 ← 采集：padding 16px 0、行间一条 hairline、文字列右侧留 48、控件贴右 */
+/* Settings row ← captured: padding 16px 0, one hairline between rows, 48 left on the right of the text column, the control flush right */
 .row {
   display: flex;
   align-items: center;
@@ -257,7 +266,7 @@
 .rowDesc { font-size: 12px; line-height: 18px; color: var(--dsw-alias-label-tertiary); }
 .rowControl { display: inline-flex; flex: none; align-items: center; gap: 8px; }
 
-/* 选择器 ← 采集：高 36、圆角 12、padding 0 14、gap 12、底 rgb(245,246,247)、折角 14×14 */
+/* Selector ← captured: height 36, radius 12, padding 0 14, gap 12, ground rgb(245,246,247), chevron 14×14 */
 .selector {
   box-sizing: border-box;
   display: inline-flex;
@@ -278,10 +287,10 @@
 .selector:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 2px; }
 .selector svg { flex: none; width: 14px; height: 14px; color: var(--dsw-alias-label-tertiary); }
 
-/* 分组标题（外观那一行）← 采集：标题 14/22，方块紧随其后 */
+/* Group title (the Appearance row) ← captured: title 14/22, the cubes right after it */
 .groupTitle { padding-top: 16px; font-size: 14px; line-height: 22px; }
 
-/* 主题方块 ← 采集：183 × 84、圆角 20、padding 20px 32px、gap 4、选中底 rgb(245,246,247) */
+/* Theme cube ← captured: 183 × 84, radius 20, padding 20px 32px, gap 4, selected ground rgb(245,246,247) */
 .cubeRow { display: flex; gap: 8px; padding: 8px 0 16px; border-bottom: 1px solid var(--dsw-alias-border-l2); }
 .cube {
   box-sizing: border-box;
@@ -307,7 +316,7 @@
 .cube:hover:not([aria-pressed='true']) { background: var(--dsw-alias-interactive-bg-hover); }
 .cube svg { width: 16px; height: 16px; }
 
-/* 开关 ← 采集：36 × 20、圆角 999、滑块 16、padding 2、打开时 brand-primary */
+/* Switch ← captured: 36 × 20, radius 999, thumb 16, padding 2, brand-primary when on */
 .switch {
   position: relative;
   display: inline-flex;
@@ -326,7 +335,7 @@
 .switchThumb { display: block; width: 16px; height: 16px; border-radius: 50%; background: var(--dsw-alias-label-primary-foreground); transition: transform 120ms ease; }
 .switch[aria-checked='true'] .switchThumb { transform: translateX(16px); }
 
-/* 数字微调 ← 采集：上下两枚 17 × 12 箭头、圆角 4；数值旁单位是次级色 */
+/* Number stepper ← captured: two 17 × 12 arrows, up and down, radius 4; the unit beside the value is in the secondary colour */
 .stepper { display: inline-flex; flex-direction: column; gap: 2px; }
 .stepperArrow {
   box-sizing: border-box;
@@ -343,7 +352,7 @@
 .number { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; line-height: 22px; }
 .numberUnit { color: var(--dsw-alias-label-tertiary); }
 
-/* Button 组件的几何，逐条同 controls/Button/button.module.css；这里只用到 sm + outline。 */
+/* The Button component's geometry, taken one by one from controls/Button/button.module.css; only sm + outline are used here. */
 .button {
   box-sizing: border-box;
   display: inline-flex;
@@ -384,11 +393,13 @@
 .iconButton:hover { background: var(--dsw-alias-interactive-bg-hover); }
 .iconButton svg { width: 16px; height: 16px; }
 
-/* ------------------------------------------------------------------ demo 外壳
-   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
-   .demo-label 是本页唯一允许出现的说明，只写客观事实（尺寸 / 出处）。
-   导航格里的图标用 `data-icon` 占位，由站点把官方图标集里的字形填进来——
-   站外单独打开本文件时图标为空，几何不受影响。 */
+/* ------------------------------------------------------------------ demo shell
+   body only sets 16px padding and the text colour, no background: the ground colour
+   comes from the site (the shadow host). .demo-label is the only note this page is
+   allowed to show, and it states objective facts only (sizes / where it came from).
+   The icons in the nav cells use `data-icon` placeholders and the site fills in the
+   glyph from its official icon set — opening this file on its own leaves the icons
+   empty, which does not affect the geometry. */
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -408,201 +419,139 @@ body {
   border-radius: 14px;
   background: var(--dsw-alias-bg-mask-1);
 }
+.anatomy-board {
+  display: grid;
+  grid-template-columns: 150px 848px 170px;
+  align-items: start;
+  gap: 20px;
+  width: max-content;
+  max-width: 100%;
+}
+.anatomy-window { width: 848px; }
+.anatomy-legend {
+  padding: 14px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 12px;
+  background: var(--dsw-alias-bg-layer-1);
+  color: var(--dsw-alias-label-secondary);
+  font-size: 12px;
+  line-height: 18px;
+}
+.anatomy-legend h3 {
+  margin: 0 0 10px;
+  color: var(--dsw-alias-label-primary);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+}
+.anatomy-legend ol, .anatomy-legend ul { margin: 0; padding-left: 18px; }
+.anatomy-legend li + li { margin-top: 8px; }
+.anatomy-legend p { margin: 10px 0 0; }
+.anatomy-legend code { overflow-wrap: anywhere; }
+.anatomy-note {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--dsw-alias-label-tertiary);
+  font-size: 12px;
+  line-height: 18px;
+}
 </style>
 </head>
 <body>
-  <div class="demo-group">
-    <p class="demo-label">真实设置窗口 · 800 × 800 · 圆角 28 · 阴影 --dsw-elevation-prominent · 背后是 --dsw-alias-bg-mask-1（采集：docs/reference/settings-panel.json）</p>
-    <div class="mask">
-      <div class="window" role="dialog" aria-label="设置">
-        <nav class="nav" aria-label="设置分区">
-          <div class="navTitle">设置</div>
+  <div class="anatomy-board" aria-label="设置窗口结构与控件用途" data-t-aria="demo.settings-page.boardAria">
+    <aside class="anatomy-legend">
+      <h3 data-t="demo.settings-page.legendSidebarTitle">左侧菜单</h3>
+      <ol>
+        <li><strong data-capture="settings window, sidebar heading">设置</strong><span data-t="demo.settings-page.legendTitleNote">是宿主窗口标题。</span></li>
+        <li><strong data-capture="settings window, sidebar entry">通用设置</strong><span data-t="demo.settings-page.legendCurrentPageNote">表示当前页面。</span></li>
+        <li><strong data-capture="settings window, sidebar entry">模型</strong><span data-t="demo.settings-page.legendListSeparator">、</span><strong data-capture="settings window, sidebar entry">内置插件</strong><span data-t="demo.settings-page.legendListSeparator">、</span><strong data-capture="settings window, sidebar entry">Agent 预设</strong><span data-t="demo.settings-page.legendOtherPagesNote">是实景中实际出现的其他菜单页。</span></li>
+        <li data-t="demo.settings-page.legendMenuItemNote">菜单项只显示图标与名称；这张实景没有菜单描述，也没有页面级说明。</li>
+      </ol>
+      <p><span data-t="demo.settings-page.legendItemPrefBefore">插件一项全局偏好用</span> <code>settings.general.item</code><span data-t="demo.settings-page.legendItemPrefBetween">；插件整页用</span> <code>settings.section</code><span data-t="demo.settings-page.legendItemPrefAfter">，不替换宿主导航。</span></p>
+    </aside>
+
+    <div class="anatomy-window">
+      <div class="window" role="dialog" aria-label="设置" data-t-aria="demo.settings-page.windowLabel">
+        <nav class="nav" aria-label="设置分区" data-t-aria="demo.settings-page.navLabel">
+          <div class="navTitle" data-capture="settings window, sidebar heading">设置</div>
           <div class="navList">
-            <!-- 分区列表 = 官方设置窗口里那一列。前 10 项逐条采自 docs/reference/settings-panel.json
-                 （2026-10-02 复采）。「账号与余额」是产品文案里点名的分区（bundle 内 i18n：
-                 onboardingNoCreditDescription「稍后前往 设置 → 账号与余额 进行充值」、账号菜单 nav），
-                 未登录实例的导航列里不出现，故不在采集文件里；条目本身以产品文案 + 用户截图为准。 -->
-            <button type="button" class="navItem"><span class="navItemIcon" data-icon="user"></span><span class="navItemLabel">账号与余额</span></button>
-            <button type="button" class="navItem" aria-current="page"><span class="navItemIcon" data-icon="settings"></span><span class="navItemLabel">通用设置</span></button>
-            <button type="button" class="navItem"><span class="navItemIcon" data-icon="gauge"></span><span class="navItemLabel">模型</span></button>
-            <button type="button" class="navItem"><span class="navItemIcon" data-icon="api"></span><span class="navItemLabel">Command Code</span></button>
-            <button type="button" class="navItem"><span class="navItemIcon" data-icon="cordis-plugin"></span><span class="navItemLabel">内置插件</span></button>
-            <button type="button" class="navItem"><span class="navItemIcon" data-icon="agent-preset"></span><span class="navItemLabel">Agent 预设</span></button>
-            <button type="button" class="navItem"><span class="navItemIcon" data-icon="sparkle"></span><span class="navItemLabel">组件</span></button>
-            <button type="button" class="navItem"><span class="navItemIcon" data-icon="goal"></span><span class="navItemLabel">科研</span></button>
-            <button type="button" class="navItem"><span class="navItemIcon" data-icon="personalization"></span><span class="navItemLabel">UI 兼容性</span></button>
-            <button type="button" class="navItem"><span class="navItemIcon" data-icon="folder-open"></span><span class="navItemLabel">插件市场</span></button>
-            <button type="button" class="navItem"><span class="navItemIcon" data-icon="alarm-clock"></span><span class="navItemLabel">通知</span></button>
+            <button type="button" class="navItem" aria-current="page"><span class="navItemIcon" data-icon="settings"></span><span class="navItemLabel" data-capture="settings window, sidebar entry">通用设置</span></button>
+            <button type="button" class="navItem"><span class="navItemIcon" data-icon="gauge"></span><span class="navItemLabel" data-capture="settings window, sidebar entry">模型</span></button>
+            <button type="button" class="navItem"><span class="navItemIcon" data-icon="cordis-plugin"></span><span class="navItemLabel" data-capture="settings window, sidebar entry">内置插件</span></button>
+            <button type="button" class="navItem"><span class="navItemIcon" data-icon="agent-preset"></span><span class="navItemLabel" data-capture="settings window, sidebar entry">Agent 预设</span></button>
           </div>
         </nav>
         <div class="content">
           <div class="contentHead">
-            <button type="button" class="button sm outline">打开配置文件</button>
-            <button type="button" class="iconButton" aria-label="关闭设置"><span data-icon="close"></span></button>
+            <button type="button" class="button sm outline" data-capture="settings window, header action button">打开配置文件</button>
+            <button type="button" class="iconButton" aria-label="关闭设置" data-t-aria="demo.settings-page.closeAria"><span data-icon="close"></span></button>
           </div>
           <div class="options">
-            <h2 class="pageTitle">通用设置</h2>
-            <p class="pageIntro">管理语言、外观、界面与对话行为等基础偏好。</p>
-
             <div class="row">
-              <div class="rowText">
-                <div class="rowTitle">权限</div>
-                <div class="rowDesc">选择新会话的默认权限模式</div>
-              </div>
-              <div class="rowControl">
-                <button type="button" class="selector">完全权限<span data-icon="chevron-down"></span></button>
-              </div>
+              <div class="rowText"><div class="rowTitle" data-capture="General settings row title">权限</div><div class="rowDesc" data-capture="General settings row description">选择新会话的默认权限模式</div></div>
+              <div class="rowControl"><button type="button" class="selector" data-capture="General settings selector value">工作区内修改<span data-icon="chevron-down"></span></button></div>
             </div>
 
             <div class="row">
-              <div class="rowText">
-                <div class="rowTitle">语言</div>
-              </div>
-              <div class="rowControl">
-                <button type="button" class="selector">中文<span data-icon="chevron-down"></span></button>
-              </div>
+              <div class="rowText"><div class="rowTitle" data-capture="General settings row title">语言</div></div>
+              <div class="rowControl"><button type="button" class="selector" data-capture="General settings selector value">中文<span data-icon="chevron-down"></span></button></div>
             </div>
 
-            <div class="groupTitle">外观</div>
+            <div class="groupTitle" data-capture="General settings group title">外观</div>
             <div class="cubeRow">
-              <button type="button" class="cube" aria-pressed="true"><span data-icon="light"></span>浅色</button>
-              <button type="button" class="cube" aria-pressed="false"><span data-icon="dark"></span>深色</button>
-              <button type="button" class="cube" aria-pressed="false"><span data-icon="followsystem"></span>跟随系统</button>
+              <button type="button" class="cube" aria-pressed="false" data-capture="General settings appearance option"><span data-icon="light"></span>浅色</button>
+              <button type="button" class="cube" aria-pressed="false" data-capture="General settings appearance option"><span data-icon="dark"></span>深色</button>
+              <button type="button" class="cube" aria-pressed="true" data-capture="General settings appearance option"><span data-icon="followsystem"></span>跟随系统</button>
             </div>
 
             <div class="row">
-              <div class="rowText">
-                <div class="rowTitle">字号大小</div>
-                <div class="rowDesc">仅影响会话内容的字号</div>
-              </div>
-              <div class="rowControl">
-                <span class="number">14<span class="numberUnit">px</span></span>
-                <span class="stepper">
-                  <button type="button" class="stepperArrow" aria-label="增大字号"><span data-icon="chevron-up"></span></button>
-                  <button type="button" class="stepperArrow" aria-label="减小字号"><span data-icon="chevron-down"></span></button>
-                </span>
-              </div>
+              <div class="rowText"><div class="rowTitle" data-capture="General settings row title">字号大小</div><div class="rowDesc" data-capture="General settings row description">仅影响会话内容的字号</div></div>
+              <div class="rowControl"><span class="number">14<span class="numberUnit">px</span></span></div>
             </div>
 
             <div class="row">
-              <div class="rowText">
-                <div class="rowTitle">工作步骤展示</div>
-                <div class="rowDesc">选择希望看到多少工具调用细节</div>
-              </div>
-              <div class="rowControl">
-                <button type="button" class="selector">简洁<span data-icon="chevron-down"></span></button>
-              </div>
+              <div class="rowText"><div class="rowTitle" data-capture="General settings row title">工作步骤展示</div><div class="rowDesc" data-capture="General settings row description">选择希望看到多少工具调用细节</div></div>
+              <div class="rowControl"><button type="button" class="selector" data-capture="General settings selector value">详细<span data-icon="chevron-down"></span></button></div>
             </div>
 
             <div class="row">
-              <div class="rowText">
-                <div class="rowTitle">显示代码工作视图</div>
-                <div class="rowDesc">开启后，显示轨迹、本轮代码差异，可选择完整的 Agent 预设切换</div>
-              </div>
-              <div class="rowControl">
-                <button type="button" class="switch" role="switch" aria-checked="true" aria-label="显示代码工作视图"><span class="switchThumb"></span></button>
-              </div>
+              <div class="rowText"><div class="rowTitle" data-capture="General settings row title">显示代码工作视图</div><div class="rowDesc" data-capture="General settings row description">开启后，显示轨迹、本轮代码差异，可选择完整的 Agent 预设切换</div></div>
+              <div class="rowControl"><button type="button" class="switch" role="switch" aria-checked="true" aria-label="显示代码工作视图" data-t-aria="demo.settings-page.switchCodeViewAria"><span class="switchThumb"></span></button></div>
             </div>
 
             <div class="row">
-              <div class="rowText">
-                <div class="rowTitle">快捷键</div>
-                <div class="rowDesc">查看和编辑当前可用的快捷键和输入操作</div>
-              </div>
-              <div class="rowControl">
-                <button type="button" class="button sm outline">编辑快捷键</button>
-              </div>
+              <div class="rowText"><div class="rowTitle" data-capture="General settings row title">快捷键</div><div class="rowDesc" data-capture="General settings row description">查看和编辑当前可用的快捷键和输入操作</div></div>
+              <div class="rowControl"><button type="button" class="button outline" data-capture="General settings row action button">编辑快捷键</button></div>
             </div>
 
             <div class="row">
-              <div class="rowText">
-                <div class="rowTitle">网页链接默认打开方式</div>
-                <div class="rowDesc">对话中网页链接的打开位置</div>
-              </div>
-              <div class="rowControl">
-                <button type="button" class="selector">应用内侧边栏<span data-icon="chevron-down"></span></button>
-              </div>
+              <div class="rowText"><div class="rowTitle" data-capture="General settings row title">繁忙时的发送行为</div><div class="rowDesc" data-capture="General settings row description">智能体运行时 Enter 键和发送按钮的行为；Cmd/Ctrl+Enter 使用另一行为</div></div>
+              <div class="rowControl"><button type="button" class="selector" data-capture="General settings selector value">排队发送<span data-icon="chevron-down"></span></button></div>
+            </div>
+
+            <div class="row">
+              <div class="rowText"><div class="rowTitle" data-capture="General settings row title">性能与用量</div><div class="rowDesc" data-capture="General settings row description">选择性能与用量信息显示的详细程度</div></div>
+              <div class="rowControl"><button type="button" class="selector" data-capture="General settings selector value">详细<span data-icon="chevron-down"></span></button></div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <aside class="anatomy-legend">
+      <h3 data-t="demo.settings-page.legendControlsTitle">通用设置里的控件</h3>
+      <ul>
+        <li><strong data-t="demo.settings-page.legendPageTitle">页面标题</strong><span data-t="demo.settings-page.legendPageTitleBody">真实文字是“通用设置”；这张实景没有页面级说明。</span></li>
+        <li><strong data-t="demo.settings-page.legendRowTitleDesc">选项标题 / 说明</strong><span data-t="demo.settings-page.legendRowTitleDescBody">只在实景出现的行使用说明，例如“权限”和“选择新会话的默认权限模式”。</span></li>
+        <li><strong data-t="demo.settings-page.legendSelector">下拉选择器</strong><span data-t="demo.settings-page.legendSelectorBody">适合语言、权限等离散选项。</span></li>
+        <li><strong data-t="demo.settings-page.legendThemeGroup">外观选项组</strong><span data-t="demo.settings-page.legendThemeGroupBody">适合需要并排比较的互斥外观。</span></li>
+        <li><strong data-t="demo.settings-page.legendNumberInput">数值输入</strong><span data-t="demo.settings-page.legendNumberInputBody">显示当前值和单位；不要添加截图中没有的步进箭头。</span></li>
+        <li><strong data-t="demo.settings-page.legendSwitch">开关</strong><span data-t="demo.settings-page.legendSwitchBody">表示立即生效的二态偏好。</span></li>
+        <li><strong data-t="demo.settings-page.legendActionButton">动作按钮</strong><span data-t="demo.settings-page.legendActionButtonBody">执行或打开后续操作，例如“编辑快捷键”。</span></li>
+      </ul>
+    </aside>
+
+    <p class="anatomy-note" data-t="demo.settings-page.anatomyNote">依据 docs/reference/review-crops/settings-general-clean-2026-10-05.png 与 docs/reference/14-settings-panel.json；实景文件只用于本地核对，不嵌入网站。</p>
   </div>
-
-  <div class="demo-group">
-    <p class="demo-label">分区表头的契约 · 往设置页里注册一个分区时，<b>大标题与子描述两件都不能缺</b>：标题 18/26/600、描述 13/20 三级色 + 底部 hairline、两者相距 12px。下面三块是同一套写法的三种情况，读数由浏览器现测。</p>
-    <div class="heads">
-      <figure class="head" data-head data-expect="ok">
-        <div class="headStage">
-          <h2 class="pageTitle">通用设置</h2>
-          <p class="pageIntro">管理语言、外观、界面与对话行为等基础偏好。</p>
-        </div>
-        <figcaption class="headChecks" data-checks></figcaption>
-      </figure>
-      <figure class="head" data-head data-expect="no-intro">
-        <div class="headStage">
-          <h2 class="pageTitle">我的插件</h2>
-        </div>
-        <figcaption class="headChecks" data-checks></figcaption>
-      </figure>
-      <figure class="head" data-head data-expect="no-title">
-        <div class="headStage">
-          <p class="pageIntro">只有一段说明，整页没有大标题。</p>
-        </div>
-        <figcaption class="headChecks" data-checks></figcaption>
-      </figure>
-    </div>
-    <p class="demo-label">缺标题时页面在大纲里没有入口，缺描述时读者不知道这一页管什么；两者都不属于「装饰可以省」。官方各页自己的数值并不统一（模型页 16/500 + 14/22），本页给的是规范化之后统一采用的一套。实测差异记录：2026-10-02 采集到的 <code>p.enhc-page-intro</code> 计算样式为 <code>padding-bottom:12px</code>、<code>border:0 none</code>——描述下那条 hairline 按规范器文档的契约画，采集里没有量到。</p>
-  </div>
-
-<script>
-(function () {
-  'use strict'
-
-  /* 演示脚本跑在 shadow root 里，document.querySelector 看不到自己的标记；站点在挂载期
-     把当前根挂在 window.__DSH_DEMO_ROOT 上。 */
-  var root = window.__DSH_DEMO_ROOT || document
-
-  /** 一行读数。 */
-  function line(ok, label, actual) {
-    var mark = ok ? '✓' : '✗'
-    var cls = ok ? 'check check--ok' : 'check check--bad'
-    return '<span class="' + cls + '"><b>' + mark + '</b> ' + label + ' <i>' + actual + '</i></span>'
-  }
-
-  var heads = root.querySelectorAll('[data-head]')
-  Array.prototype.forEach.call(heads, function (head) {
-    var h2 = head.querySelector('h2')
-    var p = head.querySelector('p')
-    var out = []
-
-    if (h2 === null) {
-      out.push(line(false, '大标题 h2', '缺失'))
-    } else {
-      var hs = getComputedStyle(h2)
-      out.push(line(hs.fontSize === '18px' && hs.lineHeight === '26px' && hs.fontWeight === '600',
-        '大标题 18/26 · 600', hs.fontSize + '/' + hs.lineHeight + ' · ' + hs.fontWeight))
-    }
-
-    if (p === null) {
-      out.push(line(false, '子描述 p', '缺失'))
-    } else {
-      var ps = getComputedStyle(p)
-      var hairline = parseFloat(ps.borderBottomWidth) > 0 && ps.borderBottomStyle !== 'none'
-      out.push(line(ps.fontSize === '13px' && ps.lineHeight === '20px', '子描述 13/20', ps.fontSize + '/' + ps.lineHeight))
-      out.push(line(hairline && ps.paddingBottom === '12px', '描述下 12px + hairline',
-        ps.paddingBottom + (hairline ? ' + 1px' : ' · 无底边')))
-    }
-
-    if (h2 !== null && p !== null) {
-      var gap = Math.round(p.getBoundingClientRect().top - h2.getBoundingClientRect().bottom)
-      out.push(line(Math.abs(gap - 12) <= 1, '标题 → 描述 12px', gap + 'px'))
-    }
-
-    var box = head.querySelector('[data-checks]')
-    if (box !== null) box.innerHTML = out.join('')
-  })
-})();
-</script>
 </body>
 </html>

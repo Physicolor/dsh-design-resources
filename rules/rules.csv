@@ -13,7 +13,7 @@ A11,required,semi,"占用 `shadows-shipped-ui` 座位时有显式声明与关闭
 A12,required,manual,"未遮蔽官方唯一入口（发送、停止、设置总入口、关闭）","SL-MF-09"
 A13,required,semi,"`keyed` 座位使用稳定 key，无时间戳／随机数","SL-MF-11"
 A14,required,manual,"`chain` 座位未匹配时回落到官方实现","SL-MF-12"
-A15,required,auto,"按钮高度只用 36 或 28，圆角只用 18 或 14","CT-MF-01"
+A15,required,auto,"按钮高度只用 36 或 28，圆角只用 12 或 8","CT-MF-01"
 A16,required,auto,"Button 内图标容器为 16×16，且未抬高按钮高度","CT-MF-02"
 A17,required,semi,"Tag 未绑定点击动作","CT-MF-04"
 A18,required,semi,"每个交互控件具备 default/hover/active/focus-visible/disabled 五态（官方控件未提供的不补，按 00-overview §4.1）","CT-MF-07"

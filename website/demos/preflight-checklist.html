@@ -1,12 +1,14 @@
-<!-- 自检清单：条目、条文号、检测方式逐条抄自 spec/70-checklist.md（A01–A51 / B01–B13）。
-     这里演示的是清单本身的机制——全部二元、必选组出现「否」即不得提交、推荐组为「否」需在 README 写理由；
-     条目是抽样（全表 64 条太长），每一条的条文号都可以回文档对。 -->
+<!-- Pre-submit checklist: the items, clause ids and detection methods are copied item by item from
+     spec/70-checklist.md (A01–A51 / B01–B13). What this demonstrates is the checklist's own
+     mechanics — everything is binary, a "no" on any item in the Required group blocks submission,
+     and a "no" in the Recommended group needs its reason written in the README. The items are a
+     sample (the full table of 64 is too long); every clause id can be checked back against the document. -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>提交前自检 · DSH 设计资源</title>
+<title>Pre-submit checklist · DeepSeek Design Resources</title>
 <style>
 :root {
   --dsw-font-family: 'HarmonyOS Sans SC', 'HarmonyOS Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
@@ -48,8 +50,8 @@ meter { width: 100%; height: 6px; }
 <body>
 
   <div class="tabs" data-tabs>
-    <button type="button" data-tab="A" aria-selected="true">A 必选（强制）</button>
-    <button type="button" data-tab="B" aria-selected="false">B 推荐</button>
+    <button type="button" data-tab="A" aria-selected="true" data-t="demo.preflight-checklist.tabRequired">A 必选（强制）</button>
+    <button type="button" data-tab="B" aria-selected="false" data-t="demo.preflight-checklist.tabRecommended">B 推荐</button>
   </div>
 
   <p class="demo-label" data-summary></p>
@@ -60,11 +62,11 @@ meter { width: 100%; height: 6px; }
 (function () {
   'use strict'
 
-  /* 演示脚本跑在 shadow root 里，document.querySelector 看不到自己的标记；站点在挂载期
-     把当前根挂在 window.__DSH_DEMO_ROOT 上。 */
+  /* A demo script runs inside a shadow root, where document.querySelector cannot see its own
+     markup; the site publishes the current root on window.__DSH_DEMO_ROOT for the duration of the mount. */
   var root = window.__DSH_DEMO_ROOT || document
 
-  /* 抽样自 spec/70-checklist.md（id / 判定项 / 条文号 / 检测方式） */
+  /* Sampled from spec/70-checklist.md (id / criterion / clause id / detection method) */
   var ITEMS = {
     A: [
       { id: 'A07', text: '所用座位 id 全部来自 DSH 官方声明，未自造', rule: 'SL-MF-01', how: '自动' },
@@ -96,7 +98,7 @@ meter { width: 100%; height: 6px; }
   var verdictEl = root.querySelector('[data-verdict]')
   var summaryEl = root.querySelector('[data-summary]')
 
-  /** 画当前 tab 的清单与结论。 */
+  /** Draw the checklist and the verdict for the current tab. */
   function render() {
     var items = ITEMS[tab]
     listEl.innerHTML = items.map(function (item) {

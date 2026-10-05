@@ -1,0 +1,22 @@
+{
+  "zh": {
+    "pageTitle": "Toast · DSH 设计资源",
+    "labelUncoveredDefault": "截图未覆盖 · 此场景未在截图中出现，仅按 Toast.module.css 几何复现：pad 12 16 · r14 · gap 10 · font 14/22 · shadow lv3",
+    "sampleText": "示例提示文本",
+    "labelUncoveredNoIcon": "截图未覆盖 · 无图标 · 仅文案",
+    "sampleTextNoIcon": "示例提示文本",
+    "labelUncoveredLong": "截图未覆盖 · 长文案 · max-width min(640px, calc(100vw − 48px))",
+    "sampleTextLong": "示例提示文本，用来撑到 max-width 上限，检验换行与内边距。",
+    "labelGeometryFacts": "几何事实 · position fixed · top 40 · left 50% · translateX(−50%) · z-index 1100 · pointer-events none · 入场 160ms · 淡出 1000ms + hold 3000ms"
+  },
+  "en": {
+    "pageTitle": "Toast · DSH Design Resources",
+    "labelUncoveredDefault": "not covered by the screenshots · this scene does not appear in them; reproduced from the Toast.module.css geometry only: pad 12 16 · r14 · gap 10 · font 14/22 · shadow lv3",
+    "sampleText": "Sample toast text",
+    "labelUncoveredNoIcon": "not covered by the screenshots · no icon · copy only",
+    "sampleTextNoIcon": "Sample toast text",
+    "labelUncoveredLong": "not covered by the screenshots · long copy · max-width min(640px, calc(100vw − 48px))",
+    "sampleTextLong": "Sample toast text, long enough to reach the max-width limit so wrapping and padding can be checked.",
+    "labelGeometryFacts": "geometry facts · position fixed · top 40 · left 50% · translateX(−50%) · z-index 1100 · pointer-events none · entrance 160ms · fade-out 1000ms + hold 3000ms"
+  }
+}

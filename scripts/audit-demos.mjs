@@ -50,7 +50,7 @@ function findBrowser() {
 }
 
 /**
- * 路由清单：组件页 + 带演示的规范页。
+ * 路由清单：组件页、带演示的规范页与带演示的指南页。
  * @returns 路由数组。
  */
 function routes() {
@@ -61,8 +61,13 @@ function routes() {
     .sort()
     .filter(f => readFileSync(join(ROOT, 'spec', f), 'utf8').includes('demo:'))
     .map(f => `#/spec/${f.replace(/\.md$/u, '')}`)
+  const guideRoutes = readdirSync(join(ROOT, 'guides'))
+    .filter(f => f.endsWith('.md'))
+    .sort()
+    .filter(f => readFileSync(join(ROOT, 'guides', f), 'utf8').includes('demo:'))
+    .map(f => `#/guide/${f.replace(/\.md$/u, '')}`)
   const landing = ['#/components', '#/spec', '#/icons', '#/seats', '#/tokens', '#/inventory']
-  return [...componentRoutes, ...specRoutes, ...landing]
+  return [...componentRoutes, ...specRoutes, ...guideRoutes, ...landing]
 }
 
 const browserPath = findBrowser()

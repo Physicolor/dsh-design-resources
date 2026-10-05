@@ -1,0 +1,14 @@
+{
+  "zh": {
+    "plainForm": "平排（默认）· gap 3 · 12/16 · 无底色无圆角 —— 采集：键帽 19 × 16、bg 透明、radius 0",
+    "tooltipBubble": "提示气泡 · 11/14 · 每枚键 min-width 16 / height 16 / padding 0 2 / 圆角 4 / 底 --dsw-alias-tooltip-key-bg",
+    "joinedForm": "连排 · height 16 / padding 0 4 / 圆角 4，内部键不带底",
+    "newSessionPlacement": "长在哪儿 · 左栏新会话按钮（252 × 38、圆角 12；键帽平时 opacity 0，悬停或键盘聚焦才出现）"
+  },
+  "en": {
+    "plainForm": "Plain (default) · gap 3 · 12/16, no background and no radius — captured: keycaps 19 × 16, transparent background, radius 0",
+    "tooltipBubble": "Tooltip · 11/14, each key min-width 16 / height 16 / padding 0 2 / radius 4, on --dsw-alias-tooltip-key-bg",
+    "joinedForm": "Joined · height 16 / padding 0 4 / radius 4, the keys inside carry no background",
+    "newSessionPlacement": "Where it lives · the new-conversation button in the left sidebar (252 × 38, radius 12; the keycaps sit at opacity 0 and appear on hover or keyboard focus)"
+  }
+}

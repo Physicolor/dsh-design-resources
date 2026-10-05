@@ -1,4 +1,4 @@
-/* 几何全部来自官方 Switch.module.css：
+/* All geometry comes from the official Switch.module.css:
  *   .switch                → 36×20 / padding 2px / border 0 / radius 10px
  *                            corner-shape round / background var(--dsw-alias-border-l3)
  *   .switch[aria-checked=true] → background var(--dsw-alias-brand-primary)
@@ -8,9 +8,9 @@
  *                            background var(--dsw-alias-label-primary-foreground)
  *                            transition transform 120ms ease
  *   .switch[aria-checked=true] .thumb → translateX(16px)
- * 轨道的圆角是自身高度的一半；`corner-shape: round` 用来抵消全局超椭圆，
- * 否则两端会被压方、和里面那个圆滑块的形状打架。滑块同理。
- * 实现为本仓库原创（用 aria-checked 驱动状态），未复制官方 CSS 源码。 */
+ * The track radius is half its own height; `corner-shape: round` cancels out the global superellipse,
+ * which would otherwise square off both ends and fight the round thumb inside. The same goes for the thumb.
+ * The implementation is original to this repository (aria-checked drives the state), and is not a copy of the official CSS. */
 
 .switch {
   --dsh-switch-width: 36px;
@@ -61,9 +61,9 @@
   transform: translateX(var(--dsh-switch-thumb-offset));
 }
 
-/* 官方没有为这个开关声明 reduced-motion 分支。滑块位移只有 16px、时长 120ms，
- * 但前庭敏感用户仍可能被横向滑动影响；这里跟随系统偏好直接关掉过渡。
- * 本仓库建议值，理由见 README「可访问性要点」。 */
+/* The official CSS declares no reduced-motion branch for this switch. The thumb travels only 16px over 120ms,
+ * but users with vestibular sensitivity can still be affected by horizontal sliding; this follows the system
+ * preference and turns the transition off outright. Value proposed here, with the reasoning in the README's accessibility notes. */
 @media (prefers-reduced-motion: reduce) {
   .thumb {
     transition: none;

@@ -21,14 +21,14 @@ description: "Design spec, seat directory, tokens, the official icon set and a r
 
 ## Why this exists
 
-DeepSeek Harness gives plugin authors a **technical stack and a development contract**: the Cordis plugin system, the slot (seat) mechanism, and `--dsw-*` design tokens. It does not give them a **design spec**: how large a control should be, how much space belongs between two of them, how long a transition runs, how to draw an icon, or who wins when two plugins want the same spot.
+DeepSeek Harness publicly provides **Cordis plugin APIs, slots, semantic tokens, UI primitives and client development guidance**. The relevant rules are distributed across GitHub documentation, agent guidance and source code; they are not yet organized as a complete design handbook around community plugin authors' interface tasks.
 
 So plugins each do their own thing, and one screen ends up with mismatched button heights, arbitrary spacing and unpredictable stacking. That is not a plugin's fault — it is what happens without a spec and a check.
 
-This repository supplies the missing layer. Three rules:
+This repository organizes those references into a guide community plugin authors can discover and verify. Three rules:
 
 1. **No invented numbers.** Every size, gap and duration carries its source (the official client bundle, Apple HIG, OpenHarmony, or an explicit "this repository suggests"). Where no authority exists, it says so instead of inventing something that looks professional.
-2. **No aesthetic verdicts.** The spec keeps things consistent and usable; it does not claim one style is prettier.
+2. **No arbitrary taste verdicts.** Visual quality is assessed through checkable criteria such as hierarchy, reading width, density, alignment, theme contrast and interaction feedback.
 3. **If it cannot be decided, it is not a rule.** "Spacing should feel comfortable" is not a rule. "Two adjacent independent controls closer than 16px count as cramped" is. Every document states whether its criteria can be checked automatically.
 
 ## Layout
@@ -37,16 +37,22 @@ This repository supplies the missing layer. Three rules:
 | --- | --- |
 | [`spec/`](spec/) | 10 documents: frame layout, seat selection, controls, tokens, motion, icons, accessibility, checklist, conflict arbitration |
 | [`rules/`](rules/) | `rules.json` / `rules.csv` — the checklist in machine-readable form, for CI gates and auditors |
-| [`guides/`](guides/) | Task-oriented guides: start here, official basis, principles, five UI patterns, seats and integration, verify and sources |
+| [`guides/`](guides/) | Task-oriented guides: overview, official basis, principles, interface patterns, seats and integration, verification and sources |
 | [`data/`](data/) | Collected from a running harness: 75 icons, 90 seats, tokens (palette 77 / light aliases 115 / dark aliases 119 / scale and type 207) and the element inventory. Calibers and capture times: [`docs/FACTS-2026-10-02.md`](docs/FACTS-2026-10-02.md) |
 | [`icons/`](icons/) | 75 official icons plus brand marks, exported verbatim (see [`icons/README.md`](icons/README.md)) |
 | [`components/`](components/) | Reusable-source knowledge base: categorised, dependency-free React built on official tokens |
-| [`website/`](website/) | The live gallery: a three-column site where specimens render as native HTML, with search |
+| [`website/`](website/) | The plugin design guide and live component gallery, with navigation, article content, on-page contents and search |
 | [`scripts/`](scripts/) | Collection and generation — every number here is reproducible, nothing is hand-recorded |
 
 ## Open the site
 
-The site is **zero-build and works straight from disk**:
+Published on GitHub Pages:
+
+```
+https://physicolor.github.io/dsh-design-resources/
+```
+
+The site is **zero-build and works straight from disk** as well:
 
 ```
 website/index.html
@@ -71,7 +77,7 @@ The site follows this repository's own spec, so it is the spec's first implement
 - **each column scrolls on its own** while the page itself never does, under a liquid-glass top bar content passes behind;
 - **both rails drag to resize** (arrow keys work too) and remember their width and collapsed state;
 - **either rail collapses entirely**, with an animated open/close;
-- **Chinese and English** interface dictionaries; the spec prose and component docs are Chinese-only today and say so in English mode;
+- **Chinese and English, both complete**: the spec, the guides, the component documents and every specimen exist in both languages. Any Chinese left on an English page is a product string quoted verbatim, and it is followed by its English gloss. The contract and its gates are in [`docs/I18N.md`](docs/I18N.md);
 - **light and dark are both authored** — a design that survives light mode and collapses in dark mode counts as a defect here;
 - **an operable motion bench** on the motion spec page: compare the five durations and both curves side by side, which is the one thing paper cannot do and an HTML reference can;
 - **specimens render into a shadow root, not an iframe**: under `file://` every document is its own opaque origin, so a parent cannot read a frame's height or measure its content and the preview degrades silently; a shadow root isolates the demo's styles and needs no measuring because it takes part in normal layout;
@@ -85,19 +91,29 @@ node scripts/collect-icons.mjs     # icon set      → icons/ + data/icons.json
 node scripts/collect-tokens.mjs    # theme tokens  → data/tokens.json + website/css/dsh-tokens.css
 node scripts/collect-slots.mjs     # seat directory (needs a snapshot under data/raw/)
 node scripts/gen-rules.mjs         # checklist     → rules/rules.json
+node scripts/check-i18n.mjs        # fail if a translation is missing or stale (--update re-pins it)
+node scripts/check-demos-i18n.mjs  # fail if a specimen still shows untranslated copy
 node website/gen-site.mjs          # everything    → website/js/data.js
+node scripts/gen-index.mjs         # inventory     → index.json (the package entry point)
 node scripts/check-refs.mjs        # fail if a document names a seat that does not exist
 node website/verify.mjs            # structure + data + real browser render + screenshots
+npm run build                      # all of the above, in that order
 ```
 
 The collectors read this machine's harness installation (`DSH_ASAR` / `DSH_PRIMITIVES` override the paths). `collect-tokens.mjs` needs the desktop `app.asar`; `collect-slots.mjs` needs a seat-tree snapshot captured from the harness's seat inspection surface.
 
-## Relationship to dsh-ui-harmonizer
+## The set: spec plus runtime
 
-| Repository | Responsibility |
-| --- | --- |
-| **this one** | Spec, resources, reusable source, the site — "how it should be done" |
-| [dsh-ui-harmonizer](https://github.com/Physicolor/dsh-ui-harmonizer) | Read-only compatibility auditing and targeted reconciliation — "how it actually turned out", reported in the settings page |
+These are two halves of one thing, and they are worth installing together: one says what the interface
+should look like, the other makes it true inside the running product and reports what it could not fix.
+
+| Repository | Role | The question it answers |
+| --- | --- | --- |
+| **dsh-design-resources** (this one) | Spec, resources, reusable source, the site | How the interface **should** be built — how big a control is, how wide a gap is, how long a motion lasts, how an icon is drawn |
+| [dsh-ui-harmonizer](https://github.com/Physicolor/dsh-ui-harmonizer) | A runtime plugin inside the product | How it **actually** turned out — read-only compatibility auditing, reported in the settings page |
+
+- Site: [physicolor.github.io/dsh-design-resources](https://physicolor.github.io/dsh-design-resources/)
+- Runtime: [github.com/Physicolor/dsh-ui-harmonizer](https://github.com/Physicolor/dsh-ui-harmonizer)
 
 The spec obliges nobody to change their code; it makes conflicts **visible, explainable and one click from an issue**.
 

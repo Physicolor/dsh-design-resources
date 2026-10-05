@@ -1,40 +1,41 @@
 import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react';
 import styles from './button.module.css';
 
-/** 按钮的视觉家族。 */
+/** The button's visual family. */
 export type ButtonVariant = 'primary' | 'ghost' | 'outline' | 'toolbar';
 
-/** 按钮尺寸：`md` 为标准 36px 胶囊，`sm` 为紧凑 28px。 */
+/** Button size: `md` is the standard 36px capsule, `sm` the compact 28px one. */
 export type ButtonSize = 'md' | 'sm';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  /** 视觉家族，默认 `ghost`。 */
+  /** Visual family, defaults to `ghost`. */
   variant?: ButtonVariant;
-  /** 尺寸，默认 `md`。 */
+  /** Size, defaults to `md`. */
   size?: ButtonSize;
-  /** 前置图标节点，会被放进 16×16 的图标容器里。 */
+  /** Leading icon node, placed inside a 16×16 icon container. */
   icon?: ReactNode;
   /**
-   * 仅图标按钮：渲染成正方形（宽 = 高）。
-   * 开启后必须自行提供 `aria-label`，否则屏幕阅读器读不出按钮用途。
+   * Icon-only button: renders as a square (width = height).
+   * With it on you have to supply your own `aria-label`, otherwise screen readers cannot tell what the button does.
    */
   iconOnly?: boolean;
 }
 
-/** 拼 class，避免引入 clsx 之类的依赖。 */
+/** Join class names, without pulling in a dependency like clsx. */
 function cx(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
 /**
- * 胶囊按钮。
+ * Capsule button.
  *
- * 几何参照官方 Button 组件（h36 / padding 0 14px / gap 4px / radius 18px；
- * 小号 h28 / 12-18 / padding 0 10px / radius 14px），实现为本仓库原创。
+ * Geometry follows the official Button.module.css the current product loads (h36 / padding 0 14px / gap 4px /
+ * radius var(--dsw-radius-md)=12px; compact h28 / 12-18 / padding 0 10px /
+ * radius var(--dsw-radius-sm)=8px); the implementation is original to this repository.
  *
  * @example
- * <Button variant="primary" onClick={save}>保存</Button>
- * <Button size="sm" icon={<IconPlus />} aria-label="新建" iconOnly />
+ * <Button variant="primary" onClick={save}>Save</Button>
+ * <Button size="sm" icon={<IconPlus />} aria-label="New" iconOnly />
  */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   { variant = 'ghost', size = 'md', icon, iconOnly = false, className, children, type = 'button', ...rest },

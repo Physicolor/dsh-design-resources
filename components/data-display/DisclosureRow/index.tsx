@@ -2,38 +2,41 @@ import { forwardRef, type KeyboardEvent, type ReactNode } from 'react';
 import styles from './disclosure-row.module.css';
 
 export interface DisclosureRowProps {
-  /** 折叠态里显示的行内图标（16×16 盒子、内部渲染 14×14）。悬停整行时它淡出、箭头淡入。 */
+  /** The in-row icon shown in the collapsed state (a 16×16 box, rendered at 14×14 inside). It fades out and the chevron fades in while the whole row is hovered. */
   icon?: ReactNode;
-  /** 行标题，通常是一行 13px 文字。 */
+  /** The row title, usually one line of 13px text. */
   title: ReactNode;
-  /** 是否展开。受控属性，组件自己不保存状态。 */
+  /** Whether it is open. Controlled: the component keeps no state of its own. */
   open: boolean;
-  /** 这一行是否可展开。为 `false` 时不渲染箭头、不加交互语义。 */
+  /** Whether this row can expand. When `false`, no chevron is rendered and no interaction semantics are added. */
   expandable: boolean;
-  /** 展开 / 收起时回调。键盘（Enter、空格）与点击都走它。 */
+  /** Called on expand / collapse. Both the keyboard (Enter, Space) and clicks go through it. */
   onToggle: () => void;
   /**
-   * 整行是否可点击切换。默认 `false` —— 此时只有左侧 16×16 的图标按钮能切换；
-   * 打开后整行（24px 高、整行宽）都成为命中区，更符合触控与最小命中区要求。
+   * Whether the whole row toggles on click. Defaults to `false` — then only the 16×16 icon button
+   * on the left toggles; once on, the whole row (24px tall, full width) becomes the hit area,
+   * which suits touch and minimum hit-area requirements better.
    */
   expandOnRowClick?: boolean;
-  /** 折叠时挂在标题后面的次要信息（例如当前值、状态摘要）。展开后不再渲染。 */
+  /** Secondary information hung after the title when collapsed (for example the current value or a status summary). Not rendered once the row is open. */
   collapsedContent?: ReactNode;
-  /** 展开后渲染在行下方的详情内容。 */
+  /** Detail content rendered below the row once it is open. */
   children?: ReactNode;
-  /** 根元素的额外类名，用于外部布局（宽度、外边距等）。 */
+  /** Extra class name for the root element, for outside layout (width, margin and the like). */
   className?: string;
 }
 
-/** 拼 class，避免引入 clsx 之类的依赖。 */
+/** Join class names without pulling in a dependency such as clsx. */
 function cx(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
 /**
- * 行内箭头。本仓库自绘：官方用的是 IconChevronDownOutline14（14×14 的填充轮廓形），
- * 这里画同尺寸、1.4px 描边的等价箭头，不复制官方 path 数据。
- * 官方在「折叠悬停」与「已展开」两种状态下用的是同一个方向的箭头（不旋转），本组件保持一致。
+ * The in-row chevron. Drawn by this repository: the official component uses
+ * IconChevronDownOutline14 (a 14×14 filled outline shape), and this draws an equivalent arrow
+ * at the same size with a 1.4px stroke, without copying the official path data.
+ * Officially the "collapsed, hovered" and the "expanded" state use an arrow pointing the same
+ * way (no rotation); this component does the same.
  */
 function Chevron({ className }: { className?: string }) {
   return (
@@ -50,21 +53,22 @@ function Chevron({ className }: { className?: string }) {
 }
 
 /**
- * 可展开行：一行 24px 的紧凑标题，点开后在下方渲染详情。
+ * An expandable row: one 24px line of compact title, and the detail renders below it once opened.
  *
- * 几何参照官方 DisclosureRow（行高 24px、leading 16×16 且 margin-right 6px、
- * 行内字形 14×14、标题 13px/24px；悬停时图标与箭头各 100ms 淡入淡出），
- * 实现为本仓库原创。官方用 `--dsh-content-font-delta` 让这一行跟随字体偏好缩放，
- * 本仓库固定为官方默认值（delta = 0）。
+ * The geometry follows the official DisclosureRow (row height 24px, leading 16×16 with
+ * margin-right 6px, in-row glyph 14×14, title 13px/24px; on hover the icon and the chevron each
+ * fade over 100ms), and the implementation is original to this repository. Officially
+ * `--dsh-content-font-delta` makes this row scale with the font preference; this repository
+ * fixes it at the official defaults (delta = 0).
  *
  * @example
  * <DisclosureRow
  *   icon={<IconFolder />}
- *   title="已修改文件"
+ *   title="Files modified"
  *   open={open}
  *   expandable
  *   expandOnRowClick
- *   collapsedContent="3 个"
+ *   collapsedContent="3 items"
  *   onToggle={() => setOpen(!open)}
  * >
  *   <ul>…</ul>
@@ -84,18 +88,19 @@ export const DisclosureRow = forwardRef<HTMLDivElement, DisclosureRowProps>(func
   },
   ref,
 ) {
-  /** 只有「可展开 + 允许点整行」时，整行才是按钮；否则按钮只是左侧那个图标。 */
+  /** The whole row is a button only when it is expandable and the whole row is clickable; otherwise the button is just that icon on the left. */
   const rowExpands = expandable && expandOnRowClick;
 
   const handleRowKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key !== 'Enter' && event.key !== ' ') return;
-    event.preventDefault(); // 空格默认会滚动页面
+    event.preventDefault(); // Space scrolls the page by default
     onToggle();
   };
 
   /**
-   * 折叠态的 leading 内容。箭头预览只在「可展开」时出现——官方同名的
-   * `previewChevron` 参数默认等于 `expandable`，本仓库不暴露该参数，固定取其默认值。
+   * The leading content of the collapsed state. The chevron preview appears only when the row
+   * is expandable — the official parameter of the same name, `previewChevron`, defaults to
+   * `expandable`; this repository does not expose that parameter and fixes it at its default.
    */
   const leadingContent = open ? (
     <Chevron />

@@ -1,32 +1,34 @@
-/* StateDot 状态圆点。
+/* StateDot state dot.
  *
- * 几何全部读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/StateDot.module.css
- * 与同目录 lib/index.js 的 StateDot 函数：
+ * The geometry is all read from the official @deepseek-ai/dsh-client-ui-primitives/lib/StateDot.module.css
+ * and the StateDot function in lib/index.js in the same directory:
  *   .dot            → flex: none / position: relative / display: inline-block
- *   .dot::before    → inset: 0 / radius 50% / background currentColor / opacity 0.1（光环）
- *   .dot::after     → inset: 20% / radius 50% / background currentColor（实心核）
- *   .dot[data-state]→ done / warning / error 用语义状态色，idle 用三级文字色
+ *   .dot::before    → inset: 0 / radius 50% / background currentColor / opacity 0.1 (halo)
+ *   .dot::after     → inset: 20% / radius 50% / background currentColor (solid core)
+ *   .dot[data-state]→ done / warning / error use semantic state colours, idle uses the tertiary text colour
  *   .dot, .matrix   → --dsh-state-ongoing: var(--dsw-static-deepseek-450)
- *   .matrix         → flex: none / color 取上述 ongoing 变量
- *   .cell           → fill currentColor / opacity 0.15 / 1s 无限追逐动画
- *   关键帧 dsh-state-dot-chase → 0/12.5/25/37.5 四段离散台阶 1 / 0.6 / 0.35 / 0.15
- *   JS：8 个 2×2 方块放在 10×10 viewBox 的外圈（坐标 0/4/8），
+ *   .matrix         → flex: none / color takes the ongoing variable above
+ *   .cell           → fill currentColor / opacity 0.15 / 1s infinite chase animation
+ *   keyframes dsh-state-dot-chase → four discrete steps at 0/12.5/25/37.5 of 1 / 0.6 / 0.35 / 0.15
+ *   JS: the eight 2×2 squares sit on the outer ring of the 10×10 viewBox (coordinates 0/4/8),
  *       animation-delay = (index - 8) * 125ms
  *
- * 实现为本仓库原创：几何用组件级 CSS 变量承载、规则重新组织、关键帧改用自有名，
- * 数值与官方逐条一致，但未复制官方 CSS 源码。§ 标记处为本仓库建议值，理由见 README。 */
+ * The implementation is original to this repository: the geometry is carried by component-level
+ * CSS variables, the rules are reorganised and the keyframes take a name of their own; the values
+ * match the official ones one by one, but no official CSS source was copied.
+ * § marks a value proposed here; the reason is in README. */
 
 .dot,
 .matrix {
-  /* 官方注释：ongoing 的蓝在 alias 层没有对应 token
-   * （--dsw-alias-state-business-primary 是 500 档，不是这里的 450 档），
-   * 因此官方把它钉在 static 色阶上；本仓库照实沿用。 */
+  /* The official comment: ongoing's blue has no matching token at the alias layer
+   * (--dsw-alias-state-business-primary is the 500 step, not the 450 step used here),
+   * so the official component pins it to the static scale; this repository follows suit. */
   --dsh-statedot-ongoing: var(--dsw-static-deepseek-450);
 
   flex: none;
 }
 
-/* 实心状态：外圈同色 10% 透明度当光环，内圈是 60% 直径的实心核。 */
+/* Solid states: the outer ring uses the same colour at 10% opacity as a halo, and the inner ring is a solid core 60% of the diameter. */
 .dot {
   position: relative;
   display: inline-block;
@@ -37,7 +39,7 @@
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  corner-shape: round; /* 官方声明；不支持的浏览器忽略即可，圆仍是圆 */
+  corner-shape: round; /* the official declaration; browsers that do not support it simply ignore it, and the circle is still a circle */
   background: currentColor;
   opacity: 0.1;
 }
@@ -45,7 +47,7 @@
 .dot::after {
   content: '';
   position: absolute;
-  inset: 20%; /* 外径的 60%（官方注释写的就是 6/10 缩放） */
+  inset: 20%; /* 60% of the outer diameter (the official comment literally writes the 6/10 scaling) */
   border-radius: 50%;
   corner-shape: round;
   background: currentColor;
@@ -63,8 +65,9 @@
   color: var(--dsw-alias-state-error-primary);
 }
 
-/* idle 是「没有活动」，不是第四种结果，所以退到三级文字色。
- * 它必须与另外三色在同一行并排时仍然成立——别把它换成 border 色或 bg 层色。 */
+/* idle is "no activity", not a fourth outcome, so it falls back to the tertiary text colour.
+ * It has to hold up sitting beside the other three colours on one row — do not swap it for a
+ * border colour or a bg-layer colour. */
 .dot[data-state='idle'] {
   color: var(--dsw-alias-label-tertiary);
 }
@@ -81,9 +84,11 @@
   animation: dsh-design-state-dot-chase 1s infinite;
 }
 
-/* 官方关键帧的意图是「像素追逐」：被追到的格子最亮，随后三格逐级衰减，
- * 台阶之间不插值（所以用离散的百分比分段，而不是平滑曲线）。
- * 本仓库改成自有关键帧名，避免与官方同名定义在同一页面里互相覆盖。 */
+/* The official keyframes mean a "pixel chase": the cell being chased is the brightest, then the
+ * next three fade step by step, with no interpolation between the steps (hence discrete
+ * percentage segments rather than a smooth curve).
+ * This repository gives the keyframes a name of its own, so that same-named definitions do not
+ * overwrite each other on one page. */
 @keyframes dsh-design-state-dot-chase {
   0%,
   12.4% {
@@ -103,10 +108,11 @@
   }
 }
 
-/* § 本仓库建议值：官方 StateDot.module.css 没有 prefers-reduced-motion 分支。
- * spec/40-motion.md 的 MO-MF-09 要求「减少动态」时去掉非必要的持续运动。
- * 追逐动画是循环装饰性运动（它表达的是「进行中」，不是位置或进度），
- * 因此这里停掉动画，8 格统一停在中间档 0.6：形状与颜色仍然区分 ongoing。 */
+/* § Proposed here: the official StateDot.module.css has no prefers-reduced-motion branch.
+ * MO-MF-09 in spec/40-motion.md requires dropping non-essential continuous motion when reduced
+ * motion is asked for. The chase animation is looping decorative motion (it expresses "in
+ * progress", not a position or a progress value), so the animation stops here and all eight
+ * cells park on the middle step 0.6: shape and colour still set ongoing apart. */
 @media (prefers-reduced-motion: reduce) {
   .cell {
     animation: none;

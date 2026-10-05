@@ -1,13 +1,13 @@
-/* 几何全部来自官方 Input.module.css：
+/* All geometry comes from the official Input.module.css:
  *   .wrap           → h32 / padding 0 8px / gap 6px / radius 8px
  *                     border 0.5px solid var(--dsw-alias-border-l4)
  *                     background var(--dsw-alias-bg-layer-1)
  *   .wrap:focus-within → border-color var(--dsw-alias-brand-primary)
  *   .icon           → 16×16 / color var(--dsw-alias-label-tertiary)
- *   .input          → flex 1 / min-width 0 / 无边框无轮廓 / 透明底 / font 14-22
+ *   .input          → flex 1 / min-width 0 / no border, no outline / transparent background / font 14-22
  *                     color var(--dsw-alias-label-primary)
  *   .input::placeholder → color var(--dsw-alias-label-dimmed)
- * 实现为本仓库原创（CSS 变量承载几何 + disabled 为新增建议值），未复制官方 CSS 源码。 */
+ * The implementation is original to this repository (CSS variables carry the geometry, disabled is a newly proposed value), and is not a copy of the official CSS. */
 
 .wrap {
   --dsh-input-height: 32px;
@@ -59,10 +59,10 @@
   color: var(--dsw-alias-label-dimmed);
 }
 
-/* § 本仓库建议值：官方 Input 没有 disabled 视觉。禁用输入框如果外观不变，
- * 用户会先点一下才知道不能用。两个属性的取值都有出处：
- *   opacity: 0.4 —— 沿用官方 Button.module.css 的 .button:disabled；
- *   cursor: not-allowed —— 沿用官方 Button.module.css 的 .button:disabled。 */
+/* § Proposed by this repository: the official Input has no disabled visuals. With the look unchanged,
+ * a user only finds out a disabled input cannot be used after clicking it. Both properties have a source:
+ *   opacity: 0.4 — follows .button:disabled in the official Button.module.css;
+ *   cursor: not-allowed — follows .button:disabled in the official Button.module.css. */
 .wrap:has(.input:disabled) {
   cursor: not-allowed;
   opacity: 0.4;

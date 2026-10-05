@@ -1,24 +1,26 @@
-/* Card 卡片 —— 几何来源：
- *   圆角 20px        ← 官方 settings 卡片：`border-radius: var(--dsw-radius-xl)`
- *                       （`--dsw-radius-xl: 20px`，见 data/tokens.json 的 scale 组）
- *   0.5px 描边       ← 官方 settings 卡片：`border: .5px solid
- *                       var(--dsw-alias-settings-card-stroke)`
- *   底色             ← 官方 settings 卡片：`background:
- *                       var(--dsw-alias-settings-card-fill)`
- *   标题 16/24/500   ← 官方 Modal.module.css `.title`
- *   正文 14/22       ← 官方 Modal.module.css `.description`
- *   说明次级色       ← 官方 Modal.module.css `.close` / Pill.module.css `.pill`
- *   footer hairline  ← 官方 Menu.module.css `.footer`（border-top 0.5px + border-l2）
+/* Card — where the geometry comes from:
+ *   corner radius 20px    ← official settings card: `border-radius: var(--dsw-radius-xl)`
+ *                           (`--dsw-radius-xl: 20px`, see the scale group in data/tokens.json)
+ *   0.5px stroke          ← official settings card: `border: .5px solid
+ *                           var(--dsw-alias-settings-card-stroke)`
+ *   fill                  ← official settings card: `background:
+ *                           var(--dsw-alias-settings-card-fill)`
+ *   title 16/24/500       ← official Modal.module.css `.title`
+ *   body 14/22            ← official Modal.module.css `.description`
+ *   secondary description ← official Modal.module.css `.close` / Pill.module.css `.pill`
+ *   footer hairline       ← official Menu.module.css `.footer` (border-top 0.5px + border-l2)
  *
- * 表面的三档（这套值的出处都在 data/tokens.json，浅色深色共用）：
- *   贴地卡片  0.5px hairline + 20px 圆角 + 一层底色 —— 本组件这一档
- *   浮层      16px 圆角 + --dsw-specific-menu + backdrop-filter +
- *             box-shadow: var(--dsw-elevation-prominent)（菜单、弹层）
- *   大面板    28px 圆角（--dsw-radius-panel）+ --dsw-alias-bg-layer-2 + elevation
- * 圆角档位：4 / 8 / 12 / 16 / 20 / 28（xs → panel）。阴影与描边不叠加：
- * 离开文档流才用 elevation，贴着的容器只用 hairline。
- * 内边距与插槽间距为本仓库建议值（4 的倍数），逐条理由见 README。
- * 实现为本仓库原创：用 CSS 变量承载几何，未复制官方 CSS 源码。 */
+ * The three surface tiers (every one of these values comes from data/tokens.json, shared by
+ * light and dark):
+ *   resting card  0.5px hairline + 20px corner radius + one fill layer — this component's tier
+ *   overlay       16px corner radius + --dsw-specific-menu + backdrop-filter +
+ *                 box-shadow: var(--dsw-elevation-prominent) (menus, popups)
+ *   large panel   28px corner radius (--dsw-radius-panel) + --dsw-alias-bg-layer-2 + elevation
+ * Corner radius steps: 4 / 8 / 12 / 16 / 20 / 28 (xs → panel). Shadow and stroke never stack:
+ * elevation is for elements out of the document flow, a hairline for containers in it.
+ * Padding and slot gaps are proposed here (multiples of 4); the README gives each reason.
+ * Implemented as original work for this repository: geometry lives in CSS variables,
+ * no official CSS source was copied. */
 
 .card {
   --dsh-card-radius: var(--dsw-radius-xl);
@@ -31,8 +33,9 @@
   flex-direction: column;
   gap: var(--dsh-card-gap);
   padding: var(--dsh-card-padding);
-  /* 边框与阴影二选一：卡片是内联内容容器，不脱离文档流，
-   * 所以走 hairline 描边而不是 elevation（理由见 README「几何来源」）。 */
+  /* Stroke or shadow, never both: the card is an inline content container and stays
+   * in the document flow, so it takes a hairline stroke instead of elevation (see
+   * "What values make up a card" in the README). */
   border: 0.5px solid var(--dsw-alias-settings-card-stroke);
   border-radius: var(--dsh-card-radius);
   background: var(--dsw-alias-settings-card-fill);

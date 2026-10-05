@@ -3,9 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>选择器箭头动效 · DSH 设计资源</title>
+<title>Select chevron motion · DSH Design Resources</title>
 <style>
-/* ── 兜底 token：嵌入时跟随页面主题，双击打开时用兜底值 ─────────────── */
+/* ── Fallback tokens: follow the page theme when embedded, take the fallback value when
+   the file is opened on its own ─────────────────────────────────────── */
 :root {
   --dm-bg: var(--site-bg, light-dark(#ffffff, #0c0c0d));
   --dm-raised: var(--site-bg-raised, light-dark(#ffffff, #1c1c1f));
@@ -25,7 +26,7 @@
   --dm-mono: var(--site-font-mono, ui-monospace, Consolas, monospace);
   --dm-font: var(--site-font, system-ui, -apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif);
   --dm-dur-fast: var(--site-dur-fast, 120ms);
-  /* 箭头翻转的时长取站点自身的折叠箭头：.index__chevron 用 --site-dur（200ms） */
+  /* The chevron flip takes its duration from the site's own disclosure chevron: .index__chevron uses --site-dur (200ms) */
   --dm-dur: var(--site-dur, 200ms);
   --dm-ease: var(--site-ease, cubic-bezier(0.4, 0, 0.2, 1));
   --dm-selector-fill: var(--dsw-specific-selector, light-dark(#f9fafb, #2c2c2e));
@@ -58,7 +59,7 @@ body { margin: 0; }
   white-space: nowrap;
 }
 
-/* ── 三个入口：自动播放 / 暂停 / 手动点一下 ─────────────────────────── */
+/* ── Three entries: auto play / pause / click it yourself ────────────── */
 .entries {
   display: inline-flex;
   align-items: center;
@@ -92,7 +93,7 @@ body { margin: 0; }
 #e-pause:focus-visible ~ .entries label[for="e-pause"],
 #e-manual:focus-visible ~ .entries label[for="e-manual"] { outline: 2px solid var(--dm-accent); outline-offset: 1px; }
 
-/* ── 三个对照格 ─────────────────────────────────────────────────────── */
+/* ── The three comparison panels ────────────────────────────────────── */
 .bench {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -144,7 +145,7 @@ body { margin: 0; }
   color: var(--dm-label-2);
 }
 
-/* ── 案例一：选择器右侧的箭头 ───────────────────────────────────────── */
+/* ── Case one: the chevron on the right of a select ─────────────────── */
 .picker { position: relative; height: 104px; }
 .picker__face {
   display: flex;
@@ -194,13 +195,14 @@ body { margin: 0; }
 }
 .menu__item:first-child { background: var(--dm-accent-soft); color: var(--dm-label); }
 
-/* 手动模式：由 checkbox 驱动（自动 / 暂停模式下动画优先，见下） */
+/* Manual mode: driven by the checkbox (under auto / pause the animation wins, see below) */
 #sel:checked ~ .bench .chev { transform: rotate(180deg); }
 #sel:checked ~ .bench .menu { opacity: 1; transform: translateY(0); }
 #sel:focus-visible ~ .bench .picker__face { outline: 2px solid var(--dm-accent); outline-offset: 2px; }
 
-/* 自动播放 / 暂停：同一组关键帧，只切换 animation-play-state，暂停时停在当前位置。
-   周期 3s；每段移动占 6.667%（= 200ms），其余时间是停留，所以看到的仍是 200ms 的翻动。 */
+/* Auto play / pause: the same keyframes, only animation-play-state switches — pausing freezes
+   at the current position. The cycle is 3s; each move takes 6.667% (= 200ms) and the rest of the
+   time is a hold, so what you see is still a 200ms flip. */
 @keyframes dm-chev {
   0%, 26.667% { transform: rotate(0deg); }
   33.333%, 60% { transform: rotate(180deg); }
@@ -216,7 +218,7 @@ body { margin: 0; }
 #e-pause:checked ~ .bench .chev { animation: dm-chev 3s var(--dm-ease) infinite; animation-play-state: paused; }
 #e-pause:checked ~ .bench .menu { animation: dm-menu 3s var(--dm-ease) infinite; animation-play-state: paused; }
 
-/* ── 案例二 / 三：width+height 与 transform 的对照 ──────────────────── */
+/* ── Cases two / three: width+height versus transform ───────────────── */
 .row {
   display: flex;
   align-items: center;
@@ -271,7 +273,7 @@ body { margin: 0; }
 </head>
 <body>
 <div class="dm">
-  <p class="dm__lede">选择器右边的那个箭头也是动效：展开时旋转 180°，<b>200ms</b>、标准曲线。右边两格是把同一段位移分别交给 <code>width/height</code> 与 <code>transform</code> 的结果。</p>
+  <p class="dm__lede"><span data-t="demo.motion-select.ledeLead">选择器右边的那个箭头也是动效：展开时旋转 180°，</span><b>200ms</b><span data-t="demo.motion-select.ledeMid">、标准曲线。右边两格是把同一段位移分别交给 </span><code>width/height</code><span data-t="demo.motion-select.ledeJoin"> 与 </span><code>transform</code><span data-t="demo.motion-select.ledeTail"> 的结果。</span></p>
 
   <input type="radio" name="entry" id="e-auto" class="vh">
   <input type="radio" name="entry" id="e-pause" class="vh">
@@ -279,56 +281,56 @@ body { margin: 0; }
   <input type="checkbox" id="sel" class="vh">
 
   <div class="entries">
-    <label for="e-auto">自动播放</label>
-    <label for="e-pause">暂停</label>
-    <label for="e-manual">手动点一下</label>
+    <label for="e-auto" data-t="demo.motion-select.entryAuto">自动播放</label>
+    <label for="e-pause" data-t="demo.motion-select.entryPause">暂停</label>
+    <label for="e-manual" data-t="demo.motion-select.entryManual">手动点一下</label>
   </div>
 
   <div class="bench">
 
     <div class="case">
-      <p class="case__label">选择器箭头<span class="case__badge case__badge--good">正确</span></p>
+      <p class="case__label"><span data-t="demo.motion-select.caseChevron">选择器箭头</span><span class="case__badge case__badge--good" data-t="demo.motion-select.badgeCorrect">正确</span></p>
       <p class="case__prop">transform: rotate(0 → 180deg)</p>
       <div class="picker">
         <label class="picker__face" for="sel">
-          <span>模型 · V3</span>
+          <span data-capture="model select face in the settings panel">模型 · V3</span>
           <span class="chev">
-            <!-- 官方图标 ic_ds_chevron_down_outline_14（chevron-down-outline-14.svg），
-                 填充路径，fill="currentColor" -->
+            <!-- Official icon ic_ds_chevron_down_outline_14 (chevron-down-outline-14.svg),
+                 a filled path, fill="currentColor" -->
             <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M11.8486 5.5L11.4238 5.92383L8.69727 8.65137C8.44157 8.90706 8.21562 9.13382 8.01172 9.29785C7.79912 9.46883 7.55595 9.61756 7.25 9.66602C7.08435 9.69222 6.91565 9.69222 6.75 9.66602C6.44405 9.61756 6.20088 9.46883 5.98828 9.29785C5.78438 9.13382 5.55843 8.90706 5.30273 8.65137L2.57617 5.92383L2.15137 5.5L3 4.65137L3.42383 5.07617L6.15137 7.80273C6.42595 8.07732 6.59876 8.24849 6.74023 8.3623C6.87291 8.46904 6.92272 8.47813 6.9375 8.48047C6.97895 8.48703 7.02105 8.48703 7.0625 8.48047C7.07728 8.47813 7.12709 8.46904 7.25977 8.3623C7.40124 8.24849 7.57405 8.07732 7.84863 7.80273L10.5762 5.07617L11 4.65137L11.8486 5.5Z" fill="currentColor"/></svg>
           </span>
         </label>
         <div class="menu">
-          <div class="menu__item">选项一</div>
-          <div class="menu__item">选项二</div>
+          <div class="menu__item" data-t="demo.motion-select.optionOne">选项一</div>
+          <div class="menu__item" data-t="demo.motion-select.optionTwo">选项二</div>
         </div>
       </div>
-      <p class="case__meta">200ms · cubic-bezier(0.4, 0, 0.2, 1)<br>取站点 .index__chevron 的现值</p>
+      <p class="case__meta">200ms · cubic-bezier(0.4, 0, 0.2, 1)<br><span data-t="demo.motion-select.caseChevronMeta">取站点 .index__chevron 的现值</span></p>
     </div>
 
     <div class="case case--bad">
-      <p class="case__label">width / height<span class="case__badge case__badge--bad">违规</span></p>
-      <p class="case__prop">width: 11px → 26px（每帧重排）</p>
+      <p class="case__label">width / height<span class="case__badge case__badge--bad" data-t="demo.motion-select.badgeViolation">违规</span></p>
+      <p class="case__prop" data-t="demo.motion-select.caseReflowProp">width: 11px → 26px（每帧重排）</p>
       <div class="row">
         <span class="box box--bad"></span>
-        <span class="chip">旁边的元素</span>
+        <span class="chip" data-t="demo.motion-select.chipNeighbour">旁边的元素</span>
       </div>
-      <p class="case__note">方块变宽，旁边的胶囊被推开——动画每帧都要重新算布局（MO-MF-08 禁止）。</p>
+      <p class="case__note" data-t="demo.motion-select.caseReflowNote">方块变宽，旁边的胶囊被推开——动画每帧都要重新算布局（MO-MF-08 禁止）。</p>
     </div>
 
     <div class="case">
-      <p class="case__label">transform<span class="case__badge case__badge--good">正确</span></p>
+      <p class="case__label">transform<span class="case__badge case__badge--good" data-t="demo.motion-select.badgeCorrect">正确</span></p>
       <p class="case__prop">transform: scale(0.42 → 1)</p>
       <div class="row">
         <span class="box box--good"></span>
-        <span class="chip">旁边的元素</span>
+        <span class="chip" data-t="demo.motion-select.chipNeighbour">旁边的元素</span>
       </div>
-      <p class="case__note">同样的视觉变化，旁边的胶囊纹丝不动——只在合成层上改，不触发布局。</p>
+      <p class="case__note" data-t="demo.motion-select.caseCompositedNote">同样的视觉变化，旁边的胶囊纹丝不动——只在合成层上改，不触发布局。</p>
     </div>
 
   </div>
 
-  <p class="footnote">循环只属于这页演示本身：<code>MO-MF-07</code> 禁止在产品里做与进程无关的无限循环动画。<code>prefers-reduced-motion: reduce</code> 下本演示的全部位移与旋转即时完成。</p>
+  <p class="footnote"><span data-t="demo.motion-select.footnoteLead">循环只属于这页演示本身：</span><code>MO-MF-07</code><span data-t="demo.motion-select.footnoteMid"> 禁止在产品里做与进程无关的无限循环动画。</span><code>prefers-reduced-motion: reduce</code><span data-t="demo.motion-select.footnoteTail"> 下本演示的全部位移与旋转即时完成。</span></p>
 </div>
 </body>
 </html>

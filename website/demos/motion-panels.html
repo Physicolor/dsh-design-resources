@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>左右栏开合 · DSH 设计资源</title>
+<title>Opening the side panels · DeepSeek Design Resources</title>
 <style>
-/* ── 兜底 token：嵌入时跟随页面主题，双击打开时用兜底值 ─────────────── */
+/* ── Fallback tokens: follow the page theme when embedded, use these values when opened on their own ── */
 :root {
   --dm-bg: var(--site-bg, light-dark(#ffffff, #0c0c0d));
   --dm-raised: var(--site-bg-raised, light-dark(#ffffff, #1c1c1f));
@@ -21,7 +21,7 @@
   --dm-mono: var(--site-font-mono, ui-monospace, Consolas, monospace);
   --dm-font: var(--site-font, system-ui, -apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif);
   --dm-dur-fast: var(--site-dur-fast, 120ms);
-  /* 面板开合的真实时长与曲线：site.css 的 .shell 过渡 grid-template-columns 用的就是这两个值 */
+  /* The real duration and curve for the panel transition: site.css's .shell transitions grid-template-columns with exactly these two values */
   --dm-dur-slow: var(--site-dur-slow, 340ms);
   --dm-ease: var(--site-ease, cubic-bezier(0.4, 0, 0.2, 1));
   --dm-nav-fill: var(--dsw-specific-sidebar-fill, light-dark(#f9fafb, #1b1b1c));
@@ -54,7 +54,7 @@ body { margin: 0; }
   white-space: nowrap;
 }
 
-/* ── 控制条 ─────────────────────────────────────────────────────────── */
+/* ── Controls ───────────────────────────────────────────────────────── */
 .controls {
   display: flex;
   flex-wrap: wrap;
@@ -88,12 +88,12 @@ body { margin: 0; }
 #p-left:focus-visible ~ .controls label[for="p-left"],
 #p-right:focus-visible ~ .controls label[for="p-right"],
 #p-auto:focus-visible ~ .controls label[for="p-auto"] { outline: 2px solid var(--dm-accent); outline-offset: 2px; }
-/* 自动循环期间，两个手动开关交给动画，先停用 */
+/* While the auto loop runs the animation drives both panels, so the two manual switches are disabled */
 #p-auto:checked ~ .controls label[for="p-left"],
 #p-auto:checked ~ .controls label[for="p-right"] { opacity: 0.45; pointer-events: none; }
 .controls__hint { font-size: 10.5px; color: var(--dm-label-3); }
 
-/* ── 舞台 ───────────────────────────────────────────────────────────── */
+/* ── Stage ──────────────────────────────────────────────────────────── */
 .stage {
   position: relative;
   border: 1px solid var(--dm-line);
@@ -105,14 +105,14 @@ body { margin: 0; }
   display: grid;
   grid-template-columns: 22.7% minmax(0, 1fr) 29.5%;
   height: 268px;
-  /* 站点自身的实现：过渡的是 grid-template-columns，中栏内容跟着轨道重新排版 */
+  /* How the site itself does it: grid-template-columns is what transitions, and the middle column's content reflows with the tracks */
   transition: grid-template-columns var(--dm-dur-slow) var(--dm-ease);
 }
 #p-left:checked ~ .stage .shell { grid-template-columns: 0% minmax(0, 1fr) 29.5%; }
 #p-right:checked ~ .stage .shell { grid-template-columns: 22.7% minmax(0, 1fr) 0%; }
 #p-left:checked ~ #p-right:checked ~ .stage .shell { grid-template-columns: 0% minmax(0, 1fr) 0%; }
 
-/* 自动循环：周期 4.25s，每段移动占 8%（= 340ms），其余时间是停留 */
+/* Auto loop: a 4.25s cycle where each move takes 8% (= 340ms) and the rest is dwell time */
 @keyframes dm-panels {
   0%, 18% { grid-template-columns: 22.7% minmax(0, 1fr) 29.5%; }
   26%, 44% { grid-template-columns: 0% minmax(0, 1fr) 29.5%; }
@@ -151,7 +151,7 @@ body { margin: 0; }
 .ph i:nth-child(2) { width: 56%; }
 .ph i:nth-child(3) { width: 68%; }
 
-/* 中栏内容块：居中，所以左右两栏任何一边开合都会让它位移 */
+/* The middle column's content block: centred, so opening or closing either side moves it */
 .card {
   width: 100%;
   max-width: 360px;
@@ -177,7 +177,7 @@ body { margin: 0; }
   background: color-mix(in srgb, var(--dm-label) 12%, transparent);
 }
 
-/* ── 标注：全开时的边界与内容中心 ───────────────────────────────────── */
+/* ── Annotations: the boundary and the content centre when both sides are open ── */
 .guide {
   position: absolute;
   top: 0;
@@ -202,7 +202,7 @@ body { margin: 0; }
 .guide--mid { left: 46.6%; border-left-style: dotted; }
 .guide--mid b { left: auto; right: 5px; }
 
-/* ── 说明 ───────────────────────────────────────────────────────────── */
+/* ── Notes ──────────────────────────────────────────────────────────── */
 .notes {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -225,53 +225,53 @@ body { margin: 0; }
 </head>
 <body>
 <div class="dm">
-  <p class="dm__lede">整个页面的位移来自两条轨道的宽度：左栏 <code>268px</code>、右栏 <code>348px</code>，中栏吃掉剩下的宽度。开合时中栏内容不是跳变，而是跟着轨道平滑重排。</p>
+  <p class="dm__lede"><span data-t="demo.motion-panels.ledeLead">整个页面的位移来自两条轨道的宽度：左栏 </span><code>268px</code><span data-t="demo.motion-panels.ledeAnd">、右栏 </span><code>348px</code><span data-t="demo.motion-panels.ledeTail">，中栏吃掉剩下的宽度。开合时中栏内容不是跳变，而是跟着轨道平滑重排。</span></p>
 
   <input type="checkbox" id="p-left" class="vh">
   <input type="checkbox" id="p-right" class="vh">
   <input type="checkbox" id="p-auto" class="vh">
 
   <div class="controls">
-    <label class="switch" for="p-left">开合左栏</label>
-    <label class="switch" for="p-right">开合右栏</label>
-    <label class="switch" for="p-auto">自动循环</label>
-    <span class="controls__hint">自动循环期间，两个手动开关先停用</span>
+    <label class="switch" for="p-left" data-t="demo.motion-panels.toggleLeft">开合左栏</label>
+    <label class="switch" for="p-right" data-t="demo.motion-panels.toggleRight">开合右栏</label>
+    <label class="switch" for="p-auto" data-t="demo.motion-panels.autoLoop">自动循环</label>
+    <span class="controls__hint" data-t="demo.motion-panels.autoHint">自动循环期间，两个手动开关先停用</span>
   </div>
 
   <div class="stage">
     <div class="shell">
 
       <div class="col col--nav">
-        <p class="col__name">左栏 sidebar</p>
-        <p class="col__id">268px 固定</p>
+        <p class="col__name" data-t="demo.motion-panels.navName">左栏 sidebar</p>
+        <p class="col__id" data-t="demo.motion-panels.navWidth">268px 固定</p>
         <div class="ph"><i></i><i></i><i></i><i></i></div>
       </div>
 
       <div class="col col--main">
-        <p class="col__name">中栏 main.conversation</p>
-        <p class="col__id">自适应宽度</p>
+        <p class="col__name" data-t="demo.motion-panels.mainName">中栏 main.conversation</p>
+        <p class="col__id" data-t="demo.motion-panels.mainWidth">自适应宽度</p>
         <div class="card">
-          <p class="card__title">会话内容</p>
+          <p class="card__title" data-t="demo.motion-panels.cardTitle">会话内容</p>
           <div class="card__row"><span class="card__dot"></span><span class="card__bar"></span></div>
           <div class="card__row" style="margin-top:6px"><span class="card__dot"></span><span class="card__bar" style="width:64%"></span></div>
         </div>
       </div>
 
       <div class="col col--aside">
-        <p class="col__name">右栏 rightbar</p>
-        <p class="col__id">348px 固定</p>
+        <p class="col__name" data-t="demo.motion-panels.asideName">右栏 rightbar</p>
+        <p class="col__id" data-t="demo.motion-panels.asideWidth">348px 固定</p>
         <div class="ph"><i></i><i></i><i></i></div>
       </div>
 
     </div>
-    <span class="guide guide--nav"><b>原左栏边界 268px</b></span>
-    <span class="guide guide--mid"><b>全开时的内容中心</b></span>
+    <span class="guide guide--nav"><b data-t="demo.motion-panels.guideNavBound">原左栏边界 268px</b></span>
+    <span class="guide guide--mid"><b data-t="demo.motion-panels.guideCentre">全开时的内容中心</b></span>
   </div>
 
   <div class="notes">
-    <p>过渡：<code>grid-template-columns</code></p>
-    <p>时长与曲线：<code>340ms · cubic-bezier(0.4, 0, 0.2, 1)</code></p>
-    <p class="notes__full">340ms 取自站点 <code>--site-dur-slow</code>（site.css 中 <code>.shell</code> 的现值）；40-motion 的 <code>MO-MF-01</code> 五档为 100 / 150 / 200 / 300 / 350ms，340 与其中的 350ms 档最接近。左栏边界虚线停在原位，收起后可以直接读出中栏多吃了多少宽度。</p>
+    <p><span data-t="demo.motion-panels.notesTransition">过渡：</span><code>grid-template-columns</code></p>
+    <p><span data-t="demo.motion-panels.notesDuration">时长与曲线：</span><code>340ms · cubic-bezier(0.4, 0, 0.2, 1)</code></p>
+    <p class="notes__full"><span data-t="demo.motion-panels.notesSourceBefore">340ms 取自站点 </span><code>--site-dur-slow</code><span data-t="demo.motion-panels.notesSourceMid">（site.css 中 </span><code>.shell</code><span data-t="demo.motion-panels.notesSourceAfter"> 的现值）；40-motion 的 </span><code>MO-MF-01</code><span data-t="demo.motion-panels.notesSourceTail"> 五档为 100 / 150 / 200 / 300 / 350ms，340 与其中的 350ms 档最接近。左栏边界虚线停在原位，收起后可以直接读出中栏多吃了多少宽度。</span></p>
   </div>
 </div>
 </body>

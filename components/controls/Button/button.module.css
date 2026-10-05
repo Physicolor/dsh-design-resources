@@ -1,15 +1,15 @@
-/* 几何全部来自官方 Button.module.css：
- *   .button → h36(md) / padding 0 14px / gap 4px / radius 18px / font 14-22
- *   .sm     → h28 / padding 0 10px / radius 14px / font 12-18
- *   .icon   → 图标容器 16×16
+/* All geometry comes from the official Button.module.css:
+ *   .button → h36(md) / padding 0 14px / gap 4px / radius var(--dsw-radius-md) (12px) / font 14-22
+ *   .sm     → h28 / padding 0 10px / radius var(--dsw-radius-sm) (8px) / font 12-18
+ *   .icon   → 16×16 icon container
  *   .outline→ 0.5px solid var(--dsw-alias-border-l3)
  *   :disabled → opacity 0.4
- * 实现为本仓库原创（变量驱动 + 单类尺寸切换），未复制官方 CSS 源码。 */
+ * The implementation is original to this repository (variable-driven, single-class size switching), and is not a copy of the official CSS. */
 
 .button {
   --dsh-btn-height: 36px;
   --dsh-btn-pad-x: 14px;
-  --dsh-btn-radius: 18px;
+  --dsh-btn-radius: var(--dsw-radius-md);
   --dsh-btn-font-size: 14px;
   --dsh-btn-line-height: 22px;
   --dsh-btn-gap: 4px;
@@ -37,32 +37,32 @@
   opacity: 0.4;
 }
 
-/* 官方 Button.module.css 未定义键盘焦点样式；本仓库建议值，理由见 README
- * 「可访问性要点」，写法对齐官方 Switch.module.css 的 focus-visible。 */
+/* The official Button.module.css defines no keyboard focus style; this value is proposed here,
+ * with the reasoning in the README's accessibility notes, mirroring the official Switch.module.css focus-visible. */
 .button:focus-visible {
   outline: 2px solid var(--dsw-alias-brand-primary);
   outline-offset: 2px;
 }
 
-/* ------------------------------------------------------------------ 尺寸 */
+/* ------------------------------------------------------------------ Size */
 
 .sm {
   --dsh-btn-height: 28px;
   --dsh-btn-pad-x: 10px;
-  --dsh-btn-radius: 14px;
+  --dsh-btn-radius: var(--dsw-radius-sm);
   --dsh-btn-font-size: 12px;
   --dsh-btn-line-height: 18px;
 }
 
-/* 仅图标按钮：高度沿用 sm 的 28px（官方注释里的 Icon_container 28×28），
- * width/padding 为本仓库建议值，官方未提供方形变体类。 */
+/* Icon-only button: the height follows sm's 28px (the Icon_container 28×28 in the official comment),
+ * while width/padding are values proposed here, as the official set offers no square variant class. */
 .iconOnly {
   --dsh-btn-pad-x: 0;
   width: var(--dsh-btn-height);
   padding: 0;
 }
 
-/* ------------------------------------------------------------------ 变体 */
+/* ------------------------------------------------------------------ Variants */
 
 .primary {
   background: var(--dsw-alias-button-primary-fill);
@@ -97,7 +97,7 @@
   background: var(--dsw-alias-button-tool-bar-hover);
 }
 
-/* ------------------------------------------------------------------ 图标 */
+/* ------------------------------------------------------------------ Icon */
 
 .icon {
   display: inline-flex;

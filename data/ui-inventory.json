@@ -1,5 +1,5 @@
 {
-  "$comment": "由 scripts/scan-ui.mjs 从运行中的产品采集。key 是剥掉 CSS Modules 哈希后的身份；不要手改。",
+  "$comment": "Collected from the running product by scripts/scan-ui.mjs. key is the identity with the CSS Modules hash stripped off; do not hand-edit.",
   "generatedAt": "2026-10-01T18:18:32.097Z",
   "viewport": {
     "w": 1570,

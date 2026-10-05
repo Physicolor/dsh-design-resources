@@ -1,52 +1,56 @@
 import { forwardRef, type HTMLAttributes, type KeyboardEvent, type MouseEvent, type ReactNode } from 'react';
 import styles from './inline-notice.module.css';
 
-/** 提示语气。与官方状态色一一对应。 */
+/** Notice tone. Maps one-to-one onto the official state colours. */
 export type InlineNoticeTone = 'info' | 'success' | 'warn' | 'error';
 
 export interface InlineNoticeProps extends HTMLAttributes<HTMLElement> {
-  /** 语气，默认 `info`。 */
+  /** Tone, default `info`. */
   tone?: InlineNoticeTone;
-  /** 前置状态图标节点；容器 14×14，颜色跟随语气文字色。 */
+  /** Leading status icon node; the container is 14×14 and takes the tone's text colour. */
   icon?: ReactNode;
-  /** 文案。 */
+  /** The text. */
   children?: ReactNode;
-  /** 多行形态：高度改为 auto、上下内边距各 6px。默认单行为 32px。 */
+  /** Multiline form: height becomes auto and the vertical padding is 6px on each side. The default single line is 32px. */
   multiline?: boolean;
-  /** 传入即渲染右侧关闭控件。 */
+  /** Passing it renders the dismiss control on the right. */
   onDismiss?: () => void;
-  /** 关闭控件的无障碍名称，默认「关闭提示」。 */
+  /** Accessible name for the dismiss control, defaulting to the label built into the component. */
   dismissLabel?: string;
 }
 
-/** 拼 class，避免引入 clsx 之类的依赖。 */
+/** Join class names without pulling in a dependency like clsx. */
 function cx(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
 /**
- * 内联提示条：留在文档流里的状态说明，可带图标、可关闭、可多行。
+ * Inline notice: a status message that stays in the document flow; it can carry an icon,
+ * be dismissible, and run to multiple lines.
  *
- * 单行几何参照官方 `ConnectionIndicator.module.css` 的 `.indicator` / `.icon`
- * （h32 / padding 0 10px / radius 8px / 12-18 / 500 / 图标 14×14），
- * 配色取官方状态三级底 + 状态主色的组合；`info` 与 `error` 的底色官方无对应
- * 变量，按官方 `Tag.module.css` 的既有手法用 `color-mix` 从主色派生（见 README）。
- * 实现为本仓库原创。
+ * The single-line geometry follows `.indicator` / `.icon` in the official
+ * `ConnectionIndicator.module.css` (h32 / padding 0 10px / radius 8px / 12-18 / 500 /
+ * icon 14×14), and the colours combine the official state tertiary background with the
+ * state primary colour. The official set has no variable for the `info` and `error`
+ * backgrounds, so they are derived from the primary colour with `color-mix`, following the
+ * existing approach in the official `Tag.module.css` (see the README).
+ * The implementation is original to this repository.
  *
- * 两个形态：
- * - 不传 `onDismiss`：根节点是 `<div>`，静态展示。
- * - 传 `onDismiss`：根节点是 `<button>`（整条可点关闭），此时关闭控件降级为
- *   `role="button"` 的 `<span>`——`<button>` 里不能再嵌 `<button>`。
+ * Two forms:
+ * - No `onDismiss`: the root is a `<div>`, shown statically.
+ * - With `onDismiss`: the root is a `<button>` (the whole bar dismisses on click), and the
+ *   dismiss control drops to a `<span>` with `role="button"` — a `<button>` cannot contain
+ *   another `<button>`.
  *
  * @example
- * <InlineNotice tone="warn" icon={<WarningIcon />}>当前网络不稳定</InlineNotice>
+ * <InlineNotice tone="warn" icon={<WarningIcon />}>Your connection is unstable</InlineNotice>
  *
  * @example
- * <InlineNotice tone="success" onDismiss={() => setSaved(false)}>已保存到本地</InlineNotice>
+ * <InlineNotice tone="success" onDismiss={() => setSaved(false)}>Saved locally</InlineNotice>
  *
  * @example
  * <InlineNotice tone="error" multiline>
- *   上传失败：文件超过 20MB。请压缩后重试。
+ *   Upload failed: the file is over 20MB. Compress it and try again.
  * </InlineNotice>
  */
 export const InlineNotice = forwardRef<HTMLElement, InlineNoticeProps>(function InlineNotice(
@@ -65,7 +69,7 @@ export const InlineNotice = forwardRef<HTMLElement, InlineNoticeProps>(function 
   const dismissible = onDismiss !== undefined;
   const classes = cx(styles.notice, styles[tone], multiline && styles.multiline, dismissible && styles.actionable, className);
 
-  /** 关闭控件自身触发关闭时，不要再冒泡给整条（否则会触发两次）。 */
+  /** When the dismiss control triggers the dismissal itself, stop it bubbling to the whole bar (otherwise it fires twice). */
   const handleDismissClick = (event: MouseEvent<HTMLElement>) => {
     event.stopPropagation();
     onDismiss?.();

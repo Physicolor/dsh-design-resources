@@ -1,26 +1,31 @@
-/* 字标的几何（182 × 24 / 156 × 24 视框、角标矩形、两处 clipPath）不在这份 CSS 里：
- * 官方 BrandWordmark 把它们写在 svg 属性与 JSX 里，本组件沿用同一分工。
- * 这份 CSS 只做两件事：
- *   1) 角标字母颜色——官方逐条写成 var(--dsw-alias-label-primary-inverted)，
- *      本仓库把它提升为一个可覆盖的自定义属性（§ 本仓库建议值，理由见 README）；
- *   2) 品牌标记与相邻元素的共处（§ 本仓库建议值，官方没有对应声明）。
- * 实现为本仓库原创，未复制官方 CSS 源码（官方 BrandWordmark 也没有配套 .module.css）。 */
+/* The wordmark's geometry (182 × 24 / 156 × 24 view boxes, the badge rectangle, the two clipPaths) is
+ * not in this CSS: the official BrandWordmark writes them in svg attributes and JSX, and this
+ * component keeps the same split.
+ * This CSS does two things only:
+ *   1) badge letter colour — the official code writes var(--dsw-alias-label-primary-inverted) for each
+ *      letter, while this repository promotes it to an overridable custom property (§ Proposed here;
+ *      the reasoning is in the README);
+ *   2) coexistence of the brand mark with adjacent elements (§ Proposed here; no corresponding
+ *      official declaration).
+ * The implementation is original to this repository; no official CSS source was copied (the official
+ * BrandWordmark ships no .module.css either). */
 
 .mark {
-  /* § 本仓库建议值：角标字母的墨色。默认就是官方用的那个语义 token，
-     把它提出来是为了在非 token 底色（例如品牌色块）上能只覆盖这一处。 */
+  /* § Proposed here: the ink colour of the badge letters. It defaults to the semantic token the
+     official code uses; hoisting it out lets you override just this one spot on a non-token
+     background (a brand colour block, say). */
   --dsh-wordmark-badge-ink: var(--dsw-alias-label-primary-inverted);
 
-  /* § 本仓库建议值：品牌标记在 flex 行里不应被压缩成非等比尺寸。 */
+  /* § Proposed here: a brand mark in a flex row should not be squeezed into a non-proportional size. */
   flex: none;
-  /* § 本仓库建议值：svg 默认按基线对齐，与相邻文字并排时底部会显得下坠。 */
+  /* § Proposed here: an svg aligns to the baseline by default, so its bottom looks sagging beside adjacent text. */
   vertical-align: middle;
 }
 
-/* 角标矩形的底色是 currentColor，字母用上面的自定义属性：
-   浅色主题下该 token 解析为 --dsw-static-neutral-bluish-00（白），
-   深色主题下解析为 --dsw-static-neutral-bluish-800（深灰），与底色始终反相。
-   具体数值与出处见 README「角标配色与深浅主题」。 */
+/* The badge rectangle's background is currentColor, and the letters use the custom property above:
+   in the light theme that token resolves to --dsw-static-neutral-bluish-00 (white), and in the dark
+   theme to --dsw-static-neutral-bluish-800 (dark grey), so it always inverts against the background.
+   Exact values and where they come from are in the README, "Badge colours and the light/dark themes". */
 .badgeInk {
   fill: var(--dsh-wordmark-badge-ink);
 }

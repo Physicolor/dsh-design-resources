@@ -1,252 +1,342 @@
 {
-    "meta": { "lang": "en", "short": "EN", "name": "English" },
-    "brand": { "product": "Design Resources" },
-    "topnav": { "spec": "Spec", "components": "Components", "seats": "Seats", "icons": "Icons", "tokens": "Tokens" },
-    "search": {
-        "placeholder": "Search components, seats, spec, icons…",
-        "empty": "No matches",
-        "hint": "Press Ctrl K to focus"
-    },
-    "actions": {
-        "theme": "Switch light / dark",
-        "lang": "Switch language",
-        "nav": "Show or hide the index",
-        "aside": "Show or hide the rationale",
-        "copy": "Copy",
-        "copied": "Copied",
-        "back": "Back",
-        "expand": "Show source",
-        "collapse": "Hide source"
-    },
-    "index": {
-        "overview": "Overview",
-        "spec": "Design spec",
-        "components": "Reusable source",
-        "resources": "Resources",
-        "home": "Home",
-        "why": "Why this exists",
-        "allComponents": "All components",
-        "inventory": "Element inventory",
-        "seats": "Seat directory",
-        "icons": "Official icon set",
-        "tokens": "Design tokens"
-    },
-    "groups": { "basics": "Foundations", "visual": "Visual language", "quality": "Quality", "start": "Start here", "principles": "Principles", "patterns": "Patterns", "integration": "Seats and integration", "verify": "Verify and sources" },
-    "markers": {
-        "source": "Official source",
-        "sourceNote": "A rule, token or component implementation from the official repository, with its file path.",
-        "measured": "Runtime measurement",
-        "measuredNote": "Geometry and pixels measured on the running Harness here; the method is reproducible.",
-        "external": "Borrowed principle",
-        "externalNote": "A transferable principle from Apple or Huawei guidance — the judgement, not the platform numbers.",
-        "proposed": "Proposed here",
-        "proposedNote": "Where the official material is silent, this repository gives the value and the reason.",
-        "deviation": "Known deviation",
-        "deviationNote": "Where the official UI contradicts itself or its own rules. Recorded, not promoted to best practice."
-    },
-    "categories": {
-        "layout": "Layout and organization",
-        "controls": "Actions and input",
-        "surfaces": "Presentation",
-        "feedback": "Status and feedback",
-        "data-display": "Content",
-        "patterns": "Page skeletons",
-        "brand": "Brand",
-        "uncategorized": "Uncategorised"
-    },
-    "origin": {
-        "official": "Ships with the product",
-        "proposed": "Proposed here",
-        "officialNote": "This component mirrors an interface element the product actually ships — you will meet it in the app.",
-        "proposedNote": "The product has no such component. This is an implementation proposal from this repository: every number traces back to an element the product already ships, but the component itself is not in the product — do not read it as what DSH looks like today."
-    },
-    "home": {
-        "eyebrow": "DeepSeek Design Resources",
-        "title": "Making community plugins<br>look like one product.",
-        "lede": "By the fifth plugin, the interface stops looking like one product: buttons at different heights, every corner radius its own, a dialog that animates here and not there; and when two plugins both want the bottom of the sidebar, whichever loaded first sits on top. The product gives plugins somewhere to run, but no shared answer to how big a control is, how much space goes between two of them, how long a transition runs, or how to draw an icon. This resource supplies it: every number carries its source, and every component is ready to use.",
-        "sectionTitle": "Go by task",
-        "sectionHint": "Find the task you have in hand, then read down from there",
-        "indexTitle": "Data and indexes",
-        "indexHint": "The raw material behind the specs: component sources, the seat directory, the icon set, tokens",
-        "markersTitle": "Why these numbers hold up",
-        "runtimeTitle": "Runtime in use here",
-        "runtime": "This machine runs @deepseek-ai/dsh-* 0.2.0-rc.2 (nightly channel, Windows x64 10.0.26200); data was collected 2026-10-01 to 10-02 at a 1570x905 viewport. The public repository github.com/deepseek-ai/deepseek-harness is also at 0.2.0-rc.2 on master — the version matches, but master is a floating ref, not this build snapshot.",
-        "verifyTitle": "How to verify",
-        "verify": "npm run build runs the structural, data and browser passes; npm run audit clicks every control in every demo in a real browser, checking for escaping overlays, containers blown open, and clicks that scroll the page. Method and calibers: see Verify and sources.",
-        "cards": {
-            "spec": { "title": "Spec", "body": "Page skeletons, controls, tokens, motion, icons, accessibility, and a checklist to run before you submit.", "note": "read this layer first" },
-            "components": { "title": "Reusable source", "body": "React components sorted by category, built on official tokens, each with where its numbers came from and when to use it.", "note": "take it and go" },
-            "seats": { "title": "Seat directory", "body": "Every place in the product a plugin can put UI: what it is for, how many plugins fit, and whether it covers official UI.", "note": "decide where your UI lives" },
-            "icons": { "title": "Official icon set", "body": "Icons lifted from the product unchanged, shapes and names both.", "note": "stop drawing a fifth close button" },
-            "tokens": { "title": "Design tokens", "body": "The official values for colour, radius and spacing, light and dark side by side. Use them as they are.", "note": "never hard-code a colour" },
-            "why": { "title": "Why", "body": "Plugins install fine; they just do not add up to one product — that is why this repository exists.", "note": "a two-minute read" }
-        }
-    },
-    "why": {
-        "title": "Why plugins do not look like one product",
-        "lede": "Each plugin is fine on its own; together they stop looking like one product. The reason is plain: there is an interface to install into, but no shared answer for what a plugin should look like once it is in. The three sections below cover what the product already gives you, what you will run into, and where these numbers come from.",
-        "officialTitle": "What the product already gives you",
-        "missingTitle": "What you will run into",
-        "proofTitle": "This is not a guess",
-        "scopeTitle": "What this repository will not do",
-        "items": {
-            "tokens": "A ready-made set of values for colour, type, radius, spacing and elevation, in light and dark.",
-            "primitives": "Buttons, switches, inputs, menus and notices already ship with the product, along with one explicit instruction: do not copy a control that already exists.",
-            "seats": "A list of everywhere UI can go: what each spot is for, how many plugins fit, and whether it covers official UI.",
-            "icons": "An icon set with a consistent naming scheme and size families, so a redrawn glyph does not drift.",
-            "aesthetics": "It does not judge how things look. It keeps things consistent and usable; it does not claim one style is better.",
-            "force": "It does not force anyone to change their code. It is a shared reference for people who opt in.",
-            "invent": "It does not invent numbers. Every size, gap and duration can name its source, and where no authority exists it says so."
-        },
-        "gaps": {
-            "layoutClaim": "Two plugins both want their button at the bottom of the sidebar; whichever loaded first sits on top.",
-            "layoutBody": "How much room a plugin may take, and how it shares space with the conversation, has no shared answer. Each plugin follows its own reading, and together they crowd: one covers the conversation, another leaves a gap nobody uses.",
-            "orderClaim": "The order of plugins in one spot can change when you reload.",
-            "orderBody": "Spots that take several plugins sort them by order, but nothing says what to put there. The default is 0, so whichever loads first goes first — the user sees an arbitrary stack, not the important one on top.",
-            "motionClaim": "One plugin closes a panel in 100 milliseconds; the next takes 350.",
-            "motionBody": "How long an expand, a collapse or a popover should take has no shared scale. Both numbers are defensible on their own; side by side they look like two different products.",
-            "iconGeometryClaim": "A hand-drawn icon gives itself away next to an official one.",
-            "iconGeometryBody": "How thick the stroke should be, how it lines up with its neighbours, how much air it needs — there is no reference to check against. Fine alone, rough in a row.",
-            "conflictClaim": "When two plugins want the same spot, nothing tells you.",
-            "conflictBody": "The later one simply covers the earlier one. Nothing is missing from the interface and nothing logs an error — you find out from user reports."
-        },
-        "proof": {
-            "overlay": "14 plugins occupy shell.overlay in the official UI, and 11 of them never say where they belong in the order. They all fall to the default 0, so the stacking follows load order — reload the same machine and the order can change.",
-            "settings": "11 plugins occupy settings.section, and 3 of them all declare order 40. Which of those three comes first is equally unexplained."
-        },
-        "asideNote": "Both figures were counted on this machine on 2026-10-01; the raw snapshot is in data/raw/occupancy-2026-10-01.json. A different machine, or a different set of enabled plugins, gives different numbers.",
-        "closing": "This is not one plugin's fault. With no shared answers, everyone makes a reasonable choice and the sum still looks like this. The repository does two things: it fills in the numbers and the practice that were missing, and it makes the collisions visible."
-    },
-    "spec": {
-        "title": "Design spec",
-        "lede": "In reading order. If you are writing your first plugin, start with the page skeleton and seat selection.",
-        "chars": "chars",
-        "notFound": "No such document",
-        "fileLabel": "File",
-        "sizeLabel": "Size",
-        "sectionsLabel": "Sections",
-        "outline": "On this page",
-        "relatedNote": "The checkable clauses in the spec map to the checklist and the auditor's rules.",
-        "chineseOnly": "This document is currently Chinese-only."
-    },
-    "components": {
-        "title": "Reusable source",
-        "lede": "Each component is a standalone React implementation built on official tokens, with where its numbers came from and when to use it. Take it and go.",
-        "viewAll": "View all",
-        "count": "",
-        "whenToUse": "When to use",
-        "whenNotToUse": "When not to use",
-        "geometrySource": "Where the numbers came from",
-        "tags": "Tags",
-        "preview": "Live preview",
-        "sourceLabel": "Source",
-        "docHuman": "Guide",
-        "docSpec": "Spec",
-        "docSpecNote": "This one is for engineers and agents: where the numbers came from, the API, the tokens, and the constraints a machine can check.",
-        "chineseOnly": "This component's documentation is currently Chinese-only.",
-        "usage": "The component directory is itself an npm package you can install, or you can copy just the folder you need into your plugin."
-    },
-    "seats": {
-        "title": "Seat directory",
-        "lede": "The product has {n} places a plugin can put UI. Your interface lives in exactly one of them — choosing the wrong one costs more than writing the wrong style.",
-        "riskyNote": "{n} of them cover official UI once you occupy them. Use those only when you really mean to replace that part of the interface.",
-        "tableTitle": "{n} seats",
-        "treeOrder": "in tree order",
-        "filter": "filter",
-        "columns": { "name": "Seat", "kind": "Kind", "scope": "Scope", "risk": "Covers official UI", "purpose": "Purpose" },
-        "safe": "no",
-        "shadows": "covers it",
-        "kindsTitle": "Seat kinds",
-        "scopesTitle": "Scopes",
-        "orderTitle": "How to choose",
-        "kinds": {
-            "single": "single — one occupant only; a later registration covers an earlier one",
-            "list": "list — as many as you like, sorted by order from low to high",
-            "keyed": "keyed — handed out by key, one slot each",
-            "chain": "chain — a selector decides; the whole chain can be replaced"
-        },
-        "scopes": {
-            "root": "root — global, present even with no session",
-            "maybe": "session-maybe — tied to a session, but can be empty",
-            "session": "session — appears once a session is selected"
-        },
-        "orderNote": "Start with the list spot whose meaning fits best; if none does, fall back to a single spot; leave the ones that cover official UI for last."
-    },
-    "icons": {
-        "title": "Official icon set",
-        "lede": "{n} icons, lifted from the product exactly as they are, shapes untouched. Naming: ic_ds_&lt;name&gt;_&lt;style&gt;_&lt;size&gt;. Click one to copy its SVG.",
-        "familyNote": "Size families",
-        "familyTail": "If you draw your own, match the stroke weight and the breathing room of the icons beside it.",
-        "tableTitle": "{n} icons",
-        "order": "in extraction order",
-        "whyTitle": "Why use these",
-        "why": "Mismatched icons are where a plugin interface gives itself away. This set already has its weight and padding worked out; reusing it is less work than drawing something close enough, and it stays even.",
-        "namingTitle": "Naming",
-        "authored": "Authored name",
-        "component": "Component",
-        "file": "File"
-    },
-    "tokens": {
-        "title": "Design tokens",
-        "lede": "{palette} colour values back {aliases} named colours. Use the names, not the values — light and dark are already worked out.",
-        "usageNote": "Reach for a token name, never a hard-coded value. The first thing to give way in dark mode is a colour written into the stylesheet.",
-        "tableTitle": "{n} aliases",
-        "order": "in definition order",
-        "columns": { "name": "Token", "swatch": "Swatch", "light": "Light", "dark": "Dark" },
-        "depthTitle": "How elevation is expressed",
-        "depth": "Express depth with background layers (bg-base → bg-layer-1 → bg-layer-2 → bg-overlay), not with shadows. A shadow is the exception, not the default.",
-        "sourceTitle": "Source",
-        "source": "Values come straight from the theme definition inside the product's client bundle, one set per theme, unmodified.",
-        "geometryTitle": "Corners, shadows and elevation",
-        "geometryLead": "The other half of the system. There are six corner steps and three elevation recipes — put two surfaces side by side and one step off shows. A surface that sits in the flow gets a 0.5px hairline; only what floats gets elevation, and the two never stack on one element.",
-        "geometryColumns": { "name": "Token", "value": "Value", "use": "Where it goes" },
-        "geometryUse": {
-            "--dsw-radius-xs": "Smallest step: badges, small swatches",
-            "--dsw-radius-sm": "Small controls: tags, inline chips",
-            "--dsw-radius-md": "Middle: inputs, toolbar rows",
-            "--dsw-radius-lg": "Floating: menus, popovers, raised panels",
-            "--dsw-radius-xl": "Cards: the card on a settings page (this repository's Card uses this step)",
-            "--dsw-radius-panel": "Large: the composer card, a full-screen panel",
-            "--dsw-elevation-stroke": "The 0.5px stroke every elevation recipe starts from",
-            "--dsw-elevation-panel": "Floating controls: small buttons above content",
-            "--dsw-elevation-prominent": "Menus and popovers",
-            "--dsw-elevation-soft": "Large floating surfaces: wider and softer",
-            "--dsw-shadow-lv1": "General-purpose shadow, step one",
-            "--dsw-shadow-lv2": "General-purpose shadow, step two",
-            "--dsw-shadow-lv3": "General-purpose shadow, step three (highest)"
-        },
-        "geometryNote": "These values are read out of the product's theme layer the same way the colours are (the scale group in data/tokens.json); one set serves both themes."
-    },
-    "inventory": {
-        "title": "Element inventory",
-        "lede": "Scanning the running interface turns up {identities} identities: {official} belong to the product itself (the table below) and {third} come from third-party plugins (parked at the end). Of the product's own, {described} have their measured size written into the spec, while {notDescribed} are only placed — the file they belong to is known, but it does not state their size yet.",
-        "empty": "Not scanned yet. Run node scripts/scan-ui.mjs on this machine: it opens the product, walks every state, and registers each element it can see.",
-        "note": "\"Covered\" only means some file in this repository happened to contain the word; it is not a review. \"Gap\" is the to-do list — and each of those still needs a human call: it may be something the product really has and the spec missed, or it may just be a one-off container. Third-party elements are all parked: they are not DSH's interface language, and the product's own side comes first.",
-        "tableTitle": "{n} identities that belong to the product",
-        "thirdTitle": "{n} third-party plugin identities (parked)",
-        "thirdHint": "Grouped by plugin, counted not expanded",
-        "thirdNote": "These screens are drawn by installed plugins: sliders, heatmaps, stat cards, their own switches. The product itself has none of it. They are registered here (who drew it, how big, where it shows up) and left alone until the product's own elements are done — only then is it worth deciding whether plugin authors should get a recommendation.",
-        "order": "By how often it appears",
-        "columns": { "identity": "Identity", "where": "Seen in", "size": "Size", "state": "State", "source": "Where the spec mentions it" },
-        "stateMissing": "Gap",
-        "stateCovered": "Referenced",
-        "stateDescribed": "Documented",
-        "stateNotDescribed": "Placed only",
-        "statePlugin": "Plugin-only",
-        "stateParked": "Parked",
-        "pluginUnknown": "Unidentified plugin",
-        "howTitle": "Where this page comes from",
-        "how": "scripts/scan-ui.mjs drives the product with the same credentials the screenshot script uses, walks it state by state, and registers every element that occupies space under an identity with the CSS Modules hash stripped off: tag, role, box, computed styles, seat, and the screens it showed up on. It is machine output, so its unit is \"things you can see\", not \"components\".",
-        "stateTitle": "Three states",
-        "stateNote": "Documented: the file the anchor points at really contains this element's measured size (a `50 × 50` style pair, units optional). Placed only: it knows which file it belongs to, but that file does not state its size yet — this is the main to-do. Referenced: some text merely happened to contain the word; needs review. Plugin-only: an installed plugin draws it (anything under dsx-, for instance), so the product itself has no such element. Gap: neither side mentions it."
-    },
-    "footer": {
-        "name": "DeepSeek Design Resources",
-        "source": "Spec and data taken from a running DeepSeek Harness, with the source of every item recorded",
-        "generated": "Data generated"
-    },
-    "notFound": {
-        "title": "No such page",
-        "lede": "That link points at something that has not been generated yet. Head home, or use the search above."
+  "meta": {
+    "lang": "en",
+    "short": "EN",
+    "name": "English"
+  },
+  "coverage": {
+    "line": "{translated} of {total} {kind} exist in English. The rest are not listed in this language yet.",
+    "kind": {
+      "specs": "spec documents",
+      "guides": "guides",
+      "components": "component documents"
     }
+  },
+  "brand": {
+    "product": "Design Resources"
+  },
+  "topnav": {
+    "aria": "Quick links",
+    "guides": "Guides",
+    "spec": "Spec",
+    "components": "Interface",
+    "seats": "Seats",
+    "icons": "Icons",
+    "tokens": "Tokens"
+  },
+  "search": {
+    "placeholder": "Search guides, interface elements, seats, spec, icons…",
+    "empty": "No matches",
+    "hint": "Press Ctrl K to focus",
+    "results": "Search results"
+  },
+  "actions": {
+    "theme": "Switch light / dark",
+    "lang": "Switch language",
+    "nav": "Show or hide the index",
+    "aside": "Show or hide the rationale",
+    "resizeNav": "Resize the index",
+    "resizeAside": "Resize the rationale",
+    "copy": "Copy",
+    "copied": "Copied",
+    "back": "Back",
+    "expand": "Show source",
+    "collapse": "Hide source"
+  },
+  "index": {
+    "aria": "Resource index",
+    "overview": "Overview",
+    "spec": "Design spec",
+    "components": "Interface elements",
+    "resources": "Resources",
+    "home": "Home",
+    "why": "Guide scope and evidence",
+    "allComponents": "All interface elements",
+    "inventory": "Element inventory",
+    "seats": "Seat directory",
+    "icons": "Official icon set",
+    "tokens": "Design tokens"
+  },
+  "groups": {
+    "basics": "Structure and implementation reference",
+    "visual": "Controls and visual references",
+    "quality": "Review and accessibility",
+    "start": "Guide overview",
+    "principles": "Choose an extension area",
+    "patterns": "Build by interface task",
+    "integration": "Public extension seats",
+    "verify": "Evidence and checks"
+  },
+  "guide": {
+    "taskLabel": "In this guide"
+  },
+  "markers": {
+    "source": "Official source",
+    "sourceNote": "A rule, token or component implementation from the official repository, with its file path.",
+    "measured": "Runtime measurement",
+    "measuredNote": "Geometry and pixels measured on the running Harness here; the method is reproducible.",
+    "external": "Borrowed principle",
+    "externalNote": "A transferable principle from Apple or Huawei guidance — the judgement, not the platform numbers.",
+    "proposed": "Proposed here",
+    "proposedNote": "Where the official material is silent, this repository gives the value and the reason.",
+    "deviation": "Known deviation",
+    "deviationNote": "Where the official UI contradicts itself or its own rules. Recorded, not promoted to best practice."
+  },
+  "categories": {
+    "layout": "Layout and interface regions",
+    "controls": "Actions and input",
+    "surfaces": "Presentation",
+    "feedback": "Status and feedback",
+    "data-display": "Content",
+    "patterns": "Page skeletons",
+    "brand": "Brand",
+    "uncategorized": "Uncategorised"
+  },
+  "origin": {
+    "official": "Official implementation",
+    "proposed": "Proposed here",
+    "officialNote": "This item has support in official source code or product implementation. Whether it appears in the host UI, and which state is demonstrated, follows its evidence record. The HTML is a reusable reference, not a claim that DSH exposes a plugin API with this component name.",
+    "proposedNote": "This component combination was not observed in the current DSH interface. The example is a community proposal, not a description of the product today."
+  },
+  "home": {
+    "eyebrow": "Guide overview",
+    "title": "DeepSeek Harness plugin interface guide",
+    "lede": "Choose whether a feature belongs in global settings, navigation, the current conversation or an auxiliary view; then use a documented DSH seat and actual controls. Screenshots stay local for review.",
+    "sectionTitle": "Start with a task",
+    "sectionHint": "Choose the host area before patterns or controls",
+    "indexTitle": "Implementation references",
+    "indexHint": "Look up public seats, product-visible controls, icons and tokens",
+    "markersTitle": "Why these numbers hold up",
+    "runtimeTitle": "Runtime in use here",
+    "runtime": "Clean screenshots use an isolated DSH web profile with official DeepSeek bundles only. Third-party plugins and user sessions are not copied; desktop-only account UI is described separately.",
+    "verifyTitle": "How to verify",
+    "verify": "The site renders structural HTML examples and keeps screenshots in docs/reference for local review. npm run site regenerates the data; npm run verify checks routes and browser rendering.",
+    "cards": {
+      "spec": {
+        "title": "Foundations",
+        "body": "Rules for page structure, controls, tokens, motion, icons and accessibility.",
+        "note": "Rules and checks"
+      },
+      "components": {
+        "title": "Interface elements",
+        "body": "Find actual DSH labels and controls by task; mark plugin-owned examples separately from host UI.",
+        "note": "Screenshots stay local"
+      },
+      "seats": {
+        "title": "Extension points",
+        "body": "Find where plugins can contribute, what each seat is for and how extensions coexist.",
+        "note": "Choose a contribution point"
+      },
+      "icons": {
+        "title": "Official icons",
+        "body": "Browse product icon names, dimensions and SVG source files.",
+        "note": "Reuse existing icons"
+      },
+      "tokens": {
+        "title": "Design tokens",
+        "body": "Review color, type, radius, spacing and theme mappings.",
+        "note": "Use semantic tokens"
+      },
+      "why": {
+        "title": "Background",
+        "body": "Understand the design problem, evidence and scope of this guide.",
+        "note": "Context and scope"
+      }
+    }
+  },
+  "why": {
+    "title": "Background and goals",
+    "lede": "This is not a brand style manual. It explains the regions and public extension seats in DeepSeek Harness, starting with the relationship between global preferences, settings pages, the sidebar, the conversation and the host rightbar.",
+    "officialTitle": "Official interface references",
+    "missingTitle": "Placement decisions plugin authors need to make",
+    "proofTitle": "How examples are checked",
+    "scopeTitle": "Scope and limits",
+    "items": {
+      "tokens": "A ready-made set of values for colour, type, radius, spacing and elevation, in light and dark.",
+      "primitives": "Buttons, switches, inputs, menus and notices already ship with the product, along with one explicit instruction: do not copy a control that already exists.",
+      "seats": "A list of everywhere UI can go: what each spot is for, how many plugins fit, and whether it covers official UI.",
+      "icons": "An icon set with a consistent naming scheme and size families, so a redrawn glyph does not drift.",
+      "aesthetics": "Choose placement by content scope and relationship to the host. Discuss colour and dimensions only when product source or clearly labelled community guidance supports them.",
+      "force": "This is a community reference, not a runtime enforcement mechanism; document compatibility exceptions.",
+      "invent": "It does not invent values. Cite the source of each size, gap and duration; label recommendations where no official value exists."
+    },
+    "gaps": {
+      "layoutClaim": "Multiple extensions can compete for the same sidebar space.",
+      "layoutBody": "Official extension points identify purpose and type, but plugin page width, information density and relationship to the conversation still depend on the use case. Without a shared reference, content may overlap or leave unused space.",
+      "orderClaim": "The display order of extensions in one seat may depend on load order.",
+      "orderBody": "List seats sort by order; omitted or duplicate values make the result hard to explain. A community guide can help authors justify ordering, but a local plugin snapshot is not a universal deployment fact.",
+      "motionClaim": "Similar interface actions can use inconsistent motion timing.",
+      "motionBody": "Implementations may differ in duration, easing and reduced-motion behavior. Separate existing official control behavior from recommendations for new plugin UI, and avoid unsupported overrides.",
+      "iconGeometryClaim": "Custom icons can differ from official icons in visual weight or alignment.",
+      "iconGeometryBody": "Canvas size, path inset, stroke and baseline all affect how icons read together. Reuse existing icons and compare real geometry instead of redrawing by eye.",
+      "conflictClaim": "Extensions that use the same seat may overlap or appear in an unclear order.",
+      "conflictBody": "An extension API does not guarantee that contributions can all be shown together. Check the seat type, occupancy snapshot and alternatives, and state when the evidence was collected."
+    },
+    "proof": {
+      "overlay": "shell.overlay is a host layer for frame-wide floating UI. The dsh-widgets rail registers in conversation.input.overlay; the two seats have different scopes and stacking.",
+      "settings": "settings.general.item adds one preference row; settings.section adds a page inside the host Settings window. The public seat list has no dedicated plugin-window seat."
+    },
+    "asideNote": "Clean screenshots are stored in docs/reference/clean-capture for local review. The website does not embed them. A blank profile does not render session view tabs because those appear after a conversation starts.",
+    "closing": "Choose placement before styling. When a layout belongs to a plugin, identify its source and seat; do not describe one plugin installation as the default DSH interface."
+  },
+  "spec": {
+    "title": "Design spec",
+    "lede": "In reading order. If you are writing your first plugin, start with the page skeleton and seat selection.",
+    "chars": "chars",
+    "notFound": "No such document",
+    "fileLabel": "File",
+    "sizeLabel": "Size",
+    "sectionsLabel": "Sections",
+    "outline": "On this page",
+    "relatedNote": "The checkable clauses in the spec map to the checklist and the auditor's rules."
+  },
+  "components": {
+    "title": "Interface elements",
+    "lede": "Browse DSH-visible controls and layouts by interface task. HTML pages are structural examples; product screenshots remain in local review files and are never embedded. States without reliable runtime or source evidence are withheld.",
+    "viewAll": "View all",
+    "count": "",
+    "whenToUse": "When to use",
+    "whenNotToUse": "When not to use",
+    "geometrySource": "Where the numbers came from",
+    "tags": "Tags",
+    "preview": "Structure example",
+    "evidenceLabel": "Local QA note",
+    "pluginEvidence": "Plugin-owned example",
+    "evidenceAlt": "Local review record",
+    "demoLabel": "HTML structure example, not a product screenshot",
+    "withheldLabel": "Interface example withheld",
+    "withheldBadge": "Example withheld",
+    "withheldText": "No clean capture verifies this state; the HTML example stays hidden.",
+    "sourceLabel": "Source",
+    "docHuman": "Guide",
+    "docSpec": "Spec",
+    "docSpecNote": "This one is for engineers and agents: where the numbers came from, the API, the tokens, and the constraints a machine can check.",
+    "usage": "The site renders HTML structure examples only. Screenshots stay in docs/reference/clean-capture for one-by-one review; plugin content is labelled separately from host UI.",
+    "screenshotCheckedNote": "Product screenshots are used for local review only and are not embedded in the site.",
+    "sourceVerifiedNote": "This structure is cross-checked against official source and the user-provided reference; no conversation text is invented."
+  },
+  "seats": {
+    "title": "Seat directory",
+    "lede": "Use the content scope and task relationship to find a public place for a plugin interface.",
+    "riskyNote": "{n} of them cover official UI once you occupy them. Use those only when you really mean to replace that part of the interface.",
+    "tableTitle": "{n} seats",
+    "treeOrder": "in tree order",
+    "filter": "filter",
+    "columns": {
+      "name": "Seat",
+      "kind": "Kind",
+      "scope": "Scope",
+      "risk": "Covers official UI",
+      "purpose": "Purpose"
+    },
+    "safe": "no",
+    "shadows": "covers it",
+    "kindsTitle": "Seat kinds",
+    "scopesTitle": "Scopes",
+    "orderTitle": "How to choose",
+    "kinds": {
+      "single": "single — one occupant only; a later registration covers an earlier one",
+      "list": "list — as many as you like, sorted by order from low to high",
+      "keyed": "keyed — handed out by key, one slot each",
+      "chain": "chain — a selector decides; the whole chain can be replaced"
+    },
+    "scopes": {
+      "root": "root — global, present even with no session",
+      "maybe": "session-maybe — tied to a session, but can be empty",
+      "session": "session — appears once a session is selected"
+    },
+    "orderNote": "Start with the list spot whose meaning fits best; if none does, fall back to a single spot; leave the ones that cover official UI for last."
+  },
+  "icons": {
+    "title": "Official icon set",
+    "lede": "{n} icons, lifted from the product exactly as they are, shapes untouched. Naming: ic_ds_&lt;name&gt;_&lt;style&gt;_&lt;size&gt;. Click one to copy its SVG.",
+    "familyNote": "Size families",
+    "familyTail": "If you draw your own, match the stroke weight and the breathing room of the icons beside it.",
+    "tableTitle": "{n} icons",
+    "order": "in extraction order",
+    "whyTitle": "Why use these",
+    "why": "Reusing official icons preserves the product vocabulary and avoids redrawing a shape that already has a source.",
+    "namingTitle": "Naming",
+    "authored": "Authored name",
+    "component": "Component",
+    "file": "File"
+  },
+  "tokens": {
+    "title": "Design tokens",
+    "lede": "{palette} colour values back {aliases} named colours. Use the names, not the values — light and dark are already worked out.",
+    "usageNote": "Reach for a token name, never a hard-coded value. The first thing to give way in dark mode is a colour written into the stylesheet.",
+    "tableTitle": "{n} aliases",
+    "order": "in definition order",
+    "columns": {
+      "name": "Token",
+      "swatch": "Swatch",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "depthTitle": "How elevation is expressed",
+    "depth": "Express depth with background layers (bg-base → bg-layer-1 → bg-layer-2 → bg-overlay), not with shadows. A shadow is the exception, not the default.",
+    "sourceTitle": "Source",
+    "source": "Values come straight from the theme definition inside the product's client bundle, one set per theme, unmodified.",
+    "geometryTitle": "Corners, shadows and elevation",
+    "geometryLead": "The other half of the system. There are six corner steps and three elevation recipes — put two surfaces side by side and one step off shows. A surface that sits in the flow gets a 0.5px hairline; only what floats gets elevation, and the two never stack on one element.",
+    "geometryColumns": {
+      "name": "Token",
+      "value": "Value",
+      "use": "Where it goes"
+    },
+    "geometryUse": {
+      "--dsw-radius-xs": "Smallest step: badges, small swatches",
+      "--dsw-radius-sm": "Small controls: tags, inline chips",
+      "--dsw-radius-md": "Middle: inputs, toolbar rows",
+      "--dsw-radius-lg": "Floating: menus, popovers, raised panels",
+      "--dsw-radius-xl": "Cards: the card on a settings page (this repository's Card uses this step)",
+      "--dsw-radius-panel": "Large: the composer card, a full-screen panel",
+      "--dsw-elevation-stroke": "The 0.5px stroke every elevation recipe starts from",
+      "--dsw-elevation-panel": "Floating controls: small buttons above content",
+      "--dsw-elevation-prominent": "Menus and popovers",
+      "--dsw-elevation-soft": "Large floating surfaces: wider and softer",
+      "--dsw-shadow-lv1": "General-purpose shadow, step one",
+      "--dsw-shadow-lv2": "General-purpose shadow, step two",
+      "--dsw-shadow-lv3": "General-purpose shadow, step three (highest)"
+    },
+    "geometryNote": "These values are read out of the product's theme layer the same way the colours are (the scale group in data/tokens.json); one set serves both themes."
+  },
+  "inventory": {
+    "title": "Element inventory",
+    "lede": "Scanning the running interface turns up {identities} identities: {official} belong to the product itself (the table below) and {third} come from third-party plugins (parked at the end). Of the product's own, {described} have their measured size written into the spec, while {notDescribed} are only placed — the file they belong to is known, but it does not state their size yet.",
+    "empty": "Not scanned yet. Run node scripts/scan-ui.mjs on this machine: it opens the product, walks every state, and registers each element it can see.",
+    "note": "\"Covered\" only means some file in this repository happened to contain the word; it is not a review. \"Gap\" is the to-do list — and each of those still needs a human call: it may be something the product really has and the spec missed, or it may just be a one-off container. Third-party elements are all parked: they are not DSH's interface language, and the product's own side comes first.",
+    "tableTitle": "{n} identities that belong to the product",
+    "thirdTitle": "{n} third-party plugin identities (parked)",
+    "thirdHint": "Grouped by plugin, counted not expanded",
+    "thirdNote": "These screens are drawn by installed plugins: sliders, heatmaps, stat cards, their own switches. The product itself has none of it. They are registered here (who drew it, how big, where it shows up) and left alone until the product's own elements are done — only then is it worth deciding whether plugin authors should get a recommendation.",
+    "order": "By how often it appears",
+    "columns": {
+      "identity": "Identity",
+      "where": "Seen in",
+      "size": "Size",
+      "state": "State",
+      "source": "Where the spec mentions it"
+    },
+    "stateMissing": "Gap",
+    "stateCovered": "Referenced",
+    "stateDescribed": "Documented",
+    "stateNotDescribed": "Placed only",
+    "statePlugin": "Plugin-only",
+    "stateParked": "Parked",
+    "pluginUnknown": "Unidentified plugin",
+    "howTitle": "Where this page comes from",
+    "how": "scripts/scan-ui.mjs drives the product with the same credentials the screenshot script uses, walks it state by state, and registers every element that occupies space under an identity with the CSS Modules hash stripped off: tag, role, box, computed styles, seat, and the screens it showed up on. It is machine output, so its unit is \"things you can see\", not \"components\".",
+    "stateTitle": "Three states",
+    "stateNote": "Documented: the file the anchor points at really contains this element's measured size (a `50 × 50` style pair, units optional). Placed only: it knows which file it belongs to, but that file does not state its size yet — this is the main to-do. Referenced: some text merely happened to contain the word; needs review. Plugin-only: an installed plugin draws it (anything under dsx-, for instance), so the product itself has no such element. Gap: neither side mentions it."
+  },
+  "footer": {
+    "name": "DeepSeek Design Resources",
+    "source": "Spec and data taken from a running DeepSeek Harness, with the source of every item recorded",
+    "generated": "Data generated"
+  },
+  "notFound": {
+    "title": "No such page",
+    "lede": "That link points at something that has not been generated yet. Head home, or use the search above."
+  }
 }

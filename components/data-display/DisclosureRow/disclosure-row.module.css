@@ -1,32 +1,34 @@
-/* DisclosureRow 可展开行。
+/* DisclosureRow expandable row.
  *
- * 几何读自官方 @deepseek-ai/dsh-client-ui-primitives/lib/DisclosureRow.module.css
- * 与同目录 lib/index.js 的 DisclosureRow 函数：
+ * Geometry read from the official @deepseek-ai/dsh-client-ui-primitives/lib/DisclosureRow.module.css
+ * and the DisclosureRow function in lib/index.js in the same directory:
  *   .root                   → flex column / width 100% / min-width 0
  *   .row                    → position relative / overflow hidden / flex /
  *                             align-items center / height 24px / min-width 0
  *   .row[data-expandable]   → cursor: pointer
- *   .leading                → 16×16 / inline-flex 居中 / margin-right 6px /
+ *   .leading                → 16×16 / inline-flex centred / margin-right 6px /
  *                             padding 0 / border none / background none /
  *                             color var(--dsw-alias-label-tertiary)
- *   .leading svg:not([data-state]) → 14×14（CSS 边缘覆盖 svg 自身属性）
- *   .iconIdle / .chevronHover → opacity 1 / 0，各 100ms ease 过渡
- *   .row:hover .iconIdle → opacity 0；.row:hover .chevronHover → opacity 1
+ *   .leading svg:not([data-state]) → 14×14 (the CSS edge overrides the svg's own attributes)
+ *   .iconIdle / .chevronHover → opacity 1 / 0, each with a 100ms ease transition
+ *   .row:hover .iconIdle → opacity 0; .row:hover .chevronHover → opacity 1
  *   .title                  → flex none / 13px / line-height 24px /
  *                             color var(--dsw-alias-label-secondary)
- *   JS：可展开时 role="button" + tabIndex=0 + aria-expanded + Enter/Space 触发；
- *       仅图标按钮形态下 aria-expanded 落在 leading 按钮上
+ *   JS: when expandable, role="button" + tabIndex=0 + aria-expanded + Enter/Space triggers;
+ *       in the icon-button-only form, aria-expanded lands on the leading button
  *
- * 本仓库决策：官方用 --dsh-content-font-delta / --dsh-content-font-size-secondary
- * 让这一行跟随 DSH 的字体偏好缩放，本仓库有意删掉这条轴、固定为官方默认值
- * （delta = 0 时的 24px / 16px / 14px / 13px-24px），理由见 README「几何来源」。
+ * Decision in this repository: the official component uses --dsh-content-font-delta /
+ * --dsh-content-font-size-secondary to make this row scale with DSH's font preference;
+ * this repository deliberately drops that axis and fixes the official defaults
+ * (at delta = 0: 24px / 16px / 14px / 13px-24px) — the reason is in README "geometry-source".
  *
- * 实现为本仓库原创：几何由组件级 CSS 变量承载、规则重新组织，未复制官方 CSS 源码。
- * § 标记处为本仓库建议值（官方没有的声明）。 */
+ * The implementation is original to this repository: the geometry is carried by component-level
+ * CSS variables and the rules are reorganised; no official CSS source was copied.
+ * § marks a value proposed here (declarations the official component does not have). */
 
 .root {
-  /* 官方默认值：--dsh-content-font-delta 在宿主未发布时回落到 0px，
-   * 此时的高度 / leading / 字号就是下面这四个数。 */
+  /* The official defaults: --dsh-content-font-delta falls back to 0px when the host does not
+   * publish it, and at that point the height / leading / font size are these four numbers. */
   --dsh-disclosure-row-height: 24px;
   --dsh-disclosure-leading-size: 16px;
   --dsh-disclosure-glyph-size: 14px;
@@ -40,7 +42,7 @@
 
 .row {
   position: relative;
-  overflow: hidden; /* 官方如此；注意它会把子元素（含 leading 的焦点环）裁掉 */
+  overflow: hidden; /* as the official component does; note that it clips children, the leading focus ring included */
   display: flex;
   align-items: center;
   height: var(--dsh-disclosure-row-height);
@@ -70,14 +72,15 @@ button.leading {
   cursor: pointer;
 }
 
-/* 行内图标渲染在 16px 盒子的中间：14px。StateDot 那类带 data-state 的 svg
- * 不走这条规则，它保留自己的固定尺寸（官方注释写明这一点）。 */
+/* The in-row icon renders in the middle of the 16px box: 14px. An svg carrying data-state,
+ * such as StateDot, does not go through this rule and keeps its own fixed size (the official
+ * comment says as much). */
 .leading svg:not([data-state]) {
   width: var(--dsh-disclosure-glyph-size);
   height: var(--dsh-disclosure-glyph-size);
 }
 
-/* 折叠态：默认显示调用方给的图标；悬停整行时它淡出、箭头淡入。 */
+/* Collapsed state: the icon the caller passed is shown by default; hovering the whole row fades it out and fades the chevron in. */
 .iconIdle {
   display: inline-flex;
   opacity: 1;
@@ -107,35 +110,39 @@ button.leading {
   color: var(--dsw-alias-label-secondary);
 }
 
-/* § 本仓库建议值：官方 DisclosureRow.module.css 没有焦点样式。
- * spec/60-accessibility.md 的 AC-MF-11 要求 2px 实线 + --dsw-alias-brand-primary，
- * 常规取 2px 外偏移。 */
+/* § Proposed here: the official DisclosureRow.module.css has no focus style.
+ * AC-MF-11 in spec/60-accessibility.md requires a 2px solid + --dsw-alias-brand-primary,
+ * normally with a 2px outer offset. */
 .row:focus-visible {
   outline: 2px solid var(--dsw-alias-brand-primary);
   outline-offset: 2px;
 }
 
-/* § 本仓库建议值：leading 是 16×16 的按钮，左边正好贴着 .row 的左边缘，
- * 2px 外偏移的焦点环会被 .row 的 overflow: hidden 从左侧裁掉（AC-MF-12），
- * 所以这一处改用 -2px 内偏移，把环画在按钮自身盒子里。 */
+/* § Proposed here: leading is a 16×16 button sitting flush against the left edge of .row,
+ * so a focus ring with a 2px outer offset would be clipped away on the left by the .row's
+ * overflow: hidden (AC-MF-12); this one switches to a -2px inner offset instead, drawing the
+ * ring inside the button's own box. */
 .leading:focus-visible {
   outline: 2px solid var(--dsw-alias-brand-primary);
   outline-offset: -2px;
 }
 
-/* § 本仓库建议值：官方只给了 leading 这个 16×16 的命中区，低于
- * spec/60-accessibility.md 的 AC-MF-01 下限 20×20。这里用一个透明伪元素把
- * 「仅图标按钮」的热区向四周各扩 4px（左侧 4px 会被 .row 的 overflow: hidden 裁掉，
- * 实际有效热区 20×24）。不改变任何可见几何：伪元素没有背景、没有边框。 */
+/* § Proposed here: the official component gives only the leading 16×16 hit area, below the
+ * 20×20 minimum of AC-MF-01 in spec/60-accessibility.md. A transparent pseudo-element extends
+ * the "icon button only" hit area by 4px on each side (the 4px on the left is clipped away by
+ * the .row's overflow: hidden, so the effective hit area is 20×24). It changes no visible
+ * geometry: the pseudo-element has no background and no border. */
 button.leading::after {
   content: '';
   position: absolute;
   inset: -4px;
 }
 
-/* § 本仓库建议值：官方 DisclosureRow.module.css 没有 prefers-reduced-motion 分支。
- * spec/40-motion.md 的 MO-MF-09 要求减少动态时去掉非必要运动；这里的两处过渡
- * 都只是透明度切换，直接停掉最省事，也不影响信息（折叠态由 aria-expanded 与箭头承载）。 */
+/* § Proposed here: the official DisclosureRow.module.css has no prefers-reduced-motion branch.
+ * MO-MF-09 in spec/40-motion.md requires dropping non-essential motion when reduced motion is
+ * asked for; both transitions here are an opacity switch and nothing else, so stopping them
+ * outright is the least work and loses no information (the collapsed state is carried by
+ * aria-expanded and the chevron). */
 @media (prefers-reduced-motion: reduce) {
   .iconIdle,
   .chevronHover {

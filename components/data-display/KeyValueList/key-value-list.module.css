@@ -1,17 +1,21 @@
-/* KeyValueList 键值列表。官方没有对应组件，几何来源逐条如下（详见 README「几何来源」）：
+/* KeyValueList key-value list. The official package has no matching component; the geometry
+ * sources are listed one by one (see README "geometry-source" for details):
  *   key   13px / line-height 20px / var(--dsw-alias-label-tertiary)
- *         ← 官方合成 token --dsw-font-xs-13（13px/20px）；三级文字取色见官方 Menu.module.css `.label`
+ *         ← the official composite token --dsw-font-xs-13 (13px/20px); for the tertiary text
+ *           colour see the official Menu.module.css `.label`
  *   value 14px / line-height 22px / var(--dsw-alias-label-primary)
- *         ← 官方合成 token --dsw-font-s-14（14px/22px）；正文取色见官方 Button.module.css `.button`
+ *         ← the official composite token --dsw-font-s-14 (14px/22px); for the body text colour
+ *           see the official Button.module.css `.button`
  *   divider 0.5px + var(--dsw-alias-border-l2)
- *         ← 官方 markdown/MarkdownText.module.css `.markdown hr`
- * 标记 § 的是本仓库建议值（4 的倍数），官方没有对应数值。
- * 实现为本仓库原创：用 grid 与 data 属性组织规则，未复制官方 CSS。 */
+ *         ← the official markdown/MarkdownText.module.css `.markdown hr`
+ * § marks a value proposed here (a multiple of 4); the official source has no matching number.
+ * The implementation is original to this repository: the rules are organised with grid and data
+ * attributes, and no official CSS was copied. */
 
 .list {
-  /* § 本仓库建议值：键列与值列之间的最小距离，4 的倍数。 */
+  /* § Proposed here: the minimum distance between the key column and the value column, a multiple of 4. */
   --dsh-kv-column-gap: 12px;
-  /* § 本仓库建议值：每行上下各留 4px，4 的倍数。 */
+  /* § Proposed here: 4px above and below each row, a multiple of 4. */
   --dsh-kv-row-padding: 4px;
 
   display: flex;
@@ -22,14 +26,14 @@
 
 .item {
   display: grid;
-  /* 键列按内容取宽、空间不足时可收缩；值列吃掉剩余宽度并可换行。 */
+  /* The key column takes its width from its content and can shrink when space runs short; the value column takes the remaining width and can wrap. */
   grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
   column-gap: var(--dsh-kv-column-gap);
   align-items: center;
   padding: var(--dsh-kv-row-padding) 0;
 }
 
-/* 键与值在行内垂直对齐：默认居中，值是长文本时可选 start。 */
+/* Vertical alignment of the key and the value within the row: centred by default, with start available when the value is long text. */
 .list[data-align='start'] .item {
   align-items: start;
 }
@@ -42,7 +46,7 @@
 }
 
 .value {
-  /* dd 默认有 margin-inline-start，必须清掉。 */
+  /* dd has a margin-inline-start by default, which has to be cleared. */
   margin: 0;
   min-width: 0;
   font-size: 14px;
@@ -51,14 +55,15 @@
   overflow-wrap: break-word;
 }
 
-/* 值列右对齐：整列贴住容器右缘，便于纵向比对数值。 */
+/* Value column aligned right: the whole column sits against the container's right edge, which makes values easy to compare down the column. */
 .list[data-value-align='end'] .value {
   justify-self: end;
   text-align: end;
 }
 
-/* 行间分隔线：官方 markdown/MarkdownText.module.css `.markdown hr` 的 hairline 写法
-   （0.5px + var(--dsw-alias-border-l2)）。用相邻兄弟选择器，第一行之前不画线。 */
+/* Divider between rows: the hairline the official markdown/MarkdownText.module.css `.markdown hr`
+   writes (0.5px + var(--dsw-alias-border-l2)). An adjacent-sibling selector keeps the line from
+   appearing before the first row. */
 .list[data-divider='true'] .item + .item {
   border-top: 0.5px solid var(--dsw-alias-border-l2);
 }

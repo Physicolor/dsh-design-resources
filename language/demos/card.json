@@ -1,0 +1,32 @@
+{
+  "zh": {
+    "pageTitle": "Card · DSH 设计资源",
+    "labelOne": "r12 · pad 16 · gap 12 · 0.5px border-l1 · 标题 16/24 500",
+    "titleOne": "标题文字一",
+    "descOne": "说明文字一",
+    "bodyNumber": "示例数值",
+    "footerLink": "脚注链接",
+    "titleTwo": "标题文字二",
+    "descTwo": "说明文字二",
+    "bodyLong": "正文占位文字，用于演示两行以上的卡片正文。",
+    "labelTwo": "仅标题 · 无 description / footer",
+    "titleThree": "标题文字三",
+    "labelThree": "footer hairline 0.5px border-l2 · padding-top 12",
+    "bodyShort": "正文占位文字。"
+  },
+  "en": {
+    "pageTitle": "Card · DSH Design Resources",
+    "labelOne": "r12 · pad 16 · gap 12 · 0.5px border-l1 · title 16/24 500",
+    "titleOne": "Title text one",
+    "descOne": "Description text one",
+    "bodyNumber": "sample value",
+    "footerLink": "Footer link",
+    "titleTwo": "Title text two",
+    "descTwo": "Description text two",
+    "bodyLong": "Body placeholder text, long enough to show a card body of two lines or more.",
+    "labelTwo": "Title only · no description / footer",
+    "titleThree": "Title text three",
+    "labelThree": "footer hairline 0.5px border-l2 · padding-top 12",
+    "bodyShort": "Body placeholder text."
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "zh": {
+    "settingHeader": "设置窗口页头 · 紧凑 outlined · 实景文案",
+    "modelProviderCard": "模型页的供应商卡片 · 紧凑 outlined · 实景文案",
+    "captureNote": "「打开配置文件」与「编辑」均来自干净 profile 实景。通用设置的「编辑快捷键」属于 SettingsRow 行内动作，不是 Button primitive；官方 Button.module.css 未定义键盘焦点环，资源仓库的焦点环是单独标注的建议。"
+  },
+  "en": {
+    "settingHeader": "Settings window header · compact outlined · copy as captured",
+    "modelProviderCard": "Provider card on the Models page · compact outlined · copy as captured",
+    "captureNote": "Both Open config file and Edit come from a clean-profile capture. Edit shortcuts in Settings → General is an inline SettingsRow action, not a Button primitive; the official Button.module.css defines no keyboard focus ring, so the focus ring proposed by this resource repository is labelled as such."
+  }
+}

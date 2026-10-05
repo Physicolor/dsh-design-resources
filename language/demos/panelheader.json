@@ -1,0 +1,34 @@
+{
+    "zh": {
+        "mdRow": "md · min-height 44 · pad 0 12 · gap 8 · 标题 14/22 500",
+        "titleOne": "标题文字一",
+        "moreAria": "更多",
+        "closeAria": "关闭",
+        "descriptionRow": "带 description · 12/18 tertiary · gap 4",
+        "titleTwo": "标题文字二",
+        "descriptionText": "说明文字",
+        "textButton": "文字按钮",
+        "smRow": "sm · min-height 36 · pad 0 8",
+        "titleThree": "标题文字三",
+        "iconButtonAria": "图标按钮",
+        "noDividerRow": "divider false · 无 hairline",
+        "titleFour": "标题文字四",
+        "extraText": "附加文字"
+    },
+    "en": {
+        "mdRow": "md · min-height 44 · pad 0 12 · gap 8 · title 14/22 500",
+        "titleOne": "Title text one",
+        "moreAria": "More",
+        "closeAria": "Close",
+        "descriptionRow": "With a description · 12/18 tertiary · gap 4",
+        "titleTwo": "Title text two",
+        "descriptionText": "Description text",
+        "textButton": "Text button",
+        "smRow": "sm · min-height 36 · pad 0 8",
+        "titleThree": "Title text three",
+        "iconButtonAria": "Icon button",
+        "noDividerRow": "divider false · no hairline",
+        "titleFour": "Title text four",
+        "extraText": "Extra text"
+    }
+}

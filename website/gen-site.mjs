@@ -6,8 +6,14 @@
  * cannot fetch its neighbours. That is why spec documents are converted to HTML
  * here rather than in the browser.
  *
- * Inputs : data/*.json, spec/*.md, components/** (index.json + per-component files)
+ * Inputs : data/*.json, spec/*.md + spec/en/*.md, components/** (index.json +
+ *          per-component files plus their `.en.md` siblings), guides/**
  * Output : website/js/data.js
+ *
+ * Every document is emitted per language (`{ zh, en }`) and a document with no
+ * English counterpart is absent from the English build: `docs/I18N.md` forbids
+ * serving a Chinese page to a reader who asked for English. Coverage is counted
+ * here and shown on the English home page rather than asserted anywhere.
  *
  * Usage: node website/gen-site.mjs [--check]   (--check fails when the output is stale)
  */
@@ -15,9 +21,13 @@
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from 'node:fs'
 import { join, dirname, basename } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { README_HEADINGS, TASK_HEADINGS, parseFrontmatter } from '../scripts/lib/i18n.mjs'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const OUT = join(ROOT, 'website', 'js', 'data.js')
+
+/** Both languages, in the order the site lists them. */
+const LANGS = ['zh', 'en']
 
 /**
  * Read a JSON file, or a fallback when it is absent.
@@ -28,7 +38,9 @@ const OUT = join(ROOT, 'website', 'js', 'data.js')
 function readJson(rel, fallback) {
   const p = join(ROOT, rel)
   if (!existsSync(p)) return fallback
-  try { return JSON.parse(readFileSync(p, 'utf8')) } catch { return fallback }
+  try { return JSON.parse(readFileSync(p, 'utf8')) } catch (error) {
+    throw new Error(`Invalid JSON in ${rel}: ${error.message}`)
+  }
 }
 
 /**
@@ -41,6 +53,106 @@ function readText(rel) {
   return existsSync(p) ? readFileSync(p, 'utf8') : ''
 }
 
+/**
+ * Read a document and strip its translation frontmatter.
+ *
+ * The Chinese side has no frontmatter by design; the English side must have
+ * one, and it must not reach the page (it would render as a stray paragraph
+ * because the markdown converter escapes raw HTML). An empty file reads as
+ * `null`, which every caller treats as "this language does not have it".
+ * @param rel - repository-relative path.
+ * @returns document body, or `null` when absent.
+ */
+function readDoc(rel) {
+  const raw = readText(rel)
+  return raw === '' ? null : parseFrontmatter(raw).body
+}
+
+/**
+ * One entry of the page furniture, in both languages.
+ *
+ * These strings are emitted by this file rather than read from
+ * `language/*.json` because they are part of a document's markup: they are
+ * built once, at generation time, and the browser has no key to look up.
+ */
+const FURNITURE = {
+  evidence: { zh: '核对记录', en: 'Evidence checked' },
+  proposal: { zh: '本仓库提案', en: 'Proposal in this repository' },
+  noteVerified: {
+    zh: '产品截图只用于本地核验；此处仅展示 HTML 结构示意。',
+    en: 'The product screenshot is a local check only; what is shown here is the HTML structure.',
+  },
+  noteSourceVerified: {
+    zh: '此示意依据产品源码与本地审阅参照核对；截图不随网页发布。',
+    en: 'This specimen was reconciled against the product source and a local review reference; the screenshot is not published.',
+  },
+  withheldTitle: { zh: '暂不显示 HTML 演示', en: 'No HTML specimen yet' },
+  withheldReason: { zh: '尚缺可核对依据。', en: 'There is no checkable basis for it yet.' },
+  kindProposal: { zh: '社区提案（非产品界面）', en: 'Community proposal (not a product surface)' },
+  kindAudit: { zh: '规则工具（非产品界面）', en: 'Rule tool (not a product surface)' },
+  kindPlugin: { zh: '插件扩展示意', en: 'Plugin extension specimen' },
+  kindScene: { zh: '交互示意', en: 'Interaction specimen' },
+  componentSpecimen: { zh: '组件示意', en: 'Component specimen' },
+  captureNote: { zh: '含产品实景文案（原样保留）', en: 'includes product copy, kept as captured' },
+  citation: { zh: '引用', en: 'Source' },
+}
+
+/**
+ * Sample a demo's visible copy and report whether any of it is product copy.
+ *
+ * A specimen that re-creates a real surface quotes the product's own strings —
+ * `打开配置文件` on a settings button, say. Those must not be translated (the
+ * geometry was checked against a screenshot of exactly that string), so the
+ * figure says so instead of leaving the reader to wonder. Reading the demo here
+ * costs one file read and keeps the note out of the specimen's DOM, where an
+ * injected element would change the box geometry the page is asserting.
+ * @param html - the demo document.
+ * @returns true when it contains `data-capture` markup.
+ */
+function demoHasCapturedCopy(html) {
+  return /data-capture=/u.test(html)
+}
+
+/** Component id → its demo document, filled in by {@link loadComponents}. */
+const COMPONENT_DEMO = new Map()
+
+/**
+ * Look a furniture string up for one language.
+ * @param key - key of {@link FURNITURE}.
+ * @param lang - `zh` or `en`.
+ * @returns the string; a missing key throws rather than shipping a blank label.
+ */
+function furniture(key, lang) {
+  const entry = FURNITURE[key]
+  if (entry === undefined) throw new Error(`unknown furniture key: ${key}`)
+  return entry[lang]
+}
+
+/**
+ * Pick one language out of a `{ zh, en }` pair, or `null` when that language
+ * has no version of the thing.
+ * @param value - `{ zh, en }` pair, a plain value, or `null`.
+ * @param lang - `zh` or `en`.
+ * @returns the value for that language, or `null`.
+ */
+function pick(value, lang) {
+  if (value === null || value === undefined) return null
+  if (typeof value === 'object' && !Array.isArray(value) && ('zh' in value || 'en' in value)) return value[lang] ?? null
+  return value
+}
+
+const DEMO_EVIDENCE = readJson('data/demo-evidence.json', { demos: {}, components: {} })
+
+/**
+ * The product's own interface strings, and their English glosses.
+ *
+ * A guide quoting `通用设置` is quoting the running UI: the Chinese has to stay
+ * verbatim or the instruction stops matching what the reader sees. What an
+ * English reader needs on top of that is the meaning, and this map is the one
+ * place it lives — see the file's own `$comment` for what belongs here.
+ */
+const PRODUCT_LABELS = readJson('data/product-labels.json', { labels: {} }).labels ?? {}
+
 /* ── markdown ──────────────────────────────────────────────────────── */
 
 /**
@@ -52,6 +164,99 @@ function esc(s) {
   return s.replace(/&/gu, '&amp;').replace(/</gu, '&lt;').replace(/>/gu, '&gt;').replace(/"/gu, '&quot;')
 }
 
+/** Validate evidence and proposal metadata without publishing screenshots. */
+function validateEvidence(evidence, owner) {
+  if (evidence === undefined || !['verified', 'source-verified', 'proposed', 'withheld'].includes(evidence.status)) {
+    throw new Error(`${owner} has no evidence status`)
+  }
+  if (evidence.status === 'verified' && (typeof evidence.source !== 'string' || evidence.source === '')) {
+    throw new Error(`${owner} must name its local screenshot source`)
+  }
+  if (evidence.source !== undefined && !existsSync(join(ROOT, evidence.source))) {
+    throw new Error(`${owner} source evidence is missing: ${evidence.source}`)
+  }
+  if (evidence.reviewAsset !== undefined && !existsSync(join(ROOT, evidence.reviewAsset))) {
+    throw new Error(`${owner} review crop is missing: ${evidence.reviewAsset}`)
+  }
+  if (evidence.status === 'source-verified' && (!evidence.reference || !evidence.sourceCode)) {
+    throw new Error(`${owner} must name its user reference and official source`)
+  }
+  if (evidence.status === 'proposed' && (
+    evidence.kind !== 'proposal'
+    || typeof evidence.reason !== 'string'
+    || evidence.reason === ''
+    || evidence.source !== undefined
+    || evidence.reviewAsset !== undefined
+  )) {
+    throw new Error(`${owner} proposal must be explicit and must not claim screenshot evidence`)
+  }
+}
+
+/** A plain provenance note, in the reader's language; screenshots never enter the markup. */
+function evidencePanel(evidence, owner, lang) {
+  const label = pick({ zh: evidence.scene, en: evidence.sceneEn ?? evidence.scene }, lang) ?? owner
+  const title = evidence.status === 'proposed' ? furniture('proposal', lang) : furniture('evidence', lang)
+  const note = evidence.status === 'proposed'
+    ? pick({ zh: evidence.reason, en: evidence.reasonEn ?? evidence.reason }, lang)
+    : furniture(evidence.status === 'source-verified' ? 'noteSourceVerified' : 'noteVerified', lang)
+  return '<aside class="demo__proof"><strong>' + title + '</strong><p>'
+    + esc(label) + '</p><p>' + esc(note) + '</p></aside>'
+}
+/** Render a document demo with verified, source-verified, or proposed provenance. */
+function demoFigure(id, caption, lang) {
+  const evidence = DEMO_EVIDENCE.demos?.[id]
+  validateEvidence(evidence, `demo ${id}`)
+  const reason = evidence.reason === undefined
+    ? furniture('withheldReason', lang)
+    : pick({ zh: evidence.reason, en: evidence.reasonEn ?? evidence.reason }, lang)
+  if (evidence.status === 'withheld') {
+    return `<figure class="demo demo--withheld"><div class="demo__withheld"><strong>${furniture('withheldTitle', lang)}</strong><p>${esc(reason)}</p></div>`
+      + (caption === '' ? '' : `<figcaption>${inline(caption, lang)}</figcaption>`)
+      + '</figure>'
+  }
+  const label = furniture(
+    evidence.kind === 'proposal' ? 'kindProposal'
+      : evidence.kind === 'audit' ? 'kindAudit'
+        : evidence.kind === 'plugin' ? 'kindPlugin' : 'kindScene',
+    lang,
+  )
+  const wideDemos = new Set(['sidebar-anatomy', 'settings-section', 'settings-independent-window'])
+  const figureClass = wideDemos.has(id) ? 'demo demo--wide' : 'demo'
+  const capture = demoHasCapturedCopy(readText(`website/demos/${id}.html`))
+    ? `<span class="demo__capture">${furniture('captureNote', lang)}</span>` : ''
+  return '<figure class="' + figureClass + '"><div class="demo__comparison">'
+    + evidencePanel(evidence, id, lang)
+    + `<section class="demo__example"><h3 class="demo__panel-title">${label}${capture}</h3>`
+    + `<div class="demo__stage" data-inline-demo="${esc(id)}"></div></section></div>`
+    + (caption === '' ? '' : `<figcaption>${inline(caption, lang)}</figcaption>`)
+    + '</figure>'
+}
+
+/** Render a component comparison, or show why its HTML specimen is withheld. */
+function componentFigure(id, caption, lang) {
+  const evidence = DEMO_EVIDENCE.components?.[id]
+  validateEvidence(evidence, `component ${id}`)
+  const image = evidencePanel(evidence, id, lang)
+  const figureClass = id === 'settings-page' ? 'demo demo--wide' : 'demo'
+  if (evidence.status === 'withheld') {
+    const reason = evidence.reason === undefined
+      ? furniture('withheldReason', lang)
+      : pick({ zh: evidence.reason, en: evidence.reasonEn ?? evidence.reason }, lang)
+    return `<figure class="demo demo--withheld">${image}`
+      + `<div class="demo__withheld"><strong>${furniture('withheldTitle', lang)}</strong><p>${esc(reason)}</p></div>`
+      + (caption === '' ? '' : `<figcaption>${inline(caption, lang)}</figcaption>`)
+      + '</figure>'
+  }
+  const capture = demoHasCapturedCopy(COMPONENT_DEMO.get(id) ?? '')
+    ? `<span class="demo__capture">${furniture('captureNote', lang)}</span>` : ''
+  return '<figure class="' + figureClass + '"><div class="demo__comparison">'
+    + image
+    + `<section class="demo__example"><h3 class="demo__panel-title">${furniture('componentSpecimen', lang)}${capture}</h3>`
+    + `<div class="demo__stage" data-inline-demo="component/${esc(id)}"></div></section></div>`
+    + (caption === '' ? '' : `<figcaption>${inline(caption, lang)}</figcaption>`)
+    + '</figure>'
+}
+
 /**
  * Inline markdown: code spans, bold, links, citation markers.
  *
@@ -60,13 +265,26 @@ function esc(s) {
  * authority instead of paraphrasing it ("[HIG] 讲的是同一件事…" cannot be
  * checked; "[1]" can).
  * @param s - raw inline text.
+ * @param lang - `zh` or `en`; the citation marker's tooltip is furniture, and
+ *   English prose glosses quoted product labels.
  * @returns HTML.
  */
-function inline(s) {
+function inline(s, lang) {
   let out = esc(s)
-  out = out.replace(/`([^`]+)`/gu, (_m, c) => `<code>${c}</code>`)
+  out = out.replace(/`([^`]+)`/gu, (_m, c) => {
+    /* A quoted product label stays Chinese — it has to match the running UI —
+       so the English page appends what it means. The map is the single place
+       that translation lives; see data/product-labels.json. */
+    const gloss = lang === 'en' ? PRODUCT_LABELS[c] : undefined
+    const quoted = lang === 'en' && PRODUCT_LABELS[c] !== undefined
+      ? `<code lang="zh-CN">${c}</code>`
+      : `<code>${c}</code>`
+    if (gloss === undefined) return quoted
+    return quoted + `<span class="site-gloss">${esc(gloss)}</span>`
+  })
   out = out.replace(/\*\*([^*]+)\*\*/gu, '<strong>$1</strong>')
-  out = out.replace(/\[\^(\d+)\]/gu, (_m, num) => `<sup class="cite" data-jump="cite-${num}" title="引用 ${num}">[${num}]</sup>`)
+  out = out.replace(/\[\^(\d+)\]/gu, (_m, num) =>
+    `<sup class="cite" data-jump="cite-${num}" title="${furniture('citation', lang)} ${num}">[${num}]</sup>`)
   out = out.replace(/\[([^\]]+)\]\(([^)\s]+)\)/gu, (_m, text, href) => `<a href="${href}">${text}</a>`)
   return out
 }
@@ -83,9 +301,10 @@ let headingSeq = 0
  * Headings carry an `id` because the site builds "on this page" navigation from
  * them — a document outline you cannot click is decoration.
  * @param md - markdown source.
+ * @param lang - `zh` or `en`; decides the specimen furniture's language.
  * @returns HTML.
  */
-function mdToHtml(md) {
+function mdToHtml(md, lang) {
   const lines = md.replace(/\r\n/gu, '\n').split('\n')
   const html = []
   let i = 0
@@ -103,14 +322,12 @@ function mdToHtml(md) {
       continue
     }
 
-    /* An embedded live demo: `<!-- demo: name | caption -->`. The stage becomes
-     * a shadow root the page fills at render time, so a document can carry real
-     * operable UI instead of a screenshot of one. */
+   /* A live demo is only emitted after its actual DSH scene has been captured
+     * and its local evidence record has been checked. Screenshots remain in
+     * docs/reference; the generated page never includes those images. */
     const demoRef = /^<!--\s*demo:\s*([\w-]+)\s*(?:\|\s*(.*?))?\s*-->$/u.exec(line.trim())
     if (demoRef !== null) {
-      html.push('<figure class="demo"><div class="demo__stage" data-inline-demo="' + esc(demoRef[1]) + '"></div>'
-        + (demoRef[2] === undefined || demoRef[2] === '' ? '' : '<figcaption>' + inline(demoRef[2]) + '</figcaption>')
-        + '</figure>')
+      html.push(demoFigure(demoRef[1], demoRef[2] ?? '', lang))
       i++
       continue
     }
@@ -121,9 +338,7 @@ function mdToHtml(md) {
      * guide points at one instead of shipping a second copy that drifts. */
     const componentRef = /^<!--\s*component:\s*([\w-]+)\s*(?:\|\s*(.*?))?\s*-->$/u.exec(line.trim())
     if (componentRef !== null) {
-      html.push('<figure class="demo"><div class="demo__stage" data-inline-demo="component/' + esc(componentRef[1]) + '"></div>'
-        + (componentRef[2] === undefined || componentRef[2] === '' ? '' : '<figcaption>' + inline(componentRef[2]) + '</figcaption>')
-        + '</figure>')
+      html.push(componentFigure(componentRef[1], componentRef[2] ?? '', lang))
       i++
       continue
     }
@@ -132,7 +347,7 @@ function mdToHtml(md) {
     if (heading !== null) {
       const level = heading[1].length
       headingSeq += 1
-      html.push(`<h${level} id="h${headingSeq}">${inline(heading[2])}</h${level}>`)
+      html.push(`<h${level} id="h${headingSeq}">${inline(heading[2], lang)}</h${level}>`)
       i++
       continue
     }
@@ -146,8 +361,8 @@ function mdToHtml(md) {
       i += 2
       const rows = []
       while (i < lines.length && lines[i].includes('|') && lines[i].trim() !== '') { rows.push(cells(lines[i])); i++ }
-      html.push('<table><thead><tr>' + head.map(c => `<th>${inline(c)}</th>`).join('') + '</tr></thead><tbody>'
-        + rows.map(r => '<tr>' + r.map(c => `<td>${inline(c)}</td>`).join('') + '</tr>').join('')
+      html.push('<table><thead><tr>' + head.map(c => `<th>${inline(c, lang)}</th>`).join('') + '</tr></thead><tbody>'
+        + rows.map(r => '<tr>' + r.map(c => `<td>${inline(c, lang)}</td>`).join('') + '</tr>').join('')
         + '</tbody></table>')
       continue
     }
@@ -155,7 +370,7 @@ function mdToHtml(md) {
     if (/^\s*>\s?/u.test(line)) {
       const body = []
       while (i < lines.length && /^\s*>\s?/u.test(lines[i])) { body.push(lines[i].replace(/^\s*>\s?/u, '')); i++ }
-      html.push(`<blockquote>${mdToHtml(body.join('\n'))}</blockquote>`)
+      html.push(`<blockquote>${mdToHtml(body.join('\n'), lang)}</blockquote>`)
       continue
     }
 
@@ -172,7 +387,7 @@ function mdToHtml(md) {
       html.push(`<${tag}>` + items.map(t => {
         const cite = /^\[(\d+)\]/u.exec(t)
         const id = cite === null ? '' : ` id="cite-${cite[1]}"`
-        return `<li${id}>${inline(t)}</li>`
+        return `<li${id}>${inline(t, lang)}</li>`
       }).join('') + `</${tag}>`)
       continue
     }
@@ -184,7 +399,7 @@ function mdToHtml(md) {
       para.push(lines[i])
       i++
     }
-    if (para.length > 0) html.push(`<p>${inline(para.join(' '))}</p>`)
+    if (para.length > 0) html.push(`<p>${inline(para.join(' '), lang)}</p>`)
   }
 
   return html.join('\n')
@@ -249,33 +464,81 @@ function loadComponents() {
   const items = manifest.components.map(entry => {
     const dir = entry.path ?? ''
     const base = dir === '' ? '' : `${dir.replace(/\/$/u, '')}/`
-    const readme = readText(`${base}README.md`)
-    const spec = readText(`${base}SPEC.md`)
-    const demo = readText(`${base}demo.html`)
-    const tsx = readText(`${base}index.tsx`)
-    const css = readText(`${base}${(entry.id ?? 'component').toLowerCase()}.module.css`)
+    const sourceDemo = readText(`${base}demo.html`)
+    const evidence = DEMO_EVIDENCE.components?.[entry.id]
+    validateEvidence(evidence, `component ${entry.id}`)
+    const evidenceVerified = evidence.status === 'verified' || evidence.status === 'source-verified'
+    if (evidenceVerified && sourceDemo === '') {
+      throw new Error(`component ${entry.id} has verified evidence but no demo.html`)
+    }
+    const demoWithheld = sourceDemo !== '' && !evidenceVerified
+    const demo = evidenceVerified ? sourceDemo : ''
+    COMPONENT_DEMO.set(entry.id, sourceDemo)
 
     /* The documents are the source of truth for the documents: the manifest's
      * prose fields were written back when the READMEs still spoke in
      * engineering voice, so they are read out of the prose rather than
-     * maintained in two places that drift. */
-    const summary = firstParagraph(readme) || entry.summary || ''
-    const whenToUse = listUnder(readme, '什么时候用它')
-    const whenNotToUse = listUnder(readme, '什么时候不要用它')
+     * maintained in two places that drift. `docs/I18N.md` extends the same rule
+     * to the English side: `README.en.md` supplies the English card, and a
+     * component without one is simply absent from the English site. */
+    const docs = {}
+    const prose = {}
+    for (const lang of LANGS) {
+      const readmeRel = `${base}${lang === 'en' ? 'README.en.md' : 'README.md'}`
+      const specRel = `${base}${lang === 'en' ? 'SPEC.en.md' : 'SPEC.md'}`
+      const readme = readDoc(readmeRel)
+      const spec = readDoc(specRel)
+      docs[lang] = { readme, spec, readmeRel, specRel }
+      if (readme === null) { prose[lang] = null; continue }
+      const whenToUse = listUnder(readme, README_HEADINGS.whenToUse[lang])
+      const whenNotToUse = listUnder(readme, README_HEADINGS.whenNotToUse[lang])
+      if (whenToUse.length === 0 || whenNotToUse.length === 0) {
+        throw new Error(
+          `${readmeRel}: expected "## ${README_HEADINGS.whenToUse[lang]}" and`
+          + ` "## ${README_HEADINGS.whenNotToUse[lang]}" lists; found ${whenToUse.length}/${whenNotToUse.length}`,
+        )
+      }
+      prose[lang] = { summary: firstParagraph(readme), whenToUse, whenNotToUse }
+    }
+
+    const langDoc = {}
+    for (const lang of LANGS) {
+      langDoc[lang] = docs[lang].readme === null ? null : {
+        summary: prose[lang].summary,
+        whenToUse: prose[lang].whenToUse,
+        whenNotToUse: prose[lang].whenNotToUse,
+        readme: docs[lang].readme,
+        readmeHtml: mdToHtml(docs[lang].readme, lang),
+        specHtml: docs[lang].spec === null ? '' : mdToHtml(docs[lang].spec, lang),
+        hasSpec: docs[lang].spec !== null,
+      }
+    }
+    const zhDoc = langDoc.zh
+    if (zhDoc === null) throw new Error(`component ${entry.id} has no README.md`)
 
     return {
       ...entry,
       origin: official.has(entry.id) ? 'official' : 'proposed',
-      summary,
-      whenToUse: whenToUse.length > 0 ? whenToUse : entry.whenToUse,
-      whenNotToUse: whenNotToUse.length > 0 ? whenNotToUse : entry.whenNotToUse,
-      readme,
-      readmeHtml: readme === '' ? '' : mdToHtml(readme),
-      specHtml: spec === '' ? '' : mdToHtml(spec),
-      hasSpec: spec !== '',
+      translated: langDoc.en !== null,
+      doc: langDoc,
+      geometrySource: { zh: entry.geometrySource, en: entry.geometrySourceEn ?? entry.geometrySource },
+      tags: { zh: entry.tags, en: entry.tagsEn ?? entry.tags },
+      /* Kept flat for the English fallback path in `app.js`: the Chinese side is
+       * always present, so a reader who somehow reaches a page without an
+       * English document still sees the authored text rather than a blank. */
+      summary: zhDoc.summary,
+      whenToUse: zhDoc.whenToUse,
+      whenNotToUse: zhDoc.whenNotToUse,
+      hasSpec: zhDoc.hasSpec,
       demo,
-      tsx,
-      css,
+      demoWithheld,
+      evidence: {
+        status: evidence.status,
+        reason: evidence.reason,
+        reasonEn: evidence.reasonEn ?? evidence.reason,
+      },
+      tsx: readText(`${base}index.tsx`),
+      css: readText(`${base}${(entry.id ?? 'component').toLowerCase()}.module.css`),
     }
   })
 
@@ -316,23 +579,31 @@ function loadSpecs() {
     .filter(f => f.endsWith('.md'))
     .sort()
     .map(f => {
-      const md = readFileSync(join(dir, f), 'utf8')
       const id = basename(f, '.md')
       const meta = SPEC_META[id] ?? { group: 'basics', short: id, shortEn: id }
-      /* The `60` in `60 可访问性` is a filing number, not part of the title the
-       * reader is looking for — it belongs in the filename. */
-      const html = mdToHtml(md).replace(/<h1([^>]*)>\s*\d+\s*/u, '<h1$1>')
+      const doc = {}
+      for (const lang of LANGS) {
+        const body = readDoc(lang === 'en' ? `spec/en/${f}` : `spec/${f}`)
+        doc[lang] = body === null ? null : {
+          title: titleOf(body, id).replace(/^\d+\s*/u, ''),
+          /* 卡片上要有内容摘要而不是字数：读者挑的是「这一页解决什么问题」。 */
+          summary: firstParagraph(body),
+          /* The `60` in `60 可访问性` is a filing number, not part of the title the
+           * reader is looking for — it belongs in the filename. */
+          html: mdToHtml(body, lang).replace(/<h1([^>]*)>\s*\d+\s*/u, '<h1$1>'),
+          chars: body.length,
+        }
+      }
+      if (doc.zh === null) throw new Error(`spec/${f} is empty`)
       return {
         id,
         file: `spec/${f}`,
-        title: titleOf(md, id).replace(/^\d+\s*/u, ''),
+        fileEn: `spec/en/${f}`,
+        translated: doc.en !== null,
+        doc,
         short: meta.short,
         shortEn: meta.shortEn,
         group: meta.group,
-        /* 卡片上要有内容摘要而不是字数：读者挑的是「这一页解决什么问题」。 */
-        summary: firstParagraph(md),
-        html,
-        chars: md.length,
       }
     })
 }
@@ -347,7 +618,15 @@ function loadDemos() {
   const out = {}
   for (const f of readdirSync(dir)) {
     if (!f.endsWith('.html')) continue
-    out[basename(f, '.html')] = readFileSync(join(dir, f), 'utf8')
+    const id = basename(f, '.html')
+   const evidence = DEMO_EVIDENCE.demos?.[id]
+   validateEvidence(evidence, `demo ${id}`)
+    if (evidence.status === 'withheld') continue
+   out[id] = readFileSync(join(dir, f), 'utf8')
+  }
+ for (const id of Object.keys(DEMO_EVIDENCE.demos ?? {})) {
+    if (DEMO_EVIDENCE.demos[id]?.status === 'withheld') continue
+   if (!existsSync(join(dir, `${id}.html`))) throw new Error(`evidence entry has no demo HTML: ${id}`)
   }
   return out
 }
@@ -362,36 +641,38 @@ function loadDemos() {
  * file. `group` decides which navigation branch it sits in.
  */
 const GUIDE_GROUPS = {
-  start: { zh: '开始这里', en: 'Start' },
-  principles: { zh: '设计原则', en: 'Principles' },
-  patterns: { zh: '界面模式', en: 'Patterns' },
-  integration: { zh: '座位与集成', en: 'Seats and integration' },
-  verify: { zh: '自检与来源', en: 'Verify and sources' },
+  start: { zh: '指南概览', en: 'Guide overview' },
+  principles: { zh: '先选扩展位置', en: 'Choose an extension area' },
+  patterns: { zh: '按场景搭建', en: 'Build by task' },
+  integration: { zh: '公开座位与登记', en: 'Public seats and registration' },
+  verify: { zh: '核对与来源', en: 'Evidence and sources' },
 }
 
 /**
  * Read one guide's short metadata out of its own prose.
  *
  * The guide is the source of truth: title from the `# heading`, the one-line
- * summary from the first blockquote, the task list from the first `## 任务`
- * section. Nothing is duplicated into a manifest that then drifts.
+ * summary from the first blockquote, the task list from the heading named in
+ * `TASK_HEADINGS`. Nothing is duplicated into a manifest that then drifts.
  * @param md - markdown source.
- * @returns { title, summary, tasks }.
+ * @param lang - `zh` or `en`; decides which heading names the task list.
+ * @returns { title, summary, tasks, tasksHeading }.
  */
-function guideMeta(md) {
+function guideMeta(md, lang) {
   const title = titleOf(md, '')
   const quote = /^>\s*(.+)$/mu.exec(md)
   const summary = quote === null ? '' : quote[1].trim()
+  const heading = TASK_HEADINGS[lang]
   const tasks = []
   let inside = false
   for (const line of md.split(/\r?\n/u)) {
     const head = /^##\s+(.+?)\s*$/u.exec(line)
-    if (head !== null) { inside = /任务|读这一页能做什么|What this page gets you/u.test(head[1]); continue }
+    if (head !== null) { inside = head[1] === heading; continue }
     if (!inside) continue
     const item = /^\s*[-*]\s+(.+)$/u.exec(line)
     if (item !== null) tasks.push(item[1].trim())
   }
-  return { title, summary, tasks }
+  return { title, summary, tasks, tasksHeading: heading }
 }
 
 /**
@@ -405,37 +686,72 @@ function loadGuides() {
     .filter(f => f.endsWith('.md'))
     .sort()
     .map(f => {
-      const md = readFileSync(join(dir, f), 'utf8')
       const id = basename(f, '.md')
       const groupKey = /^0\d/u.test(id) ? 'start'
         : /^1\d/u.test(id) ? 'principles'
           : /^2\d/u.test(id) ? 'patterns'
             : /^3\d/u.test(id) ? 'integration' : 'verify'
-      const meta = guideMeta(md)
       const group = GUIDE_GROUPS[groupKey]
+      const doc = {}
+      for (const lang of LANGS) {
+        const body = readDoc(lang === 'en' ? `guides/en/${f}` : `guides/${f}`)
+        if (body === null) { doc[lang] = null; continue }
+        const meta = guideMeta(body, lang)
+        doc[lang] = {
+          title: meta.title,
+          summary: meta.summary,
+          tasks: meta.tasks,
+          tasksHeading: meta.tasksHeading,
+          html: mdToHtml(body, lang).replace(/<h1([^>]*)>\s*\d+\s*/u, '<h1$1>'),
+          chars: body.length,
+        }
+      }
+      if (doc.zh === null) throw new Error(`guides/${f} is empty`)
       return {
         id,
         group: groupKey,
         groupLabel: group.zh,
         groupLabelEn: group.en,
-        title: meta.title,
-        summary: meta.summary,
-        tasks: meta.tasks,
-        html: mdToHtml(md).replace(/<h1([^>]*)>\s*\d+\s*/u, '<h1$1>'),
-        chars: md.length,
+        translated: doc.en !== null,
+        doc,
       }
     })
 }
 
 /**
- * Load the interface dictionaries.
+ * Load the interface dictionaries, plus the per-specimen copy tables.
+ *
+ * A demo's own strings live in `language/demos/<demo>.json` instead of the two
+ * big dictionaries, for two reasons: a specimen's copy is authored next to the
+ * specimen, and one file per demo means two people (or two agents) translating
+ * two demos never touch the same file. Both are merged under `demo.<id>` here,
+ * so `app.js` looks them up with the ordinary `t()` path.
  * @returns { zh, en } — each an object of nested translation tables.
  */
 function loadI18n() {
-  return {
-    zh: readJson('language/zh.json', {}),
-    en: readJson('language/en.json', {}),
+  const zh = readJson('language/zh.json', {})
+  const en = readJson('language/en.json', {})
+  const dir = join(ROOT, 'language', 'demos')
+  if (!existsSync(dir)) return { zh, en }
+  zh.demo = zh.demo ?? {}
+  en.demo = en.demo ?? {}
+  for (const file of readdirSync(dir).sort()) {
+    if (!file.endsWith('.json')) continue
+    const id = basename(file, '.json')
+    const table = readJson(`language/demos/${file}`, null)
+    if (table === null) continue
+    if (typeof table.zh !== 'object' || typeof table.en !== 'object') {
+      throw new Error(`language/demos/${file} must be { zh: {...}, en: {...} }`)
+    }
+    const zhKeys = Object.keys(table.zh).sort()
+    const enKeys = Object.keys(table.en).sort()
+    if (zhKeys.join(',') !== enKeys.join(',')) {
+      throw new Error(`language/demos/${file}: zh and en keys differ (${zhKeys.length} vs ${enKeys.length})`)
+    }
+    zh.demo[id] = table.zh
+    en.demo[id] = table.en
   }
+  return { zh, en }
 }
 
 /* ── assemble ──────────────────────────────────────────────────────── */
@@ -462,6 +778,16 @@ for (const item of components.items) {
   if (typeof item.demo === 'string' && item.demo !== '') demos['component/' + item.id] = item.demo
 }
 
+/* Counted, never asserted here: the English home page states how much of the
+ * corpus is translated, and `scripts/check-i18n.mjs` is what refuses a stale or
+ * missing translation. gen-site has to keep building while a translation is in
+ * flight, otherwise nobody can render the Chinese site. */
+const i18nCoverage = {
+  specs: { translated: specs.filter(s => s.translated).length, total: specs.length },
+  guides: { translated: guides.filter(g => g.translated).length, total: guides.length },
+  components: { translated: components.items.filter(c => c.translated).length, total: components.items.length },
+}
+
 const data = {
   generatedAt: new Date().toISOString(),
   stats: {
@@ -481,6 +807,7 @@ const data = {
     slots: slots.source ?? null,
   },
   i18n,
+  i18nCoverage,
   demos,
   /* 指南（guides/）：面向作者任务的内容层，和规范正文分开——规范回答「规则是什么」，
    * 指南回答「我现在该做什么」。 */

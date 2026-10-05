@@ -344,7 +344,7 @@ async function writeCoverage(elements) {
   const coverage = scoreCoverage(elements)
   await mkdir(OUT, { recursive: true })
   await writeFile(join(OUT, 'ui-coverage.json'), `${JSON.stringify({
-    $comment: '清单里的每个身份在规范/组件语料里有没有位置。covered = 人工锚点命中（described 表示目标文件里写下了它的实测尺寸）；referenced = 语料里出现过这个词（要复核）；missing = 待办。',
+    $comment: 'Whether each identity in the inventory has a home in the spec/component corpus. covered = a human anchor matched (described means the target file states its measured size); referenced = the word merely appears somewhere in the corpus (needs review); missing = a to-do.',
     generatedAt: new Date().toISOString(),
     counts: {
       identities: coverage.length,
@@ -649,7 +649,7 @@ try {
 
   await mkdir(OUT, { recursive: true })
   await writeFile(join(OUT, 'ui-inventory.json'), `${JSON.stringify({
-    $comment: '由 scripts/scan-ui.mjs 从运行中的产品采集。key 是剥掉 CSS Modules 哈希后的身份；不要手改。',
+    $comment: 'Collected from the running product by scripts/scan-ui.mjs. key is the identity with the CSS Modules hash stripped off; do not hand-edit.',
     generatedAt: new Date().toISOString(),
     viewport: samples[0]?.viewport ?? null,
     scenes: samples.map(s => ({ scene: s.scene, step: s.step })),

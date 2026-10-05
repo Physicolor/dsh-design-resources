@@ -1,24 +1,26 @@
-/* 几何锚点（逐条，详见 README「几何来源」）：
- *   导航行   官方 Menu.module.css .item      → min-height 40 / padding 8px 10px / radius 10px / gap 8px / 14-22
- *   导航行 hover / 选中  官方 Menu .item:hover:not(:disabled) / .selectedFill
- *   导航图标 官方 Menu.module.css .itemIcon  → 16×16 + label-tertiary
- *   导航容器内边距 4px    官方 Menu.module.css .list
- *   导航容器圆角 12px     官方 ReadBlock.module.css .block (--dsl-read-radius)
- *   页面标题 16-24-500    官方 Modal.module.css .title
- *   页面描述 14-22        官方 Modal.module.css .description
- *   分区标题 14-22-500    官方 Button .button(14-22) + Modal .title(500)
- *   标题与内容 20px       官方 Modal.module.css .dialog gap / .body margin-top
- * § 标记的为「本仓库建议值」：官方没有 SettingsPage 对应物，这些数值在官方侧没有直接来源，理由见 README。
- * 实现为本仓库原创（变量承载几何 + 单类切换），未复制官方 CSS 源码。 */
+/* Geometry anchors (item by item, see the README's "geometry-source"):
+ *   Nav row   Official Menu.module.css .item      → min-height 40 / padding 8px 10px / radius 10px / gap 8px / 14-22
+ *   Nav row hover / selected  Official Menu .item:hover:not(:disabled) / .selectedFill
+ *   Nav icon  Official Menu.module.css .itemIcon  → 16×16 + label-tertiary
+ *   Nav container padding 4px           Official Menu.module.css .list
+ *   Nav container corner radius 12px    Official ReadBlock.module.css .block (--dsl-read-radius)
+ *   Page title 16-24-500                Official Modal.module.css .title
+ *   Page description 14-22              Official Modal.module.css .description
+ *   Section title 14-22-500             Official Button .button(14-22) + Modal .title(500)
+ *   Title and content 20px              Official Modal.module.css .dialog gap / .body margin-top
+ * § marks the values proposed here: the official side has no SettingsPage equivalent, so these
+ * numbers have no direct official source; the reasoning is in the README.
+ * The implementation is original to this repository (geometry carried by CSS variables + a single
+ * class switching size); the geometry is equivalent, but this is not a copy of the official CSS. */
 
 .page {
-  --dsh-settings-nav-width: 218px; /* § 建议值 */
-  --dsh-settings-gap: 32px; /* § 建议值 */
-  --dsh-settings-pad: 24px; /* § 建议值 */
-  --dsh-settings-block-gap: 24px; /* § 建议值 */
-  --dsh-settings-radius: 12px; /* 官方 ReadBlock .block */
-  --dsh-settings-nav-pad: 4px; /* 官方 Menu .list */
-  --dsh-settings-content-max: 640px; /* § 建议值（借官方 Toast 的 640 上限） */
+  --dsh-settings-nav-width: 218px; /* § proposed here */
+  --dsh-settings-gap: 32px; /* § proposed here */
+  --dsh-settings-pad: 24px; /* § proposed here */
+  --dsh-settings-block-gap: 24px; /* § proposed here */
+  --dsh-settings-radius: 12px; /* Official ReadBlock .block */
+  --dsh-settings-nav-pad: 4px; /* Official Menu .list */
+  --dsh-settings-content-max: 640px; /* § proposed here (borrows the official Toast's 640 cap) */
 
   box-sizing: border-box;
   display: flex;
@@ -31,7 +33,7 @@
   line-height: 22px;
 }
 
-/* ------------------------------------------------------------------ 左列 */
+/* ------------------------------------------------------------------ left column */
 
 .nav {
   flex: none;
@@ -39,8 +41,9 @@
   width: var(--dsh-settings-nav-width);
   padding: var(--dsh-settings-nav-pad);
   border-radius: var(--dsh-settings-radius);
-  /* § 建议值：用官方 neutral Tag 同款的平台底色承载导航列；
-     官方侧栏另有 --dsw-specific-sidebar-* 系列，本组件不引用以免与宿主侧栏语义混淆。 */
+  /* § proposed here: the navigation column is carried by the same platform background as the
+     official neutral Tag; the official sidebar has its own --dsw-specific-sidebar-* set, which
+     this component does not reference so as not to blur the host sidebar's semantics. */
   background: var(--dsw-alias-bg-module-platform);
 }
 
@@ -61,8 +64,9 @@
   border: 0;
   border-radius: 10px;
   background: transparent;
-  /* § 建议值：官方 Menu .item 一律 label-primary；本组件用 label-secondary 表示
-     「非当前项」，让选中态不依赖底色也能分辨。 */
+  /* § proposed here: the official Menu .item is always label-primary; this component uses
+     label-secondary for the "not current" item, so the selected state is distinguishable
+     without relying on the background. */
   color: var(--dsw-alias-label-secondary);
   font-family: inherit;
   font-size: 14px;
@@ -76,7 +80,7 @@
   background: var(--dsw-alias-interactive-bg-hover);
 }
 
-/* 选中态沿用官方 Menu .selectedFill 的同一 fill（官方用尾部对勾做标记）。 */
+/* The selected state reuses the same fill as the official Menu .selectedFill (the official side marks it with a trailing tick). */
 .navItemActive {
   color: var(--dsw-alias-label-primary);
   background: var(--dsw-alias-interactive-bg-hover);
@@ -87,7 +91,7 @@
   cursor: not-allowed;
 }
 
-/* § 建议值：官方 SettingsPage 无对应物；写法对齐官方 Switch.module.css 的 focus-visible。 */
+/* § proposed here: the official side has no SettingsPage equivalent; this follows the focus-visible in the official Switch.module.css. */
 .navItem:focus-visible {
   outline: 2px solid var(--dsw-alias-brand-primary);
   outline-offset: 2px;
@@ -111,7 +115,7 @@
   white-space: nowrap;
 }
 
-/* ------------------------------------------------------------------ 右列 */
+/* ------------------------------------------------------------------ right column */
 
 .content {
   flex: 1;
@@ -128,7 +132,7 @@
 }
 
 .pageDescription {
-  margin: 4px 0 0; /* § 建议值（4 的倍数） */
+  margin: 4px 0 0; /* § proposed here (a multiple of 4) */
   font-size: 14px;
   line-height: 22px;
   color: var(--dsw-alias-label-secondary);
@@ -141,7 +145,7 @@
   margin-top: 20px;
 }
 
-/* ------------------------------------------------------------------ 分区 */
+/* ------------------------------------------------------------------ section */
 
 .section {
   display: flex;
@@ -172,12 +176,12 @@
 }
 
 .sectionDescription {
-  margin: 4px 0 0; /* § 建议值（4 的倍数） */
+  margin: 4px 0 0; /* § proposed here (a multiple of 4) */
   font-size: 12px;
   line-height: 18px;
   color: var(--dsw-alias-label-tertiary);
 }
 
 .sectionBody {
-  margin-top: 8px; /* § 建议值（4 的倍数） */
+  margin-top: 8px; /* § proposed here (a multiple of 4) */
 }

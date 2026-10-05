@@ -1,18 +1,19 @@
-/* Modal 对话框 —— 几何逐条对齐官方 Modal.module.css：
- *   .root        fixed / inset:0 / z-index:1000 / 居中 / padding 24px
+/* Modal dialog — the geometry matches the official Modal.module.css item by item:
+ *   .root        fixed / inset:0 / z-index:1000 / centred / padding 24px
  *   .mask        absolute / inset:0 / background var(--dsw-alias-bg-mask-1)
  *                / backdrop-filter var(--dsw-mask-blur)
  *   .dialog      gap 20px / width min(380px,100%) / padding 0 0 24px / r24
- *                / layer-2 底色 / box-shadow var(--dsw-elevation-prominent)
+ *                / layer-2 fill / box-shadow var(--dsw-elevation-prominent)
  *   .header      padding 22px 14px 12px 24px / gap 8px / space-between
  *   .title       16/24/500
  *   .close       28×28 / r8 / label-secondary / hover interactive-bg-hover
  *   .description 14/22/400 / padding 0 24px
  *   .body        margin-top 20px / padding 0 24px / min-width 0
  *   .footer      flex-end / gap 8px / padding 0 24px
- * 官方 JS 用 createPortal 到 body、Escape 关闭、点 mask 关闭、role="dialog"。
- * 焦点陷阱与焦点样式为本仓库建议值（官方 Modal 没有），理由见 README。
- * 实现为本仓库原创：用 CSS 变量承载几何，未复制官方 CSS 源码。 */
+ * The official JS portals to body, closes on Escape, closes on a mask click, role="dialog".
+ * The focus trap and the focus styles are proposed here (the official Modal has neither);
+ * the README gives the reasons. Implemented as original work for this repository: geometry
+ * lives in CSS variables, no official CSS source was copied. */
 
 .root {
   --dsh-modal-z: 1000;
@@ -53,8 +54,9 @@
   border-radius: var(--dsh-modal-radius);
   background: var(--dsw-alias-bg-layer-2);
   box-shadow: var(--dsw-elevation-prominent);
-  /* § 本仓库建议值：对话框是可编程聚焦的容器（tabIndex=-1），
-   * 不画浏览器默认焦点环（官方依赖 :focus 默认行为，未显式声明）。 */
+  /* § Proposed here: the dialog is a programmatically focusable container (tabIndex=-1),
+   * so no browser default focus ring is drawn (the official source relies on the :focus
+   * default and declares nothing). */
   outline: none;
 }
 
@@ -86,8 +88,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  /* 官方未写 padding:0，依赖宿主全局 reset；本仓库组件不假定宿主 reset，
-   * 否则浏览器默认的按钮内边距会把这个方块撑大。 */
+  /* The official source does not write padding:0 and relies on the host's global reset;
+   * this repository's components do not assume a host reset, or the browser's default
+   * button padding would stretch this square. */
   padding: 0;
   width: 28px;
   height: 28px;
@@ -102,8 +105,8 @@
   background: var(--dsw-alias-interactive-bg-hover);
 }
 
-/* § 本仓库建议值：官方 .close 没有焦点样式；写法对齐官方 Switch.module.css
- * 的 :focus-visible（2px brand-primary + offset 2px）。 */
+/* § Proposed here: the official .close has no focus style; this one follows
+ * the :focus-visible of the official Switch.module.css (2px brand-primary + offset 2px). */
 .close:focus-visible {
   outline: 2px solid var(--dsw-alias-brand-primary);
   outline-offset: 2px;

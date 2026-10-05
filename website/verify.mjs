@@ -85,8 +85,77 @@ if (data !== null) {
   /* 图文并茂：每篇规范都要带至少一个能操作的演示——规范页只有文字的话，
    * 「看规范」就退化成「读规范」。演示由 markdown 里的 `demo:` 标记嵌进来，
    * 生成后是 `data-inline-demo` 的舞台。 */
-  const noDemo = data.specs.filter(s => !s.html.includes('data-inline-demo=')).map(s => s.id)
+  const noDemo = data.specs.filter(s => !s.doc.zh.html.includes('data-inline-demo=')).map(s => s.id)
   check('every spec carries an operable demo', noDemo.length === 0, noDemo.length === 0 ? `${data.specs.length}/${data.specs.length}` : noDemo.join(', '))
+
+  /* 双语契约（docs/I18N.md）：每篇中文文档都在 data 里，每篇英文文档都是干净的——
+   * 断言的是「英文页面不出现中文」，而唯一允许的中文是 <code> 里的产品实景串
+   * （那是引用，不是我们的文案）。覆盖率数字由 gen-site 算出，这里只比一致性。 */
+  const translatedSpecs = data.specs.filter(s => s.doc.en !== null)
+  const translatedGuides = data.guides.filter(g => g.doc.en !== null)
+  const translatedComponents = data.components.filter(c => c.doc.en !== null)
+  check('every document carries a Chinese body', data.specs.every(s => s.doc.zh !== null)
+    && data.guides.every(g => g.doc.zh !== null)
+    && data.components.every(c => c.doc.zh !== null))
+  check('i18n coverage counts what is actually translated',
+    data.i18nCoverage.specs.translated === translatedSpecs.length
+    && data.i18nCoverage.guides.translated === translatedGuides.length
+    && data.i18nCoverage.components.translated === translatedComponents.length,
+    `specs ${translatedSpecs.length}/${data.specs.length}, guides ${translatedGuides.length}/${data.guides.length}, components ${translatedComponents.length}/${data.components.length}`)
+
+  const CJK = /[\u3000-\u303f\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff00-\uffef]/u
+  const cjkIn = s => CJK.test(String(s ?? ''))
+  /* `<code>` 里可以引用产品实景串；别处出现中文就是漏译。`<code lang="zh-CN">` 是
+   * 带英文释义的产品标签，同样属于引用，所以剥标签时要认属性。 */
+  const codeSpan = /<code\b[^>]*>[\s\S]*?<\/code>/gu
+  const outsideCode = html => String(html ?? '').replace(codeSpan, '')
+  /* 引用了中文就必须紧跟释义：`data/product-labels.json` 的每条都会被 gen-site
+   * 渲染成 <code lang="zh-CN">…</code><span class="site-gloss">…</span>。
+   * 含 < > = 或引号的代码跨度是代码示例（`'设置分区'`、`<span>进行中</span>`），
+   * 不是产品标签，不要求释义——它们旁边本来就有解释。 */
+  const glossed = html => {
+    const source = String(html ?? '')
+    const spans = [...source.matchAll(/<code\b[^>]*>([\s\S]*?)<\/code>/gu)]
+    const unglossed = []
+    for (const span of spans) {
+      if (!cjkIn(span[1])) continue
+      if (/[<>="']/u.test(span[1])) continue
+      const after = source.slice(span.index + span[0].length, span.index + span[0].length + 40)
+      if (!after.includes('site-gloss')) unglossed.push(span[1].slice(0, 30))
+    }
+    return unglossed
+  }
+  const latinOnlyProblems = []
+  const unglossedProblems = []
+  const checkEnglish = (label, ...htmls) => {
+    for (const html of htmls) {
+      const bad = glossed(html)
+      if (bad.length > 0) unglossedProblems.push(`${label}: ${bad.join(' | ')}`)
+    }
+  }
+  for (const s of translatedSpecs) {
+    if (cjkIn(s.doc.en.title) || cjkIn(s.doc.en.summary) || cjkIn(outsideCode(s.doc.en.html))) latinOnlyProblems.push(`spec ${s.id}`)
+    checkEnglish(`spec ${s.id}`, s.doc.en.html)
+  }
+  for (const g of translatedGuides) {
+    if (cjkIn(g.doc.en.title) || cjkIn(g.doc.en.summary) || cjkIn(outsideCode(g.doc.en.html))
+      || g.doc.en.tasks.some(cjkIn)) latinOnlyProblems.push(`guide ${g.id}`)
+    checkEnglish(`guide ${g.id}`, g.doc.en.html)
+  }
+  for (const c of translatedComponents) {
+    if (cjkIn(c.doc.en.summary) || cjkIn(outsideCode(c.doc.en.readmeHtml)) || cjkIn(outsideCode(c.doc.en.specHtml))
+      || c.doc.en.whenToUse.some(cjkIn) || c.doc.en.whenNotToUse.some(cjkIn) || cjkIn(c.tags.en.join(' '))) {
+      latinOnlyProblems.push(`component ${c.id}`)
+    }
+    checkEnglish(`component ${c.id}`, c.doc.en.html, c.doc.en.readmeHtml, c.doc.en.specHtml)
+  }
+  check('the English build contains no Chinese outside <code> quotes', latinOnlyProblems.length === 0,
+    latinOnlyProblems.length === 0 ? `${translatedSpecs.length + translatedGuides.length + translatedComponents.length} documents` : latinOnlyProblems.join(', '))
+  check('every Chinese quotation in the English build carries a gloss', unglossedProblems.length === 0,
+    unglossedProblems.length === 0 ? 'all glossed' : unglossedProblems.slice(0, 4).join(' ;; '))
+  const dictionaryCjk = /\u4e00-\u9fff|[\u3000-\u303f]/u
+  check('the English dictionary is free of Chinese', !dictionaryCjk.test(JSON.stringify(data.i18n.en)),
+    JSON.stringify(data.i18n.en).match(/[\u4e00-\u9fff]+/gu)?.slice(0, 5).join(', ') ?? '')
 
   /* 组件的归属不能含糊：清单里的每个 id 要么在 official、要么在 proposed；
    * proposed 必须写明它服务的真实场景（origins.json 的 scenes），
@@ -289,14 +358,22 @@ if (browserPath === null) {
       return out.result.value
     }
 
-    const base = `http://127.0.0.1:${PORT}/`
-    const routes = ['#/', '#/why', '#/spec', '#/components', '#/seats', '#/icons', '#/tokens']
+   const base = `http://127.0.0.1:${PORT}/`
+    const guideRoutes = (data && data.guides ? data.guides : []).map(guide => `#/guide/${guide.id}`)
+    const routes = ['#/', '#/why', '#/spec', '#/components', '#/seats', '#/icons', '#/tokens', ...guideRoutes]
 
     await goto(base)
     check('home renders hero', await evaluate(`document.querySelector('.hero__title') !== null`))
     check('left index built', await evaluate(`document.querySelectorAll('.index__link').length > 5`), String(await evaluate(`document.querySelectorAll('.index__link').length`)))
     check('cards rendered', await evaluate(`document.querySelectorAll('.card').length > 0`), String(await evaluate(`document.querySelectorAll('.card').length`)))
-    check('stats include icons', await evaluate(`document.body.innerText.includes('官方图标集')`))
+    const initialLocale = await evaluate(`(function(){
+      var selected = document.querySelector("#lang button[aria-selected=true]");
+      var code = selected ? selected.getAttribute("data-lang") : "";
+      var locale = window.DSHDR && window.DSHDR.i18n && window.DSHDR.i18n[code];
+      var iconTitle = locale && locale.home && locale.home.cards && locale.home.cards.icons && locale.home.cards.icons.title;
+      return { code: code, eyebrow: locale && locale.home && locale.home.eyebrow, title: locale && locale.home && locale.home.title, iconTitle: iconTitle, renderedTitle: document.querySelector(".hero__title")?.textContent, renderedIconCard: !!iconTitle && document.body.innerText.includes(iconTitle) };
+    })()`)
+    check('stats include icons', await evaluate(`(function(){var tab=document.querySelector("#lang button[aria-selected=true]");var locale=window.DSHDR.i18n[tab.getAttribute("data-lang")];var title=locale&&locale.home&&locale.home.cards&&locale.home.cards.icons&&locale.home.cards.icons.title;return !!title&&document.body.innerText.includes(title)})()`), JSON.stringify(initialLocale))
 
     // every route must render and leave the main column non-empty
     for (const route of routes) {
@@ -370,9 +447,13 @@ if (browserPath === null) {
     check('nav collapses', await evaluate(`document.getElementById('shell').getAttribute('data-nav')==='hidden'`))
     await evaluate(`document.getElementById('navToggle').click()`)
     check('nav restores', await evaluate(`document.getElementById('shell').getAttribute('data-nav')==='shown'`))
+    /* Use a page with real aside blocks and normalize its starting state. */
+    await goto(base + '#/component/button')
+    await evaluate(`(function(){var shell=document.getElementById('shell');if(shell.getAttribute('data-aside')!=='shown')document.getElementById('asideToggle').click();return 1})()`)
     await evaluate(`document.getElementById('asideToggle').click()`)
     check('aside collapses', await evaluate(`document.getElementById('shell').getAttribute('data-aside')==='hidden'`))
     await evaluate(`document.getElementById('asideToggle').click()`)
+    check('aside restores', await evaluate(`document.getElementById('shell').getAttribute('data-aside')==='shown'`))
 
     // drag handles: present, focusable, keyboard-operable
     check('two rail handles', await evaluate(`document.querySelectorAll('.resizer').length === 2`))
@@ -459,7 +540,7 @@ if (browserPath === null) {
     check('shell composer dock is 26px', shellInfo !== null && Math.abs(shellInfo.dock - 26) <= 2, shellInfo === null ? 'n/a' : shellInfo.dock + 'px')
     /* 顶栏右上角：打开方式分段按钮、省略号、右侧边栏开关，三样都要在。 */
     check('shell top strip carries the three real tools', shellInfo !== null && shellInfo.tools === 3, shellInfo === null ? 'n/a' : String(shellInfo.tools))
-    check('shell shows demo sessions', shellInfo !== null && shellInfo.sessions >= 3, shellInfo === null ? 'n/a' : String(shellInfo.sessions))
+    check('shell shows only the observed new-session row', shellInfo !== null && shellInfo.sessions === 1, shellInfo === null ? 'n/a' : String(shellInfo.sessions))
 
     const shellToggle = await evaluate(`(function(){
         var stages = document.querySelectorAll('[data-inline-demo]');
@@ -654,9 +735,11 @@ if (browserPath === null) {
       }
     }
 
-    for (const [name, route] of [
-      ['home', '#/'], ['components', '#/components'], ['component', '#/component/button'],
-      ['icons', '#/icons'], ['seats', '#/seats'], ['spec', '#/spec'],
+   for (const [name, route] of [
+     ['home', '#/'], ['components', '#/components'], ['component', '#/component/button'],
+      ['guide-start', '#/guide/00-start'], ['guide-settings', '#/guide/20-pattern-settings'],
+      ['guide-sidebar', '#/guide/21-pattern-sidebar-panel'],
+     ['icons', '#/icons'], ['seats', '#/seats'], ['spec', '#/spec'],
       ['frame-layout', '#/spec/10-frame-layout'], ['icon-anatomy', '#/spec/50-icons'],
       ['tokens', '#/tokens'],
       /* 图文并茂那一轮的记录：每篇规范都带演示，截图也得留下它们的样子 */

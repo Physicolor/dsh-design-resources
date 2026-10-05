@@ -1,46 +1,46 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
 import styles from './panelheader.module.css';
 
-/** 面板标题栏尺寸。 */
+/** Panel header bar size. */
 export type PanelHeaderSize = 'md' | 'sm';
 
 export interface PanelHeaderProps extends HTMLAttributes<HTMLDivElement> {
-  /** 左侧标题文本。 */
+  /** The title text on the left. */
   title: ReactNode;
   /**
-   * 标题下方的补充说明（12/18，`var(--dsw-alias-label-tertiary)`）。
-   * 传入后标题栏高度会由内容撑开，不再锁定 --dsh-ph-height。
+   * Supplementary description below the title (12/18, `var(--dsw-alias-label-tertiary)`).
+   * When provided, the header bar's height is set by its content and no longer locked to --dsh-ph-height.
    */
   description?: ReactNode;
-  /** 右侧动作区内容，通常是若干 `Button`/图标按钮。 */
+  /** The content of the right-hand action area, usually several `Button`s / icon buttons. */
   actions?: ReactNode;
   /**
-   * 尺寸：`md` 高 44px（默认），`sm` 高 36px。
-   * 传了 `description` 时高度由内容决定，该属性只影响左右内边距。
+   * Size: `md` is 44px high (default), `sm` is 36px high.
+   * With a `description` the height is set by the content; this property then only affects the left / right padding.
    */
   size?: PanelHeaderSize;
-  /** 是否绘制底部 hairline，默认 `true`。 */
+  /** Whether to draw the bottom hairline, default `true`. */
   divider?: boolean;
 }
 
-/** 拼 class，避免引入 clsx 之类的依赖。 */
+/** Concatenates classes, avoiding a dependency like clsx. */
 function cx(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
 /**
- * 面板 / 抽屉 / 侧栏的标题栏：左侧标题，右侧动作区，底部一条 hairline。
+ * The header bar of a panel / drawer / sidebar: title on the left, action area on the right, a hairline at the bottom.
  *
- * 字号体系对齐官方 `Modal.module.css` 的 `.title`（16/24/500）——面板标题栏比
- * 对话框标题低一档，取 14/22/500，与官方 `Button.module.css` 的 `.button`
- * 同级。高度与内边距为 4 的倍数，属本仓库建议值（原因见 README）。
- *
- * @example
- * <PanelHeader title="会话设置" actions={<Button size="sm" icon={<IconClose />} aria-label="关闭" iconOnly />} />
+ * The type scale follows `.title` in the official `Modal.module.css` (16/24/500) — a panel header bar
+ * sits one step below a dialog title, so it takes 14/22/500, the same step as `.button` in the official
+ * `Button.module.css`. The height and padding are multiples of 4 and are values proposed here (for why, see the README).
  *
  * @example
- * // 带说明、紧凑尺寸、不要分隔线（自绘边框时）
- * <PanelHeader size="sm" divider={false} title="文件" description="3 个已修改" />
+ * <PanelHeader title="Session settings" actions={<Button size="sm" icon={<IconClose />} aria-label="Close" iconOnly />} />
+ *
+ * @example
+ * // With a description, compact size, no divider (when drawing your own border)
+ * <PanelHeader size="sm" divider={false} title="Files" description="3 modified" />
  */
 export const PanelHeader = forwardRef<HTMLDivElement, PanelHeaderProps>(function PanelHeader(
   { title, description, actions, size = 'md', divider = true, className, children, ...rest },

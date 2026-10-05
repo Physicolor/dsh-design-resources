@@ -1,9 +1,10 @@
-<!-- 座位图：下面列出的 11 个代表座位都是真的（名字 / kind / scope / 子座位数 / 用途 / replaceRisk
-     逐条抄自 data/slots.json 的实测座位树，共 90 个，2026-10-01 采集），那扇界面也是真的——
-     站点把 website/shell 里那套产品复刻挂上来，指针扫到哪一栏就标哪一栏。 -->
+<!-- Seat map: the 11 representative seats listed below are real (name / kind / scope / child count /
+     purpose / replaceRisk, each copied from the measured seat tree in data/slots.json — 90 seats,
+     captured 2026-10-01) — and so is the frame around it: the site mounts the product replica from
+     website/shell, and whichever column the pointer touches is the one that gets highlighted. -->
 <div style="margin:0 0 14px">
   <div data-shell='{"hover":true,"highlight":"left","right":"closed"}'>
-    <p style="margin:0;padding:24px;font:14px/1.6 sans-serif;color:#81858c">
+    <p style="margin:0;padding:24px;font:14px/1.6 sans-serif;color:#81858c" data-t="demo.seat-map.previewNotice">
       此预览需要在 DeepSeek Design Resources 站内查看（座位是活的容器，不是图片）。
     </p>
   </div>
@@ -35,11 +36,11 @@
 (function () {
   'use strict'
 
-  /* 演示脚本跑在 shadow root 里，document.querySelector 看不到自己的标记；站点在挂载期
-     把当前根挂在 window.__DSH_DEMO_ROOT 上。 */
+  /* A demo script runs inside a shadow root, where document.querySelector cannot see its own
+     markup; the site publishes the current root on window.__DSH_DEMO_ROOT while it mounts. */
   var root = window.__DSH_DEMO_ROOT || document
 
-  /* 逐条抄自 data/slots.json（name / kind / scope / childCount / purpose） */
+  /* Copied item by item from data/slots.json (name / kind / scope / childCount / purpose) */
   var SEATS = [
     { name: 'root', kind: 'single', scope: 'root', children: 5, purpose: 'SlotCore 播下的渲染树根洞：壳自己渲染的那一个座位，也是其余所有座位的祖先。', replaceRisk: 'shadows-shipped-ui' },
     { name: 'shell.overlay', kind: 'list', scope: 'root', children: 1, purpose: '横跨整个框架的悬浮层，盖在所有栏之上、且在各栏滚动容器之外。', replaceRisk: 'none' },
@@ -54,7 +55,7 @@
     { name: 'settings.trigger', kind: 'single', scope: 'root', children: 0, purpose: '左栏底部触发行的内容：图标 + 文字，作为插槽内容提供。', replaceRisk: 'shadows-shipped-ui' },
   ]
 
-  /** 一行座位。 */
+  /** One seat row. */
   function rowHtml(seat) {
     return '<div class="seats__row">'
       + '<span class="badge2 badge2--' + seat.kind + '">' + seat.kind + '</span>'

@@ -1,10 +1,11 @@
-<!-- 本组件官方没有对应物，这是本仓库建议的实现；预览为几何展示，不代表产品界面。 -->
+<!-- The product has no counterpart for this component; this is this repository's proposed implementation.
+     The preview is a geometry exhibit and does not represent the product interface. -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>InlineNotice · DSH 设计资源</title>
+<title data-t-title="demo.inline-notice.pageTitle">InlineNotice · DSH 设计资源</title>
 <style>
 :root {
   --dsw-static-neutral-bluish-00: #fff;
@@ -107,15 +108,18 @@
   --dsw-shadow-lv3: 0 0 1px 0 rgba(0, 0, 0, .2), 0 0 4px 0 rgba(0, 0, 0, .02), 0 12px 32px 0 rgba(0, 0, 0, .08);
   --dsw-mask-blur: none;
   --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  /* 官方把这两条写成 font 简写合成 token，这里展开以便 demo 单条使用。 */
+  /* The official side writes these two as font shorthand composite tokens;
+     they are expanded here so a demo can use one of them on its own. */
   --dsw-font-s-14: 14px/22px var(--dsw-font-family);
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
 }
 
-/* 深色主题：站点把深色 token 挂在 body[data-ds-dark-theme] 上，Shadow DOM 里选择不到它，
-   而 :host 自己的自定义属性又会盖过继承值——所以深色值在文件内自带一份，用 light-dark()
-   依据宿主继承下来的 color-scheme 选择。只列本页用到、且深浅两套取值不同的 token；
-   数值逐条取自 website/css/dsh-tokens.css。 */
+/* Dark theme: the site hangs the dark tokens on body[data-ds-dark-theme], which cannot be
+   selected inside a Shadow DOM, and :host's own custom properties would override the
+   inherited values — so the dark values are carried inside the file and light-dark()
+   picks between them from the color-scheme the host inherits. Only the tokens this page
+   uses that differ between the light and dark sets are listed; each value is taken from
+   website/css/dsh-tokens.css. */
 :root {
   --dsw-alias-bg-module-platform: light-dark(var(--dsw-static-neutral-bluish-60), var(--dsw-static-neutral-bluish-800));
   --dsw-alias-label-secondary: light-dark(var(--dsw-static-neutral-bluish-700), var(--dsw-static-neutral-bluish-300));
@@ -125,9 +129,10 @@
   --dsw-alias-state-warn-tertiary: light-dark(var(--dsw-static-amber-100), var(--dsw-static-amber-900));
 }
 
-/* --------------------------------------------------- 组件几何
-   数值逐条取自同目录 inline-notice.module.css（CSS Modules 的哈希类名已去掉），
-   规则重新组织过，声明值未改。 */
+/* --------------------------------------------------- component geometry
+   Each value is taken from inline-notice.module.css in the same directory (the CSS Modules
+   hashed class names are removed); the rules are reorganised, the declared values are
+   unchanged. */
 .notice {
   --dsh-notice-text: var(--dsw-alias-label-secondary);
   --dsh-notice-bg: var(--dsw-alias-bg-module-platform);
@@ -161,7 +166,7 @@
 .actionable:focus-visible .dismiss,
 .actionable:hover .dismiss { opacity: 1; }
 
-/* § 本仓库建议值：多行形态 */
+/* § values proposed by this repository: the multiline form */
 .multiline {
   height: auto;
   min-height: 32px;
@@ -176,7 +181,7 @@
 
 .text { min-width: 0; overflow-wrap: break-word; }
 
-/* § 本仓库建议值：关闭控件 */
+/* § values proposed by this repository: the dismiss control */
 .dismiss {
   display: grid;
   place-items: center;
@@ -202,9 +207,10 @@
   .notice { transition: none; }
 }
 
-/* ------------------------------------------------------------------ demo 外壳
-   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
-   .demo-label 是本页唯一允许出现的文字，只写客观事实（尺寸 / 状态名）。 */
+/* ------------------------------------------------------------------ demo shell
+   body only provides the 16px padding and the text colour, and sets no background: the
+   backdrop comes from the site (the shadow host). .demo-label is the only copy allowed on
+   this page, and it states objective facts only (sizes / state names). */
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -232,43 +238,43 @@ body {
 </head>
 <body>
   <div class="demo-group">
-    <p class="demo-label">单行 · h32 r8 · pad 0 10 · gap 4 · font 12/18 · 500</p>
+    <p class="demo-label" data-t="demo.inline-notice.labelSingleLine">单行 · h32 r8 · pad 0 10 · gap 4 · font 12/18 · 500</p>
     <div class="stack" style="gap:8px;align-items:flex-start">
-      <div class="notice info"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.6a6.4 6.4 0 1 1 0 12.8A6.4 6.4 0 0 1 8 1.6zm0 1.6a4.8 4.8 0 1 0 0 9.6 4.8 4.8 0 0 0 0-9.6zM7.2 7.2h1.6v4H7.2zM7.2 4.8h1.6v1.6H7.2z" fill="currentColor"/></svg></span><span class="text">提示信息文字</span></div>
-      <div class="notice success"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.6a6.4 6.4 0 1 1 0 12.8A6.4 6.4 0 0 1 8 1.6zm3.1 4.5-4.3 4.3-2-2-1.1 1.1 3.1 3.1 5.4-5.4z" fill="currentColor"/></svg></span><span class="text">成功信息文字</span></div>
-      <div class="notice warn"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.6 15 14H1zM8 5.6 4.6 12h6.8zM7.2 7.2h1.6v2.4H7.2zm0 3.2h1.6v1.6H7.2z" fill="currentColor"/></svg></span><span class="text">警告信息文字</span></div>
-      <div class="notice error"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.6a6.4 6.4 0 1 1 0 12.8A6.4 6.4 0 0 1 8 1.6zm2.9 3.5L8 7.9 5.1 5.1 4 6.2 6.9 9 4 11.9l1.1 1.1L8 10.1l2.9 2.9 1.1-1.1L9.1 9 12 6.2z" fill="currentColor"/></svg></span><span class="text">错误信息文字</span></div>
+      <div class="notice info"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.6a6.4 6.4 0 1 1 0 12.8A6.4 6.4 0 0 1 8 1.6zm0 1.6a4.8 4.8 0 1 0 0 9.6 4.8 4.8 0 0 0 0-9.6zM7.2 7.2h1.6v4H7.2zM7.2 4.8h1.6v1.6H7.2z" fill="currentColor"/></svg></span><span class="text" data-t="demo.inline-notice.infoText">提示信息文字</span></div>
+      <div class="notice success"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.6a6.4 6.4 0 1 1 0 12.8A6.4 6.4 0 0 1 8 1.6zm3.1 4.5-4.3 4.3-2-2-1.1 1.1 3.1 3.1 5.4-5.4z" fill="currentColor"/></svg></span><span class="text" data-t="demo.inline-notice.successText">成功信息文字</span></div>
+      <div class="notice warn"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.6 15 14H1zM8 5.6 4.6 12h6.8zM7.2 7.2h1.6v2.4H7.2zm0 3.2h1.6v1.6H7.2z" fill="currentColor"/></svg></span><span class="text" data-t="demo.inline-notice.warnText">警告信息文字</span></div>
+      <div class="notice error"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.6a6.4 6.4 0 1 1 0 12.8A6.4 6.4 0 0 1 8 1.6zm2.9 3.5L8 7.9 5.1 5.1 4 6.2 6.9 9 4 11.9l1.1 1.1L8 10.1l2.9 2.9 1.1-1.1L9.1 9 12 6.2z" fill="currentColor"/></svg></span><span class="text" data-t="demo.inline-notice.errorText">错误信息文字</span></div>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">无图标 · 仅文案</p>
+    <p class="demo-label" data-t="demo.inline-notice.labelNoIcon">无图标 · 仅文案</p>
     <div class="stack" style="gap:8px;align-items:flex-start">
-      <div class="notice"><span class="text">无图标文字一</span></div>
-      <div class="notice success"><span class="text">无图标文字二</span></div>
+      <div class="notice"><span class="text" data-t="demo.inline-notice.noIconTextOne">无图标文字一</span></div>
+      <div class="notice success"><span class="text" data-t="demo.inline-notice.noIconTextTwo">无图标文字二</span></div>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">multiline · min-height 32 · pad 6 10 · icon margin-top 2</p>
+    <p class="demo-label" data-t="demo.inline-notice.labelMultiline">multiline · min-height 32 · pad 6 10 · icon margin-top 2</p>
     <div class="stack" style="gap:8px;align-items:flex-start;max-width:360px">
-      <div class="notice error multiline"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.6a6.4 6.4 0 1 1 0 12.8A6.4 6.4 0 0 1 8 1.6zm2.9 3.5L8 7.9 5.1 5.1 4 6.2 6.9 9 4 11.9l1.1 1.1L8 10.1l2.9 2.9 1.1-1.1L9.1 9 12 6.2z" fill="currentColor"/></svg></span><span class="text">多行文本示例：这是一段较长的说明文字，用于演示换行后图标与首行的对齐。</span></div>
-      <div class="notice warn multiline"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.6 15 14H1zM8 5.6 4.6 12h6.8zM7.2 7.2h1.6v2.4H7.2zm0 3.2h1.6v1.6H7.2z" fill="currentColor"/></svg></span><span class="text">多行文本示例：第二段较长的说明文字，同样用于演示换行。</span></div>
+      <div class="notice error multiline"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.6a6.4 6.4 0 1 1 0 12.8A6.4 6.4 0 0 1 8 1.6zm2.9 3.5L8 7.9 5.1 5.1 4 6.2 6.9 9 4 11.9l1.1 1.1L8 10.1l2.9 2.9 1.1-1.1L9.1 9 12 6.2z" fill="currentColor"/></svg></span><span class="text" data-t="demo.inline-notice.multilineError">多行文本示例：这是一段较长的说明文字，用于演示换行后图标与首行的对齐。</span></div>
+      <div class="notice warn multiline"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.6 15 14H1zM8 5.6 4.6 12h6.8zM7.2 7.2h1.6v2.4H7.2zm0 3.2h1.6v1.6H7.2z" fill="currentColor"/></svg></span><span class="text" data-t="demo.inline-notice.multilineWarn">多行文本示例：第二段较长的说明文字，同样用于演示换行。</span></div>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">onDismiss · 根节点 button · dismiss 20×20 r6 · 悬停/聚焦才显形</p>
+    <p class="demo-label" data-t="demo.inline-notice.labelDismiss">onDismiss · 根节点 button · dismiss 20×20 r6 · 悬停/聚焦才显形</p>
     <div class="stack" style="gap:8px;align-items:flex-start">
       <button type="button" class="notice success actionable">
         <span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.6a6.4 6.4 0 1 1 0 12.8A6.4 6.4 0 0 1 8 1.6zm3.1 4.5-4.3 4.3-2-2-1.1 1.1 3.1 3.1 5.4-5.4z" fill="currentColor"/></svg></span>
-        <span class="text">可关闭的提示文字一</span>
-        <span class="dismiss" role="button" tabindex="0" aria-label="关闭提示"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M14.1168 13.197 13.197 14.1167 1.8833 2.803 2.803 1.8832z" fill="currentColor"/><path d="M13.197 1.8833 14.1168 2.803 2.803 14.1168 1.8833 13.197z" fill="currentColor"/></svg></span>
+        <span class="text" data-t="demo.inline-notice.dismissibleTextOne">可关闭的提示文字一</span>
+        <span class="dismiss" role="button" tabindex="0" aria-label="关闭提示" data-t-aria="demo.inline-notice.dismissAria"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M14.1168 13.197 13.197 14.1167 1.8833 2.803 2.803 1.8832z" fill="currentColor"/><path d="M13.197 1.8833 14.1168 2.803 2.803 14.1168 1.8833 13.197z" fill="currentColor"/></svg></span>
       </button>
       <button type="button" class="notice warn actionable">
         <span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 1.6 15 14H1zM8 5.6 4.6 12h6.8zM7.2 7.2h1.6v2.4H7.2zm0 3.2h1.6v1.6H7.2z" fill="currentColor"/></svg></span>
-        <span class="text">可关闭的提示文字二</span>
-        <span class="dismiss" role="button" tabindex="0" aria-label="关闭提示"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M14.1168 13.197 13.197 14.1167 1.8833 2.803 2.803 1.8832z" fill="currentColor"/><path d="M13.197 1.8833 14.1168 2.803 2.803 14.1168 1.8833 13.197z" fill="currentColor"/></svg></span>
+        <span class="text" data-t="demo.inline-notice.dismissibleTextTwo">可关闭的提示文字二</span>
+        <span class="dismiss" role="button" tabindex="0" aria-label="关闭提示" data-t-aria="demo.inline-notice.dismissAria"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M14.1168 13.197 13.197 14.1167 1.8833 2.803 2.803 1.8832z" fill="currentColor"/><path d="M13.197 1.8833 14.1168 2.803 2.803 14.1168 1.8833 13.197z" fill="currentColor"/></svg></span>
       </button>
     </div>
   </div>

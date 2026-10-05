@@ -1,0 +1,26 @@
+{
+  "zh": {
+    "title": "KeyValueList · DSH 设计资源",
+    "defaultLabel": "key 13/20 tertiary · value 14/22 primary · 行距 4 · 列距 12",
+    "alignStartLabel": "align start · 值换行成多行时",
+    "keyOne": "字段一",
+    "keyTwo": "字段二",
+    "keyThree": "字段三",
+    "valueOne": "值一",
+    "valueTwo": "值二",
+    "valueThree": "值三",
+    "valueOneLong": "值一：一段较长的示例内容，用于演示值换行后的对齐。"
+  },
+  "en": {
+    "title": "KeyValueList · DSH Design Resources",
+    "defaultLabel": "key 13/20 tertiary · value 14/22 primary · row padding 4 · column gap 12",
+    "alignStartLabel": "align start · when the value wraps onto several lines",
+    "keyOne": "Field one",
+    "keyTwo": "Field two",
+    "keyThree": "Field three",
+    "valueOne": "Value one",
+    "valueTwo": "Value two",
+    "valueThree": "Value three",
+    "valueOneLong": "Value one: a longer sample text, used to show how the value aligns once it wraps."
+  }
+}

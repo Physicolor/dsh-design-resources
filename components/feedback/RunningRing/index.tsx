@@ -2,31 +2,33 @@ import { forwardRef, type ReactNode, type Ref } from 'react';
 import styles from './running-ring.module.css';
 
 export interface RunningRingProps {
-  /** 渲染尺寸（px），默认 14 —— 产品在左栏会话行里的实渲尺寸。 */
+  /** Rendered size (px), default 14 — the size the product actually renders in the left sidebar's conversation row. */
   size?: number;
   /**
-   * 给读屏的说明文字，例如「进行中」。产品在会话行里就是紧挨着环放一段视觉隐藏的
-   * 文本；不传则不渲染（此时环对辅助技术完全不存在）。
+   * Text for screen readers, for example "Running". In the product the conversation row puts
+   * visually hidden text right next to the ring; when omitted nothing is rendered (the ring
+   * then does not exist at all for assistive technology).
    */
   label?: ReactNode;
-  /** 额外的布局类名，由调用方决定外边距、对齐等。 */
+  /** Extra layout class name; the caller decides margins, alignment and so on. */
   className?: string;
 }
 
-/** 拼 class，避免引入 clsx 之类的依赖。 */
+/** Join class names without pulling in a dependency like clsx. */
 function cx(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
 /**
- * 运行圆环：一条 25% 不透明度的轨道 + 一段绕圈跑并且自己伸缩的弧。
+ * Running ring: a track at 25% opacity plus an arc that travels around it and stretches on its own.
  *
- * 它表达的是「正在进行，还不知道要多久」——不是进度百分比（那要用进度条），
- * 也不是「完成了」（那是静态状态点）。产品在左栏会话行首用它替代会话字形，
- * 几何逐条来自运行中的界面（见 SPEC 的 geometry-source）。
+ * It says "in progress, and there is no telling how long" — not a percentage of progress
+ * (that needs a progress bar), and not "done" (that is the static state dot). The product uses it
+ * at the start of a conversation row in the left sidebar in place of the conversation glyph, and
+ * every value comes from the running interface (see the geometry source in the SPEC).
  *
  * @example
- * <RunningRing label="进行中" />
+ * <RunningRing label="Running" />
  */
 export const RunningRing = forwardRef<HTMLSpanElement, RunningRingProps>(function RunningRing(
   { size = 14, label, className },

@@ -2,62 +2,64 @@ import { useEffect, useLayoutEffect, useState, type CSSProperties, type ReactNod
 import { createPortal } from 'react-dom';
 import styles from './toast.module.css';
 
-/** 停留（全不透明）时长缺省值，与官方 Toast 的 `HOLD_MS = 3000` 一致。 */
+/** Default hold (fully opaque) duration, matching `HOLD_MS = 3000` in the official Toast. */
 export const TOAST_HOLD_MS = 3000;
 
-/** 淡出时长，与 `toast.module.css` 里 `dsh-toast-fade` 的 1000ms 必须一致。 */
+/** Fade-out duration; it must match the 1000ms of `dsh-toast-fade` in `toast.module.css`. */
 export const TOAST_FADE_MS = 1000;
 
 export interface ToastProps {
-  /** 提示文案。由调用方给出（已本地化的字符串或任意 React 节点）。 */
+  /** The toast text. Supplied by the caller (a localised string or any React node). */
   text: ReactNode;
   /**
-   * 前置图标节点。会被放进 16×16 的图标容器，容器颜色取警告色。
-   * 图标自身请写 `aria-hidden`，语义由文案承担。
+   * Leading icon node. It goes into a 16×16 icon container whose colour is the warning colour.
+   * Give the icon itself `aria-hidden`; the text carries the meaning.
    */
   icon?: ReactNode;
   /**
-   * 水平中心跟随的锚点元素（例如输入框卡片），缺省时居中于视口。
-   * 传入 DOM 节点本身：`anchor={composerRef.current}`。
+   * Anchor element whose horizontal centre the toast follows (the composer card, for example);
+   * without one it is centred in the viewport. Pass the DOM node itself: `anchor={composerRef.current}`.
    */
   anchor?: HTMLElement | null;
-  /** 全不透明停留时长（毫秒），缺省 3000。越长留给阅读的时间越多。 */
+  /** Fully opaque hold duration in milliseconds, default 3000. The longer it is, the more time there is to read. */
   holdMs?: number;
   /**
-   * 淡出动画结束、并且停留计时也走完时调用一次。
-   * 调用方在这里卸载提示（把 `open` 置为 `false` 或把节点从列表里移除）。
+   * Called once when the fade-out animation has finished and the hold timer has also run out.
+   * The caller unmounts the toast here (set `open` to `false` or drop the node from the list).
    */
   onDone: () => void;
-  /** 追加在根节点上的类名。 */
+  /** Class name appended to the root. */
   className?: string;
 }
 
-/** 拼 class，避免引入 clsx 之类的依赖。 */
+/** Join class names without pulling in a dependency like clsx. */
 function cx(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
 /**
- * 顶部居中、自动淡出的瞬时提示条。
+ * A brief toast, centred at the top and fading out on its own.
  *
- * 职责边界（重要）：本组件只负责「呈现层」——几何、进出场动画、随锚点定位；
- * 「定时关闭」由两条分开的线组成：CSS 用 `--dsh-toast-hold` 驱动淡出动画，
- * 组件用一个 `holdMs + TOAST_FADE_MS` 的定时器在动画走完后回调 `onDone`。
- * 两者共享同一个 `holdMs`，因此不会出现「动画还没放完就被卸载」。
+ * Scope (important): this component owns only the presentation layer — geometry, entry and exit
+ * animation, and positioning against an anchor. The timed dismissal is two separate strands: CSS
+ * drives the fade-out through `--dsh-toast-hold`, and the component calls `onDone` from a
+ * `holdMs + TOAST_FADE_MS` timer once the animation has run. Both share the same `holdMs`, so it
+ * can never be unmounted mid-animation.
  *
- * 几何参照官方 `Toast.module.css` 的 `.toast` / `.icon`，实现为本仓库原创。
+ * The geometry follows `.toast` / `.icon` in the official `Toast.module.css`; the implementation
+ * is original to this repository.
  *
  * @example
  * const [toast, setToast] = useState<string | null>(null);
- * // 保存成功后：
- * setToast('已保存');
+ * // After a successful save:
+ * setToast('Saved');
  * {toast !== null && (
  *   <Toast key={toast} text={toast} onDone={() => { setToast(null); }} />
  * )}
  *
  * @example
- * // 居中对齐到某个锚点（例如输入框卡片）而不是整个视口：
- * <Toast text="已重新连接" anchor={composerRef.current} holdMs={5000} onDone={hide} />
+ * // Align the centre to an anchor (the composer card, for example) instead of the viewport:
+ * <Toast text="Reconnected" anchor={composerRef.current} holdMs={5000} onDone={hide} />
  */
 export function Toast({ text, icon, anchor, holdMs = TOAST_HOLD_MS, onDone, className }: ToastProps) {
   useEffect(() => {
@@ -82,13 +84,14 @@ export function Toast({ text, icon, anchor, holdMs = TOAST_HOLD_MS, onDone, clas
     };
   }, [anchor]);
 
-  // 传送到 body：祖先上的 transform / filter 会改变 fixed 的包含块，
-  // 提示条会被困在那个祖先的盒子里并被裁掉。缺省 onDone 无所谓，这里只守卫 SSR。
+  // Portal to the body: a transform / filter on an ancestor changes the containing block for
+  // fixed positioning, so the toast would be trapped in that ancestor's box and clipped.
+  // A missing onDone does not matter here; this only guards against SSR.
   if (typeof document === 'undefined') return null;
 
   const style: CSSProperties = {
     ...(left === null ? {} : { left }),
-    // 同一个值同时驱动淡出延迟与上面的卸载计时器。
+    // One value drives both the fade-out delay and the unmount timer above.
     '--dsh-toast-hold': `${String(holdMs)}ms`,
   } as CSSProperties;
 

@@ -1,16 +1,20 @@
 <!--
-  右栏的存在方式。
+  How the rightbar is present.
 
-  右栏不是"第三个中栏"：它常驻、可比中栏更强，但随时可以收起来，收起时让出的
-  宽度归中栏。**直接在窗口里点右栏头部那个按钮**开合它，看中栏怎么让位——
-  不需要外部的开关按钮。
+  The rightbar is not "a third centre column": it stays on, can carry more weight
+  than the centre column, but can be put away at any time, and the width it gives
+  up goes back to the centre column. **Click that button in the rightbar header,
+  right in the window**, to open and close it and watch how the centre column
+  gives way — no external toggle button is needed.
 
-  几何来源：docs/reference/geometry.json（拖拽带 8px、会话头 40px）。
+  Geometry source: docs/reference/geometry.json (drag handle 8px, conversation
+  header 40px).
 
-  说明：依赖站点脚本，只在资源站内嵌时渲染。
+  Note: it depends on the site scripts and only renders when embedded in the
+  resource site.
 -->
 <div data-shell='{"hover":true,"right":"open"}'>
-    <p style="margin:0;padding:24px;font:14px/1.6 sans-serif;color:#81858c">
+    <p style="margin:0;padding:24px;font:14px/1.6 sans-serif;color:#81858c" data-t="demo.frame-rightbar.siteNotice">
         此预览需要在 DeepSeek Design Resources 站内查看（它是活的界面，不是图片）。
     </p>
 </div>

@@ -1,10 +1,11 @@
-<!-- 本组件官方没有对应物，这是本仓库建议的实现；预览为几何展示，不代表产品界面。 -->
+<!-- This component has no official counterpart; this is the implementation proposed by this
+     repository. The preview shows geometry only and does not represent the product interface. -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>KeyValueList · DSH 设计资源</title>
+<title data-t="demo.key-value-list.title">KeyValueList · DSH 设计资源</title>
 <style>
 :root {
   --dsw-static-neutral-bluish-00: #fff;
@@ -106,24 +107,25 @@
   --dsw-shadow-lv3: 0 0 1px 0 rgba(0, 0, 0, .2), 0 0 4px 0 rgba(0, 0, 0, .02), 0 12px 32px 0 rgba(0, 0, 0, .08);
   --dsw-mask-blur: none;
   --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  /* 官方把这两条写成 font 简写合成 token，这里展开以便 demo 单条使用。 */
+  /* The official source writes these two as composite font shorthand tokens; they are expanded here so a demo can use one on its own. */
   --dsw-font-s-14: 14px/22px var(--dsw-font-family);
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
 }
 
-/* 深色主题：站点把深色 token 挂在 body[data-ds-dark-theme] 上，Shadow DOM 里选择不到它，
-   而 :host 自己的自定义属性又会盖过继承值——所以深色值在文件内自带一份，用 light-dark()
-   依据宿主继承下来的 color-scheme 选择。只列本页用到、且深浅两套取值不同的 token；
-   数值逐条取自 website/css/dsh-tokens.css。 */
+/* Dark theme: the site hangs the dark tokens on body[data-ds-dark-theme], which a Shadow DOM
+   cannot select, and :host's own custom properties would override the inherited values — so the
+   dark values are carried in this file and chosen with light-dark() from the color-scheme the host
+   inherits. Only the tokens this page uses whose light and dark values differ; every value comes
+   from website/css/dsh-tokens.css. */
 :root {
   --dsw-alias-border-l2: light-dark(#0000001a, #ffffff1f);
   --dsw-alias-label-primary: light-dark(var(--dsw-static-neutral-bluish-1000), var(--dsw-static-neutral-bluish-50));
   --dsw-alias-label-tertiary: light-dark(var(--dsw-static-neutral-bluish-600), var(--dsw-static-neutral-bluish-400));
 }
 
-/* --------------------------------------------------- 组件几何
-   数值逐条取自同目录 key-value-list.module.css（CSS Modules 的哈希类名已去掉），
-   规则重新组织过，声明值未改。 */
+/* --------------------------------------------------- component geometry
+   Every value comes from key-value-list.module.css in this directory (the CSS Modules hashed
+   class names are removed); the rules are re-organised, the declared values are unchanged. */
 .list {
   --dsh-kv-column-gap: 12px;
   --dsh-kv-row-padding: 4px;
@@ -157,9 +159,10 @@
   overflow-wrap: break-word;
 }
 
-/* ------------------------------------------------------------------ demo 外壳
-   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
-   .demo-label 是本页唯一允许出现的文字，只写客观事实（尺寸 / 状态名）。 */
+/* ------------------------------------------------------------------ demo shell
+   body gets only a 16px padding and the text colour, no background: the surface comes from the
+   site (the shadow host). .demo-label is the only text this page allows, and it states observable
+   facts only (sizes / state names). */
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -187,28 +190,28 @@ body {
 </head>
 <body>
   <div class="demo-group" style="max-width:340px">
-    <p class="demo-label">key 13/20 tertiary · value 14/22 primary · 行距 4 · 列距 12</p>
+    <p class="demo-label" data-t="demo.key-value-list.defaultLabel">key 13/20 tertiary · value 14/22 primary · 行距 4 · 列距 12</p>
     <dl class="list">
-      <div class="item"><dt class="key">字段一</dt><dd class="value">值一</dd></div>
-      <div class="item"><dt class="key">字段二</dt><dd class="value">值二</dd></div>
-      <div class="item"><dt class="key">字段三</dt><dd class="value">值三</dd></div>
+      <div class="item"><dt class="key" data-t="demo.key-value-list.keyOne">字段一</dt><dd class="value" data-t="demo.key-value-list.valueOne">值一</dd></div>
+      <div class="item"><dt class="key" data-t="demo.key-value-list.keyTwo">字段二</dt><dd class="value" data-t="demo.key-value-list.valueTwo">值二</dd></div>
+      <div class="item"><dt class="key" data-t="demo.key-value-list.keyThree">字段三</dt><dd class="value" data-t="demo.key-value-list.valueThree">值三</dd></div>
     </dl>
   </div>
 
   <div class="demo-group" style="max-width:340px">
     <p class="demo-label">valueAlign end + divider · 0.5px border-l2</p>
     <dl class="list" data-divider="true" data-value-align="end">
-      <div class="item"><dt class="key">字段一</dt><dd class="value">值一</dd></div>
-      <div class="item"><dt class="key">字段二</dt><dd class="value">值二</dd></div>
-      <div class="item"><dt class="key">字段三</dt><dd class="value">值三</dd></div>
+      <div class="item"><dt class="key" data-t="demo.key-value-list.keyOne">字段一</dt><dd class="value" data-t="demo.key-value-list.valueOne">值一</dd></div>
+      <div class="item"><dt class="key" data-t="demo.key-value-list.keyTwo">字段二</dt><dd class="value" data-t="demo.key-value-list.valueTwo">值二</dd></div>
+      <div class="item"><dt class="key" data-t="demo.key-value-list.keyThree">字段三</dt><dd class="value" data-t="demo.key-value-list.valueThree">值三</dd></div>
     </dl>
   </div>
 
   <div class="demo-group" style="max-width:340px">
-    <p class="demo-label">align start · 值换行成多行时</p>
+    <p class="demo-label" data-t="demo.key-value-list.alignStartLabel">align start · 值换行成多行时</p>
     <dl class="list" data-align="start" data-divider="true">
-      <div class="item"><dt class="key">字段一</dt><dd class="value">值一：一段较长的示例内容，用于演示值换行后的对齐。</dd></div>
-      <div class="item"><dt class="key">字段二</dt><dd class="value">值二</dd></div>
+      <div class="item"><dt class="key" data-t="demo.key-value-list.keyOne">字段一</dt><dd class="value" data-t="demo.key-value-list.valueOneLong">值一：一段较长的示例内容，用于演示值换行后的对齐。</dd></div>
+      <div class="item"><dt class="key" data-t="demo.key-value-list.keyTwo">字段二</dt><dd class="value" data-t="demo.key-value-list.valueTwo">值二</dd></div>
     </dl>
   </div>
 </body>

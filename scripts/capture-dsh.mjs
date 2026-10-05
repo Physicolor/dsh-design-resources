@@ -19,14 +19,16 @@
 
 import { mkdir, writeFile, rm, readFile } from 'node:fs/promises'
 import { existsSync, readFileSync } from 'node:fs'
-import { join, dirname } from 'node:path'
+import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { spawn, spawnSync } from 'node:child_process'
 import { tmpdir } from 'node:os'
 import { authCookieFor } from './lib/auth.mjs'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
-const OUT = join(ROOT, 'docs', 'reference')
+const OUT = process.env.DSH_CAPTURE_OUT
+  ? resolve(ROOT, process.env.DSH_CAPTURE_OUT)
+  : join(ROOT, 'docs', 'reference')
 
 const DSH_URL = process.env.DSH_URL ?? 'http://127.0.0.1:19387'
 const CREDENTIALS = process.env.DSH_CREDENTIALS ?? 'D:/dsh-home/.credentials.yaml'
@@ -44,6 +46,18 @@ const OPEN_SETTINGS = `(() => {
   if (labels.length === 0) throw new Error('settings label not found')
   const target = labels[0].closest('button, [role="button"], a') ?? labels[0].parentElement
   target.click()
+  return true
+})()`
+
+/** Close the first-run preview notice only in an isolated capture profile. */
+const DISMISS_PREVIEW_NOTICE = `(() => {
+  const title = [...document.querySelectorAll('*')]
+    .find(el => el.children.length === 0 && (el.textContent || '').trim() === '预览版说明')
+  if (title === undefined) return false
+  const button = [...document.querySelectorAll('button')]
+    .find(el => (el.textContent || '').trim() === '继续')
+  if (button === undefined) throw new Error('preview notice continuation button not found')
+  button.click()
   return true
 })()`
 
@@ -66,6 +80,40 @@ const OPEN_SESSION = `(() => {
   const target = rows.find(row => row !== selected) ?? rows[0]
   if (target === undefined) throw new Error('no session row matched')
   target.click()
+  return true
+})()`
+
+/** Create a blank local session in the isolated capture profile; sends nothing. */
+const OPEN_NEW_SESSION = `(() => {
+  const label = [...document.querySelectorAll('*')]
+    .find(el => el.children.length === 0 && (el.textContent || '').trim() === '新会话'
+      && el.getBoundingClientRect().top < 160)
+  if (label === undefined) throw new Error('new-session label not found')
+  const target = label.closest('button, [role="button"], a') ?? label.parentElement
+  if (target === null) throw new Error('new-session click target not found')
+  target.click()
+  return true
+})()`
+
+/** Skip provider setup in the isolated, credential-free capture profile. */
+const SKIP_API_KEY_SETUP = `(() => {
+  const title = [...document.querySelectorAll('*')]
+    .find(el => el.children.length === 0 && (el.textContent || '').trim() === '添加一个 API Key 开始使用')
+  if (title === undefined) return false
+  const label = [...document.querySelectorAll('*')]
+    .find(el => el.children.length === 0 && (el.textContent || '').trim() === '稍后配置')
+  if (label === undefined) throw new Error('skip-setup action not found')
+  const target = label.closest('button, [role="button"], a') ?? label.parentElement
+  if (target === null) throw new Error('skip-setup target not found')
+  target.click()
+  return true
+})()`
+
+const OPEN_EMPTY_RIGHTBAR = `(() => {
+  const button = [...document.querySelectorAll('button')]
+    .find(el => (el.getAttribute('aria-label') || '').trim() === '打开右侧边栏')
+  if (button === undefined) throw new Error('rightbar toggle not found')
+  button.click()
   return true
 })()`
 
@@ -589,6 +637,28 @@ const SCENES = [
       return true
     })()`],
   },
+  {
+    name: '17-session-tabs',
+    title: '会话视图页签 · 空白本地会话',
+    steps: [OPEN_NEW_SESSION, SKIP_API_KEY_SETUP],
+  },
+  {
+    name: '18-sidebar-chrome',
+    title: '左栏与新会话页顶栏',
+    steps: [],
+    collect: 'chrome',
+  },
+  {
+    name: '19-rightbar-empty',
+    title: '宿主右栏 · 无插件内容',
+    steps: [OPEN_EMPTY_RIGHTBAR],
+  },
+  {
+    name: '20-session-tabs-clean',
+    title: '会话标题栏 · 页签裁取',
+    steps: [OPEN_SESSION],
+    clip: { x: 840, y: 0, width: 240, height: 54, scale: 1 },
+  },
 ]
 
 /* ── browser plumbing ──────────────────────────────────────────────── */
@@ -698,11 +768,11 @@ try {
    * @param params - parameters.
    * @returns the result.
    */
-  const send = (method, params) => new Promise((resolve, reject) => {
+  const send = (method, params, timeoutMs = 60000) => new Promise((resolve, reject) => {
     const id = nextId++
     pending.set(id, { resolve, reject })
     ws.send(JSON.stringify({ id, method, params: params ?? {} }))
-    setTimeout(() => { if (pending.has(id)) { pending.delete(id); reject(new Error(`${method} timeout`)) } }, 60000)
+    setTimeout(() => { if (pending.has(id)) { pending.delete(id); reject(new Error(`${method} timeout`)) } }, timeoutMs)
   })
 
   await send('Page.enable')
@@ -736,11 +806,21 @@ try {
   for (const scene of scenes) {
     await send('Page.navigate', { url: DSH_URL + '/' })
     await new Promise(r => setTimeout(r, 3500))
+    if (process.env.DSH_CAPTURE_DISMISS_PREVIEW === '1') {
+      const dismissed = await evaluate(DISMISS_PREVIEW_NOTICE)
+      if (dismissed) await new Promise(r => setTimeout(r, 600))
+    }
+    if (process.env.DSH_CAPTURE_SKIP_API_SETUP === '1') {
+      const skipped = await evaluate(SKIP_API_KEY_SETUP)
+      if (skipped) await new Promise(r => setTimeout(r, 600))
+    }
     for (const step of scene.steps) {
       await evaluate(step)
       await new Promise(r => setTimeout(r, 1200))
     }
-    const shot = await send('Page.captureScreenshot', { format: 'png' }, 90000)
+    const screenshotOptions = { format: 'png' }
+    if (scene.clip !== undefined) screenshotOptions.clip = scene.clip
+    const shot = await send('Page.captureScreenshot', screenshotOptions, scene.captureTimeoutMs ?? 90000)
     await writeFile(join(OUT, `${scene.name}.png`), Buffer.from(shot.data, 'base64'))
     console.log(`captured  ${scene.name}  ${scene.title}`)
 

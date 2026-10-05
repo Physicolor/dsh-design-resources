@@ -1,13 +1,16 @@
-<!-- 令牌量板：档位值逐条取自 data/tokens.json 与 website/css/dsh-tokens.css（产品采集值），
-     不在这里另立一套。板上做的是「渲染后回读」——圆角读回自己设的那个档位、高程读 box-shadow、
-     字号读 font-size/line-height、语义色在「浅色 / 深色」两块里各自解一次色值。它验证的是
-     「这份演示确实按该档位渲染」，不是独立测量；原始测量在 docs/reference 与 data/tokens.json。 -->
+<!-- Token scale board: every step value is taken one by one from data/tokens.json and
+     website/css/dsh-tokens.css (values collected from the product); the board does not set up a
+     second set of its own. What it does is read back after render — the corner radius reads back the
+     step it just set, elevation reads box-shadow, type reads font-size/line-height, and each semantic
+     colour is resolved once in the light panel and once in the dark one. It shows that this specimen
+     really renders at that step, not an independent measurement; the original measurements live in
+     docs/reference and data/tokens.json. -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>令牌量板 · DSH 设计资源</title>
+<title>Token scale board · DSH Design Resources</title>
 <style>
 :root {
   --dsw-static-neutral-bluish-00: #fff;
@@ -67,15 +70,31 @@ body {
 .swatchText { font-size: 11px; line-height: 16px; color: var(--dsw-alias-label-secondary); }
 .radiusBox { width: 56px; height: 56px; background: var(--dsw-alias-interactive-bg-hover); border: 1px solid var(--dsw-alias-border-l2); }
 .elev { display: flex; flex-direction: column; gap: 4px; align-items: center; }
+.elev-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: start;
+}
+.elev-row .cell { min-width: 0; align-items: center; }
+.elev-row .read {
+  width: 100%;
+  max-width: 144px;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
 .elevCard {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 96px;
   height: 64px;
+  padding: 6px;
   border-radius: var(--dsw-radius-md);
   background: var(--dsw-alias-bg-layer-1);
   font-size: 11px;
+  text-align: center;
+  overflow-wrap: anywhere;
   color: var(--dsw-alias-label-tertiary);
 }
 .typeRow { display: flex; align-items: baseline; gap: 12px; }
@@ -93,12 +112,17 @@ body {
 .theme__name { flex: 1; font-size: 11px; line-height: 16px; color: var(--dsw-alias-label-secondary); font-variant-numeric: tabular-nums; }
 .theme__value { font-size: 11px; line-height: 16px; color: var(--dsw-alias-label-primary); font-variant-numeric: tabular-nums; }
 </style>
+<style>
+@media (max-width: 560px) {
+  .elev-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+</style>
 </head>
 <body>
 
   <div class="group">
-    <h3 class="group__title">圆角只有六档</h3>
-    <p class="demo-label">`--dsw-radius-xs…panel` = 4 / 8 / 12 / 16 / 20 / 28 · 读数取 border-top-left-radius 的计算值（档位值取自 data/tokens.json）</p>
+    <h3 class="group__title" data-t="demo.token-scale.radiusTitle">圆角只有六档</h3>
+    <p class="demo-label" data-t="demo.token-scale.radiusLabel">`--dsw-radius-xs…panel` = 4 / 8 / 12 / 16 / 20 / 28 · 读数取 border-top-left-radius 的计算值（档位值取自 data/tokens.json）</p>
     <div class="row">
       <span class="cell"><span class="radiusBox" data-radius="4px"></span><span class="read" data-read></span></span>
       <span class="cell"><span class="radiusBox" data-radius="8px"></span><span class="read" data-read></span></span>
@@ -110,9 +134,9 @@ body {
   </div>
 
   <div class="group">
-    <h3 class="group__title">高程：三层阴影 + 一层弹层</h3>
-    <p class="demo-label">卡片用贴地 hairline，浮层才用阴影；读数读的是 box-shadow 的计算值（压缩显示）</p>
-    <div class="row">
+    <h3 class="group__title" data-t="demo.token-scale.elevationTitle">高程：三层阴影 + 一层弹层</h3>
+    <p class="demo-label" data-t="demo.token-scale.elevationLabel">卡片用贴地 hairline，浮层才用阴影；读数读的是 box-shadow 的计算值（压缩显示）</p>
+    <div class="row elev-row">
       <span class="cell elev"><span class="elevCard" data-shadow="lv1" data-check="lv1">shadow-lv1</span><span class="read" data-read></span></span>
       <span class="cell elev"><span class="elevCard" data-shadow="lv2" data-check="lv2">shadow-lv2</span><span class="read" data-read></span></span>
       <span class="cell elev"><span class="elevCard" data-shadow="lv3" data-check="lv3">shadow-lv3</span><span class="read" data-read></span></span>
@@ -121,24 +145,24 @@ body {
   </div>
 
   <div class="group">
-    <h3 class="group__title">字号档位</h3>
-    <p class="demo-label">用角色而不是裸字号：`--dsw-font-xxxs-11` … `--dsw-font-xl-24`，每个都是一整条 font 简写</p>
-    <div class="typeRow"><span class="typeSample" style="font:var(--dsw-font-xxxs-11)">设计资源 Design Resources</span><span class="typeName" data-type>--dsw-font-xxxs-11</span></div>
-    <div class="typeRow"><span class="typeSample" style="font:var(--dsw-font-xxs-12)">设计资源 Design Resources</span><span class="typeName" data-type>--dsw-font-xxs-12</span></div>
-    <div class="typeRow"><span class="typeSample" style="font:var(--dsw-font-xs-13)">设计资源 Design Resources</span><span class="typeName" data-type>--dsw-font-xs-13</span></div>
-    <div class="typeRow"><span class="typeSample" style="font:var(--dsw-font-s-14)">设计资源 Design Resources</span><span class="typeName" data-type>--dsw-font-s-14</span></div>
-    <div class="typeRow"><span class="typeSample" style="font:var(--dsw-font-base-16)">设计资源 Design Resources</span><span class="typeName" data-type>--dsw-font-base-16</span></div>
-    <div class="typeRow"><span class="typeSample" style="font:var(--dsw-font-m-18)">设计资源 Design Resources</span><span class="typeName" data-type>--dsw-font-m-18</span></div>
-    <div class="typeRow"><span class="typeSample" style="font:var(--dsw-font-l-20)">设计资源 Design Resources</span><span class="typeName" data-type>--dsw-font-l-20</span></div>
-    <div class="typeRow"><span class="typeSample" style="font:var(--dsw-font-xl-24)">设计资源 Design Resources</span><span class="typeName" data-type>--dsw-font-xl-24</span></div>
+    <h3 class="group__title" data-t="demo.token-scale.typeTitle">字号档位</h3>
+    <p class="demo-label" data-t="demo.token-scale.typeLabel">用角色而不是裸字号：`--dsw-font-xxxs-11` … `--dsw-font-xl-24`，每个都是一整条 font 简写</p>
+    <div class="typeRow"><span class="typeSample" style="font:var(--dsw-font-xxxs-11)" data-t="demo.token-scale.typeSample">设计资源 Design Resources</span><span class="typeName" data-type>--dsw-font-xxxs-11</span></div>
+    <div class="typeRow"><span class="typeSample" style="font:var(--dsw-font-xxs-12)" data-t="demo.token-scale.typeSample">设计资源 Design Resources</span><span class="typeName" data-type>--dsw-font-xxs-12</span></div>
+    <div class="typeRow"><span class="typeSample" style="font:var(--dsw-font-xs-13)" data-t="demo.token-scale.typeSample">设计资源 Design Resources</span><span class="typeName" data-type>--dsw-font-xs-13</span></div>
+    <div class="typeRow"><span class="typeSample" style="font:var(--dsw-font-s-14)" data-t="demo.token-scale.typeSample">设计资源 Design Resources</span><span class="typeName" data-type>--dsw-font-s-14</span></div>
+    <div class="typeRow"><span class="typeSample" style="font:var(--dsw-font-base-16)" data-t="demo.token-scale.typeSample">设计资源 Design Resources</span><span class="typeName" data-type>--dsw-font-base-16</span></div>
+    <div class="typeRow"><span class="typeSample" style="font:var(--dsw-font-m-18)" data-t="demo.token-scale.typeSample">设计资源 Design Resources</span><span class="typeName" data-type>--dsw-font-m-18</span></div>
+    <div class="typeRow"><span class="typeSample" style="font:var(--dsw-font-l-20)" data-t="demo.token-scale.typeSample">设计资源 Design Resources</span><span class="typeName" data-type>--dsw-font-l-20</span></div>
+    <div class="typeRow"><span class="typeSample" style="font:var(--dsw-font-xl-24)" data-t="demo.token-scale.typeSample">设计资源 Design Resources</span><span class="typeName" data-type>--dsw-font-xl-24</span></div>
   </div>
 
   <div class="group">
-    <h3 class="group__title">语义色：同一行两块，浅深各解一次</h3>
-    <p class="demo-label">左右两块用同一批 `--dsw-alias-*`，只有 color-scheme 不同；色值那一列是浏览器当场算出来的</p>
+    <h3 class="group__title" data-t="demo.token-scale.colourTitle">语义色：同一行两块，浅深各解一次</h3>
+    <p class="demo-label" data-t="demo.token-scale.colourLabel">左右两块用同一批 `--dsw-alias-*`，只有 color-scheme 不同；色值那一列是浏览器当场算出来的</p>
     <div class="themes">
       <div class="theme theme--light" data-theme-panel>
-        <p class="theme__title">浅色（color-scheme: light）</p>
+        <p class="theme__title" data-t="demo.token-scale.lightPanelTitle">浅色（color-scheme: light）</p>
         <div class="theme__row"><span class="theme__chip" data-swatch="label-primary"></span><span class="theme__name">label-primary</span><span class="theme__value" data-value="label-primary"></span></div>
         <div class="theme__row"><span class="theme__chip" data-swatch="label-secondary"></span><span class="theme__name">label-secondary</span><span class="theme__value" data-value="label-secondary"></span></div>
         <div class="theme__row"><span class="theme__chip" data-swatch="label-tertiary"></span><span class="theme__name">label-tertiary</span><span class="theme__value" data-value="label-tertiary"></span></div>
@@ -147,7 +171,7 @@ body {
         <div class="theme__row"><span class="theme__chip" data-swatch="state-business-primary"></span><span class="theme__name">state-business-primary</span><span class="theme__value" data-value="state-business-primary"></span></div>
       </div>
       <div class="theme theme--dark" data-theme-panel>
-        <p class="theme__title">深色（color-scheme: dark）</p>
+        <p class="theme__title" data-t="demo.token-scale.darkPanelTitle">深色（color-scheme: dark）</p>
         <div class="theme__row"><span class="theme__chip" data-swatch="label-primary"></span><span class="theme__name">label-primary</span><span class="theme__value" data-value="label-primary"></span></div>
         <div class="theme__row"><span class="theme__chip" data-swatch="label-secondary"></span><span class="theme__name">label-secondary</span><span class="theme__value" data-value="label-secondary"></span></div>
         <div class="theme__row"><span class="theme__chip" data-swatch="label-tertiary"></span><span class="theme__name">label-tertiary</span><span class="theme__value" data-value="label-tertiary"></span></div>
@@ -162,11 +186,11 @@ body {
 (function () {
   'use strict'
 
-  /* 演示脚本跑在 shadow root 里，document.querySelector 看不到自己的标记；站点在挂载期
-     把当前根挂在 window.__DSH_DEMO_ROOT 上。 */
+  /* The demo script runs inside a shadow root, where document.querySelector cannot see its own
+     markup; the site publishes the current root on window.__DSH_DEMO_ROOT while mounting. */
   var root = window.__DSH_DEMO_ROOT || document
 
-  /* 圆角：读出计算值，跟规范里那一档对齐（对不上就红） */
+  /* Corner radius: read the computed value back and line it up with the spec's step (red when they disagree) */
   Array.prototype.forEach.call(root.querySelectorAll('[data-radius]'), function (box) {
     var want = box.getAttribute('data-radius')
     box.style.borderRadius = want
@@ -178,7 +202,7 @@ body {
     out.style.color = ok ? '#14663c' : '#b3271f'
   })
 
-  /* 高程：把 box-shadow 的计算值截断显示，证明用的确实是那一条 token */
+  /* Elevation: show the computed box-shadow truncated, proving the token in use really is that one */
   var shadows = {
     lv1: 'var(--dsw-shadow-lv1)',
     lv2: 'var(--dsw-shadow-lv2)',
@@ -194,14 +218,14 @@ body {
     if (out !== null) out.textContent = value.length > 46 ? value.slice(0, 46) + '…' : value
   })
 
-  /* 字号：读 font-size / line-height（名字写在 spans 里，读数补在后面） */
+  /* Type: read font-size / line-height (the name sits in the span, the readout is appended after it) */
   Array.prototype.forEach.call(root.querySelectorAll('[data-type]'), function (name) {
     var sample = name.parentElement.querySelector('.typeSample')
     var cs = getComputedStyle(sample)
     name.textContent = name.textContent + ' → ' + cs.fontSize + '/' + cs.lineHeight + ' · ' + cs.fontWeight
   })
 
-  /* 语义色：两块主题各自把同一个令牌解一次色 */
+  /* Semantic colours: each theme panel resolves the same token once */
   var swatchTokens = {
     'label-primary': 'var(--dsw-alias-label-primary)',
     'label-secondary': 'var(--dsw-alias-label-secondary)',

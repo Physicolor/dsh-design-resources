@@ -1,0 +1,24 @@
+{
+  "zh": {
+    "mdRow": "md · 段 h36 r8 · 容器 pad 4 r12 · gap 0 · 两段与三段",
+    "smRow": "sm · 段 h28 · pad 0 10 · font 12/18",
+    "iconRow": "icon 16×16 · aria-hidden",
+    "disabledRow": "disabled · 文字 label-tertiary · 保留选中填充",
+    "viewOptions": "视图选项组",
+    "rangeOptions": "区间选项组",
+    "optionOne": "选项一",
+    "optionTwo": "选项二",
+    "optionThree": "选项三"
+  },
+  "en": {
+    "mdRow": "md · segment h36 r8 · container pad 4 r12 · gap 0 · two and three segments",
+    "smRow": "sm · segment h28 · pad 0 10 · font 12/18",
+    "iconRow": "icon 16×16 · aria-hidden",
+    "disabledRow": "disabled · text label-tertiary · keeps the selected fill",
+    "viewOptions": "View options group",
+    "rangeOptions": "Range options group",
+    "optionOne": "Option one",
+    "optionTwo": "Option two",
+    "optionThree": "Option three"
+  }
+}

@@ -1,12 +1,15 @@
-/* 鱼标的几何不在这份 CSS 里：官方 FishLogo 用 svg 的 width/height 属性 +
- * viewBox（23.16 × 17.04）承载尺寸，本组件沿用同一做法，所以下面的规则只处理
- * 「放进页面后怎么与邻居共处」，两条都是本仓库建议值（§），官方没有对应声明。
- * 实现为本仓库原创，未复制官方 CSS 源码（官方 FishLogo 也没有配套 .module.css）。 */
+/* The fish mark's geometry is not in this CSS: the official FishLogo carries size in the svg's
+ * width/height attributes + viewBox (23.16 × 17.04), and this component follows the same approach, so
+ * the rules below only cover "how it coexists with its neighbours once on the page" — both are values
+ * proposed by this repository (§), with no corresponding official declaration.
+ * The implementation is original to this repository; no official CSS source was copied (the official
+ * FishLogo ships no .module.css either). */
 
 .mark {
-  /* § 本仓库建议值：品牌标记在 flex 行里不应被压缩成非等比尺寸。 */
+  /* § Proposed here: a brand mark in a flex row should not be squeezed into a non-proportional size. */
   flex: none;
-  /* § 本仓库建议值：svg 默认按基线对齐，与相邻文字并排时底部会显得下坠；
-     居中后鱼标与同排文字的视觉中线一致。 */
+  /* § Proposed here: an svg aligns to the baseline by default, so its bottom looks sagging when set
+     beside adjacent text; centring it puts the fish mark on the same visual midline as the text in
+     the row. */
   vertical-align: middle;
 }

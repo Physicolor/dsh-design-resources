@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>StateDot · DSH 设计资源</title>
+<title data-t="demo.state-dot.title">StateDot · DSH 设计资源</title>
 <style>
 :root {
   --dsw-static-neutral-bluish-00: #fff;
@@ -105,23 +105,24 @@
   --dsw-shadow-lv3: 0 0 1px 0 rgba(0, 0, 0, .2), 0 0 4px 0 rgba(0, 0, 0, .02), 0 12px 32px 0 rgba(0, 0, 0, .08);
   --dsw-mask-blur: none;
   --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  /* 官方把这两条写成 font 简写合成 token，这里展开以便 demo 单条使用。 */
+  /* The official source writes these two as composite font shorthand tokens; they are expanded here so a demo can use one on its own. */
   --dsw-font-s-14: 14px/22px var(--dsw-font-family);
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
 }
 
-/* 深色主题：站点把深色 token 挂在 body[data-ds-dark-theme] 上，Shadow DOM 里选择不到它，
-   而 :host 自己的自定义属性又会盖过继承值——所以深色值在文件内自带一份，用 light-dark()
-   依据宿主继承下来的 color-scheme 选择。只列本页用到、且深浅两套取值不同的 token；
-   数值逐条取自 website/css/dsh-tokens.css。 */
+/* Dark theme: the site hangs the dark tokens on body[data-ds-dark-theme], which a Shadow DOM
+   cannot select, and :host's own custom properties would override the inherited values — so the
+   dark values are carried in this file and chosen with light-dark() from the color-scheme the host
+   inherits. Only the tokens this page uses whose light and dark values differ; every value comes
+   from website/css/dsh-tokens.css. */
 :root {
   --dsw-alias-label-tertiary: light-dark(var(--dsw-static-neutral-bluish-600), var(--dsw-static-neutral-bluish-400));
   --dsw-alias-state-error-primary: light-dark(var(--dsw-static-red-600), var(--dsw-static-red-400));
 }
 
-/* --------------------------------------------------- 组件几何
-   数值逐条取自同目录 state-dot.module.css（CSS Modules 的哈希类名已去掉），
-   规则重新组织过，声明值未改。 */
+/* --------------------------------------------------- component geometry
+   Every value comes from state-dot.module.css in this directory (the CSS Modules hashed class names
+   are removed); the rules are re-organised, the declared values are unchanged. */
 .dot,
 .matrix { --dsh-statedot-ongoing: var(--dsw-static-deepseek-450); flex: none; }
 
@@ -166,14 +167,16 @@
   37.5%, 100% { opacity: 0.15; }
 }
 
-/* § 本仓库建议值：减少动态时停掉追逐，8 格停在中间档 0.6 */
+/* § value proposed by this repository: stop the chase when motion is reduced; the 8 cells rest at
+   the middle step, 0.6 */
 @media (prefers-reduced-motion: reduce) {
   .cell { animation: none; opacity: 0.6; }
 }
 
-/* ------------------------------------------------------------------ demo 外壳
-   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
-   .demo-label 是本页唯一允许出现的文字，只写客观事实（尺寸 / 状态名）。 */
+/* ------------------------------------------------------------------ demo shell
+   body gets only a 16px padding and the text colour, no background: the surface comes from the
+   site (the shadow host). .demo-label is the only text this page allows, and it states observable
+   facts only (sizes / state names). */
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -203,18 +206,19 @@ body {
 </style>
 </head>
 <body>
-<!-- 截图里只出现过 done 一种状态：04-settings-models.png 的模型提供商行，绿色的实心点。 -->
+<!-- Only the done state ever appears in the screenshots: the model provider row of
+     04-settings-models.png, a green solid dot. -->
 
   <div class="demo-group">
-    <p class="demo-label">04-settings-models · 模型提供商行 · done（实拍绿核实心 8×8，见 SPEC 已知偏差）</p>
+    <p class="demo-label" data-t="demo.state-dot.captureLabel">04-settings-models · 模型提供商行 · done（实拍绿核实心 8×8，见 SPEC 已知偏差）</p>
     <div class="demo-stack" style="gap:12px">
-      <span class="provider"><span class="provider-name">DeepSeek</span><span class="dot" data-state="done" style="width:10px;height:10px"></span></span>
-      <span class="provider"><span class="provider-name">Command Code</span><span class="dot" data-state="done" style="width:10px;height:10px"></span></span>
+      <span class="provider"><span class="provider-name" data-capture="model provider row, 04-settings-models capture">DeepSeek</span><span class="dot" data-state="done" style="width:10px;height:10px"></span></span>
+      <span class="provider"><span class="provider-name" data-capture="model provider row, 04-settings-models capture">Command Code</span><span class="dot" data-state="done" style="width:10px;height:10px"></span></span>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">截图未覆盖 · warning / error / idle / ongoing —— 截图里没有这四种状态</p>
+    <p class="demo-label" data-t="demo.state-dot.uncoveredStatesLabel">截图未覆盖 · warning / error / idle / ongoing —— 截图里没有这四种状态</p>
     <div class="demo-row" style="gap:16px">
       <span class="dot" data-state="warning" style="width:10px;height:10px"></span>
       <span class="dot" data-state="error" style="width:10px;height:10px"></span>
@@ -224,7 +228,7 @@ body {
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">截图未覆盖 · 外径 10 / 12 / 16 · 光环 inset 0 · 实心核 inset 20%</p>
+    <p class="demo-label" data-t="demo.state-dot.sizesLabel">截图未覆盖 · 外径 10 / 12 / 16 · 光环 inset 0 · 实心核 inset 20%</p>
     <div class="demo-row" style="gap:16px">
       <span class="dot" data-state="done" style="width:10px;height:10px"></span>
       <span class="dot" data-state="done" style="width:12px;height:12px"></span>

@@ -93,7 +93,7 @@ window.DSHShellParts.conversationFlow = function (ctx) {
     var icon = ctx.icon
     var esc = ctx.esc
 
-    var bubbles = data.messages.map(function (message) {
+    var bubbles = (data.messages || []).map(function (message) {
         var isUser = message.role === 'user'
         /* 只有用户消息有气泡；助手正文是落在背景上的 markdown。 */
         return '<div class="sh-msg' + (isUser ? ' sh-msg--user' : ' sh-msg--assistant') + '">'
@@ -104,7 +104,7 @@ window.DSHShellParts.conversationFlow = function (ctx) {
     }).join('')
 
     /* 工具调用 ← 折叠态的活动行：图标 + 标题一条线，内容紧随其后。 */
-    var tool = '<div class="sh-tool">'
+    var tool = data.tool == null ? '' : '<div class="sh-tool">'
         + '<button class="sh-tool__title" type="button">'
         + '<span class="sh-tool__leading">' + icon('check') + '</span>'
         + '<span class="sh-tool__label">' + esc(data.tool.label) + '</span>'

@@ -1,0 +1,24 @@
+{
+  "zh": {
+    "boardAria": "设置位置支持范围决策图",
+    "onePreference": "一个跨会话偏好",
+    "onePreferenceBody": "放进宿主通用设置中的一行。",
+    "sectionSeat": "几组相关的插件设置",
+    "sectionSeatBody": "注册为宿主设置窗口中的一个分区。",
+    "windowOnly": "必须使用插件独立窗口",
+    "noPublicSeat": "当前没有公开座位",
+    "noPublicSeatBody": "不要把宿主设置入口或 shell.overlay 当成窗口 API。",
+    "sourceNote": "依据 data/slots.json：settings.trigger 与 settings.launcher 属于宿主入口；shell.overlay 是浮层座位。"
+  },
+  "en": {
+    "boardAria": "Decision map: where a settings surface can live",
+    "onePreference": "One cross-conversation preference",
+    "onePreferenceBody": "Put it in one row in the host's General settings.",
+    "sectionSeat": "A few groups of related plugin settings",
+    "sectionSeatBody": "Register it as a section in the host's settings window.",
+    "windowOnly": "A plugin-owned window is required",
+    "noPublicSeat": "No public seat yet",
+    "noPublicSeatBody": "Don't treat the host's settings entry points or shell.overlay as a window API.",
+    "sourceNote": "Source: data/slots.json — settings.trigger and settings.launcher are host entry points; shell.overlay is an overlay seat."
+  }
+}

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Button · DSH 设计资源</title>
+<title>Button · DSH Design Resources</title>
 <style>
 :root {
   --dsw-static-neutral-bluish-00: #fff;
@@ -105,15 +105,17 @@
   --dsw-shadow-lv3: 0 0 1px 0 rgba(0, 0, 0, .2), 0 0 4px 0 rgba(0, 0, 0, .02), 0 12px 32px 0 rgba(0, 0, 0, .08);
   --dsw-mask-blur: none;
   --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  /* 官方把这两条写成 font 简写合成 token，这里展开以便 demo 单条使用。 */
+  /* The product declares these two as font-shorthand composite tokens; they are expanded here
+     so the demo can use each one on its own. */
   --dsw-font-s-14: 14px/22px var(--dsw-font-family);
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
 }
 
-/* 深色主题：站点把深色 token 挂在 body[data-ds-dark-theme] 上，Shadow DOM 里选择不到它，
-   而 :host 自己的自定义属性又会盖过继承值——所以深色值在文件内自带一份，用 light-dark()
-   依据宿主继承下来的 color-scheme 选择。只列本页用到、且深浅两套取值不同的 token；
-   数值逐条取自 website/css/dsh-tokens.css。 */
+/* Dark theme: the site hangs its dark tokens on body[data-ds-dark-theme], which a shadow DOM
+   cannot select, and :host custom properties would override the inherited values — so the dark
+   values are carried in this file and chosen with light-dark() from the color-scheme the host
+   inherits. Only tokens this page uses whose light and dark values differ are listed; every
+   value comes from website/css/dsh-tokens.css. */
 :root {
   --dsw-alias-border-l3: light-dark(#0000001f, #ffffff29);
   --dsw-alias-brand-primary: light-dark(var(--dsw-static-neutral-bluish-1000), var(--dsw-static-neutral-bluish-50));
@@ -124,13 +126,13 @@
   --dsw-alias-label-primary-foreground: light-dark(var(--dsw-static-neutral-bluish-00), var(--dsw-static-neutral-bluish-1000));
 }
 
-/* --------------------------------------------------- 组件几何
-   数值逐条取自同目录 button.module.css（CSS Modules 的哈希类名已去掉），
-   规则重新组织过，声明值未改。 */
+/* --------------------------------------------------- component geometry
+   Every value comes from button.module.css in this directory (the CSS Modules hashed class
+   names are dropped); the rules are reorganised, the declared values are unchanged. */
 .button {
   --dsh-btn-height: 36px;
   --dsh-btn-pad-x: 14px;
-  --dsh-btn-radius: 18px;
+  --dsh-btn-radius: var(--dsw-radius-md);
   --dsh-btn-font-size: 14px;
   --dsh-btn-line-height: 22px;
   --dsh-btn-gap: 4px;
@@ -155,18 +157,19 @@
 
 .button:disabled { cursor: not-allowed; opacity: 0.4; }
 
-/* § 本仓库建议值：官方 Button 未定义焦点样式 */
+/* § Proposed here: the official Button defines no focus style */
 .button:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 2px; }
 
 .sm {
   --dsh-btn-height: 28px;
   --dsh-btn-pad-x: 10px;
-  --dsh-btn-radius: 14px;
+  --dsh-btn-radius: var(--dsw-radius-sm);
   --dsh-btn-font-size: 12px;
   --dsh-btn-line-height: 18px;
 }
 
-/* § 高度取官方注释的 Icon_container 28×28；width/padding 为本仓库建议值 */
+/* § The height follows the official Icon_container note of 28×28; width and padding are
+   proposed here */
 .icon-only { --dsh-btn-pad-x: 0; width: var(--dsh-btn-height); padding: 0; }
 
 .primary { background: var(--dsw-alias-button-primary-fill); color: var(--dsw-alias-label-primary-foreground); }
@@ -187,9 +190,10 @@
   height: 16px;
 }
 
-/* ------------------------------------------------------------------ demo 外壳
-   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
-   .demo-label 是本页唯一允许出现的文字，只写客观事实（尺寸 / 状态名）。 */
+/* ------------------------------------------------------------------ demo shell
+   body sets only the 16px padding and the text colour, never a background: the site (the shadow
+   host) supplies that. .demo-label is the only text this page allows, and it states facts only
+   (sizes and state names). */
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -214,41 +218,24 @@ body {
   background: color-mix(in srgb, var(--dsw-alias-label-primary) 7%, transparent);
 }
 
-/* § 场景实测：06-plugins 页头主操作实拍 96×32，比 md（36）矮 4px —— 按 owner 覆写高度复现。 */
-.btn-page { --dsh-btn-height: 32px; }
+
 </style>
 </head>
 <body>
-<!-- 以下三组各对应 docs/reference 里真实出现过的一处按钮，文案与尺寸照抄截图。 -->
-
   <div class="demo-group">
-    <p class="demo-label">06-plugins · 插件页页头右上 · primary + 16px icon（实拍 96×32）</p>
+    <p class="demo-label" data-t="demo.button.settingHeader">设置窗口页头 · 紧凑 outlined · 实景文案</p>
     <div class="demo-row">
-      <button type="button" class="button primary btn-page"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M7.2 1.6h1.6v5.6h5.6v1.6H8.8v5.6H7.2V8.8H1.6V7.2h5.6V1.6z" fill="currentColor"/></svg></span>添加插件</button>
+      <button type="button" class="button outline sm" data-capture="Settings window header, clean profile capture">打开配置文件</button>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">03-settings-open · 设置面板页头右侧 · outline sm（实拍 94×28）</p>
+    <p class="demo-label" data-t="demo.button.modelProviderCard">模型页的供应商卡片 · 紧凑 outlined · 实景文案</p>
     <div class="demo-row">
-      <button type="button" class="button outline sm">打开配置文件</button>
+      <button type="button" class="button outline sm" data-capture="Models page provider card, clean profile capture">编辑</button>
     </div>
   </div>
 
-  <div class="demo-group">
-    <p class="demo-label">03-settings-open · 通用设置「快捷键」行尾 · outline md（实拍 97×36）</p>
-    <div class="demo-row">
-      <button type="button" class="button outline">编辑快捷键</button>
-    </div>
-  </div>
-
-  <div class="demo-group">
-    <p class="demo-label">截图未覆盖 · ghost / toolbar / disabled —— 仅按源码的 hover 与禁用规则复现，不代表真实位置</p>
-    <div class="demo-row">
-      <button type="button" class="button ghost">次要操作</button>
-      <button type="button" class="button toolbar">工具条</button>
-      <button type="button" class="button primary" disabled>主要操作</button>
-    </div>
-  </div>
+  <p class="demo-label" data-t="demo.button.captureNote">「打开配置文件」与「编辑」均来自干净 profile 实景。通用设置的「编辑快捷键」属于 SettingsRow 行内动作，不是 Button primitive；官方 Button.module.css 未定义键盘焦点环，资源仓库的焦点环是单独标注的建议。</p>
 </body>
 </html>

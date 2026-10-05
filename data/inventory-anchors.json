@@ -1,5 +1,12 @@
 {
-    "$comment": "产品界面里的类名族 → 本仓库规范/组件里的出处。scan-ui.mjs 的自动对照只能做包含判断，而同一件东西在产品和仓库里常常不是一个名字：产品叫 sessionRow，仓库里叫 SidebarRow。这张表是人的判断，命中的身份直接判为已收录（并把出处指向这里写的地方）。match 是子串匹配，越具体越先命中；where 是仓库内的路径。",
+    "$comment": "Class-name families in the product interface → where this repository's spec/component corpus accounts for them. scan-ui.mjs can only do containment matching, and the same thing rarely carries the same name on both sides: the product calls it sessionRow, the repository calls it SidebarRow. This table is human judgement — a matched identity counts as covered, and its source points at whatever is written here. match is a substring test, most specific first; where is a repository path.",
+    "pluginNamesEn": {
+        "插件图标（lucide 图标集）": "Plugin icons (the lucide set)",
+        "DeepSeek 客户端（非 dsh 插件）": "DeepSeek client (not a dsh plugin)",
+        "Command Code 插件": "Command Code plugin",
+        "插件市场页（插件未识别）": "Plugin market page (plugin unidentified)",
+        "未识别（待查）": "Unidentified (to check)"
+    },
     "pluginFamilies": [
         {
             "match": "lucide",

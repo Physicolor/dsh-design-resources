@@ -1,4 +1,4 @@
-/* 几何逐条来自官方 @deepseek-ai/dsh-client-ui-primitives/lib/Toast.module.css：
+/* Every value comes from the official @deepseek-ai/dsh-client-ui-primitives/lib/Toast.module.css:
  *   .toast → position fixed / top 40px / left 50% / z-index 1100 / pointer-events none
  *            display flex / align-items center / gap 10px
  *            width max-content / max-width min(640px, calc(100vw - 48px))
@@ -9,10 +9,12 @@
  *            animation dsh-toast-in 160ms ease-out + dsh-toast-fade 1000ms ease var(--dsh-toast-hold,3000ms) forwards
  *   .icon  → display grid / place-items center / flex none / color var(--dsw-alias-state-warn-label)
  *   .text  → min-width 0
- * 实现为本仓库原创（变量承载几何、关键帧自行组织），未复制官方 CSS 源码。 */
+ * The implementation is original to this repository (variables carry the geometry, the keyframes are
+ * organised here); no official CSS source was copied. */
 
 .toast {
-  /* 几何变量：官方未提供尺寸变体，这里只做集中声明，新增尺寸只需覆写变量。 */
+  /* Geometry variables: the official set offers no size variants, so these are simply declared in one place;
+     a new size only needs the variables overridden. */
   --dsh-toast-offset-top: 40px;
   --dsh-toast-z: 1100;
   --dsh-toast-gap: 10px;
@@ -23,22 +25,23 @@
   --dsh-toast-inset: 48px;
   --dsh-toast-font-size: 14px;
   --dsh-toast-line-height: 22px;
-  /* § 本仓库建议值：官方只给 .icon 的布局，容器边长没有数值。 */
+  /* § Proposed here: the official set gives only the .icon layout, with no value for the container's side length. */
   --dsh-toast-icon-size: 16px;
 
   position: fixed;
   top: var(--dsh-toast-offset-top);
   left: 50%;
-  /* 高于图片灯箱背景遮罩的 1000：预览打开时报告失败必须仍可读。 */
+  /* Above the 1000 of the image lightbox backdrop: a failure report must still be readable while a preview is open. */
   z-index: var(--dsh-toast-z);
-  /* 提示条永远不拦截点击。 */
+  /* The toast never intercepts clicks. */
   pointer-events: none;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   gap: var(--dsh-toast-gap);
-  /* left 已定位的固定盒会按「left 右侧的剩余空间」收缩，靠窗边会提前换行；
-     max-content 让盒子只按自身文本定宽，再由下面的 max-width 封顶。 */
+  /* A fixed box that already has left set shrinks to the space remaining to its right,
+     so it wraps early near the window edge; max-content sizes the box to its own text and
+     the max-width below caps it. */
   width: max-content;
   max-width: min(var(--dsh-toast-max-w), calc(100vw - var(--dsh-toast-inset)));
   padding: var(--dsh-toast-pad-y) var(--dsh-toast-pad-x);
@@ -86,7 +89,8 @@
   }
 }
 
-/* 减弱动态效果时去掉滑入；延迟淡出（只改透明度、不移动）仍然负责在定时卸载前收起。 */
+/* Under reduced motion the slide-in is dropped; the delayed fade (opacity only, no movement) still
+   hides it before the timed unmount. */
 @media (prefers-reduced-motion: reduce) {
   .toast {
     animation: dsh-toast-fade 1000ms ease var(--dsh-toast-hold, 3000ms) forwards;

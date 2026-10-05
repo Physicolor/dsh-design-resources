@@ -1,11 +1,12 @@
-<!-- 几何取自同目录 shortcut-keys.module.css（即产品采集值）；token 取自 website/css/dsh-tokens.css。
-     键帽对读屏是装饰（容器 aria-hidden），键位本身写在按钮的 aria-keyshortcuts 上。 -->
+<!-- Geometry comes from shortcut-keys.module.css in this directory (the captured product values);
+     tokens come from website/css/dsh-tokens.css. The keycaps are decoration for a screen reader
+     (the container is aria-hidden) — the shortcut itself lives on the button's aria-keyshortcuts. -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ShortcutKeys · DSH 设计资源</title>
+<title>ShortcutKeys · DSH Design Resources</title>
 <style>
 :root {
   --dsw-static-neutral-bluish-00: #fff;
@@ -29,9 +30,9 @@
   --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-/* --------------------------------------------------- 组件几何
-   数值逐条取自同目录 shortcut-keys.module.css（CSS Modules 的哈希类名已去掉），
-   规则重新组织过，声明值未改。 */
+/* --------------------------------------------------- component geometry
+   Every value comes from shortcut-keys.module.css in this directory (the CSS Modules hashed
+   class names are dropped); the rules are reorganised, the declared values are unchanged. */
 .keys { display: inline-flex; flex: none; align-items: center; gap: 3px; color: var(--dsw-alias-label-tertiary); font-size: 12px; line-height: 16px; white-space: nowrap; }
 .key { box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; font: inherit; }
 .separator { font: inherit; }
@@ -40,9 +41,9 @@
 .joined { box-sizing: border-box; height: 16px; padding: 0 4px; border-radius: 4px; background: var(--dsw-alias-tooltip-key-bg); }
 .joined .key { min-width: 0; height: auto; padding: 0; border: 0; background: transparent; }
 
-/* ------------------------------------------------------------------ demo 外壳
-   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
-   .demo-label 只写客观事实（尺寸 / 出处）。 */
+/* ------------------------------------------------------------------ demo shell
+   body sets only the 16px padding and the text colour, never a background: the site (the shadow
+   host) supplies that. .demo-label states objective facts only (sizes / where they come from). */
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -56,7 +57,8 @@ body {
 .demo-group + .demo-group { margin-top: 20px; }
 .demo-row { display: flex; align-items: center; gap: 16px; }
 
-/* 左栏新会话按钮的实测排布：252 × 38、圆角 12、行尾键帽平时透明，hover / focus 才出现。 */
+/* The measured layout of the new-conversation button in the left sidebar: 252 × 38, radius 12,
+   with the keycaps at the end of the row transparent until hover / focus. */
 .newSession {
   display: flex;
   align-items: center;
@@ -76,7 +78,8 @@ body {
 .newSession:hover .newSession__keys,
 .newSession:focus-visible .newSession__keys { opacity: 1; }
 
-/* 工具提示样例：产品里键帽形态出现在气泡里，底色是 tooltip 底。 */
+/* Tooltip sample: in the product this keycap form appears inside a bubble, on the tooltip
+   background. */
 .tip {
   display: inline-flex;
   align-items: center;
@@ -92,23 +95,23 @@ body {
 </head>
 <body>
   <div class="demo-group">
-    <p class="demo-label">平排（默认）· gap 3 · 12/16 · 无底色无圆角 —— 采集：键帽 19 × 16、bg 透明、radius 0</p>
+    <p class="demo-label" data-t="demo.shortcut-keys.plainForm">平排（默认）· gap 3 · 12/16 · 无底色无圆角 —— 采集：键帽 19 × 16、bg 透明、radius 0</p>
     <span class="keys" aria-hidden="true"><kbd class="key">Ctrl</kbd><kbd class="separator">+</kbd><kbd class="key">Alt</kbd><kbd class="separator">+</kbd><kbd class="key">N</kbd></span>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">提示气泡 · 11/14 · 每枚键 min-width 16 / height 16 / padding 0 2 / 圆角 4 / 底 --dsw-alias-tooltip-key-bg</p>
-    <span class="tip">搜索会话<span class="keys tooltip" aria-hidden="true"><kbd class="key">Ctrl</kbd><kbd class="separator">+</kbd><kbd class="key">K</kbd></span></span>
+    <p class="demo-label" data-t="demo.shortcut-keys.tooltipBubble">提示气泡 · 11/14 · 每枚键 min-width 16 / height 16 / padding 0 2 / 圆角 4 / 底 --dsw-alias-tooltip-key-bg</p>
+    <span class="tip" data-capture="search conversations row, product shortcut tooltip">搜索会话<span class="keys tooltip" aria-hidden="true"><kbd class="key">Ctrl</kbd><kbd class="separator">+</kbd><kbd class="key">K</kbd></span></span>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">连排 · height 16 / padding 0 4 / 圆角 4，内部键不带底</p>
+    <p class="demo-label" data-t="demo.shortcut-keys.joinedForm">连排 · height 16 / padding 0 4 / 圆角 4，内部键不带底</p>
     <span class="joined" aria-hidden="true"><span class="keys" style="color:inherit"><kbd class="key">Ctrl</kbd><kbd class="separator">+</kbd><kbd class="key">K</kbd></span></span>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">长在哪儿 · 左栏新会话按钮（252 × 38、圆角 12；键帽平时 opacity 0，悬停或键盘聚焦才出现）</p>
-    <button type="button" class="newSession" aria-keyshortcuts="Control+Alt+N">
+    <p class="demo-label" data-t="demo.shortcut-keys.newSessionPlacement">长在哪儿 · 左栏新会话按钮（252 × 38、圆角 12；键帽平时 opacity 0，悬停或键盘聚焦才出现）</p>
+    <button type="button" class="newSession" aria-keyshortcuts="Control+Alt+N" data-capture="new-conversation button, left sidebar">
       新会话
       <span class="newSession__keys"><span class="keys" aria-hidden="true"><kbd class="key">Ctrl</kbd><kbd class="separator">+</kbd><kbd class="key">Alt</kbd><kbd class="separator">+</kbd><kbd class="key">N</kbd></span></span>
     </button>

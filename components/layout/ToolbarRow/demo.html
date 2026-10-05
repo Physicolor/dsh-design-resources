@@ -1,10 +1,11 @@
-<!-- 本组件官方没有对应物，这是本仓库建议的实现；预览为几何展示，不代表产品界面。 -->
+<!-- The product has no counterpart for this component; this is this repository's proposed implementation.
+     The preview is a geometry exhibit and does not represent the product interface. -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ToolbarRow · DSH 设计资源</title>
+<title>ToolbarRow · DSH Design Resources</title>
 <style>
 :root {
   --dsw-static-neutral-bluish-00: #fff;
@@ -110,10 +111,11 @@
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
 }
 
-/* 深色主题：站点把深色 token 挂在 body[data-ds-dark-theme] 上，Shadow DOM 里选择不到它，
-   而 :host 自己的自定义属性又会盖过继承值——所以深色值在文件内自带一份，用 light-dark()
-   依据宿主继承下来的 color-scheme 选择。只列本页用到、且深浅两套取值不同的 token；
-   数值逐条取自 website/css/dsh-tokens.css。 */
+/* Dark theme: the site hangs its dark tokens on body[data-ds-dark-theme], which a shadow DOM
+   cannot select, and :host custom properties would override the inherited values — so the dark
+   values are carried in this file and chosen with light-dark() from the color-scheme the host
+   inherits. Only tokens this page uses whose light and dark values differ are listed; every
+   value comes from website/css/dsh-tokens.css. */
 :root {
   --dsw-alias-border-l1: light-dark(#0000000a, #ffffff0f);
   --dsw-alias-brand-primary: light-dark(var(--dsw-static-neutral-bluish-1000), var(--dsw-static-neutral-bluish-50));
@@ -123,9 +125,9 @@
   --dsw-alias-label-primary-foreground: light-dark(var(--dsw-static-neutral-bluish-00), var(--dsw-static-neutral-bluish-1000));
 }
 
-/* --------------------------------------------------- 组件几何
-   数值逐条取自同目录 toolbarrow.module.css（CSS Modules 的哈希类名已去掉），
-   规则重新组织过，声明值未改。 */
+/* --------------------------------------------------- component geometry
+   Every value comes from toolbarrow.module.css in this directory (the CSS Modules hashed
+   class names are dropped); the rules are reorganised, the declared values are unchanged. */
 .row {
   --dsh-tb-height: 32px;
   --dsh-tb-pad-x: 12px;
@@ -148,7 +150,7 @@
 .filled { background: var(--dsw-alias-button-tool-bar-fill); }
 .sm { --dsh-tb-height: 28px; --dsh-tb-pad-x: 8px; --dsh-tb-gap: 4px; }
 
-/* 下面两条是 Button 组件的几何，逐条同 controls/Button/button.module.css。 */
+/* The two rules below are the Button component's geometry, matching controls/Button/button.module.css rule for rule. */
 .button {
   box-sizing: border-box;
   display: inline-flex;
@@ -182,9 +184,10 @@
 .button:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 2px; }
 .button > svg { flex: none; }
 
-/* ------------------------------------------------------------------ demo 外壳
-   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
-   .demo-label 是本页唯一允许出现的文字，只写客观事实（尺寸 / 状态名）。 */
+/* ------------------------------------------------------------------ demo shell
+   body sets only the 16px padding and the text colour, never a background: the site (the shadow
+   host) supplies that. .demo-label is the only text this page allows, and it states facts only
+   (sizes and state names). */
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -212,38 +215,38 @@ body {
 </head>
 <body>
   <div class="demo-group" style="max-width:480px">
-    <p class="demo-label">md · min-height 32 · pad 0 12 · gap 4 · r8 · 内容用 Button sm</p>
+    <p class="demo-label" data-t="demo.toolbarrow.mdRow">md · min-height 32 · pad 0 12 · gap 4 · r8 · 内容用 Button sm</p>
     <div class="row divider">
-      <button type="button" class="button sm ghost">按钮一</button>
-      <button type="button" class="button sm ghost">按钮二</button>
-      <button type="button" class="button sm icon-only ghost" aria-label="图标按钮"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6.8 1.6a5.2 5.2 0 1 0 3.06 9.4l3.07 3.07 1.13-1.13-3.07-3.07A5.2 5.2 0 0 0 6.8 1.6zm0 1.6a3.6 3.6 0 1 1 0 7.2 3.6 3.6 0 0 1 0-7.2z" fill="currentColor"/></svg></button>
+      <button type="button" class="button sm ghost" data-t="demo.toolbarrow.buttonOne">按钮一</button>
+      <button type="button" class="button sm ghost" data-t="demo.toolbarrow.buttonTwo">按钮二</button>
+      <button type="button" class="button sm icon-only ghost" aria-label="图标按钮" data-t-aria="demo.toolbarrow.iconButtonAria"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6.8 1.6a5.2 5.2 0 1 0 3.06 9.4l3.07 3.07 1.13-1.13-3.07-3.07A5.2 5.2 0 0 0 6.8 1.6zm0 1.6a3.6 3.6 0 1 1 0 7.2 3.6 3.6 0 0 1 0-7.2z" fill="currentColor"/></svg></button>
     </div>
   </div>
 
   <div class="demo-group" style="max-width:480px">
-    <p class="demo-label">sm · min-height 28 · pad 0 8 · 与 Button sm 齐平</p>
+    <p class="demo-label" data-t="demo.toolbarrow.smRow">sm · min-height 28 · pad 0 8 · 与 Button sm 齐平</p>
     <div class="row sm divider">
-      <button type="button" class="button sm ghost">按钮一</button>
-      <button type="button" class="button sm ghost">按钮二</button>
-      <button type="button" class="button sm ghost">按钮三</button>
-      <button type="button" class="button sm icon-only ghost" aria-label="图标按钮"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><circle cx="3" cy="8" r="1.4" fill="currentColor"/><circle cx="8" cy="8" r="1.4" fill="currentColor"/><circle cx="13" cy="8" r="1.4" fill="currentColor"/></svg></button>
+      <button type="button" class="button sm ghost" data-t="demo.toolbarrow.buttonOne">按钮一</button>
+      <button type="button" class="button sm ghost" data-t="demo.toolbarrow.buttonTwo">按钮二</button>
+      <button type="button" class="button sm ghost" data-t="demo.toolbarrow.buttonThree">按钮三</button>
+      <button type="button" class="button sm icon-only ghost" aria-label="图标按钮" data-t-aria="demo.toolbarrow.iconButtonAria"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><circle cx="3" cy="8" r="1.4" fill="currentColor"/><circle cx="8" cy="8" r="1.4" fill="currentColor"/><circle cx="13" cy="8" r="1.4" fill="currentColor"/></svg></button>
     </div>
   </div>
 
   <div class="demo-group" style="max-width:480px">
-    <p class="demo-label">filled · button-tool-bar-fill · 浮层工具条</p>
+    <p class="demo-label" data-t="demo.toolbarrow.filledRow">filled · button-tool-bar-fill · 浮层工具条</p>
     <div class="row filled" style="width:max-content">
-      <button type="button" class="button sm icon-only toolbar" aria-label="图标按钮"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M2 3.2h12L9.6 8v5.2L6.4 11.6V8z" fill="currentColor"/></svg></button>
-      <button type="button" class="button toolbar sm">按钮一</button>
-      <button type="button" class="button toolbar sm">按钮二</button>
+      <button type="button" class="button sm icon-only toolbar" aria-label="图标按钮" data-t-aria="demo.toolbarrow.iconButtonAria"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M2 3.2h12L9.6 8v5.2L6.4 11.6V8z" fill="currentColor"/></svg></button>
+      <button type="button" class="button toolbar sm" data-t="demo.toolbarrow.buttonOne">按钮一</button>
+      <button type="button" class="button toolbar sm" data-t="demo.toolbarrow.buttonTwo">按钮二</button>
     </div>
   </div>
 
   <div class="demo-group" style="max-width:480px">
-    <p class="demo-label">divider 0.5px border-l1 · 普通分区</p>
+    <p class="demo-label" data-t="demo.toolbarrow.dividerRow">divider 0.5px border-l1 · 普通分区</p>
     <div class="row divider">
-      <button type="button" class="button sm ghost">按钮一</button>
-      <button type="button" class="button sm primary">按钮二</button>
+      <button type="button" class="button sm ghost" data-t="demo.toolbarrow.buttonOne">按钮一</button>
+      <button type="button" class="button sm primary" data-t="demo.toolbarrow.buttonTwo">按钮二</button>
     </div>
   </div>
 </body>

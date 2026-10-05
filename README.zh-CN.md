@@ -17,14 +17,14 @@ description: "DeepSeek Harness 插件生态的设计规范、座位目录、官�
 
 ## 这个仓库解决什么问题
 
-DeepSeek Harness 给插件作者提供了**技术栈与开发规范**：Cordis 插件系统、座位（slot）机制、`--dsw-*` 设计令牌。它没有提供**设计规范**：控件该多大、间距多少、动效多长、图标怎么画、两个插件抢同一个位置时谁优先——都没有裁决依据。
+DeepSeek Harness 公开了 **Cordis 插件接口、slot 机制、语义令牌、UI primitives 和客户端开发指引**。相关规则分布在 GitHub 文档、Agent 指引与源码中，目前没有一份按社区插件作者的界面任务组织的完整设计手册。
 
 结果是社区插件各写各的，同一个界面里按钮高矮不一、间距忽大忽小、层级顺序不可预测。这不是某个插件的错，是缺少规范与检查的必然结果。
 
-本仓库补上这一层。三条原则：
+本仓库把这些依据整理成插件作者可查阅、可复现的参考。三条原则：
 
 1. **不发明数值。** 每一条尺寸、间距、时长都标注来源（官方客户端包 / Apple HIG / OpenHarmony / 本仓库建议）。没有权威依据的地方会明确写出来，而不是编一个看起来专业的数字。
-2. **不评判审美。** 规范只保证一致与可用，不宣称哪种风格更好看。
+2. **不用主观偏好代替评估。** 视觉质量按信息层级、阅读宽度、密度、对齐、主题对比和交互反馈等可检查标准评估。
 3. **可判定的才是规范。** 「间距要舒适」不是规范；「相邻独立控件垂直间距 < 16px 判过挤」才是。每篇文档都会写明该判据能否自动检测。
 
 ## 仓库结构
@@ -33,19 +33,20 @@ DeepSeek Harness 给插件作者提供了**技术栈与开发规范**：Cordis �
 | --- | --- |
 | [`spec/`](spec/) | 10 篇规范文档：主页面骨架、座位选择、控件、令牌、动效、图标、可访问性、自检清单、冲突裁决 |
 | [`rules/`](rules/) | `rules.json` / `rules.csv`——自检清单的机器可读形式，供 CI 与审计器消费 |
-| [`guides/`](guides/) | 面向作者任务的指南：开始这里、官方依据、设计原则、五个界面模式、座位与集成、自检与来源 |
+| [`guides/`](guides/) | 面向插件任务的指南：指南概览、官方依据、设计原则、界面模式、座位与集成、验证与来源 |
 | [`data/`](data/) | 从运行中的 Harness 采集的数据：75 个图标、90 个座位、令牌（色板 77 / 浅色别名 115 / 深色别名 119 / 尺度与排版 207）、元素清单。口径与采集时间见 [`docs/FACTS-2026-10-02.md`](docs/FACTS-2026-10-02.md) |
 | [`icons/`](icons/) | 75 个官方图标 + 品牌标识，SVG 原样导出（来源见 [`icons/README.md`](icons/README.md)） |
 | [`components/`](components/) | 可复用源码知识库：分类归档、零依赖、只用官方令牌的 React 实现 |
-| [`website/`](website/) | 实况组件画廊：Apple 风格三栏站，组件用原生 HTML 渲染，支持检索 |
+| [`website/`](website/) | 插件设计指南与实况组件画廊：导航、正文和页内目录分栏呈现，支持检索 |
 | [`scripts/`](scripts/) | 采集与生成脚本——所有数据都可重新生成，不依赖手工记录 |
 
 ## 打开网站
 
-网站是**零构建、`file://` 可直接打开**的静态站：
+网站是**零构建、`file://` 可直接打开**的静态站，也已经发布在 GitHub Pages 上：
 
 ```
-website/index.html
+https://physicolor.github.io/dsh-design-resources/
+website/index.html            # 同一份文件，本地打开
 ```
 
 或起一个本地服务器（无缓存，编辑后刷新即见）：
@@ -68,7 +69,7 @@ node scripts/serve.mjs        # → http://127.0.0.1:4173/
 - **三栏各自滚动**，页面本身不滚动；顶栏是液态玻璃，内容从下方穿过；
 - **左右栏可拖动调宽**（键盘方向键也行），宽度与开关状态会被记住；
 - **左右栏都可以整栏收起**，带展开/收起动画；
-- **中英双语切换**：界面文案两套，规范正文与组件说明目前只有中文，英文界面下会明确标注；
+- **中英双语，两边都是完整的**：规范正文、指南、组件说明与示意页都有英文版；英文页面上出现的每一条中文都是被引用的产品实景串，后面紧跟英文释义。约定与门禁见 [`docs/I18N.md`](docs/I18N.md)；
 - **浅色与深色两套都是作者手写的**——在浅色下看着还行、在深色下崩掉的设计，在这里算缺陷；
 - **可操作的动效试验台**：动效规范页里能直接比较 100/150/200/300/350ms 五档与两条曲线，这是纸面文档做不到、HTML 电子说明书能做到的事；
 - **预览用 Shadow DOM 渲染，不用 iframe**：`file://` 下每个文档都是独立安全源，父页读不到 iframe 的高度也无法测量内容，预览会静默退化；shadow root 既隔离 demo 的样式，又因为参与正常布局而不需要测量；
@@ -84,18 +85,29 @@ node scripts/collect-icons.mjs     # 官方图标集 → icons/ + data/icons.jso
 node scripts/collect-tokens.mjs    # 官方主题令牌 → data/tokens.json + website/css/dsh-tokens.css
 node scripts/collect-slots.mjs     # 座位目录（需 data/raw/ 下的快照）→ data/slots.json
 node scripts/gen-rules.mjs         # 自检清单 → rules/rules.json
+node scripts/check-i18n.mjs         # 缺译或译文过期即失败（--update 重新钉住）
+node scripts/check-demos-i18n.mjs   # 示意页还有未译文案即失败
 node website/gen-site.mjs          # 汇总 → website/js/data.js
+node scripts/gen-index.mjs         # 清单 → index.json（包的入口文件）
+node scripts/check-refs.mjs        # 文档提到不存在的座位即失败
 node website/verify.mjs            # 自检：结构 + 数据 + 真实浏览器渲染 + 截图
+npm run build                      # 上面全部，按这个顺序
 ```
 
 采集脚本读取本机的 DSH 安装（`DSH_ASAR` / `DSH_PRIMITIVES` 可覆盖路径）。`collect-tokens.mjs` 需要桌面版 `app.asar`；`collect-slots.mjs` 需要一份座位树快照（由 Harness 的座位检查接口产出，快照文件放在 `data/raw/`）。
 
-## 与 dsh-ui-harmonizer 的分工
+## 这一套：规范 + 运行时
 
-| 仓库 | 职责 |
-| --- | --- |
-| **本仓库** | 规范、资源、可复用源码、网站——回答「应该怎么做」 |
-| [dsh-ui-harmonizer](https://github.com/Physicolor/dsh-ui-harmonizer) | 只读兼容性审计与针对性适配——回答「实际做得怎么样」，检测结果在设置页提示 |
+两个仓库是一条线上的两半，装在一起才算完整：一个说「应该长什么样」，一个在真实运行的产品里
+把它落实、并把做不到的地方报出来。
+
+| 仓库 | 角色 | 回答的问题 |
+| --- | --- | --- |
+| **dsh-design-resources**（本仓库） | 规范、资源、可复用源码、站点 | 界面**应该**怎么做：控件多大、间距多少、动效多长、图标怎么画 |
+| [dsh-ui-harmonizer](https://github.com/Physicolor/dsh-ui-harmonizer) | 装进产品的运行时插件 | **实际**做得怎么样：只读兼容性审计，问题在设置页里列出来 |
+
+- 站点：[physicolor.github.io/dsh-design-resources](https://physicolor.github.io/dsh-design-resources/)
+- 运行时：[github.com/Physicolor/dsh-ui-harmonizer](https://github.com/Physicolor/dsh-ui-harmonizer)
 
 规范不强制任何人改代码；它让冲突**可见、可解释、可一键出 issue**。
 

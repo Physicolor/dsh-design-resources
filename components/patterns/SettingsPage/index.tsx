@@ -9,34 +9,34 @@ import {
 } from 'react';
 import styles from './settings-page.module.css';
 
-/** 拼 class，避免引入 clsx 之类的依赖。 */
+/** Join classes without pulling in a dependency like clsx. */
 function cx(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
-/** 语义标题级别，用于需要按页面层级降级的场景。 */
+/** Semantic heading level, for cases that need to step down with the page hierarchy. */
 export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
-/* ------------------------------------------------------------------ 导航行 */
+/* ------------------------------------------------------------------ nav row */
 
 export interface SettingsNavItemProps extends HTMLAttributes<HTMLElement> {
-  /** 是否当前所在分区。为 `true` 时带 `aria-current="page"` 与选中底色。 */
+  /** Whether this is the current section. When `true` it carries `aria-current="page"` and the selected background. */
   active?: boolean;
-  /** 传了 `href` 渲染成 `<a>`（页面内锚点跳转），否则渲染成 `<button>`。 */
+  /** Renders as an `<a>` when `href` is given (an in-page anchor jump), otherwise as a `<button>`. */
   href?: string;
-  /** 前置图标节点，会被放进 16×16 的图标容器里。 */
+  /** Leading icon node, placed inside a 16×16 icon container. */
   icon?: ReactNode;
 }
 
 /**
- * 设置页左侧导航的一行。
+ * One row of the settings page's left navigation.
  *
- * 行几何参照官方 Menu 的菜单单元（min-height 40 / padding 8px 10px /
- * radius 10px / gap 8px / 14-22），实现为本仓库原创。
+ * The row geometry follows the official Menu's menu item (min-height 40 / padding 8px 10px /
+ * radius 10px / gap 8px / 14-22); the implementation is original to this repository.
  *
  * @example
- * <SettingsNavItem active icon={<IconSettings />}>通用</SettingsNavItem>
- * <SettingsNavItem href="#appearance">外观</SettingsNavItem>
+ * <SettingsNavItem active icon={<IconSettings />}>General</SettingsNavItem>
+ * <SettingsNavItem href="#appearance">Appearance</SettingsNavItem>
  */
 export const SettingsNavItem = forwardRef<HTMLElement, SettingsNavItemProps>(function SettingsNavItem(
   { active = false, href, icon, className, children, ...rest },
@@ -77,30 +77,31 @@ export const SettingsNavItem = forwardRef<HTMLElement, SettingsNavItemProps>(fun
   );
 });
 
-/* ---------------------------------------------------------------- 内容分区 */
+/* ---------------------------------------------------------------- content section */
 
-/* 这里 Omit 掉原生的 `title`（string 工具提示属性），换成 ReactNode 的标题，
-   否则接口与 HTMLAttributes 的 `title?: string` 冲突。 */
+/* The native `title` (the string tooltip attribute) is omitted here and replaced by a ReactNode
+   title, otherwise the interface clashes with HTMLAttributes' `title?: string`. */
 export interface SettingsSectionProps extends Omit<HTMLAttributes<HTMLElement>, 'title'> {
-  /** 分区标题。不传则不渲染标题行。 */
+  /** Section title. No title row is rendered when it is omitted. */
   title?: ReactNode;
-  /** 标题下方的补充说明。 */
+  /** Supplementary text below the title. */
   description?: ReactNode;
-  /** 右对齐的操作区（通常是 1 个 Button）。 */
+  /** The right-aligned action area (usually one Button). */
   actions?: ReactNode;
-  /** 标题的语义级别，默认 2。 */
+  /** Semantic level of the heading, 2 by default. */
   headingLevel?: HeadingLevel;
 }
 
 /**
- * 设置页内容列里的一个分区：标题行 + 可选描述 + 内容。
+ * A section in the settings page's content column: a title row + an optional description + content.
  *
- * 排版参照官方 Modal 的标题/描述（16-24-500 / 14-22），实现为本仓库原创。
- * 只负责排版，不画卡片、不加背景，避免和内容里的控件抢层次。
+ * The typography follows the official Modal's title/description (16-24-500 / 14-22); the
+ * implementation is original to this repository. It only handles typography and draws no card and
+ * no background, so it does not compete for elevation with the controls inside.
  *
  * @example
- * <SettingsSection title="通用" description="对所有会话生效">
- *   <ListRowGroup title="启动行为">…</ListRowGroup>
+ * <SettingsSection title="General" description="Applies to every conversation">
+ *   <ListRowGroup title="Startup behaviour">…</ListRowGroup>
  * </SettingsSection>
  */
 export const SettingsSection = forwardRef<HTMLElement, SettingsSectionProps>(function SettingsSection(
@@ -126,47 +127,47 @@ export const SettingsSection = forwardRef<HTMLElement, SettingsSectionProps>(fun
   );
 });
 
-/* ------------------------------------------------------------------ 整页骨架 */
+/* ------------------------------------------------------------------ full-page skeleton */
 
 export interface SettingsPageProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
-  /** 左列导航内容，通常是若干 `SettingsNavItem`。 */
+  /** The left column's navigation content, usually several `SettingsNavItem`s. */
   nav: ReactNode;
-  /** 导航列的无障碍名称，默认「设置分区」。 */
+  /** The navigation column's accessible name; defaults to the "settings section" label. */
   navLabel?: string;
-  /** 页面标题。不传则不渲染标题区。 */
+  /** Page title. No title area is rendered when it is omitted. */
   title?: ReactNode;
-  /** 标题下方的说明。 */
+  /** Text below the title. */
   description?: ReactNode;
-  /** 标题的语义级别，默认 1。 */
+  /** Semantic level of the heading, 1 by default. */
   titleLevel?: HeadingLevel;
   /**
-   * 覆盖左列宽度。数字按 px 处理。
-   * 默认 218px（取自官方 Menu 菜单卡外宽）。
+   * Overrides the left column's width. Numbers are treated as px.
+   * Defaults to 218px (taken from the official Menu menu card's outer width).
    */
   navWidth?: number | string;
 }
 
 /**
- * 设置页整页骨架：左列分区导航 + 右列内容。
+ * The settings page's full-page skeleton: section navigation in the left column + content in the right.
  *
- * 只做布局与排版，不 import 仓库内任何其它组件；导航项、内容全部由调用方
- * 通过 `nav` / `children` 插槽传入。
+ * It only does layout and typography and imports no other component from the repository; the nav
+ * items and content all come in from the caller through the `nav` / `children` slots.
  *
- * 导航行几何参照官方 Menu 的菜单单元，内容列排版参照官方 Modal 的标题/描述，
- * 实现为本仓库原创。
+ * The nav row geometry follows the official Menu's menu item, and the content column typography
+ * follows the official Modal's title/description; the implementation is original to this repository.
  *
  * @example
  * <SettingsPage
- *   title="设置"
- *   description="以下改动会立即生效"
+ *   title="Settings"
+ *   description="These changes take effect immediately"
  *   nav={
  *     <>
- *       <SettingsNavItem active>通用</SettingsNavItem>
- *       <SettingsNavItem>外观</SettingsNavItem>
+ *       <SettingsNavItem active>General</SettingsNavItem>
+ *       <SettingsNavItem>Appearance</SettingsNavItem>
  *     </>
  *   }
  * >
- *   <SettingsSection title="通用">…</SettingsSection>
+ *   <SettingsSection title="General">…</SettingsSection>
  * </SettingsPage>
  */
 export const SettingsPage = forwardRef<HTMLDivElement, SettingsPageProps>(function SettingsPage(

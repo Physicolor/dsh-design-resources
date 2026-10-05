@@ -1,49 +1,50 @@
 import { forwardRef, useId, type ElementType, type HTMLAttributes, type ReactNode } from 'react';
 import styles from './panel-seat.module.css';
 
-/** 拼 class，避免引入 clsx 之类的依赖。 */
+/** Join classes without pulling in a dependency like clsx. */
 function cx(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
-/** 语义标题级别。 */
+/** Semantic heading level. */
 export type PanelHeadingLevel = 2 | 3 | 4 | 5 | 6;
 
-/* Omit 掉原生的 `title`（string 工具提示属性），换成 ReactNode 的标题。 */
+/* Omit the native `title` (the string tooltip attribute) and take a ReactNode title instead. */
 export interface PanelSeatProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
-  /** 标题行文本。必填：`aria-labelledby` 指向它。 */
+  /** Title row text. Required: `aria-labelledby` points at it. */
   title: ReactNode;
-  /** 标题行右侧的操作区（通常是 1 个 sm 尺寸的 Button）。 */
+  /** The action area on the right of the title row (usually one `sm`-sized Button). */
   actions?: ReactNode;
-  /** 标题的语义级别，默认 3。 */
+  /** Semantic level of the heading, 3 by default. */
   headingLevel?: PanelHeadingLevel;
   /**
-   * 视觉层级：
-   * - `plain`（默认）：透明底，靠排版与父容器区分；
-   * - `surface`：填官方代码块同款底色，用于需要独立纸面感的区块。
+   * Visual elevation:
+   * - `plain` (default): transparent background, set apart from its parent by typography alone;
+   * - `surface`: filled with the official code block's background, for blocks that need a paper-like feel of their own.
    */
   variant?: 'plain' | 'surface';
   /**
-   * 是否给容器加内边距（12px 16px）。
-   * 默认 `false`：让宿主既有的会话流间距说话，避免与相邻消息叠加出双层留白。
+   * Whether to add padding to the container (12px 16px).
+   * Defaults to `false`: let the host's existing conversation flow spacing speak, avoiding double
+   * white space stacked with adjacent messages.
    */
   inset?: boolean;
 }
 
 /**
- * 会话流里的插槽容器：一个带标题行的区块骨架。
+ * A slot container in the conversation flow: a block skeleton with a title row.
  *
- * 只做布局与排版，不 import 仓库内任何其它组件；标题行右侧的操作、正文内容
- * 全部由调用方通过 `actions` / `children` 插槽传入。
+ * It only does layout and typography and imports no other component from the repository; the
+ * actions and body content all come in from the caller through the `actions` / `children` slots.
  *
- * 几何参照官方 ReadBlock 的内联区块（radius 12 / banner gap 12 / 底色）与
- * HoverCard 的内边距（12px 16px），实现为本仓库原创。
+ * The geometry follows the official ReadBlock inline block (radius 12 / banner gap 12 / background)
+ * and HoverCard's padding (12px 16px); the implementation is original to this repository.
  *
- * 宽度默认按内容收缩（`inline-flex`），不铺满会话流。
+ * The width shrinks to its content by default (`inline-flex`) and does not fill the conversation flow.
  *
  * @example
- * <PanelSeat title="构建产物" actions={<Button size="sm">复制</Button>}>
- *   <p>3 个文件，共 128 KB。</p>
+ * <PanelSeat title="Build output" actions={<Button size="sm">Copy</Button>}>
+ *   <p>3 files, 128 KB in total.</p>
  * </PanelSeat>
  */
 export const PanelSeat = forwardRef<HTMLDivElement, PanelSeatProps>(function PanelSeat(
@@ -67,8 +68,9 @@ export const PanelSeat = forwardRef<HTMLDivElement, PanelSeatProps>(function Pan
     <div
       {...rest}
       ref={ref}
-      /* § 建议值：默认 role="group" 而不是让 <section> 变成 region landmark，
-         避免一屏会话里出现几十个地标；需要地标时显式传 role="region"。 */
+      /* § proposed here: default to role="group" rather than letting <section> become a
+         region landmark, avoiding dozens of landmarks in one screenful of conversation;
+         pass role="region" explicitly when you need a landmark. */
       role={role ?? 'group'}
       aria-labelledby={headingId}
       className={cx(styles.seat, inset && styles.inset, variant === 'surface' && styles.surface, className)}

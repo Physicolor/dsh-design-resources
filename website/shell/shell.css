@@ -51,7 +51,7 @@
      * 1290px（无插件右栏）还是 1085px（插件占位时），阅读列都是 748px 居中、
      * 输入卡都是 780px 居中，两者的轴心重合。 */
     --sh-side-w: 280px;                  /* sidebarCol 280x905 */
-    --sh-right-w: 0px;                   /* 右栏默认收起，打开时 348px */
+    --sh-right-w: 0px;                   /* 默认收起；干净开始页采集的展开宽度为 707px */
     --sh-handle-w: 8px;                  /* handle 8x905 @ x=276 */
     --sh-head-h: 50px;                   /* 会话头部 0..50：页签下划线落在 37..38 */
     --sh-col-w: 748px;                   /* xz4KEq_column 748 宽 */
@@ -122,7 +122,17 @@
     font-family: var(--sh-font);
 }
 .sh-root[data-left='closed'] { --sh-side-w: 0px; }
-.sh-root[data-right='open'] { --sh-right-w: 348px; }
+.sh-root[data-right='open'] {
+    --sh-right-w: 707px;
+    --sh-col-w: 545px;
+    --sh-card-w: 545px;
+}
+.sh-stage[data-sidebar-only='true'] { width: 280px; height: 905px; aspect-ratio: auto; overflow: hidden; }
+.sh-root[data-sidebar-only='true'] { position: relative; width: 280px; height: 905px; transform: none; border-radius: 12px; }
+.sh-root[data-sidebar-only='true'] .sh-handle,
+.sh-root[data-sidebar-only='true'] .sh-center,
+.sh-root[data-sidebar-only='true'] .sh-right { display: none; }
+.sh-root[data-sidebar-only='true'] .sh-side { width: 280px; height: 905px; flex: 0 0 280px; }
 
 /* 侧栏拖拽手柄 ← handle 8x905 @ x=276 */
 .sh-handle {
@@ -304,11 +314,30 @@
 .sh-section__action:hover { background: var(--sh-hover); color: var(--sh-ink); }
 
 .sh-list { overflow: hidden; display: flex; flex-direction: column; gap: 1px; }
+.sh-workspace {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    height: 34px;
+    padding: 0 8px;
+    border: none;
+    border-radius: 12px;
+    color: var(--sh-ink);
+    background: transparent;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 22px;
+    text-align: left;
+}
+.sh-workspace svg:first-child { width: 16px; height: 16px; flex: none; color: var(--sh-ink-2); }
+.sh-workspace svg:last-child { width: 10px; height: 10px; flex: none; color: var(--sh-ink-3); }
+.sh-workspace__label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sh-session {
     display: flex;
     align-items: center;
     gap: 6px;
-    height: 30px;
+    height: 32px;
     padding: 0 8px 0 10px;
     font-size: 14px;
     color: var(--sh-ink);
@@ -652,14 +681,36 @@
     font-size: 13px;
     color: var(--sh-ink-2);
 }
-.sh-right__body { flex: 1; min-height: 0; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.sh-right__body {
+    flex: 1;
+    min-height: 0;
+    padding: 16px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+}
 .sh-right__card {
-    padding: 12px;
+    display: flex;
+    align-items: center;
+    width: min(380px, 100%);
+    min-height: 82px;
+    padding: 12px 16px;
     border: 1px solid var(--sh-line-soft);
-    border-radius: var(--sh-radius);
+    border-radius: 16px;
+    background: var(--sh-bg);
+    text-align: left;
+    font-family: inherit;
     font-size: 13px;
     color: var(--sh-ink-2);
+    cursor: default;
 }
+.sh-right__copy { display: flex; flex: 1; flex-direction: column; gap: 2px; min-width: 0; }
+.sh-right__copy strong { color: var(--sh-ink); font-weight: 500; }
+.sh-right__copy > span { color: var(--sh-ink-3); font-size: 12px; line-height: 18px; }
+.sh-right__shortcut { margin-left: 12px; color: var(--sh-ink-3); font: inherit; white-space: nowrap; }
+.sh-right__chevron { margin-left: 4px; color: var(--sh-ink-3); }
 
 /* ── 演示辅助：高亮某个区域 ────────────────────────────────────────── */
 

@@ -1,0 +1,38 @@
+{
+  "zh": {
+    "pageTitle": "InlineNotice · DSH 设计资源",
+    "labelSingleLine": "单行 · h32 r8 · pad 0 10 · gap 4 · font 12/18 · 500",
+    "infoText": "提示信息文字",
+    "successText": "成功信息文字",
+    "warnText": "警告信息文字",
+    "errorText": "错误信息文字",
+    "labelNoIcon": "无图标 · 仅文案",
+    "noIconTextOne": "无图标文字一",
+    "noIconTextTwo": "无图标文字二",
+    "labelMultiline": "multiline · min-height 32 · pad 6 10 · icon margin-top 2",
+    "multilineError": "多行文本示例：这是一段较长的说明文字，用于演示换行后图标与首行的对齐。",
+    "multilineWarn": "多行文本示例：第二段较长的说明文字，同样用于演示换行。",
+    "labelDismiss": "onDismiss · 根节点 button · dismiss 20×20 r6 · 悬停/聚焦才显形",
+    "dismissibleTextOne": "可关闭的提示文字一",
+    "dismissibleTextTwo": "可关闭的提示文字二",
+    "dismissAria": "关闭提示"
+  },
+  "en": {
+    "pageTitle": "InlineNotice · DSH Design Resources",
+    "labelSingleLine": "single line · h32 r8 · pad 0 10 · gap 4 · font 12/18 · 500",
+    "infoText": "Informational message text",
+    "successText": "Success message text",
+    "warnText": "Warning message text",
+    "errorText": "Error message text",
+    "labelNoIcon": "no icon · copy only",
+    "noIconTextOne": "Text without an icon, one",
+    "noIconTextTwo": "Text without an icon, two",
+    "labelMultiline": "multiline · min-height 32 · pad 6 10 · icon margin-top 2",
+    "multilineError": "Multiline text example: a longer description, showing how the icon lines up with the first line once the text wraps.",
+    "multilineWarn": "Multiline text example: a second longer description, also showing how the text wraps.",
+    "labelDismiss": "onDismiss · root element is a button · dismiss 20×20 r6 · appears only on hover / focus",
+    "dismissibleTextOne": "Dismissible message text, one",
+    "dismissibleTextTwo": "Dismissible message text, two",
+    "dismissAria": "Dismiss the notice"
+  }
+}

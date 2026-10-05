@@ -1,12 +1,14 @@
-<!-- 规则与来源标签对照板：三档效力（MF/RC/AD）与五个来源标签（[HIG] [OH] [DSH-CSS] [实测] [本仓库建议]）
-     的措辞逐条抄自 spec/00-overview.md §2–§4。板上的规则标签是真渲染出来的：同一个标签在不同文档里
-     反复出现，长得一样、说法一样，才谈得上「可被引用」。 -->
+<!-- Rule and source label legend board: the three levels of force (MF/RC/AD) and the five source
+     labels ([HIG] [OH] [DSH-CSS] [measured] [proposed here]), word for word from
+     spec/00-overview.md §2–§4. The rule tags on the board are really rendered: the same tag
+     recurring across documents with the same look and the same wording is what makes it
+     quotable. -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>规则与来源 · DSH 设计资源</title>
+<title>Rules and sources · DSH Design Resources</title>
 <style>
 :root {
   --dsw-font-family: 'HarmonyOS Sans SC', 'HarmonyOS Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
@@ -42,54 +44,54 @@ h3 { margin: 0 0 8px; font-size: 14px; font-weight: 600; }
 <body>
 
   <div class="group">
-    <h3>三档效力：标记长什么样，违反了怎么办</h3>
-    <p class="demo-label">一篇文档可以同时含三档；未标注效力的句子不构成条文</p>
+    <h3 data-t="demo.rule-legend.forceHeader">三档效力：标记长什么样，违反了怎么办</h3>
+    <p class="demo-label" data-t="demo.rule-legend.forceNote">一篇文档可以同时含三档；未标注效力的句子不构成条文</p>
     <div class="grid">
       <div class="card">
-        <div class="card__head"><span class="tag tag--mf">MF</span><b>强制</b></div>
-        <div class="card__body">不满足即判为缺陷，审核可拒 → 必须修改或给出书面例外理由。<br>例：<span class="rule__id">CT-MF-01</span> Button 计算高度只允许 36 或 28。</div>
+        <div class="card__head"><span class="tag tag--mf">MF</span><b data-t="demo.rule-legend.mfLabel">强制</b></div>
+        <div class="card__body"><span data-t="demo.rule-legend.mfBody">不满足即判为缺陷，审核可拒 → 必须修改或给出书面例外理由。</span><br><span data-t="demo.rule-legend.exampleLead">例：</span><span class="rule__id">CT-MF-01</span> <span data-t="demo.rule-legend.mfExample">Button 计算高度只允许 36 或 28。</span></div>
       </div>
       <div class="card">
-        <div class="card__head"><span class="tag tag--rc">RC</span><b>推荐</b></div>
-        <div class="card__body">默认照做；偏离需在插件 README 说明理由 → 不阻塞合并，但记录在案。<br>例：<span class="rule__id">TK-RC-13</span> 不得引入档位外的字号。</div>
+        <div class="card__head"><span class="tag tag--rc">RC</span><b data-t="demo.rule-legend.rcLabel">推荐</b></div>
+        <div class="card__body"><span data-t="demo.rule-legend.rcBody">默认照做；偏离需在插件 README 说明理由 → 不阻塞合并，但记录在案。</span><br><span data-t="demo.rule-legend.exampleLead">例：</span><span class="rule__id">TK-RC-13</span> <span data-t="demo.rule-legend.rcExample">不得引入档位外的字号。</span></div>
       </div>
       <div class="card">
-        <div class="card__head"><span class="tag tag--ad">AD</span><b>建议</b></div>
-        <div class="card__body">供取舍参考，允许按场景判断 → 无需说明。</div>
+        <div class="card__head"><span class="tag tag--ad">AD</span><b data-t="demo.rule-legend.adLabel">建议</b></div>
+        <div class="card__body" data-t="demo.rule-legend.adBody">供取舍参考，允许按场景判断 → 无需说明。</div>
       </div>
     </div>
   </div>
 
   <div class="group">
-    <h3>编号：域 + 效力 + 序号</h3>
-    <p class="demo-label">引用方式：「依据 DSH Design Resources `FL-MF-03`」；70-checklist.md 只引用编号，数值以正文为准</p>
+    <h3 data-t="demo.rule-legend.numberingHeader">编号：域 + 效力 + 序号</h3>
+    <p class="demo-label" data-t="demo.rule-legend.numberingNote">引用方式：「依据 DSH Design Resources `FL-MF-03`」；70-checklist.md 只引用编号，数值以正文为准</p>
     <div class="card">
-      <div class="rule"><span class="tag tag--mf">FL-MF-03</span><span>FL 骨架 · 强制 · 第 3 条</span></div>
-      <div class="rule"><span class="tag tag--rc">SL-RC-04</span><span>SL 座位 · 推荐 · 第 4 条</span></div>
-      <div class="rule"><span class="tag tag--ad">SL-AD-07</span><span>SL 座位 · 建议 · 第 7 条</span></div>
-      <div class="rule"><span class="rule__id">域代码</span><span>FL 骨架 · SL 座位 · CT 控件 · TK 令牌 · MO 动效 · IC 图标 · AC 可访问性 · CF 冲突</span></div>
+      <div class="rule"><span class="tag tag--mf">FL-MF-03</span><span data-t="demo.rule-legend.ruleFlMf03">FL 骨架 · 强制 · 第 3 条</span></div>
+      <div class="rule"><span class="tag tag--rc">SL-RC-04</span><span data-t="demo.rule-legend.ruleSlRc04">SL 座位 · 推荐 · 第 4 条</span></div>
+      <div class="rule"><span class="tag tag--ad">SL-AD-07</span><span data-t="demo.rule-legend.ruleSlAd07">SL 座位 · 建议 · 第 7 条</span></div>
+      <div class="rule"><span class="rule__id" data-t="demo.rule-legend.domainCodeLabel">域代码</span><span data-t="demo.rule-legend.domainCodes">FL 骨架 · SL 座位 · CT 控件 · TK 令牌 · MO 动效 · IC 图标 · AC 可访问性 · CF 冲突</span></div>
     </div>
   </div>
 
   <div class="group">
-    <h3>五个来源标签：没有标签的数值就算缺陷</h3>
-    <p class="demo-label">铁律：某维度确实没有权威数值时，必须写成「无权威数值，本仓库建议 X，理由 Y」——不得沉默，也不得伪造出处</p>
+    <h3 data-t="demo.rule-legend.sourcesHeader">五个来源标签：没有标签的数值就算缺陷</h3>
+    <p class="demo-label" data-t="demo.rule-legend.sourcesNote">铁律：某维度确实没有权威数值时，必须写成「无权威数值，本仓库建议 X，理由 Y」——不得沉默，也不得伪造出处</p>
     <div class="grid">
-      <div class="card"><div class="card__head"><span class="tag">[HIG]</span></div><div class="card__body">Apple Human Interface Guidelines 官方条文</div></div>
-      <div class="card"><div class="card__head"><span class="tag">[OH]</span></div><div class="card__body">OpenHarmony 官方文档全文</div></div>
-      <div class="card"><div class="card__head"><span class="tag">[DSH-CSS]</span></div><div class="card__body">DSH 官方未压缩 CSS 源（部分注释注明来自 Figma 组件实例）</div></div>
-      <div class="card"><div class="card__head"><span class="tag">[实测]</span></div><div class="card__body">在本仓库对本机 DSH 资产／声明做全量统计得出，方法可复现</div></div>
-      <div class="card"><div class="card__head"><span class="tag">[本仓库建议]</span></div><div class="card__body">无权威数值，本仓库给出的建议值与理由</div></div>
+      <div class="card"><div class="card__head"><span class="tag">[HIG]</span></div><div class="card__body" data-t="demo.rule-legend.sourceHig">Apple Human Interface Guidelines 官方条文</div></div>
+      <div class="card"><div class="card__head"><span class="tag">[OH]</span></div><div class="card__body" data-t="demo.rule-legend.sourceOh">OpenHarmony 官方文档全文</div></div>
+      <div class="card"><div class="card__head"><span class="tag">[DSH-CSS]</span></div><div class="card__body" data-t="demo.rule-legend.sourceDshCss">DSH 官方未压缩 CSS 源（部分注释注明来自 Figma 组件实例）</div></div>
+      <div class="card"><div class="card__head"><span class="tag" data-t="demo.rule-legend.tagMeasured">[实测]</span></div><div class="card__body" data-t="demo.rule-legend.sourceMeasured">在本仓库对本机 DSH 资产／声明做全量统计得出，方法可复现</div></div>
+      <div class="card"><div class="card__head"><span class="tag" data-t="demo.rule-legend.tagProposed">[本仓库建议]</span></div><div class="card__body" data-t="demo.rule-legend.sourceProposed">无权威数值，本仓库给出的建议值与理由</div></div>
     </div>
   </div>
 
   <div class="group">
-    <h3>冲突时官方优先</h3>
-    <p class="demo-label">本规范约束的是新写的界面与插件之间的协调，不是推翻产品自身的既有实现；为了对齐规范去覆盖官方控件，恰恰违反 CT-MF-12</p>
+    <h3 data-t="demo.rule-legend.officialFirstHeader">冲突时官方优先</h3>
+    <p class="demo-label" data-t="demo.rule-legend.officialFirstNote">本规范约束的是新写的界面与插件之间的协调，不是推翻产品自身的既有实现；为了对齐规范去覆盖官方控件，恰恰违反 CT-MF-12</p>
     <div class="card">
-      <div class="rule"><span class="rule__id">官方控件自带的过渡</span><span>沿用官方值 · Switch 滑块是官方 120ms ease，不在五档之内</span></div>
-      <div class="rule"><span class="rule__id">官方控件未提供的状态</span><span>不自行补样式 · Switch 没有 hover 态、Pill 没有 active 态</span></div>
-      <div class="rule"><span class="rule__id">控件内部间距</span><span>不套用控件间距建议 · Button 文本与图标之间是官方 gap 4px</span></div>
+      <div class="rule"><span class="rule__id" data-t="demo.rule-legend.conflictTransitionLabel">官方控件自带的过渡</span><span data-t="demo.rule-legend.conflictTransitionText">沿用官方值 · Switch 滑块是官方 120ms ease，不在五档之内</span></div>
+      <div class="rule"><span class="rule__id" data-t="demo.rule-legend.conflictStatesLabel">官方控件未提供的状态</span><span data-t="demo.rule-legend.conflictStatesText">不自行补样式 · Switch 没有 hover 态、Pill 没有 active 态</span></div>
+      <div class="rule"><span class="rule__id" data-t="demo.rule-legend.conflictGapLabel">控件内部间距</span><span data-t="demo.rule-legend.conflictGapText">不套用控件间距建议 · Button 文本与图标之间是官方 gap 4px</span></div>
     </div>
   </div>
 

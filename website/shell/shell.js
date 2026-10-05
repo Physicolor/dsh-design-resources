@@ -45,8 +45,9 @@ window.DSHShell = (function () {
         }
         var parts = window.DSHShellParts
 
-        return '<div class="sh-stage">'
-            + '<div class="sh-root" data-demo="true"'
+        var sidebarOnly = config.sidebarOnly === true
+        return '<div class="sh-stage"' + (sidebarOnly ? ' data-sidebar-only="true"' : '') + '>'
+            + '<div class="sh-root" data-demo="true"' + (sidebarOnly ? ' data-sidebar-only="true"' : '')
             + ' data-left="' + (config.left === 'closed' ? 'closed' : 'open') + '"'
             + ' data-right="' + (config.right === 'open' ? 'open' : 'closed') + '"'
             + (config.highlight ? ' data-hl="' + config.highlight + '"' : '')
@@ -84,6 +85,7 @@ window.DSHShell = (function () {
          * 280px rail becomes 31.5%, i.e. a different layout from the product's.
          */
         function fit() {
+            if (config.sidebarOnly === true) return
             var width = stage.clientWidth
             if (width > 0) stage.style.setProperty('--sh-scale', String(width / 1570))
         }

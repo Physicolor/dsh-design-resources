@@ -1,0 +1,24 @@
+{
+  "zh": {
+    "labelStatic": "title pad 8 10 · 行 min-height 40 pad 8 10 r10 · hairline 0.5px l1",
+    "groupLabelOne": "分组标题一",
+    "itemOne": "示例条目一",
+    "itemTwo": "示例条目二",
+    "itemThree": "示例条目三",
+    "groupLabelTwo": "分组标题二",
+    "labelSeparator": "separator none + 显式分隔线 · margin 4px 2px",
+    "groupLabelThree": "分组标题三",
+    "labelNoTitle": "无 title · 只有行"
+  },
+  "en": {
+    "labelStatic": "title pad 8 10 · row min-height 40 pad 8 10 r10 · hairline 0.5px l1",
+    "groupLabelOne": "Group heading one",
+    "itemOne": "Sample row one",
+    "itemTwo": "Sample row two",
+    "itemThree": "Sample row three",
+    "groupLabelTwo": "Group heading two",
+    "labelSeparator": "separator none + explicit separator · margin 4px 2px",
+    "groupLabelThree": "Group heading three",
+    "labelNoTitle": "no title · rows only"
+  }
+}

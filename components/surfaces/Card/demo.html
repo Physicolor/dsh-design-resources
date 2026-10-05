@@ -1,10 +1,10 @@
-<!-- 本组件官方没有对应物，这是本仓库建议的实现；预览为几何展示，不代表产品界面。 -->
+<!-- The official UI has no counterpart to this component: it is an implementation proposed by this repository. The preview is a geometry display, not a picture of the product interface. -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Card · DSH 设计资源</title>
+<title data-t-title="demo.card.pageTitle">Card · DSH 设计资源</title>
 <style>
 :root {
   --dsw-static-neutral-bluish-00: #fff;
@@ -61,7 +61,7 @@
   --dsw-alias-border-l4: #00000029;
   --dsw-alias-settings-card-fill: var(--dsw-alias-bg-layer-2);
   --dsw-alias-settings-card-stroke: var(--dsw-alias-border-l4);
-  /* 圆角档位（浅深共用）：4 / 8 / 12 / 16 / 20 / 28 */
+  /* Corner radius steps (shared by light and dark): 4 / 8 / 12 / 16 / 20 / 28 */
   --dsw-radius-sm: 8px;
   --dsw-radius-xl: 20px;
   --dsw-radius-panel: 28px;
@@ -112,15 +112,17 @@
   --dsw-shadow-lv3: 0 0 1px 0 rgba(0, 0, 0, .2), 0 0 4px 0 rgba(0, 0, 0, .02), 0 12px 32px 0 rgba(0, 0, 0, .08);
   --dsw-mask-blur: none;
   --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  /* 官方把这两条写成 font 简写合成 token，这里展开以便 demo 单条使用。 */
+  /* The official stylesheet writes these two as shorthand `font` composite tokens; they are expanded here so a demo can use one at a time. */
   --dsw-font-s-14: 14px/22px var(--dsw-font-family);
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
 }
 
-/* 深色主题：站点把深色 token 挂在 body[data-ds-dark-theme] 上，Shadow DOM 里选择不到它，
-   而 :host 自己的自定义属性又会盖过继承值——所以深色值在文件内自带一份，用 light-dark()
-   依据宿主继承下来的 color-scheme 选择。只列本页用到、且深浅两套取值不同的 token；
-   数值逐条取自 website/css/dsh-tokens.css。 */
+/* Dark theme: the site hangs the dark tokens on body[data-ds-dark-theme], which is not
+   selectable from inside a Shadow DOM, and :host custom properties would override the
+   inherited values anyway — so the dark values are carried in this file and picked with
+   light-dark() from the color-scheme inherited from the host. Only the tokens this page
+   uses that differ between light and dark are listed; the values are taken one by one
+   from website/css/dsh-tokens.css. */
 :root {
   --dsw-alias-bg-layer-2: light-dark(var(--dsw-static-neutral-bluish-00), var(--dsw-static-neutral-bluish-850));
   --dsw-alias-border-l1: light-dark(#0000000a, #ffffff0f);
@@ -130,9 +132,10 @@
   --dsw-alias-link: light-dark(var(--dsw-static-deepseek-500), var(--dsw-static-deepseek-400));
 }
 
-/* --------------------------------------------------- 组件几何
-   数值逐条取自同目录 card.module.css（CSS Modules 的哈希类名已去掉），
-   规则重新组织过，声明值未改。 */
+/* --------------------------------------------------- component geometry
+   The values are taken one by one from card.module.css in this directory (the hashed
+   CSS Modules class names are dropped) and the rules are reorganised; no declared value
+   is changed. */
 .card {
   --dsh-card-radius: var(--dsw-radius-xl);
   --dsh-card-padding: 16px;
@@ -158,16 +161,18 @@
 
 .description { margin: 0; font-size: 14px; line-height: 22px; color: var(--dsw-alias-label-secondary); }
 
-/* 正文容器。类名不叫 .body：站点会把「前面不是词字符的 body + {」改写成 :host。 */
+/* Body container. The class is not called .body: the site rewrites a `body` preceded by
+   a non-word character together with its `{` into :host. */
 .cardBody { min-width: 0; }
 
 .footer { padding-top: var(--dsh-card-gap); border-top: 0.5px solid var(--dsw-alias-border-l2); }
 
 .footer a { color: var(--dsw-alias-link); font-size: 14px; line-height: 22px; }
 
-/* ------------------------------------------------------------------ demo 外壳
-   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
-   .demo-label 是本页唯一允许出现的文字，只写客观事实（尺寸 / 状态名）。 */
+/* ------------------------------------------------------------------ demo shell
+   body only sets 16px padding and the text colour, no background: the ground colour
+   comes from the site (the shadow host). .demo-label is the only text this page is
+   allowed to show, and it states objective facts only (sizes / state names). */
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -195,42 +200,42 @@ body {
 </head>
 <body>
   <div class="demo-group">
-    <p class="demo-label">r12 · pad 16 · gap 12 · 0.5px border-l1 · 标题 16/24 500</p>
+    <p class="demo-label" data-t="demo.card.labelOne">r12 · pad 16 · gap 12 · 0.5px border-l1 · 标题 16/24 500</p>
     <div class="demo-row" style="align-items:stretch;gap:16px">
       <section class="card" style="width:280px">
         <div class="header">
-          <h3 class="title">标题文字一</h3>
-          <p class="description">说明文字一</p>
+          <h3 class="title"><span data-t="demo.card.titleOne">标题文字一</span></h3>
+          <p class="description"><span data-t="demo.card.descOne">说明文字一</span></p>
         </div>
-        <div class="cardBody"><strong>100</strong> 示例数值</div>
-        <div class="footer"><a href="#/component/card">脚注链接</a></div>
+        <div class="cardBody"><strong>100</strong> <span data-t="demo.card.bodyNumber">示例数值</span></div>
+        <div class="footer"><a href="#/component/card" data-t="demo.card.footerLink">脚注链接</a></div>
       </section>
 
       <section class="card" style="width:280px">
         <div class="header">
-          <h3 class="title">标题文字二</h3>
-          <p class="description">说明文字二</p>
+          <h3 class="title"><span data-t="demo.card.titleTwo">标题文字二</span></h3>
+          <p class="description"><span data-t="demo.card.descTwo">说明文字二</span></p>
         </div>
-        <div class="cardBody">正文占位文字，用于演示两行以上的卡片正文。</div>
+        <div class="cardBody"><span data-t="demo.card.bodyLong">正文占位文字，用于演示两行以上的卡片正文。</span></div>
       </section>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">仅标题 · 无 description / footer</p>
+    <p class="demo-label" data-t="demo.card.labelTwo">仅标题 · 无 description / footer</p>
     <div class="demo-row">
       <section class="card" style="width:280px">
-        <div class="header"><h3 class="title">标题文字三</h3></div>
+        <div class="header"><h3 class="title"><span data-t="demo.card.titleThree">标题文字三</span></h3></div>
       </section>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">footer hairline 0.5px border-l2 · padding-top 12</p>
+    <p class="demo-label" data-t="demo.card.labelThree">footer hairline 0.5px border-l2 · padding-top 12</p>
     <div class="demo-row">
       <section class="card" style="width:280px">
-        <div class="cardBody">正文占位文字。</div>
-        <div class="footer"><a href="#/component/card">脚注链接</a></div>
+        <div class="cardBody"><span data-t="demo.card.bodyShort">正文占位文字。</span></div>
+        <div class="footer"><a href="#/component/card" data-t="demo.card.footerLink">脚注链接</a></div>
       </section>
     </div>
   </div>

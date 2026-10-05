@@ -1,55 +1,57 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
 import styles from './key-value-list.module.css';
 
-/** 一条键值对。 */
+/** One key-value pair. */
 export interface KeyValueItem {
-  /** 键（左侧），例如「模型」。 */
+  /** The key (left side), for example "Model". */
   key: ReactNode;
-  /** 值（右侧），例如「deepseek-v4」。 */
+  /** The value (right side), for example "deepseek-v4". */
   value: ReactNode;
 }
 
-/** 键与值在行内的垂直对齐方式：值换行成多行时影响明显。 */
+/** How the key and the value align vertically within the row: it shows clearly once the value wraps onto several lines. */
 export type KeyValueListAlign = 'start' | 'center';
 
-/** 值列的水平对齐方式：`end` 把值推到最右侧，`start` 紧跟键列。 */
+/** Horizontal alignment of the value column: `end` pushes the value to the far right, `start` keeps it right after the key column. */
 export type KeyValueListValueAlign = 'start' | 'end';
 
 export interface KeyValueListProps extends HTMLAttributes<HTMLDListElement> {
-  /** 键值对数组，按顺序渲染，不排序、不去重。 */
+  /** The key-value pairs, rendered in order, with no sorting and no de-duplication. */
   items: KeyValueItem[];
-  /** 垂直对齐，默认 `center`。 */
+  /** Vertical alignment, `center` by default. */
   align?: KeyValueListAlign;
-  /** 值列水平对齐，默认 `start`。 */
+  /** Horizontal alignment of the value column, `start` by default. */
   valueAlign?: KeyValueListValueAlign;
-  /** 是否在行与行之间画 hairline（第一行之前不画）。 */
+  /** Whether to draw a hairline between rows (none before the first row). */
   divider?: boolean;
 }
 
-/** 拼 class，避免引入 clsx 之类的依赖。 */
+/** Join class names without pulling in a dependency such as clsx. */
 function cx(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
 /**
- * 键值列表：多行 `<dt>` / `<dd>` 对，键列固定层级、值列可换行。
+ * Key-value list: several `<dt>` / `<dd>` pairs, with the key column at a fixed level and the
+ * value column free to wrap.
  *
- * 官方 `@deepseek-ai/dsh-client-ui-primitives` 没有对应组件，几何按以下官方选择器拼装：
- * 键 13/20 + `--dsw-alias-label-tertiary`（合成 token `--dsw-font-xs-13`，色取 Menu `.label` 的三级文字）、
- * 值 14/22 + `--dsw-alias-label-primary`（Button `.button`）、
- * 分隔线 0.5px + `--dsw-alias-border-l2`（markdown/MarkdownText `.markdown hr`）。
- * 实现为本仓库原创。
+ * The official `@deepseek-ai/dsh-client-ui-primitives` has no matching component, so the geometry
+ * is assembled from these official selectors:
+ * key 13/20 + `--dsw-alias-label-tertiary` (the composite token `--dsw-font-xs-13`; the colour is
+ * the tertiary text of Menu `.label`), value 14/22 + `--dsw-alias-label-primary` (Button
+ * `.button`), divider 0.5px + `--dsw-alias-border-l2` (markdown/MarkdownText `.markdown hr`).
+ * The implementation is original to this repository.
  *
  * @example
  * <KeyValueList
  *   items={[
- *     { key: '模型', value: 'deepseek-v4' },
- *     { key: '上下文窗口', value: '128K tokens' },
+ *     { key: 'Model', value: 'deepseek-v4' },
+ *     { key: 'Context window', value: '128K tokens' },
  *   ]}
  * />
  *
  * @example
- * // 值排到最右侧，并在行间画分隔线
+ * // values sit on the far right, with a divider drawn between rows
  * <KeyValueList valueAlign="end" divider items={rows} />
  */
 export const KeyValueList = forwardRef<HTMLDListElement, KeyValueListProps>(function KeyValueList(
@@ -66,7 +68,7 @@ export const KeyValueList = forwardRef<HTMLDListElement, KeyValueListProps>(func
       className={cx(styles.list, className)}
     >
       {items.map((item, index) => (
-        // items 是静态展示数据，没有稳定 id 时用下标做 key 是安全的（不重排、不增删）。
+        // items is static display data; with no stable id, using the index as the key is safe (no reordering, no insertion or removal).
         <div key={index} className={styles.item}>
           <dt className={styles.key}>{item.key}</dt>
           <dd className={styles.value}>{item.value}</dd>

@@ -1,54 +1,54 @@
 import { forwardRef, type HTMLAttributes } from 'react';
 import styles from './toolbarrow.module.css';
 
-/** 工具条的底色形态。 */
+/** The toolbar's background variant. */
 export type ToolbarRowVariant = 'plain' | 'filled';
-/** 工具条尺寸：`md` 行高 32px（默认），`sm` 行高 28px。 */
+/** Toolbar size: `md` has a 32px row height (default), `sm` 28px. */
 export type ToolbarRowSize = 'md' | 'sm';
 
 export interface ToolbarRowProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * 底色：
-   * - `plain`（默认）透明，作为页面/面板内的普通工具分区；
-   * - `filled` 官方工具条按钮底 `var(--dsw-alias-button-tool-bar-fill)`，用于浮在内容之上的浮层工具条。
+   * Background:
+   * - `plain` (default) is transparent, for an ordinary tool section inside a page / panel;
+   * - `filled` is the official toolbar-button ground `var(--dsw-alias-button-tool-bar-fill)`, for an overlay toolbar that floats above content.
    */
   variant?: ToolbarRowVariant;
   /**
-   * 行高：`md` 32px（对齐官方 `ConnectionIndicator.module.css` 的 `.indicator`），
-   * `sm` 28px（对齐官方 `Button.module.css` 的 `.sm`，即 `Button size="sm"` 放进来刚好撑满）。
+   * Row height: `md` is 32px (matching `.indicator` in the official `ConnectionIndicator.module.css`),
+   * `sm` is 28px (matching the official `Button.module.css`'s `.sm`, i.e. a `Button size="sm"` just fills it).
    */
   size?: ToolbarRowSize;
   /**
-   * 底部 hairline（`0.5px` + `var(--dsw-alias-border-l1)`），默认 `false`。
-   * `sticky` 与它组合使用，可做出「吸顶 + 与下方内容分离」的效果。
+   * Bottom hairline (`0.5px` + `var(--dsw-alias-border-l1)`), default `false`.
+   * Combined with `sticky` it gives the "pinned to the top + separated from the content below" effect.
    */
   divider?: boolean;
-  /** 吸顶：`position: sticky; top: 0`。需要外层滚动容器不要有 `overflow: hidden`。 */
+  /** Pinned to the top: `position: sticky; top: 0`. The outer scroll container must not have `overflow: hidden`. */
   sticky?: boolean;
 }
 
-/** 拼 class，避免引入 clsx 之类的依赖。 */
+/** Concatenates classes, avoiding a dependency like clsx. */
 function cx(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
 /**
- * 一排按钮 / 控件的容器：水平 flex、垂直居中、自动换行。
+ * A container for a row of buttons / controls: horizontal flex, vertically centred, wrapping.
  *
- * 几何锚点：行高 32px 取自官方 `ConnectionIndicator.module.css` 的 `.indicator`
- * （`height: 32px`），间距 4px 取自官方 `Button.module.css` 的 `.button`
- * （`gap: 4px`）。零依赖，只用到 `react` 和 CSS Modules。
+ * Geometry anchors: the 32px row height comes from `.indicator` in the official
+ * `ConnectionIndicator.module.css` (`height: 32px`), and the 4px spacing comes from `.button`
+ * in the official `Button.module.css` (`gap: 4px`). Zero dependencies, using only `react` and CSS Modules.
  *
  * @example
  * <ToolbarRow size="sm" divider sticky>
- *   <Button size="sm" variant="ghost">筛选</Button>
- *   <Button size="sm" variant="ghost">排序</Button>
+ *   <Button size="sm" variant="ghost">Filter</Button>
+ *   <Button size="sm" variant="ghost">Sort</Button>
  * </ToolbarRow>
  *
  * @example
- * // 浮在内容之上的工具条：用官方工具条按钮底
+ * // A toolbar floating above content: use the official toolbar-button ground
  * <ToolbarRow variant="filled">
- *   <Button variant="toolbar" size="sm">格式化</Button>
+ *   <Button variant="toolbar" size="sm">Format</Button>
  * </ToolbarRow>
  */
 export const ToolbarRow = forwardRef<HTMLDivElement, ToolbarRowProps>(function ToolbarRow(

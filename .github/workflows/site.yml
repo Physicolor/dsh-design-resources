@@ -1,0 +1,74 @@
+name: Site
+
+# The site is zero-build: `website/index.html` and its neighbours are the
+# artifact. What this workflow publishes is therefore the directory itself, and
+# what it checks first is the thing that can rot without anyone noticing — that
+# the generated data still matches its sources, and that the bilingual corpus is
+# complete and fresh (`docs/I18N.md`).
+#
+# GitHub Pages can only serve `/` or `/docs`, so the site is uploaded as an
+# artifact rather than pointed at from the repository settings. `website/` is not
+# renamed because `docs/` already means "reviews, captures and reference data"
+# in this repository, and a directory cannot mean both.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # No install step: this repository has no dependencies, and the site runs
+      # from `file://` by design.
+      - name: Generated data is current
+        run: node website/gen-site.mjs --check
+      - name: Manifest index is current
+        run: node scripts/gen-index.mjs --check
+      - name: Every document has a fresh English counterpart
+        run: node scripts/check-i18n.mjs
+      - name: Every specimen is bilingual-ready
+        run: node scripts/check-demos-i18n.mjs
+      - name: Every seat a document names still exists
+        run: node scripts/check-refs.mjs
+
+      # The full site verification drives a real browser. GitHub's ubuntu image
+      # ships Chrome, but `website/verify.mjs` looks for it at the documented
+      # Windows and macOS paths; on Linux the browser pass reports itself as
+      # skipped. Its structural and static passes — including the assertions
+      # that the English build renders no Chinese — still run here.
+      - name: Site verification
+        run: node website/verify.mjs
+
+  deploy:
+    needs: check
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: website
+      - id: deployment
+        uses: actions/deploy-pages@v4

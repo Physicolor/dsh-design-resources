@@ -1,0 +1,45 @@
+<style>
+.sidebar-anatomy {
+  display: grid;
+  grid-template-columns: 240px 280px 270px;
+  align-items: start;
+  gap: 16px;
+}
+.sidebar-anatomy__shell { width: 280px; height: 905px; overflow: hidden; border: 1px solid var(--dsw-alias-border-l2); border-radius: 12px; }
+.sidebar-anatomy__legend {
+  padding: 14px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 12px;
+  background: var(--dsw-alias-bg-layer-1);
+  color: var(--dsw-alias-label-secondary);
+  font-size: 12px;
+  line-height: 18px;
+}
+.sidebar-anatomy__legend h3 { margin: 0 0 10px; color: var(--dsw-alias-label-primary); font-size: 14px; line-height: 20px; font-weight: 600; }
+.sidebar-anatomy__legend ul { margin: 0; padding-left: 18px; }
+.sidebar-anatomy__legend li + li { margin-top: 8px; }
+.sidebar-anatomy__legend p { margin: 10px 0 0; }
+.sidebar-anatomy__legend code { overflow-wrap: anywhere; }
+</style>
+<div class="sidebar-anatomy" aria-label="DeepSeek Harness left sidebar anatomy" data-t-aria="demo.sidebar-anatomy.regionLabel">
+  <aside class="sidebar-anatomy__legend">
+    <h3 data-t="demo.sidebar-anatomy.hostNavHeader">宿主导航</h3>
+    <ul>
+      <li data-t="demo.sidebar-anatomy.hostNavBrandRow">顶部是 DeepSeek 标志与 Harness 名称。</li>
+      <li><span data-t="demo.sidebar-anatomy.hostNavPanelsLead">「插件」和「自动化任务」位于全局面板列表，由 </span><code>sidebar.panellist</code><span data-t="demo.sidebar-anatomy.hostNavPanelsTail"> 管理。</span></li>
+      <li><span data-t="demo.sidebar-anatomy.hostNavWorkspacesLead">「工作区」与会话行属于宿主工作区区域 </span><code>sidebar.workspaces</code><span data-t="demo.sidebar-anatomy.hostNavWorkspacesTail">。</span></li>
+    </ul>
+  </aside>
+  <div class="sidebar-anatomy__shell" data-shell='{"sidebarOnly":true}'>
+    <p data-t="demo.sidebar-anatomy.viewInSite">需要在 DeepSeek Design Resources 站内查看。</p>
+  </div>
+  <aside class="sidebar-anatomy__legend">
+    <h3 data-t="demo.sidebar-anatomy.boundaryHeader">底部与桌面版边界</h3>
+    <ul>
+      <li data-t="demo.sidebar-anatomy.boundarySettingsEntry">「设置」是宿主入口。</li>
+      <li><code>sidebar.footer.action</code><span data-t="demo.sidebar-anatomy.boundaryFooterAction"> 是设置旁的可选注册位；干净 profile 没有第三方条目时保持为空。</span></li>
+      <li><code>settings.launcher</code><span data-t="demo.sidebar-anatomy.boundaryLauncher"> 是 Desktop 宿主管理的可选账户入口。Web 采集没有展示登录状态，所以这里不画虚构的登录卡片或用户名。</span></li>
+    </ul>
+    <p data-t="demo.sidebar-anatomy.conversationScopeNote">对话区里的常驻插件面板属于会话层级；不要把它塞进左侧栏，也不要把它说成默认 DSH 内容。</p>
+  </aside>
+</div>

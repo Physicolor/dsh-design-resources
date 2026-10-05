@@ -3,12 +3,16 @@
 - id: segmentedcontrol
 - category: controls
 - source: `components/controls/SegmentedControl/`（`index.tsx` / `segmentedcontrol.module.css`）
-- official-counterpart: **官方有这个控件**：产品 `app.asar` 内 `@deepseek-ai/dsh-client-ui-primitives/lib/SegmentedControl.module.css`（2173 B）与导出表里的 `SegmentedControl` 都真实存在，模型设置页在渲染它（`<SegmentedControl id label value options>`）。本仓库实现的几何仍逐条锚定官方 `Menu.module.css` / `Pill.module.css` / `Tag.module.css` / `Button.module.css` / `Input.module.css`；实测另有插件侧 `duc-seg` 234 × 28 / `duc-seg-thumb` 42 × 24 / `duc-seg-btn` 44 × 24
+- official-counterpart: 官方包在产品 `app.asar` 中包含 `SegmentedControl.module.css` 和 `SegmentedControl` 导出；这证明源码包提供该 primitive，不证明当前宿主界面使用本仓库这套外观。混合截图中的 `duc-seg` 234 × 28 / `duc-seg-thumb` 42 × 24 / `duc-seg-btn` 44 × 24 属于插件内容。
 - human-doc: `README.md`（判断与取舍；本文件只放事实）
 
 ## geometry-source
 
-官方没有此控件。下列数值全部读自官方 CSS，本仓库只负责把它们组合起来。写法为「数值 ← 文件名 选择器」。
+官方 primitives 导出 SegmentedControl；下列数值读自官方 CSS，本仓库的实现只负责把它们组合起来。写法为「数值 ← 文件名 选择器」。组件包的导出事实不等于任一截图中的通用分段 UI 都是宿主界面。
+
+### screenshot provenance
+
+`docs/reference/05-settings-components.png` 是混合插件截图；其中的「组件」页包含 Command Code 与 dsh-widgets 内容，不能作为 DSH 宿主原生分段控件的证据。该图对应的 HTML 示例已暂缓。宿主会话头部「对话／轨迹／上下文」另见 `guides/21-pattern-sidebar-panel.md`；它是会话视图页签，不是本组件的通用设置示例。
 
 | 数值 ← 文件名 选择器 |
 | --- |

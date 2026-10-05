@@ -1,0 +1,22 @@
+{
+    "zh": {
+        "mdRow": "md · min-height 32 · pad 0 12 · gap 4 · r8 · 内容用 Button sm",
+        "buttonOne": "按钮一",
+        "buttonTwo": "按钮二",
+        "buttonThree": "按钮三",
+        "iconButtonAria": "图标按钮",
+        "smRow": "sm · min-height 28 · pad 0 8 · 与 Button sm 齐平",
+        "filledRow": "filled · button-tool-bar-fill · 浮层工具条",
+        "dividerRow": "divider 0.5px border-l1 · 普通分区"
+    },
+    "en": {
+        "mdRow": "md · min-height 32 · pad 0 12 · gap 4 · r8 · content uses Button sm",
+        "buttonOne": "Button one",
+        "buttonTwo": "Button two",
+        "buttonThree": "Button three",
+        "iconButtonAria": "Icon button",
+        "smRow": "sm · min-height 28 · pad 0 8 · flush with Button sm",
+        "filledRow": "filled · button-tool-bar-fill · overlay toolbar",
+        "dividerRow": "divider 0.5px border-l1 · plain section"
+    }
+}

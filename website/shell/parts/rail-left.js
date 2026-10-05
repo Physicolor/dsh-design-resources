@@ -27,33 +27,34 @@ window.DSHShellParts.railLeft = function (ctx) {
     var icon = ctx.icon
     var esc = ctx.esc
     var harvested = (ctx.chrome && ctx.chrome.icons) || {}
-
-    /**
-     * 取真实采集到的图标，取不到才退回按名字查。
-     * @param label - 该控件在真实界面上的可见文字。
-     * @param fallback - 兜底的图标短名。
-     * @returns SVG 标记。
-     */
     var glyph = function (label, fallback) {
         return harvested[label] || icon(fallback)
     }
 
-    var panels = data.panels.map(function (panel) {
+    var panels = (data.panels || []).map(function (panel) {
         return '<button class="sh-panel" type="button" data-panel="' + esc(panel.id) + '">'
             + glyph(panel.label, panel.icon)
             + '<span>' + esc(panel.label) + '</span>'
             + '</button>'
     }).join('')
 
-    var sessions = data.sessions.map(function (session, index) {
-        return '<button class="sh-session" type="button"' + (index === 0 ? ' aria-current="true"' : '') + '>'
-            + '<span class="sh-session__title">' + esc(session.title) + '</span>'
-            + '<span class="sh-session__time">' + esc(session.time) + '</span>'
-            + '<span class="sh-session__more">···</span>'
+    var workspaces = (data.workspaces || []).map(function (workspace) {
+        return '<button class="sh-workspace" type="button" aria-expanded="true">'
+            + glyph(workspace.label, workspace.icon || 'folder-open')
+            + '<span class="sh-workspace__label">' + esc(workspace.label) + '</span>'
+            + icon('chevron-down')
             + '</button>'
     }).join('')
 
-    var footer = data.footer.map(function (item) {
+    var sessions = (data.sessions || []).map(function (session) {
+        return '<button class="sh-session" type="button"' + (session.selected === true ? ' aria-current="true"' : '') + '>'
+            + '<span class="sh-session__title">' + esc(session.title) + '</span>'
+            + (session.time ? '<span class="sh-session__time">' + esc(session.time) + '</span>' : '')
+            + (session.more ? '<span class="sh-session__more">' + esc(session.more) + '</span>' : '')
+            + '</button>'
+    }).join('')
+
+    var footer = (data.footer || []).map(function (item) {
         return '<button class="sh-foot__action" type="button" data-foot="' + esc(item.id) + '">'
             + glyph(item.label, item.icon)
             + '<span>' + esc(item.label) + '</span>'
@@ -71,24 +72,18 @@ window.DSHShellParts.railLeft = function (ctx) {
         + '<button class="sh-icon-button" type="button" data-action="toggle-left" aria-label="收起侧栏">'
         + icon('panel-left') + '</button>'
         + '</div>'
-
         + '<button class="sh-new" type="button" data-action="new-session">'
         + glyph('新会话', 'new-chat')
         + '<span>新会话</span>'
-        + '<span class="sh-new__keys" aria-hidden="true"><kbd>Ctrl</kbd><kbd class="sh-new__sep">+</kbd><kbd>N</kbd></span>'
         + '</button>'
-
-        + '<nav class="sh-panels">' + panels + '</nav>'
-
+        + '<nav class="sh-panels" aria-label="全局面板">' + panels + '</nav>'
         + '<div class="sh-region">'
         + '<div class="sh-section">'
         + '<span>工作区</span>'
         + '<span class="sh-section__spacer"></span>'
-        + '<button class="sh-section__action" type="button" aria-label="搜索">' + icon('search') + '</button>'
         + '</div>'
-        + '<div class="sh-list">' + sessions + '</div>'
+        + '<div class="sh-list">' + workspaces + sessions + '</div>'
         + '</div>'
-
         + '<div class="sh-foot">'
         + footer
         + '<button class="sh-settings" type="button" data-foot="' + esc(data.settings.id) + '">'

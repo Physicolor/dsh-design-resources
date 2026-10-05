@@ -1,10 +1,11 @@
-<!-- 本组件官方没有对应物，这是本仓库建议的实现；预览为几何展示，不代表产品界面。 -->
+<!-- The product ships no counterpart for this component; this is the implementation proposed by this
+     repository. The preview is a geometry demonstration, not a representation of the product interface. -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SegmentedControl · DSH 设计资源</title>
+<title>SegmentedControl · DSH Design Resources</title>
 <style>
 :root {
   --dsw-static-neutral-bluish-00: #fff;
@@ -106,15 +107,17 @@
   --dsw-shadow-lv3: 0 0 1px 0 rgba(0, 0, 0, .2), 0 0 4px 0 rgba(0, 0, 0, .02), 0 12px 32px 0 rgba(0, 0, 0, .08);
   --dsw-mask-blur: none;
   --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  /* 官方把这两条写成 font 简写合成 token，这里展开以便 demo 单条使用。 */
+  /* The product declares these two as font-shorthand composite tokens; they are expanded here
+     so the demo can use each one on its own. */
   --dsw-font-s-14: 14px/22px var(--dsw-font-family);
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
 }
 
-/* 深色主题：站点把深色 token 挂在 body[data-ds-dark-theme] 上，Shadow DOM 里选择不到它，
-   而 :host 自己的自定义属性又会盖过继承值——所以深色值在文件内自带一份，用 light-dark()
-   依据宿主继承下来的 color-scheme 选择。只列本页用到、且深浅两套取值不同的 token；
-   数值逐条取自 website/css/dsh-tokens.css。 */
+/* Dark theme: the site hangs its dark tokens on body[data-ds-dark-theme], which a shadow DOM
+   cannot select, and :host custom properties would override the inherited values — so the dark
+   values are carried in this file and chosen with light-dark() from the color-scheme the host
+   inherits. Only tokens this page uses whose light and dark values differ are listed; every
+   value comes from website/css/dsh-tokens.css. */
 :root {
   --dsw-alias-bg-module-platform: light-dark(var(--dsw-static-neutral-bluish-60), var(--dsw-static-neutral-bluish-800));
   --dsw-alias-brand-primary: light-dark(var(--dsw-static-neutral-bluish-1000), var(--dsw-static-neutral-bluish-50));
@@ -127,9 +130,9 @@
   --dsw-alias-label-tertiary: light-dark(var(--dsw-static-neutral-bluish-600), var(--dsw-static-neutral-bluish-400));
 }
 
-/* --------------------------------------------------- 组件几何
-   数值逐条取自同目录 segmentedcontrol.module.css（CSS Modules 的哈希类名已去掉），
-   规则重新组织过，声明值未改。 */
+/* --------------------------------------------------- component geometry
+   Every value comes from segmentedcontrol.module.css in this directory (the CSS Modules hashed
+   class names are dropped); the rules are reorganised, the declared values are unchanged. */
 .control {
   --dsh-seg-pad: 4px;
   --dsh-seg-radius: 12px;
@@ -203,9 +206,10 @@
 
 .icon > svg { display: block; width: 100%; height: 100%; }
 
-/* ------------------------------------------------------------------ demo 外壳
-   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
-   .demo-label 是本页唯一允许出现的文字，只写客观事实（尺寸 / 状态名）。 */
+/* ------------------------------------------------------------------ demo shell
+   body sets only the 16px padding and the text colour, never a background: the site (the shadow
+   host) supplies that. .demo-label is the only text this page allows, and it states facts only
+   (sizes and state names). */
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -233,47 +237,47 @@ body {
 </head>
 <body>
   <div class="demo-group">
-    <p class="demo-label">md · 段 h36 r8 · 容器 pad 4 r12 · gap 0 · 两段与三段</p>
+    <p class="demo-label" data-t="demo.segmentedcontrol.mdRow">md · 段 h36 r8 · 容器 pad 4 r12 · gap 0 · 两段与三段</p>
     <div class="demo-row" style="gap:16px">
-      <div class="control" role="radiogroup" aria-label="视图选项组" aria-orientation="horizontal">
-        <button type="button" role="radio" aria-checked="true" tabindex="0" class="option">选项一</button>
-        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option">选项二</button>
+      <div class="control" role="radiogroup" aria-label="视图选项组" data-t-aria="demo.segmentedcontrol.viewOptions" aria-orientation="horizontal">
+        <button type="button" role="radio" aria-checked="true" tabindex="0" class="option" data-t="demo.segmentedcontrol.optionOne">选项一</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option" data-t="demo.segmentedcontrol.optionTwo">选项二</button>
       </div>
-      <div class="control" role="radiogroup" aria-label="区间选项组" aria-orientation="horizontal">
-        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option">选项一</button>
-        <button type="button" role="radio" aria-checked="true" tabindex="0" class="option">选项二</button>
-        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option">选项三</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="demo-group">
-    <p class="demo-label">sm · 段 h28 · pad 0 10 · font 12/18</p>
-    <div class="demo-row">
-      <div class="control sm" role="radiogroup" aria-label="区间选项组" aria-orientation="horizontal">
-        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option">选项一</button>
-        <button type="button" role="radio" aria-checked="true" tabindex="0" class="option">选项二</button>
-        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option">选项三</button>
+      <div class="control" role="radiogroup" aria-label="区间选项组" data-t-aria="demo.segmentedcontrol.rangeOptions" aria-orientation="horizontal">
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option" data-t="demo.segmentedcontrol.optionOne">选项一</button>
+        <button type="button" role="radio" aria-checked="true" tabindex="0" class="option" data-t="demo.segmentedcontrol.optionTwo">选项二</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option" data-t="demo.segmentedcontrol.optionThree">选项三</button>
       </div>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">icon 16×16 · aria-hidden</p>
+    <p class="demo-label" data-t="demo.segmentedcontrol.smRow">sm · 段 h28 · pad 0 10 · font 12/18</p>
     <div class="demo-row">
-      <div class="control" role="radiogroup" aria-label="视图选项组" aria-orientation="horizontal">
-        <button type="button" role="radio" aria-checked="true" tabindex="0" class="option"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M13.1 4.6 6.4 11.3 2.9 7.8l1.1-1.1 2.4 2.4 5.6-5.6z" fill="currentColor"/></svg></span>选项一</button>
-        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.6a4 4 0 0 1 4 4v2.4l1.2 2.4H2.8L4 8V5.6a4 4 0 0 1 4-4zm0 12.8a1.6 1.6 0 0 1-1.6-1.6h3.2A1.6 1.6 0 0 1 8 14.4z" fill="currentColor"/></svg></span>选项二</button>
+      <div class="control sm" role="radiogroup" aria-label="区间选项组" data-t-aria="demo.segmentedcontrol.rangeOptions" aria-orientation="horizontal">
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option" data-t="demo.segmentedcontrol.optionOne">选项一</button>
+        <button type="button" role="radio" aria-checked="true" tabindex="0" class="option" data-t="demo.segmentedcontrol.optionTwo">选项二</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option" data-t="demo.segmentedcontrol.optionThree">选项三</button>
       </div>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">disabled · 文字 label-tertiary · 保留选中填充</p>
+    <p class="demo-label" data-t="demo.segmentedcontrol.iconRow">icon 16×16 · aria-hidden</p>
     <div class="demo-row">
-      <div class="control disabled" role="radiogroup" aria-label="视图选项组" aria-orientation="horizontal" aria-disabled="true">
-        <button type="button" role="radio" aria-checked="true" tabindex="-1" class="option" disabled>选项一</button>
-        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option" disabled>选项二</button>
+      <div class="control" role="radiogroup" aria-label="视图选项组" data-t-aria="demo.segmentedcontrol.viewOptions" aria-orientation="horizontal">
+        <button type="button" role="radio" aria-checked="true" tabindex="0" class="option"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M13.1 4.6 6.4 11.3 2.9 7.8l1.1-1.1 2.4 2.4 5.6-5.6z" fill="currentColor"/></svg></span><span data-t="demo.segmentedcontrol.optionOne">选项一</span></button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option"><span class="icon" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.6a4 4 0 0 1 4 4v2.4l1.2 2.4H2.8L4 8V5.6a4 4 0 0 1 4-4zm0 12.8a1.6 1.6 0 0 1-1.6-1.6h3.2A1.6 1.6 0 0 1 8 14.4z" fill="currentColor"/></svg></span><span data-t="demo.segmentedcontrol.optionTwo">选项二</span></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="demo-group">
+    <p class="demo-label" data-t="demo.segmentedcontrol.disabledRow">disabled · 文字 label-tertiary · 保留选中填充</p>
+    <div class="demo-row">
+      <div class="control disabled" role="radiogroup" aria-label="视图选项组" data-t-aria="demo.segmentedcontrol.viewOptions" aria-orientation="horizontal" aria-disabled="true">
+        <button type="button" role="radio" aria-checked="true" tabindex="-1" class="option" data-t="demo.segmentedcontrol.optionOne" disabled>选项一</button>
+        <button type="button" role="radio" aria-checked="false" tabindex="-1" class="option" data-t="demo.segmentedcontrol.optionTwo" disabled>选项二</button>
       </div>
     </div>
   </div>

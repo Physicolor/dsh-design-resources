@@ -2,16 +2,16 @@ import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
 import styles from './tag.module.css';
 
 /**
- * 标签调色板。每个 tone 对应一种已发布的固定观感。
+ * Tag palette. Each tone is one published, fixed look.
  *
- * - `outline`：细描边 + 三级文字，只读场景的默认值。
- * - `solid`：反色填充，一组标签里用来标出当前选中的那一个。
- * - `neutral`：平台灰底，纯中性事实，不带状态含义。
- * - `quiet`：只有文字没有底色，比 `neutral` 更安静。
- * - `success`：绿色淡底，健康 / 已启用。
- * - `info`：蓝色淡底，信息性归类，不代表健康度。
- * - `warning`：琥珀色淡底，需要关注但还没失败。
- * - `danger`：红色淡底，已经失败。
+ * - `outline`: a fine border + tertiary text, the default for read-only places.
+ * - `solid`: inverted fill, used to mark the selected one in a group of tags.
+ * - `neutral`: the platform grey background, plain neutral fact with no state meaning.
+ * - `quiet`: text only, no fill, quieter than `neutral`.
+ * - `success`: a pale green fill, healthy / enabled.
+ * - `info`: a pale blue fill, informational grouping, says nothing about health.
+ * - `warning`: a pale amber fill, needs attention but has not failed yet.
+ * - `danger`: a pale red fill, already failed.
  */
 export type TagTone
   = | 'outline'
@@ -24,27 +24,27 @@ export type TagTone
     | 'danger';
 
 export interface TagProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'children' | 'className'> {
-  /** 调色板，默认 `outline`。 */
+  /** Palette, defaults to `outline`. */
   tone?: TagTone;
-  /** 追加到根节点的 class，用于外部布局定位。 */
+  /** Class appended to the root node, for external layout positioning. */
   className?: string;
-  /** 标签文案，由调用方负责本地化。 */
+  /** Tag text; the caller is responsible for localisation. */
   children?: ReactNode;
 }
 
 /**
- * 只读标签。全库统一一种几何，只有配色随 `tone` 变化。
+ * Read-only tag. One geometry across the library; only the palette changes with `tone`.
  *
- * 几何参照官方 `Tag.module.css` 的 `.tag`（radius 999px / padding 1px 8px /
- * 11-17 / weight 500 / nowrap）与 8 个 `data-tone` 选择器，实现为本仓库原创。
+ * Geometry follows the official `Tag.module.css` `.tag` (radius 999px / padding 1px 8px /
+ * 11-17 / weight 500 / nowrap) and its 8 `data-tone` selectors; the implementation is original to this repository.
  *
- * 配色一律通过 `data-tone` 属性选择器切换，与官方保持一致，
- * 这样外部仍然可以用自己的 class 调整摆放而不影响配色。
+ * Colour always switches through the `data-tone` attribute selector, in step with the official set,
+ * so an outside class can still adjust placement without touching the palette.
  *
  * @example
- * <Tag>草稿</Tag>
- * <Tag tone="success">已启用</Tag>
- * <Tag tone="danger">构建失败</Tag>
+ * <Tag>Draft</Tag>
+ * <Tag tone="success">Enabled</Tag>
+ * <Tag tone="danger">Build failed</Tag>
  */
 export const Tag = forwardRef<HTMLSpanElement, TagProps>(function Tag(
   { tone = 'outline', className, children, ...rest },

@@ -1,5 +1,5 @@
 {
-  "$comment": "清单里的每个身份在规范/组件语料里有没有位置。covered = 人工锚点命中（described 表示目标文件里写下了它的实测尺寸）；referenced = 语料里出现过这个词（要复核）；missing = 待办。",
+  "$comment": "Whether each identity in the inventory has a home in the spec/component corpus. covered = a human anchor matched (described means the target file states its measured size); referenced = the word merely appears somewhere in the corpus (needs review); missing = a to-do.",
   "generatedAt": "2026-10-01T19:01:47.782Z",
   "counts": {
     "identities": 436,

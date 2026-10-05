@@ -9,44 +9,44 @@ import {
 } from 'react';
 import styles from './list-row-group.module.css';
 
-/** 拼 class，避免引入 clsx 之类的依赖。 */
+/** Join classes without pulling in a dependency like clsx. */
 function cx(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
-/** 语义标题级别。 */
+/** Semantic heading level. */
 export type ListRowHeadingLevel = 2 | 3 | 4 | 5 | 6;
 
-/** 行组内分隔线的两种承载方式。 */
+/** The two ways a row group carries its separators. */
 export type ListRowSeparatorMode = 'hairline' | 'none';
 
-/* -------------------------------------------------------------------- 行 */
+/* -------------------------------------------------------------------- row */
 
 export interface ListRowProps extends HTMLAttributes<HTMLElement> {
   /**
-   * 让整行成为一个 `<button>`（带键盘焦点与 hover 底色）。
-   * 开启后行内不得再放可交互控件（会嵌套按钮）。
+   * Makes the whole row a `<button>` (with keyboard focus and a hover background).
+   * Once enabled, the row must not hold another interactive control (that would nest buttons).
    */
   interactive?: boolean;
-  /** 仅 `interactive` 时生效。 */
+  /** Only has an effect when `interactive` is set. */
   disabled?: boolean;
-  /** 前置内容，会被放进 16×16 的图标容器里。 */
+  /** Leading content, placed inside a 16×16 icon container. */
   leading?: ReactNode;
-  /** 尾部内容（计数、状态点、chevron）。 */
+  /** Trailing content (a count, a status dot, a chevron). */
   trailing?: ReactNode;
 }
 
 /**
- * 列表行组里的一行。
+ * One row in a list row group.
  *
- * 行几何参照官方 Menu 的菜单单元（min-height 40 / padding 8px 10px /
- * radius 10px / gap 8px / 14-22），实现为本仓库原创。
- * 默认渲染 `<div>`（纯展示行，行内可以放按钮）；`interactive` 时渲染
- * `<button type="button">`，此时行内不得再有可交互控件。
+ * The row geometry follows the official Menu's menu item (min-height 40 / padding 8px 10px /
+ * radius 10px / gap 8px / 14-22); the implementation is original to this repository.
+ * It renders a `<div>` by default (a display-only row, which may hold buttons); with
+ * `interactive` it renders `<button type="button">` and must hold no other interactive control.
  *
  * @example
- * <ListRow leading={<IconFolder />} trailing="12 项">工作区</ListRow>
- * <ListRow interactive onClick={open}>打开设置</ListRow>
+ * <ListRow leading={<IconFolder />} trailing="12 items">Workspace</ListRow>
+ * <ListRow interactive onClick={open}>Open settings</ListRow>
  */
 export const ListRow = forwardRef<HTMLElement, ListRowProps>(function ListRow(
   { interactive = false, disabled = false, leading, trailing, className, children, ...rest },
@@ -82,16 +82,17 @@ export const ListRow = forwardRef<HTMLElement, ListRowProps>(function ListRow(
   );
 });
 
-/* --------------------------------------------------------------- 分隔线 */
+/* --------------------------------------------------------------- separator */
 
 export type ListRowSeparatorProps = HTMLAttributes<HTMLDivElement>;
 
 /**
- * 行间分隔线：0.5px 高、左右各收 2px、上下各 4px 外边距，颜色用官方
- * 一级描边 token。数值逐条取自官方 Menu 的分隔线单元。
+ * A separator between rows: 0.5px tall, inset 2px left and right, 4px margin above and
+ * below, coloured with the official level-1 border token. Every value comes from the
+ * official Menu separator item.
  *
- * 只在 `ListRowGroup` 的 `separator="none"` 模式下自行插入，
- * 与默认的自动 hairline 二选一，同时用会出现双线。
+ * Insert it yourself only in `ListRowGroup`'s `separator="none"` mode; it is an
+ * alternative to the default automatic hairline, and using both gives a double line.
  *
  * @example
  * <ListRowGroup separator="none">
@@ -104,40 +105,41 @@ export const ListRowSeparator = forwardRef<HTMLDivElement, ListRowSeparatorProps
   { className, ...rest },
   ref,
 ) {
-  /* 纯装饰线：不进入无障碍树（默认 div 无 role，此处显式写清意图）。 */
+  /* Purely decorative line: it stays out of the accessibility tree (a plain div has no role; this states the intent explicitly). */
   return <div {...rest} ref={ref} aria-hidden="true" className={cx(styles.separator, className)} />;
 });
 
-/* ---------------------------------------------------------------- 行组 */
+/* ---------------------------------------------------------------- group */
 
-/* Omit 掉原生的 `title`（string 工具提示属性），换成 ReactNode 的分组标题。 */
+/* Omit the native `title` (the string tooltip attribute) and take a ReactNode group title instead. */
 export interface ListRowGroupProps extends Omit<HTMLAttributes<HTMLElement>, 'title'> {
-  /** 分组标题。不传则不渲染标题行。 */
+  /** Group title. No title row is rendered when it is omitted. */
   title?: ReactNode;
-  /** 标题的语义级别，默认 3。 */
+  /** Semantic level of the heading, 3 by default. */
   headingLevel?: ListRowHeadingLevel;
   /**
-   * 行间分隔线：
-   * - `hairline`（默认）：给相邻行之间加 0.5px 的 `--dsw-alias-border-l1` 描边；
-   * - `none`：不画，交给调用方自己插 `ListRowSeparator`。
+   * Separators between rows:
+   * - `hairline` (default): adds a 0.5px `--dsw-alias-border-l1` border between adjacent rows;
+   * - `none`: draws nothing; the caller inserts `ListRowSeparator` itself.
    */
   separator?: ListRowSeparatorMode;
 }
 
 /**
- * 列表行组：分组标题 + 一组行 + 行间分隔线。
+ * A list row group: a group title + a set of rows + separators between rows.
  *
- * 标题排版逐条取自官方 Menu 的标题行（padding 8px 10px / 12-16 /
- * label-tertiary），行间距 0，分隔线 0.5px + `--dsw-alias-border-l1`。
- * 实现为本仓库原创，未复制官方 CSS 源码。
+ * Every typographic value for the title comes from the official Menu title row
+ * (padding 8px 10px / 12-16 / label-tertiary), the spacing between rows is 0, and the
+ * separator is 0.5px + `--dsw-alias-border-l1`.
+ * The implementation is original to this repository; the official CSS source was not copied.
  *
- * 只做布局与排版，不 import 仓库内任何其它组件；行由调用方通过 `children`
- * 传入（推荐配 `ListRow`）。
+ * It only does layout and typography and imports no other component from the repository; the
+ * rows come in from the caller through `children` (ideally `ListRow`s).
  *
  * @example
- * <ListRowGroup title="启动行为">
- *   <ListRow interactive>恢复上次会话</ListRow>
- *   <ListRow interactive>始终新建会话</ListRow>
+ * <ListRowGroup title="Startup behaviour">
+ *   <ListRow interactive>Restore the last session</ListRow>
+ *   <ListRow interactive>Always start a new session</ListRow>
  * </ListRowGroup>
  */
 export const ListRowGroup = forwardRef<HTMLElement, ListRowGroupProps>(function ListRowGroup(

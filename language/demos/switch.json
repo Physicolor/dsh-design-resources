@@ -1,0 +1,22 @@
+{
+  "zh": {
+    "settingsOpenLabel": "03-settings-open · 通用设置「显示代码工作视图」行 · 开（实拍 36×20）",
+    "pluginsLabel": "06-plugins · 插件列表行尾 · 开 / 关 / 关（实拍 36×20）",
+    "statesLabel": "截图未覆盖 · disabled（opacity 0.5）/ focus-visible（2px brand-primary + offset 2）",
+    "settingsRowAria": "显示代码工作视图",
+    "agentTeamAria": "智能体团队",
+    "voiceInputAria": "语音输入",
+    "lockedAria": "已锁定",
+    "writingConfigTitle": "正在写入配置"
+  },
+  "en": {
+    "settingsOpenLabel": "03-settings-open · Settings → General, the Show the code workspace view row · on (captured 36×20)",
+    "pluginsLabel": "06-plugins · end of a plugin list row · on / off / off (captured 36×20)",
+    "statesLabel": "not covered by a capture · disabled (opacity 0.5) / focus-visible (2px brand-primary + offset 2)",
+    "settingsRowAria": "Show the code workspace view",
+    "agentTeamAria": "Agent team",
+    "voiceInputAria": "Voice input",
+    "lockedAria": "Locked",
+    "writingConfigTitle": "Writing the configuration"
+  }
+}

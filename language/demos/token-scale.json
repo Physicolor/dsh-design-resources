@@ -1,0 +1,28 @@
+{
+  "zh": {
+    "radiusTitle": "圆角只有六档",
+    "radiusLabel": "`--dsw-radius-xs…panel` = 4 / 8 / 12 / 16 / 20 / 28 · 读数取 border-top-left-radius 的计算值（档位值取自 data/tokens.json）",
+    "elevationTitle": "高程：三层阴影 + 一层弹层",
+    "elevationLabel": "卡片用贴地 hairline，浮层才用阴影；读数读的是 box-shadow 的计算值（压缩显示）",
+    "typeTitle": "字号档位",
+    "typeLabel": "用角色而不是裸字号：`--dsw-font-xxxs-11` … `--dsw-font-xl-24`，每个都是一整条 font 简写",
+    "typeSample": "设计资源 Design Resources",
+    "colourTitle": "语义色：同一行两块，浅深各解一次",
+    "colourLabel": "左右两块用同一批 `--dsw-alias-*`，只有 color-scheme 不同；色值那一列是浏览器当场算出来的",
+    "lightPanelTitle": "浅色（color-scheme: light）",
+    "darkPanelTitle": "深色（color-scheme: dark）"
+  },
+  "en": {
+    "radiusTitle": "There are only six corner steps",
+    "radiusLabel": "`--dsw-radius-xs…panel` = 4 / 8 / 12 / 16 / 20 / 28 · the readout is the computed border-top-left-radius (step values taken from data/tokens.json)",
+    "elevationTitle": "Elevation: three shadow levels, plus one for what floats",
+    "elevationLabel": "A surface in the flow gets the hairline; only what floats gets a shadow. The readout is the computed box-shadow, truncated",
+    "typeTitle": "Type steps",
+    "typeLabel": "Reach for a role, not a bare font size: `--dsw-font-xxxs-11` … `--dsw-font-xl-24`, each one a whole font shorthand",
+    "typeSample": "Design Resources",
+    "colourTitle": "Semantic colours: two panels side by side, light and dark each resolving the token once",
+    "colourLabel": "Both panels use the same `--dsw-alias-*` set and differ only in color-scheme; the value column is what the browser works out on the spot",
+    "lightPanelTitle": "Light (color-scheme: light)",
+    "darkPanelTitle": "Dark (color-scheme: dark)"
+  }
+}

@@ -1,43 +1,43 @@
 import { forwardRef, type ButtonHTMLAttributes, type MouseEvent, type ReactNode } from 'react';
 import styles from './sidebarrow.module.css';
 
-/** 选中态的视觉方式。 */
+/** The visual treatment of the selected state. */
 export type SidebarRowSelectionStyle = 'check' | 'fill';
 
 export interface SidebarRowProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  /** 行标题。 */
+  /** The row label. */
   children?: ReactNode;
   /**
-   * 前置图标。文字类内容会被放进 16×16 的容器，
-   * 图标节点请自行给 `aria-hidden="true"`。
+   * The leading icon. Text-like content is placed in a 16×16 container;
+   * give an icon node `aria-hidden="true"` yourself.
    */
   icon?: ReactNode;
-  /** 是否选中。配合 `selectionStyle` 决定用尾部对勾还是整行填充。 */
+  /** Whether it is selected. Together with `selectionStyle` this decides between a trailing check and a whole-row fill. */
   selected?: boolean;
   /**
-   * 多选行的复选框形态：渲染一个真实 `<input type="checkbox">`，
-   * 点击行任意位置都会切换它。此时不要再传 `selected`。
+   * The checkbox form of a multi-select row: renders a real `<input type="checkbox">`,
+   * and clicking anywhere on the row toggles it. In this case do not pass `selected`.
    */
   checkbox?: boolean;
-  /** `checkbox` 形态下的勾选状态。 */
+  /** The checked state in the `checkbox` form. */
   checked?: boolean;
-  /** 复选框的 `aria-label`（当行内没有可读文本时必填）。 */
+  /** The checkbox's `aria-label` (required when the row holds no readable text). */
   checkboxLabel?: string;
   /**
-   * 选中态画法：`check`（默认，官方 `Menu` 的做法：保持透明底，尾部放对勾）
-   * 或 `fill`（整行铺 `var(--dsw-alias-interactive-bg-hover)`）。
+   * How the selected state is drawn: `check` (default, the official `Menu`'s approach: keep a transparent
+   * ground and put a check at the end) or `fill` (the whole row takes `var(--dsw-alias-interactive-bg-hover)`).
    */
   selectionStyle?: SidebarRowSelectionStyle;
-  /** 尾部节点，如计数、快捷键提示。`check` 选中时会追加对勾。 */
+  /** Trailing node, such as a count or a shortcut hint. A `check` selection appends the check after it. */
   trailing?: ReactNode;
 }
 
-/** 拼 class，避免引入 clsx 之类的依赖。 */
+/** Concatenates classes, avoiding a dependency like clsx. */
 function cx(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
-/** 尾部对勾：官方 `Menu` 的选中标记，用 currentColor 上色。 */
+/** The trailing check: the official `Menu`'s selection marker, coloured with currentColor. */
 function CheckMark() {
   return (
     <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
@@ -47,18 +47,18 @@ function CheckMark() {
 }
 
 /**
- * 侧边栏 / 列表里可选中、可悬停的一行。
+ * A selectable, hoverable row in a sidebar / list.
  *
- * 几何直接锚定官方 `Menu.module.css` 的 `.item`（min-height 40px /
- * padding 8px 10px / border-radius 10px / gap 8px / 14-22），悬停与选中填充
- * 也用官方那两条 token。零依赖，只用到 `react` 和 CSS Modules。
- *
- * @example
- * <SidebarRow icon={<IconChat aria-hidden />} selected onClick={select}>今天的对话</SidebarRow>
+ * The geometry is anchored directly to `.item` in the official `Menu.module.css` (min-height 40px /
+ * padding 8px 10px / border-radius 10px / gap 8px / 14-22), and the hover and selected fills
+ * use the same two official tokens. Zero dependencies, using only `react` and CSS Modules.
  *
  * @example
- * // 多选列表：真实复选框
- * <SidebarRow checkbox checked={picked} checkboxLabel="选择 报告.md" onChange={toggle}>报告.md</SidebarRow>
+ * <SidebarRow icon={<IconChat aria-hidden />} selected onClick={select}>Today's conversation</SidebarRow>
+ *
+ * @example
+ * // A multi-select list: a real checkbox
+ * <SidebarRow checkbox checked={picked} checkboxLabel="Select report.md" onChange={toggle}>report.md</SidebarRow>
  */
 export const SidebarRow = forwardRef<HTMLButtonElement, SidebarRowProps>(function SidebarRow(
   {
@@ -76,7 +76,7 @@ export const SidebarRow = forwardRef<HTMLButtonElement, SidebarRowProps>(functio
   },
   ref,
 ) {
-  /** 复选框处在按钮内部：拦住冒泡，否则点复选框会再触发一次按钮的 click。 */
+  /** The checkbox sits inside the button: stop the event, or clicking the checkbox fires the button's click a second time. */
   function handleCheckboxClick(event: MouseEvent<HTMLInputElement>) {
     event.stopPropagation();
   }

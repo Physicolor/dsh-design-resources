@@ -2,29 +2,29 @@ import { forwardRef, type InputHTMLAttributes, type ReactNode } from 'react';
 import styles from './input.module.css';
 
 export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'className'> {
-  /** 可选前置图标节点，会被放进 16×16 的图标容器里（例如搜索、链接图标）。 */
+  /** Optional leading icon node, placed inside a 16×16 icon container (a search or link icon, say). */
   icon?: ReactNode;
-  /** 追加到外层容器的 class，用于外部布局定位。 */
+  /** Class appended to the outer container, for external layout positioning. */
   className?: string;
 }
 
 /**
- * 单行文本输入框。
+ * Single-line text input.
  *
- * 几何参照官方 `Input.module.css` 的 `.wrap`（h32 / padding 0 8px / gap 6px /
- * radius 8px / 0.5px 描边）、`.icon`（16×16）与 `.input`（14-22），
- * 实现为本仓库原创。
+ * Geometry follows the official `Input.module.css`: `.wrap` (h32 / padding 0 8px / gap 6px /
+ * radius 8px / 0.5px border), `.icon` (16×16) and `.input` (14-22);
+ * the implementation is original to this repository.
  *
- * `ref` 透传到内部原生 `<input>`，其余 input 属性（`value` / `onChange` /
- * `placeholder` / `type` / `disabled` …）也全部透传。
+ * `ref` is forwarded to the inner native `<input>`, and every other input attribute
+ * (`value` / `onChange` / `placeholder` / `type` / `disabled` …) is forwarded too.
  *
  * @example
  * const ref = useRef<HTMLInputElement>(null);
- * <Input ref={ref} placeholder="搜索会话" onChange={(e) => setQ(e.target.value)} />
+ * <Input ref={ref} placeholder="Search conversations" onChange={(e) => setQ(e.target.value)} />
  *
  * @example
- * // 带 16×16 前置图标
- * <Input icon={<SearchIcon aria-hidden="true" />} placeholder="搜索" />
+ * // With a 16×16 leading icon
+ * <Input icon={<SearchIcon aria-hidden="true" />} placeholder="Search" />
  */
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input({ icon, className, ...rest }, ref) {
   return (

@@ -1,12 +1,12 @@
-/* 几何锚点来自官方 @deepseek-ai/dsh-client-ui-primitives/lib 下已核实的值：
+/* Geometry anchors come from values verified in the official @deepseek-ai/dsh-client-ui-primitives/lib:
  *   ConnectionIndicator.module.css .indicator → height 32px / padding 0 10px
  *                                                / border-radius 8px / box-sizing border-box
- *   Button.module.css            .button     → gap 4px（本组件主间距直接取该值）
- *   Button.module.css            .sm         → 28px 高，故 sm 档行高取 28px、间距收到 4px
+ *   Button.module.css            .button     → gap 4px (this component's main spacing takes that value directly)
+ *   Button.module.css            .sm         → 28px high, so the sm step takes a 28px row height and tightens the spacing to 4px
  *   Button.module.css            .toolbar    → background var(--dsw-alias-button-tool-bar-fill)
  *   Menu.module.css              .separator  → height 0.5px / var(--dsw-alias-border-l1)
- * 12px 的左右内边距与 sm 档的 8px 内边距为本仓库建议值（4 的倍数），README 单列。
- * 实现为本仓库原创：CSS 变量承载几何 + 语义 token 承载颜色，未复制官方 CSS 源码。 */
+ * The 12px left / right padding and the sm step's 8px padding are values proposed here (multiples of 4); the README lists them separately.
+ * The implementation here is original: CSS variables carry the geometry, semantic tokens carry the colour, and no official CSS source is copied. */
 
 .row {
   --dsh-tb-height: 32px;
@@ -20,13 +20,13 @@
   gap: var(--dsh-tb-gap);
   min-height: var(--dsh-tb-height);
   padding: 0 var(--dsh-tb-pad-x);
-  border-radius: 8px; /* 官方 ConnectionIndicator.module.css .indicator 的 8px */
+  border-radius: 8px; /* the 8px of .indicator in the official ConnectionIndicator.module.css */
   background: transparent;
   font-family: inherit;
 }
 
-/* 底部 hairline：写法与官方 Menu.module.css 的 .separator 一致
- * （0.5px + border-l1）。选 l1 的理由见 README。 */
+/* Bottom hairline: written the same way as .separator in the official Menu.module.css
+ * (0.5px + border-l1). For why l1, see the README. */
 .divider {
   border-bottom: 0.5px solid var(--dsw-alias-border-l1);
 }
@@ -37,14 +37,14 @@
   z-index: 1;
 }
 
-/* ------------------------------------------------------------------ 形态 */
+/* ------------------------------------------------------------------ variant */
 
-/* 官方 Button.module.css 的 .toolbar 底色，即工具条按钮的底。 */
+/* The .toolbar background in the official Button.module.css, i.e. the ground of a toolbar button. */
 .filled {
   background: var(--dsw-alias-button-tool-bar-fill);
 }
 
-/* ------------------------------------------------------------------ 尺寸 */
+/* ------------------------------------------------------------------ size */
 
 .sm {
   --dsh-tb-height: 28px;

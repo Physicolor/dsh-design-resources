@@ -1,0 +1,32 @@
+{
+  "zh": {
+    "regionLabel": "DeepSeek Harness left sidebar anatomy",
+    "hostNavHeader": "宿主导航",
+    "hostNavBrandRow": "顶部是 DeepSeek 标志与 Harness 名称。",
+    "hostNavPanelsLead": "「插件」和「自动化任务」位于全局面板列表，由 ",
+    "hostNavPanelsTail": " 管理。",
+    "hostNavWorkspacesLead": "「工作区」与会话行属于宿主工作区区域 ",
+    "hostNavWorkspacesTail": "。",
+    "viewInSite": "需要在 DeepSeek Design Resources 站内查看。",
+    "boundaryHeader": "底部与桌面版边界",
+    "boundarySettingsEntry": "「设置」是宿主入口。",
+    "boundaryFooterAction": " 是设置旁的可选注册位；干净 profile 没有第三方条目时保持为空。",
+    "boundaryLauncher": " 是 Desktop 宿主管理的可选账户入口。Web 采集没有展示登录状态，所以这里不画虚构的登录卡片或用户名。",
+    "conversationScopeNote": "对话区里的常驻插件面板属于会话层级；不要把它塞进左侧栏，也不要把它说成默认 DSH 内容。"
+  },
+  "en": {
+    "regionLabel": "DeepSeek Harness left sidebar anatomy",
+    "hostNavHeader": "Host navigation",
+    "hostNavBrandRow": "The top holds the DeepSeek mark and the Harness name.",
+    "hostNavPanelsLead": "Plugins and Automated tasks live in the global panel list, managed by ",
+    "hostNavPanelsTail": ".",
+    "hostNavWorkspacesLead": "Workspaces and session rows belong to the host's workspace region ",
+    "hostNavWorkspacesTail": ".",
+    "viewInSite": "Open the DeepSeek Design Resources site to see this.",
+    "boundaryHeader": "The footer and the desktop boundary",
+    "boundarySettingsEntry": "Settings is a host entry point.",
+    "boundaryFooterAction": " is the optional registration slot next to Settings; on a clean profile with no third-party entries it stays empty.",
+    "boundaryLauncher": " is the optional account entry the Desktop host manages. The Web capture never shows a signed-in state, so no invented sign-in card or username is drawn here.",
+    "conversationScopeNote": "A persistent plugin panel in the conversation area belongs to the conversation layer; do not squeeze it into the left sidebar, and do not describe it as default DSH content."
+  }
+}

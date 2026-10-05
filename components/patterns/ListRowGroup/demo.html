@@ -1,10 +1,10 @@
-<!-- 本组件官方没有对应物，这是本仓库建议的实现；预览为几何展示，不代表产品界面。 -->
+<!-- The official UI has no counterpart to this component: it is an implementation proposed by this repository. The preview is a geometry display, not a picture of the product interface. -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ListRowGroup · DSH 设计资源</title>
+<title>ListRowGroup · DSH Design Resources</title>
 <style>
 :root {
   --dsw-static-neutral-bluish-00: #fff;
@@ -106,15 +106,17 @@
   --dsw-shadow-lv3: 0 0 1px 0 rgba(0, 0, 0, .2), 0 0 4px 0 rgba(0, 0, 0, .02), 0 12px 32px 0 rgba(0, 0, 0, .08);
   --dsw-mask-blur: none;
   --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  /* 官方把这两条写成 font 简写合成 token，这里展开以便 demo 单条使用。 */
+  /* The official stylesheet writes these two as shorthand `font` composite tokens; they are expanded here so a demo can use one at a time. */
   --dsw-font-s-14: 14px/22px var(--dsw-font-family);
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
 }
 
-/* 深色主题：站点把深色 token 挂在 body[data-ds-dark-theme] 上，Shadow DOM 里选择不到它，
-   而 :host 自己的自定义属性又会盖过继承值——所以深色值在文件内自带一份，用 light-dark()
-   依据宿主继承下来的 color-scheme 选择。只列本页用到、且深浅两套取值不同的 token；
-   数值逐条取自 website/css/dsh-tokens.css。 */
+/* Dark theme: the site hangs the dark tokens on body[data-ds-dark-theme], which is not
+   selectable from inside a Shadow DOM, and :host custom properties would override the
+   inherited values anyway — so the dark values are carried in this file and picked with
+   light-dark() from the color-scheme inherited from the host. Only the tokens this page
+   uses that differ between light and dark are listed; the values are taken one by one
+   from website/css/dsh-tokens.css. */
 :root {
   --dsw-alias-border-l1: light-dark(#0000000a, #ffffff0f);
   --dsw-alias-brand-primary: light-dark(var(--dsw-static-neutral-bluish-1000), var(--dsw-static-neutral-bluish-50));
@@ -124,12 +126,13 @@
   --dsw-alias-label-tertiary: light-dark(var(--dsw-static-neutral-bluish-600), var(--dsw-static-neutral-bluish-400));
 }
 
-/* --------------------------------------------------- 组件几何
-   数值逐条取自同目录 list-row-group.module.css（CSS Modules 的哈希类名已去掉），
-   规则重新组织过，声明值未改。 */
+/* --------------------------------------------------- component geometry
+   The values are taken one by one from list-row-group.module.css in this directory (the
+   hashed CSS Modules class names are dropped) and the rules are reorganised; no declared
+   value is changed. */
 .group { display: flex; flex-direction: column; min-width: 0; }
 
-/* 分组标题：官方 Menu.module.css .label（pad 8 10 / 12-16 / label-tertiary） */
+/* Group heading: the official Menu.module.css .label (pad 8 10 / 12-16 / label-tertiary). */
 .groupLabel {
   margin: 0;
   padding: 8px 10px;
@@ -142,7 +145,7 @@
 .rows { display: flex; flex-direction: column; gap: 0; }
 .rowsHairline > * + * { border-top: 0.5px solid var(--dsw-alias-border-l1); }
 
-/* 行：官方 Menu.module.css .item（min-height 40 / pad 8 10 / r10 / gap 8 / 14-22） */
+/* Row: the official Menu.module.css .item (min-height 40 / pad 8 10 / r10 / gap 8 / 14-22). */
 .row {
   box-sizing: border-box;
   display: flex;
@@ -187,12 +190,13 @@
   color: var(--dsw-alias-label-tertiary);
 }
 
-/* 分隔线：官方 Menu.module.css .separator（0.5px / margin 4px 2px / border-l1） */
+/* Separator: the official Menu.module.css .separator (0.5px / margin 4px 2px / border-l1). */
 .separator { flex: none; height: 0.5px; margin: 4px 2px; background: var(--dsw-alias-border-l1); }
 
-/* ------------------------------------------------------------------ demo 外壳
-   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
-   .demo-label 是本页唯一允许出现的文字，只写客观事实（尺寸 / 状态名）。 */
+/* ------------------------------------------------------------------ demo shell
+   body only sets 16px padding and the text colour, no background: the ground colour
+   comes from the site (the shadow host). .demo-label is the only text this page is
+   allowed to show, and it states objective facts only (sizes / state names). */
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -220,13 +224,13 @@ body {
 </head>
 <body>
   <div class="demo-group" style="max-width:300px">
-    <p class="demo-label">title pad 8 10 · 行 min-height 40 pad 8 10 r10 · hairline 0.5px l1</p>
+    <p class="demo-label" data-t="demo.list-row-group.labelStatic">title pad 8 10 · 行 min-height 40 pad 8 10 r10 · hairline 0.5px l1</p>
     <section class="group">
-      <h3 class="groupLabel">分组标题一</h3>
+      <h3 class="groupLabel" data-t="demo.list-row-group.groupLabelOne">分组标题一</h3>
       <div class="rows rowsHairline">
-        <div class="row"><span class="rowLeading"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M1.6 3.2h4.4l1.2 1.6h7.2v8H1.6z" fill="currentColor"/></svg></span><span class="rowLabel">示例条目一</span><span class="rowTrailing">12</span></div>
-        <div class="row"><span class="rowLeading"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3.6 1.6h5.6L12.4 5v9.4H3.6z" fill="currentColor"/></svg></span><span class="rowLabel">示例条目二</span></div>
-        <div class="row"><span class="rowLeading"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6.9 1.6h2.2l.3 1.7 1.2.5 1.5-.9 1.6 1.6-.9 1.5.5 1.2 1.7.3v2.2l-1.7.3-.5 1.2.9 1.5-1.6 1.6-1.5-.9-1.2.5-.3 1.7H6.9l-.3-1.7-1.2-.5-1.5.9-1.6-1.6.9-1.5-.5-1.2L1 9.1V6.9l1.7-.3.5-1.2-.9-1.5 1.6-1.6 1.5.9 1.2-.5zM8 6.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6z" fill="currentColor"/></svg></span><span class="rowLabel">示例条目三</span></div>
+        <div class="row"><span class="rowLeading"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M1.6 3.2h4.4l1.2 1.6h7.2v8H1.6z" fill="currentColor"/></svg></span><span class="rowLabel" data-t="demo.list-row-group.itemOne">示例条目一</span><span class="rowTrailing">12</span></div>
+        <div class="row"><span class="rowLeading"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M3.6 1.6h5.6L12.4 5v9.4H3.6z" fill="currentColor"/></svg></span><span class="rowLabel" data-t="demo.list-row-group.itemTwo">示例条目二</span></div>
+        <div class="row"><span class="rowLeading"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6.9 1.6h2.2l.3 1.7 1.2.5 1.5-.9 1.6 1.6-.9 1.5.5 1.2 1.7.3v2.2l-1.7.3-.5 1.2.9 1.5-1.6 1.6-1.5-.9-1.2.5-.3 1.7H6.9l-.3-1.7-1.2-.5-1.5.9-1.6-1.6.9-1.5-.5-1.2L1 9.1V6.9l1.7-.3.5-1.2-.9-1.5 1.6-1.6 1.5.9 1.2-.5zM8 6.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6z" fill="currentColor"/></svg></span><span class="rowLabel" data-t="demo.list-row-group.itemThree">示例条目三</span></div>
       </div>
     </section>
   </div>
@@ -234,33 +238,33 @@ body {
   <div class="demo-group" style="max-width:300px">
     <p class="demo-label">interactive · button · hover interactive-bg-hover</p>
     <section class="group">
-      <h3 class="groupLabel">分组标题二</h3>
+      <h3 class="groupLabel" data-t="demo.list-row-group.groupLabelTwo">分组标题二</h3>
       <div class="rows">
-        <button type="button" class="row rowInteractive"><span class="rowLeading"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M13.1 4.6 6.4 11.3 2.9 7.8l1.1-1.1 2.4 2.4 5.6-5.6z" fill="currentColor"/></svg></span><span class="rowLabel">示例条目一</span></button>
-        <button type="button" class="row rowInteractive"><span class="rowLeading"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><circle cx="3" cy="8" r="1.4" fill="currentColor"/><circle cx="8" cy="8" r="1.4" fill="currentColor"/><circle cx="13" cy="8" r="1.4" fill="currentColor"/></svg></span><span class="rowLabel">示例条目二</span></button>
-        <button type="button" class="row rowInteractive" disabled><span class="rowLeading"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M1.6 3.2h4.4l1.2 1.6h7.2v8H1.6z" fill="currentColor"/></svg></span><span class="rowLabel">示例条目三</span></button>
+        <button type="button" class="row rowInteractive"><span class="rowLeading"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M13.1 4.6 6.4 11.3 2.9 7.8l1.1-1.1 2.4 2.4 5.6-5.6z" fill="currentColor"/></svg></span><span class="rowLabel" data-t="demo.list-row-group.itemOne">示例条目一</span></button>
+        <button type="button" class="row rowInteractive"><span class="rowLeading"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><circle cx="3" cy="8" r="1.4" fill="currentColor"/><circle cx="8" cy="8" r="1.4" fill="currentColor"/><circle cx="13" cy="8" r="1.4" fill="currentColor"/></svg></span><span class="rowLabel" data-t="demo.list-row-group.itemTwo">示例条目二</span></button>
+        <button type="button" class="row rowInteractive" disabled><span class="rowLeading"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M1.6 3.2h4.4l1.2 1.6h7.2v8H1.6z" fill="currentColor"/></svg></span><span class="rowLabel" data-t="demo.list-row-group.itemThree">示例条目三</span></button>
       </div>
     </section>
   </div>
 
   <div class="demo-group" style="max-width:300px">
-    <p class="demo-label">separator none + 显式分隔线 · margin 4px 2px</p>
+    <p class="demo-label" data-t="demo.list-row-group.labelSeparator">separator none + 显式分隔线 · margin 4px 2px</p>
     <section class="group">
-      <h4 class="groupLabel">分组标题三</h4>
+      <h4 class="groupLabel" data-t="demo.list-row-group.groupLabelThree">分组标题三</h4>
       <div class="rows">
-        <div class="row"><span class="rowLabel">示例条目一</span><span class="rowTrailing"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M13.1 4.6 6.4 11.3 2.9 7.8l1.1-1.1 2.4 2.4 5.6-5.6z" fill="currentColor"/></svg></span></div>
+        <div class="row"><span class="rowLabel" data-t="demo.list-row-group.itemOne">示例条目一</span><span class="rowTrailing"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M13.1 4.6 6.4 11.3 2.9 7.8l1.1-1.1 2.4 2.4 5.6-5.6z" fill="currentColor"/></svg></span></div>
         <div class="separator" aria-hidden="true"></div>
-        <div class="row"><span class="rowLabel">示例条目二</span></div>
+        <div class="row"><span class="rowLabel" data-t="demo.list-row-group.itemTwo">示例条目二</span></div>
       </div>
     </section>
   </div>
 
   <div class="demo-group" style="max-width:300px">
-    <p class="demo-label">无 title · 只有行</p>
+    <p class="demo-label" data-t="demo.list-row-group.labelNoTitle">无 title · 只有行</p>
     <section class="group">
       <div class="rows rowsHairline">
-        <div class="row"><span class="rowLeading"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.6a6.4 6.4 0 0 0 0 12.8c.9 0 1.4-.6 1.4-1.2 0-.4-.2-.7-.4-1-.2-.2-.3-.5-.3-.8 0-.7.5-1.2 1.2-1.2h1.3A3.2 3.2 0 0 0 14.4 7C14.4 4 11.5 1.6 8 1.6zM4.6 8.4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm1.6-2.8a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm3.2-.4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm2.8 2.4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" fill="currentColor"/></svg></span><span class="rowLabel">示例条目一</span></div>
-        <div class="row"><span class="rowLeading"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6.9 1.6h2.2l.3 1.7 1.2.5 1.5-.9 1.6 1.6-.9 1.5.5 1.2 1.7.3v2.2l-1.7.3-.5 1.2.9 1.5-1.6 1.6-1.5-.9-1.2.5-.3 1.7H6.9l-.3-1.7-1.2-.5-1.5.9-1.6-1.6.9-1.5-.5-1.2L1 9.1V6.9l1.7-.3.5-1.2-.9-1.5 1.6-1.6 1.5.9 1.2-.5zM8 6.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6z" fill="currentColor"/></svg></span><span class="rowLabel">示例条目二</span></div>
+        <div class="row"><span class="rowLeading"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.6a6.4 6.4 0 0 0 0 12.8c.9 0 1.4-.6 1.4-1.2 0-.4-.2-.7-.4-1-.2-.2-.3-.5-.3-.8 0-.7.5-1.2 1.2-1.2h1.3A3.2 3.2 0 0 0 14.4 7C14.4 4 11.5 1.6 8 1.6zM4.6 8.4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm1.6-2.8a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm3.2-.4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm2.8 2.4a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" fill="currentColor"/></svg></span><span class="rowLabel" data-t="demo.list-row-group.itemOne">示例条目一</span></div>
+        <div class="row"><span class="rowLeading"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6.9 1.6h2.2l.3 1.7 1.2.5 1.5-.9 1.6 1.6-.9 1.5.5 1.2 1.7.3v2.2l-1.7.3-.5 1.2.9 1.5-1.6 1.6-1.5-.9-1.2.5-.3 1.7H6.9l-.3-1.7-1.2-.5-1.5.9-1.6-1.6.9-1.5-.5-1.2L1 9.1V6.9l1.7-.3.5-1.2-.9-1.5 1.6-1.6 1.5.9 1.2-.5zM8 6.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6z" fill="currentColor"/></svg></span><span class="rowLabel" data-t="demo.list-row-group.itemTwo">示例条目二</span></div>
       </div>
     </section>
   </div>

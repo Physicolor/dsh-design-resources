@@ -9,10 +9,18 @@
     'use strict'
 
     var D = window.DSHDR || {}
-    var SPECS = D.specs || []
+    /* Documents arrive per language (`docs/I18N.md`): the raw arrays hold every
+     * document in both languages, and `SPECS` / `GUIDES` / `COMPONENTS` below are
+     * the flat, single-language projections the renderers read. A document with
+     * no version in the reader's language is not projected at all, so it cannot
+     * be reached from the index, a card or a search hit. */
+    var SPECS_RAW = D.specs || []
     /* 指南：按作者任务写的内容层（guides/）。规范回答「规则是什么」，指南回答「我现在该做什么」。 */
-    var GUIDES = D.guides || []
-    var COMPONENTS = D.components || []
+    var GUIDES_RAW = D.guides || []
+    var COMPONENTS_RAW = D.components || []
+    var SPECS = []
+    var GUIDES = []
+    var COMPONENTS = []
     var SEATS = D.seats || []
     var ICONS = D.icons || []
     var TOKENS = D.tokens || { light: {}, dark: {}, resolvedLight: {}, resolvedDark: {}, palette: {}, scale: {} }
@@ -99,6 +107,46 @@
             node = node[parts[i]]
         }
         return node === undefined ? null : node
+    }
+
+    /* ── language projection ───────────────────────────────────────── */
+
+    /**
+     * Merge one language's view of a document over its record.
+     *
+     * The generator stores each document as `doc[lang]`; every renderer below
+     * wants a flat record, so the projection happens once here instead of at
+     * forty call sites. A missing language means the document is dropped, not
+     * shown in Chinese.
+     * @param rows - raw records carrying a `doc` pair.
+     * @returns flat records for the current language, translated ones only.
+     */
+    function project(rows) {
+        var out = []
+        rows.forEach(function (row) {
+            var side = row.doc && row.doc[LANG]
+            if (!side) return
+            var flat = {}
+            Object.keys(row).forEach(function (key) { flat[key] = row[key] })
+            Object.keys(side).forEach(function (key) { flat[key] = side[key] })
+            flat.groupLabel = LANG === 'en' ? row.groupLabelEn : row.groupLabel
+            if (row.geometrySource) flat.geometrySource = row.geometrySource[LANG]
+            if (row.tags) flat.tags = row.tags[LANG]
+            if (row.evidence) flat.evidence = { status: row.evidence.status, reason: LANG === 'en' ? row.evidence.reasonEn : row.evidence.reason }
+            out.push(flat)
+        })
+        return out
+    }
+
+    /**
+     * Rebuild the three document lists for the current language.
+     *
+     * Called at boot and on every language switch, before anything renders.
+     */
+    function applyLanguage() {
+        SPECS = project(SPECS_RAW)
+        GUIDES = project(GUIDES_RAW)
+        COMPONENTS = project(COMPONENTS_RAW)
     }
 
     /* ── helpers ───────────────────────────────────────────────────── */
@@ -248,8 +296,7 @@
      * @returns title.
      */
     function specTitle(spec) {
-        if (LANG === 'en' && spec.shortEn) return spec.shortEn
-        return spec.short || spec.title
+        return (LANG === 'en' ? spec.shortEn : spec.short) || spec.title
     }
 
     /**
@@ -436,8 +483,6 @@
             return { href: href('/guide/' + g.id), label: g.title, active: path === '/guide/' + g.id }
         }
 
-        /* 导航按作者的任务排，不按文件类型排：先「我在哪一步」，再「规则在哪」。
-         * 分组标题就是任务名，因此不再需要「概览 / 设计规范 / 资源」这种按内容类型分的桶。 */
         groups.push({
             id: 'start',
             title: t('groups.start'),
@@ -450,22 +495,18 @@
             groups.push({ id: 'principles', title: t('groups.principles'), links: guidesIn('principles').map(guideLink) })
         }
 
-        /* 基础规范：规则正文（10 骨架 / 11 座位 / 20 控件 / 30 令牌 / 40 动效 / 50 图标 / 60 可访问性）。
-         * 总览归到「开始这里」，自检与冲突归到「自检与来源」。 */
-        var basics = SPECS.filter(function (s) { return ['10-frame-layout', '11-slot-seats', '20-controls', '30-tokens', '40-motion', '50-icons', '60-accessibility'].indexOf(s.id) !== -1 })
-        if (basics.length > 0) {
-            groups.push({
-                id: 'spec-basics',
-                title: t('groups.basics'),
-                links: basics.map(function (spec) {
-                    return { href: href('/spec/' + spec.id), label: specTitle(spec), active: path === '/spec/' + spec.id }
-                }),
-            })
-        }
-
         if (guidesIn('patterns').length > 0) {
             groups.push({ id: 'patterns', title: t('groups.patterns'), links: guidesIn('patterns').map(guideLink) })
         }
+
+        groups.push({
+            id: 'integration',
+            title: t('groups.integration'),
+            links: guidesIn('integration').map(guideLink).concat([
+                { href: href('/seats'), label: t('index.seats'), active: path === '/seats' },
+                { href: href('/inventory'), label: t('index.inventory'), active: path === '/inventory' },
+            ]),
+        })
 
         var byCategory = {}
         COMPONENTS.forEach(function (c) {
@@ -484,17 +525,11 @@
                 var holdsOpen = openId !== null && byCategory[cat].some(function (c) { return c.id === openId })
                 var key = 'cat-' + cat
                 var flag = OPEN_GROUPS[key]
-                /* Folded unless the reader opened it, or is reading something
-                 * inside it — a tree you cannot find yourself in is worse than a
-                 * long list. Children are always rendered and folded by CSS, so
-                 * opening one needs no re-render. */
                 var open = flag === true || (flag === undefined && holdsOpen)
                 return {
                     key: key,
                     href: href('/components/' + cat),
                     label: categoryLabel(cat),
-                    /* the branch itself is never lit: exactly one row carries the
-                     * current position, and it is the row actually opened */
                     active: path === '/components/' + cat,
                     collapsible: true,
                     open: open,
@@ -506,14 +541,18 @@
             groups.push({ id: 'components', title: t('index.components'), links: componentLinks })
         }
 
-        groups.push({
-            id: 'integration',
-            title: t('groups.integration'),
-            links: guidesIn('integration').map(guideLink).concat([
-                { href: href('/seats'), label: t('index.seats'), active: path === '/seats' },
-                { href: href('/inventory'), label: t('index.inventory'), active: path === '/inventory' },
-            ]),
+        var basics = SPECS.filter(function (s) {
+            return ['10-frame-layout', '11-slot-seats', '20-controls', '30-tokens', '40-motion', '50-icons', '60-accessibility'].indexOf(s.id) !== -1
         })
+        if (basics.length > 0) {
+            groups.push({
+                id: 'spec-basics',
+                title: t('groups.basics'),
+                links: basics.map(function (spec) {
+                    return { href: href('/spec/' + spec.id), label: specTitle(spec), active: path === '/spec/' + spec.id }
+                }),
+            })
+        }
 
         var verifySpecs = SPECS.filter(function (s) { return ['70-checklist', '80-conflicts'].indexOf(s.id) !== -1 })
         groups.push({
@@ -529,7 +568,6 @@
 
         return groups
     }
-
     /**
      * One leaf navigation row.
      * @param link - { href, label, count, active, sub }.
@@ -562,6 +600,7 @@
     function branchRow(link, chevron) {
         return '<div class="index__branch" data-open="' + link.open + '" data-key="' + esc(link.key) + '">'
             + '<button class="index__link index__row" type="button" aria-expanded="' + link.open + '"'
+            + (link.active ? ' aria-current="page"' : '')
             + ' data-branch-toggle aria-label="' + esc(link.label) + '">'
             + '<span class="index__label">' + esc(link.label) + '</span>'
             + (link.count == null ? '' : '<span class="index__count">' + link.count + '</span>')
@@ -727,16 +766,23 @@
      * @param demoHtml - the demo document.
      * @returns html.
      */
-    function specimen(title, demoHtml) {
-        if (demoHtml == null || demoHtml === '') return ''
+    function specimen(title, demoHtml, evidence, withheld) {
+        if (demoHtml == null || demoHtml === '') {
+            if (withheld !== true) return ''
+            return '<div class="specimen specimen--withheld"><div class="demo__withheld"><strong>'
+                + esc(t('components.withheldLabel')) + '</strong><p>'
+                + esc((evidence && evidence.reason) || t('components.withheldText')) + '</p></div></div>'
+        }
+        if (evidence == null || ['verified', 'source-verified'].indexOf(evidence.status) === -1) return ''
         var id = 'demo-' + (demoSeq++)
         DEMOS[id] = demoHtml
-        return '<div class="specimen">'
-            + '<p class="specimen__label"><span>' + esc(title) + '</span></p>'
+        var proof = evidence.status === 'source-verified'
+            ? t('components.sourceVerifiedNote')
+            : t('components.screenshotCheckedNote')
+        return '<div class="specimen"><p class="specimen__label"><span>' + esc(title) + '</span></p>'
             + '<div class="specimen__stage" data-demo-id="' + id + '"></div>'
-            + '</div>'
+            + '<p class="specimen__proof">' + esc(proof) + '</p></div>'
     }
-
     /**
      * The style every shadow-hosted document starts from.
      *
@@ -784,6 +830,7 @@
                 highlight: options.highlight || null,
                 highlightOnHover: options.hover === true,
                 docks: options.docks === true,
+                sidebarOnly: options.sidebarOnly === true,
             })
         })
     }
@@ -800,6 +847,30 @@
      */
     function mountDemos(root) {
         /**
+         * Translate a specimen's own copy, and mark the strings that are not ours.
+         *
+         * A demo is one file for both languages because its geometry and CSS are
+         * shared (`docs/I18N.md` §5). Copy *we* wrote carries `data-t` and is
+         * replaced here. Copy copied verbatim off the running product carries
+         * `data-capture`: it stays exactly as captured — the SPEC's geometry was
+         * checked against a screenshot of that string — and it is tagged
+         * `lang="zh-CN"` so fonts, hyphenation and screen readers treat it as the
+         * Chinese quotation it is. Nothing is inserted around it: the specimen's
+         * box geometry is part of what the page is asserting.
+         * @param scope - the mounted shadow root.
+         */
+        var localize = function (scope) {
+            Array.prototype.forEach.call(scope.querySelectorAll('[data-t]'), function (node) {
+                var key = node.getAttribute('data-t')
+                var text = t(key)
+                if (text !== key) node.textContent = text
+            })
+            Array.prototype.forEach.call(scope.querySelectorAll('[data-capture]'), function (node) {
+                node.setAttribute('lang', 'zh-CN')
+            })
+        }
+
+        /**
          * Fill one host with its document.
          * @param host - the stage element.
          * @param html - the embedded document.
@@ -811,6 +882,7 @@
              * querySelectorAll，不会穿过 shadow 边界，所以每个 demo 自己的根要单独喂一次。
              * 有了它，demo 不用把官方图标再抄一份进来。 */
             hydrateIcons(shadow)
+            localize(shadow)
             /* `innerHTML` never executes a `<script>`, so an embedded demo would
              * be a picture of an interaction rather than an interaction. The
              * nodes are rebuilt so the demo can actually be operated.
@@ -920,9 +992,6 @@
                     + '<p class="card__meta">' + esc(t('groups.' + guide.group)) + '</p>'
                     + '<p class="card__title">' + esc(guide.title) + '</p>'
                     + '<p class="card__body">' + esc(guide.summary) + '</p>'
-                    + (guide.tasks.length === 0 ? '' : '<ul class="card__tasks">' + guide.tasks.slice(0, 3).map(function (task) {
-                        return '<li>' + esc(task) + '</li>'
-                    }).join('') + '</ul>')
                     + '</a>'
             }).join('') + '</div></section>'
             + '<section class="section">'
@@ -936,19 +1005,7 @@
             + card('home.cards.tokens', (s.aliases || 0) + ' ' + t('components.count'), '/tokens')
             + '</div></section></div>'
 
-        /* 右栏给的是「这里的东西凭什么可信」：五种来源标记的含义 + 本机运行版本。
-         * 采集时间、文件字数这类元数据不占右栏——读者判断内容时用不上它们。 */
-        renderAside([
-            {
-                title: t('home.markersTitle'),
-                html: '<ul class="markers">' + ['source', 'measured', 'external', 'proposed', 'deviation'].map(function (key) {
-                    return '<li><span class="marker marker--' + key + '">' + esc(t('markers.' + key)) + '</span> '
-                        + esc(t('markers.' + key + 'Note')) + '</li>'
-                }).join('') + '</ul>',
-            },
-            { title: t('home.runtimeTitle'), html: p(t('home.runtime')) },
-            { title: t('home.verifyTitle'), html: p(t('home.verify')) },
-        ])
+        renderAside([])
     }
 
     /**
@@ -969,7 +1026,7 @@
     /** The positioning page. */
     function pageWhy() {
         mainEl.innerHTML = '<div class="main-inner">'
-            + '<div class="hero"><h1 class="hero__title">' + esc(t('why.title')) + '</h1>'
+            + '<div class="hero"><p class="hero__eyebrow">' + esc(t('groups.start')) + '</p><h1 class="hero__title">' + esc(t('why.title')) + '</h1>'
             + '<p class="hero__lede">' + esc(t('why.lede')) + '</p></div>'
             + '<section class="section"><div class="prose">'
             + '<h2>' + esc(t('why.officialTitle')) + '</h2>'
@@ -1004,6 +1061,43 @@
     }
 
     /**
+     * How much of one document group exists in the reader's language.
+     *
+     * Untranslated documents are absent from the English site rather than shown
+     * in Chinese, which is honest but leaves the reader wondering why the list is
+     * short. The count is computed by the generator (`i18nCoverage`), never
+     * written down here, so it cannot go stale.
+     * @param kind - `specs`, `guides` or `components`.
+     * @returns html, or an empty string in Chinese and when nothing is missing.
+     */
+    function coverageNote(kind) {
+        var counts = (D.i18nCoverage || {})[kind]
+        if (!counts || counts.translated === counts.total) return ''
+        return '<div class="callout"><span class="callout__mark">i</span><div><p>'
+            + esc(t('coverage.line', {
+                translated: counts.translated,
+                total: counts.total,
+                kind: t('coverage.kind.' + kind),
+            }))
+            + '</p></div></div>'
+    }
+
+    /**
+     * Localised name of the plugin that drew an element.
+     *
+     * Most families are already named by their package (`dsh-widgets`), which
+     * reads the same in both languages. The few that describe the owner in words
+     * go through the table's `pluginNamesEn` map, so the label is translated
+     * without duplicating the family list.
+     * @param name - the family's `plugin` value.
+     * @returns the label for the current language.
+     */
+    function pluginLabel(name) {
+        if (LANG !== 'en') return name
+        return (ANCHORS.pluginNamesEn || {})[name] || name
+    }
+
+    /**
      * One thing the product does not answer, as a claim plus its explanation.
      *
      * The claim is what the reader has already seen happen; the explanation says
@@ -1029,15 +1123,28 @@
         if (id == null || GUIDES.filter(function (g) { return g.id === id }).length === 0) { pageNotFound(); return }
         var guide = GUIDES.filter(function (g) { return g.id === id })[0]
 
-        var outline = []
-        var re = /<h([23]) id="([^"]+)">([^<]*)<\/h\1>/gu
-        var m
-        while ((m = re.exec(guide.html)) !== null) outline.push({ level: Number(m[1]), id: m[2], text: m[3] })
-
         var body = guide.html
         var head = /<h1 id="h\d+">([\s\S]*?)<\/h1>/u.exec(body)
         var titleHtml = head === null ? esc(guide.title) : head[1]
         if (head !== null) body = body.slice(0, head.index) + body.slice(head.index + head[0].length)
+        if (guide.summary !== '') {
+            body = body.replace(/<blockquote>\s*<p>[\s\S]*?<\/p>\s*<\/blockquote>\s*/u, '')
+        }
+        if (guide.tasks.length > 0 && guide.tasksHeading) {
+            /* The task list is lifted into the page head below, so the copy still
+             * inside the body has to go. The heading text comes from the data,
+             * not from a regex that knows Chinese. */
+            var escapeRe = function (s) { return s.replace(/[.*+?^${}()|[\]\\]/gu, '\\$&') }
+            body = body.replace(
+                new RegExp('<h2 id="[^"]+">' + escapeRe(guide.tasksHeading) + '</h2>\\s*<ul>[\\s\\S]*?</ul>\\s*', 'u'),
+                '',
+            )
+        }
+
+        var outline = []
+        var re = /<h([23]) id="([^"]+)">([^<]*)<\/h\1>/gu
+        var m
+        while ((m = re.exec(body)) !== null) outline.push({ level: Number(m[1]), id: m[2], text: m[3] })
 
         var siblings = GUIDES.filter(function (g) { return g.group === guide.group && g.id !== guide.id })
 
@@ -1046,9 +1153,10 @@
             + '<p class="doc-head__eyebrow">' + esc(t('groups.' + guide.group)) + '</p>'
             + '<h1 class="doc-head__title">' + titleHtml + '</h1>'
             + (guide.summary === '' ? '' : '<p class="doc-head__lede">' + esc(guide.summary) + '</p>')
-            + (guide.tasks.length === 0 ? '' : '<ul class="doc-head__tasks">' + guide.tasks.map(function (task) {
-                return '<li>' + esc(task) + '</li>'
-            }).join('') + '</ul>')
+            + (guide.tasks.length === 0 ? '' : '<div class="doc-head__tasks-wrap"><p class="doc-head__tasks-label">' + esc(t('guide.taskLabel')) + '</p>'
+                + '<ul class="doc-head__tasks">' + guide.tasks.map(function (task) {
+                    return '<li>' + esc(task) + '</li>'
+                }).join('') + '</ul></div>')
             + '</div>'
             + '<article class="prose">' + body + '</article>'
             + '</div>'
@@ -1079,9 +1187,9 @@
         if (id == null) {
             mainEl.innerHTML = '<div class="main-inner"><div class="hero"><h1 class="hero__title">' + esc(t('spec.title')) + '</h1>'
                 + '<p class="hero__lede">' + esc(t('spec.lede')) + '</p></div>'
-                + '<div class="cards">' + SPECS.map(function (spec, i) {
+                + '<div class="cards">' + SPECS.map(function (spec) {
                     return '<a class="card" href="' + esc(href('/spec/' + spec.id)) + '">'
-                        + '<p class="card__meta">' + esc(t('groups.' + spec.group)) + ' · ' + String(i + 1).padStart(2, '0') + '</p>'
+                        + '<p class="card__meta">' + esc(t('groups.' + spec.group)) + '</p>'
                         + '<p class="card__title">' + esc(specTitle(spec)) + '</p>'
                         + '<p class="card__body">' + esc(spec.summary || '') + '</p>'
                         + '</a>'
@@ -1113,7 +1221,7 @@
             + '<h1 class="doc-head__title">' + titleHtml + '</h1>'
             + '</div>'
             + '<article class="prose">' + bodyHtml + '</article>'
-            + (LANG === 'en' ? '<div class="callout"><span class="callout__mark">i</span><div><p>' + esc(t('spec.chineseOnly')) + '</p></div></div>' : '')
+            + (LANG === 'en' ? coverageNote('specs') : '')
             + '</div>'
 
         /* The right column carries what you need *while reading this document*:
@@ -1187,8 +1295,8 @@
             + '<span class="hero__code">' + esc(c.name) + '</span></h1>'
             + '<p class="hero__lede">' + esc(toPlain(c.summary)) + '</p>'
             + originNote(c) + '</div>'
-            + (LANG === 'en' ? '<div class="callout"><span class="callout__mark">i</span><div><p>' + esc(t('components.chineseOnly')) + '</p></div></div>' : '')
-            + specimen(t('components.preview'), c.demo)
+            + (LANG === 'en' ? coverageNote('components') : '')
+            + specimen(t('components.preview'), c.demo, c.evidence, c.demoWithheld)
             + (c.hasSpec === true ? docSwitch() : '')
             + (c.readmeHtml ? '<article class="prose" data-doc-panel="readme">' + c.readmeHtml + '</article>' : '')
             + (c.hasSpec === true ? '<article class="prose" data-doc-panel="spec" hidden>' + c.specHtml + '</article>' : '')
@@ -1215,6 +1323,7 @@
             + '<p class="card__body">' + esc(toPlain(c.summary)) + '</p>'
             + '<p class="card__meta">'
             + badge(t('origin.' + (c.origin === 'official' ? 'official' : 'proposed')), c.origin === 'official' ? 'safe' : 'warn')
+            + (c.demoWithheld === true ? ' ' + badge(t('components.withheldBadge'), 'warn') : '')
             + '</p>'
             + '</a>'
     }
@@ -1408,7 +1517,9 @@
              * 真正的出处写在没被剥掉的那半截类名里（`_tag_brmue_4`）；匿名元素则只认座位。 */
             var hay = (row.key + ' ' + (row.cls || '') + ' ' + (row.slot || '')).toLowerCase()
             for (var i = 0; i < families.length; i++) {
-                if (hay.indexOf(String(families[i].match).toLowerCase()) !== -1) return families[i].plugin
+                if (hay.indexOf(String(families[i].match).toLowerCase()) !== -1) {
+                    return pluginLabel(families[i].plugin)
+                }
             }
             return row.pluginOwned === true ? t('inventory.pluginUnknown') : null
         }
@@ -1610,6 +1721,7 @@
      */
     function renderTopnav(path) {
         var links = [
+            { key: 'topnav.guides', href: '/guide/00-start', match: '/guide' },
             { key: 'topnav.spec', href: '/spec', match: '/spec' },
             { key: 'topnav.components', href: '/components', match: '/component' },
             { key: 'topnav.seats', href: '/seats', match: '/seats' },
@@ -1755,6 +1867,7 @@
                 if (next === LANG) return
                 LANG = next
                 save('dshdr-lang', LANG)
+                applyLanguage()
                 applyStaticText()
                 renderLangSwitch()
                 render()
@@ -1770,6 +1883,12 @@
             : 'DeepSeek Design Resources — spec, components and icons for plugin UI'
         Array.prototype.forEach.call(document.querySelectorAll('[data-t]'), function (node) {
             node.textContent = t(node.getAttribute('data-t'))
+        })
+        /* Accessible names carry no visible text, so they are easy to leave
+         * behind in one language: the static shell is English and these nodes
+         * are what a screen reader announces in Chinese (`docs/I18N.md`). */
+        Array.prototype.forEach.call(document.querySelectorAll('[data-t-aria]'), function (node) {
+            node.setAttribute('aria-label', t(node.getAttribute('data-t-aria')))
         })
         queryEl.placeholder = t('search.placeholder')
         queryEl.setAttribute('aria-label', t('search.placeholder'))
@@ -1867,6 +1986,7 @@
     })
 
     applyTheme(load('dshdr-theme', 'auto'))
+    applyLanguage()
     renderLangSwitch()
     applyStaticText()
 

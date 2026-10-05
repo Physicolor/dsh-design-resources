@@ -1,0 +1,32 @@
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; padding: 16px; color: var(--dsw-alias-label-primary); font: 14px/22px var(--dsw-font-family); }
+.decision-board { display: grid; gap: 12px; max-width: 900px; }
+.choice-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.choice { min-height: 142px; padding: 14px; border: .5px solid var(--dsw-alias-border-l2); border-radius: 12px; background: var(--dsw-alias-bg-layer-1); }
+.choice small { display: block; margin-bottom: 8px; color: var(--dsw-alias-label-tertiary); font-size: 11px; line-height: 16px; }
+.choice strong { display: block; margin-bottom: 6px; font-size: 13px; line-height: 18px; }
+.choice p { margin: 0; color: var(--dsw-alias-label-secondary); font-size: 12px; line-height: 18px; }
+.choice--unsupported { border-style: dashed; }
+.source-note { margin: 0; color: var(--dsw-alias-label-tertiary); font-size: 11px; line-height: 16px; }
+</style>
+<div class="decision-board" role="group" aria-label="Decision map: where a settings surface can live" data-t-aria="demo.settings-independent-window.boardAria">
+  <div class="choice-grid">
+    <article class="choice">
+      <small data-t="demo.settings-independent-window.onePreference">一个跨会话偏好</small>
+      <strong>settings.general.item</strong>
+      <p data-t="demo.settings-independent-window.onePreferenceBody">放进宿主通用设置中的一行。</p>
+    </article>
+    <article class="choice">
+      <small data-t="demo.settings-independent-window.sectionSeat">几组相关的插件设置</small>
+      <strong>settings.section</strong>
+      <p data-t="demo.settings-independent-window.sectionSeatBody">注册为宿主设置窗口中的一个分区。</p>
+    </article>
+    <article class="choice choice--unsupported">
+      <small data-t="demo.settings-independent-window.windowOnly">必须使用插件独立窗口</small>
+      <strong data-t="demo.settings-independent-window.noPublicSeat">当前没有公开座位</strong>
+      <p data-t="demo.settings-independent-window.noPublicSeatBody">不要把宿主设置入口或 shell.overlay 当成窗口 API。</p>
+    </article>
+  </div>
+  <p class="source-note" data-t="demo.settings-independent-window.sourceNote">依据 data/slots.json：settings.trigger 与 settings.launcher 属于宿主入口；shell.overlay 是浮层座位。</p>
+</div>

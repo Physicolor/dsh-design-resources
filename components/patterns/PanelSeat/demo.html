@@ -1,10 +1,10 @@
-<!-- 本组件官方没有对应物，这是本仓库建议的实现；预览为几何展示，不代表产品界面。 -->
+<!-- The official UI has no counterpart to this component: it is an implementation proposed by this repository. The preview is a geometry display, not a picture of the product interface. -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PanelSeat · DSH 设计资源</title>
+<title>PanelSeat · DSH Design Resources</title>
 <style>
 :root {
   --dsw-static-neutral-bluish-00: #fff;
@@ -106,15 +106,17 @@
   --dsw-shadow-lv3: 0 0 1px 0 rgba(0, 0, 0, .2), 0 0 4px 0 rgba(0, 0, 0, .02), 0 12px 32px 0 rgba(0, 0, 0, .08);
   --dsw-mask-blur: none;
   --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  /* 官方把这两条写成 font 简写合成 token，这里展开以便 demo 单条使用。 */
+  /* The official stylesheet writes these two as shorthand `font` composite tokens; they are expanded here so a demo can use one at a time. */
   --dsw-font-s-14: 14px/22px var(--dsw-font-family);
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
 }
 
-/* 深色主题：站点把深色 token 挂在 body[data-ds-dark-theme] 上，Shadow DOM 里选择不到它，
-   而 :host 自己的自定义属性又会盖过继承值——所以深色值在文件内自带一份，用 light-dark()
-   依据宿主继承下来的 color-scheme 选择。只列本页用到、且深浅两套取值不同的 token；
-   数值逐条取自 website/css/dsh-tokens.css。 */
+/* Dark theme: the site hangs the dark tokens on body[data-ds-dark-theme], which is not
+   selectable from inside a Shadow DOM, and :host custom properties would override the
+   inherited values anyway — so the dark values are carried in this file and picked with
+   light-dark() from the color-scheme inherited from the host. Only the tokens this page
+   uses that differ between light and dark are listed; the values are taken one by one
+   from website/css/dsh-tokens.css. */
 :root {
   --dsw-alias-border-l1: light-dark(#0000000a, #ffffff0f);
   --dsw-alias-brand-primary: light-dark(var(--dsw-static-neutral-bluish-1000), var(--dsw-static-neutral-bluish-50));
@@ -125,9 +127,10 @@
   --dsw-alias-markdown-code-block: light-dark(var(--dsw-static-neutral-bluish-50), var(--dsw-static-neutral-bluish-900));
 }
 
-/* --------------------------------------------------- 组件几何
-   数值逐条取自同目录 panel-seat.module.css（CSS Modules 的哈希类名已去掉），
-   规则重新组织过，声明值未改。 */
+/* --------------------------------------------------- component geometry
+   The values are taken one by one from panel-seat.module.css in this directory (the
+   hashed CSS Modules class names are dropped) and the rules are reorganised; no declared
+   value is changed. */
 .seat {
   --dsh-pseat-radius: 12px;
   --dsh-pseat-pad-x: 16px;
@@ -174,12 +177,13 @@
 
 .actions { display: flex; flex: none; align-items: center; gap: var(--dsh-pseat-action-gap); margin-left: auto; }
 
-/* 正文容器。类名不叫 .body：站点会把「前面不是词字符的 body + {」改写成 :host。 */
+/* Body container. The class is not called .body: the site rewrites a `body` preceded by
+   a non-word character together with its `{` into :host. */
 .seatBody { min-width: 0; padding-top: var(--dsh-pseat-body-gap); }
 .seatBody > :first-child { margin-top: 0; }
 .seatBody > :last-child { margin-bottom: 0; }
 
-/* Button 组件的几何，逐条同 controls/Button/button.module.css。 */
+/* The Button component's geometry, taken one by one from controls/Button/button.module.css. */
 .button {
   box-sizing: border-box;
   display: inline-flex;
@@ -205,9 +209,10 @@
 .button.primary:hover:not(:disabled) { background: var(--dsw-alias-button-primary-hover); }
 .button:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 2px; }
 
-/* ------------------------------------------------------------------ demo 外壳
-   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
-   .demo-label 是本页唯一允许出现的文字，只写客观事实（尺寸 / 状态名）。 */
+/* ------------------------------------------------------------------ demo shell
+   body only sets 16px padding and the text colour, no background: the ground colour
+   comes from the site (the shadow host). .demo-label is the only text this page is
+   allowed to show, and it states objective facts only (sizes / state names). */
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -235,38 +240,38 @@ body {
 </head>
 <body>
   <div class="demo-group">
-    <p class="demo-label">plain · r12 · 标题行 gap 12 · hairline 0.5px l1 · 正文 padding-top 12</p>
+    <p class="demo-label" data-t="demo.panel-seat.labelStatic">plain · r12 · 标题行 gap 12 · hairline 0.5px l1 · 正文 padding-top 12</p>
     <div class="seat" role="group" aria-labelledby="seat-a" style="width:360px">
       <div class="header">
-        <h3 class="title" id="seat-a">分区标题一</h3>
-        <div class="actions"><button type="button" class="button sm ghost">操作</button></div>
+        <h3 class="title" id="seat-a" data-t="demo.panel-seat.titleOne">分区标题一</h3>
+        <div class="actions"><button type="button" class="button sm ghost" data-t="demo.panel-seat.actionOne">操作</button></div>
       </div>
-      <div class="seatBody">正文占位文字。</div>
+      <div class="seatBody" data-t="demo.panel-seat.bodyShort">正文占位文字。</div>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">surface + inset 12 16 · markdown-code-block 底色</p>
+    <p class="demo-label" data-t="demo.panel-seat.labelSurface">surface + inset 12 16 · markdown-code-block 底色</p>
     <div class="seat inset surface" role="group" aria-labelledby="seat-b" style="width:360px">
       <div class="header">
-        <h3 class="title" id="seat-b">分区标题二</h3>
+        <h3 class="title" id="seat-b" data-t="demo.panel-seat.titleTwo">分区标题二</h3>
         <div class="actions">
-          <button type="button" class="button sm ghost">次要操作</button>
-          <button type="button" class="button sm primary">主要操作</button>
+          <button type="button" class="button sm ghost" data-t="demo.panel-seat.actionSecondary">次要操作</button>
+          <button type="button" class="button sm primary" data-t="demo.panel-seat.actionPrimary">主要操作</button>
         </div>
       </div>
-      <div class="seatBody">正文占位文字，用于演示两行以上的正文排布。</div>
+      <div class="seatBody" data-t="demo.panel-seat.bodyLong">正文占位文字，用于演示两行以上的正文排布。</div>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">标题过长 · text-overflow ellipsis · actions 不收缩</p>
+    <p class="demo-label" data-t="demo.panel-seat.labelTruncated">标题过长 · text-overflow ellipsis · actions 不收缩</p>
     <div class="seat inset" role="group" aria-labelledby="seat-c" style="width:320px">
       <div class="header">
-        <h3 class="title" id="seat-c">一个很长很长很长很长很长的分区标题</h3>
-        <div class="actions"><button type="button" class="button sm ghost" aria-label="更多"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><circle cx="3" cy="8" r="1.4" fill="currentColor"/><circle cx="8" cy="8" r="1.4" fill="currentColor"/><circle cx="13" cy="8" r="1.4" fill="currentColor"/></svg></button></div>
+        <h3 class="title" id="seat-c" data-t="demo.panel-seat.titleLong">一个很长很长很长很长很长的分区标题</h3>
+        <div class="actions"><button type="button" class="button sm ghost" aria-label="更多" data-t-aria="demo.panel-seat.actionMoreAria"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><circle cx="3" cy="8" r="1.4" fill="currentColor"/><circle cx="8" cy="8" r="1.4" fill="currentColor"/><circle cx="13" cy="8" r="1.4" fill="currentColor"/></svg></button></div>
       </div>
-      <div class="seatBody">标题省略，操作区保持原尺寸。</div>
+      <div class="seatBody" data-t="demo.panel-seat.bodyTruncated">标题省略，操作区保持原尺寸。</div>
     </div>
   </div>
 </body>

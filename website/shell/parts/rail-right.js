@@ -6,8 +6,8 @@
  * tab（`sidebar.right.pane.tab`）与它的标题。先前在这里画了一个关闭按钮，
  * 那是编出来的。
  *
- * 注意：真实截图里出现的 707px 宽面板是**插件**渲染的（右侧组件栏），不属于
- * 产品自身的右栏，因此这里按官方 `rightbar` 的语义来画。
+ * 干净 profile 的 2026-10-05 采集确认，宿主「开始」右栏包含“工作区文件”和
+ * “新建终端”两个操作。dsh-widgets 的对话区浮层是另一个插件座位，不是这个右栏。
  */
 
 window.DSHShellParts = window.DSHShellParts || {}
@@ -18,19 +18,22 @@ window.DSHShellParts = window.DSHShellParts || {}
  * @returns HTML。
  */
 window.DSHShellParts.railRight = function (ctx) {
+    var data = ctx.data
     var esc = ctx.esc
 
-    var cards = [
-        { title: '临时查看', body: '上下文占用、文件预览、来源引用——看完就收起来的东西。' },
-        { title: '与当前会话弱相关', body: '它常驻可见，但不参与主流程；收起它，主流程照样走得完。' },
-    ].map(function (card) {
-        return '<div class="sh-right__card"><strong>' + esc(card.title) + '</strong>'
-            + '<div>' + esc(card.body) + '</div></div>'
+    var cards = (data.rightbarActions || []).map(function (action) {
+        var shortcut = action.shortcut === undefined ? ''
+            : '<kbd class="sh-right__shortcut">' + esc(action.shortcut) + '</kbd>'
+        var chevron = action.expandable === true
+            ? '<span class="sh-right__chevron" aria-hidden="true">⌄</span>' : ''
+        return '<button class="sh-right__card" type="button" data-action="' + esc(action.id) + '">'
+            + '<span class="sh-right__copy"><strong>' + esc(action.title) + '</strong>'
+            + '<span>' + esc(action.description) + '</span></span>'
+            + chevron + shortcut + '</button>'
     }).join('')
 
     return '<aside class="sh-right" data-region="rightbar">'
-        + '<div class="sh-right__head"><span>上下文</span></div>'
+        + '<div class="sh-right__head"><span>' + esc(data.rightbarTitle || '') + '</span></div>'
         + '<div class="sh-right__body">' + cards + '</div>'
         + '</aside>'
 }
-

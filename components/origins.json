@@ -1,5 +1,5 @@
 {
-    "$comment": "哪些组件的实现对应官方已有组件，哪些是本仓库补充的。判断依据是每个组件 SPEC.md 的 official-counterpart 字段，以及 2026-10-02 的一次独立复核（逐条回到产品与实测数据）。official 表示这件东西在产品界面里真实存在（官方 primitives 包里有同名组件，或者产品客户端自己的 CSS 模块在渲染它——例如运行圆环 running-ring、设置窗口 settings-page）；proposed 表示产品里没有这个界面，几何是逐条锚定官方选择器拼出来的实现建议，必须写明它服务的真实场景（scene）。网站必须把两者区分显示——把 proposed 当官方界面展示，等于编造 UI。",
+    "$comment": "哪些元素有官方源码实现，哪些界面组合是本仓库补充的。official 表示官方 primitives 包提供同名实现，或产品客户端 CSS 实际渲染该元素；包内存在 primitive 不代表某张截图或某个组合就是宿主实景。产品可见状态另由 data/demo-evidence.json 标注。proposed 表示当前产品没有该组合，是锚定真实场景的仓库建议。网站分别显示源码归属、产品实景和提案归属。",
     "source": "components/*/*/SPEC.md 的 official-counterpart 字段 + 2026-10-02 独立复核（app.asar 新版 primitives、data/ui-inventory.json、docs/reference/*.json）",
     "revision": "2026-10-02 · 复核把 10 个此前挂在 proposed 里的真实界面收回 official（依据见 scene 字段），并删除没有任何产品对应物的 loading-dots（三点顺序出现只存在于官方 ConnectionIndicator 的「重连中」分支，产品没有独立的加载点组件）",
     "official": [
@@ -33,7 +33,7 @@
         "panel-seat"
     ],
     "scenes": {
-        "segmentedcontrol": "官方 primitives 新版（app.asar 内 @deepseek-ai/dsh-client-ui-primitives）有 SegmentedControl.module.css 并导出 SegmentedControl；产品模型页用 <SegmentedControl> 渲染模式切换，用量面板实测 duc-seg 234×28 / duc-seg-thumb 42×24 / duc-seg-btn 44×24",
+        "segmentedcontrol": "官方 primitives 新版（app.asar 内 @deepseek-ai/dsh-client-ui-primitives）有 SegmentedControl.module.css 并导出 SegmentedControl；这是源码归属证据，不代表宿主实景使用该视觉组合。05-settings-components.png 的「组件」页含 dsh-widgets 插件内容；其中 duc-seg 234×28 / duc-seg-thumb 42×24 / duc-seg-btn 44×24 属于插件。宿主「对话／轨迹／上下文」是会话视图页签，另见 guides/21-pattern-sidebar-panel.md。",
         "card": "产品自有 CSS 模块在设置页/插件页/输入区三处渲染卡片表面：.KZf9OG_card（.5px settings-card-stroke、radius-xl=20px、settings-card-fill）、fO69Vq_card 976×66 圆角 20（docs/reference/plugin-row.json）",
         "empty-state": "实测 EBLgjq_emptyNotice（284×16）、dsh_notification_empty（settings.section，530×20）、enhc-doctor-empty（564×20）——空状态文案在产品里真实渲染；组件那套「图标+标题+说明+动作」的组合未被实测，见其 SPEC 的已知偏差",
         "inline-notice": "产品挂载官方 ConnectionIndicator（state/disconnectedLabel/onReconnect），单行几何见产品 app.asar 内 lib/ConnectionIndicator.module.css（h28 / padding 0 8 / radius 8 / 12-18-500；2026-10-02 复核更正旧版的 h32 / 0 10）；info、error 两种语气没有产品对应物",

@@ -1,10 +1,17 @@
 <!doctype html>
-<html lang="zh-CN">
+<!-- The static shell is English: it is what a crawler, a social preview and a
+     first paint see before app.js reads the stored language. app.js rewrites
+     lang, title and every `data-t` / `data-t-aria` node as soon as it boots, so
+     a Chinese reader still gets the Chinese page. -->
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>DeepSeek Design Resources — DeepSeek Harness 界面规范与资源</title>
-    <meta name="description" content="DeepSeek Harness 插件生态的设计规范、座位目录、官方 token、图标集与可直接复用的源码知识库。">
+    <title>DeepSeek Design Resources</title>
+    <meta name="description" content="Design spec, seat directory, tokens, the official icon set and a reusable-source knowledge base for DeepSeek Harness plugin authors.">
+    <meta property="og:title" content="DeepSeek Design Resources">
+    <meta property="og:description" content="Making community plugins look like one product: spec, seats, tokens, icons and reusable source for DeepSeek Harness.">
+    <meta property="og:type" content="website">
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#0c0c0d" media="(prefers-color-scheme: dark)">
     <link rel="icon" href="assets/fish.svg" type="image/svg+xml">
@@ -15,7 +22,7 @@
 <body>
     <header class="topbar">
         <button class="icon-button" id="navToggle" type="button" aria-pressed="true"
-                data-tip="显示或隐藏导航栏" aria-label="显示或隐藏导航栏">
+                data-tip="Show or hide the index" aria-label="Show or hide the index">
             <span data-icon="panel-left"></span>
         </button>
 
@@ -24,35 +31,35 @@
                 <img class="brand__mark" src="assets/fish.svg" alt="DeepSeek">
                 <span class="brand__name">DeepSeek Harness</span>
                 <span class="brand__divider"></span>
-                <span class="brand__product" data-t="brand.product">设计资源</span>
+                <span class="brand__product" data-t="brand.product">Design Resources</span>
             </a>
 
-            <nav class="topbar__nav" id="topnav" aria-label="快捷入口"></nav>
+            <nav class="topbar__nav" id="topnav" data-t-aria="topnav.aria" aria-label="Quick links"></nav>
 
             <div class="search">
                 <span class="search__icon" data-icon="search"></span>
-                <input id="q" type="search" autocomplete="off" aria-label="搜索" placeholder="搜索组件、座位、规范、图标…">
+                <input id="q" type="search" autocomplete="off" aria-label="Search" placeholder="Search guides, interface elements, seats, spec, icons…">
                 <span class="search__hint" id="searchHint">Ctrl K</span>
             </div>
 
-            <div class="segmented" id="lang" role="tablist" aria-label="语言"></div>
+            <div class="segmented" id="lang" role="tablist" data-t-aria="actions.lang" aria-label="Switch language"></div>
 
-            <button class="icon-button" id="theme" type="button" data-tip="切换浅色 / 深色" aria-label="切换浅色 / 深色">
+            <button class="icon-button" id="theme" type="button" data-tip="Switch light / dark" aria-label="Switch light / dark">
                 <span id="themeIcon"></span>
             </button>
         </div>
 
         <button class="icon-button" id="asideToggle" type="button" aria-pressed="true"
-                data-tip="显示或隐藏说明栏" aria-label="显示或隐藏说明栏">
+                data-tip="Show or hide the rationale" aria-label="Show or hide the rationale">
             <span data-icon="panel-right"></span>
         </button>
     </header>
 
     <div class="shell" id="shell">
         <div class="col col--nav" id="colNav">
-            <nav class="col__scroll" id="index" aria-label="资源导航"></nav>
+            <nav class="col__scroll" id="index" data-t-aria="index.aria" aria-label="Resource index"></nav>
             <div class="resizer" data-resize="nav" role="separator" aria-orientation="vertical"
-                 tabindex="0" aria-label="调整导航栏宽度"></div>
+                 tabindex="0" data-t-aria="actions.resizeNav" aria-label="Resize the index"></div>
         </div>
 
         <main class="col col--main">
@@ -61,12 +68,12 @@
 
         <aside class="col col--aside" id="colAside">
             <div class="resizer" data-resize="aside" role="separator" aria-orientation="vertical"
-                 tabindex="0" aria-label="调整说明栏宽度"></div>
-            <div class="col__scroll aside" id="aside" aria-label="说明"></div>
+                 tabindex="0" data-t-aria="actions.resizeAside" aria-label="Resize the rationale"></div>
+            <div class="col__scroll aside" id="aside" data-t-aria="actions.aside" aria-label="Rationale"></div>
         </aside>
     </div>
 
-    <div class="results" id="results" role="listbox" aria-label="搜索结果">
+    <div class="results" id="results" role="listbox" data-t-aria="search.results" aria-label="Search results">
         <div class="results__panel" id="resultsPanel"></div>
     </div>
 

@@ -336,9 +336,9 @@ body[data-resizing] { cursor: col-resize; user-select: none; }
  * row folds the branch). */
 .index__row:hover { background: var(--site-bg-subtle); color: var(--site-label); }
 
-/* 展开着的那一支：与「当前页」同一套胶囊，只是不加粗——加粗留给真正所在的那一行 */
-.index__branch[data-open='true'] > .index__row { background: var(--site-accent-soft); color: var(--site-accent-ink); }
-.index__branch[data-open='true'] > .index__row:hover { background: var(--site-accent-soft); }
+/* Open state controls visibility; only the current route receives selection styling. */
+.index__branch[data-open='true'] > .index__row { background: transparent; color: var(--site-label-2); }
+.index__branch[data-open='true'] > .index__row:hover { background: var(--site-bg-subtle); color: var(--site-label); }
 
 .index__chevron { display: block; flex: none; width: 12px; height: 12px; margin-left: 2px; color: var(--site-label-3); transition: transform var(--site-dur) var(--site-ease); }
 .index__chevron svg { width: 100%; height: 100%; display: block; }
@@ -370,6 +370,15 @@ body[data-resizing] { cursor: col-resize; user-select: none; }
     color: var(--site-accent-ink);
     font-weight: 600;
 }
+.index__branch > .index__row[aria-current='page'] {
+    background: var(--site-accent-soft);
+    color: var(--site-accent-ink);
+    font-weight: 600;
+}
+.index__branch > .index__row[aria-current='page']:hover {
+    background: var(--site-accent-soft);
+    color: var(--site-accent-ink);
+}
 .index__label { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .index__count {
     font-size: var(--site-text-micro);
@@ -381,23 +390,42 @@ body[data-resizing] { cursor: col-resize; user-select: none; }
 /* ── main ──────────────────────────────────────────────────────────── */
 
 .main-inner { max-width: 920px; margin: 0 auto; }
+.main-inner:has(.demo--wide) { max-width: 1480px; }
 
 .hero { margin-bottom: var(--site-s7); }
-.hero__eyebrow {
+.hero__eyebrow,
+.doc-head__eyebrow {
+    min-height: 20px;
     margin: 0 0 var(--site-s3);
-    font-size: 15px;
+    font-size: var(--site-text-micro);
+    line-height: 20px;
     font-weight: 600;
-    letter-spacing: 0.01em;
-    color: var(--site-accent);
+    letter-spacing: 0.05em;
 }
-.hero__title {
-    margin: 0 0 var(--site-s4);
-    font-size: var(--site-text-hero);
-    line-height: 1.06;
+.hero__eyebrow { color: var(--site-accent); }
+.doc-head__eyebrow { color: var(--site-label-3); }
+.hero:not(:has(.hero__eyebrow))::before,
+.doc-head:not(:has(.doc-head__eyebrow))::before {
+    content: '';
+    display: block;
+    height: calc(20px + var(--site-s3));
+}
+.hero__title,
+.doc-head__title {
+    margin: 0;
+    font-size: var(--site-text-page-title);
+    line-height: 1.2;
     font-weight: 600;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.02em;
 }
-.hero__lede { margin: 0; font-size: 18px; line-height: 1.6; color: var(--site-label-2); }
+.hero__lede,
+.doc-head__lede {
+    max-width: 72ch;
+    margin: var(--site-s4) 0 0;
+    font-size: var(--site-text-card);
+    line-height: 1.6;
+    color: var(--site-label-2);
+}
 
 .section { margin-bottom: var(--site-s7); }
 .section__head {
@@ -715,6 +743,85 @@ code, .mono { font-family: var(--site-font-mono); font-size: 12px; }
 /* ── embedded live demos: a document's figures ─────────────────────── */
 
 .demo { margin: 0 0 var(--site-s5); }
+.demo { container-type: inline-size; }
+.specimen { container-type: inline-size; }
+.demo__comparison {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: var(--site-s4);
+}
+.demo__evidence, .demo__example, .demo__proof {
+    min-width: 0;
+    border: 1px solid var(--site-line-soft);
+    border-radius: var(--site-radius-m);
+    overflow: hidden;
+    background: var(--site-bg);
+}
+.demo__proof {
+    padding: var(--site-s4);
+    color: var(--site-label-2);
+    font-size: var(--site-text-note);
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+}
+.demo__proof strong { display: block; margin-bottom: var(--site-s2); color: var(--site-label); font-size: var(--site-text-micro); }
+.demo__proof p { margin: 0; }
+.demo__proof p + p { margin-top: var(--site-s2); }
+.demo__panel-title {
+    margin: 0;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--site-line-soft);
+    font-size: var(--site-text-micro);
+    font-weight: 600;
+    color: var(--site-label-2);
+}
+/* The specimen re-creates a real surface, so some of its copy is quoted off the
+   product rather than written by us. Say so once, on the header: marking every
+   quoted string inside the specimen would disturb the geometry the page is
+   asserting (`docs/I18N.md` §5). */
+.demo__capture {
+    display: block;
+    margin-top: 2px;
+    font-weight: 400;
+    color: var(--site-label-3);
+}
+/* A quoted product label keeps its Chinese so it matches the running UI; the
+   gloss is what the English reader actually reads. It must not look like part
+   of the code span — it is our sentence, not the product's string. */
+.site-gloss {
+    margin-left: 4px;
+    color: var(--site-label-3);
+}
+.site-gloss::before { content: "("; }
+.site-gloss::after { content: ")"; }
+.demo__evidence-image {
+    display: block;
+    width: 100%;
+    max-height: 360px;
+    object-fit: contain;
+    background: var(--site-bg-subtle);
+}
+.demo__evidence-meta, .demo__evidence-note {
+    margin: 8px 12px 0;
+    font-size: var(--site-text-micro);
+    line-height: 1.5;
+    color: var(--site-label-3);
+    overflow-wrap: anywhere;
+}
+.demo__evidence-note { margin-bottom: 10px; }
+.demo__evidence--missing { padding-bottom: 12px; }
+.demo__evidence--missing p { margin: 10px 12px 0; font-size: var(--site-text-note); color: var(--site-label-2); }
+.demo__example > .demo__stage { border: 0; border-radius: 0; }
+.demo__withheld {
+    align-self: start;
+    padding: 12px 14px;
+    border: 1px solid var(--site-line-soft);
+    border-radius: var(--site-radius-m);
+    background: var(--site-bg-subtle);
+    font-size: var(--site-text-note);
+}
+.demo__withheld p { margin: 6px 0 0; color: var(--site-label-2); line-height: 1.55; }
 .demo__stage {
     display: block;
     border: 1px solid var(--site-line-soft);
@@ -729,24 +836,15 @@ code, .mono { font-family: var(--site-font-mono); font-size: 12px; }
     color: var(--site-label-3);
     text-align: center;
 }
+@container (min-width: 820px) {
+    .demo__comparison { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.demo--wide .demo__comparison { grid-template-columns: minmax(0, 1fr); }
+.demo--wide .demo__stage { overflow-x: auto; overflow-y: hidden; }
 
 /* ── document head (spec pages lead with their own title) ──────────── */
 
 .doc-head { margin: 0 0 var(--site-s5); }
-.doc-head__eyebrow {
-    margin: 0 0 var(--site-s2);
-    font-size: var(--site-text-micro);
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--site-label-3);
-}
-.doc-head__title {
-    margin: 0;
-    font-size: var(--site-text-title);
-    font-weight: 600;
-    letter-spacing: -0.02em;
-}
 /* 指南页头：一句摘要 + 「读完能做什么」。这两样是导航卡片要显示的东西，
    写在页头就等于写在卡片上，不用再维护第二份。 */
 .doc-head__lede {
@@ -757,11 +855,18 @@ code, .mono { font-family: var(--site-font-mono); font-size: 12px; }
     color: var(--site-label-2);
 }
 .doc-head__tasks {
-    margin: var(--site-s4) 0 0;
+    margin: 0;
     padding-left: 1.1em;
     font-size: var(--site-text-note);
     line-height: 1.7;
     color: var(--site-label-2);
+}
+.doc-head__tasks-wrap { margin-top: var(--site-s4); }
+.doc-head__tasks-label {
+    margin: 0 0 var(--site-s2);
+    font-size: var(--site-text-micro);
+    font-weight: 600;
+    color: var(--site-label-3);
 }
 .card__tasks {
     margin: var(--site-s2) 0 0;
@@ -888,7 +993,7 @@ code, .mono { font-family: var(--site-font-mono); font-size: 12px; }
     .shell { --nav-w: 0px !important; }
     .col--nav, .resizer[data-resize='nav'] { display: none; }
     .col--main .col__scroll { padding-left: var(--site-s5); padding-right: var(--site-s5); }
-    :root { --site-text-hero: 34px; --site-text-title: 24px; }
+    :root { --site-text-hero: 34px; --site-text-page-title: 30px; --site-text-title: 24px; }
     .brand__product, .brand__divider { display: none; }
     .search { width: 38vw; }
     .search__hint { display: none; }

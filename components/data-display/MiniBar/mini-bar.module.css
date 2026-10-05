@@ -1,16 +1,21 @@
-/* MiniBar 迷你条形图 / 进度条。官方没有对应组件，几何来源逐条如下（详见 README「几何来源」）：
- *   圆角 999px  ← 官方 Tag.module.css `.tag`（胶囊几何）
- *   填充色      ← 官方状态主色 token，同 Tag.module.css `.tag[data-tone='...']` 用的那一批
- *   过渡 120ms ease ← 官方 Switch.module.css `.thumb`（transition: transform 120ms ease）
- *   轨道色 var(--dsw-alias-border-l1) ← 本仓库选定的 token（取值见 website/css/dsh-tokens.css）
- * 标记 § 的是本仓库建议值（4 的倍数），官方没有对应数值。
- * 实现为本仓库原创：用 data-tone 挑色（写法参照官方 Tag），未复制官方 CSS 规则。 */
+/* MiniBar mini bar chart / progress bar. The official package has no matching component; the
+ * geometry sources are listed one by one (see README "geometry-source" for details):
+ *   corner radius 999px ← the official Tag.module.css `.tag` (capsule geometry)
+ *   fill colour         ← the official state-primary tokens, the same batch Tag.module.css
+ *                         `.tag[data-tone='...']` uses
+ *   transition 120ms ease ← the official Switch.module.css `.thumb` (transition: transform 120ms ease)
+ *   track colour var(--dsw-alias-border-l1) ← the token this repository settled on (the values are
+ *                         in website/css/dsh-tokens.css)
+ * § marks a value proposed here (a multiple of 4); the official source has no matching number.
+ * The implementation is original to this repository: colours are chosen with data-tone (the way it
+ * is written follows the official Tag), and no official CSS rule was copied. */
 
 .bar {
-  /* § 本仓库建议值：条高 8px（4 的倍数）。官方没有条形图，8px 是「在 32px 行里
-     一眼可见、又不喧宾夺主」的取值；比它更细的 6px 不是 4 的倍数，本仓库不用。 */
+  /* § Proposed here: bar height 8px (a multiple of 4). The official UI has no bar chart; 8px is
+     the value that reads at a glance inside a 32px row without stealing the show; the thinner
+     6px is not a multiple of 4, so this repository does not use it. */
   --dsh-bar-height: 8px;
-  /* § 本仓库建议值：条形与右侧百分比之间的间距，4 的倍数。 */
+  /* § Proposed here: the gap between the bar and the percentage on its right, a multiple of 4. */
   --dsh-bar-gap: 8px;
 
   display: flex;
@@ -22,10 +27,10 @@
   flex: 1;
   min-width: 0;
   height: var(--dsh-bar-height);
-  /* 全圆胶囊：官方 Tag.module.css `.tag` 的 999px。 */
+  /* Full capsule: the 999px of the official Tag.module.css `.tag`. */
   border-radius: 999px;
   background: var(--dsw-alias-border-l1);
-  /* 让填充的圆角永远被轨道裁住（极窄宽度下圆角会被浏览器夹紧）。 */
+  /* Keeps the fill's corner radius always clipped by the track (at very narrow widths the browser clamps the radius). */
   overflow: hidden;
 }
 
@@ -33,11 +38,11 @@
   height: 100%;
   border-radius: 999px;
   background: var(--dsw-alias-state-business-primary);
-  /* 官方 Switch.module.css `.thumb` 的过渡时长与缓动。值更新时平滑过渡，不跳动。 */
+  /* The duration and easing of the official Switch.module.css `.thumb`. A value update transitions smoothly instead of jumping. */
   transition: width 120ms ease;
 }
 
-/* 语义色：官方状态主色 token，挑色写法参照官方 Tag.module.css 的 [data-tone='...']。 */
+/* Semantic colours: the official state-primary tokens; the way colours are chosen follows the [data-tone='...'] of the official Tag.module.css. */
 .fill[data-tone='success'] {
   background: var(--dsw-alias-state-success-primary);
 }
@@ -55,11 +60,11 @@
   font-size: 12px;
   line-height: 18px;
   color: var(--dsw-alias-label-tertiary);
-  /* § 本仓库建议值：等宽数字，多个条形纵向排列时百分比宽度不抖。 */
+  /* § Proposed here: tabular figures, so the percentage width does not jitter when several bars are stacked vertically. */
   font-variant-numeric: tabular-nums;
 }
 
-/* 与官方 Toast.module.css 的做法一致：用户要求减少动效时去掉过渡。 */
+/* The same approach as the official Toast.module.css: drop the transition when the user asks for reduced motion. */
 @media (prefers-reduced-motion: reduce) {
   .fill {
     transition: none;

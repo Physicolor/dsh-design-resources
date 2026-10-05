@@ -26,9 +26,9 @@ node scripts/capture-dsh.mjs 01-hero 06-plugins
 | --- | --- | --- |
 | `01-hero` | `01-hero.png` | 新会话页：hero、输入卡、工具行 |
 | `02-session` | `02-session.png` | 会话页：消息流、工具调用卡、输入区、dock |
-| `03-settings-open` | `03-settings-open.png` | 设置面板：分段按钮、开关、下拉、数字输入 |
+| `03-settings-open` | `03-settings-open.png` | 设置面板：外观选项组、开关、下拉、数值输入 |
 | `04-settings-models` | `04-settings-models.png` | 设置 · 模型 |
-| `05-settings-components` | `05-settings-components.png` | 设置 · 组件 |
+| `05-settings-components` | `05-settings-components.png` | 混合截图：组件页包含 Command Code 与 dsh-widgets，不作宿主原生 UI 证据 |
 | `06-plugins` | `06-plugins.png` | 插件列表：分组标题、行、行尾开关、主按钮 |
 | `07-composer` | `07-composer.png` | 输入区特写 |
 | `08-session-geometry` | `geometry.json` | 框架骨架的**真实渲染树**：每个占位节点的盒子与计算样式 |
@@ -41,9 +41,17 @@ node scripts/capture-dsh.mjs 01-hero 06-plugins
 | `15-plugin-row` | `plugin-row.json` | 插件列表一行：应用图标方块、标题、状态标签、说明、开关 |
 | `16-running-row` | `running-row.json` | 左栏会话行首的运行字形（转圈环）与它的动画 |
 
+## 网站演示与截图的对应关系
+
+每个网站示意都要有可追溯的依据；具体对应、插件归属和暂缓状态见 [demo-evidence.md](demo-evidence.md)。生成网页只输出 HTML 示意与核验文字，不嵌入截图。data/demo-evidence.json 指向本地原图或审阅裁图；缺少可靠状态证据的组件会显示暂缓说明。
+
+## 干净 profile 采集
+
+2026-10-05 的宿主界面采集使用独立的 design-guide-clean profile，bundle 清单仅含 @deepseek-ai/dsh-base、@deepseek-ai/dsh-web-app 与官方 @deepseek-ai/dsh-experimental-schedule-bundle。未加载第三方插件包，也未改动日常使用的 profile。完整图留在本地审阅目录并可能包含用户历史标题；网页不引用它们。可分享的审阅裁图保存在 review-crops/。
+
 ## 插件的部分不算产品的
 
-采集是照着一台**装了插件**的机器拍的，所以图里混着插件画的界面。判据是类名与座位：
+历史截图中有一部分来自装有插件的环境。混合图只用来标注插件贡献，不能作为 DSH 默认 UI 证据；判据是 bundle、类名和座位：
 
 | 画面里的东西 | 是谁的 |
 | --- | --- |

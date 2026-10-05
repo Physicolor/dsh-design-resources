@@ -1,0 +1,32 @@
+{
+  "zh": {
+    "labelStatic": "plain · r12 · 标题行 gap 12 · hairline 0.5px l1 · 正文 padding-top 12",
+    "titleOne": "分区标题一",
+    "actionOne": "操作",
+    "bodyShort": "正文占位文字。",
+    "labelSurface": "surface + inset 12 16 · markdown-code-block 底色",
+    "titleTwo": "分区标题二",
+    "actionSecondary": "次要操作",
+    "actionPrimary": "主要操作",
+    "bodyLong": "正文占位文字，用于演示两行以上的正文排布。",
+    "labelTruncated": "标题过长 · text-overflow ellipsis · actions 不收缩",
+    "titleLong": "一个很长很长很长很长很长的分区标题",
+    "actionMoreAria": "更多",
+    "bodyTruncated": "标题省略，操作区保持原尺寸。"
+  },
+  "en": {
+    "labelStatic": "plain · r12 · heading row gap 12 · hairline 0.5px l1 · body padding-top 12",
+    "titleOne": "Section title one",
+    "actionOne": "Action",
+    "bodyShort": "Body placeholder text.",
+    "labelSurface": "surface + inset 12 16 · markdown-code-block ground",
+    "titleTwo": "Section title two",
+    "actionSecondary": "Secondary action",
+    "actionPrimary": "Primary action",
+    "bodyLong": "Body placeholder text, long enough to show a body of two lines or more.",
+    "labelTruncated": "Overlong heading · text-overflow ellipsis · actions do not shrink",
+    "titleLong": "A very very very very very long section title",
+    "actionMoreAria": "More",
+    "bodyTruncated": "The heading is truncated; the action area keeps its size."
+  }
+}

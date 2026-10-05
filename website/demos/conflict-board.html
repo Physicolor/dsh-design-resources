@@ -1,14 +1,15 @@
-<!-- 冲突裁决板：三张表用的都是真实占用登记（data/raw/occupancy-2026-10-01.json，2026-10-01 采集）：
-     shell.overlay 14 个占用者 / 11 个未声明 order；settings.section 11 个 / 三个同值 40；
-     conversation.session.header.utilities 4 个 / order −10 −5 空 5。
-     第一张表的「换个时序」按钮只做一件事：把未声明 order 的那些换个注册次序——可见顺序跟着变，
-     这就是「顺序不能依赖注册时序」这条规则要治的病。 -->
+<!-- Conflict board: all three tables use the real occupancy registry (data/raw/occupancy-2026-10-01.json, collected 2026-10-01):
+     shell.overlay 14 occupants / 11 of them declaring no order; settings.section 11 / three sharing the value 40;
+     conversation.session.header.utilities 4 / order −10 −5 blank 5.
+     The "change the registration order" button in the first table does one thing: it changes the registration
+     sequence of the entries that declare no order — the visible sequence follows, which is the disease the
+     rule "the visible sequence must never depend on registration timing" exists to treat. -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>冲突裁决板 · DSH 设计资源</title>
+<title>Conflict board · DeepSeek Design Resources</title>
 <style>
 :root {
   --dsw-font-family: 'HarmonyOS Sans SC', 'HarmonyOS Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
@@ -44,35 +45,35 @@ tr.moved { background: #fdf1dd; }
 <body>
 
   <div class="group">
-    <h3>1 · order 缺声明：同一座位，换个注册时序，可见顺序就变</h3>
-    <p class="demo-label">shell.overlay：14 个占用者，11 个未声明 order（落在默认值 0），实际层级顺序由注册时序决定——登记表里 3 个声明了值（10 / 30 / 100）</p>
-    <button class="action" type="button" data-shuffle>换个注册时序</button>
-    <table><thead><tr><th>#</th><th>占用者</th><th>注册方</th><th>order</th></tr></thead><tbody data-overlay></tbody></table>
-    <p class="demo-label" style="margin-top:8px">换个时序之后，橘色的那些换了位置——它们的 order 都是「未声明」，谁在前面只取决于谁先注册。规则（CF-MF-01）：任何可见顺序依赖注册时序的情形判为缺陷，责任在未声明 order 的一方。</p>
+    <h3 data-t="demo.conflict-board.orderHeading">1 · order 缺声明：同一座位，换个注册时序，可见顺序就变</h3>
+    <p class="demo-label" data-t="demo.conflict-board.orderNote">shell.overlay：14 个占用者，11 个未声明 order（落在默认值 0），实际层级顺序由注册时序决定——登记表里 3 个声明了值（10 / 30 / 100）</p>
+    <button class="action" type="button" data-shuffle data-t="demo.conflict-board.shuffleButton">换个注册时序</button>
+    <table><thead><tr><th>#</th><th data-t="demo.conflict-board.columnOccupant">占用者</th><th data-t="demo.conflict-board.columnRegistrant">注册方</th><th>order</th></tr></thead><tbody data-overlay></tbody></table>
+    <p class="demo-label" style="margin-top:8px" data-t="demo.conflict-board.orderAfter">换个时序之后，橘色的那些换了位置——它们的 order 都是「未声明」，谁在前面只取决于谁先注册。规则（CF-MF-01）：任何可见顺序依赖注册时序的情形判为缺陷，责任在未声明 order 的一方。</p>
   </div>
 
   <div class="group">
-    <h3>2 · order 撞车：settings.section 三个 order 40</h3>
-    <p class="demo-label">11 个占用者，research-cordis / market / ui-harmony 三个都是 40——顺序无法解释</p>
-    <table><thead><tr><th>order</th><th>占用者</th><th>注册方</th><th>判定</th></tr></thead><tbody data-sections></tbody></table>
-    <p class="demo-label" style="margin-top:8px">新插件进这个座位要取现有最大值 +10（CF-MF-03），不能复刻已有值；撞车本身不是「人多」的错，是「没声明」的错。</p>
+    <h3 data-t="demo.conflict-board.clashHeading">2 · order 撞车：settings.section 三个 order 40</h3>
+    <p class="demo-label" data-t="demo.conflict-board.clashNote">11 个占用者，research-cordis / market / ui-harmony 三个都是 40——顺序无法解释</p>
+    <table><thead><tr><th>order</th><th data-t="demo.conflict-board.columnOccupant">占用者</th><th data-t="demo.conflict-board.columnRegistrant">注册方</th><th data-t="demo.conflict-board.columnVerdict">判定</th></tr></thead><tbody data-sections></tbody></table>
+    <p class="demo-label" style="margin-top:8px" data-t="demo.conflict-board.clashAfter">新插件进这个座位要取现有最大值 +10（CF-MF-03），不能复刻已有值；撞车本身不是「人多」的错，是「没声明」的错。</p>
   </div>
 
   <div class="group">
-    <h3>3 · 声明清楚了长什么样</h3>
-    <p class="demo-label">conversation.session.header.utilities：4 个占用者，order −10 / −5 / 空 / 5——排布清晰，唯一的问题只是还有 1 个没声明</p>
-    <table><thead><tr><th>order</th><th>占用者</th><th>注册方</th><th>判定</th></tr></thead><tbody data-utils></tbody></table>
+    <h3 data-t="demo.conflict-board.declaredHeading">3 · 声明清楚了长什么样</h3>
+    <p class="demo-label" data-t="demo.conflict-board.declaredNote">conversation.session.header.utilities：4 个占用者，order −10 / −5 / 空 / 5——排布清晰，唯一的问题只是还有 1 个没声明</p>
+    <table><thead><tr><th>order</th><th data-t="demo.conflict-board.columnOccupant">占用者</th><th data-t="demo.conflict-board.columnRegistrant">注册方</th><th data-t="demo.conflict-board.columnVerdict">判定</th></tr></thead><tbody data-utils></tbody></table>
   </div>
 
 <script>
 (function () {
   'use strict'
 
-  /* 演示脚本跑在 shadow root 里，document.querySelector 看不到自己的标记；站点在挂载期
-     把当前根挂在 window.__DSH_DEMO_ROOT 上。 */
+  /* A demo script runs inside a shadow root, where document.querySelector cannot see its own
+     markup; the site publishes the current root on window.__DSH_DEMO_ROOT for the duration of the mount. */
   var root = window.__DSH_DEMO_ROOT || document
 
-  /* 逐条抄自 data/raw/occupancy-2026-10-01.json */
+  /* Copied row by row from data/raw/occupancy-2026-10-01.json */
   var OVERLAY = [
     ['session-log-upload-toast', 'mf', null], ['shortcuts', 'mf', null], ['dsh-market-toast', 'dsh-market', null],
     ['desktop-onboarding', 'mf', null], ['account.platform-page', 'mf', null], ['workspace.session-rename', 'mf', null],
@@ -91,11 +92,11 @@ tr.moved { background: #fdf1dd; }
 
   var shuffleSeed = 0
 
-  /** 画 shell.overlay：声明了 order 的按值排，未声明的按当前注册时序排。 */
+  /** Draw shell.overlay: entries that declare an order sort by value, undeclared ones follow the current registration sequence. */
   function drawOverlay() {
     var declared = OVERLAY.filter(function (row) { return row[2] !== null })
     var loose = OVERLAY.filter(function (row) { return row[2] === null })
-    /* 只动未声明的那 11 个：它们之间换次序，声明过的不受影响 */
+    /* Only the 11 undeclared ones move: they rotate among themselves, and the declared entries keep their place */
     var rotated = loose.slice(shuffleSeed % loose.length).concat(loose.slice(0, shuffleSeed % loose.length))
     var ordered = declared.concat(rotated).sort(function (a, b) {
       var av = a[2] === null ? 0 : a[2]
@@ -114,7 +115,7 @@ tr.moved { background: #fdf1dd; }
     }).join('')
   }
 
-  /** 画另外两张表。 */
+  /** Draw the other two tables. */
   function drawStatic() {
     var secBody = root.querySelector('[data-sections]')
     if (secBody !== null) {

@@ -1,0 +1,28 @@
+{
+  "zh": {
+    "pageTitle": "EmptyState · DSH 设计资源",
+    "labelDefault": "icon 32×32 · gap 12 · 标题 14/22 500 · 说明 13/20 · 动作 margin-top 16",
+    "titleText": "标题文字",
+    "descText": "说明文字",
+    "primaryAction": "主要操作",
+    "secondaryAction": "次要操作",
+    "labelTitleOnly": "仅标题 · 无 icon / description / action",
+    "titleOnly": "只有标题",
+    "labelTitleDesc": "pad 32 12 · 标题说明间距 6px（负 margin 抵消 gap）",
+    "titleText2": "标题文字",
+    "descText2": "说明文字"
+  },
+  "en": {
+    "pageTitle": "EmptyState · DSH Design Resources",
+    "labelDefault": "icon 32×32 · gap 12 · title 14/22 500 · description 13/20 · action margin-top 16",
+    "titleText": "Title text",
+    "descText": "Description text",
+    "primaryAction": "Primary action",
+    "secondaryAction": "Secondary action",
+    "labelTitleOnly": "Title only · no icon / description / action",
+    "titleOnly": "Title only",
+    "labelTitleDesc": "pad 32 12 · title-to-description gap 6px (a negative margin cancels the gap)",
+    "titleText2": "Title text",
+    "descText2": "Description text"
+  }
+}

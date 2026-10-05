@@ -1,0 +1,30 @@
+{
+  "zh": {
+    "orderHeading": "1 · order 缺声明：同一座位，换个注册时序，可见顺序就变",
+    "orderNote": "shell.overlay：14 个占用者，11 个未声明 order（落在默认值 0），实际层级顺序由注册时序决定——登记表里 3 个声明了值（10 / 30 / 100）",
+    "shuffleButton": "换个注册时序",
+    "columnOccupant": "占用者",
+    "columnRegistrant": "注册方",
+    "columnVerdict": "判定",
+    "orderAfter": "换个时序之后，橘色的那些换了位置——它们的 order 都是「未声明」，谁在前面只取决于谁先注册。规则（CF-MF-01）：任何可见顺序依赖注册时序的情形判为缺陷，责任在未声明 order 的一方。",
+    "clashHeading": "2 · order 撞车：settings.section 三个 order 40",
+    "clashNote": "11 个占用者，research-cordis / market / ui-harmony 三个都是 40——顺序无法解释",
+    "clashAfter": "新插件进这个座位要取现有最大值 +10（CF-MF-03），不能复刻已有值；撞车本身不是「人多」的错，是「没声明」的错。",
+    "declaredHeading": "3 · 声明清楚了长什么样",
+    "declaredNote": "conversation.session.header.utilities：4 个占用者，order −10 / −5 / 空 / 5——排布清晰，唯一的问题只是还有 1 个没声明"
+  },
+  "en": {
+    "orderHeading": "1 · Undeclared order: the same seat, a different registration order, and the visible sequence changes",
+    "orderNote": "shell.overlay: 14 occupants, 11 of them declaring no order (so those fall to the default 0) and the stacking order decided by registration timing — three entries in the registry do declare a value (10 / 30 / 100)",
+    "shuffleButton": "Change the registration order",
+    "columnOccupant": "Occupant",
+    "columnRegistrant": "Registered by",
+    "columnVerdict": "Verdict",
+    "orderAfter": "After reordering, the orange rows have moved — every one of them has an \"undeclared\" order, so which comes first depends only on which registered first. Rule (CF-MF-01): any case where the visible sequence depends on registration timing counts as a defect, and the party that declared no order is responsible.",
+    "clashHeading": "2 · Order collision: three entries at order 40 in settings.section",
+    "clashNote": "11 occupants, and research-cordis / market / ui-harmony all sit at 40 — the sequence cannot be explained",
+    "clashAfter": "A new plugin joining this seat has to take the current maximum +10 (CF-MF-03) and must not copy an existing value; the collision itself is not the fault of \"too many occupants\" but of \"nothing declared\".",
+    "declaredHeading": "3 · What a clear declaration looks like",
+    "declaredNote": "conversation.session.header.utilities: 4 occupants, order −10 / −5 / blank / 5 — a clean arrangement, the only problem being that one of them still declares nothing"
+  }
+}

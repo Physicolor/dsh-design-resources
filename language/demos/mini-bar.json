@@ -1,0 +1,16 @@
+{
+  "zh": {
+    "title": "MiniBar · DSH 设计资源",
+    "trackLabel": "轨道 8px · 半径 999px · 过渡 120ms ease",
+    "progressOneAria": "示例进度一",
+    "progressTwoAria": "示例进度二",
+    "progressThreeAria": "示例进度三"
+  },
+  "en": {
+    "title": "MiniBar · DSH Design Resources",
+    "trackLabel": "Track 8px · corner radius 999px · transition 120ms ease",
+    "progressOneAria": "Sample progress one",
+    "progressTwoAria": "Sample progress two",
+    "progressThreeAria": "Sample progress three"
+  }
+}

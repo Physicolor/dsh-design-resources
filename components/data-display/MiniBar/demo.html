@@ -1,10 +1,11 @@
-<!-- 本组件官方没有对应物，这是本仓库建议的实现；预览为几何展示，不代表产品界面。 -->
+<!-- This component has no official counterpart; this is the implementation proposed by this
+     repository. The preview shows geometry only and does not represent the product interface. -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MiniBar · DSH 设计资源</title>
+<title data-t="demo.mini-bar.title">MiniBar · DSH 设计资源</title>
 <style>
 :root {
   --dsw-static-neutral-bluish-00: #fff;
@@ -106,15 +107,16 @@
   --dsw-shadow-lv3: 0 0 1px 0 rgba(0, 0, 0, .2), 0 0 4px 0 rgba(0, 0, 0, .02), 0 12px 32px 0 rgba(0, 0, 0, .08);
   --dsw-mask-blur: none;
   --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  /* 官方把这两条写成 font 简写合成 token，这里展开以便 demo 单条使用。 */
+  /* The official source writes these two as composite font shorthand tokens; they are expanded here so a demo can use one on its own. */
   --dsw-font-s-14: 14px/22px var(--dsw-font-family);
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
 }
 
-/* 深色主题：站点把深色 token 挂在 body[data-ds-dark-theme] 上，Shadow DOM 里选择不到它，
-   而 :host 自己的自定义属性又会盖过继承值——所以深色值在文件内自带一份，用 light-dark()
-   依据宿主继承下来的 color-scheme 选择。只列本页用到、且深浅两套取值不同的 token；
-   数值逐条取自 website/css/dsh-tokens.css。 */
+/* Dark theme: the site hangs the dark tokens on body[data-ds-dark-theme], which a Shadow DOM
+   cannot select, and :host's own custom properties would override the inherited values — so the
+   dark values are carried in this file and chosen with light-dark() from the color-scheme the host
+   inherits. Only the tokens this page uses whose light and dark values differ; every value comes
+   from website/css/dsh-tokens.css. */
 :root {
   --dsw-alias-border-l1: light-dark(#0000000a, #ffffff0f);
   --dsw-alias-label-tertiary: light-dark(var(--dsw-static-neutral-bluish-600), var(--dsw-static-neutral-bluish-400));
@@ -122,9 +124,9 @@
   --dsw-alias-state-error-primary: light-dark(var(--dsw-static-red-600), var(--dsw-static-red-400));
 }
 
-/* --------------------------------------------------- 组件几何
-   数值逐条取自同目录 mini-bar.module.css（CSS Modules 的哈希类名已去掉），
-   规则重新组织过，声明值未改。 */
+/* --------------------------------------------------- component geometry
+   Every value comes from mini-bar.module.css in this directory (the CSS Modules hashed class names
+   are removed); the rules are re-organised, the declared values are unchanged. */
 .bar {
   --dsh-bar-height: 8px;
   --dsh-bar-gap: 8px;
@@ -156,14 +158,15 @@
 
 .percent { flex: none; font-size: 12px; line-height: 18px; color: var(--dsw-alias-label-tertiary); font-variant-numeric: tabular-nums; }
 
-/* 与官方 Toast.module.css 的做法一致 */
+/* The same thing the official Toast.module.css does */
 @media (prefers-reduced-motion: reduce) {
   .fill { transition: none; }
 }
 
-/* ------------------------------------------------------------------ demo 外壳
-   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
-   .demo-label 是本页唯一允许出现的文字，只写客观事实（尺寸 / 状态名）。 */
+/* ------------------------------------------------------------------ demo shell
+   body gets only a 16px padding and the text colour, no background: the surface comes from the
+   site (the shadow host). .demo-label is the only text this page allows, and it states observable
+   facts only (sizes / state names). */
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -191,7 +194,7 @@ body {
 </head>
 <body>
   <div class="demo-group" style="max-width:320px">
-    <p class="demo-label">轨道 8px · 半径 999px · 过渡 120ms ease</p>
+    <p class="demo-label" data-t="demo.mini-bar.trackLabel">轨道 8px · 半径 999px · 过渡 120ms ease</p>
     <div class="demo-stack" style="gap:12px">
       <div class="bar">
         <div class="track"><div class="fill" data-tone="business" style="width:82%"></div></div>
@@ -218,15 +221,15 @@ body {
   <div class="demo-group" style="max-width:320px">
     <p class="demo-label">showPercent · 12/18 · tabular-nums</p>
     <div class="demo-stack" style="gap:12px">
-      <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="82" aria-label="示例进度一">
+      <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="82" aria-label="示例进度一" data-t-aria="demo.mini-bar.progressOneAria">
         <div class="track"><div class="fill" data-tone="business" style="width:82%"></div></div>
         <span class="percent" aria-hidden="true">82%</span>
       </div>
-      <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="64" aria-valuenow="41" aria-label="示例进度二">
+      <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="64" aria-valuenow="41" aria-label="示例进度二" data-t-aria="demo.mini-bar.progressTwoAria">
         <div class="track"><div class="fill" data-tone="warn" style="width:64%"></div></div>
         <span class="percent" aria-hidden="true">64%</span>
       </div>
-      <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="93" aria-label="示例进度三">
+      <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="93" aria-label="示例进度三" data-t-aria="demo.mini-bar.progressThreeAria">
         <div class="track"><div class="fill" data-tone="error" style="width:93%"></div></div>
         <span class="percent" aria-hidden="true">93%</span>
       </div>

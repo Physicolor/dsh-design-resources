@@ -1,6 +1,6 @@
-# 40 自检与来源
+# 自检与证据来源
 
-> 提交前你要能回答两个问题：「我怎么知道它没坏」和「这个数字凭什么可信」。
+> 提交前检查界面行为与可访问性，并确认每项关键数值都有版本、时间和可复现来源。
 
 这一页面向 DSH 第三方插件作者。它不讲怎么设计，讲怎么**验证**：先跑哪些检查、哪些检查跑不了、每个数值来自哪里、以及哪些看起来像要求的东西其实只是官方 monorepo 的内部约束、与你无关。
 
@@ -17,6 +17,20 @@
 | `[已知偏差]` | 官方实现与本仓库规范冲突，或两处证据互相矛盾 | 记录，不覆盖官方 |
 
 注意 `spec/00-overview.md` §4 列的旧标签是 `[HIG]` / `[OH]` / `[DSH-CSS]` / `[实测]` / `[本仓库建议]`；`guides/` 用的是上表这套，两者含义对应，引用时不要混用。
+
+## Apple 与华为设计指南的对照审阅
+
+这次对照聚焦两个实际问题：插件设置应放在哪个层级，按钮示例如何展示。借用判断方法与文档编排，不把平台尺寸、外观或 API 转写成 DSH 规范。
+
+| 官方指南 | 可迁移的审阅问题 | 本指南的对应调整 | DSH 差距与边界 |
+| --- | --- | --- | --- |
+| [Apple HIG：Settings](https://developer.apple.com/cn/design/human-interface-guidelines/settings) | 这是影响整体体验、低频调整的偏好，还是只影响当前任务／会话的选项？ | `00-start` 与 `20-pattern-settings` 先判断全局偏好、完整设置分区或会话内选项，再选择 `settings.general.item`、`settings.section` 或 `conversation.*` 座位。 | Apple 描述的平台设置入口和窗口不等于 DSH 插件 API。DSH 公开座位表没有独立插件设置窗口入口；本指南明确该情形当前不受支持，也不生成概念 HTML。 |
+| [Apple HIG：Sidebars](https://developer.apple.com/cn/design/human-interface-guidelines/sidebars) | 侧栏是否只承担顶层导航？关键操作是否只能从侧栏底部找到？ | `21-pattern-sidebar-panel` 将左栏分成品牌、全局面板、工作区和宿主设置；将 `sidebar.footer.action` 限定为次要快捷入口。 | Apple 的侧栏层级规则不变成 DSH API；实际可挂载位置仍以 `data/slots.json` 为准。 |
+| [Apple HIG：Buttons](https://developer.apple.com/cn/design/human-interface-guidelines/buttons) | 控件是立即执行动作，还是表达持续状态／一组选项？主次靠样式还是尺寸？自定义按钮是否有按下反馈？ | 设置指南把动作按钮与下拉、外观选项和开关分开；Button 页面按变体展示干净实景里可核对的真实文案，并提供实现源码。 | DSH 实景截图只证明拍到的状态；Apple 的命中区数值和平台状态外观不复制到 DSH。按钮源码里哪些是官方几何、哪些是本仓库建议分别标注。 |
+| [HUAWEI Vision Design Guide：Buttons](https://developer.huawei.com/consumer/en/doc/design-guides-V1/button-0000001052807858-V1) | 按钮是否按用途、视觉类型和状态组织；文案是否直接说明动作；相邻按钮是否保持一致？ | Button 页面借用分类和并列对照的展示方式，先列实际存在的 DSH 按钮，再附本仓库的 TSX/CSS 实现。 | 华为的视觉类型、状态和间距规则属于其平台。本站不把 HarmonyOS 分类映射成 DSH 官方组件。 |
+| [HUAWEI HarmonyOS：按钮开发指导](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V13/arkts-common-components-button-V13) | 示例能否从成品回到具体的组件声明与事件实现？ | Button 页展示可复制的 `components/controls/Button/index.tsx` 与 `button.module.css`，并把它们标成资源仓库实现。 | 本仓库实现参考 DSH 官方 CSS 几何，但不是 DSH 官方 React 组件源码；HarmonyOS ArkTS 写法不能直接用于 DSH 插件。 |
+
+本轮还保留两项未验证：Desktop 账户／登录状态没有干净 Web 截图，只说明宿主管理的 `settings.launcher`；会话页签没有取得干净全屏截图，只用用户图五的页签局部与 UI inventory 交叉核对，并在证据映射中标为 `source-verified`。Button gallery 只展示干净采集中的正常态；没有采到的键盘焦点、禁用或按下态不会画成 DSH 现状。
 
 ## 官方自检清单
 

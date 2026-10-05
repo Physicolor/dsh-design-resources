@@ -1,27 +1,27 @@
 import { forwardRef, type Ref } from 'react';
 import styles from './state-dot.module.css';
 
-/** 状态圆点表达的四种结果 + 一种「没有活动」。 */
+/** The four outcomes a state dot expresses plus one "no activity". */
 export type StateDotState = 'done' | 'warning' | 'ongoing' | 'error' | 'idle';
 
 export interface StateDotProps {
-  /** 要表达的状态。`ongoing` 会渲染成会动的方块矩阵，其余渲染成实心圆点。 */
+  /** The state to express. `ongoing` renders as an animated square matrix; the rest render as a solid dot. */
   state: StateDotState;
-  /** 外径（px），默认 10 —— 官方默认值，也是 Figma 里的尺寸。 */
+  /** The outer diameter (px), 10 by default — the official default, and the size in Figma. */
   size?: number;
-  /** 额外的布局类名，由调用方决定外边距、对齐等。 */
+  /** An extra layout class name; the caller decides margin, alignment and the like. */
   className?: string;
 }
 
 /**
- * 圆点是 `<span>`、矩阵是 `<svg>`，两者不是同一个元素类型，
- * 所以 ref 用联合类型；调用方按 `state` 自行收窄。
+ * The dot is a `<span>` and the matrix is an `<svg>`, which are not the same element type,
+ * so the ref is a union type; the caller narrows it by `state`.
  */
 export type StateDotRef = HTMLSpanElement | SVGSVGElement;
 
 /**
- * `ongoing` 的 8 个 2×2 像素块在 10×10 网格外圈的位置，
- * 从左上角开始顺时针排列（屏幕坐标 y 向下，所以这是顺时针）。
+ * Where `ongoing`'s eight 2×2 pixel cells sit on the outer ring of the 10×10 grid,
+ * clockwise from the top-left corner (screen coordinates run y downwards, so this is clockwise).
  */
 const MATRIX_CELLS: ReadonlyArray<readonly [number, number]> = [
   [0, 0],
@@ -34,24 +34,25 @@ const MATRIX_CELLS: ReadonlyArray<readonly [number, number]> = [
   [0, 4],
 ];
 
-/** 拼 class，避免引入 clsx 之类的依赖。 */
+/** Join class names without pulling in a dependency such as clsx. */
 function cx(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
 /**
- * 状态圆点。
+ * State dot.
  *
- * 几何参照官方 StateDot（默认外径 10px、光环 `::before` 透明度 0.1、
- * 实心核 `::after` inset 20%、四种语义状态色；`ongoing` 是 10×10 viewBox 上
- * 8 个 2×2 方块跑 1s 追逐动画，逐格 `animation-delay` 相差 125ms），
- * 实现为本仓库原创。
+ * The geometry follows the official StateDot (default outer diameter 10px, halo `::before` at
+ * 0.1 opacity, solid core `::after` at inset 20%, four semantic state colours; `ongoing` is
+ * eight 2×2 squares running a 1s chase animation on a 10×10 viewBox, with `animation-delay`
+ * 125ms apart from cell to cell), and the implementation is original to this repository.
  *
- * 组件本身 `aria-hidden`：它不携带可读文本，状态必须由旁边的文字表达。
+ * The component itself is `aria-hidden`: it carries no readable text, so the state has to be
+ * expressed by the text beside it.
  *
  * @example
- * <span><StateDot state="done" /> 构建成功</span>
- * <span><StateDot state="ongoing" size={12} /> 正在生成</span>
+ * <span><StateDot state="done" /> Build succeeded</span>
+ * <span><StateDot state="ongoing" size={12} /> Generating</span>
  */
 export const StateDot = forwardRef<StateDotRef, StateDotProps>(function StateDot(
   { state, size = 10, className },
@@ -77,7 +78,7 @@ export const StateDot = forwardRef<StateDotRef, StateDotProps>(function StateDot
             y={y}
             width={2}
             height={2}
-            // 负延迟把 8 格排成一个追逐环：index 0 → -1000ms，最后一格 → -125ms。
+            // The negative delays line the 8 cells up into a chase ring: index 0 → -1000ms, the last cell → -125ms.
             style={{ animationDelay: `${(index - MATRIX_CELLS.length) * 125}ms` }}
           />
         ))}

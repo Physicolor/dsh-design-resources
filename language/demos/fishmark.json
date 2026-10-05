@@ -1,0 +1,14 @@
+{
+  "zh": {
+    "labelSidebarRow": "01-hero / 06-plugins · 左栏品牌行 · 实拍 ink 24×18 @ (16,27)",
+    "labelHero": "01-hero · Hero 居中品牌 · 实拍 ink 33×24",
+    "labelUncaptured": "截图未覆盖 · 宽 48 与四档 currentColor（截图中鱼标只以 label-primary 的黑色出现）",
+    "labelTitleVariants": "截图未覆盖 · title → role=\"img\" + <title> ／ 无 title → aria-hidden=\"true\"（两者在截图中外观相同）"
+  },
+  "en": {
+    "labelSidebarRow": "01-hero / 06-plugins · brand row in the left sidebar · as captured ink 24×18 @ (16,27)",
+    "labelHero": "01-hero · brand centred in the hero · as captured ink 33×24",
+    "labelUncaptured": "Not covered by the screenshot · width 48 and four levels of currentColor (in the screenshot the fish mark appears only as label-primary black)",
+    "labelTitleVariants": "Not covered by the screenshot · title → role=\"img\" + <title> / no title → aria-hidden=\"true\" (the two look identical in the screenshot)"
+  }
+}

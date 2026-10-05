@@ -1,4 +1,4 @@
-/* 几何全部来自官方 Tag.module.css：
+/* All geometry comes from the official Tag.module.css:
  *   .tag                    → radius 999px / corner-shape round / padding 1px 8px
  *                             font 11-17 / weight 500 / nowrap
  *   .tag[data-tone=outline] → border 0.5px solid var(--dsw-alias-border-l4)
@@ -12,8 +12,8 @@
  *   .tag[data-tone=info]    → color-mix(state-business-primary 10%, transparent)
  *   .tag[data-tone=warning] → color-mix(state-warn-primary 12%, transparent)
  *   .tag[data-tone=danger]  → color-mix(state-error-primary 10%, transparent)
- * 状态色的文字色与填充色同源（同一个 token），改一处深浅即可整体跟随。
- * 实现为本仓库原创（CSS 变量承载几何 + 属性选择器配色），未复制官方 CSS 源码。 */
+ * A state colour's text and fill come from one source (the same token), so changing the shade in one place carries the whole thing.
+ * The implementation is original to this repository (CSS variables carry the geometry, attribute selectors the palette), and is not a copy of the official CSS. */
 
 .tag {
   --dsh-tag-radius: 999px;
@@ -36,7 +36,7 @@
   white-space: nowrap;
 }
 
-/* ---------------------------------------------------------------- 基础调色 */
+/* ---------------------------------------------------------------- Base palette */
 
 .tag[data-tone='outline'] {
   border: 0.5px solid var(--dsw-alias-border-l4);
@@ -57,7 +57,7 @@
   color: var(--dsw-alias-label-tertiary);
 }
 
-/* ---------------------------------------------------------------- 状态调色 */
+/* ---------------------------------------------------------------- State palette */
 
 .tag[data-tone='success'] {
   background: color-mix(in srgb, var(--dsw-alias-state-success-primary) 10%, transparent);

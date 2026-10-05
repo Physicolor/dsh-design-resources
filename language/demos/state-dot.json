@@ -1,0 +1,14 @@
+{
+  "zh": {
+    "title": "StateDot · DSH 设计资源",
+    "captureLabel": "04-settings-models · 模型提供商行 · done（实拍绿核实心 8×8，见 SPEC 已知偏差）",
+    "uncoveredStatesLabel": "截图未覆盖 · warning / error / idle / ongoing —— 截图里没有这四种状态",
+    "sizesLabel": "截图未覆盖 · 外径 10 / 12 / 16 · 光环 inset 0 · 实心核 inset 20%"
+  },
+  "en": {
+    "title": "StateDot · DSH Design Resources",
+    "captureLabel": "04-settings-models · model provider row · done (captured green solid core 8×8, see the SPEC's Known deviations)",
+    "uncoveredStatesLabel": "Not covered by the screenshots · warning / error / idle / ongoing — none of these four states is in the screenshots",
+    "sizesLabel": "Not covered by the screenshots · outer diameter 10 / 12 / 16 · halo inset 0 · solid core inset 20%"
+  }
+}

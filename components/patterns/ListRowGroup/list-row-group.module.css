@@ -1,14 +1,16 @@
-/* 几何锚点（逐条，详见 README「几何来源」）：
- *   分组标题 padding 8px 10px / 12-16 / label-tertiary  官方 Menu.module.css .label
- *   行 min-height 40 / padding 8px 10px / radius 10 / gap 8 / 14-22  官方 Menu.module.css .item
- *   行 hover 底色        官方 Menu.module.css .item:hover:not(:disabled)
- *   行 disabled 透明度   官方 Menu.module.css .item:disabled (opacity .4)
- *   前置图标 16×16       官方 Menu.module.css .itemIcon
- *   行文字省略           官方 Menu.module.css .itemLabel
- *   分隔线 0.5px / margin 4px 2px / border-l1  官方 Menu.module.css .separator
- *   行间距 0             官方 Menu.module.css .list (gap: 0)
- * § 标记的为「本仓库建议值」：官方没有 ListRowGroup 对应物，这些数值在官方侧没有直接来源，理由见 README。
- * 实现为本仓库原创（变量承载几何 + 单类切换），未复制官方 CSS 源码。 */
+/* Geometry anchors (item by item, see the README's "geometry-source"):
+ *   Group title padding 8px 10px / 12-16 / label-tertiary  Official Menu.module.css .label
+ *   Row min-height 40 / padding 8px 10px / radius 10 / gap 8 / 14-22  Official Menu.module.css .item
+ *   Row hover background  Official Menu.module.css .item:hover:not(:disabled)
+ *   Row disabled opacity  Official Menu.module.css .item:disabled (opacity .4)
+ *   Leading icon 16×16    Official Menu.module.css .itemIcon
+ *   Row text truncation   Official Menu.module.css .itemLabel
+ *   Separator 0.5px / margin 4px 2px / border-l1  Official Menu.module.css .separator
+ *   Row spacing 0         Official Menu.module.css .list (gap: 0)
+ * § marks the values proposed here: the official side has no ListRowGroup equivalent, so these
+ * numbers have no direct official source; the reasoning is in the README.
+ * The implementation is original to this repository (geometry carried by CSS variables plus
+ * single-class switching); it does not copy the official CSS source. */
 
 .group {
   display: flex;
@@ -16,8 +18,9 @@
   min-width: 0;
 }
 
-/* 官方 .label 不设字重（继承父级）；本组件用 <hN> 承载语义，
-   因此显式写 font-weight: inherit 抵消浏览器对标题的加粗默认值。 */
+/* The official .label sets no font weight (it inherits from the parent); this component
+   carries the semantics with <hN>, so it writes font-weight: inherit explicitly to cancel
+   the browser's bold default for headings. */
 .groupLabel {
   margin: 0;
   padding: 8px 10px;
@@ -33,14 +36,15 @@
   gap: 0;
 }
 
-/* § 建议值：官方用独立的 .separator 元素承载分隔线；这里用相邻兄弟的
-   border-top 表达同一宽度（0.5px）与同一颜色（border-l1）。
-   需要官方那种「上下各 4px、左右各收 2px」的留白时改用 ListRowSeparator。 */
+/* § proposed here: the official side carries the separator on a standalone .separator
+   element; here an adjacent-sibling border-top expresses the same width (0.5px) and the
+   same colour (border-l1). When you need the official 4px above and below, 2px left and
+   right of white space, switch to ListRowSeparator. */
 .rowsHairline > * + * {
   border-top: 0.5px solid var(--dsw-alias-border-l1);
 }
 
-/* -------------------------------------------------------------------- 行 */
+/* -------------------------------------------------------------------- row */
 
 .row {
   box-sizing: border-box;
@@ -68,7 +72,7 @@
   background: var(--dsw-alias-interactive-bg-hover);
 }
 
-/* 官方 Button .ghost:active 用的是同一个 active 底色。 */
+/* The official Button .ghost:active uses the same active background. */
 .rowInteractive:active:not(:disabled) {
   background: var(--dsw-alias-interactive-bg-active);
 }
@@ -78,7 +82,7 @@
   cursor: not-allowed;
 }
 
-/* § 建议值：官方 ListRow 无对应物；写法对齐官方 Switch.module.css 的 focus-visible。 */
+/* § proposed here: the official side has no ListRow equivalent; this follows the focus-visible in the official Switch.module.css. */
 .rowInteractive:focus-visible {
   outline: 2px solid var(--dsw-alias-brand-primary);
   outline-offset: 2px;
@@ -110,7 +114,7 @@
   color: var(--dsw-alias-label-tertiary);
 }
 
-/* --------------------------------------------------------------- 分隔线 */
+/* --------------------------------------------------------------- separator */
 
 .separator {
   flex: none;

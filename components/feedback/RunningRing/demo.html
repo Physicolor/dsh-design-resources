@@ -1,11 +1,13 @@
-<!-- 几何取自同目录 running-ring.module.css（即产品采集值）；token 取自 website/css/dsh-tokens.css。
-     环本身对读屏隐藏，行里那段「进行中」是视觉隐藏文本——用 Tab 走过这一页时读屏会念到它。 -->
+<!-- The geometry is taken from running-ring.module.css in the same directory (that is, the value
+     collected from the product); the tokens are taken from website/css/dsh-tokens.css.
+     The ring itself is hidden from screen readers, and the "in progress" text on the row is
+     visually hidden copy — a screen reader reads it out when you tab through this page. -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RunningRing · DSH 设计资源</title>
+<title data-t-title="demo.running-ring.pageTitle">RunningRing · DSH 设计资源</title>
 <style>
 :root {
   --dsw-static-neutral-bluish-00: #fff;
@@ -29,9 +31,10 @@
   --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-/* --------------------------------------------------- 组件几何
-   数值逐条取自同目录 running-ring.module.css（CSS Modules 的哈希类名已去掉），
-   规则重新组织过，声明值未改。 */
+/* --------------------------------------------------- component geometry
+   Each value is taken from running-ring.module.css in the same directory (the CSS Modules
+   hashed class names are removed); the rules are reorganised, the declared values are
+   unchanged. */
 .root { display: inline-flex; align-items: center; flex: none; }
 .ring { display: block; flex: none; color: var(--dsw-alias-label-tertiary); }
 .motion { transform-origin: center; animation: dsh-design-running-ring-spin 1.5s linear infinite; }
@@ -59,14 +62,16 @@
   white-space: nowrap;
 }
 
-/* 静止形态：把媒体查询里那一帧写成类，好在同一页里对照看。
-   产品在「减少动效」下的真实表现就是这个样子，不是另一套设计。 */
+/* The still form: the frame from the media query written as a class, so the two can be
+   compared side by side on one page. What the product really does under "reduce motion"
+   looks exactly like this, not like a second design. */
 .frozen .motion, .frozen .arc { animation: none; }
 .frozen .arc { stroke-dasharray: 18 150; stroke-dashoffset: -3; }
 
-/* ------------------------------------------------------------------ demo 外壳
-   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
-   .demo-label 只写客观事实（尺寸 / 出处）。 */
+/* ------------------------------------------------------------------ demo shell
+   body only provides the 16px padding and the text colour, and sets no background: the
+   backdrop comes from the site (the shadow host). .demo-label states objective facts only
+   (sizes / where it comes from). */
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -80,7 +85,8 @@ body {
 .demo-group + .demo-group { margin-top: 20px; }
 .demo-row { display: flex; align-items: center; gap: 12px; }
 
-/* 左栏会话行的实测排布：行高 32、行首座位的字形 14×14。仅用于说明这枚环长在哪儿。 */
+/* The measured layout of a conversation row in the left sidebar: row height 32, the seat's
+   glyph at the start of the row 14×14. It only shows where this ring sits. */
 .sessionRow {
   display: flex;
   align-items: center;
@@ -105,7 +111,7 @@ body {
 </head>
 <body>
   <div class="demo-group">
-    <p class="demo-label">默认 14px（左栏会话行首的实渲尺寸）· viewBox 24 · r 9.5 · stroke 2 · 1.5s 转 + 1.5s 伸缩</p>
+    <p class="demo-label" data-t="demo.running-ring.labelDefault">默认 14px（左栏会话行首的实渲尺寸）· viewBox 24 · r 9.5 · stroke 2 · 1.5s 转 + 1.5s 伸缩</p>
     <div class="demo-row">
       <span class="canvas">
         <span class="root">
@@ -115,7 +121,7 @@ body {
               <circle class="arc" cx="12" cy="12" r="9.5"></circle>
             </g>
           </svg>
-          <span class="srOnly">进行中</span>
+          <span class="srOnly" data-capture="visually hidden running status, left sidebar conversation row">进行中</span>
         </span>
       </span>
       <span class="canvas frozen">
@@ -129,11 +135,11 @@ body {
         </span>
       </span>
     </div>
-    <p class="demo-label" style="margin-top:8px">左：运行中（1.5s 一圈）　右：减少动效下停住的那一帧（弧停在 18 150 / -3，仍是「没转完」）</p>
+    <p class="demo-label" style="margin-top:8px" data-t="demo.running-ring.labelFrozenSide">左：运行中（1.5s 一圈）　右：减少动效下停住的那一帧（弧停在 18 150 / -3，仍是「没转完」）</p>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">长在哪儿 · 左栏会话行（行 256 × 32，环替掉平时那枚会话字形）</p>
+    <p class="demo-label" data-t="demo.running-ring.labelWhereItSits">长在哪儿 · 左栏会话行（行 256 × 32，环替掉平时那枚会话字形）</p>
     <div class="sessionRow">
       <span class="root">
         <svg class="ring" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -142,10 +148,10 @@ body {
             <circle class="arc" cx="12" cy="12" r="9.5"></circle>
           </g>
         </svg>
-        <span class="srOnly">进行中</span>
+        <span class="srOnly" data-capture="visually hidden running status, left sidebar conversation row">进行中</span>
       </span>
-      <span class="sessionRow__title">示例会话：整理接口文档</span>
-      <span class="sessionRow__time">2 分钟</span>
+      <span class="sessionRow__title" data-t="demo.running-ring.sessionTitle">示例会话：整理接口文档</span>
+      <span class="sessionRow__time" data-t="demo.running-ring.sessionTime">2 分钟</span>
     </div>
   </div>
 </body>

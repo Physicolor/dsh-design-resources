@@ -1,0 +1,14 @@
+{
+    "zh": {
+        "pluginRowLabel": "06-plugins · 官方分组行 · 插件名之后 · tone=info（实拍 42×18）",
+        "heroRowLabel": "01-hero · Hero 标语之后 · tone=info（实拍 50×19）",
+        "uncapturedTones": "截图未覆盖 · outline / solid / neutral / quiet / success / warning / danger —— 几何同一，只有配色不同",
+        "sample": "示例"
+    },
+    "en": {
+        "pluginRowLabel": "06-plugins · official grouping row · after the plugin name · tone=info (42×18 as captured)",
+        "heroRowLabel": "01-hero · after the hero slogan · tone=info (50×19 as captured)",
+        "uncapturedTones": "Not in the capture · outline / solid / neutral / quiet / success / warning / danger — the geometry is the same, only the colours differ",
+        "sample": "Example"
+    }
+}

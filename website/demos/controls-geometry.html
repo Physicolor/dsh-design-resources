@@ -1,13 +1,16 @@
-<!-- 控件量板：几何逐条取自官方未压缩 CSS 源（产品 app.asar 内 @deepseek-ai/dsh-client-ui-primitives 的
-     Button / Switch / Tag / Pill / DisclosureRow 模块），token 取自 website/css/dsh-tokens.css。
-     每一格右边是渲染后回读的 offsetWidth/Height 与计算样式，与左边的官方值比对，对不上就地标 ✗——
-     这一板做的是「把条文渲染一遍再回读」，不是独立测量。第三组是 CT-MF-11 / CT-MF-12 的反例。 -->
+<!-- Controls board: geometry is copied clause by clause from the official uncompressed CSS source
+     (the Button / Switch / Tag / Pill / DisclosureRow modules of @deepseek-ai/dsh-client-ui-primitives
+     inside the product's app.asar); tokens come from website/css/dsh-tokens.css.
+     To the right of each cell sits the offsetWidth/Height and computed style read back after render,
+     compared against the official value on the left and marked ✗ in place when they disagree —
+     this board renders the clauses once and reads them back, it is not an independent measurement.
+     The third group is the counter-example for CT-MF-11 / CT-MF-12. -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>控件几何量板 · DSH 设计资源</title>
+<title>Controls geometry board · DSH Design Resources</title>
 <style>
 :root {
   --dsw-static-neutral-bluish-00: #fff;
@@ -55,7 +58,7 @@ body {
 .read--ok b { color: #14663c; }
 .read--bad b { color: #b3271f; }
 
-/* ---------------------------------------------------- 官方几何（逐条照抄） */
+/* ------------------------------------------------------- Official geometry (copied clause by clause) */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -64,7 +67,7 @@ body {
   height: 36px;
   padding: 0 14px;
   border: 0;
-  border-radius: 12px;              /* 官方 Button.module.css：var(--dsw-radius-md) */
+  border-radius: 12px;              /* Official Button.module.css: var(--dsw-radius-md) */
   background: var(--dsw-alias-bg-layer-2);
   color: var(--dsw-alias-label-primary);
   font: inherit;
@@ -164,12 +167,12 @@ body {
   color: var(--dsw-alias-label-tertiary);
 }
 
-/* -------------------------------------------------------- 强制态（看五态用） */
+/* --------------------------------------------------------- Forced states (to see the five side by side) */
 .force-hover { background: var(--dsw-alias-interactive-bg-hover) !important; }
 .force-focus { outline: 2px solid var(--dsw-alias-label-primary); outline-offset: 2px; }
 .force-disabled { color: var(--dsw-alias-label-tertiary); }
 
-/* ------------------------------------------------------------------ 反例 */
+/* ------------------------------------------------------------------ Counter-examples */
 .wrong { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
 .fakeButton {
   display: inline-flex;
@@ -183,18 +186,18 @@ body {
 .overridden {
   display: inline-flex;
   align-items: center;
-  height: 44px;              /* 反例：官方 Button 只允许 36 或 28 */
+  height: 44px;              /* Counter-example: the official Button allows only 36 or 28 */
   padding: 0 14px;
   border: 0;
-  border-radius: 22px;       /* 反例：官方只允许 18 / 14 */
+  border-radius: 22px;       /* Counter-example: only 18 / 14 are allowed */
   background: var(--dsw-alias-bg-layer-2);
   font: inherit;
-  font-size: 16px;           /* 反例：官方 14 / 22 */
+  font-size: 16px;           /* Counter-example: officially 14 / 22 */
   cursor: pointer;
 }
 .badSwitch {
   position: relative;
-  width: 44px;               /* 反例：官方 Switch 只允许 36 × 20 */
+  width: 44px;               /* Counter-example: the official Switch allows only 36 × 20 */
   height: 24px;
   border-radius: 12px;
   background: var(--dsw-alias-border-l3);
@@ -206,15 +209,15 @@ body {
 <body>
 
   <div class="group">
-    <h3 class="group__title">1 · 官方几何（每格右边是现测读数）</h3>
-    <p class="demo-label">判定 CT-MF-01 / 02 / 03：Button 只允许 36 或 28 高、圆角只允许 12 或 8（`--dsw-radius-md` / `--dsw-radius-sm`）；Switch 只允许 36 × 20；Button 内图标容器 16 × 16</p>
+    <h3 class="group__title" data-t="demo.controls-geometry.group1Title">1 · 官方几何（每格右边是现测读数）</h3>
+    <p class="demo-label" data-t="demo.controls-geometry.group1Label">判定 CT-MF-01 / 02 / 03：Button 只允许 36 或 28 高、圆角只允许 12 或 8（`--dsw-radius-md` / `--dsw-radius-sm`）；Switch 只允许 36 × 20；Button 内图标容器 16 × 16</p>
     <div class="row">
       <span class="cell">
-        <button class="btn" type="button" data-check="btn-md"><span class="btn__icon" data-icon="sparkle"></span>Button 默认</button>
+        <button class="btn" type="button" data-check="btn-md"><span class="btn__icon" data-icon="sparkle"></span><span data-t="demo.controls-geometry.btnDefault">Button 默认</span></button>
         <span class="read" data-read></span>
       </span>
       <span class="cell">
-        <button class="btn btn--primary" type="button" data-check="btn-primary">主按钮</button>
+        <button class="btn btn--primary" type="button" data-check="btn-primary" data-t="demo.controls-geometry.btnPrimary">主按钮</button>
         <span class="read" data-read></span>
       </span>
       <span class="cell">
@@ -226,19 +229,19 @@ body {
         <span class="read" data-read></span>
       </span>
       <span class="cell">
-        <button class="switch" type="button" role="switch" aria-checked="true" aria-label="示例开关" data-check="switch"><span class="switch__thumb"></span></button>
+        <button class="switch" type="button" role="switch" aria-checked="true" aria-label="示例开关" data-t-aria="demo.controls-geometry.switchAria" data-check="switch"><span class="switch__thumb"></span></button>
         <span class="read" data-read></span>
       </span>
       <span class="cell">
-        <span class="tag" data-check="tag">标签</span>
+        <span class="tag" data-check="tag" data-t="demo.controls-geometry.tagText">标签</span>
         <span class="read" data-read></span>
       </span>
       <span class="cell">
-        <button class="pill" type="button" aria-pressed="true" data-check="pill">今天</button>
+        <button class="pill" type="button" aria-pressed="true" data-check="pill" data-t="demo.controls-geometry.pillToday">今天</button>
         <span class="read" data-read></span>
       </span>
       <span class="cell">
-        <button class="disclosure" type="button" aria-expanded="false" data-check="disclosure"><span class="disclosure__icon" data-icon="chevron-down"></span>高级选项</button>
+        <button class="disclosure" type="button" aria-expanded="false" data-check="disclosure"><span class="disclosure__icon" data-icon="chevron-down"></span><span data-t="demo.controls-geometry.disclosureLabel">高级选项</span></button>
         <span class="read" data-read></span>
       </span>
       <span class="cell">
@@ -249,38 +252,38 @@ body {
   </div>
 
   <div class="group">
-    <h3 class="group__title">2 · 五态（CT-MF-07）</h3>
-    <p class="demo-label">hover / focus-visible 是真的伪类，把指针移上去或按 Tab 进来就是真效果；左边三个静态格子用类强制成同一帧，方便并排看</p>
+    <h3 class="group__title" data-t="demo.controls-geometry.group2Title">2 · 五态（CT-MF-07）</h3>
+    <p class="demo-label" data-t="demo.controls-geometry.group2Label">hover / focus-visible 是真的伪类，把指针移上去或按 Tab 进来就是真效果；左边三个静态格子用类强制成同一帧，方便并排看</p>
     <div class="row">
       <span class="cell"><span class="btn">default</span></span>
       <span class="cell"><span class="btn force-hover">hover</span></span>
       <span class="cell"><span class="btn force-focus">focus-visible</span></span>
       <span class="cell"><span class="btn force-disabled">disabled</span></span>
-      <span class="cell"><button class="btn" type="button">真按钮 · 移上来</button></span>
-      <span class="cell"><button class="btn" type="button">真按钮 · Tab 进来</button></span>
+      <span class="cell"><button class="btn" type="button" data-t="demo.controls-geometry.realButtonHover">真按钮 · 移上来</button></span>
+      <span class="cell"><button class="btn" type="button" data-t="demo.controls-geometry.realButtonTab">真按钮 · Tab 进来</button></span>
     </div>
     <div class="row" style="margin-top:12px">
-      <span class="cell"><button class="switch" type="button" role="switch" aria-checked="false" aria-label="关"><span class="switch__thumb"></span></button><span class="cell__name">off</span></span>
-      <span class="cell"><button class="switch" type="button" role="switch" aria-checked="true" aria-label="开"><span class="switch__thumb"></span></button><span class="cell__name">on</span></span>
-      <span class="cell"><button class="pill" type="button" aria-pressed="false">未选</button><span class="cell__name">Pill 未选</span></span>
-      <span class="cell"><button class="pill" type="button" aria-pressed="true">已选</button><span class="cell__name">Pill 已选</span></span>
+      <span class="cell"><button class="switch" type="button" role="switch" aria-checked="false" aria-label="关" data-t-aria="demo.controls-geometry.switchOffAria"><span class="switch__thumb"></span></button><span class="cell__name">off</span></span>
+      <span class="cell"><button class="switch" type="button" role="switch" aria-checked="true" aria-label="开" data-t-aria="demo.controls-geometry.switchOnAria"><span class="switch__thumb"></span></button><span class="cell__name">on</span></span>
+      <span class="cell"><button class="pill" type="button" aria-pressed="false" data-t="demo.controls-geometry.pillUnselected">未选</button><span class="cell__name" data-t="demo.controls-geometry.pillUnselectedCaption">Pill 未选</span></span>
+      <span class="cell"><button class="pill" type="button" aria-pressed="true" data-t="demo.controls-geometry.pillSelected">已选</button><span class="cell__name" data-t="demo.controls-geometry.pillSelectedCaption">Pill 已选</span></span>
     </div>
   </div>
 
   <div class="group">
-    <h3 class="group__title">3 · 反例：这三样按 CT-MF-11 / CT-MF-12 判缺陷</h3>
+    <h3 class="group__title" data-t="demo.controls-geometry.group3Title">3 · 反例：这三样按 CT-MF-11 / CT-MF-12 判缺陷</h3>
     <div class="row">
       <span class="cell wrong">
-        <span class="fakeButton" role="button" tabindex="-1">div 冒充按钮</span>
-        <span class="verdict"><b>✗</b> role=button 却不可聚焦、无键盘处理</span>
+        <span class="fakeButton" role="button" tabindex="-1" data-t="demo.controls-geometry.fakeButton">div 冒充按钮</span>
+        <span class="verdict"><b>✗</b> <span data-t="demo.controls-geometry.verdictRole">role=button 却不可聚焦、无键盘处理</span></span>
       </span>
       <span class="cell wrong">
-        <button class="overridden" type="button">被改高的官方按钮</button>
-        <span class="verdict"><b>✗</b> 覆盖官方几何：高 44、圆角 22、字号 16</span>
+        <button class="overridden" type="button" data-t="demo.controls-geometry.overriddenButton">被改高的官方按钮</button>
+        <span class="verdict"><b>✗</b> <span data-t="demo.controls-geometry.verdictOverridden">覆盖官方几何：高 44、圆角 22、字号 16</span></span>
       </span>
       <span class="cell wrong">
         <span class="badSwitch"></span>
-        <span class="verdict"><b>✗</b> 自绘开关 44 × 24，宽高比不是 36:20</span>
+        <span class="verdict"><b>✗</b> <span data-t="demo.controls-geometry.verdictSwitch">自绘开关 44 × 24，宽高比不是 36:20</span></span>
       </span>
     </div>
   </div>
@@ -289,11 +292,11 @@ body {
 (function () {
   'use strict'
 
-  /* 演示脚本跑在 shadow root 里，document.querySelector 看不到自己的标记；站点在挂载期
-     把当前根挂在 window.__DSH_DEMO_ROOT 上。 */
+  /* The demo script runs inside a shadow root, where document.querySelector cannot see its own
+     markup; the site publishes the current root on window.__DSH_DEMO_ROOT while mounting. */
   var root = window.__DSH_DEMO_ROOT || document
 
-  /** 现测一格：把结论与实测并排写出来。 */
+  /** Read one cell: write the conclusion and the measurement side by side. */
   function read(el, expect, extra) {
     var box = el.closest('.cell')
     if (box === null) return

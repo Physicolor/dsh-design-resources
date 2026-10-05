@@ -1,0 +1,427 @@
+{
+  "$comment": "Screenshots and review crops are local audit evidence only; generated HTML never embeds DSH screenshots. `source` and `reviewAsset` identify local evidence. Withheld items render no HTML demo; proposed demos must be labeled as non-product concepts and cannot claim screenshot evidence.",
+  "demos": {
+    "a11y-board": {
+      "status": "verified",
+      "asset": "assets/evidence/settings-general.png",
+      "source": "docs/reference/03-settings-open.png",
+      "scene": "设置面板 · 通用设置",
+      "sceneEn": "Settings panel · General",
+      "kind": "audit",
+      "note": "这是可访问性审核工具，不是 DSH 产品界面；测量对象以左侧实景为准。"
+    },
+    "app-icon-board": {
+      "status": "verified",
+      "asset": "assets/evidence/plugin-row.png",
+      "source": "docs/reference/15-plugin-row.png",
+      "scene": "插件列表 · 官方插件行",
+      "sceneEn": "Plugin list · Official plugin row",
+      "kind": "plugin",
+      "note": "示例讲插件图标在 DSH 列表中的实际容器；图标资源属于插件。"
+    },
+    "conflict-board": {
+      "status": "verified",
+      "asset": "assets/evidence/plugin-list.png",
+      "source": "docs/reference/06-plugins.png",
+      "scene": "插件页 · 官方插件分组",
+      "sceneEn": "Plugins page · Official plugin groups",
+      "kind": "audit",
+      "note": "冲突图解来自真实座位占用数据，但图表本身不是 DSH 界面。"
+    },
+    "controls-geometry": {
+      "status": "verified",
+      "asset": "assets/evidence/settings-general.png",
+      "source": "docs/reference/03-settings-open.png",
+      "scene": "设置面板 · 真实控件",
+      "sceneEn": "Settings panel · Real controls",
+      "kind": "product",
+      "note": "只按截图和实测几何演示产品中看得到的控件。"
+    },
+    "frame-columns": {
+      "status": "verified",
+      "asset": "assets/evidence/home-shell.png",
+      "source": "docs/reference/01-hero.png",
+      "scene": "新会话页 · 左栏与主栏",
+      "sceneEn": "New conversation page · Left sidebar and main column",
+      "kind": "product",
+      "note": "侧栏文本已匿名化，栏宽和实际区域位置保留。"
+    },
+    "frame-composer": {
+      "status": "verified",
+      "asset": "assets/evidence/composer.png",
+      "source": "docs/reference/07-composer.png",
+      "scene": "会话页 · 输入区",
+      "sceneEn": "Conversation page · Composer",
+      "kind": "product",
+      "note": "截图裁到输入卡，正文与用量数据不进入站点素材。"
+    },
+    "frame-rightbar": {
+      "status": "verified",
+      "asset": "assets/evidence/right-rail.png",
+      "source": "docs/reference/clean-capture-2026-10-05/19-rightbar-empty.png",
+      "reviewAsset": "docs/reference/review-crops/rightbar-clean-2026-10-05.png",
+      "scene": "空白新会话 · 宿主开始页",
+      "sceneEn": "Blank new conversation · Host start page",
+      "kind": "product",
+      "note": "干净官方 profile 中可见“开始”“工作区文件”“新建终端”及对应说明和快捷键；示意只复现这两项宿主操作。"
+    },
+    "icon-anatomy": {
+      "status": "verified",
+      "asset": "assets/evidence/top-strip.png",
+      "source": "docs/reference/13-top-strip.png",
+      "scene": "会话页 · 顶栏图标",
+      "sceneEn": "Conversation page · Top bar icons",
+      "kind": "product",
+      "note": "页面中的图标标注只用于讲解几何，不表示每个图标都在同一场景出现。"
+    },
+    "motion-panels": {
+      "status": "verified",
+      "asset": "assets/evidence/right-rail.png",
+      "source": "docs/reference/09-chrome.png",
+      "scene": "会话页 · 右侧扩展栏",
+      "sceneEn": "Conversation page · Right extension column",
+      "kind": "plugin",
+      "note": "这是布局变化的说明图；右栏内容归插件，截图不证明具体动效时长。"
+    },
+    "motion-select": {
+      "status": "verified",
+      "asset": "assets/evidence/settings-general.png",
+      "source": "docs/reference/03-settings-open.png",
+      "scene": "设置面板 · 主题与选择器",
+      "sceneEn": "Settings panel · Theme and selectors",
+      "kind": "product",
+      "note": "以设置页中实际出现的选择控件为参照。"
+    },
+    "preflight-checklist": {
+      "status": "verified",
+      "asset": "assets/evidence/plugin-list.png",
+      "source": "docs/reference/06-plugins.png",
+      "scene": "插件页 · 插件行与开关",
+      "sceneEn": "Plugins page · Plugin rows and switches",
+      "kind": "audit",
+      "note": "清单是提交流程工具，不是 DSH 产品界面；截图展示它要检查的插件 UI 场景。"
+    },
+    "rule-legend": {
+      "status": "verified",
+      "asset": "assets/evidence/home-shell.png",
+      "source": "docs/reference/01-hero.png",
+      "scene": "新会话页 · 窗口基准",
+      "sceneEn": "New conversation page · Window baseline",
+      "kind": "audit",
+      "note": "图例解释规范标记，不模拟产品控件。"
+    },
+    "seat-map": {
+      "status": "verified",
+      "asset": "assets/evidence/home-shell.png",
+      "source": "docs/reference/01-hero.png",
+      "scene": "新会话页 · 产品骨架",
+      "sceneEn": "New conversation page · Product skeleton",
+      "kind": "audit",
+      "note": "座位名称和类型来自运行时采集；方框图是结构说明，不是产品 UI。"
+    },
+    "token-scale": {
+      "status": "verified",
+      "asset": "assets/evidence/settings-general.png",
+      "source": "docs/reference/review-crops/settings-general-clean-2026-10-05.png",
+      "reviewAsset": "docs/reference/review-crops/settings-general-clean-2026-10-05.png",
+      "scene": "设置面板 · 主题、控件与层级",
+      "sceneEn": "Settings panel · Theme, controls and elevation",
+      "kind": "product",
+      "note": "令牌演示以实际设置面板中使用的颜色、圆角、字号和阴影为参照。"
+    },
+    "sidebar-anatomy": {
+      "status": "source-verified",
+      "source": "docs/reference/review-crops/sidebar-top-clean-2026-10-05.png",
+      "reviewAsset": "docs/reference/review-crops/sidebar-top-clean-2026-10-05.png",
+      "reference": "干净官方 profile 的左栏顶部裁图；Desktop 账户状态另按公开座位说明。",
+      "sourceCode": "data/slots.json: sidebar.panellist, sidebar.workspaces, sidebar.footer.action, settings.launcher; website/shell/data.js",
+      "scene": "宿主左栏 · 全局面板与工作区",
+      "sceneEn": "Host left sidebar · Global panels and workspaces",
+      "kind": "product",
+      "note": "HTML 只复用实景中的宿主文案；注册位与 Desktop 账户差异在窗外说明。"
+    },
+    "session-tabs": {
+      "status": "source-verified",
+      "reference": "docs/reference/review-crops/session-tabs-user-reference.png；只核对用户图五中的三个宿主页签，原图其他插件区域不作依据。",
+      "sourceCode": "data/ui-inventory.json 与 data/slots.json 中的 conversation.session.header 视图导航",
+      "reviewAsset": "docs/reference/review-crops/session-tabs-user-reference.png",
+      "scene": "会话头部 · 对话／轨迹／上下文",
+      "sceneEn": "Conversation header · Conversation / Trajectory / Context",
+      "kind": "product",
+      "note": "此示意只呈现真实页签标签；没有干净全屏会话截图，因此不标记为实景截图验证。"
+    },
+    "settings-general-item": {
+      "status": "verified",
+      "source": "docs/reference/clean-capture-2026-10-05/03-settings-open.png",
+      "reviewAsset": "docs/reference/review-crops/settings-general-clean-2026-10-05.png",
+      "scene": "通用设置 · 显示代码工作视图",
+      "sceneEn": "General · Show code workspace view",
+      "kind": "product",
+      "note": "此行文字、说明和开关均可在干净采集及本地裁图中逐项核对；HTML 只抽取这一条宿主设置。"
+    },
+    "settings-section": {
+      "status": "verified",
+      "source": "docs/reference/clean-capture-2026-10-05/04-settings-models.png",
+      "reviewAsset": "docs/reference/review-crops/settings-models-clean-2026-10-05.png",
+      "scene": "设置窗口 · 模型页面与导航",
+      "sceneEn": "Settings window · Models page and navigation",
+      "kind": "product",
+      "note": "窗口、左侧菜单、模型页文字和按钮来自干净采集；右侧说明只解释插件应注册到 settings.section，不冒充 DSH 页面。"
+    },
+    "settings-independent-window": {
+      "status": "proposed",
+      "scene": "独立插件设置窗口 · 公开座位边界图",
+      "sceneEn": "Standalone plugin settings window · Public seat boundary diagram",
+      "kind": "proposal",
+      "reason": "此图只整理公开座位表的支持边界，不是 DSH 窗口界面。座位表没有专用的独立插件设置窗口入口；插件设置应使用 settings.general.item 或 settings.section。",
+      "reasonEn": "This diagram only lays out the supported boundary of the public seat table; it is not a DSH window interface. The seat table has no dedicated entry for a standalone plugin settings window; plugin settings should use settings.general.item or settings.section."
+    }
+  },
+  "components": {
+    "button": {
+      "status": "verified",
+      "asset": "assets/evidence/settings-general.png",
+      "source": "docs/reference/review-crops/settings-general-clean-2026-10-05.png",
+      "reviewAsset": "docs/reference/review-crops/settings-general-clean-2026-10-05.png",
+      "scene": "设置面板 · 打开配置文件与模型页编辑按钮",
+      "sceneEn": "Settings panel · Open config file and Models page Edit button",
+      "kind": "product",
+      "note": "按钮示意只使用干净实景中的「打开配置文件」和「编辑」文案；「编辑快捷键」由 SettingsRow 自己承载，不冒称为 Button primitive。"
+    },
+    "input": {
+      "status": "verified",
+      "asset": "assets/evidence/settings-general.png",
+      "source": "docs/reference/review-crops/settings-general-clean-2026-10-05.png",
+      "reviewAsset": "docs/reference/review-crops/settings-general-clean-2026-10-05.png",
+      "scene": "设置面板 · 字号输入",
+      "sceneEn": "Settings panel · Font size input",
+      "kind": "product",
+      "note": "用实际字号输入控件对照表单输入样式。"
+    },
+    "pill": {
+      "status": "verified",
+      "asset": "assets/evidence/composer.png",
+      "source": "docs/reference/07-composer.png",
+      "scene": "会话页 · 权限与模型选择",
+      "sceneEn": "Conversation page · Permission and model selection",
+      "kind": "product",
+      "note": "截图显示输入卡底部实际胶囊控件。"
+    },
+    "shortcut-keys": {
+      "status": "withheld",
+      "asset": "assets/evidence/settings-general.png",
+      "source": "docs/reference/review-crops/settings-general-clean-2026-10-05.png",
+      "reviewAsset": "docs/reference/review-crops/settings-general-clean-2026-10-05.png",
+      "scene": "设置面板 · 快捷键入口",
+      "sceneEn": "Settings panel · Keyboard shortcut entry",
+      "kind": "product",
+      "reason": "截图只证明有快捷键设置入口，没有拍到真实键帽/组合状态，因此不显示模拟键帽演示。",
+      "reasonEn": "The screenshot only proves that a keyboard shortcut settings entry exists; the real keycaps and key combinations were not captured, so no mock keycap demo is shown."
+    },
+    "segmentedcontrol": {
+      "status": "withheld",
+      "asset": "assets/evidence/settings-tabs.png",
+      "source": "docs/reference/05-settings-components.png",
+      "scene": "设置页 · 组件（混合插件界面）",
+      "sceneEn": "Settings page · Components (mixed plugin interface)",
+      "kind": "plugin",
+      "reason": "05-settings-components.png 中的“组件”页包含 Command Code 与 dsh-widgets 内容，不能证明这是 DSH 原生分段控件。通用分段 HTML 暂缓；宿主“对话／轨迹／上下文”见 session-tabs 示意。",
+      "reasonEn": "The Components page in 05-settings-components.png contains Command Code and dsh-widgets content, so it cannot prove that this is a native DSH segmented control. The generic segmented HTML is deferred; see the session-tabs specimen for the host Conversation / Trajectory / Context tabs."
+    },
+    "switch": {
+      "status": "verified",
+      "asset": "assets/evidence/settings-general.png",
+      "source": "docs/reference/review-crops/settings-general-clean-2026-10-05.png",
+      "reviewAsset": "docs/reference/review-crops/settings-general-clean-2026-10-05.png",
+      "scene": "设置面板 · 代码工作视图开关",
+      "sceneEn": "Settings panel · Code workspace view switch",
+      "kind": "product",
+      "note": "截图展示产品里的实际开关状态。"
+    },
+    "tag": {
+      "status": "verified",
+      "asset": "assets/evidence/plugin-list.png",
+      "source": "docs/reference/06-plugins.png",
+      "scene": "插件页 · 实验性状态标签",
+      "sceneEn": "Plugins page · Experimental status tag",
+      "kind": "product",
+      "note": "截图中可见产品插件列表实际使用的状态标签。"
+    },
+    "card": {
+      "status": "verified",
+      "asset": "assets/evidence/plugin-row.png",
+      "source": "docs/reference/15-plugin-row.png",
+      "scene": "插件页 · 插件卡片",
+      "sceneEn": "Plugins page · Plugin card",
+      "kind": "product",
+      "note": "实景用于核对卡片容器、图标、文案和开关的相对位置。"
+    },
+    "modal": {
+      "status": "verified",
+      "asset": "assets/evidence/settings-general.png",
+      "source": "docs/reference/review-crops/settings-general-clean-2026-10-05.png",
+      "reviewAsset": "docs/reference/review-crops/settings-general-clean-2026-10-05.png",
+      "scene": "设置窗口 · 完整窗口",
+      "sceneEn": "Settings window · Full window",
+      "kind": "product",
+      "note": "截图裁取运行中的设置窗口。"
+    },
+    "empty-state": {
+      "status": "withheld",
+      "asset": "assets/evidence/empty-state.png",
+      "source": "docs/reference/01-hero.png",
+      "scene": "新会话页 · 实际空白状态",
+      "sceneEn": "New conversation page · Actual empty state",
+      "kind": "product",
+      "reason": "产品的真实空白页已拍到，但图标、标题、说明和动作组成的独立卡片未观察到；当前组件 HTML 不作为产品界面展示。",
+      "reasonEn": "The product's real empty page has been captured, but the standalone card made up of an icon, title, description and action has not been observed; the current component HTML is not shown as a product interface."
+    },
+    "inline-notice": {
+      "status": "withheld",
+      "asset": "assets/evidence/top-strip.png",
+      "source": "docs/reference/13-top-strip.png",
+      "scene": "会话页 · 顶部状态区",
+      "sceneEn": "Conversation page · Top status area",
+      "kind": "product",
+      "reason": "截图只证明顶部状态区域，信息/错误通知条的实际样式未拍到，因此隐藏示意。",
+      "reasonEn": "The screenshot only proves the top status area; the actual styling of the info/error notice bar was not captured, so the specimen is withheld."
+    },
+    "running-ring": {
+      "status": "verified",
+      "asset": "assets/evidence/running-row.png",
+      "source": "docs/reference/16-running-row.png",
+      "scene": "左栏 · 正在运行的会话行",
+      "sceneEn": "Left sidebar · Running conversation row",
+      "kind": "product",
+      "note": "会话标题已遮挡，运行圆环和行高保留。"
+    },
+    "toast": {
+      "status": "withheld",
+      "kind": "product",
+      "reason": "当前实景集没有产品实际弹出的 Toast 状态；未拍到前不展示模拟弹窗。",
+      "reasonEn": "The current capture set has no Toast state actually raised by the product; until one is captured, no mock toast is shown."
+    },
+    "disclosure-row": {
+      "status": "withheld",
+      "asset": "assets/evidence/home-shell.png",
+      "source": "docs/reference/01-hero.png",
+      "scene": "新会话页 · 左侧导航",
+      "sceneEn": "New conversation page · Left navigation",
+      "kind": "product",
+      "reason": "截图证明侧栏导航存在，但没有拍到该可展开行的真实展开/收起状态，因此隐藏交互演示。",
+      "reasonEn": "The screenshot proves the sidebar navigation exists, but the real expanded/collapsed state of that disclosable row was not captured, so the interactive demo is withheld."
+    },
+    "key-value-list": {
+      "status": "verified",
+      "asset": "assets/evidence/right-rail.png",
+      "source": "docs/reference/09-chrome.png",
+      "scene": "会话页 · 插件统计卡片",
+      "sceneEn": "Conversation page · Plugin stats card",
+      "kind": "plugin",
+      "note": "截图只作宿主场景参照；键值内容属于插件，不是 DSH 原生组件。"
+    },
+    "mini-bar": {
+      "status": "verified",
+      "asset": "assets/evidence/right-rail.png",
+      "source": "docs/reference/09-chrome.png",
+      "scene": "会话页 · 插件统计卡片",
+      "sceneEn": "Conversation page · Plugin stats card",
+      "kind": "plugin",
+      "note": "截图只作宿主场景参照；条形指标由插件提供。"
+    },
+    "state-dot": {
+      "status": "verified",
+      "asset": "assets/evidence/settings-models.png",
+      "source": "docs/reference/review-crops/settings-models-clean-2026-10-05.png",
+      "reviewAsset": "docs/reference/review-crops/settings-models-clean-2026-10-05.png",
+      "scene": "设置面板 · 模型状态点",
+      "sceneEn": "Settings panel · Model state dot",
+      "kind": "product",
+      "note": "截图展示模型列表中的真实可用状态点。"
+    },
+    "panelheader": {
+      "status": "verified",
+      "asset": "assets/evidence/settings-general.png",
+      "source": "docs/reference/review-crops/settings-general-clean-2026-10-05.png",
+      "reviewAsset": "docs/reference/review-crops/settings-general-clean-2026-10-05.png",
+      "scene": "设置窗口 · 内容标题栏",
+      "sceneEn": "Settings window · Content header bar",
+      "kind": "product",
+      "note": "截图展示窗口标题、内容标题与关闭控件。"
+    },
+    "settingsrow": {
+      "status": "verified",
+      "asset": "assets/evidence/settings-general.png",
+      "source": "docs/reference/review-crops/settings-general-clean-2026-10-05.png",
+      "reviewAsset": "docs/reference/review-crops/settings-general-clean-2026-10-05.png",
+      "scene": "设置面板 · 设置项行",
+      "sceneEn": "Settings panel · Settings row",
+      "kind": "product",
+      "note": "截图展示标题、说明和右侧控件组成的真实设置行。"
+    },
+    "sidebarrow": {
+      "status": "verified",
+      "asset": "assets/evidence/home-shell.png",
+      "source": "docs/reference/01-hero.png",
+      "scene": "左栏 · 会话与工作区行",
+      "sceneEn": "Left sidebar · Conversation and workspace rows",
+      "kind": "product",
+      "note": "工作区名称已匿名化，行的位置与节奏保留。"
+    },
+    "toolbarrow": {
+      "status": "verified",
+      "asset": "assets/evidence/composer.png",
+      "source": "docs/reference/07-composer.png",
+      "scene": "会话页 · 输入卡工具行",
+      "sceneEn": "Conversation page · Composer card toolbar row",
+      "kind": "product",
+      "note": "截图展示输入卡底部真实工具行。"
+    },
+    "list-row-group": {
+      "status": "verified",
+      "asset": "assets/evidence/plugin-list.png",
+      "source": "docs/reference/06-plugins.png",
+      "scene": "插件页 · 分组与插件行",
+      "sceneEn": "Plugins page · Groups and plugin rows",
+      "kind": "product",
+      "note": "截图展示插件页中的真实分组标题与行。"
+    },
+    "panel-seat": {
+      "status": "verified",
+      "asset": "assets/evidence/right-rail.png",
+      "source": "docs/reference/09-chrome.png",
+      "scene": "会话页 · 插件占用的右侧扩展区",
+      "sceneEn": "Conversation page · Right extension area occupied by a plugin",
+      "kind": "plugin",
+      "note": "截图中的卡片是插件贡献内容；演示只说明实际扩展场景，不代表 DSH 自带这些卡片。"
+    },
+    "settings-page": {
+      "status": "verified",
+      "asset": "assets/evidence/settings-general.png",
+      "source": "docs/reference/review-crops/settings-general-clean-2026-10-05.png",
+      "reviewAsset": "docs/reference/review-crops/settings-general-clean-2026-10-05.png",
+      "scene": "设置窗口 · 设置页骨架",
+      "sceneEn": "Settings window · Settings page skeleton",
+      "kind": "product",
+      "note": "截图用于核对实际导航列、内容列与窗口遮罩。"
+    },
+    "fishmark": {
+      "status": "verified",
+      "asset": "assets/evidence/empty-state.png",
+      "source": "docs/reference/01-hero.png",
+      "scene": "新会话页 · 品牌标记",
+      "sceneEn": "New conversation page · Brand mark",
+      "kind": "product",
+      "note": "截图展示 DSH 实际鱼标。"
+    },
+    "wordmark": {
+      "status": "verified",
+      "asset": "assets/evidence/home-shell.png",
+      "source": "docs/reference/01-hero.png",
+      "scene": "左栏 · DSH 字标",
+      "sceneEn": "Left sidebar · DSH wordmark",
+      "kind": "product",
+      "note": "工作区名称已匿名化，品牌行保留。"
+    }
+  }
+}

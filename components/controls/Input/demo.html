@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Input · DSH 设计资源</title>
+<title>Input · DSH Design Resources</title>
 <style>
 :root {
   --dsw-static-neutral-bluish-00: #fff;
@@ -105,15 +105,17 @@
   --dsw-shadow-lv3: 0 0 1px 0 rgba(0, 0, 0, .2), 0 0 4px 0 rgba(0, 0, 0, .02), 0 12px 32px 0 rgba(0, 0, 0, .08);
   --dsw-mask-blur: none;
   --dsw-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  /* 官方把这两条写成 font 简写合成 token，这里展开以便 demo 单条使用。 */
+  /* The product declares these two as font-shorthand composite tokens; they are expanded here
+     so the demo can use each one on its own. */
   --dsw-font-s-14: 14px/22px var(--dsw-font-family);
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
 }
 
-/* 深色主题：站点把深色 token 挂在 body[data-ds-dark-theme] 上，Shadow DOM 里选择不到它，
-   而 :host 自己的自定义属性又会盖过继承值——所以深色值在文件内自带一份，用 light-dark()
-   依据宿主继承下来的 color-scheme 选择。只列本页用到、且深浅两套取值不同的 token；
-   数值逐条取自 website/css/dsh-tokens.css。 */
+/* Dark theme: the site hangs its dark tokens on body[data-ds-dark-theme], which a shadow DOM
+   cannot select, and :host custom properties would override the inherited values — so the dark
+   values are carried in this file and chosen with light-dark() from the color-scheme the host
+   inherits. Only tokens this page uses whose light and dark values differ are listed; every
+   value comes from website/css/dsh-tokens.css. */
 :root {
   --dsw-alias-bg-layer-1: light-dark(var(--dsw-static-neutral-bluish-00), var(--dsw-static-neutral-bluish-875));
   --dsw-alias-border-l4: light-dark(#00000029, #fff3);
@@ -123,9 +125,9 @@
   --dsw-alias-label-tertiary: light-dark(var(--dsw-static-neutral-bluish-600), var(--dsw-static-neutral-bluish-400));
 }
 
-/* --------------------------------------------------- 组件几何
-   数值逐条取自同目录 input.module.css（CSS Modules 的哈希类名已去掉），
-   规则重新组织过，声明值未改。 */
+/* --------------------------------------------------- component geometry
+   Every value comes from input.module.css in this directory (the CSS Modules hashed class
+   names are dropped); the rules are reorganised, the declared values are unchanged. */
 .wrap {
   --dsh-input-height: 32px;
   --dsh-input-pad-x: 8px;
@@ -172,12 +174,13 @@
 
 .input::placeholder { color: var(--dsw-alias-label-dimmed); }
 
-/* § 本仓库建议值：官方 Input 没有 disabled 视觉 */
+/* § Proposed here: the official Input has no disabled visual */
 .wrap:has(.input:disabled) { cursor: not-allowed; opacity: 0.4; }
 
-/* ------------------------------------------------------------------ demo 外壳
-   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
-   .demo-label 是本页唯一允许出现的文字，只写客观事实（尺寸 / 状态名）。 */
+/* ------------------------------------------------------------------ demo shell
+   body sets only the 16px padding and the text colour, never a background: the site (the shadow
+   host) supplies that. .demo-label is the only text this page allows, and it states facts only
+   (sizes and state names). */
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -204,36 +207,37 @@ body {
 </style>
 </head>
 <body>
-<!-- 7 张截图里没有出现官方 Input 的观感（白底 + 0.5px 描边 + h32）。
-       设置·通用「字号大小」的数字框实拍 72×36、浅灰填充、无描边，几何对不上，不认作本组件用例。
-       所以本页全部是几何复现，没有真实场景可指。 -->
+<!-- None of the 7 screenshots shows the official Input's look (white fill + 0.5px border + h32).
+       The Settings → General "Font size" number field measures 72×36 with a light grey fill and no
+       visible border, so its geometry does not match and it is not counted as a use of this component.
+       Every group below is therefore a geometry reproduction, with no real scene to point at. -->
 
   <div class="demo-group">
-    <p class="demo-label">截图未覆盖 · 此场景未在截图中出现，仅按 Input.module.css 几何复现：h32 · pad 0 8 · gap 6 · r8 · 0.5px border-l4</p>
+    <p class="demo-label" data-t="demo.input.notCapturedDefault">截图未覆盖 · 此场景未在截图中出现，仅按 Input.module.css 几何复现：h32 · pad 0 8 · gap 6 · r8 · 0.5px border-l4</p>
     <div class="demo-row">
-      <span class="wrap" style="width:220px"><input class="input" placeholder="示例文本" aria-label="示例文本"></span>
-      <span class="wrap" style="width:220px"><input class="input" value="示例值" aria-label="示例值"></span>
+      <span class="wrap" style="width:220px"><input class="input" placeholder="&#x793A;&#x4F8B;&#x6587;&#x672C;" aria-label="示例文本" data-t-aria="demo.input.exampleTextAria"></span>
+      <span class="wrap" style="width:220px"><input class="input" value="&#x793A;&#x4F8B;&#x503C;" aria-label="示例值" data-t-aria="demo.input.exampleValueAria"></span>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">截图未覆盖 · icon 16×16 · label-tertiary</p>
+    <p class="demo-label" data-t="demo.input.notCapturedIcon">截图未覆盖 · icon 16×16 · label-tertiary</p>
     <div class="demo-row">
-      <span class="wrap" style="width:220px"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6.8 1.6a5.2 5.2 0 1 0 3.06 9.4l3.07 3.07 1.13-1.13-3.07-3.07A5.2 5.2 0 0 0 6.8 1.6zm0 1.6a3.6 3.6 0 1 1 0 7.2 3.6 3.6 0 0 1 0-7.2z" fill="currentColor"/></svg></span><input class="input" placeholder="示例文本" aria-label="带图标示例"></span>
+      <span class="wrap" style="width:220px"><span class="icon"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6.8 1.6a5.2 5.2 0 1 0 3.06 9.4l3.07 3.07 1.13-1.13-3.07-3.07A5.2 5.2 0 0 0 6.8 1.6zm0 1.6a3.6 3.6 0 1 1 0 7.2 3.6 3.6 0 0 1 0-7.2z" fill="currentColor"/></svg></span><input class="input" placeholder="&#x793A;&#x4F8B;&#x6587;&#x672C;" aria-label="带图标示例" data-t-aria="demo.input.iconExampleAria"></span>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">截图未覆盖 · focus-within → border-color brand-primary</p>
+    <p class="demo-label" data-t="demo.input.notCapturedFocus">截图未覆盖 · focus-within → border-color brand-primary</p>
     <div class="demo-row">
-      <span class="wrap" style="width:220px"><input class="input" placeholder="按 Tab 聚焦" aria-label="聚焦示例"></span>
+      <span class="wrap" style="width:220px"><input class="input" placeholder="&#x6309; Tab &#x805A;&#x7126;" aria-label="聚焦示例" data-t-aria="demo.input.focusExampleAria"></span>
     </div>
   </div>
 
   <div class="demo-group">
-    <p class="demo-label">截图未覆盖 · disabled → opacity 0.4（本仓库建议值）</p>
+    <p class="demo-label" data-t="demo.input.notCapturedDisabled">截图未覆盖 · disabled → opacity 0.4（本仓库建议值）</p>
     <div class="demo-row">
-      <span class="wrap" style="width:220px"><input class="input" value="示例值" disabled aria-label="禁用示例"></span>
+      <span class="wrap" style="width:220px"><input class="input" value="&#x793A;&#x4F8B;&#x503C;" disabled aria-label="禁用示例" data-t-aria="demo.input.disabledExampleAria"></span>
     </div>
   </div>
 </body>

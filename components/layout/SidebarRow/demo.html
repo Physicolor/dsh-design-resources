@@ -1,10 +1,11 @@
-<!-- 本组件官方没有对应物，这是本仓库建议的实现；预览为几何展示，不代表产品界面。 -->
+<!-- The product has no counterpart for this component; this is this repository's proposed implementation.
+     The preview is a geometry exhibit and does not represent the product interface. -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SidebarRow · DSH 设计资源</title>
+<title>SidebarRow · DSH Design Resources</title>
 <style>
 :root {
   --dsw-static-neutral-bluish-00: #fff;
@@ -110,10 +111,11 @@
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
 }
 
-/* 深色主题：站点把深色 token 挂在 body[data-ds-dark-theme] 上，Shadow DOM 里选择不到它，
-   而 :host 自己的自定义属性又会盖过继承值——所以深色值在文件内自带一份，用 light-dark()
-   依据宿主继承下来的 color-scheme 选择。只列本页用到、且深浅两套取值不同的 token；
-   数值逐条取自 website/css/dsh-tokens.css。 */
+/* Dark theme: the site hangs its dark tokens on body[data-ds-dark-theme], which a shadow DOM
+   cannot select, and :host custom properties would override the inherited values — so the dark
+   values are carried in this file and chosen with light-dark() from the color-scheme the host
+   inherits. Only tokens this page uses whose light and dark values differ are listed; every
+   value comes from website/css/dsh-tokens.css. */
 :root {
   --dsw-alias-brand-primary: light-dark(var(--dsw-static-neutral-bluish-1000), var(--dsw-static-neutral-bluish-50));
   --dsw-alias-interactive-bg-active: light-dark(#2631481a, #ffffff24);
@@ -122,9 +124,9 @@
   --dsw-alias-label-tertiary: light-dark(var(--dsw-static-neutral-bluish-600), var(--dsw-static-neutral-bluish-400));
 }
 
-/* --------------------------------------------------- 组件几何
-   数值逐条取自同目录 sidebarrow.module.css（CSS Modules 的哈希类名已去掉），
-   规则重新组织过，声明值未改。 */
+/* --------------------------------------------------- component geometry
+   Every value comes from sidebarrow.module.css in this directory (the CSS Modules hashed
+   class names are dropped); the rules are reorganised, the declared values are unchanged. */
 .row {
   --dsh-sb-min-height: 40px;
   --dsh-sb-pad-x: 10px;
@@ -183,7 +185,7 @@
   color: var(--dsw-alias-label-primary);
 }
 
-/* 建议值：16×16 + accent-color，对齐官方 RiskConfirmation 的 .acknowledgement input */
+/* Proposed value: 16×16 + accent-color, aligned with the official RiskConfirmation .acknowledgement input. */
 .checkbox {
   flex: none;
   width: 16px;
@@ -193,9 +195,10 @@
   cursor: pointer;
 }
 
-/* ------------------------------------------------------------------ demo 外壳
-   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
-   .demo-label 是本页唯一允许出现的文字，只写客观事实（尺寸 / 状态名）。 */
+/* ------------------------------------------------------------------ demo shell
+   body sets only the 16px padding and the text colour, never a background: the site (the shadow
+   host) supplies that. .demo-label is the only text this page allows, and it states facts only
+   (sizes and state names). */
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -223,61 +226,61 @@ body {
 </head>
 <body>
   <div class="demo-group" style="max-width:280px">
-    <p class="demo-label">min-height 40 · pad 8 10 · gap 8 · r10 · 图标 16×16</p>
+    <p class="demo-label" data-t="demo.sidebarrow.mdRow">min-height 40 · pad 8 10 · gap 8 · r10 · 图标 16×16</p>
     <button type="button" class="row">
       <span class="leading" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M2.4 2.4h11.2v8H7.2L4 13.2V10.4H2.4z" fill="currentColor"/></svg></span>
-      <span class="label">示例条目一</span>
+      <span class="label" data-t="demo.sidebarrow.exampleItemOne">示例条目一</span>
     </button>
     <button type="button" class="row">
       <span class="leading" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M1.6 3.2h4.4l1.2 1.6h7.2v8H1.6z" fill="currentColor"/></svg></span>
-      <span class="label">示例条目二</span>
+      <span class="label" data-t="demo.sidebarrow.exampleItemTwo">示例条目二</span>
       <span class="trailing">12</span>
     </button>
   </div>
 
   <div class="demo-group" style="max-width:280px">
-    <p class="demo-label">selected · selectionStyle check · 透明底 + 尾部对勾</p>
+    <p class="demo-label" data-t="demo.sidebarrow.checkRow">selected · selectionStyle check · 透明底 + 尾部对勾</p>
     <button type="button" class="row" aria-pressed="true">
       <span class="leading" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M2.4 2.4h11.2v8H7.2L4 13.2V10.4H2.4z" fill="currentColor"/></svg></span>
-      <span class="label">示例条目一</span>
+      <span class="label" data-t="demo.sidebarrow.exampleItemOne">示例条目一</span>
       <span class="check"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M13.1 4.6 6.4 11.3 2.9 7.8l1.1-1.1 2.4 2.4 5.6-5.6z" fill="currentColor"/></svg></span>
     </button>
     <button type="button" class="row" aria-pressed="false">
       <span class="leading" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M1.6 3.2h4.4l1.2 1.6h7.2v8H1.6z" fill="currentColor"/></svg></span>
-      <span class="label">示例条目二</span>
+      <span class="label" data-t="demo.sidebarrow.exampleItemTwo">示例条目二</span>
       <span class="trailing">12</span>
     </button>
   </div>
 
   <div class="demo-group" style="max-width:280px">
-    <p class="demo-label">selected · selectionStyle fill · 整行 interactive-bg-hover</p>
+    <p class="demo-label" data-t="demo.sidebarrow.fillRow">selected · selectionStyle fill · 整行 interactive-bg-hover</p>
     <button type="button" class="row selectedFill" aria-pressed="true">
       <span class="leading" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.6a4 4 0 0 1 4 4v2.4l1.2 2.4H2.8L4 8V5.6a4 4 0 0 1 4-4zm0 12.8a1.6 1.6 0 0 1-1.6-1.6h3.2A1.6 1.6 0 0 1 8 14.4z" fill="currentColor"/></svg></span>
-      <span class="label">示例条目三</span>
+      <span class="label" data-t="demo.sidebarrow.exampleItemThree">示例条目三</span>
     </button>
     <button type="button" class="row" aria-pressed="false">
       <span class="leading" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M2.4 2.4h11.2v8H7.2L4 13.2V10.4H2.4z" fill="currentColor"/></svg></span>
-      <span class="label">示例条目四</span>
+      <span class="label" data-t="demo.sidebarrow.exampleItemFour">示例条目四</span>
     </button>
   </div>
 
   <div class="demo-group" style="max-width:280px">
-    <p class="demo-label">checkbox · 16×16 accent-color · aria-label</p>
+    <p class="demo-label" data-t="demo.sidebarrow.checkboxRow">checkbox · 16×16 accent-color · aria-label</p>
     <button type="button" class="row">
-      <span class="leading"><input type="checkbox" class="checkbox" checked readonly tabindex="-1" aria-label="选择 示例条目五"></span>
-      <span class="label">示例条目五</span>
+      <span class="leading"><input type="checkbox" class="checkbox" checked readonly tabindex="-1" aria-label="选择 示例条目五" data-t-aria="demo.sidebarrow.selectItemFiveAria"></span>
+      <span class="label" data-t="demo.sidebarrow.exampleItemFive">示例条目五</span>
     </button>
     <button type="button" class="row">
-      <span class="leading"><input type="checkbox" class="checkbox" readonly tabindex="-1" aria-label="选择 示例条目六"></span>
-      <span class="label">示例条目六</span>
+      <span class="leading"><input type="checkbox" class="checkbox" readonly tabindex="-1" aria-label="选择 示例条目六" data-t-aria="demo.sidebarrow.selectItemSixAria"></span>
+      <span class="label" data-t="demo.sidebarrow.exampleItemSix">示例条目六</span>
     </button>
   </div>
 
   <div class="demo-group" style="max-width:280px">
-    <p class="demo-label">disabled · opacity 0.4 · cursor not-allowed</p>
+    <p class="demo-label" data-t="demo.sidebarrow.disabledRow">disabled · opacity 0.4 · cursor not-allowed</p>
     <button type="button" class="row" disabled>
       <span class="leading" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M1.6 3.2h4.4l1.2 1.6h7.2v8H1.6z" fill="currentColor"/></svg></span>
-      <span class="label">示例条目七</span>
+      <span class="label" data-t="demo.sidebarrow.exampleItemSeven">示例条目七</span>
     </button>
   </div>
 </body>

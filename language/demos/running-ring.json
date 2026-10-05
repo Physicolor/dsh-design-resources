@@ -1,0 +1,18 @@
+{
+  "zh": {
+    "pageTitle": "RunningRing · DSH 设计资源",
+    "labelDefault": "默认 14px（左栏会话行首的实渲尺寸）· viewBox 24 · r 9.5 · stroke 2 · 1.5s 转 + 1.5s 伸缩",
+    "labelFrozenSide": "左：运行中（1.5s 一圈）　右：减少动效下停住的那一帧（弧停在 18 150 / -3，仍是「没转完」）",
+    "labelWhereItSits": "长在哪儿 · 左栏会话行（行 256 × 32，环替掉平时那枚会话字形）",
+    "sessionTitle": "示例会话：整理接口文档",
+    "sessionTime": "2 分钟"
+  },
+  "en": {
+    "pageTitle": "RunningRing · DSH Design Resources",
+    "labelDefault": "default 14px (the size it renders at, at the start of a conversation row in the left sidebar) · viewBox 24 · r 9.5 · stroke 2 · 1.5s spin + 1.5s stretch",
+    "labelFrozenSide": "left: running (one turn every 1.5s)  right: the frame it stops on under reduce motion (the arc rests at 18 150 / -3, still 'not finished turning')",
+    "labelWhereItSits": "where it sits · a conversation row in the left sidebar (row 256 × 32, the ring replaces the usual conversation glyph)",
+    "sessionTitle": "Sample conversation: tidy up the API docs",
+    "sessionTime": "2 min"
+  }
+}

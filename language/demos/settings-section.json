@@ -1,0 +1,16 @@
+{
+  "zh": {
+    "settingsWindowLabel": "设置",
+    "sidebarLabel": "设置分区",
+    "closeSettings": "关闭设置",
+    "sectionNoteTitle": "插件页应落在哪层",
+    "sectionNoteBody": "这里是 DSH 宿主的真实「模型」页，只用于说明设置窗口的菜单列与内容列。插件增加一页时注册 settings.section，让宿主承载该页；不要再套一层完整设置窗口。"
+  },
+  "en": {
+    "settingsWindowLabel": "Settings",
+    "sidebarLabel": "Settings section",
+    "closeSettings": "Close settings",
+    "sectionNoteTitle": "Which layer a plugin page belongs to",
+    "sectionNoteBody": "This is the DSH host's real Models page, shown only to explain the settings window's menu column and content column. When a plugin adds a page, it registers settings.section and lets the host carry that page; do not wrap it in another full settings window."
+  }
+}

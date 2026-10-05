@@ -1,10 +1,11 @@
-<!-- 本组件官方没有对应物，这是本仓库建议的实现；预览为几何展示，不代表产品界面。 -->
+<!-- The product has no counterpart for this component; this is this repository's proposed implementation.
+     The preview is a geometry exhibit and does not represent the product interface. -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SettingsRow · DSH 设计资源</title>
+<title>SettingsRow · DSH Design Resources</title>
 <style>
 :root {
   --dsw-static-neutral-bluish-00: #fff;
@@ -110,10 +111,11 @@
   --dsw-font-xs-13: 13px/20px var(--dsw-font-family);
 }
 
-/* 深色主题：站点把深色 token 挂在 body[data-ds-dark-theme] 上，Shadow DOM 里选择不到它，
-   而 :host 自己的自定义属性又会盖过继承值——所以深色值在文件内自带一份，用 light-dark()
-   依据宿主继承下来的 color-scheme 选择。只列本页用到、且深浅两套取值不同的 token；
-   数值逐条取自 website/css/dsh-tokens.css。 */
+/* Dark theme: the site hangs its dark tokens on body[data-ds-dark-theme], which a shadow DOM
+   cannot select, and :host custom properties would override the inherited values — so the dark
+   values are carried in this file and chosen with light-dark() from the color-scheme the host
+   inherits. Only tokens this page uses whose light and dark values differ are listed; every
+   value comes from website/css/dsh-tokens.css. */
 :root {
   --dsw-alias-bg-layer-1: light-dark(var(--dsw-static-neutral-bluish-00), var(--dsw-static-neutral-bluish-875));
   --dsw-alias-border-l2: light-dark(#0000001a, #ffffff1f);
@@ -127,9 +129,9 @@
   --dsw-alias-label-tertiary: light-dark(var(--dsw-static-neutral-bluish-600), var(--dsw-static-neutral-bluish-400));
 }
 
-/* --------------------------------------------------- 组件几何
-   数值逐条取自同目录 settingsrow.module.css（CSS Modules 的哈希类名已去掉），
-   规则重新组织过，声明值未改。 */
+/* --------------------------------------------------- component geometry
+   Every value comes from settingsrow.module.css in this directory (the CSS Modules hashed
+   class names are dropped); the rules are reorganised, the declared values are unchanged. */
 .row {
   --dsh-sr-min-height: 44px;
   --dsh-sr-pad-y: 12px;
@@ -148,7 +150,7 @@
   font-family: inherit;
 }
 
-/* 行间分隔线：官方 Menu.module.css .footer 的 0.5px + border-l2 */
+/* Row separator: the official Menu.module.css .footer 0.5px + border-l2. */
 .divider { box-shadow: inset 0 -0.5px 0 0 var(--dsw-alias-border-l2); }
 
 .text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
@@ -169,7 +171,7 @@
 
 .row:hover { background: var(--dsw-alias-interactive-bg-hover); }
 
-/* Switch 组件的几何，逐条同 controls/Switch/switch.module.css。 */
+/* The Switch component's geometry, matching controls/Switch/switch.module.css rule for rule. */
 .switch {
   box-sizing: border-box;
   position: relative;
@@ -200,7 +202,7 @@
 
 .switch[aria-checked='true'] .thumb { transform: translateX(16px); }
 
-/* Input 组件的几何，逐条同 controls/Input/input.module.css。 */
+/* The Input component's geometry, matching controls/Input/input.module.css rule for rule. */
 .input-wrap {
   box-sizing: border-box;
   display: inline-flex;
@@ -229,9 +231,10 @@
 
 .input-field::placeholder { color: var(--dsw-alias-label-dimmed); }
 
-/* ------------------------------------------------------------------ demo 外壳
-   body 只给 16px 内边距与文字颜色，不设背景：底色由站点（shadow host）提供。
-   .demo-label 是本页唯一允许出现的文字，只写客观事实（尺寸 / 状态名）。 */
+/* ------------------------------------------------------------------ demo shell
+   body sets only the 16px padding and the text colour, never a background: the site (the shadow
+   host) supplies that. .demo-label is the only text this page allows, and it states facts only
+   (sizes and state names). */
 * { box-sizing: border-box; }
 body {
   margin: 0;
@@ -255,55 +258,59 @@ body {
   border-radius: 6px;
   background: color-mix(in srgb, var(--dsw-alias-label-primary) 7%, transparent);
 }
-</style>
+.row-anatomy{display:grid;grid-template-columns:minmax(170px,220px) minmax(380px,560px);gap:20px;align-items:start;justify-content:center}
+.row-legend{color:var(--dsw-alias-label-secondary);font-size:12px;line-height:18px}
+.row-legend h3{margin:0 0 8px;color:var(--dsw-alias-label-primary);font-size:14px;line-height:22px}
+.row-legend ol{margin:0;padding-left:18px}
+.row-legend li+li{margin-top:8px}
+.row-list{min-width:0}
+.row-list>.title{margin:0 0 10px;font-weight:600}
+@media(max-width:760px){.row-anatomy{grid-template-columns:minmax(0,1fr)}}</style>
 </head>
 <body>
-  <div class="demo-group" style="max-width:420px">
-    <p class="demo-label">min-height 44 · pad 12 · gap 12 · r10 · 标题 14/22</p>
-    <label class="row divider">
-      <span class="text">
-        <span class="title">标题一</span>
-        <span class="description">说明文字一</span>
-      </span>
-      <span class="control"><button type="button" class="switch" role="switch" aria-checked="true" aria-label="开关一"><span class="thumb"></span></button></span>
-    </label>
-    <label class="row divider">
-      <span class="text">
-        <span class="title">标题二</span>
-        <span class="description">说明文字二</span>
-      </span>
-      <span class="control"><button type="button" class="switch" role="switch" aria-checked="false" aria-label="开关二"><span class="thumb"></span></button></span>
-    </label>
-  </div>
+  <div class="row-anatomy">
+    <aside class="row-legend">
+      <h3 data-t="demo.settingsrow.legendHeading">设置行怎么读</h3>
+      <ol>
+        <li><strong data-t="demo.settingsrow.legendTitleTerm">选项标题</strong><span data-t="demo.settingsrow.legendTitleBody">说明改变什么，例如「权限」。</span></li>
+        <li><strong data-t="demo.settingsrow.legendDescTerm">选项说明</strong><span data-t="demo.settingsrow.legendDescBody">解释影响范围，例如「选择新会话的默认权限模式」。</span></li>
+        <li><strong data-t="demo.settingsrow.legendControlTerm">右侧控件</strong><span data-t="demo.settingsrow.legendControlBody">展示当前值或可执行动作。</span></li>
+        <li data-t="demo.settingsrow.legendDividerBody">分隔线属于相邻行之间的布局，不写成行内文字或状态标签。</li>
+      </ol>
+      <p data-t="demo.settingsrow.legendNote">设置行是结构建议；文字与控件摘自 DSH 干净实景。</p>
+    </aside>
 
-  <div class="demo-group" style="max-width:420px">
-    <p class="demo-label">control · Input h32 · 标题点击即聚焦</p>
-    <label class="row divider">
-      <span class="text"><span class="title">标题三</span></span>
-      <span class="control">
-        <span class="input-wrap" style="width:200px"><span style="display:inline-flex;flex:none;width:16px;height:16px;align-items:center;justify-content:center;color:var(--dsw-alias-label-tertiary)"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M1.6 3.2h4.4l1.2 1.6h7.2v8H1.6z" fill="currentColor"/></svg></span><input class="input-field" value="示例值" aria-label="字段值"></span>
-      </span>
-    </label>
-    <label class="row divider">
-      <span class="text">
-        <span class="title">标题四</span>
-        <span class="description">说明文字四</span>
-      </span>
-      <span class="control">
-        <span class="input-wrap" style="width:200px"><span style="display:inline-flex;flex:none;width:16px;height:16px;align-items:center;justify-content:center;color:var(--dsw-alias-label-tertiary)"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6.8 1.6a5.2 5.2 0 1 0 3.06 9.4l3.07 3.07 1.13-1.13-3.07-3.07A5.2 5.2 0 0 0 6.8 1.6zm0 1.6a3.6 3.6 0 1 1 0 7.2 3.6 3.6 0 0 1 0-7.2z" fill="currentColor"/></svg></span><input class="input-field" placeholder="关键字" aria-label="字段值二"></span>
-      </span>
-    </label>
-  </div>
-
-  <div class="demo-group" style="max-width:420px">
-    <p class="demo-label">divider false · 列表最后一行 · 控件各自带焦点环</p>
-    <label class="row">
-      <span class="text">
-        <span class="title">标题五</span>
-        <span class="description">说明文字五</span>
-      </span>
-      <span class="control"><button type="button" class="switch" role="switch" aria-checked="false" aria-label="开关三"><span class="thumb"></span></button><button type="button" class="switch" role="switch" aria-checked="true" aria-label="开关四"><span class="thumb"></span></button></span>
-    </label>
+    <section class="row-list" aria-label="通用设置真实行摘录" data-t-aria="demo.settingsrow.rowListAria">
+      <h2 class="title" data-capture="General settings page heading, clean DSH capture">通用设置</h2>
+      <div class="row divider">
+        <span class="text">
+          <span class="title" data-capture="General settings row title, clean DSH capture">权限</span>
+          <span class="description" data-capture="General settings row description, clean DSH capture">选择新会话的默认权限模式</span>
+        </span>
+        <span class="control"><button type="button" class="selector" data-capture="General settings row selector value, clean DSH capture">工作区内修改<span data-icon="chevron-down"></span></button></span>
+      </div>
+      <div class="row divider">
+        <span class="text">
+          <span class="title" data-capture="General settings row title, clean DSH capture">工作步骤展示</span>
+          <span class="description" data-capture="General settings row description, clean DSH capture">选择希望看到多少工具调用细节</span>
+        </span>
+        <span class="control"><button type="button" class="selector" data-capture="General settings row selector value, clean DSH capture">详细<span data-icon="chevron-down"></span></button></span>
+      </div>
+      <div class="row divider">
+        <span class="text">
+          <span class="title" data-capture="General settings row title, clean DSH capture">显示代码工作视图</span>
+          <span class="description" data-capture="General settings row description, clean DSH capture">开启后，显示轨迹、本轮代码差异，可选择完整的 Agent 预设切换</span>
+        </span>
+        <span class="control"><button type="button" class="switch" role="switch" aria-checked="true" aria-label="显示代码工作视图" data-t-aria="demo.settingsrow.switchAria"><span class="thumb"></span></button></span>
+      </div>
+      <div class="row">
+        <span class="text">
+          <span class="title" data-capture="General settings row title, clean DSH capture">快捷键</span>
+          <span class="description" data-capture="General settings row description, clean DSH capture">查看和编辑当前可用的快捷键和输入操作</span>
+        </span>
+        <span class="control"><button type="button" class="button sm outline" data-capture="General settings row action button, clean DSH capture">编辑快捷键</button></span>
+      </div>
+    </section>
   </div>
 </body>
 </html>

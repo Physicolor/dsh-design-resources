@@ -1,49 +1,52 @@
 import { forwardRef, type HTMLAttributes, type ReactNode } from 'react';
 import styles from './card.module.css';
 
-/** 卡片标题使用的标题级别。 */
+/** The heading level the card title uses. */
 export type CardTitleAs = 'h2' | 'h3' | 'h4';
 
-// 原生 `title` 是字符串（浏览器 tooltip），这里被卡片的标题插槽占用，
-// 所以先从 HTMLAttributes 里摘掉再声明，避免类型冲突。
+// The native `title` is a string (the browser tooltip); the card's title slot
+// claims it here, so omit it from HTMLAttributes first to avoid a type conflict.
 export interface CardProps extends Omit<HTMLAttributes<HTMLElement>, 'title'> {
-  /** 卡片标题。不传则不渲染标题行。 */
+  /** The card title. Omit it and no title row is rendered. */
   title?: ReactNode;
   /**
-   * 标题下方的补充说明。
-   * 字号与正文相同（14/22），但用次级色 `--dsw-alias-label-secondary`，
-   * 以便一眼区分「标题 / 说明 / 正文」三层。
+   * Supporting text below the title.
+   * The font size matches the body text (14/22), but it uses the secondary
+   * colour `--dsw-alias-label-secondary`, so the title, the description and
+   * the body read as three distinct levels at a glance.
    */
   description?: ReactNode;
-  /** 标题渲染成哪个级别的标题，默认 `h3`。 */
+  /** Which heading level the title renders as; defaults to `h3`. */
   titleAs?: CardTitleAs;
-  /** 卡片底部插槽（操作按钮、链接、脚注），与正文之间会加一条 hairline。 */
+  /** The card's footer slot (action buttons, links, footnotes); a hairline separates it from the body. */
   footer?: ReactNode;
-  /** 卡片正文。 */
+  /** The card body. */
   children?: ReactNode;
 }
 
-/** 拼 class，避免引入 clsx 之类的依赖。 */
+/** Joins class names, so no dependency such as clsx is needed. */
 function cx(...parts: Array<string | false | undefined>): string {
   return parts.filter(Boolean).join(' ');
 }
 
 /**
- * 内联内容卡片。
+ * Inline content card.
  *
- * 几何锚定官方已核实的数值：圆角 12px（官方 HoverCard `.card` / ReadBlock
- * `--dsl-read-radius`）、0.5px 描边 + `--dsw-alias-border-l1`（官方
- * markdown/MarkdownText `.markdown :not(pre) > code`）、标题 16/24/500（官方
- * Modal `.title`）。内边距与插槽间距为本仓库建议值，见 README。实现为本仓库原创。
+ * Geometry is anchored to values already checked against the official source:
+ * a 12px corner radius (official HoverCard `.card` / ReadBlock
+ * `--dsl-read-radius`), a 0.5px stroke + `--dsw-alias-border-l1` (official
+ * markdown/MarkdownText `.markdown :not(pre) > code`), a 16/24/500 title
+ * (official Modal `.title`). Padding and slot gaps are proposed here, see the
+ * README. The implementation is original to this repository.
  *
  * @example
- * <Card title="会话统计" description="过去 7 天" footer={<a href="/stats">查看详情</a>}>
- *   <strong>1,204</strong> 条消息
+ * <Card title="Conversation stats" description="Last 7 days" footer={<a href="/stats">View details</a>}>
+ *   <strong>1,204</strong> messages
  * </Card>
  *
  * @example
- * <Card titleAs="h2" title="上下文占用" description="已用 86k / 200k">
- *   <p>接近上限时 DSH 会自动压缩历史消息。</p>
+ * <Card titleAs="h2" title="Context usage" description="86k / 200k used">
+ *   <p>Close to the limit, DSH compresses the message history on its own.</p>
  * </Card>
  */
 export const Card = forwardRef<HTMLElement, CardProps>(function Card(

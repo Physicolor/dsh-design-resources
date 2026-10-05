@@ -1,44 +1,56 @@
-# website/demos — 嵌入规范文档的实况演示
+# 演示：先核对依据，再看结构
 
-这个目录里的每个 `.html` 都是一段**可以直接跑**的界面演示，被规范文档引用后就地渲染在页面上。
+本目录的 HTML 是可单独检查的结构示意。截图只用于本地逐项核对；生成网页只显示核验说明与 HTML，不输出 DSH 截图图片。
 
-## 为什么不用图片
+截图映射由 `data/demo-evidence.json` 驱动，逐项审阅表见 `docs/reference/demo-evidence.md`。原始采集和审阅裁图保存在 `docs/reference/`，不作为网页素材。
 
-Apple 的 HIG 用渲染图演示小组件的外观差异，效果好，但图是死的：读者只能看，不能碰，也不能把它复制走。
+## 证据规则
 
-这里的内容本来就是 WebUI 技术栈做出来的，所以演示用**原生 HTML**写：可交互、可 hover、可复制，而且和真实实现共用同一套 token。这是电子说明书相对纸面文档的唯一优势，不用掉就白做了。
+1. 新增或更改产品界面示例前，先用只加载官方 DSH bundles 的独立 profile 核对对应场景。
+2. 在 `data/demo-evidence.json` 登记本地截图来源、审阅裁图、场景和归属。
+3. 产品控件示例只画截图和运行时数据能证明的状态。插件贡献内容标为插件场景；规则图、审核清单等工具标为说明图，不伪装成 DSH 页面。
+4. 没有干净截图或官方源码证明的产品状态标为 `withheld`，不显示 HTML 示例；只有源码和用户参照时标为 `source-verified`。概念方案可标为 `proposed`，但必须在窗体外明示其不是产品实景或公开 API，且不能挂截图证据。
+5. HTML 示意用于解释结构或行为，不替代实景，也不把社区建议标成官方实现。生成页面不嵌入截图。
+6. 组件是否为 DSH 原生还要看 components/origins.json。有截图不等于归属已确认。
 
-## 怎么被引用
+## Markdown 引用
 
-在 `spec/*.md` 里写一行占位符（独占一行）：
+在 spec/ 或 guides/ 的 Markdown 文件里独占一行写：
 
-```markdown
-<!-- demo: frame-columns | 只开左栏与中栏时的分区。把指针移到任意一栏上，它会高亮。 -->
-```
+    <!-- demo: frame-columns | 新会话页的两栏关系。截图为产品实景，旁边是布局示意。 -->
 
-- `frame-columns` 对应本目录的 `frame-columns.html`；
-- `|` 后面是图注，会渲染成居中的小字（Apple 的做法：先看，再看说明）。
+引用名对应 `website/demos/<名称>.html`。每个演示都要有证据状态：`verified` 与 `source-verified` 显示来源说明，`proposed` 显示为非产品概念，`withheld` 不挂载 HTML。
 
-渲染结果是一个 `<figure>`：演示本体 + 图注。
+复用组件示例时写：
 
-## 演示文件怎么写
+    <!-- component: settingsrow | 对照设置页中的真实设置行。 -->
 
-1. **独立可用**：双击也能在浏览器里打开看到完整效果。
-2. **style 写在文件里**：会被注入到一个 **shadow root**，样式不会泄漏到页面，也不会被页面影响。
-3. **`body` / `:root` 会被自动改写成 `:host`**：所以按普通页面写即可，`body { padding: 24px }` 这种写法是安全的。
-4. **用官方 token**：颜色、圆角、字号一律 `var(--dsw-*)`；页面已经把这套 token 注入好了，直接引用。
-5. **交互两条路都行**：纯 CSS（`:hover`、`:has()`、checkbox/radio + label、CSS 动画）最省事，双击打开与嵌入文档行为一致；需要 JS 也可以——站点挂载后会**重建 script 节点**，所以 `<script>` 真的会执行（`innerHTML` 本身不执行脚本，这一步是站点补上的）。shadow root 内的事件不会跑到外面。
-6. **高度自然撑开**：不要固定高度，不要出现内部滚动条——读者只应该滚一次。
-7. **可以动**：hover 高亮、循环播放、手动触发都行。动效演示尤其应该给「自动播放 / 暂停 / 手动触发」三种入口。
-8. **不要外部资源**：不引图片、字体、CDN。
+组件示例也需要来源依据。没有干净实景或官方源码支持的状态，网页显示暂缓说明，不挂载 demo.html。
 
-## 已有的演示
+## 可见示例清单
 
-| 文件 | 用在哪 | 演示什么 |
+| 文件 | 原始 DSH 场景 | 内容性质 |
 | --- | --- | --- |
-| `frame-columns.html` | `spec/10-frame-layout.md` | 三列分区：hover 高亮每一栏，标出各栏职责 |
-| `frame-composer.html` | `spec/10-frame-layout.md` | 输入区三段与两侧留白的关系 |
-| `frame-rightbar.html` | `spec/10-frame-layout.md` | 右栏什么时候存在、什么时候不该占用 |
-| `motion-select.html` | `spec/40-motion.md` | 选择器右侧箭头的展开动效，可循环 |
-| `motion-panels.html` | `spec/40-motion.md` | 左右栏开合时整个页面的位移 |
-| `icon-anatomy.html` | `spec/50-icons.md` | 官方图标的画板、安全区、描边与光学居中标注 |
+| a11y-board.html | 03-settings-open.png | 设置控件的可访问性审核工具，不是 DSH 页面 |
+| app-icon-board.html | 15-plugin-row.png | DSH 插件列表中的插件图标 |
+| conflict-board.html | 06-plugins.png | 真实座位占用数据的冲突图解，不是 DSH 页面 |
+| controls-geometry.html | 03-settings-open.png | 实测控件与规则说明 |
+| frame-columns.html | 01-hero.png | 新会话页窗口分栏 |
+| frame-composer.html | 07-composer.png | 会话输入区与工具行 |
+| frame-rightbar.html | review-crops/rightbar-clean-2026-10-05.png | 干净 profile 中的「开始」右栏及「工作区文件」「新建终端」操作卡 |
+| icon-anatomy.html | 13-top-strip.png | 顶栏真实图标的几何说明 |
+| motion-panels.html | 09-chrome.png | 右侧插件区域的布局变化说明 |
+| motion-select.html | 03-settings-open.png | 设置页实际选择控件 |
+| preflight-checklist.html | 06-plugins.png | 检查插件界面的清单工具，不是 DSH 页面 |
+| rule-legend.html | 01-hero.png | 规范标签说明，不是 DSH 页面 |
+| seat-map.html | 01-hero.png | 运行时座位结构说明，不是 DSH 页面 |
+| sidebar-anatomy.html | review-crops/sidebar-top-clean-2026-10-05.png | 左栏宿主分区与栏外注册说明 |
+| session-tabs.html | 用户图五页签裁图 | 宿主页签文字的局部参照，不含会话正文 |
+| settings-general-item.html | clean-capture-2026-10-05/03-settings-open.png | 干净实景中的真实通用设置项 |
+| settings-section.html | clean-capture-2026-10-05/04-settings-models.png | 干净实景中的宿主设置页；图例说明扩展位置 |
+| settings-independent-window.html | data/slots.json | 公开座位边界图；不模拟 DSH 窗口或控件 |
+| token-scale.html | 03-settings-open.png | 实际设置界面中的令牌应用 |
+
+## HTML 约定
+
+示意使用独立 HTML 文件和官方语义令牌，不加载外部图片、字体或 CDN。站点将其隔离在 shadow root 中；实景截图只保存在本地参考目录，不进入网页。示例数据使用中性内容，不复制真实会话正文、文件路径或用户数据。

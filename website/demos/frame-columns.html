@@ -1,16 +1,19 @@
 <!--
-  三列分区：产品主界面的骨架。
+  Three-column partition: the skeleton of the product's main interface.
 
-  这不是示意图，是照着实测值复刻出来的：左栏 280px、中栏自适应、右栏可开合，
-  数值取自 docs/reference/geometry.json，观感对照 docs/reference/01-hero.png。
+  This is not a stand-in drawing: it is built from measured values — left sidebar
+  280px, centre column fluid, right sidebar openable and closable. The numbers come
+  from docs/reference/geometry.json, and the look is checked against
+  docs/reference/01-hero.png.
 
-  指针移到任意一栏上它会被标出来；拖左栏右缘还能改宽度。
+  Point at any column and it is outlined; drag the left sidebar's right edge to resize it.
 
-  说明：本文件依赖站点脚本（window.DSHShell），只在资源站内嵌时渲染。
-  单独打开会看到下面那句提示——界面复刻不该假装自己是一张图。
+  Note: this file relies on the site script (window.DSHShell) and only renders when it
+  is embedded in the resource site. Opened on its own you see the notice below — an
+  interface replica should not pretend to be a picture.
 -->
 <div data-shell='{"hover":true,"highlight":"center","right":"closed"}'>
-    <p style="margin:0;padding:24px;font:14px/1.6 sans-serif;color:#81858c">
+    <p style="margin:0;padding:24px;font:14px/1.6 sans-serif;color:#81858c" data-t="demo.frame-columns.viewInSite">
         此预览需要在 DeepSeek Design Resources 站内查看（它是活的界面，不是图片）。
     </p>
 </div>

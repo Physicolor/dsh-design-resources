@@ -1,17 +1,28 @@
 {
     "meta": { "lang": "zh-CN", "short": "中", "name": "简体中文" },
+    "coverage": {
+        "line": "{total} 篇{kind}里已有 {translated} 篇英文版；其余暂不在此语言下列出。",
+        "kind": {
+            "specs": "规范文档",
+            "guides": "指南",
+            "components": "组件文档"
+        }
+    },
     "brand": { "product": "设计资源" },
-    "topnav": { "spec": "规范", "components": "组件", "seats": "座位", "icons": "图标", "tokens": "令牌" },
+    "topnav": { "aria": "快捷入口", "guides": "指南", "spec": "规范", "components": "界面元素", "seats": "座位", "icons": "图标", "tokens": "令牌" },
     "search": {
-        "placeholder": "搜索组件、座位、规范、图标…",
+        "placeholder": "搜索指南、界面元素、座位、规范、图标…",
         "empty": "没有匹配项",
-        "hint": "按 Ctrl K 聚焦"
+        "hint": "按 Ctrl K 聚焦",
+        "results": "搜索结果"
     },
     "actions": {
         "theme": "切换浅色 / 深色",
         "lang": "切换语言",
         "nav": "显示或隐藏导航栏",
         "aside": "显示或隐藏说明栏",
+        "resizeNav": "调整导航栏宽度",
+        "resizeAside": "调整说明栏宽度",
         "copy": "复制",
         "copied": "已复制",
         "back": "返回上一级",
@@ -19,19 +30,21 @@
         "collapse": "收起源码"
     },
     "index": {
+        "aria": "资源导航",
         "overview": "概览",
         "spec": "设计规范",
-        "components": "组件源码",
+        "components": "界面元素",
         "resources": "资源",
         "home": "设计资源首页",
-        "why": "为什么要做这份资源",
-        "allComponents": "全部组件",
+        "why": "指南定位与证据范围",
+        "allComponents": "全部界面元素",
         "inventory": "元素清单",
         "seats": "座位目录",
         "icons": "官方图标集",
         "tokens": "设计令牌"
     },
-    "groups": { "basics": "基础规范", "visual": "视觉", "quality": "质量", "start": "开始这里", "principles": "设计原则", "patterns": "界面模式", "integration": "座位与集成", "verify": "自检与来源" },
+    "groups": { "basics": "规范与实现参考", "visual": "控件与视觉依据", "quality": "验收与可访问性", "start": "指南概览", "principles": "先选扩展位置", "patterns": "按场景搭建", "integration": "公开座位与登记", "verify": "核对与来源" },
+    "guide": { "taskLabel": "本页要点" },
     "markers": {
         "source": "官方源码",
         "sourceNote": "官方仓库里的规则、token、组件实现（附文件路径）。",
@@ -58,7 +71,8 @@
         "button": "按钮",
         "input": "输入框",
         "pill": "胶囊",
-        "segmentedcontrol": "分段控件",
+        "segmentedcontrol": "分段控件（社区建议）",
+        "session-tabs": "会话视图页签",
         "shortcut-keys": "按键帽",
         "switch": "开关",
         "tag": "标签",
@@ -83,67 +97,67 @@
         "wordmark": "字标"
     },
     "origin": {
-        "official": "官方组件",
+        "official": "官方实现",
         "proposed": "本仓库补充",
-        "officialNote": "这个组件对应 DSH 里真实存在的界面元素，你在产品里能见到它。",
-        "proposedNote": "产品里没有这个组件。它是本仓库给出的实现建议：每个数值都能追到官方界面里的出处，但产品里并没有它——别把它当成 DSH 现在的样子。"
+        "officialNote": "本项有官方源码或产品实现依据；是否在宿主实景中出现及示例状态，以对应证据记录为准。本页 HTML 是复用参考，不代表 DSH 公开了同名插件 API。",
+        "proposedNote": "当前 DSH 实景里没有这项组件组合。本页是社区实现建议，不代表产品现状。"
     },
     "home": {
-        "eyebrow": "DeepSeek Design Resources",
-        "title": "让社区的插件<br>看起来像同一个产品。",
-        "lede": "装到第五个插件，界面就开始不像一个产品：按钮高低不一，圆角各画各的，这个弹窗有动画那个没有；两个插件都想待在侧栏底部时，谁在上面取决于谁先加载。产品给了插件能跑起来的接口，却没给「按钮多大、间距多少、动效多长、图标怎么画」的共用答案。这份资源把它补上：每一条数值都写清出处，每个组件都能直接拿去用。",
-        "sectionTitle": "按任务走",
-        "sectionHint": "先找到你手上这件事，再往下读",
-        "indexTitle": "数据与索引",
-        "indexHint": "规范正文之外的原始材料：组件源码、座位目录、图标集、令牌",
+        "eyebrow": "指南概览",
+        "title": "DeepSeek Harness 插件界面指南",
+        "lede": "先判断功能属于全局设置、侧栏导航、当前会话还是辅助查看区域，再选择 DSH 公开座位与对应控件。每个示例都标明产品现状、插件贡献或社区建议。截图只作本地核验，不嵌入网站。",
+        "sectionTitle": "按任务开始",
+        "sectionHint": "先选内容位置，再看设置、会话区与控件示例",
+        "indexTitle": "实现与规则参考",
+        "indexHint": "查找公开座位、产品控件、图标与语义令牌",
         "markersTitle": "这里的数字凭什么可信",
         "runtimeTitle": "本机运行版本",
         "runtime": "本机运行的是 @deepseek-ai/dsh-* 0.2.0-rc.2（nightly 通道，Windows x64 10.0.26200）；数据采集于 2026-10-01 至 10-02，采集视口 1570×905。官方公开仓库 github.com/deepseek-ai/deepseek-harness 的 master 也是 0.2.0-rc.2——版本号一致，但 master 是浮动引用，不等于本机这个构建快照。",
         "verifyTitle": "怎么验证",
         "verify": "npm run build 跑结构、数据与浏览器渲染三层检查；npm run audit 在真实浏览器里逐页点开每个演示的每个控件，查浮层逃逸、容器被撑高、点击导致滚动。采集方法与口径见「自检与来源」。",
         "cards": {
-            "spec": { "title": "规范", "body": "页面骨架、控件、令牌、动效、图标、无障碍，以及提交前的自检清单。", "note": "先把这一层读完再动手" },
-            "components": { "title": "组件源码", "body": "按类别归档的 React 组件，只用官方令牌，并写明尺寸出处和什么时候该用它。", "note": "拿走就能用" },
-            "seats": { "title": "座位目录", "body": "产品里每个能挂界面的位置：干什么用的、能挂几个、会不会盖住官方界面。", "note": "决定你的 UI 该放在哪里" },
-            "icons": { "title": "官方图标集", "body": "从产品里原样提取的图标，形状和命名都没有改过。", "note": "别再画第五种关闭按钮" },
-            "tokens": { "title": "设计令牌", "body": "颜色、圆角、间距的官方取值，浅色和深色并排列出，照着用就行。", "note": "别把颜色写死" },
-            "why": { "title": "为什么", "body": "插件能装进来，却装不成一个样子——这就是这个仓库存在的原因。", "note": "两分钟读完" }
+            "spec": { "title": "基础规范", "body": "页面结构、控件、令牌、动效、图标与可访问性要求。", "note": "规则与检查项" },
+            "components": { "title": "界面元素", "body": "按实际任务查看按钮、设置行、会话页签与窗口结构；产品元素、插件贡献和社区建议分别标记。", "note": "图片只在本地核验" },
+            "seats": { "title": "座位目录", "body": "查找插件可扩展的位置、用途、类型和共存风险。", "note": "选择扩展位置" },
+            "icons": { "title": "官方图标集", "body": "查看产品图标的名称、尺寸和 SVG 源文件。", "note": "复用既有图标" },
+            "tokens": { "title": "设计令牌", "body": "查看颜色、字号、圆角、间距与浅深主题映射。", "note": "沿用语义令牌" },
+            "why": { "title": "设计背景", "body": "了解本指南针对的问题、数据依据与适用范围。", "note": "查看依据与边界" }
         }
     },
     "why": {
-        "title": "为什么插件看起来不像一个产品",
-        "lede": "插件单独看都不算差，放在一起却不像一套东西。原因不复杂：能装进来的接口有了，装进去之后该长什么样，没有人给过统一答案。下面分三层说清——官方已经给了什么，你迟早会撞上什么，以及这些结论的依据在哪。",
-        "officialTitle": "官方已经给了什么",
-        "missingTitle": "你迟早会撞上什么",
-        "proofTitle": "这不是猜的",
-        "scopeTitle": "这个仓库不做什么",
+        "title": "插件界面的设计背景与目标",
+        "lede": "本指南不是品牌美学手册，而是帮助插件作者看懂 DeepSeek Harness 官方窗口的区域职责与公开扩展位置。它从全局偏好、设置页面、侧栏、会话区和右栏的关系开始，再给出对应控件和实现依据。",
+        "officialTitle": "官方已公开的界面依据",
+        "missingTitle": "插件作者要作的位置决定",
+        "proofTitle": "本指南的核验口径",
+        "scopeTitle": "本指南的边界",
         "items": {
             "tokens": "一套现成的颜色和尺寸取值：颜色、字号、圆角、间距、层级，浅色深色都有。",
             "primitives": "按钮、开关、输入框、菜单、提示这些控件产品里已经有了，官方还专门写了一句：不要复制已经存在的控件。",
             "seats": "一份界面位置的清单：每个位置是干什么用的、能挂几个插件、会不会盖住官方界面。",
             "icons": "一套图标，命名和大小的分法都有规律，照着重画不会跑偏。",
-            "aesthetics": "不评判好看。它只保证一致和能用，不说哪种风格更好。",
-            "force": "不强制谁改代码。它是愿意遵守的人之间的共同依据。",
-            "invent": "不发明数值。每一条尺寸、间距、时长都要能说清出处；没有权威依据的地方，会直接写出来。"
+            "aesthetics": "先判断内容的作用范围与宿主区域；颜色和尺寸只在已有产品依据或明确标注的社区建议中讨论。",
+            "force": "本指南是社区参考，不是运行时强制规则；例外应说明兼容原因。",
+            "invent": "不编造数值。每项尺寸、间距和时长都要注明依据；没有官方值时明确标为社区建议。"
         },
         "gaps": {
-            "layoutClaim": "两个插件都想把按钮放在侧栏底部，谁在上面全看谁先加载。",
-            "layoutBody": "插件该占哪块区域、占多大、跟会话区怎么分，没有共用答案。各自按自己的理解摆，凑在一起就挤：有的压住会话，有的留下一块谁也没用上的空白。",
-            "orderClaim": "同一个位置上的插件顺序，刷新一次可能就变了。",
-            "orderBody": "能挂多个插件的位置按 order 排先后，但没人规定该填几。默认值是 0，于是谁先加载谁就排前面——用户看到的是随机的上下关系，而不是谁更重要。",
-            "motionClaim": "同样是展开一个面板，一个插件 100 毫秒收完，另一个拖到 350 毫秒。",
-            "motionBody": "展开、收起、弹出该用多长时间，没有统一档位。两个数各自都说得过去，放在一起就不像一个产品做的。",
-            "iconGeometryClaim": "自己画的图标，和官方图标并排放就看得出来。",
-            "iconGeometryBody": "线该多粗、和旁边的图标怎么对齐、四周留多少空，都没有对照依据。单个看没问题，一排摆开就显得毛躁。",
-            "conflictClaim": "两个插件抢同一个位置时，不会有任何提示。",
-            "conflictBody": "后来的直接盖住先来的。界面不缺东西，控制台也不报错——你只能在用户反馈里知道这件事发生过。"
+            "layoutClaim": "多个插件同时扩展侧栏时，内容可能争用同一块空间。",
+            "layoutBody": "官方扩展位置说明用途与类型，但完整插件页面的宽度、信息密度和与会话区的关系仍需按实际场景判断。缺少共同参考时，容易出现遮挡或未充分利用的区域。",
+            "orderClaim": "同一座位内的插件显示顺序可能依赖加载顺序。",
+            "orderBody": "列表座位按 order 排序；未声明或重复声明时，最终次序难以解释。社区指南可帮助作者为顺序选择提供理由，但不应把单机插件清单当成所有部署的固定事实。",
+            "motionClaim": "同类界面的动效节奏可能不一致。",
+            "motionBody": "不同实现可能采用不同的时长、缓动和减少动效处理。应区分官方控件的既有行为与新写插件的建议，避免无依据地覆盖官方实现。",
+            "iconGeometryClaim": "自绘图标与官方图标并列时，视觉重量和对齐可能不一致。",
+            "iconGeometryBody": "图标的画板、路径留白、笔画和基线都会影响并排效果。复用现有图标并按真实几何比较，比凭印象重画更容易保持协调。",
+            "conflictClaim": "插件占用相同扩展位置时，可能发生遮挡或顺序冲突。",
+            "conflictBody": "接口允许扩展并不代表不同贡献一定能同时呈现。设计时应查阅座位类型、占用快照和替代方案，并说明数据的采集时间。"
         },
         "proof": {
-            "overlay": "官方界面的 shell.overlay 位置上有 14 个插件，其中 11 个没有说明自己该排第几。系统按默认值 0 处理，顺序于是由加载先后决定——同一台机器刷新一次，可能就换了个样子。",
-            "settings": "设置页的 settings.section 有 11 个插件，其中 3 个都把顺序写成 40。这 3 个里谁在前，同样解释不了。"
+            "overlay": "shell.overlay 是跨区域的宿主浮层座位；dsh-widgets 的侧边统计轨则注册在 conversation.input.overlay，两者用途和层级不同。",
+            "settings": "settings.general.item 用于通用设置中的一项偏好；settings.section 用于宿主设置窗口中的一个页面。当前公开座位表没有独立插件设置窗口入口。"
         },
-        "asideNote": "这两个数字是 2026-10-01 在本机逐条清点出来的，原始快照存在 data/raw/occupancy-2026-10-01.json。换一台机器、或者启用的插件不同，数字就会变。",
-        "closing": "这不是某个插件的错。没有共用答案的时候，每个人都在做合理的选择，合起来就成了这个样子。这个仓库做两件事：把该有的数值和做法补齐，让撞车的地方看得见。"
+        "asideNote": "独立采集 profile design-guide-clean 只加载 DeepSeek 官方 base、web-app 与 schedule bundles。核对裁图保存在 docs/reference/review-crops/；网站 HTML 不嵌入截图。",
+        "closing": "位置选择先于控件造型。遇到插件自己的布局时，标清其来源和座位；不要把单个插件运行状态写成 DSH 默认界面。"
     },
     "spec": {
         "title": "规范",
@@ -154,25 +168,32 @@
         "sizeLabel": "字数",
         "sectionsLabel": "小节",
         "outline": "本页目录",
-        "relatedNote": "规范里能自动检查的条目，对应自检清单和审计规则。",
-        "chineseOnly": "本文档目前只有中文版。"
+        "relatedNote": "规范里能自动检查的条目，对应自检清单和审计规则。"
     },
     "components": {
-        "title": "组件源码",
-        "lede": "每个组件都是独立的 React 实现，只用官方令牌，并写明尺寸出处与什么时候该用它。拿走就能用。",
+        "title": "界面元素",
+        "lede": "按界面任务浏览 DSH 可见的控件与布局。页面中的 HTML 是结构示意；产品截图保存在本地核验目录，不嵌入网站。未有可靠实景或源码依据的状态会暂缓显示。",
         "viewAll": "查看全部",
         "count": "个",
         "whenToUse": "什么时候用",
         "whenNotToUse": "什么时候不要用",
         "geometrySource": "尺寸出处",
         "tags": "标签",
-        "preview": "实况预览",
+        "preview": "界面结构示意",
+        "evidenceLabel": "本地实景核验",
+        "pluginEvidence": "插件贡献示意",
+        "evidenceAlt": "本地核验资料",
+        "demoLabel": "HTML 结构示意（不是产品截图）",
+        "withheldLabel": "暂不显示界面示意",
+        "withheldBadge": "示意暂缓",
+        "withheldText": "尚无能核验该状态的干净实景；此状态暂不生成 HTML。",
+        "screenshotCheckedNote": "产品截图只用于本地核验，网站不嵌入图片。",
+        "sourceVerifiedNote": "依据产品源码与本地界面参照核对；不伪造会话内容。",
         "sourceLabel": "源码",
         "docHuman": "说明",
         "docSpec": "技术规格",
         "docSpecNote": "这一份写给工程师和 Agent：尺寸出处、API、令牌，以及能自动检查的约束。",
-        "chineseOnly": "这个组件的说明目前只有中文版。",
-        "usage": "整个组件目录本身就是一个 npm 包，可以直接安装；也可以只把需要的那一个目录拷进你的插件。"
+        "usage": "网站只显示 HTML 结构示意和核验文字，不嵌入截图。对应裁图保存在 docs/reference/review-crops/；插件贡献与宿主原生区域分开标记。"
     },
     "seats": {
         "title": "座位目录",
