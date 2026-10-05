@@ -1,0 +1,14 @@
+{
+    "$comment": "The two halves of the DSH Design System, as the site states them. This file exists so the relationship is one editable place instead of a link buried in a template: the site says what it is (the spec) and names the runtime that enforces it, and either URL can move without touching app.js. The wording lives in language/{zh,en}.json under `set.cards.<id>`.",
+    "members": [
+        {
+            "id": "spec",
+            "url": "https://github.com/Physicolor/dsh-design-resources",
+            "site": "https://physicolor.github.io/dsh-design-resources/"
+        },
+        {
+            "id": "runtime",
+            "url": "https://github.com/Physicolor/dsh-ui-harmonizer"
+        }
+    ]
+}

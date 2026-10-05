@@ -97,11 +97,21 @@ if (data !== null) {
   check('every document carries a Chinese body', data.specs.every(s => s.doc.zh !== null)
     && data.guides.every(g => g.doc.zh !== null)
     && data.components.every(c => c.doc.zh !== null))
-  check('i18n coverage counts what is actually translated',
-    data.i18nCoverage.specs.translated === translatedSpecs.length
+  check('i18n coverage counts what is actually translated', data.i18nCoverage.specs.translated === translatedSpecs.length
     && data.i18nCoverage.guides.translated === translatedGuides.length
     && data.i18nCoverage.components.translated === translatedComponents.length,
     `specs ${translatedSpecs.length}/${data.specs.length}, guides ${translatedGuides.length}/${data.guides.length}, components ${translatedComponents.length}/${data.components.length}`)
+
+  /* 「两个仓库是一套」要在页面上成立：family.json 得进 data.js、得同时有 spec 与
+   * runtime 两个成员，而且两侧的文案都得有（只有一份就是漏译）。 */
+  const family = (data.family ?? {}).members ?? []
+  const familyIds = family.map(m => m.id).sort().join(',')
+  check('the set names both halves, in both languages',
+    familyIds === 'runtime,spec'
+    && family.every(m => typeof m.url === 'string' && m.url.startsWith('https://github.com/Physicolor/'))
+    && family.every(m => ['zh', 'en'].every(lang => ['role', 'title', 'body', 'note']
+      .every(field => typeof data.i18n[lang]?.set?.cards?.[m.id]?.[field] === 'string'))),
+    `${family.length} members: ${familyIds}`)
 
   const CJK = /[\u3000-\u303f\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff00-\uffef]/u
   const cjkIn = s => CJK.test(String(s ?? ''))
@@ -390,6 +400,11 @@ if (browserPath === null) {
 
     await goto(base)
     check('home renders hero', await evaluate(`document.querySelector('.hero__title') !== null`))
+    /* 首页必须点得到另一半（data/family.json）。这条把「两个仓库是一套」从一句话
+     * 变成页面上能验收的东西：链接丢了、或者 family.json 没进 data.js，这里就红。 */
+    check('home links to the runtime half of the set',
+      await evaluate(`document.querySelectorAll('a.card[href^="https://github.com/Physicolor/dsh-ui-harmonizer"]').length === 1`),
+      String(await evaluate(`document.querySelectorAll('a.card[href^="https://github.com/Physicolor/dsh-ui-harmonizer"]').length`)))
     check('left index built', await evaluate(`document.querySelectorAll('.index__link').length > 5`), String(await evaluate(`document.querySelectorAll('.index__link').length`)))
     check('cards rendered', await evaluate(`document.querySelectorAll('.card').length > 0`), String(await evaluate(`document.querySelectorAll('.card').length`)))
     const initialLocale = await evaluate(`(function(){

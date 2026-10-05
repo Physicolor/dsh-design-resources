@@ -812,6 +812,8 @@ const data = {
   },
   i18n,
   i18nCoverage,
+  /* 这个站点是 DSH Design System 的一半：首页要说清另一半是谁（data/family.json）。 */
+  family: readJson('data/family.json', { members: [] }),
   demos,
   /* 指南（guides/）：面向作者任务的内容层，和规范正文分开——规范回答「规则是什么」，
    * 指南回答「我现在该做什么」。 */

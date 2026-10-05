@@ -144,6 +144,24 @@
       }
     }
   },
+  "set": {
+    "title": "The other half of this set",
+    "hint": "This site is the spec; the plugin is what makes it true in the running product",
+    "cards": {
+      "spec": {
+        "role": "Repository",
+        "title": "DeepSeek Design Resources",
+        "body": "The source of everything on this site: the spec, the guides, the seat directory, the tokens, the official icon set and the reusable component source.",
+        "note": "How the interface should be built"
+      },
+      "runtime": {
+        "role": "Runtime plugin",
+        "title": "DSH UI Harmonizer",
+        "body": "A client-only DeepSeek Harness bundle plugin: it normalises the official UI, reconciles installed plugins and runs a read-only compatibility audit reported in the settings page.",
+        "note": "How it actually turned out — and what it could not fix"
+      }
+    }
+  },
   "why": {
     "title": "Background and goals",
     "lede": "This is not a brand style manual. It explains the regions and public extension seats in DeepSeek Harness, starting with the relationship between global preferences, settings pages, the sidebar, the conversation and the host rightbar.",

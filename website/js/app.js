@@ -1003,9 +1003,37 @@
             + card('home.cards.seats', (s.seats || 0) + ' ' + t('components.count'), '/seats')
             + card('home.cards.icons', (s.icons || 0) + ' ' + t('components.count'), '/icons')
             + card('home.cards.tokens', (s.aliases || 0) + ' ' + t('components.count'), '/tokens')
-            + '</div></section></div>'
+            + '</div></section>'
+            + familySection()
+            + '</div>'
 
         renderAside([])
+    }
+
+    /**
+     * The other half of the set.
+     *
+     * This site is the spec; the plugin is what makes it true inside the running
+     * product, and a reader who only finds the spec has half of the answer. The
+     * members and their URLs come from `data/family.json`, the wording from the
+     * dictionary — the runtime repository can move without a template edit.
+     * @returns html, or an empty string when the data file is absent.
+     */
+    function familySection() {
+        var members = (D.family || {}).members || []
+        if (members.length === 0) return ''
+        return '<section class="section">'
+            + '<div class="section__head"><h2 class="section__title">' + esc(t('set.title')) + '</h2>'
+            + '<span class="section__hint">' + esc(t('set.hint')) + '</span></div>'
+            + '<div class="cards">' + members.map(function (member) {
+                var prefix = 'set.cards.' + member.id
+                return '<a class="card" href="' + esc(member.url) + '" rel="noopener">'
+                    + '<p class="card__meta">' + esc(t(prefix + '.role')) + '</p>'
+                    + '<p class="card__title">' + esc(t(prefix + '.title')) + '</p>'
+                    + '<p class="card__body">' + esc(t(prefix + '.body')) + '</p>'
+                    + '<p class="card__meta">' + esc(t(prefix + '.note')) + '</p>'
+                    + '</a>'
+            }).join('') + '</div></section>'
     }
 
     /**
