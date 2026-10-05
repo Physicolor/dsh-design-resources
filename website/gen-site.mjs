@@ -616,7 +616,11 @@ function loadDemos() {
   const dir = join(ROOT, 'website', 'demos')
   if (!existsSync(dir)) return {}
   const out = {}
-  for (const f of readdirSync(dir)) {
+  /* Sorted on purpose: the demos are serialised as an object, and object key
+   * order is insertion order — an unsorted `readdirSync` makes the generated
+   * file depend on the filesystem's directory order, so `--check` passed on
+   * NTFS and failed on ext4 with an identical tree. */
+  for (const f of readdirSync(dir).sort()) {
     if (!f.endsWith('.html')) continue
     const id = basename(f, '.html')
    const evidence = DEMO_EVIDENCE.demos?.[id]
