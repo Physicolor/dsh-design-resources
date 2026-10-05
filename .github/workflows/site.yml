@@ -46,12 +46,16 @@ jobs:
       - name: Every seat a document names still exists
         run: node scripts/check-refs.mjs
 
-      # The full site verification drives a real browser. GitHub's ubuntu image
-      # ships Chrome, but `website/verify.mjs` looks for it at the documented
-      # Windows and macOS paths; on Linux the browser pass reports itself as
-      # skipped. Its structural and static passes — including the assertions
-      # that the English build renders no Chinese — still run here.
-      - name: Site verification
+      # The site verification drives a real browser in its last pass. This
+      # repository has no dependencies and the site runs from `file://`, so the
+      # structural and static passes — which include the assertions that the
+      # English build renders no Chinese, and that every Chinese quotation
+      # carries a gloss — are what actually guard the content. The browser pass
+      # is a local, visual check; running it on a runner image whose browser may
+      # or may not be at a known path would report the wrong thing.
+      - name: Site verification (structural and static)
+        env:
+          DSHDR_STRUCTURAL_ONLY: '1'
         run: node website/verify.mjs
 
   deploy:

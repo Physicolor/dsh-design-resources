@@ -193,16 +193,42 @@ if (data !== null) {
 
 /* ── 3. browser ────────────────────────────────────────────────────── */
 
+/* `DSHDR_STRUCTURAL_ONLY=1` stops after the static pass. CI uses it: the
+ * browser pass needs a Chromium-family binary at a path this file knows, and a
+ * pipeline whose green/red depends on the runner image's browser is a pipeline
+ * that reports the wrong thing. The structural and static passes are the ones
+ * that guard the repository's own claims — including "the English build renders
+ * no Chinese" — and they are enough to gate a pull request. */
+if (process.env.DSHDR_STRUCTURAL_ONLY === '1') {
+  const failed = results.filter(r => r.ok !== true)
+  console.log(`\n${results.filter(r => r.ok === true).length}/${results.length} checks passed (browser pass skipped)`)
+  if (failed.length > 0) { console.log('failed:'); for (const f of failed) console.log(`  - ${f.name}${f.detail ? ` — ${f.detail}` : ''}`) }
+  process.exit(failed.length === 0 ? 0 : 1)
+}
+
 /**
  * Locate a Chromium-family browser.
  * @returns the executable path, or null.
  */
 function findBrowser() {
+  /* An explicit override wins, so a machine with an unusual install does not
+   * need this list edited. */
+  for (const key of ['DSHDR_BROWSER', 'CHROME_PATH', 'PUPPETEER_EXECUTABLE_PATH']) {
+    const value = process.env[key]
+    if (value !== undefined && value !== '' && existsSync(value)) return value
+  }
   const candidates = [
     'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
     'C:/Program Files/Microsoft/Edge/Application/msedge.exe',
     'C:/Program Files/Google/Chrome/Application/chrome.exe',
     'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
+    '/usr/bin/google-chrome',
+    '/usr/bin/google-chrome-stable',
+    '/usr/bin/chromium',
+    '/usr/bin/chromium-browser',
+    '/snap/bin/chromium',
+    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge',
   ]
   return candidates.find(p => existsSync(p)) ?? null
 }
