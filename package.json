@@ -56,7 +56,7 @@
         "site": "node website/gen-site.mjs",
         "verify": "node website/verify.mjs",
         "serve": "node scripts/serve.mjs",
-        "build": "node scripts/gen-rules.mjs && node scripts/check-i18n.mjs && node scripts/check-demos-i18n.mjs && node website/gen-site.mjs && node scripts/check-refs.mjs && node website/verify.mjs"
+        "build": "node scripts/gen-rules.mjs && node scripts/check-i18n.mjs && node scripts/check-demos-i18n.mjs && node website/gen-site.mjs && node scripts/gen-index.mjs && node scripts/check-refs.mjs && node website/verify.mjs"
     },
     "devDependencies": {},
     "dependencies": {}
