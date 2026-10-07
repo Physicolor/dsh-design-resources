@@ -150,6 +150,15 @@
       "kind": "product",
       "note": "此示意只呈现真实页签标签；没有干净全屏会话截图，因此不标记为实景截图验证。"
     },
+    "pinned-summary": {
+      "status": "proposed",
+      "kind": "proposal",
+      "reason": "本仓库给出的做法示例，不是产品实景：它把官方已知的三件事拼在一起——会话头部工具按钮的几何（guides/32 实测 16 图标 / 28 命中区 / 圆角 8）、留白带的推导宽度（中栏 1085 或 1290 减去 748 阅读列，见 docs/reference/conversation-geometry.json）、以及本仓库卡片的圆角与高程（components/surfaces/Card/SPEC.md）。卡片的位置与开合方式属本仓库建议。",
+      "reasonEn": "A worked example from this repository, not a product capture: it combines three things the product already establishes — the session-head tool button's geometry (16 icon / 28 hit area / radius 8, measured in guides/32), the band's derived width (the centre column, 1085 or 1290, minus the 748 reading column; see docs/reference/conversation-geometry.json), and this repository's card radius and elevation (components/surfaces/Card/SPEC.md). The card's placement and its open/close behaviour are this repository's proposal.",
+      "scene": "会话头部 · 切换置顶摘要",
+      "sceneEn": "Session head · toggle the pinned summary",
+      "note": "按钮可点：点一下卡片开、再点一下关。"
+    },
     "settings-general-item": {
       "status": "verified",
       "source": "docs/reference/clean-capture-2026-10-05/03-settings-open.png",

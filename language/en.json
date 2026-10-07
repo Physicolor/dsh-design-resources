@@ -51,11 +51,28 @@
     "resources": "Resources",
     "home": "Home",
     "why": "Guide scope and evidence",
+    "window": "Window structure",
     "allComponents": "All interface elements",
     "inventory": "Element inventory",
     "seats": "Seat directory",
     "icons": "Official icon set",
     "tokens": "Design tokens"
+  },
+  "window": {
+    "title": "Window structure: what one screen is made of",
+    "lede": "Recognise the screen before you touch it. On the left is the product's real structure (sweep the pointer over any band and it lights up); the list beside it gives each band's official seat and whether it can be extended. If you cannot tell which band your content belongs to, do not pick a seat yet.",
+    "liveTitle": "Live: this screen after you open a new conversation",
+    "liveNote": "A product replica built from measured sizes, not a drawing: left sidebar 280, centre column fluid, right column openable. The pointer marks whichever part it sweeps over.",
+    "leftTitle": "Left sidebar: six bands, top to bottom",
+    "leftHint": "The first three belong to the host; the last three include seats you can add to.",
+    "middleTitle": "Centre column: four bands during a conversation",
+    "middleHint": "Conversation content, the header, the view area, the input card, plus three insertion points around that card.",
+    "rightTitle": "Right column: what is there once it opens",
+    "rightHint": "The right column is the page's fourth column, not an overlay on the centre; only the action slots inside a tab can be extended.",
+    "unofficialTitle": "The four places the product gives no seat to",
+    "unofficialHint": "Not \"you have not found it\" but \"there is none\". To put something in one of them, read the unofficial-areas guide first.",
+    "columns": { "part": "Band", "what": "What you see in the product", "seat": "Official seat", "append": "Can you add to it" },
+    "openSpec": "Read the full spec"
   },
   "groups": {
     "basics": "Structure and implementation reference",

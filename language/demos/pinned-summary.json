@@ -1,0 +1,14 @@
+{
+  "zh": {
+    "toggleAria": "显示或隐藏置顶摘要",
+    "toolbarHint": "会话头部工具行 →",
+    "cardTitle": "置顶摘要",
+    "cardBody": "本轮的要点会固定在这张卡片里，滚动正文时它不跟着走。它贴在正文右侧那条留白带上，不占正文宽度。"
+  },
+  "en": {
+    "toggleAria": "Show or hide the pinned summary",
+    "toolbarHint": "Session head tool row →",
+    "cardTitle": "Pinned summary",
+    "cardBody": "This round's key points stay on this card and do not scroll with the text. It sits in the band beside the reading column and takes no width from the text."
+  }
+}
