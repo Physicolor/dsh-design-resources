@@ -1,7 +1,7 @@
 ---
 source: components/controls/Tag/SPEC.md
 source-sha256: 515a066a3d283175
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # Tag · SPEC
 

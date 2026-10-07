@@ -1,7 +1,7 @@
 ---
 source: components/layout/SidebarRow/SPEC.md
 source-sha256: e0c284d0906b571b
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # SidebarRow · SPEC
 

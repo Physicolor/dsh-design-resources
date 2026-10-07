@@ -110,14 +110,14 @@ DSH 语义 token（均可在 `data/tokens.json` 中查到）：
 2. 根节点不带 `aria-hidden`（`AC-MF-14` 的反向检查）。
 3. 传入 `icon` 时，图标容器带 `aria-hidden="true"`。
 4. 源码中根节点 `pointer-events` 解析为 `none`，且根节点未绑定 `onClick` 等指针事件处理器。
-5. 存在 `@media (prefers-reduced-motion: reduce)` 分支，且该分支内的动画不含 `transform` 位移（`MO-MF-09`；清单 `A34`）。
+5. 存在 `@media (prefers-reduced-motion: reduce)` 分支，且该分支内的动画不含 `transform` 位移（`MO-RC-09`；清单 `A34`）。
 6. 卸载计时器表达式为 `holdMs + TOAST_FADE_MS`，且 `TOAST_FADE_MS` 与淡出关键帧的 `1000ms` 一致。
 7. 内联自定义属性 `--dsh-toast-hold` 的取值由 `holdMs` 派生（同一值同时驱动动画延迟与计时器）。
 8. 传入 `anchor` 时注册 `window` 的 `resize` 监听，并在清理函数中移除。
 9. 根节点通过 `createPortal` 挂载到 `document.body`。
 10. 根节点宽度为 `max-content` 且带 `max-width`，未使用固定宽度夹死文本容器（`AC-RC-17`；清单 `B13`）。
-11. 时长取值：滑入 `160ms`、淡出 `1000ms`，均取自官方 CSS，**不在** `MO-MF-01` 允许的五档（100 / 150 / 200 / 300 / 350）之内，也不满足「不超过 350ms」。本仓库以官方锚点优先，此项需人工确认（对照清单 `A30`）。
-12. 过渡曲线为 `ease-out` / `ease`，取自官方，不等于 `MO-MF-04` 的标准曲线（`MO-MF-06` 对非官方默认曲线的禁令）。以官方锚点优先，此项需人工确认（对照清单 `A31`）。
+11. 时长取值：滑入 `160ms`、淡出 `1000ms`，均取自官方 CSS，**不在** `MO-RC-01` 允许的五档（100 / 150 / 200 / 300 / 350）之内，也不满足「不超过 350ms」。本仓库以官方锚点优先，此项需人工确认（对照清单 `A30`）。
+12. 过渡曲线为 `ease-out` / `ease`，取自官方，不等于 `MO-RC-04` 的标准曲线（`MO-RC-06` 对非官方默认曲线的禁令）。以官方锚点优先，此项需人工确认（对照清单 `A31`）。
 13. 文案为单句短文本（人审，见 `README.md`「怎么用得好」）。
 14. 未在组件内部维护队列：同一时刻多条提示的覆盖行为由调用方（`key` 重挂载）决定（人审，见 `README.md`「什么时候不要用它」）。
 

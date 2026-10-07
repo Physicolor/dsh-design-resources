@@ -1,7 +1,7 @@
 ---
 source: components/feedback/RunningRing/SPEC.md
 source-sha256: 2436eb8e055df4ab
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # RunningRing · SPEC
 

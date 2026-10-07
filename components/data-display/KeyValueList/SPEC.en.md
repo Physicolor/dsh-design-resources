@@ -1,7 +1,7 @@
 ---
 source: components/data-display/KeyValueList/SPEC.md
 source-sha256: 6da959e47d973703
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # KeyValueList · SPEC
 

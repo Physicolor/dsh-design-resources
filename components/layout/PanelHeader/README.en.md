@@ -1,7 +1,7 @@
 ---
 source: components/layout/PanelHeader/README.md
 source-sha256: 71667f51f3686585
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # PanelHeader
 

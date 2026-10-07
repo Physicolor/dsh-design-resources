@@ -1,7 +1,7 @@
 ---
 source: components/surfaces/Card/README.md
 source-sha256: 0eec880423c23bf2
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # Card
 

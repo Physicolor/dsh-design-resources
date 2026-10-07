@@ -192,16 +192,6 @@ function validateEvidence(evidence, owner) {
   }
 }
 
-/** A plain provenance note, in the reader's language; screenshots never enter the markup. */
-function evidencePanel(evidence, owner, lang) {
-  const label = pick({ zh: evidence.scene, en: evidence.sceneEn ?? evidence.scene }, lang) ?? owner
-  const title = evidence.status === 'proposed' ? furniture('proposal', lang) : furniture('evidence', lang)
-  const note = evidence.status === 'proposed'
-    ? pick({ zh: evidence.reason, en: evidence.reasonEn ?? evidence.reason }, lang)
-    : furniture(evidence.status === 'source-verified' ? 'noteSourceVerified' : 'noteVerified', lang)
-  return '<aside class="demo__proof"><strong>' + title + '</strong><p>'
-    + esc(label) + '</p><p>' + esc(note) + '</p></aside>'
-}
 /** Render a document demo with verified, source-verified, or proposed provenance. */
 function demoFigure(id, caption, lang) {
   const evidence = DEMO_EVIDENCE.demos?.[id]
@@ -220,12 +210,19 @@ function demoFigure(id, caption, lang) {
         : evidence.kind === 'plugin' ? 'kindPlugin' : 'kindScene',
     lang,
   )
-  const wideDemos = new Set(['sidebar-anatomy', 'settings-section', 'settings-independent-window'])
+  /* A replica of the product's own frame — the three-column shell and the demos
+   * built on it — is a wide figure: at half width its left rail takes a third
+   * of the box and the thing it exists to show (the columns' proportions) stops
+   * being true. The provenance panel does not sit beside it either: a live demo
+   * the reader can operate is the figure, and its evidence is a label. */
+  const wideDemos = new Set([
+    'sidebar-anatomy', 'settings-section', 'settings-independent-window',
+    'frame-columns', 'frame-composer', 'frame-rightbar', 'seat-map', 'session-tabs',
+  ])
   const figureClass = wideDemos.has(id) ? 'demo demo--wide' : 'demo'
   const capture = demoHasCapturedCopy(readText(`website/demos/${id}.html`))
     ? `<span class="demo__capture">${furniture('captureNote', lang)}</span>` : ''
   return '<figure class="' + figureClass + '"><div class="demo__comparison">'
-    + evidencePanel(evidence, id, lang)
     + `<section class="demo__example"><h3 class="demo__panel-title">${label}${capture}</h3>`
     + `<div class="demo__stage" data-inline-demo="${esc(id)}"></div></section></div>`
     + (caption === '' ? '' : `<figcaption>${inline(caption, lang)}</figcaption>`)
@@ -236,21 +233,30 @@ function demoFigure(id, caption, lang) {
 function componentFigure(id, caption, lang) {
   const evidence = DEMO_EVIDENCE.components?.[id]
   validateEvidence(evidence, `component ${id}`)
-  const image = evidencePanel(evidence, id, lang)
-  const figureClass = id === 'settings-page' ? 'demo demo--wide' : 'demo'
   if (evidence.status === 'withheld') {
     const reason = evidence.reason === undefined
       ? furniture('withheldReason', lang)
       : pick({ zh: evidence.reason, en: evidence.reasonEn ?? evidence.reason }, lang)
-    return `<figure class="demo demo--withheld">${image}`
-      + `<div class="demo__withheld"><strong>${furniture('withheldTitle', lang)}</strong><p>${esc(reason)}</p></div>`
+    /* A one-line notice, not a panel card: the same space complaint that
+     * removed the provenance panel applies here, and a withheld specimen has no
+     * specimen left to show in the first place. */
+    return `<figure class="demo demo--withheld"><div class="demo__withheld"><strong>${furniture('withheldTitle', lang)}</strong><p>${esc(reason)}</p></div>`
       + (caption === '' ? '' : `<figcaption>${inline(caption, lang)}</figcaption>`)
       + '</figure>'
   }
   const capture = demoHasCapturedCopy(COMPONENT_DEMO.get(id) ?? '')
     ? `<span class="demo__capture">${furniture('captureNote', lang)}</span>` : ''
+  /* The specimen takes the whole figure: the provenance panel beside it halved
+   * the width of the one thing the page exists to show, and the reader asked
+   * for it twice. Its facts are not lost — `validateEvidence` still refuses to
+   * build without them, and the same words appear on the page, in the caption
+   * line under the specimen. */
+  /* The settings page reproduces a whole 800px-wide settings window: at the
+   * reading column's default width its right-hand controls were clipped, so it
+   * gets the extra-wide figure (`demo--xwide`) and the stage scrolls if the
+   * screen is narrower than the replica. */
+  const figureClass = id === 'settings-page' ? 'demo demo--xwide' : 'demo'
   return '<figure class="' + figureClass + '"><div class="demo__comparison">'
-    + image
     + `<section class="demo__example"><h3 class="demo__panel-title">${furniture('componentSpecimen', lang)}${capture}</h3>`
     + `<div class="demo__stage" data-inline-demo="component/${esc(id)}"></div></section></div>`
     + (caption === '' ? '' : `<figcaption>${inline(caption, lang)}</figcaption>`)
@@ -557,8 +563,10 @@ function loadComponents() {
  */
 const SPEC_META = {
   '00-overview': { group: 'basics', short: '总览', shortEn: 'Overview' },
+  '05-region-map': { group: 'basics', short: '一屏区域地图', shortEn: 'Region map' },
   '10-frame-layout': { group: 'basics', short: '主页面骨架', shortEn: 'Frame layout' },
   '11-slot-seats': { group: 'basics', short: '座位目录与选择', shortEn: 'Seat directory' },
+  '15-middle-column': { group: 'basics', short: '中栏的占用档位', shortEn: 'Centre column' },
   '20-controls': { group: 'visual', short: '控件', shortEn: 'Controls' },
   '30-tokens': { group: 'visual', short: '颜色与字体', shortEn: 'Colour and type' },
   '40-motion': { group: 'visual', short: '动效', shortEn: 'Motion' },
@@ -648,7 +656,7 @@ const GUIDE_GROUPS = {
   start: { zh: '指南概览', en: 'Guide overview' },
   principles: { zh: '先选扩展位置', en: 'Choose an extension area' },
   patterns: { zh: '按场景搭建', en: 'Build by task' },
-  integration: { zh: '公开座位与登记', en: 'Public seats and registration' },
+  integration: { zh: '座位、非官方区域与控件登记', en: 'Seats, unofficial areas and control registration' },
   verify: { zh: '核对与来源', en: 'Evidence and sources' },
 }
 

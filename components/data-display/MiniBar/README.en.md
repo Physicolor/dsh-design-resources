@@ -1,7 +1,7 @@
 ---
 source: components/data-display/MiniBar/README.md
 source-sha256: 12bb3641fb1c7bd0
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # MiniBar
 

@@ -1,7 +1,7 @@
 ---
 source: components/brand/Wordmark/README.md
 source-sha256: 0411996581edb459
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # Wordmark
 

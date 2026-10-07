@@ -85,7 +85,7 @@ const doc = {
   generatedAt: new Date().toISOString(),
   counts: { total: rules.length, byLevel, byDetection: byTier },
   legend: {
-    level: { required: '必选：任一条为否即不得提交', recommended: '推荐：为否需在 README 写明理由' },
+    level: { required: '必选：任一条为否即不得提交', recommended: '推荐：为否需在 README 写明理由（动效组在推荐里：官方没有公开时长与曲线数值）' },
     detection: { auto: '可由脚本对源码／构建产物／渲染结果判定', semi: '脚本给出候选，需人确认', manual: '无法自动化' },
   },
   rules,

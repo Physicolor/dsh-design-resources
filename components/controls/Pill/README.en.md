@@ -1,7 +1,7 @@
 ---
 source: components/controls/Pill/README.md
 source-sha256: df1a88e352d2b38e
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # Pill
 

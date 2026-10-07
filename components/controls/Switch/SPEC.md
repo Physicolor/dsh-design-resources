@@ -27,11 +27,11 @@
 
 ### 本仓库建议值（非官方数值）
 
-- `@media (prefers-reduced-motion: reduce) { .thumb { transition: none; } }`：官方 `Switch.module.css` 没有声明 reduced-motion 分支。位移只有 16px、时长 120ms，影响很小，但前庭敏感用户对横向滑动更敏感，跟随系统偏好关掉过渡是零成本的。依据 `spec/40-motion.md` 的 `MO-MF-09`（必须响应 `prefers-reduced-motion: reduce`）。
+- `@media (prefers-reduced-motion: reduce) { .thumb { transition: none; } }`：官方 `Switch.module.css` 没有声明 reduced-motion 分支。位移只有 16px、时长 120ms，影响很小，但前庭敏感用户对横向滑动更敏感，跟随系统偏好关掉过渡是零成本的。依据 `spec/40-motion.md` 的 `MO-RC-09`（必须响应 `prefers-reduced-motion: reduce`）。
 
 ### 已知偏差（照实记录，不视为本仓库发明）
 
-- 官方过渡为 `120ms ease`。`spec/40-motion.md` 的 `MO-MF-01` 要求时长取 100 / 150 / 200 / 300 / 350 之一（`MO-MF-01` 表格把 Switch 归入 150ms 档），`MO-MF-06` 禁止把 `ease` 作为交互过渡曲线。本仓库原样保留官方数值，因为 `CT-MF-01` 要求复用官方几何、`CT-MF-12` 禁止覆盖官方控件的几何属性。两个条款在此冲突，记录而不擅自改写；`checks` 中相应条目因此判定为 false。
+- 官方过渡为 `120ms ease`。`spec/40-motion.md` 的 `MO-RC-01` 要求时长取 100 / 150 / 200 / 300 / 350 之一（`MO-RC-01` 表格把 Switch 归入 150ms 档），`MO-RC-06` 禁止把 `ease` 作为交互过渡曲线。本仓库原样保留官方数值，因为 `CT-MF-01` 要求复用官方几何、`CT-MF-12` 禁止覆盖官方控件的几何属性。两个条款在此冲突，记录而不擅自改写；`checks` 中相应条目因此判定为 false。
 
 ### 实现说明
 
@@ -103,14 +103,14 @@ DSH 语义 token：
 2. `label` 为必填属性且最终落到 `aria-label` 上，不允许为空字符串。
 3. 开关外观由 `[aria-checked='true']` 驱动；源码中不出现与 `aria-checked` 并行的第二套状态 class。
 4. 打开态轨道为 `--dsw-alias-brand-primary`；关闭态轨道为 `--dsw-alias-border-l3`。
-5. 滑块在打开态 `translateX(16px)`，过渡只动 `transform`，不动布局属性（`MO-MF-08`）。
+5. 滑块在打开态 `translateX(16px)`，过渡只动 `transform`，不动布局属性（`MO-RC-08`）。
 6. 几何为 36×20，`CT-MF-01` 要求复用官方几何，不得被外部覆盖。
 7. 存在 `:focus-visible` 焦点样式，且不以 `outline: none` 移除后无替代（`AC-MF-10`）。
 8. 焦点环规格为 2px 实线 + `--dsw-alias-brand-primary` + 2px 外偏移（`AC-MF-11`）。
-9. 存在 `prefers-reduced-motion: reduce` 分支并关掉滑块过渡（`MO-MF-09`、`MO-MF-10`；本仓库建议值）。
+9. 存在 `prefers-reduced-motion: reduce` 分支并关掉滑块过渡（`MO-RC-09`、`MO-RC-10`；本仓库建议值）。
 10. 禁用使用原生 `disabled`，源码中不得出现以 `aria-disabled` 替代 `disabled` 的写法。
 11. 轨道存在 `:hover` 视觉（`CT-MF-07` 要求 default / hover / active / focus-visible / disabled 五态齐全）。当前判定：false。
-12. 过渡时长为 150ms 且曲线为 `cubic-bezier(0.40, 0, 0.20, 1)`（`MO-MF-01`、`MO-MF-06`）。当前判定：false，见「已知偏差」。
+12. 过渡时长为 150ms 且曲线为 `cubic-bezier(0.40, 0, 0.20, 1)`（`MO-RC-01`、`MO-RC-06`）。当前判定：false，见「已知偏差」。
 
 ## demo
 

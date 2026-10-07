@@ -1,7 +1,7 @@
 ---
 source: components/layout/PanelHeader/SPEC.md
 source-sha256: a2510460ecac9829
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # PanelHeader · SPEC
 

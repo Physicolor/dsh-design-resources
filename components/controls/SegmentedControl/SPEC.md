@@ -143,7 +143,7 @@ DSH 语义 token：
 13. 段内图标容器固定 16×16、`flex: none`，图标节点带 `aria-hidden="true"`（`AC-MF-14`）。
 14. 两个尺寸的段高分别为 36px 与 28px，均 ≥28px（`AC-MF-01`），且相邻段命中区不重叠（`AC-MF-03`）。
 15. 未选中段的 `:active` 底色来自 `--dsw-alias-interactive-bg-active`，与 hover 底色分属两个官方 token（本仓库建议值）。
-16. 组件不含过渡与动画，因此没有需要 `prefers-reduced-motion` 覆盖的位移（`MO-MF-09` 的适用前提不成立）。
+16. 组件不含过渡与动画，因此没有需要 `prefers-reduced-motion` 覆盖的位移（`MO-RC-09` 的适用前提不成立）。
 
 ## demo
 

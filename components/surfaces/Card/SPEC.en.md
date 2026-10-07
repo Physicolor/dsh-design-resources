@@ -1,7 +1,7 @@
 ---
 source: components/surfaces/Card/SPEC.md
 source-sha256: 3e5dbc8263782c82
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # Card · SPEC
 

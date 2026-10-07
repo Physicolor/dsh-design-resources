@@ -1,0 +1,185 @@
+<!--
+  Worked example: the "toggle the pinned summary" card.
+
+  This is the case `guides/32-header-controls.md` describes in prose: a tool
+  button in the session head's right-hand tool row toggles a floating summary
+  card that sits in the band beside the reading column.
+
+  Every number in the markup is either measured from the product (the reading
+  column 748px, the band 273px on a 1290px centre column, the tool button's
+  28 x 28 hit area, the card's 20px radius) or taken from the component this
+  repository already documents (`components/surfaces/Card`, `spec/40-motion.md`).
+  Where a value is this repository's suggestion, the caption says so.
+
+  The toggle is a real control: click it and the card opens and closes. The
+  transition is 300ms on the standard curve, both directions, and the card's own
+  movement is opacity plus a 4px shift — the band itself is not animated (the
+  reading column is centred and does not reflow), which is what keeps the text
+  from jumping.
+-->
+<div class="pinned">
+  <div class="pinned__home">
+    <button type="button" class="pinned__toggle" aria-pressed="true" aria-controls="pinned-card"
+            aria-label="显示或隐藏置顶摘要" data-t-aria="demo.pinned-summary.toggleAria"
+            data-capture="Session head, tool row">
+      <span data-icon="IconListPenOutline16"></span>
+    </button>
+
+    <div class="pinned__area">
+      <div class="pinned__head">
+        <span class="pinned__title" data-capture="Session head, title">新建会话</span>
+        <span class="pinned__spacer"></span>
+        <span class="pinned__toolbar" data-t="demo.pinned-summary.toolbarHint">会话头部工具行 →</span>
+      </div>
+
+      <div class="pinned__body" data-pinned-body>
+        <div class="pinned__column">
+          <div class="pinned__line"></div>
+          <div class="pinned__line"></div>
+          <div class="pinned__line"></div>
+          <div class="pinned__line"></div>
+          <div class="pinned__line"></div>
+        </div>
+      </div>
+    </div>
+
+    <aside class="pinned__card" id="pinned-card" data-pinned-card aria-hidden="false" data-open="true">
+      <p class="pinned__label" data-t="demo.pinned-summary.cardTitle"></p>
+      <p class="pinned__text" data-t="demo.pinned-summary.cardBody"></p>
+    </aside>
+  </div>
+</div>
+
+<style>
+  .pinned { container-type: inline-size; }
+  .pinned__home {
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    aspect-ratio: 1290 / 560;
+    min-height: 320px;
+    overflow: hidden;
+    border: 1px solid var(--dsw-alias-border-l2, rgba(0, 0, 0, 0.1));
+    border-radius: 12px;
+    background: var(--dsw-alias-bg-base, #fff);
+    container-type: inline-size;
+  }
+  /* The tool button: the geometry from guides/32 — icon 16, hit area 28, radius 8. */
+  .pinned__toggle {
+    position: absolute;
+    z-index: 3;
+    top: 11px;
+    right: 12px;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--dsw-alias-label-secondary, #5f6062);
+    cursor: pointer;
+  }
+  .pinned__toggle:hover { background: var(--dsw-alias-interactive-bg-hover, rgba(38, 49, 72, 0.06)); }
+  .pinned__toggle:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary, #0f1115); outline-offset: 2px; }
+  .pinned__toggle[aria-pressed='true'] { background: var(--dsw-alias-interactive-bg-active, rgba(38, 49, 72, 0.1)); }
+  .pinned__toggle svg { display: block; width: 16px; height: 16px; }
+
+  /* The head keeps the tool row's place so the button does not move when the
+   * card opens: the card floats, the frame does not reflow. */
+  .pinned__area { display: flex; flex: 1; min-width: 0; flex-direction: column; }
+  .pinned__head {
+    box-sizing: border-box;
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: 8px;
+    height: 50px;
+    padding: 0 48px 0 28px;
+    border-bottom: 1px solid var(--dsw-alias-border-l2, rgba(0, 0, 0, 0.06));
+  }
+  .pinned__title { font-size: 14px; line-height: 22px; color: var(--dsw-alias-label-primary, #0f1115); }
+  .pinned__spacer { flex: 1; }
+  .pinned__toolbar { font-size: 12px; line-height: 18px; color: var(--dsw-alias-label-tertiary, #81858c); }
+  .pinned__body {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    padding: 20px 32px;
+    background: var(--dsw-alias-bg-base, #fff);
+    background-image: radial-gradient(circle at 1px 1px, var(--dsw-alias-border-l3, rgba(0, 0, 0, 0.08)) 1px, transparent 0);
+    background-size: 16px 16px;
+  }
+  /* The reading column: a fixed 748px, centred — the band is whatever is left. */
+  .pinned__column { box-sizing: border-box; width: 100%; max-width: 748px; margin: 0 auto; }
+  .pinned__line {
+    margin: 0 0 12px;
+    height: 10px;
+    border-radius: 999px;
+    background: var(--dsw-alias-border-l3, rgba(0, 0, 0, 0.08));
+  }
+  .pinned__line:nth-of-type(2) { width: 86%; }
+  .pinned__line:nth-of-type(3) { width: 92%; }
+  .pinned__line:nth-of-type(4) { width: 64%; }
+  .pinned__line:nth-of-type(5) { width: 78%; }
+
+  /* The card: pinned to the band. `min(273px, ...)` is the width rule the guide
+   * gives — the band is the remainder beside the 748px column, so the card is
+   * capped by the 273px the product yields on a 1290px centre column, and
+   * collapses rather than shrinking below 240px. */
+  .pinned__card {
+    position: absolute;
+    z-index: 2;
+    top: 66px;
+    right: 16px;
+    box-sizing: border-box;
+    width: min(273px, max(0px, 100% - 16px - 16px - 748px - 32px));
+    padding: 14px 16px;
+    border: 0;
+    border-radius: 20px;                                  /* Card SPEC: --dsw-radius-xl */
+    background: var(--dsw-alias-bg-layer-2, #f7f8f9);
+    box-shadow: var(--dsw-elevation-soft, 0 4px 16px rgba(0, 0, 0, 0.08));
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1),
+                transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .pinned__card[data-open='false'] { opacity: 0; transform: translateY(-4px); pointer-events: none; }
+  .pinned__label { margin: 0 0 6px; font-size: 13px; line-height: 20px; font-weight: 600; color: var(--dsw-alias-label-primary, #0f1115); }
+  .pinned__text { margin: 0; font-size: 13px; line-height: 20px; color: var(--dsw-alias-label-tertiary, #81858c); }
+
+  @container (max-width: 1180px) {
+    /* Below this the band cannot hold a readable card: it folds into the head
+     * (the same three-way choice the guide gives for zero-width behaviour). */
+    .pinned__card { display: none; }
+    .pinned__toolbar::after { content: ''; }
+    .pinned__folded { display: inline; }
+  }
+  .pinned__folded { display: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pinned__card { transition: opacity 1ms linear; transform: none; }
+    .pinned__card[data-open='false'] { transform: none; }
+  }
+</style>
+
+<script>
+  (function () {
+    'use strict'
+    var root = window.__DSH_DEMO_ROOT || document
+    var toggle = root.querySelector('.pinned__toggle')
+    var card = root.querySelector('[data-pinned-card]')
+    if (toggle === null || card === null) return
+    toggle.addEventListener('click', function () {
+      var open = card.getAttribute('data-open') === 'true'
+      card.setAttribute('data-open', open ? 'false' : 'true')
+      card.setAttribute('aria-hidden', open ? 'true' : 'false')
+      toggle.setAttribute('aria-pressed', open ? 'false' : 'true')
+    })
+  })()
+</script>

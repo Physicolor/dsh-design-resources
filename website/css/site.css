@@ -390,6 +390,12 @@ body[data-resizing] { cursor: col-resize; user-select: none; }
 /* ── main ──────────────────────────────────────────────────────────── */
 
 .main-inner { max-width: 920px; margin: 0 auto; }
+/* A specimen that reproduces a whole 800px-wide window needs room for it, or the
+ * right-hand controls are clipped. Widening the reading column beats shrinking
+ * the replica: the replica's geometry is the thing being asserted. It scrolls
+ * horizontally on a narrow screen rather than reflowing. */
+.main-inner:has(.demo--xwide) { max-width: 1920px; }
+.demo--xwide .demo__stage { overflow-x: auto; overflow-y: hidden; }
 .main-inner:has(.demo--wide) { max-width: 1480px; }
 
 .hero { margin-bottom: var(--site-s7); }
@@ -751,23 +757,17 @@ code, .mono { font-family: var(--site-font-mono); font-size: 12px; }
     align-items: start;
     gap: var(--site-s4);
 }
-.demo__evidence, .demo__example, .demo__proof {
+.demo__example {
     min-width: 0;
     border: 1px solid var(--site-line-soft);
     border-radius: var(--site-radius-m);
     overflow: hidden;
     background: var(--site-bg);
 }
-.demo__proof {
-    padding: var(--site-s4);
-    color: var(--site-label-2);
-    font-size: var(--site-text-note);
-    line-height: 1.55;
-    overflow-wrap: anywhere;
-}
-.demo__proof strong { display: block; margin-bottom: var(--site-s2); color: var(--site-label); font-size: var(--site-text-micro); }
-.demo__proof p { margin: 0; }
-.demo__proof p + p { margin-top: var(--site-s2); }
+/* `.demo__proof` (the provenance panel) used to sit beside the specimen and
+ * halved its width. The facts it carried are still validated at build time and
+ * still on the page — as the caption line under the figure — so the panel is
+ * gone and the specimen takes the whole figure. */
 .demo__panel-title {
     margin: 0;
     padding: 10px 12px;
@@ -841,6 +841,48 @@ code, .mono { font-family: var(--site-font-mono); font-size: 12px; }
 }
 .demo--wide .demo__comparison { grid-template-columns: minmax(0, 1fr); }
 .demo--wide .demo__stage { overflow-x: auto; overflow-y: hidden; }
+
+/* ── window structure: the replica and the band tables side by side ── */
+
+/* The replica is the answer to "what is this screen made of", so it wants the
+ * full content width: at a 1.25:1 side-by-side split it was a 484px thumbnail
+ * (measured) and its 1570px-wide drawing scaled to 0.31. The side-by-side only
+ * happens where both halves stay legible — 1800px of stage — and below that the
+ * replica takes the whole column and the band tables follow underneath. */
+.window__split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--site-s5);
+    align-items: start;
+}
+@media (min-width: 1800px) {
+    .window__split { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); }
+}
+.window__figure { margin: 0; }
+.window__figureTitle {
+    margin: 0 0 var(--site-s2);
+    font-size: var(--site-text-micro);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--site-label-2);
+}
+/* The framed box itself is inline on the host element: it also carries the
+ * shell's `.sh-stage`, and a host that is also a `.sh-stage` must not be
+ * restyled from outside the shadow root. */
+.window__note {
+    margin: var(--site-s2) 0 0;
+    font-size: var(--site-text-note);
+    line-height: 1.5;
+    color: var(--site-label-3);
+}
+.window__rails h2:first-child { margin-top: 0; }
+.window__hint {
+    margin: 0 0 var(--site-s3);
+    font-size: var(--site-text-note);
+    line-height: 1.5;
+    color: var(--site-label-3);
+}
+.window__link { font-weight: 600; }
 
 /* ── document head (spec pages lead with their own title) ──────────── */
 

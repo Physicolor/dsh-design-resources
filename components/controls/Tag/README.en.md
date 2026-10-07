@@ -1,7 +1,7 @@
 ---
 source: components/controls/Tag/README.md
 source-sha256: e1ae450e5dc71503
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # Tag
 

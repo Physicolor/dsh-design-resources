@@ -1,7 +1,7 @@
 ---
 source: components/feedback/EmptyState/SPEC.md
 source-sha256: 68cd46461436b40f
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # EmptyState · SPEC
 

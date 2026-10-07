@@ -1,8 +1,8 @@
 <!-- Pre-submit checklist: the items, clause ids and detection methods are copied item by item from
-     spec/70-checklist.md (A01–A51 / B01–B13). What this demonstrates is the checklist's own
+     spec/70-checklist.md (A01–A53 / B01–B14). What this demonstrates is the checklist's own
      mechanics — everything is binary, a "no" on any item in the Required group blocks submission,
      and a "no" in the Recommended group needs its reason written in the README. The items are a
-     sample (the full table of 64 is too long); every clause id can be checked back against the document. -->
+     sample (the full table of 67 is too long); every clause id can be checked back against the document. -->
 <!doctype html>
 <html lang="zh-CN">
 <head>
@@ -78,7 +78,7 @@ meter { width: 100%; height: 6px; }
       { id: 'A43', text: '可交互元素命中区 ≥20×20，常规控件达 28×28，相邻不重叠', rule: 'AC-MF-01 / AC-MF-03', how: '自动' },
       { id: 'A45', text: '≤17pt 文本对比度 ≥4.5:1；≥18pt 或粗体 ≥3:1', rule: 'AC-MF-05', how: '自动' },
       { id: 'A11', text: '占用 shadows-shipped-ui 座位时有显式声明与关闭开关', rule: 'SL-MF-08', how: '半自动' },
-      { id: 'A35', text: '交互类动画实测或评估达到 60FPS', rule: 'MO-MF-11', how: '人审' },
+      { id: 'A35', text: '交互类动画实测或评估达到 60FPS', rule: 'MO-RC-11', how: '人审' },
       { id: 'A51', text: '窗口收窄时功能收起而非消失', rule: 'AC-MF-16', how: '人审' },
     ],
     B: [
@@ -112,7 +112,7 @@ meter { width: 100%; height: 6px; }
     }).join('')
 
     var done = items.filter(function (item) { return state[tab][item.id] === true }).length
-    summaryEl.textContent = '共 ' + items.length + ' 条（本表是抽样，文档里 A 组 51 条、B 组 13 条）· 已确认 ' + done + ' 条'
+    summaryEl.textContent = '共 ' + items.length + ' 条（本表是抽样，文档里 A 组 53 条、B 组 14 条）· 已确认 ' + done + ' 条'
 
     if (tab === 'A') {
       var missing = items.length - done

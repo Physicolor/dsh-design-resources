@@ -1,7 +1,7 @@
 ---
 source: components/feedback/InlineNotice/README.md
 source-sha256: f126342c5e645093
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # InlineNotice
 

@@ -1,7 +1,7 @@
 ---
 source: components/patterns/PanelSeat/SPEC.md
 source-sha256: d947a4283c0fca51
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # PanelSeat · SPEC
 

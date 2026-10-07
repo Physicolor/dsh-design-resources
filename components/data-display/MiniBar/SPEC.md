@@ -102,7 +102,7 @@ DSH 语义 token（均可在 `data/tokens.json` 中查到）：
 4. `aria-valuenow` 的取值必须落在 `[0, aria-valuemax]` 闭区间内。
 5. `max <= 0` 或非有限数时，`aria-valuemax` 输出 0、填充宽度为 0（不得为 `NaN` 或负数）。
 6. `showPercent === true` 时，百分比文本节点带 `aria-hidden="true"`。
-7. 填充元素声明 `transition: width 120ms ease`，且样式表包含 `@media (prefers-reduced-motion: reduce)` 分支（`MO-MF-09`，对应 `spec/70-checklist.md` 的 `A34`）。
+7. 填充元素声明 `transition: width 120ms ease`，且样式表包含 `@media (prefers-reduced-motion: reduce)` 分支（`MO-RC-09`，对应 `spec/70-checklist.md` 的 `A34`）。
 8. 轨道与填充的 `border-radius` 均为 `999px`，轨道声明 `overflow: hidden`。
 9. 百分比文本声明 `font-variant-numeric: tabular-nums`（`§ 建议值`）。
 10. `tone` 只影响 `background`，不得改变高度、宽度或圆角。
@@ -119,4 +119,4 @@ DSH 语义 token（均可在 `data/tokens.json` 中查到）：
 - 双轨写作约定：`docs/WRITING.md`
 - 清单条目：`spec/70-checklist.md`（`A34`、`A46`）
 - 无障碍条款：`spec/60-accessibility.md`（`AC-MF-07`）
-- 动效条款：`spec/40-motion.md`（`MO-MF-09`）
+- 动效条款：`spec/40-motion.md`（`MO-RC-09`）

@@ -1,7 +1,7 @@
 ---
 source: components/controls/Input/SPEC.md
 source-sha256: eb4d931ad143d08a
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # Input · SPEC
 

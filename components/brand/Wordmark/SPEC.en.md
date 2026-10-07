@@ -1,7 +1,7 @@
 ---
 source: components/brand/Wordmark/SPEC.md
 source-sha256: ea2b0bfbab2dd4c9
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # Wordmark · SPEC
 

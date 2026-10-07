@@ -1,7 +1,7 @@
 ---
 source: components/patterns/ListRowGroup/README.md
 source-sha256: 299184a0101e0395
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # ListRowGroup
 

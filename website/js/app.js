@@ -488,6 +488,7 @@
             title: t('groups.start'),
             links: guidesIn('start').map(guideLink).concat([
                 { href: href('/why'), label: t('index.why'), active: path === '/why' },
+                { href: href('/window'), label: t('index.window'), active: path === '/window' },
             ]),
         })
 
@@ -806,19 +807,28 @@
         + '</style>'
 
     /**
-     * Mount every product-shell instance a document declares.
+     * Mount one product-shell instance into a shadow root.
      *
-     * A document asks for one with `data-shell='{"highlight":"composer"}'`. The
-     * shell renders into its own shadow root, so its styles cannot leak into the
-     * page and the page's cannot leak into it.
-     * @param root - subtree to scan; a shadow root works too.
+     * Two shapes reach this function, and both end with the replica rendering
+     * into the same root as the stylesheet that positions it:
+     *   - a demo document that declares `<div data-shell="…">` inside its own
+     *     markup → the demo's stage gets a root, the replica mounts there;
+     *   - a page that declares the replica directly → the `[data-shell]` element
+     *     is handed to `DSHShell.mount`, which gives it a root of its own.
+     * Handing a demo's nested `[data-shell]` element a root of its own (what
+     * `mountShells` used to do) put the replica one boundary deeper than the
+     * demo's stylesheets, and it rendered as an unstyled 3159px stack of blocks.
+     * @param host - the stage element (document form) or the `[data-shell]` element.
+     * @param markup - the demo document, when there is one.
+     * @param options - parsed `data-shell` attributes for the document form.
+     * @param shellStylesInjected - true when `host` is the `[data-shell]` element itself.
      */
-    function mountShells(root) {
-        if (window.DSHShell === undefined) return
-        Array.prototype.forEach.call(root.querySelectorAll('[data-shell]'), function (host) {
-            if (host.shadowRoot !== null && host.shadowRoot !== undefined) return
-            var options = {}
-            try { options = JSON.parse(host.getAttribute('data-shell') || '{}') } catch (e) { options = {} }
+    function mountShellInTree(host, markup, options, shellStylesInjected) {
+        var shadow
+        if (shellStylesInjected === true) {
+            /* `host` is the `[data-shell]` element itself (a page declares the
+             * replica directly). `DSHShell.mount` attaches the root, renders into
+             * it and wires it in one call. */
             window.DSHShell.mount(host, {
                 css: D.shellCss || '',
                 icon: function (name) { return iconSvg(name) },
@@ -832,6 +842,50 @@
                 docks: options.docks === true,
                 sidebarOnly: options.sidebarOnly === true,
             })
+            return
+        }
+        /* A demo document declares the replica inside its own markup, so the
+         * replica is mounted where it stands. The stylesheet goes in through
+         * `DSHShell.mount` itself: a `<style>` appended by hand here came back
+         * empty once the shell was nested one level deeper (measured: 0 rules in
+         * the nested root, so `.sh-root` computed to `transform: none` and the
+         * rail laid out at 894px instead of 280). */
+        shadow = host.attachShadow({ mode: 'open' })
+        shadow.innerHTML = toShadowMarkup(markup) + SHADOW_RESET
+        var shell = shadow.querySelector('[data-shell]')
+        if (shell === null) return
+        var config = {}
+        try { config = JSON.parse(shell.getAttribute('data-shell') || '{}') } catch (e) { config = {} }
+        window.DSHShell.mount(shell, {
+            css: D.shellCss || '',
+            icon: function (name) { return iconSvg(name) },
+            chrome: D.chrome || { icons: {}, header: [] },
+            esc: esc,
+            brandMark: (D.brand && D.brand.fish) || '',
+            left: config.left === 'closed' ? 'closed' : 'open',
+            right: config.right === 'open' ? 'open' : 'closed',
+            highlight: config.highlight || null,
+            highlightOnHover: config.hover === true,
+            docks: config.docks === true,
+            sidebarOnly: config.sidebarOnly === true,
+        })
+    }
+
+    /**
+     * Mount every product-shell instance a document declares.
+     *
+     * A document asks for one with `data-shell='{"highlight":"composer"}'`. The
+     * shell renders into its own shadow root, so its styles cannot leak into the
+     * page and the page's cannot leak into it.
+     * @param root - subtree to scan; a shadow root works too.
+     */
+    function mountShells(root) {
+        if (window.DSHShell === undefined) return
+        Array.prototype.forEach.call(root.querySelectorAll('[data-shell]'), function (shell) {
+            if (shell.shadowRoot !== null && shell.shadowRoot !== undefined) return
+            var shellOptions = {}
+            try { shellOptions = JSON.parse(shell.getAttribute('data-shell') || '{}') } catch (e) { shellOptions = {} }
+            mountShellInTree(shell, '', shellOptions, true)
         })
     }
 
@@ -876,6 +930,20 @@
          * @param html - the embedded document.
          */
         var mount = function (host, html) {
+            /* A demo document whose markup *is* a product replica is mounted
+             * with the shell stylesheet already part of the same shadow root, so
+             * the replica renders where it stands instead of into a nested root.
+             * The test has to look at the structure, not at the string: several
+             * demos (`seat-map`, `session-tabs`) *contain* a replica inside a
+             * larger demo, and their own script still has to run against the
+             * demo's shadow root. */
+            var probe = document.createElement('template')
+            probe.innerHTML = toShadowMarkup(html)
+            var only = probe.content.children.length === 1 ? probe.content.firstElementChild : null
+            if (only !== null && only.getAttribute('data-shell') !== null) {
+                mountShellInTree(host, html, null, false)
+                return
+            }
             var shadow = host.attachShadow({ mode: 'open' })
             shadow.innerHTML = toShadowMarkup(html) + SHADOW_RESET
             /* `[data-icon]` 占位符在 demo 里也管用：`hydrateIcons` 走的是
@@ -1087,6 +1155,156 @@
             { title: t('index.resources'), html: ul([t('index.seats'), t('index.icons'), t('index.tokens')]) },
         ])
     }
+
+    /**
+     * One table per region: band, what you see, official seat, extendable.
+     *
+     * The rows are the same facts as `spec/05-region-map.md` §2–§5, kept here as
+     * data because this page is the "recognise the screen first" entry: the
+     * reader should be able to name a band before any seat name is mentioned.
+     * @param id - which region.
+     * @returns an object keyed by language.
+     */
+    function windowParts(id) {
+        var parts = {
+            left: {
+                zh: [
+                    ['品牌行', '标志与产品名', 'sidebar.brand.mark /.name', '宿主 single'],
+                    ['全局面板入口', '「插件」「自动化任务」', 'sidebar.panellist', '可追加'],
+                    ['工作区与会话列表', '工作区、会话列表、搜索', 'sidebar.workspaces', '宿主 single'],
+                    ['会话行的悬停动作', '每行末尾的按钮与「…」菜单', 'sidebar.workspaces.session.row.action', '可追加'],
+                    ['底部：设置入口', '「设置」', 'sidebar.settings', '宿主 single'],
+                    ['底部：扩展动作区', '没有插件时是空的', 'sidebar.footer.action', '可追加'],
+                ],
+                en: [
+                    ['Brand row', 'Mark and product name', 'sidebar.brand.mark /.name', 'Host single'],
+                    ['Global panel entries', 'Plugins, Automated tasks', 'sidebar.panellist', 'Extendable'],
+                    ['Workspaces and sessions', 'Workspaces, session list, search', 'sidebar.workspaces', 'Host single'],
+                    ['Row hover actions', 'Buttons and the ... menu at each row end', 'sidebar.workspaces.session.row.action', 'Extendable'],
+                    ['Footer: settings', 'Settings', 'sidebar.settings', 'Host single'],
+                    ['Footer: action area', 'Empty with no plugins installed', 'sidebar.footer.action', 'Extendable'],
+                ],
+            },
+            middle: {
+                zh: [
+                    ['常驻导航头', '会话标题左边的全局导航；没有选中会话时也在', 'conversation.header.leading', '宿主'],
+                    ['会话头', '标题、标题旁动作、右对齐工具行、最右角', 'conversation.session.header.actions / .utilities / .corner', '工具行可追加'],
+                    ['视图区', '「对话 / 轨迹 / 上下文」这类会话视图，一次渲染一个', 'conversation.view → conversation.session', '可注册视图'],
+                    ['输入卡', '输入框与它的工具行', 'conversation.composer.bar → conversation.input.left / .right', '左右两个 list 可追加'],
+                    ['输入卡上下的插入点', '卡上方、卡下方、卡内浮层', 'conversation.input.dock / composer.dock / input.overlay', '可追加'],
+                ],
+                en: [
+                    ['Persistent nav header', 'Global navigation left of the title; present with no session selected', 'conversation.header.leading', 'Host'],
+                    ['Session head', 'Title, title-side actions, right-aligned tool row, far corner', 'conversation.session.header.actions / .utilities / .corner', 'Tool row extendable'],
+                    ['View area', 'Conversation views such as Conversation / Trajectory / Context; one renders at a time', 'conversation.view → conversation.session', 'Registerable view'],
+                    ['Input card', 'The box and its tool row', 'conversation.composer.bar → conversation.input.left / .right', 'Both lists extendable'],
+                    ['Insertion points', 'Above the card, below the card, inside it as an overlay', 'conversation.input.dock / composer.dock / input.overlay', 'Extendable'],
+                ],
+            },
+            right: {
+                zh: [
+                    ['轨道本体', '第 4 列本身，中栏为它让出宽度', 'rightbar', '替代点'],
+                    ['会话内容区', '当前会话在右栏里的内容', 'rightbar.session', '替代点'],
+                    ['页签正文与标题', '上下文、文件、预览这些页签', 'sidebar.right.pane.tab / .tab.title', '按 key 分发'],
+                    ['页签菜单尾部项', '页签「…」菜单里的追加项', 'sidebar.right.tab.menu.item', '可追加'],
+                    ['文件页签的动作', '文件树页签里的动作位', 'sidebar.right.tab.files.actions', '可追加'],
+                    ['文档预览页签的动作', '预览页签里的动作位', 'sidebar.right.tab.document.actions', '可追加'],
+                    ['展开 / 收起开关', '会话头最右角', 'conversation.session.header.corner', '已被占用'],
+                ],
+                en: [
+                    ['The track itself', 'The fourth column; the centre makes room for it', 'rightbar', 'Replacement point'],
+                    ['Session content', 'What the current session shows in the column', 'rightbar.session', 'Replacement point'],
+                    ['Tab body and title', 'Context, files, previews', 'sidebar.right.pane.tab / .tab.title', 'Dispatched by key'],
+                    ['Tab menu tail items', 'Additions to a tab ... menu', 'sidebar.right.tab.menu.item', 'Extendable'],
+                    ['File tab actions', 'Action slots inside the file-tree tab', 'sidebar.right.tab.files.actions', 'Extendable'],
+                    ['Document tab actions', 'Action slots inside the preview tab', 'sidebar.right.tab.document.actions', 'Extendable'],
+                    ['Open / close control', 'The session head far corner', 'conversation.session.header.corner', 'Already occupied'],
+                ],
+            },
+            unofficial: {
+                zh: [
+                    ['中栏正文两侧的留白带', '无', '社区借道其他座位实现'],
+                    ['被当作面板用的 conversation.input.overlay', '有，但用途是「输入卡内的浮层」', '被当作中栏面板使用'],
+                    ['独立插件设置窗口入口', '无', '用 settings.section 落到宿主设置窗口'],
+                    ['全局顶栏 / 窗口级命令栏', '无', '不存在；shell.overlay 是浮层不是栏'],
+                ],
+                en: [
+                    ['The bands beside the reading column', 'None', 'The community borrows another seat'],
+                    ['conversation.input.overlay used as a panel', 'Exists, but means "overlay inside the input card"', 'Used as a centre-column panel'],
+                    ['An entry for a plugin\'s own settings window', 'None', 'Use settings.section inside the host settings window'],
+                    ['A global top bar / window-level command bar', 'None', 'It does not exist; shell.overlay is an overlay, not a bar'],
+                ],
+            },
+        }
+        return parts[id][LANG === 'en' ? 'en' : 'zh']
+    }
+
+    /**
+     * The window-structure page: one screen, region by region.
+     *
+     * This is the page a plugin author should read before any seat name is
+     * useful — the author's first question is "what is this screen made of",
+     * not "which seat do I register".
+     */
+    function pageWindow() {
+        var columns = {
+            part: t('window.columns.part'),
+            what: t('window.columns.what'),
+            seat: t('window.columns.seat'),
+            append: t('window.columns.append'),
+        }
+        /** One region table. */
+        var table = function (id) {
+            return '<table><thead><tr><th>' + esc(columns.part) + '</th><th>' + esc(columns.what)
+                + '</th><th>' + esc(columns.seat) + '</th><th>' + esc(columns.append) + '</th></tr></thead><tbody>'
+                + windowParts(id).map(function (row) {
+                    return '<tr><td>' + esc(row[0]) + '</td><td>' + esc(row[1]) + '</td><td><code>' + esc(row[2]) + '</code></td><td>' + esc(row[3]) + '</td></tr>'
+                }).join('')
+                + '</tbody></table>'
+        }
+        var section = function (title, hint, id) {
+            return '<h2>' + esc(title) + '</h2><p class="window__hint">' + esc(hint) + '</p>' + table(id)
+        }
+
+        mainEl.innerHTML = '<div class="main-inner">'
+            + '<div class="hero">'
+            + '<p class="hero__eyebrow">' + esc(t('groups.start')) + '</p>'
+            + '<h1 class="hero__title">' + esc(t('window.title')) + '</h1>'
+            + '<p class="hero__lede">' + esc(t('window.lede')) + '</p>'
+            + '</div>'
+            + '<section class="section">'
+            + '<div class="window__split">'
+            + '<figure class="window__figure">'
+            + '<figcaption class="window__figureTitle">' + esc(t('window.liveTitle')) + '</figcaption>'
+            + '<div class="window__stage" style="display:block;border:1px solid var(--site-line-soft);overflow:hidden;background:var(--site-bg-sunken)" data-shell=\'{"hover":true,"highlight":"left","right":"closed"}\'></div>'
+            + '<p class="window__note">' + esc(t('window.liveNote')) + '</p>'
+            + '</figure>'
+            + '<div class="prose window__rails">'
+            + section(t('window.leftTitle'), t('window.leftHint'), 'left')
+            + section(t('window.middleTitle'), t('window.middleHint'), 'middle')
+            + '</div>'
+            + '</div>'
+            + '</section>'
+            + '<section class="section"><div class="prose">'
+            + section(t('window.rightTitle'), t('window.rightHint'), 'right')
+            + '</div></section>'
+            + '<section class="section"><div class="prose">'
+            + section(t('window.unofficialTitle'), t('window.unofficialHint'), 'unofficial')
+            + '<p><a class="window__link" href="' + esc(href('/spec/05-region-map')) + '">' + esc(t('window.openSpec')) + '</a></p>'
+            + '</div></section>'
+            + '</div>'
+
+        /* The page declares a product replica directly, so it is mounted from
+         * here rather than through a demo stage. */
+        var stage = mainEl.querySelector('.window__stage')
+        if (stage !== null) mountShells(mainEl)
+
+        renderAside([
+            { title: t('window.unofficialTitle'), html: p(t('window.unofficialHint')) },
+            { title: t('index.spec'), html: ul([t('index.seats'), t('index.inventory')]) },
+        ])
+    }
+
 
     /**
      * How much of one document group exists in the reader's language.
@@ -1669,6 +1887,7 @@
 
         if (path === '/') pageHome()
         else if (path === '/why') pageWhy()
+        else if (path === '/window') pageWindow()
         else if (parts[0] === 'guide') pageGuide(parts[1] || null)
         else if (parts[0] === 'spec') pageSpec(parts[1] || null)
         else if (parts[0] === 'components') pageComponents(parts[1] || null)

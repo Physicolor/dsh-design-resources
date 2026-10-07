@@ -36,7 +36,7 @@
 - `.row:focus-visible` → `outline: 2px solid var(--dsw-alias-brand-primary)` + `outline-offset: 2px`。官方 `DisclosureRow.module.css` 没有任何焦点样式。规格取自 `spec/60-accessibility.md` 的 `AC-MF-11`，写法与官方 `Switch.module.css` 的 `:focus-visible` 一致。
 - `.leading:focus-visible` → 同样的 2px brand-primary，`outline-offset: -2px`（内偏移）。官方 `.row` 有 `overflow: hidden`，leading 左边贴着行左边缘，2px 外偏移的焦点环会被裁掉；`AC-MF-12` 明确要求这种情况改用内偏移。
 - `button.leading::after { inset: -4px }` → 无背景、无边框的透明伪元素，把仅图标形态的热区四周各扩 4px。左侧 4px 被 `.row` 的 `overflow: hidden` 裁掉，**实际有效热区 20×24**（`AC-MF-01` 下限 20×20；常规控件目标 28×28 未达到，因此更推荐 `expandOnRowClick`）。可见几何不变。
-- `@media (prefers-reduced-motion: reduce)` 分支 → `transition: none`。官方没有这条分支。原 README 记录的理由：`spec/40-motion.md` 的 `MO-MF-09` 是强制项；对应的自动判定条目是 `spec/70-checklist.md` 的 `A34`（样式表中不含 `prefers-reduced-motion` 即违规）。
+- `@media (prefers-reduced-motion: reduce)` 分支 → `transition: none`。官方没有这条分支。原 README 记录的理由：`spec/40-motion.md` 的 `MO-RC-09` 是强制项；对应的自动判定条目是 `spec/70-checklist.md` 的 `A34`（样式表中不含 `prefers-reduced-motion` 即违规）。
 
 ### 本仓库决策（改写官方行为，不是新增数值）
 

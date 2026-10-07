@@ -1,7 +1,7 @@
 ---
 source: components/controls/ShortcutKeys/SPEC.md
 source-sha256: d17cd0c2474ed7fc
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # ShortcutKeys · SPEC
 

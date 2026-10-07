@@ -1,7 +1,7 @@
 ---
 source: components/layout/ToolbarRow/SPEC.md
 source-sha256: 0ffaf0b1608bc02f
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # ToolbarRow · SPEC
 

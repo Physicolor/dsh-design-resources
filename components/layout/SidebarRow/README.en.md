@@ -1,7 +1,7 @@
 ---
 source: components/layout/SidebarRow/README.md
 source-sha256: da2a7a94ee1ae7c7
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # SidebarRow
 

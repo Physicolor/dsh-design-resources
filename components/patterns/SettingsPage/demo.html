@@ -194,7 +194,7 @@
   width: 188px;
   padding: 22px 12px 0;
 }
-.navTitle { padding: 0 12px; font-size: 16px; line-height: 24px; font-weight: 600; }
+.navTitle { padding: 0 12px; font-size: 16px; line-height: 24px; font-weight: 500; }
 .navList { display: flex; flex-direction: column; gap: 4px; }
 .navItem {
   box-sizing: border-box;
@@ -215,8 +215,23 @@
 .navItem:hover:not([aria-current='page']) { background: var(--dsw-alias-interactive-bg-hover); }
 .navItem[aria-current='page'] { background: var(--dsh-nav-active); color: var(--dsw-alias-label-primary); }
 .navItem:focus-visible { outline: 2px solid var(--dsw-alias-brand-primary); outline-offset: 2px; }
-.navItemIcon { display: inline-flex; flex: none; width: 16px; height: 16px; color: var(--dsw-alias-label-tertiary); }
-.navItemIcon svg { display: block; width: 100%; height: 100%; }
+/* 分区图标：**不是**应用图标那一层。官方设置窗口实测（docs/reference/settings-panel.json
+ * 第 4–28 行，逐像素）：
+ *   navCell 164 × 40 · 圆角 12 · padding 9/16/9/12 · gap 8 · 选中底 rgb(235,238,242)
+ *   图标 svg 16 × 16，落在 x = 409（= 397 + 12）；标签 14/22 起 x = 433
+ *   nav 内 padding 22/12/0/12、gap 18；navTitle 16/24 500；navList gap 4
+ * 早前误用 plugin-row.json 的 50 × 50 / 36 × 36（那是插件列表的**应用图标**，另一层）。 */
+.navItemIcon {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  color: var(--dsw-alias-label-tertiary);
+}
+.navItemIcon svg { display: block; width: 16px; height: 16px; }
 .navItemLabel { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 .content { display: flex; flex: 1; min-width: 0; flex-direction: column; }
@@ -335,22 +350,40 @@
 .switchThumb { display: block; width: 16px; height: 16px; border-radius: 50%; background: var(--dsw-alias-label-primary-foreground); transition: transform 120ms ease; }
 .switch[aria-checked='true'] .switchThumb { transform: translateX(16px); }
 
-/* Number stepper ← captured: two 17 × 12 arrows, up and down, radius 4; the unit beside the value is in the secondary colour */
-.stepper { display: inline-flex; flex-direction: column; gap: 2px; }
-.stepperArrow {
+/* Number stepper ← captured exactly, docs/reference/settings-panel.json 第 99–111 行：
+   行内控制位 95 × 36、gap 8；步进框 stepper 72 × 36、圆角 12、底 rgb(245,246,247)；
+   值 14/22 主色、单位 px 14/22 三级色；右侧箭头组 17 宽、两枚箭头各 17 × 12、圆角 4、
+   间隔 2，箭头底 color(srgb 1 1 1 / 0.75)。 */
+.rowControl { display: inline-flex; align-items: center; gap: 8px; }
+.stepper {
+  display: inline-flex;
+  align-items: stretch;
+  gap: 6px;
   box-sizing: border-box;
+  height: 36px;
+  padding: 0 8px 0 12px;
+  border-radius: 12px;
+  background: rgb(245, 246, 247);
+}
+.stepperValue { display: inline-flex; align-items: center; font-size: 14px; line-height: 22px; color: var(--dsw-alias-label-primary); }
+.arrows { display: inline-flex; flex-direction: column; justify-content: center; gap: 2px; }
+.arrow {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 17px;
   height: 12px;
   padding: 0;
   border: 0;
   border-radius: 4px;
-  background: transparent;
+  background: color(srgb 1 1 1 / 0.75);
   color: var(--dsw-alias-label-tertiary);
   cursor: pointer;
 }
-.stepperArrow:hover { background: var(--dsw-alias-interactive-bg-hover); }
-.number { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; line-height: 22px; }
-.numberUnit { color: var(--dsw-alias-label-tertiary); }
+.arrow:hover { background: var(--dsw-alias-interactive-bg-hover); }
+.arrow svg { display: block; width: 9px; height: 9px; }
+.unit { font-size: 14px; line-height: 22px; color: var(--dsw-alias-label-tertiary); }
 
 /* The Button component's geometry, taken one by one from controls/Button/button.module.css; only sm + outline are used here. */
 .button {
@@ -506,7 +539,7 @@ body {
 
             <div class="row">
               <div class="rowText"><div class="rowTitle" data-capture="General settings row title">字号大小</div><div class="rowDesc" data-capture="General settings row description">仅影响会话内容的字号</div></div>
-              <div class="rowControl"><span class="number">14<span class="numberUnit">px</span></span></div>
+              <div class="rowControl"><div class="stepper"><span class="stepperValue">14</span><span class="arrows"><button type="button" class="arrow" aria-label="增大字号" data-t-aria="demo.settings-page.fontUpAria"><span data-icon="chevron-up"></span></button><button type="button" class="arrow" aria-label="减小字号" data-t-aria="demo.settings-page.fontDownAria"><span data-icon="chevron-down"></span></button></span></div><span class="unit">px</span></div>
             </div>
 
             <div class="row">

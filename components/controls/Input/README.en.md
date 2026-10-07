@@ -1,7 +1,7 @@
 ---
 source: components/controls/Input/README.md
 source-sha256: f4e5cfe8947037b6
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # Input
 

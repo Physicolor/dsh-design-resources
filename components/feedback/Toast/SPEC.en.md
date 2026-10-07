@@ -1,7 +1,7 @@
 ---
 source: components/feedback/Toast/SPEC.md
-source-sha256: 91ddc43ccce85432
-translated-at: 2026-10-05
+source-sha256: 79cf76ca62112747
+translated-at: 2026-10-07
 ---
 
 # Toast · SPEC
@@ -116,14 +116,14 @@ Machine-checkable binary constraints (a true / false judgement settles them, and
 2. The root node does not carry `aria-hidden` (the reverse check of `AC-MF-14`).
 3. With `icon` passed, the icon container carries `aria-hidden="true"`.
 4. In the source the root node's `pointer-events` resolves to `none`, and the root node has no pointer event handler such as `onClick` bound to it.
-5. The `@media (prefers-reduced-motion: reduce)` branch exists, and the animation inside it contains no `transform` translation (`MO-MF-09`; checklist `A34`).
+5. The `@media (prefers-reduced-motion: reduce)` branch exists, and the animation inside it contains no `transform` translation (`MO-RC-09`; checklist `A34`).
 6. The unmount timer expression is `holdMs + TOAST_FADE_MS`, and `TOAST_FADE_MS` matches the fade-out keyframe's `1000ms`.
 7. The inline custom property `--dsh-toast-hold` takes its value from `holdMs` (the same value drives both the animation delay and the timer).
 8. With `anchor` passed, a `window` `resize` listener is registered and removed in the cleanup function.
 9. The root node is mounted to `document.body` through `createPortal`.
 10. The root node's width is `max-content` with a `max-width`, and no fixed width pinches the text container shut (`AC-RC-17`; checklist `B13`).
-11. Duration values: slide-in `160ms`, fade-out `1000ms`, both taken from the official CSS, **not** among the five gears `MO-MF-01` allows (100 / 150 / 200 / 300 / 350), and not meeting "no more than 350ms" either. This repository gives the official anchor priority, so this item needs human confirmation (against checklist `A30`).
-12. The transition curves are `ease-out` / `ease`, taken from the official source and not equal to `MO-MF-04`'s standard curve (`MO-MF-06`'s ban on a curve other than the official default). The official anchor takes priority, so this item needs human confirmation (against checklist `A31`).
+11. Duration values: slide-in `160ms`, fade-out `1000ms`, both taken from the official CSS, **not** among the five gears `MO-RC-01` allows (100 / 150 / 200 / 300 / 350), and not meeting "no more than 350ms" either. This repository gives the official anchor priority, so this item needs human confirmation (against checklist `A30`).
+12. The transition curves are `ease-out` / `ease`, taken from the official source and not equal to `MO-RC-04`'s standard curve (`MO-RC-06`'s ban on a curve other than the official default). The official anchor takes priority, so this item needs human confirmation (against checklist `A31`).
 13. The copy is a single short sentence of text (human review, see "How to use it well" in `README.md`).
 14. No queue is maintained inside the component: when several notices appear at once, which one covers which is decided by the caller (`key` remounting) (human review, see "When not to use it" in `README.md`).
 

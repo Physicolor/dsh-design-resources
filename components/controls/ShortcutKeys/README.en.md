@@ -1,7 +1,7 @@
 ---
 source: components/controls/ShortcutKeys/README.md
 source-sha256: efe58e4ae16dea96
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # ShortcutKeys
 

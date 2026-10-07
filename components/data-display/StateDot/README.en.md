@@ -1,7 +1,7 @@
 ---
 source: components/data-display/StateDot/README.md
 source-sha256: 7bf4cec6a1aa5b8f
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # StateDot
 

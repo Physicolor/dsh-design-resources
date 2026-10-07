@@ -1,7 +1,7 @@
 ---
 source: components/layout/ToolbarRow/README.md
 source-sha256: 337e8829ad5db882
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # ToolbarRow
 

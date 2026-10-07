@@ -1,7 +1,7 @@
 ---
 source: components/feedback/EmptyState/README.md
 source-sha256: e623758d4437638d
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # EmptyState
 

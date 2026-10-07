@@ -1,7 +1,7 @@
 ---
 source: components/controls/Button/README.md
 source-sha256: 429b8ff7f97d88ae
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # Button
 

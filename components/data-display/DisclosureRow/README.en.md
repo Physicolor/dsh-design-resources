@@ -1,7 +1,7 @@
 ---
 source: components/data-display/DisclosureRow/README.md
 source-sha256: e8e49b504dccffa2
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # DisclosureRow
 

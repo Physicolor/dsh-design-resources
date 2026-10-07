@@ -1,7 +1,7 @@
 ---
 source: components/feedback/Toast/README.md
 source-sha256: f1c51e4120b4c2af
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # Toast
 

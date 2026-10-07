@@ -1,7 +1,7 @@
 ---
 source: components/feedback/RunningRing/README.md
 source-sha256: 6e225c23198655d0
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # RunningRing
 

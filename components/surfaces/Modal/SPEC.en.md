@@ -1,7 +1,7 @@
 ---
 source: components/surfaces/Modal/SPEC.md
 source-sha256: 9e1cd5c892548a54
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # Modal · SPEC
 

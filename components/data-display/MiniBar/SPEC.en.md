@@ -1,7 +1,7 @@
 ---
 source: components/data-display/MiniBar/SPEC.md
-source-sha256: 9858125b1e7bd32f
-translated-at: 2026-10-05
+source-sha256: fdb4101c1f6aff3c
+translated-at: 2026-10-07
 ---
 # MiniBar · SPEC
 
@@ -107,7 +107,7 @@ Machine-checkable binary constraints (decidable as true / false, and directly ex
 4. The value of `aria-valuenow` has to fall within the closed interval `[0, aria-valuemax]`.
 5. When `max <= 0` or is a non-finite number, `aria-valuemax` outputs 0 and the fill width is 0 (never `NaN` or negative).
 6. When `showPercent === true`, the percentage text node carries `aria-hidden="true"`.
-7. The fill element declares `transition: width 120ms ease`, and the stylesheet contains a `@media (prefers-reduced-motion: reduce)` branch (`MO-MF-09`, corresponding to `A34` in `spec/70-checklist.md`).
+7. The fill element declares `transition: width 120ms ease`, and the stylesheet contains a `@media (prefers-reduced-motion: reduce)` branch (`MO-RC-09`, corresponding to `A34` in `spec/70-checklist.md`).
 8. The `border-radius` of both the track and the fill is `999px`, and the track declares `overflow: hidden`.
 9. The percentage text declares `font-variant-numeric: tabular-nums` (`§ proposed values`).
 10. `tone` affects `background` only and must not change height, width or corner radius.
@@ -124,4 +124,4 @@ Machine-checkable binary constraints (decidable as true / false, and directly ex
 - Two-track writing convention: `docs/WRITING.md`
 - Checklist entries: `spec/70-checklist.md` (`A34`, `A46`)
 - Accessibility clauses: `spec/60-accessibility.md` (`AC-MF-07`)
-- Motion clauses: `spec/40-motion.md` (`MO-MF-09`)
+- Motion clauses: `spec/40-motion.md` (`MO-RC-09`)

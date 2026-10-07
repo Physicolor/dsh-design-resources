@@ -1,7 +1,7 @@
 ---
 source: components/patterns/SettingsPage/README.md
 source-sha256: 00471dea8e3ade47
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # SettingsPage skeleton
 

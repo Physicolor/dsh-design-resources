@@ -1,7 +1,7 @@
 ---
 source: components/controls/SegmentedControl/SPEC.md
-source-sha256: 5d4a89f125fd3177
-translated-at: 2026-10-05
+source-sha256: 8127719f961c29e8
+translated-at: 2026-10-07
 ---
 # SegmentedControl · SPEC
 
@@ -148,7 +148,7 @@ Binary constraints that can be detected automatically (true / false settles each
 13. The icon container inside a segment is fixed at 16×16 with `flex: none`, and the icon node carries `aria-hidden="true"` (`AC-MF-14`).
 14. The two sizes' segment heights are 36px and 28px, both ≥28px (`AC-MF-01`), and adjacent segments' hit areas do not overlap (`AC-MF-03`).
 15. The unselected segment's `:active` background comes from `--dsw-alias-interactive-bg-active`, a different official token from the hover background (value proposed here).
-16. The component has no transitions or animations, so there is no movement that needs a `prefers-reduced-motion` override (the premise of `MO-MF-09` does not hold).
+16. The component has no transitions or animations, so there is no movement that needs a `prefers-reduced-motion` override (the premise of `MO-RC-09` does not hold).
 
 ## demo
 

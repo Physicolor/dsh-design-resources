@@ -1,7 +1,7 @@
 ---
 source: components/data-display/KeyValueList/README.md
 source-sha256: 6d196577f48fe363
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # KeyValueList
 

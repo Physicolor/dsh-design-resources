@@ -1,7 +1,7 @@
 ---
 source: components/controls/SegmentedControl/README.md
 source-sha256: 8695e27e1b4b8378
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # SegmentedControl
 

@@ -1,7 +1,7 @@
 ---
 source: components/controls/Pill/SPEC.md
 source-sha256: 99419c2f4f49866e
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # Pill · SPEC
 

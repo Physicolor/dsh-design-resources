@@ -133,7 +133,7 @@ DSH 语义 token（均可在 `data/tokens.json` 中查到）：
 8. 根节点存在 `:focus-visible` 焦点样式，且不使用 `outline: none` 后无替代（`AC-MF-10`；清单 `A48`）。
 9. 焦点环为 2px 实线 + 2px 外偏移（`AC-MF-11`）。
 10. 关闭控件存在 `:focus-visible` 样式（清单 `A48`）。
-11. 存在 `@media (prefers-reduced-motion: reduce)` 分支（`MO-MF-09`；清单 `A34`）。
+11. 存在 `@media (prefers-reduced-motion: reduce)` 分支（`MO-RC-09`；清单 `A34`）。
 12. 底色与文字色全部来自 `--dsw-*` 语义 token 或 `color-mix` 派生，源码中无硬编码色值（清单 `A19` / `A23`）。
 13. 相邻命中区不重叠（`AC-MF-03`）：关闭控件与根按钮是同一命中区内的主从关系，关闭控件自身不构成独立相邻元素。
 14. 四种语气在灰度下可区分或有图标 / 文案补充（`AC-MF-07`；清单 `A46`，半自动）。

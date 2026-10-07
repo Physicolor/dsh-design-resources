@@ -1,7 +1,7 @@
 ---
 source: components/brand/FishMark/README.md
 source-sha256: b90456af2ec722d6
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # FishMark
 

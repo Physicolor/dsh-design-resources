@@ -1,7 +1,7 @@
 ---
 source: components/controls/Switch/README.md
 source-sha256: c9c47a26a96e1d21
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # Switch
 

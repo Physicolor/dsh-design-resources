@@ -1,7 +1,7 @@
 ---
 source: components/layout/SettingsRow/SPEC.md
 source-sha256: be745db2ab92894a
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # SettingsRow · SPEC
 

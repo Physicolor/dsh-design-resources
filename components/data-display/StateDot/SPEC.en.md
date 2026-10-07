@@ -1,7 +1,7 @@
 ---
 source: components/data-display/StateDot/SPEC.md
-source-sha256: fef8b1026bdd0bd7
-translated-at: 2026-10-05
+source-sha256: 56cf93ded6421ac0
+translated-at: 2026-10-07
 ---
 # StateDot · SPEC
 
@@ -39,7 +39,7 @@ Read every row as "value ← filename selector".
 
 - The `@media (prefers-reduced-motion: reduce)` branch: the official `StateDot.module.css` has no such branch at all.
   This repo adds it, taking `animation: none` plus all cells parked on the middle step `opacity: 0.6`.
-  The reason: `MO-MF-09` in `spec/40-motion.md` is mandatory (its criterion is literally "a stylesheet that does not contain
+  The reason: `MO-RC-09` in `spec/40-motion.md` is mandatory (its criterion is literally "a stylesheet that does not contain
   `prefers-reduced-motion` is a violation"), and the chase animation counts as the "non-essential continuous motion" that clause
   names; with the animation stopped, ongoing is still distinguishable from the other four states by "the shape of the square matrix
   + the blue" (`AC-MF-07` does not carry information through animation).
@@ -96,7 +96,7 @@ Component-level CSS variables (internal to this repo, not DSH tokens; defined on
 
 - Both branches hard-code `aria-hidden="true"`: the state information is completely invisible to assistive technology, so the text beside it has to carry the semantics (`<span><StateDot state="error" /> Build failed</span>`). A usage with only a dot and no text is a defect.
 - State must not be carried by colour alone (`AC-MF-07`): converted to greyscale, `done`'s green and `idle`'s grey can look close, so the text has to spell out the outcome rather than just giving a dot.
-- `ongoing`'s infinite loop animation is allowed by `MO-MF-07` (that clause permits looping animation only for "expressing a process that is in progress"); the other four states must not add a looping animation.
+- `ongoing`'s infinite loop animation is allowed by `MO-RC-07` (that clause permits looping animation only for "expressing a process that is in progress"); the other four states must not add a looping animation.
 - `size` changes only the outer diameter, not the inner-circle ratio. The official default is 10px; when scaling up to 12–16px for use at the start of a line, you need to confirm for yourself that it aligns with the line height of the text on that line — the official source gives no use case for a size other than 10px.
 - `idle` uses `--dsw-alias-label-tertiary`: it is the tertiary text colour, and on `bg-layer-1/2` its non-text contrast is about the same as secondary body text. When placing an `idle` dot on a lighter or darker background colour, re-check the contrast (`AC-MF-06` suggests ≥3:1 for non-text elements).
 - With reduced motion the animation is stopped, but ongoing is still distinguishable from the other four states by "the shape of the square matrix + the blue", so the information does not depend on animation (`AC-MF-07`).
@@ -110,10 +110,10 @@ Machine-checkable binary constraints (decidable true / false, ready to become li
 3. The matrix squares' `animationDelay` is `(index - 8) * 125` (in ms), not a hard-coded value.
 4. The other four states' `data-state` matches `state`, and the colour mapping maps one-to-one onto the four token families `success` / `warn` / `error` / `label-tertiary`.
 5. `ongoing`'s blue comes from `--dsw-static-deepseek-450` and must not be switched to `--dsw-alias-state-business-primary`.
-6. The stylesheet contains an `@media (prefers-reduced-motion: reduce)` branch, and under that branch `.cell`'s `animation` is `none` (`MO-MF-09`, matching `A34` in `spec/70-checklist.md`).
+6. The stylesheet contains an `@media (prefers-reduced-motion: reduce)` branch, and under that branch `.cell`'s `animation` is `none` (`MO-RC-09`, matching `A34` in `spec/70-checklist.md`).
 7. The keyframe name is `dsh-design-state-dot-chase` and must not use the official `dsh-state-dot-chase` (to avoid the same-name overwrite).
 8. The keyframe's four steps are `1 / 0.6 / 0.35 / 0.15`, with breaks at `0 / 12.5% / 25% / 37.5%`.
-9. Apart from `ongoing`, no state may add an `animation` or `@keyframes` declaration (`MO-MF-07`).
+9. Apart from `ongoing`, no state may add an `animation` or `@keyframes` declaration (`MO-RC-07`).
 10. `.dot::after`'s `inset` is `20%` (a percentage, so the inner-circle ratio survives scaling) and must not be written as a fixed px value.
 11. The component takes no `...rest` pass-through, and the source must not anywhere spread other props onto the root element.
 12. State must not be carried by colour alone: every use site needs adjacent readable text (human review, `AC-MF-07`, matching `A46` in `spec/70-checklist.md`).
@@ -139,5 +139,5 @@ Machine-checkable binary constraints (decidable true / false, ready to become li
 - Human-readable version: `README.md`
 - Dual-track writing convention: `docs/WRITING.md`
 - Checklist entry: `spec/70-checklist.md` (`A32`, `A34`, `A46`)
-- Motion clauses: `spec/40-motion.md` (`MO-MF-07`, `MO-MF-09`)
+- Motion clauses: `spec/40-motion.md` (`MO-RC-07`, `MO-RC-09`)
 - Accessibility clauses: `spec/60-accessibility.md` (`AC-MF-06`, `AC-MF-07`)

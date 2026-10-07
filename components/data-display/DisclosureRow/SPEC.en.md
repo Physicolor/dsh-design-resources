@@ -1,7 +1,7 @@
 ---
 source: components/data-display/DisclosureRow/SPEC.md
-source-sha256: 76c104e20720a53e
-translated-at: 2026-10-05
+source-sha256: b080cc3813dff184
+translated-at: 2026-10-07
 ---
 # DisclosureRow · SPEC
 
@@ -41,7 +41,7 @@ Values are read one by one from the official `DisclosureRow.module.css` / `lib/i
 - `.row:focus-visible` → `outline: 2px solid var(--dsw-alias-brand-primary)` + `outline-offset: 2px`. The official `DisclosureRow.module.css` has no focus style at all. The spec comes from `AC-MF-11` in `spec/60-accessibility.md`, written the same way as the `:focus-visible` of the official `Switch.module.css`.
 - `.leading:focus-visible` → the same 2px brand-primary, `outline-offset: -2px` (an inner offset). The official `.row` has `overflow: hidden`, the leading box sits flush against the row's left edge, and a focus ring with a 2px outer offset would be clipped away; `AC-MF-12` explicitly requires switching to an inner offset in this situation.
 - `button.leading::after { inset: -4px }` → a transparent pseudo-element with no background and no border, extending the icon-only form's hit area by 4px on each side. The 4px on the left is clipped away by the `.row`'s `overflow: hidden`, so **the effective hit area is 20×24** (`AC-MF-01`'s minimum is 20×20; the regular 28×28 control target is not reached, which is why `expandOnRowClick` is the better recommendation). The visible geometry does not change.
-- `@media (prefers-reduced-motion: reduce)` branch → `transition: none`. The official stylesheet has no such branch. The reason recorded in the original README: `MO-MF-09` in `spec/40-motion.md` is mandatory; the matching machine-checkable entry is `A34` in `spec/70-checklist.md` (a stylesheet without `prefers-reduced-motion` is a violation).
+- `@media (prefers-reduced-motion: reduce)` branch → `transition: none`. The official stylesheet has no such branch. The reason recorded in the original README: `MO-RC-09` in `spec/40-motion.md` is mandatory; the matching machine-checkable entry is `A34` in `spec/70-checklist.md` (a stylesheet without `prefers-reduced-motion` is a violation).
 
 ### Decisions in this repository (rewriting official behaviour, not adding values)
 

@@ -1,7 +1,7 @@
 ---
 source: components/feedback/InlineNotice/SPEC.md
-source-sha256: 218bdb8da1e067c6
-translated-at: 2026-10-05
+source-sha256: 9ded9a0eaf5ae8aa
+translated-at: 2026-10-07
 ---
 # InlineNotice · SPEC
 
@@ -138,7 +138,7 @@ Machine-checkable binary constraints (a true / false judgement settles them, and
 8. The root node has a `:focus-visible` focus style, and does not use `outline: none` with no replacement (`AC-MF-10`; checklist `A48`).
 9. The focus ring is 2px solid + 2px outer offset (`AC-MF-11`).
 10. The dismiss control has a `:focus-visible` style (checklist `A48`).
-11. The `@media (prefers-reduced-motion: reduce)` branch exists (`MO-MF-09`; checklist `A34`).
+11. The `@media (prefers-reduced-motion: reduce)` branch exists (`MO-RC-09`; checklist `A34`).
 12. Every ground and text colour comes from a `--dsw-*` semantic token or a `color-mix` derivation, with no hard-coded colour value in the source (checklist `A19` / `A23`).
 13. Adjacent hit areas do not overlap (`AC-MF-03`): the dismiss control and the root button stand in a master–subordinate relationship inside one hit area, and the dismiss control itself is not an independent adjacent element.
 14. The four tones are distinguishable in greyscale or backed by an icon / text cue (`AC-MF-07`; checklist `A46`, semi-automatic).

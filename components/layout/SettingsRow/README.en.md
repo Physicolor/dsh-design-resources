@@ -1,7 +1,7 @@
 ---
 source: components/layout/SettingsRow/README.md
 source-sha256: 136c93ac3b9802cc
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # SettingsRow
 

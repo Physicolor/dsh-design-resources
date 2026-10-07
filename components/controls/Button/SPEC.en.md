@@ -1,7 +1,7 @@
 ---
 source: components/controls/Button/SPEC.md
 source-sha256: 87052aef31a5d25f
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # Button · SPEC
 

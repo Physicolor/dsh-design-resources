@@ -1,7 +1,7 @@
 ---
 source: components/patterns/SettingsPage/SPEC.md
 source-sha256: 9dc7d21fc9acd5d7
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # SettingsPage · SPEC
 

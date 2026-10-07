@@ -1,7 +1,7 @@
 ---
 source: components/patterns/PanelSeat/README.md
 source-sha256: 19c45931c6b33293
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # PanelSeat
 

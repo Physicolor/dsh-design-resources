@@ -1,7 +1,7 @@
 ---
 source: components/surfaces/Modal/README.md
 source-sha256: 95b7614c739209d8
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # Modal dialog
 

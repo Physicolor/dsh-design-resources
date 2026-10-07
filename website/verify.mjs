@@ -530,8 +530,12 @@ if (browserPath === null) {
     })()`))
     check('embedded demos carry a caption', await evaluate(`document.querySelectorAll('.demo figcaption').length === document.querySelectorAll('[data-inline-demo]').length`))
 
-    /* The product-shell reproduction: a document declares `data-shell`, and the
-     * page mounts a measured copy of the real interface into a shadow root. */
+    /* The window page moved the browser; come back before probing the shell. */
+    await goto(base + '#/spec/10-frame-layout')
+    /* A demo document may mount a replica inside its own markup, so the shell
+     * element and everything it renders live one shadow boundary deeper than the
+     * demo stage. These checks therefore reach the shell element first and query
+     * through it, instead of assuming a single level. */
     const shellInfo = await evaluate(`(function(){
         var stages = document.querySelectorAll('[data-inline-demo]');
         for (var i = 0; i < stages.length; i++) {
@@ -638,6 +642,70 @@ if (browserPath === null) {
         return 'no shell';
     })()`)
     check('shell side rail responds to a width change', shellResize === '320px|320px', shellResize)
+
+    /* The window-structure page is the "recognise the screen" entry: it must
+     * carry the live replica (mounted and fitted), the band tables, and a link
+     * back to the spec. A page that loses its replica still renders prose, so
+     * without this check the most useful half could vanish silently. */
+    await goto(base + '#/window')
+    const windowPage = await evaluate(`(function () {
+      function deep(node, selector, out) {
+        out = out || [];
+        var hits = node.querySelectorAll(selector);
+        for (var i = 0; i < hits.length; i++) if (out.indexOf(hits[i]) === -1) out.push(hits[i]);
+        var all = node.querySelectorAll('*');
+        for (var j = 0; j < all.length; j++) if (all[j].shadowRoot) deep(all[j].shadowRoot, selector, out);
+        return out;
+      }
+      var host = document.querySelector('.window__stage');
+      var sr = host ? host.shadowRoot : null;
+      var root = sr ? sr.querySelector('.sh-root') : null;
+      var navEntry = 0;
+      var links = document.querySelectorAll('.index__link');
+      for (var i = 0; i < links.length; i++) if (links[i].getAttribute('href') === '#/window') navEntry++;
+      return {
+        regions: sr ? deep(sr, '.sh-side, .sh-head, .sh-flow, .sh-composer, .sh-right').length : 0,
+        fitted: root ? getComputedStyle(root).transform !== 'none' : false,
+        display: root ? getComputedStyle(root).display : null,
+        rows: document.querySelectorAll('#main tbody tr').length,
+        navEntry: navEntry,
+        specLink: document.querySelector('.window__link') ? document.querySelector('.window__link').getAttribute('href') : null
+      };
+    })()`)
+    check('window page carries the live replica', windowPage.regions >= 5 && windowPage.fitted && windowPage.display === 'flex',
+      `regions=${windowPage.regions} fitted=${windowPage.fitted} display=${windowPage.display}`)
+    check('window page carries the band tables', windowPage.rows >= 20, `${windowPage.rows} rows`)
+    check('window page is reachable from the index', windowPage.navEntry === 1, `${windowPage.navEntry} nav entry`)
+    check('window page links to the region-map spec', windowPage.specLink === '#/spec/05-region-map', String(windowPage.specLink))
+
+    /* The worked example must actually operate: its whole point is that one
+     * example answers placement, sizing and motion. A demo whose toggle does
+     * nothing would still pass every structural check. */
+    await goto(base + '#/guide/32-header-controls')
+    const pinned = await evaluate(`(function () {
+      var stages = document.querySelectorAll('[data-inline-demo]');
+      for (var i = 0; i < stages.length; i++) {
+        var sr = stages[i].shadowRoot;
+        if (!sr) continue;
+        var card = sr.querySelector('[data-pinned-card]');
+        var toggle = sr.querySelector('.pinned__toggle');
+        if (card === null || toggle === null) continue;
+        var before = card.getAttribute('data-open');
+        var timing = getComputedStyle(card).transitionDuration;
+        var curve = getComputedStyle(card).transitionTimingFunction;
+        toggle.click();
+        var after = card.getAttribute('data-open');
+        var pressed = toggle.getAttribute('aria-pressed');
+        return { id: stages[i].getAttribute('data-inline-demo'), before: before, after: after, pressed: pressed, timing: timing, curve: curve };
+      }
+      return null;
+    })()`)
+    check('pinned-summary example is mounted', pinned !== null, JSON.stringify(pinned))
+    check('pinned-summary toggle operates', pinned !== null && pinned.before === 'true' && pinned.after === 'false' && pinned.pressed === 'false',
+      pinned === null ? 'n/a' : `${pinned.before} -> ${pinned.after}, aria-pressed=${pinned.pressed}`)
+    check('pinned-summary card uses the frozen motion step', pinned !== null && /0\.3s|300ms/u.test(pinned.timing) && pinned.curve.indexOf('cubic-bezier') === 0,
+      pinned === null ? 'n/a' : `${pinned.timing} ${pinned.curve}`)
+    await goto(base + '#/spec/10-frame-layout')
     await evaluate(`(function(){var a=document.querySelector('.aside .outline__item a');if(a)a.click();return 1})()`)
     /* smooth scrolling is animated, so give it time before measuring */
     await new Promise(resolve => setTimeout(resolve, 900))
@@ -668,20 +736,66 @@ if (browserPath === null) {
       ['60-accessibility', '[data-contrast] tr', 5, '对比度实测表'],
       ['70-checklist', '[data-items] li', 5, '自检清单条目'],
       ['80-conflicts', '[data-overlay] tr', 14, 'shell.overlay 占用者 14 行'],
+      /* 区域地图：这一页的演示必须真的把产品复刻挂起来——五个区域缺一个，
+       * 「这一屏由什么组成」这张图就少一块。 */
+      ['05-region-map', '.sh-side, .sh-head, .sh-flow, .sh-composer, .sh-right', 5, '一屏区域地图的五个区域'],
     ]
+    /* `product replica` figures put their markup one boundary deeper than the
+     * demo stage: the shell mounts in a shadow root of its own, so a plain
+     * `shadowRoot.querySelector` finds nothing. Probe walks the whole subtree,
+     * crossing nested shadow roots, and counts each node once — a match inside a
+     * nested root is also reached from the root above.
+     *
+     * Written as a plain function and serialised with `String()`: the selector
+     * is a parameter, so nothing has to be spliced into source text. */
+    function demoProbe(selector) {
+      function deep(node) {
+        var out = []
+        var push = function (found) { if (out.indexOf(found) === -1) out.push(found) }
+        var walk = function (current) {
+          if (current === null || current === undefined) return
+          var hits = current.querySelectorAll(selector)
+          for (var i = 0; i < hits.length; i++) push(hits[i])
+          var all = current.querySelectorAll('*')
+          for (var j = 0; j < all.length; j++) if (all[j].shadowRoot) walk(all[j].shadowRoot)
+        }
+        walk(node)
+        return out
+      }
+      /* A replica that mounts but is not scaled is the other failure this probe
+       * exists for: `.sh-root` draws at 1570px and relies on the scale set by
+       * DSHShell.wire, so `transform: none` means the fit never ran and the
+       * figure is a 1570px-wide box clipped by the column. Asking for
+       * `.sh-root` therefore counts fitted replicas, not elements. */
+      var stages = document.querySelectorAll('[data-inline-demo]')
+      var total = 0
+      var fitted = 0
+      for (var i = 0; i < stages.length; i++) {
+        var sr = stages[i].shadowRoot
+        if (!sr) continue
+        var hits = deep(sr)
+        total += hits.length
+        if (hits.length === 0) continue
+        var allScaled = true
+        for (var k = 0; k < hits.length; k++) {
+          if (getComputedStyle(hits[k]).transform === 'none') allScaled = false
+        }
+        if (allScaled) fitted += 1
+      }
+      return selector === '.sh-root' ? fitted : total
+    }
+    const probeSource = '(' + String(demoProbe) + ')'
     for (const [id, selector, min, label] of demoProbes) {
       await goto(base + '#/spec/' + id)
-      const counts = await evaluate(`(function(){
-        var stages = document.querySelectorAll('[data-inline-demo]');
-        var total = 0;
-        for (var i = 0; i < stages.length; i++) {
-          var sr = stages[i].shadowRoot;
-          if (sr) total += sr.querySelectorAll(${JSON.stringify(selector)}).length;
-        }
-        return total;
-      })()`)
+      const counts = await evaluate(probeSource + '(' + JSON.stringify(selector) + ')')
       check(`spec demo renders — ${id}`, counts >= min, `${label}: ${counts} ≥ ${min}`)
     }
+    /* Replicas must be mounted *and* fitted: a mount that silently fails renders
+     * nothing, and a fit that silently fails renders at the replica's own 1570px
+     * and gets clipped by the column. `frame-layout` carries three of them. */
+    await goto(base + '#/spec/10-frame-layout')
+    const fittedCount = await evaluate(probeSource + '(' + JSON.stringify('.sh-root') + ')')
+    check('spec demo replicas are mounted and fitted', fittedCount === 3, `${fittedCount} scaled replicas (3 expected)`)
     await goto(base + '#/spec/40-motion')
 
     // bilingual switch
@@ -777,7 +891,7 @@ if (browserPath === null) {
     }
 
    for (const [name, route] of [
-     ['home', '#/'], ['components', '#/components'], ['component', '#/component/button'],
+     ['home', '#/'], ['window', '#/window'], ['components', '#/components'], ['component', '#/component/button'],
       ['guide-start', '#/guide/00-start'], ['guide-settings', '#/guide/20-pattern-settings'],
       ['guide-sidebar', '#/guide/21-pattern-sidebar-panel'],
      ['icons', '#/icons'], ['seats', '#/seats'], ['spec', '#/spec'],
@@ -791,6 +905,10 @@ if (browserPath === null) {
       /* 演示容器与浮层：对话框的 fixed 遮罩、输入区选择器——都在这一组里核过 */
       ['component-modal', '#/component/modal'], ['component-toast', '#/component/toast'],
       ['spec-motion', '#/spec/40-motion'],
+      /* 区域地图与中栏占用档位：本轮新增的两页，截图留档 */
+      ['spec-region-map', '#/spec/05-region-map'],
+      ['spec-middle-column', '#/spec/15-middle-column'],
+      ['guide-middle-column', '#/guide/15-middle-column'],
     ]) {
       await shoot(name, route)
     }

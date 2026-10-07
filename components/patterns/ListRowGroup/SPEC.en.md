@@ -1,7 +1,7 @@
 ---
 source: components/patterns/ListRowGroup/SPEC.md
 source-sha256: 03f76f194a7bb306
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # ListRowGroup · SPEC
 

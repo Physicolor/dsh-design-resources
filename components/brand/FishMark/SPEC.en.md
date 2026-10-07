@@ -1,7 +1,7 @@
 ---
 source: components/brand/FishMark/SPEC.md
 source-sha256: 86c302fb53824d62
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # FishMark · SPEC
 
