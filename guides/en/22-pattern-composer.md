@@ -1,7 +1,7 @@
 ---
 source: guides/22-pattern-composer.md
-source-sha256: f75800665e4db335
-translated-at: 2026-10-05
+source-sha256: d97398e7ffde9af2
+translated-at: 2026-10-07
 ---
 # Composer extensions
 

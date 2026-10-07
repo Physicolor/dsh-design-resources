@@ -1,7 +1,7 @@
 ---
 source: spec/50-icons.md
 source-sha256: c4b1c0e406e1a16c
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # 50 Icon spec
 

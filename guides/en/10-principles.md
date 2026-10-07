@@ -1,7 +1,7 @@
 ---
 source: guides/10-principles.md
-source-sha256: 519d62462a5e67ec
-translated-at: 2026-10-05
+source-sha256: 1afe059245e3b03e
+translated-at: 2026-10-07
 ---
 # Choosing an extension region: decide where it goes first
 

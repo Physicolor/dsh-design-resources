@@ -1,7 +1,7 @@
 ---
 source: spec/20-controls.md
 source-sha256: 83c6daefec264534
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # 20 Controls spec
 

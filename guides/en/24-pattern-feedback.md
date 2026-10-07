@@ -1,7 +1,7 @@
 ---
 source: guides/24-pattern-feedback.md
-source-sha256: 14d2e3702b519b97
-translated-at: 2026-10-05
+source-sha256: 47a2a2273b09e8c8
+translated-at: 2026-10-07
 ---
 # State and feedback
 
@@ -44,8 +44,8 @@ The mistake plugin authors make most often is catching all four kinds of feedbac
 - Running ring: 14 × 14 inline, `viewBox="0 0 24 24"`, two `circle` elements with `cx/cy` 12 and `r` 9.5, `stroke-width` 2, track `opacity: .25`, arc `stroke-dasharray: 12 150`, rotation `1.5s linear infinite`, stretch `1.5s ease-in-out infinite`, colour `--dsw-alias-label-tertiary`, reduced motion parked at `18 150 / -3` (source: docs/reference/running-row.json, components/feedback/RunningRing/SPEC.md) `[Runtime measurement]`.
 - Capture detail: the computed value caught mid-animation is `20.7652px, 150px` (source: docs/reference/running-row.json); `12 150` is the declared initial value and the value in the check items (source: components/feedback/RunningRing/SPEC.md) `[Runtime measurement]`.
 - State dot `ongoing`: 10px outer diameter by default, `viewBox="0 0 10 10"`, 8 squares of 2 × 2 around the outside, an endless `1s` chase, `animation-delay = (index − 8) × 125ms`, four `opacity` stops at 1 / 0.6 / 0.35 / 0.15 split at 0 / 12.5% / 25% / 37.5%, blue taken from `--dsw-static-deepseek-450` (the alias layer has no matching step) (source: components/data-display/StateDot/SPEC.md) `[Official source]`.
-- Rules: an ongoing cycle may only be `1s` or `1.5s` and must be `infinite` (MO-MF-12); one interface uses only one form for the same "in progress" (MO-MF-13); an endless loop may only express a process that is under way (MO-MF-07); animate only `transform` / `opacity` (MO-MF-08) (source: spec/40-motion.md) `[Proposed here]`.
-- Do not put a spinner in place of determinate progress when the duration can be worked out (MO-MF-14); do not show a ring for a wait of under about a second (source: components/feedback/RunningRing/README.md) `[Proposed here]`.
+- Rules: an ongoing cycle may only be `1s` or `1.5s` and must be `infinite` (MO-RC-12); one interface uses only one form for the same "in progress" (MO-RC-13); an endless loop may only express a process that is under way (MO-RC-07); animate only `transform` / `opacity` (MO-RC-08) (source: spec/40-motion.md) `[Proposed here]`.
+- Do not put a spinner in place of determinate progress when the duration can be worked out (MO-RC-14); do not show a ring for a wait of under about a second (source: components/feedback/RunningRing/README.md) `[Proposed here]`.
 - `[Known deviation]` Official has two implementations side by side: the primitives package gives `ongoing` a pixel chase matrix, while the start of a left-sidebar conversation row really renders a spinning ring, so the library version never appeared in the real interface; judged against HIG this is official inconsistency rather than a division of design labour, and plugins follow the product (source: components/feedback/RunningRing/SPEC.md, section 3.1 of spec/40-motion.md) `[Borrowed principle]`.
 
 ### Error
@@ -67,7 +67,7 @@ The mistake plugin authors make most often is catching all four kinds of feedbac
 - Official values: `position: fixed`, `top: 40px`, `left: 50%`, `translateX(-50%)`, `z-index: 1100`, `pointer-events: none`, `padding: 12px 16px`, corner radius 14px, type 14px / 22px, `width: max-content`, `max-width: min(640px, calc(100vw - 48px))`, background `--dsw-alias-button-contrast-fill`, text `--dsw-alias-label-primary-inverted`, shadow `--dsw-shadow-lv3` (source: components/feedback/Toast/SPEC.md, taken from `Toast.module.css` inside the product `app.asar`) `[Official source]`.
 - Timeline: enter 160ms `ease-out` (a -6px shift plus opacity), hold `HOLD_MS = 3000ms`, fade out 1000ms, unmount timer at `holdMs + 1000ms`, mounted on `document.body`, root node `role="alert"` (source: components/feedback/Toast/SPEC.md) `[Official source]`.
 - The static marks for the done state: `StateDot`'s `done` / `warning` / `error` take `--dsw-alias-state-success-primary` / `warn-primary` / `error-primary` respectively (source: components/data-display/StateDot/SPEC.md) `[Official source]`.
-- `[Known deviation]` 160ms and 1000ms are not among the five steps of `MO-MF-01` (100 / 150 / 200 / 300 / 350ms) and do not satisfy "no more than 350ms"; the `ease-out` / `ease` curves are not equal to the standard curve of `MO-MF-04`. Following "official first" in section 4.1 of 00-overview, the official values stay, and items A30 / A31 of the checklist need a human confirmation (source: components/feedback/Toast/SPEC.md, spec/00-overview.md) `[Known deviation]`.
+- `[Known deviation]` 160ms and 1000ms are not among the five steps of `MO-RC-01` (100 / 150 / 200 / 300 / 350ms) and do not satisfy "no more than 350ms"; the `ease-out` / `ease` curves are not equal to the standard curve of `MO-RC-04`. Following "official first" in section 4.1 of 00-overview, the official values stay, and items A30 / A31 of the checklist need a human confirmation (source: components/feedback/Toast/SPEC.md, spec/00-overview.md) `[Known deviation]`.
 
 ## Where it goes: in the document flow vs in an overlay
 
@@ -135,7 +135,7 @@ The mistake plugin authors make most often is catching all four kinds of feedbac
 - Toast is `pointer-events: none` throughout and is not an interactive element, so the hit-area requirement does not apply to it; the InlineNotice close control is 20 × 20, which meets the minimum but is smaller than the 28 × 28 target for regular controls (source: components/feedback/Toast/SPEC.md, components/feedback/InlineNotice/SPEC.md) `[Proposed here]`.
 - Contrast: text at ≤17pt ≥4.5:1, at ≥18pt or bold ≥3:1 (`AC-MF-05`, checklist A45); non-text UI elements are proposed at ≥3:1 (`AC-MF-06`) (source: spec/60-accessibility.md) `[Proposed here]`.
 - Colour must not be the only carrier of information (`AC-MF-07`, checklist A46): the notice's four tones differ only slightly in greyscale, so they need an icon or a stated status in the copy; a state dot must have adjacent readable text (source: components/feedback/InlineNotice/SPEC.md, components/data-display/StateDot/SPEC.md) `[Proposed here]`.
-- Motion: a `prefers-reduced-motion: reduce` branch is required (`MO-MF-09`, checklist A34), implemented with a media query or a `matchMedia` listener (`MO-MF-10`); a loading indicator must not shift position by any large amount (source: spec/40-motion.md) `[Proposed here]`.
+- Motion: a `prefers-reduced-motion: reduce` branch is required (`MO-RC-09`, checklist A34), implemented with a media query or a `matchMedia` listener (`MO-RC-10`); a loading indicator must not shift position by any large amount (source: spec/40-motion.md) `[Proposed here]`.
 - A timed close is unfriendly to users with cognitive disabilities: when the message is heavy or important, lengthen `holdMs` or switch to InlineNotice (source: components/feedback/Toast/SPEC.md) `[Proposed here]`.
 
 ## Implementation resources
@@ -166,10 +166,10 @@ Decidable items for plugin authors. The source column gives a rule number or a c
 | Item | Check (yes / no) | Source |
 | --- | --- | --- |
 | The four kinds of feedback do not share one shell | What appears while loading is not the empty-state copy; a failure and "there really is nothing" are not drawn the same way | components/feedback/EmptyState/README.md `[Proposed here]` |
-| The frequency of continuous motion is compliant | The cycle is 1s or 1.5s and `animation-iteration-count: infinite` | `MO-MF-12`, checklist A32 |
-| One message uses only one running form | A ring and a chasing square or three dots do not appear on the same row | `MO-MF-13` |
-| A reduced-motion branch exists | The stylesheet contains `@media (prefers-reduced-motion: reduce)` | `MO-MF-09` / `MO-MF-10`, checklist A34 |
-| Loops and transitions animate only compositor properties | No animating `width` / `height` / `top` / `left` / `margin` | `MO-MF-08`, checklist A33 |
+| The frequency of continuous motion is compliant | The cycle is 1s or 1.5s and `animation-iteration-count: infinite` | `MO-RC-12`, checklist A32 |
+| One message uses only one running form | A ring and a chasing square or three dots do not appear on the same row | `MO-RC-13` |
+| A reduced-motion branch exists | The stylesheet contains `@media (prefers-reduced-motion: reduce)` | `MO-RC-09` / `MO-RC-10`, checklist A34 |
+| Loops and transitions animate only compositor properties | No animating `width` / `height` / `top` / `left` / `margin` | `MO-RC-08`, checklist A33 |
 | The overlay's seat and order | It goes on `shell.overlay` with `order` declared explicitly, taking the seat's current maximum +10 | `FL-MF-08`, `SL-MF-03`, `CF-MF-03`, checklist A09 / A10 |
 | The input-card overlay holds no permanent UI | `conversation.input.overlay` contains no permanent element | `FL-MF-04`, checklist A04 |
 | Nothing overflows its boundary | No negative margin or absolute positioning escaping its region | `FL-MF-08`, checklist A05 |

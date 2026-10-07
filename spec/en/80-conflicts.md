@@ -1,7 +1,7 @@
 ---
 source: spec/80-conflicts.md
 source-sha256: 9f4116cf086ccb18
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # 80 Conflict arbitration
 

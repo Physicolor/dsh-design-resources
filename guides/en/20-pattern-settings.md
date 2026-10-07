@@ -1,7 +1,7 @@
 ---
 source: guides/20-pattern-settings.md
-source-sha256: 17d9b4d62dc38ceb
-translated-at: 2026-10-05
+source-sha256: 1ea31feb334e1e5f
+translated-at: 2026-10-07
 ---
 # Settings page patterns: from one preference to a whole section
 

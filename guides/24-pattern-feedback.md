@@ -4,7 +4,7 @@
 
 插件作者最常做错的事，是四类反馈用同一个壳子接住：「还没加载」被画成「暂无数据」、一次性的成功也占一块常驻位置、失败只给一句红字不给出口、完成了却什么都不显示。这一页把空、加载、错误、完成四类的适用情景与替代、所在层级、关键状态与时长、键盘与焦点、主题与窄窗口行为列成可核对的表，并在「规格」一节给出可直接判定的自检条目。官方做法与本仓库建议严格分开；官方自相矛盾处标 `[已知偏差]`；每个数值都带来源标记与文件路径。
 
-## 任务
+## 读完这一页要能做什么
 
 - 判断手上这次反馈属于四类中的哪一类，以及不该用当前组件时改用什么。
 - 决定它进文档流还是覆盖层，占用哪个座位、是否必须显式声明 order。
@@ -39,8 +39,8 @@
 - 运行圆环：行内 14 × 14、`viewBox="0 0 24 24"`、两枚 `circle` 的 `cx/cy` 12 与 `r` 9.5、`stroke-width` 2、轨道 `opacity: .25`、弧 `stroke-dasharray: 12 150`、旋转 `1.5s linear infinite`、伸缩 `1.5s ease-in-out infinite`、颜色 `--dsw-alias-label-tertiary`、减动效停在 `18 150 / -3`（来源：docs/reference/running-row.json、components/feedback/RunningRing/SPEC.md）`[运行时实测]`。
 - 采集细节：动画进行中抓到的计算值是 `20.7652px, 150px`（来源：docs/reference/running-row.json）；`12 150` 是声明初值与检查条目里的值（来源：components/feedback/RunningRing/SPEC.md）`[运行时实测]`。
 - 状态点 `ongoing`：默认外径 10px，`viewBox="0 0 10 10"`，外圈 8 个 2 × 2 方块，`1s` 无限追逐，`animation-delay = (index − 8) × 125ms`，四段 `opacity` 为 1 / 0.6 / 0.35 / 0.15，分界在 0 / 12.5% / 25% / 37.5%，蓝色取 `--dsw-static-deepseek-450`（alias 层没有对应档）（来源：components/data-display/StateDot/SPEC.md）`[官方源码]`。
-- 规则：进行中的周期只能取 `1s` 或 `1.5s` 且必须 `infinite`（MO-MF-12）；同一条「正在进行」一个界面里只用一种形态（MO-MF-13）；无限循环只允许表达正在进行的进程（MO-MF-07）；只动 `transform` / `opacity`（MO-MF-08）（来源：spec/40-motion.md）`[本仓库建议]`。
-- 时长可算时不要用转圈顶替确定式进度（MO-MF-14）；等待不足约一秒不要显示圆环（来源：components/feedback/RunningRing/README.md）`[本仓库建议]`。
+- 规则：进行中的周期只能取 `1s` 或 `1.5s` 且必须 `infinite`（MO-RC-12）；同一条「正在进行」一个界面里只用一种形态（MO-RC-13）；无限循环只允许表达正在进行的进程（MO-RC-07）；只动 `transform` / `opacity`（MO-RC-08）（来源：spec/40-motion.md）`[本仓库建议]`。
+- 时长可算时不要用转圈顶替确定式进度（MO-RC-14）；等待不足约一秒不要显示圆环（来源：components/feedback/RunningRing/README.md）`[本仓库建议]`。
 - `[已知偏差]` 官方两套并存：primitives 包给 `ongoing` 的是像素追逐矩阵，产品左栏会话行首实际渲染的是转圈环，库里那套在真实界面里没有出现；按 HIG 判定属官方未统一，不是设计分工，插件跟产品走（来源：components/feedback/RunningRing/SPEC.md、spec/40-motion.md 第 3.1 节）`[外部指南借鉴]`。
 
 ### 错误
@@ -62,7 +62,7 @@
 - 官方数值：`position: fixed`、`top: 40px`、`left: 50%`、`translateX(-50%)`、`z-index: 1100`、`pointer-events: none`、`padding: 12px 16px`、圆角 14px、字体 14px / 22px、`width: max-content`、`max-width: min(640px, calc(100vw - 48px))`、底色 `--dsw-alias-button-contrast-fill`、文字 `--dsw-alias-label-primary-inverted`、阴影 `--dsw-shadow-lv3`（来源：components/feedback/Toast/SPEC.md，取自产品 `app.asar` 内 `Toast.module.css`）`[官方源码]`。
 - 时间线：进场 160ms `ease-out`（位移 -6px 加透明度）、停留 `HOLD_MS = 3000ms`、淡出 1000ms、卸载计时器为 `holdMs + 1000ms`，挂到 `document.body`，根节点 `role="alert"`（来源：components/feedback/Toast/SPEC.md）`[官方源码]`。
 - 完成态的静态标记：`StateDot` 的 `done` / `warning` / `error` 分别取 `--dsw-alias-state-success-primary` / `warn-primary` / `error-primary`（来源：components/data-display/StateDot/SPEC.md）`[官方源码]`。
-- `[已知偏差]` 160ms 与 1000ms 不在 `MO-MF-01` 的五档（100 / 150 / 200 / 300 / 350ms）内，也不满足「不超过 350ms」；曲线 `ease-out` / `ease` 不等于 `MO-MF-04` 的标准曲线。按 00-overview 第 4.1 节「官方优先」沿用官方值，checklist 的 A30 / A31 两项需人工确认（来源：components/feedback/Toast/SPEC.md、spec/00-overview.md）`[已知偏差]`。
+- `[已知偏差]` 160ms 与 1000ms 不在 `MO-RC-01` 的五档（100 / 150 / 200 / 300 / 350ms）内，也不满足「不超过 350ms」；曲线 `ease-out` / `ease` 不等于 `MO-RC-04` 的标准曲线。按 00-overview 第 4.1 节「官方优先」沿用官方值，checklist 的 A30 / A31 两项需人工确认（来源：components/feedback/Toast/SPEC.md、spec/00-overview.md）`[已知偏差]`。
 
 ## 放在哪：文档流内 vs 覆盖层
 
@@ -130,7 +130,7 @@
 - Toast 整体 `pointer-events: none`、不是可交互元素，命中区要求不作用于它；InlineNotice 的关闭控件 20 × 20 达到下限但小于常规控件目标 28 × 28（来源：components/feedback/Toast/SPEC.md、components/feedback/InlineNotice/SPEC.md）`[本仓库建议]`。
 - 对比度：≤17pt 文本 ≥4.5:1，≥18pt 或粗体 ≥3:1（`AC-MF-05`，清单 A45）；非文本 UI 元素建议 ≥3:1（`AC-MF-06`）（来源：spec/60-accessibility.md）`[本仓库建议]`。
 - 颜色不得是唯一的信息载体（`AC-MF-07`，清单 A46）：提示条四种语气在灰度下差别有限，需要带图标或在文案里写明状态；状态点必须有相邻可读文字（来源：components/feedback/InlineNotice/SPEC.md、components/data-display/StateDot/SPEC.md）`[本仓库建议]`。
-- 动效：必须有 `prefers-reduced-motion: reduce` 分支（`MO-MF-09`，清单 A34），且用媒体查询或 `matchMedia` 监听实现（`MO-MF-10`）；加载指示器不得有大幅位移（来源：spec/40-motion.md）`[本仓库建议]`。
+- 动效：必须有 `prefers-reduced-motion: reduce` 分支（`MO-RC-09`，清单 A34），且用媒体查询或 `matchMedia` 监听实现（`MO-RC-10`）；加载指示器不得有大幅位移（来源：spec/40-motion.md）`[本仓库建议]`。
 - 定时关闭对认知障碍用户不友好：信息量大或重要时应调长 `holdMs`，或改用 InlineNotice（来源：components/feedback/Toast/SPEC.md）`[本仓库建议]`。
 
 ## 实现资源
@@ -161,10 +161,10 @@
 | 条目 | 判定（是 / 否） | 出处 |
 | --- | --- | --- |
 | 四类反馈没有共用同一个壳 | 加载中出现的不是空状态文案；失败与「真的没有」不画成同一样子 | components/feedback/EmptyState/README.md `[本仓库建议]` |
-| 持续动效的频率合规 | 周期取 1s 或 1.5s 且 `animation-iteration-count: infinite` | `MO-MF-12`，清单 A32 |
-| 一条信息只用一种运行形态 | 同一行不同时出现圆环与追逐方块或三点 | `MO-MF-13` |
-| 减动效分支存在 | 样式表含 `@media (prefers-reduced-motion: reduce)` | `MO-MF-09` / `MO-MF-10`，清单 A34 |
-| 循环与过渡只动合成属性 | 不动 `width` / `height` / `top` / `left` / `margin` | `MO-MF-08`，清单 A33 |
+| 持续动效的频率合规 | 周期取 1s 或 1.5s 且 `animation-iteration-count: infinite` | `MO-RC-12`，清单 A32 |
+| 一条信息只用一种运行形态 | 同一行不同时出现圆环与追逐方块或三点 | `MO-RC-13` |
+| 减动效分支存在 | 样式表含 `@media (prefers-reduced-motion: reduce)` | `MO-RC-09` / `MO-RC-10`，清单 A34 |
+| 循环与过渡只动合成属性 | 不动 `width` / `height` / `top` / `left` / `margin` | `MO-RC-08`，清单 A33 |
 | 覆盖层的座位与顺序 | 走 `shell.overlay` 且显式声明 `order`，取该座位现有最大值 +10 | `FL-MF-08`、`SL-MF-03`、`CF-MF-03`，清单 A09 / A10 |
 | 输入卡浮层无常驻 UI | `conversation.input.overlay` 里没有常驻元素 | `FL-MF-04`，清单 A04 |
 | 没有越界覆盖 | 无负 margin 或绝对定位越出所属区域 | `FL-MF-08`，清单 A05 |

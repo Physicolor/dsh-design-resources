@@ -1,7 +1,7 @@
 ---
 source: guides/23-pattern-data-display.md
-source-sha256: 8efd5114aaa12038
-translated-at: 2026-10-05
+source-sha256: eee7955879e1e953
+translated-at: 2026-10-07
 ---
 # Data display
 
@@ -172,7 +172,7 @@ Units are px, written as "value (source: path or URL)"; each row carries its mar
 4. The scale has to degrade: when the denominator is zero, do not show "0%", which claims a number that cannot be worked out; use `aria-valuetext` and say so in the text (source: same as above) `[Proposed here]`.
 5. The fuller it gets, the more it has to speak up: `warn` / `error` only change the colour, so the state has to be written in the adjacent text (`AC-MF-07`) `[Proposed here]`.
 6. A state dot needs text beside it; both branches of the component hard-code `aria-hidden="true"`, so a dot with no text is a defect (source: `StateDot/SPEC.md` `a11y`) `[Proposed here]`.
-7. Only "in progress" may animate continuously; a looping animation on any other state is a violation (source: `spec/40-motion.md` `MO-MF-07`) `[Proposed here]`.
+7. Only "in progress" may animate continuously; a looping animation on any other state is a violation (source: `spec/40-motion.md` `MO-RC-07`) `[Proposed here]`.
 8. Whatever starts collapsed has to be supplementary; the label has to read on its own, so write "Changed files" rather than "Details" (source: `DisclosureRow/README.md`) `[Proposed here]`.
 9. On touch-first screens make the whole row clickable: the icon-only form has an effective hot area of just 20 × 24, below the regular 28 × 28 target (`AC-MF-01`) `[Borrowed principle]`.
 10. Do not introduce a size off the scale: the decision set is {26, 18, 16, 14, 13, 12, 11, 10}, each paired with a line height (source: `spec/30-tokens.md` `TK-RC-13`) `[Proposed here]`.

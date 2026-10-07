@@ -1,7 +1,7 @@
 ---
 source: spec/00-overview.md
-source-sha256: 64a9c2ee9c7968e9
-translated-at: 2026-10-05
+source-sha256: 852b22bf18ea384d
+translated-at: 2026-10-07
 ---
 # 00 Overview: The DSH design spec layer
 
@@ -37,7 +37,7 @@ A document can carry all three levels at once. Every clause labels its own force
 
 ## 3. Rule numbering and citation
 
-Number format: `<domain>-<force>-<number>`, e.g. `FL-MF-03` (frame domain, mandatory, clause 3). Domain codes: FL frame, SL seats, CT controls, TK tokens, MO motion, IC icons, AC accessibility, CF conflicts.
+Number format: `<domain>-<force>-<number>`, e.g. `FL-MF-03` (frame domain, mandatory, clause 3). Domain codes: FL frame, RG regions, SL seats, CT controls, TK tokens, MO motion, IC icons, AC accessibility, CF conflicts.
 
 70-checklist.md cites ids only and never repeats the values from the body text; the body text is the source of truth for values. Cite it as "per DSH Design Resources `FL-MF-03`".
 
@@ -69,6 +69,20 @@ Why: this spec governs **newly written UI** and **coordination between plugins**
 
 Two right moves when you hit this kind of conflict: write it into that component's SPEC under "Known deviations", or mark it `false` in the matching check and note why — **don't change the official control**. This clause distils four conflicts found in a single pass during the 2026-10 component documentation rework (Switch transition, missing Switch/Pill states, Toast entry and exit durations, Toolbar inline spacing).
 
+## 4.2 How the two marker sets correspond
+
+`guides/` uses a second wording. It maps one-to-one onto the table in section 4; the two sets coexist for historical reasons, and they are not two standards:
+
+| Section 4 wording (older `spec/` documents) | `guides/` and new documents |
+| --- | --- |
+| `[DSH-CSS]` | `[Official source]` |
+| `[measured]` | `[Runtime measurement]` |
+| `[HIG]` / `[OH]` | `[Borrowed principle]` |
+| `[repo-recommendation]` | `[Proposed here]` |
+| No equivalent | `[Known deviation]` — the official implementation conflicts with this spec, or two pieces of evidence contradict each other |
+
+New documents, and documents being revised, use the right-hand column. A new clause must not leave its marker out. English documents write the English marker, not a translated sentence. Don't mix the two sets inside one document.
+
 ## 5. What it doesn't do
 
 - It doesn't put subjective style preference in place of quality assessment: no brand hue, no illustration style. Visual quality is judged on checkable criteria — information hierarchy, reading width, density, alignment, theme contrast, interaction states, focus visibility.
@@ -79,8 +93,10 @@ Two right moves when you hit this kind of conflict: write it into that component
 
 | File | Contents |
 | --- | --- |
+| 05-region-map.md | What the screen is made of once you open a conversation, and which areas the product gives a seat to and which it doesn't |
 | 10-frame-layout.md | The three-column frame and the three-way split of the middle column: who owns what, and the decision tree for content ownership |
 | 11-slot-seats.md | How to choose a seat, the order rules for list seats, discipline for single occupancy |
+| 15-middle-column.md | The three occupancy levels of the centre column (fill it / a tab / a floating band), what a conversation view tab means, and where it ends and the right column begins |
 | 20-controls.md | Official control geometry, how to pick a variant, no home-made substitutes |
 | 30-tokens.md | Semantic tokens as the only source, depth through background layers, the type scale |
 | 40-motion.md | The five duration steps, the standard curve, reduced-motion, performance budget |

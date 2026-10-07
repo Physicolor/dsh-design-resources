@@ -1,7 +1,7 @@
 ---
 source: spec/60-accessibility.md
 source-sha256: 4eed0fe71b430e38
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # 60 Accessibility
 

@@ -36,13 +36,13 @@
 
 | 分组 | 条数 | 不通过的后果 | 来源 |
 | --- | --- | --- | --- |
-| A 必选 | 51 | 任一条为「否」即不得提交 | `spec/70-checklist.md` `[本仓库建议]` |
-| B 推荐 | 13 | 为「否」需在 README 写明理由 | 同上 `[本仓库建议]` |
-| 合计 | 64 | — | 同上；`rules/rules.json` 的 `counts.total` = 64 复核一致 `[运行时实测]` |
+| A 必选 | 50 | 任一条为「否」即不得提交 | `spec/70-checklist.md` `[本仓库建议]` |
+| B 推荐 | 22 | 为「否」需在 README 写明理由 | 同上 `[本仓库建议]` |
+| 合计 | 72 | — | 同上；`rules/rules.json` 的 `counts.total` = 72 复核一致 `[运行时实测]` |
 
-按可检测性分：自动 36 / 半自动 19 / 人审 9（来源：`rules/rules.json` 的 `counts.byDetection`）`[运行时实测]`。这三个数决定你的验证策略：**自动那 36 条应该进 CI，人审那 9 条只能靠你自己看**。
+按可检测性分：自动 38 / 半自动 25 / 人审 9（来源：`rules/rules.json` 的 `counts.byDetection`）`[运行时实测]`。这三个数决定你的验证策略：**自动那 38 条应该进 CI，人审那 9 条只能靠你自己看**。
 
-人审项集中在 A01–A04、A12、A14、A35、A38、A41、A51（来源：`spec/70-checklist.md` 第 85–89 行「审核者备注」）`[本仓库建议]`。它们是：归属是否唯一、主流程是否只在右栏、工具行是否只放本次输入的控件、overlay 里有没有常驻 UI、是否遮蔽唯一入口、chain 是否回落、帧率、自绘图标视觉重量、光学居中、200% 放大、窄窗口功能是否消失。
+人审项集中在 A01–A04、A12、A14、A35、A38、A41、A51（来源：`spec/70-checklist.md` 第 88–91 行「审核者备注」）`[本仓库建议]`。它们是：归属是否唯一、主流程是否只在右栏、工具行是否只放本次输入的控件、overlay 里有没有常驻 UI、是否遮蔽唯一入口、chain 是否回落、帧率、自绘图标视觉重量、光学居中、200% 放大、窄窗口功能是否消失。
 
 ## 本仓库怎么自检
 
@@ -96,7 +96,7 @@ token 那四项是最容易被引用错的。它们的来源选择器互不相�
 
 `npm run audit` 的存在本身是一条证据（来源：`scripts/audit-demos.mjs` 文件头）`[本仓库建议]`。它记录的两次事故是：点了选择器整个窗口变白（浮层逃出演示框盖住整页）、折叠目录里按钮自带的边框把行画成一个个方框。这两类问题里 DOM 是对的，**几何是错的**，所以任何只看 DOM 的检查都抓不到。
 
-对你的插件，可迁移的结论是三条：交互出现后要重新量几何、浮层要确认没有逃出自己的容器、自带边框的第三方控件要确认没有把布局画坏。这三条都不在 64 条清单里，属于自检要自己补的部分。
+对你的插件，可迁移的结论是三条：交互出现后要重新量几何、浮层要确认没有逃出自己的容器、自带边框的第三方控件要确认没有把布局画坏。这三条都不在 72 条清单里，属于自检要自己补的部分。
 
 采集方法上有两个坑，任何人复算前必须知道（来源：`docs/reference/README.md` 第 89–97 行）`[本仓库建议]`：
 
@@ -142,7 +142,7 @@ token 那四项是最容易被引用错的。它们的来源选择器互不相�
 | 8 | 工具行水平间距：`CT-RC-14` 建议行内相邻控件 8px，实测工具行是 `gap 12`。有实测的场景以实测为准 | `spec/20-controls.md`、`components/layout/ToolbarRow/SPEC.md` |
 | 9 | Switch 滑块过渡是官方 `120ms ease`，不在五档内 | `spec/40-motion.md`、`spec/00-overview.md` §4.1 |
 | 10 | Toast 进场 `160ms ease-out`、淡出 `1000ms ease`，既不在五档内也超过 350ms，曲线也不是标准曲线；以官方锚点优先，`A30` / `A31` 需人工确认 | `components/feedback/Toast/SPEC.md` 第 119、120 条 |
-| 11 | 持续动效的曲线：官方 `ease-in-out` 与 `linear` 并存，而 `MO-MF-06` 禁止非标准曲线用于交互过渡；持续动效不在该条管辖范围 | `spec/40-motion.md` 第 52–56 行 |
+| 11 | 持续动效的曲线：官方 `ease-in-out` 与 `linear` 并存，而 `MO-RC-06` 禁止非标准曲线用于交互过渡；持续动效不在该条管辖范围 | `spec/40-motion.md` 第 52–56 行 |
 | 12 | `ongoing` 状态有两套官方实现（primitives 包的像素追逐矩阵与产品实际渲染的转圈环），真实界面里只出现了后者 | `guides/24-pattern-feedback.md` |
 | 13 | EmptyState 的「图标 + 标题 + 说明 + 动作」组合形态、InlineNotice 的 `info` / `error` 语气，产品里没有对应物，整组几何是 `[本仓库建议]` | `components/feedback/EmptyState/SPEC.md`、`components/feedback/InlineNotice/SPEC.md` |
 | 14 | 深色主题对比度、官方 `ConnectionIndicator` 在窄容器中的行为 | 无证据 |
@@ -153,11 +153,11 @@ token 那四项是最容易被引用错的。它们的来源选择器互不相�
 
 | 步骤 | 动作 | 判定 |
 | --- | --- | --- |
-| 1 | 从 `rules/rules.json` 取出 `level: "required"` 的 51 条，逐条对照 | 任一条为否 → 不提交 |
+| 1 | 从 `rules/rules.json` 取出 `level: "required"` 的 50 条，逐条对照 | 任一条为否 → 不提交 |
 | 2 | 把 `detection.tier: "auto"` 的 36 条写成脚本（静态扫描源码与构建产物） | 应为全绿 |
-| 3 | `detection.tier: "semi"` 的 19 条逐条人工确认脚本给的候选 | 记录确认结论 |
+| 3 | `detection.tier: "semi"` 的 22 条逐条人工确认脚本给的候选 | 记录确认结论 |
 | 4 | 人审的 9 条按各篇文档口径逐条看，尤其是 A01–A04、A12、A51 | 无脚本可依赖 |
-| 5 | 推荐组 13 条若有「否」，在 README 写明理由 | 写清楚即可 |
+| 5 | 推荐组 22 条若有「否」，在 README 写明理由 | 写清楚即可 |
 | 6 | 检查你写下的每个数值都带五标签之一；无标签的当场补来源或删掉 | `spec/00-overview.md` §4 铁律 |
 | 7 | 确认没有把上节「官方内部约束」当成自己的门槛去满足 | 不必照搬 |
 
@@ -165,8 +165,8 @@ token 那四项是最容易被引用错的。它们的来源选择器互不相�
 
 实际读过的文件与 URL：
 
-- `spec/00-overview.md`（§4 来源标签、§4.1 官方优先）、`spec/70-checklist.md`（A 51 / B 13、检测方式、审核者备注）、`spec/60-accessibility.md`（§3 对比度）
-- `rules/rules.json`（`counts.total` 64、`byLevel` 51/13、`byDetection` 36/19/9）
+- `spec/00-overview.md`（§4 来源标签、§4.1 官方优先）、`spec/70-checklist.md`（A 50 / B 22、检测方式、审核者备注）、`spec/60-accessibility.md`（§3 对比度）
+- `rules/rules.json`（`counts.total` 72、`byLevel` 50/22、`byDetection` 38/25/9）
 - `website/verify.mjs`（三趟自检）、`scripts/audit-demos.mjs`（交互审计）、`scripts/check-refs.mjs`（扫描范围）、`package.json`（`scripts.build`）
 - `docs/reference/README.md`（采集方法与两个坑）、`components/origins.json`（official / proposed / scenes）
 - `data/slots.json`、`data/raw/occupancy-2026-10-01.json`、`data/tokens.json`、`data/ui-inventory.json`、`data/ui-coverage.json`、`data/icons.json`

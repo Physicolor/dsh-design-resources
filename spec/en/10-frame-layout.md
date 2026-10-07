@@ -1,7 +1,7 @@
 ---
 source: spec/10-frame-layout.md
-source-sha256: 5189177e179b66f0
-translated-at: 2026-10-05
+source-sha256: 8f31c72497214e8c
+translated-at: 2026-10-07
 ---
 # 10 Main page frame
 
@@ -11,7 +11,7 @@ translated-at: 2026-10-05
 
 ## 1. Responsibilities of the three columns
 
-[measured] The DSH main page is a three-column layout: the left sidebar `sidebar`, the centre column `main` / `main.conversation` (the current session), and the rightbar `rightbar`.
+[measured] The DSH main page is a three-column layout: the left sidebar `sidebar`, the centre column `main` / `main.conversation` (the current session), and the rightbar `rightbar`. This section covers the **division of responsibility** — what each column holds; for "which segments make up this screen, and which of them official material gives no seat at all", see the [region map](05-region-map.md). The split between them: 05 answers "does it have a name", this document answers "which column does it belong to".
 
 | Area | Responsibility | Allowed content | Disallowed content |
 | --- | --- | --- | --- |

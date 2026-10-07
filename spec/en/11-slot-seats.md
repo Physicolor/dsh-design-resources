@@ -1,7 +1,7 @@
 ---
 source: spec/11-slot-seats.md
-source-sha256: a05e67858a2cbb76
-translated-at: 2026-10-05
+source-sha256: b43fdd51e2c71ca7
+translated-at: 2026-10-07
 ---
 # 11 Seat directory and selection guide
 
@@ -37,7 +37,11 @@ The authoritative seat list is whatever DSH itself declares (it moves between ve
 
 ## 2. The selection flow
 
-Work through these in order, and stop as soon as a step settles the seat:
+Settle the region first, then the seat. Skip step 0 and every later step costs you more time, because you can't tell "I picked the wrong seat" from "there is no seat here at all".
+
+0. Does official material give the place you want to touch a name? Start with the [region map](05-region-map.md): if it has a name, carry on below; if it does not (the band, `conversation.input.overlay` used as a panel, a plugin's own settings window, a global top bar), that is not "look again" — this flow has **no exit** for it. Use the borrowed-seat method in 31-unofficial-regions and write the conclusion into the plugin's documentation as `RG-MF-08` requires.
+
+Then work through these in order, and stop as soon as a step settles the seat:
 
 1. Does official material already have a seat for this kind of content? → Reuse that seat. Inventing a seat name is forbidden (an undeclared seat is not guaranteed to render). `SL-MF-01`
 2. Must it exist with no session? Yes → the scope is `root` or `session-maybe`; no → the scope is `session`, so no empty shell renders when there's no session. `SL-MF-02`

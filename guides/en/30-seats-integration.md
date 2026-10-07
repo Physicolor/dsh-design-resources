@@ -1,7 +1,7 @@
 ---
 source: guides/30-seats-integration.md
-source-sha256: 601b5f4ea01b53ae
-translated-at: 2026-10-05
+source-sha256: ba16cd98ee5d0f74
+translated-at: 2026-10-07
 ---
 # Seat selection and extension integration
 
@@ -93,17 +93,21 @@ Everything below is proposed here, with the reasoning. It constrains **interface
 
 Work through it in order, and stop at whichever step gives you an answer:
 
+0. Settle the region first: which track and which band does it belong to? If you cannot tell, read the [Region map](../spec/05-region-map.md). If it lands in the centre column, fix the level — fill it, take a tab, or float a band — with [What the centre column can hold](../spec/15-middle-column.md). `RG-MF-01`
 1. Does official code already have a seat for this kind of content? If so reuse it, do not invent one. `SL-MF-01` / `A07`
-2. Does it have to exist with no conversation? Yes → `root` or `session-maybe`; no → `session`. `SL-MF-02` / `A08`
-3. Need several plugins to coexist → `list`; need to distribute across several targets of the same kind → `keyed`; need to take over a stretch of routing → `chain`; an exclusive replacement → `single` (go to step 6)
-4. The target is a `list` → declare order explicitly, taking the existing maximum +10. `SL-MF-03` / `SL-MF-05`
-5. The target is a `keyed` → the key must be stable. `SL-MF-11`
-6. The target `replaceRisk` is `shadows-shipped-ui` → write the declaration, give an off switch, and confirm you are not shadowing a sole entry point. `SL-MF-08` / `SL-MF-09`
+2. No seat exists, but the content really does belong on this screen? Follow the borrowing discipline in [Places the product gives no seat](31-unofficial-regions.md) and state that the product has none; do not force it into whichever seat name looks closest. `RG-MF-08`
+3. Does it have to exist with no conversation? Yes → `root` or `session-maybe`; no → `session`. `SL-MF-02` / `A08`
+4. Need several plugins to coexist → `list`; need to distribute across several targets of the same kind → `keyed`; need to take over a stretch of routing → `chain`; an exclusive replacement → `single` (go to step 7)
+5. The target is a `list` → declare order explicitly, taking the existing maximum +10. `SL-MF-03` / `SL-MF-05`
+6. The target is a `keyed` → the key must be stable. `SL-MF-11`
+7. The target `replaceRisk` is `shadows-shipped-ui` → write the declaration, give an off switch, and confirm you are not shadowing a sole entry point. `SL-MF-08` / `SL-MF-09`
 
 ## Self-check table
 
 | Yes / No | Check | Clause | Detection |
 | --- | --- | --- | --- |
+|  | The interface declares which level it occupies, and that matches where it actually renders | RG-MF-01 | Semi-automated |
+|  | Occupying a region the product gives no seat to comes with "the product has no seat here" and a fallback | RG-MF-08 | Semi-automated |
 |  | Every seat id used comes from the official DSH declaration | SL-MF-01 | Automated |
 |  | Scope matches whether it depends on a conversation | SL-MF-02 | Semi-automated |
 |  | Every list entry declares order explicitly | SL-MF-03 | Automated |

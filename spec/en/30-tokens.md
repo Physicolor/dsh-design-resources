@@ -1,7 +1,7 @@
 ---
 source: spec/30-tokens.md
 source-sha256: 683715135f7acda7
-translated-at: 2026-10-05
+translated-at: 2026-10-07
 ---
 # 30 Colour and type
 

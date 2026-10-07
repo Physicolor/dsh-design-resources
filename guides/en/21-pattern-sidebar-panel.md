@@ -1,7 +1,7 @@
 ---
 source: guides/21-pattern-sidebar-panel.md
-source-sha256: bdb99791db9d3254
-translated-at: 2026-10-05
+source-sha256: 97359ffaa839ac0c
+translated-at: 2026-10-07
 ---
 # Left sidebar, conversation area and rightbar
 
@@ -47,6 +47,8 @@ The conversation area belongs to the current session. The body view is appended 
 
 The public seat list describes `conversation.input.overlay` as "floating entries rendered inside the resident composer card". `dsh-widgets` uses it as a session panel to the right of the conversation area, which is that plugin's own implementation choice; plugin authors should check stacking and occlusion against their own version, and should not advertise it as a general host rightbar.
 
+One more thing this page has to say plainly: **the empty band to the right of the conversation column has no seat at all.** The dsh-widgets statistics rail appears there because the plugin borrows `conversation.input.overlay` and then absolute-positions the layer into that band. That is a community practice, not an official region. How to borrow, what you have to declare, and what the fallback has to do — plus the other three places where the product gives no seat — are in [Places the product gives no seat](31-unofficial-regions.md); which level of the centre column to take is in [Can the centre column be used on its own?](15-middle-column.md).
+
 ## The host rightbar is a separate column
 
 The DSH `rightbar` is a separate rail at the far right of the window; `rightbar.session` is the session content area the host controls. To add content, plugins should use `sidebar.right.pane.tab` with the corresponding title seat, and not replace `rightbar`.
@@ -59,10 +61,14 @@ In a clean profile, the rightbar of a blank new session shows the "Start" page, 
 
 | What the content relates to | Region to try first | How to decide |
 | --- | --- | --- |
+| I am not sure which track or band it belongs to | Read the [Region map](../spec/05-region-map.md) first | If the region is unsettled, the seat will be wrong. |
 | Switching a global page or object | Left sidebar | Pick a panel/workspace child seat the official source declares. |
 | Setting a global preference | Host Settings window | One preference goes in `settings.general.item`; a group of settings pages goes in `settings.section`. |
 | Showing the main content of the current session | `conversation.session` / `conversation.view` | The content changes with the session, so it belongs to the conversation itself. |
-| A persistent auxiliary rail for the current session | A public overlay seat in the conversation area, or `rightbar.session` | First work out whether it belongs to the composer/conversation, then decide whether it needs the host rightbar. |
+| Filling the centre column, or becoming a tab in the conversation header | A `main` panel page / `conversation.view` | Read [What the centre column can hold](../spec/15-middle-column.md) first: one view renders at a time, so the user cannot see the text right now. |
+| Persistent auxiliary content for the current session that has to share the screen with the text | An insertion point inside the centre column | See [Can the centre column be used on its own?](15-middle-column.md). This kind of content goes first as the window narrows. |
+| Persistent auxiliary content for the current session that must stay reachable or persist across conversations | `rightbar.session` | The right column is the fourth column of the page: it sets its own width, is never narrower than 300px, and can be collapsed; the main flow must still work when it is. |
+| The product has no seat, but I really want to put it there | Borrow an existing seat | See [Places the product gives no seat](31-unofficial-regions.md): you have to state that the product has none. |
 | A global overlay or notification | `shell.overlay` | Use it only when the content really is cross-region and is not session content. |
 
 The rightbar can be collapsed, so anything it holds is supplementary. Main-flow actions such as Send, Stop and the settings entry have to stay findable after the user collapses the rightbar.

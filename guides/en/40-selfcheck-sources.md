@@ -1,7 +1,7 @@
 ---
 source: guides/40-selfcheck-sources.md
-source-sha256: c9091c7758496fa5
-translated-at: 2026-10-05
+source-sha256: 1da1d8d9f887e2c7
+translated-at: 2026-10-07
 ---
 # Self-checks and evidence sources
 
@@ -41,13 +41,13 @@ This round also leaves two things unverified: there is no clean Web capture of t
 
 | Group | Items | What failing costs you | Source |
 | --- | --- | --- | --- |
-| A Required | 51 | A single "no" means you cannot submit | `spec/70-checklist.md` `[Proposed here]` |
-| B Recommended | 13 | A "no" needs the reason written in your README | Same `[Proposed here]` |
-| Total | 64 | — | Same; `counts.total` = 64 in `rules/rules.json` reconciles with it `[Runtime measurement]` |
+| A Required | 50 | A single "no" means you cannot submit | `spec/70-checklist.md` `[Proposed here]` |
+| B Recommended | 22 | A "no" needs the reason written in your README | Same `[Proposed here]` |
+| Total | 72 | — | Same; `counts.total` = 72 in `rules/rules.json` reconciles with it `[Runtime measurement]` |
 
-By how they can be detected: 36 automatic / 19 semi-automatic / 9 human review (source: `counts.byDetection` in `rules/rules.json`) `[Runtime measurement]`. These three numbers decide your checking strategy: **the 36 automatic ones belong in CI; the 9 human-review ones only you can look at**.
+By how they can be detected: 38 automatic / 25 semi-automatic / 9 human review (source: `counts.byDetection` in `rules/rules.json`) `[Runtime measurement]`. These three numbers decide your checking strategy: **the 38 automatic ones belong in CI; the 9 human-review ones only you can look at**.
 
-The human-review items cluster in A01–A04, A12, A14, A35, A38, A41, A51 (source: "reviewer notes" at lines 85–89 of `spec/70-checklist.md`) `[Proposed here]`. They are: whether ownership is unique, whether the main flow lives only in the rightbar, whether the toolbar row holds only the controls for the current input, whether an overlay carries permanent UI, whether a sole entry point is covered, whether chain falls back, frame rate, the visual weight of your own icon, optical centring, 200% zoom, and whether functionality disappears in a narrow window.
+The human-review items cluster in A01–A04, A12, A14, A35, A38, A41, A51 (source: "reviewer notes" at lines 88–91 of `spec/70-checklist.md`) `[Proposed here]`. They are: whether ownership is unique, whether the main flow lives only in the rightbar, whether the toolbar row holds only the controls for the current input, whether an overlay carries permanent UI, whether a sole entry point is covered, whether chain falls back, frame rate, the visual weight of your own icon, optical centring, 200% zoom, and whether functionality disappears in a narrow window.
 
 ## How this repository self-checks
 
@@ -101,7 +101,7 @@ Other text colours follow the same chain: `label-primary` light `#0f1115`, about
 
 That `npm run audit` exists at all is itself evidence (source: `scripts/audit-demos.mjs` file header) `[Proposed here]`. The two incidents it records are: clicking a selector turned the whole window white (an overlay escaped the demo frame and covered the page), and in a collapsed directory the button's built-in border drew each row as a little box. In both kinds of problem the DOM is right and the **geometry is wrong**, so no check that only looks at the DOM can catch them.
 
-Three conclusions carry over to your plugin: re-measure geometry once an interaction appears, confirm an overlay has not escaped its own container, and confirm a third-party control that brings its own border has not wrecked the layout. None of the three is in the 64-item checklist; they are the part of the check you have to add yourself.
+Three conclusions carry over to your plugin: re-measure geometry once an interaction appears, confirm an overlay has not escaped its own container, and confirm a third-party control that brings its own border has not wrecked the layout. None of the three is in the 72-item checklist; they are the part of the check you have to add yourself.
 
 There are two traps in the collection method, and anyone recomputing has to know them (source: `docs/reference/README.md` lines 89–97) `[Proposed here]`:
 
@@ -147,7 +147,7 @@ Items 1–3 above are the three you most need to know first: one where an offici
 | 8 | Toolbar row horizontal spacing: `CT-RC-14` suggests 8px between adjacent controls in a row, while the measured toolbar row is `gap 12`. Where a measurement exists, the measurement wins | `spec/20-controls.md`, `components/layout/ToolbarRow/SPEC.md` |
 | 9 | The Switch thumb transition is the official `120ms ease`, which is not one of the five steps | `spec/40-motion.md`, `spec/00-overview.md` §4.1 |
 | 10 | Toast entry `160ms ease-out`, fade-out `1000ms ease`: neither is one of the five steps, both exceed 350ms, and the curves are not standard curves; the official anchor takes priority, and `A30` / `A31` need human confirmation | `components/feedback/Toast/SPEC.md` items 119, 120 |
-| 11 | Ongoing motion curves: the official code has both `ease-in-out` and `linear`, and `MO-MF-06` forbids non-standard curves for interactive transitions; ongoing motion is outside that item's scope | `spec/40-motion.md` lines 52–56 |
+| 11 | Ongoing motion curves: the official code has both `ease-in-out` and `linear`, and `MO-RC-06` forbids non-standard curves for interactive transitions; ongoing motion is outside that item's scope | `spec/40-motion.md` lines 52–56 |
 | 12 | The `ongoing` state has two official implementations (the pixel-chase matrix in the primitives package and the spinner ring the product actually renders); only the latter appears in the real interface | `guides/24-pattern-feedback.md` |
 | 13 | The "icon + title + description + action" combination in EmptyState and the `info` / `error` tones of InlineNotice have no counterpart in the product; the whole group's geometry is `[Proposed here]` | `components/feedback/EmptyState/SPEC.md`, `components/feedback/InlineNotice/SPEC.md` |
 | 14 | Dark theme contrast, and the behaviour of the official `ConnectionIndicator` in a narrow container | No evidence |
@@ -158,11 +158,11 @@ For the detail behind items 4–5 and 11–13, see the "Sources and known deviat
 
 | Step | Action | Verdict |
 | --- | --- | --- |
-| 1 | Take the 51 items with `level: "required"` from `rules/rules.json` and go through them one by one | Any "no" → do not submit |
+| 1 | Take the 50 items with `level: "required"` from `rules/rules.json` and go through them one by one | Any "no" → do not submit |
 | 2 | Turn the 36 `detection.tier: "auto"` items into a script (a static scan of source and build output) | Should be all green |
-| 3 | Go through the 19 `detection.tier: "semi"` items by hand, confirming the candidates the script gives | Write down what you confirmed |
+| 3 | Go through the 22 `detection.tier: "semi"` items by hand, confirming the candidates the script gives | Write down what you confirmed |
 | 4 | Read the 9 human-review items one by one by the basis each document states, especially A01–A04, A12, A51 | No script to lean on |
-| 5 | If any of the 13 recommended items is a "no", write the reason in your README | Just write it clearly |
+| 5 | If any of the 22 recommended items is a "no", write the reason in your README | Just write it clearly |
 | 6 | Check that every number you wrote down carries one of the five markers; for one with no marker, add a source there and then or delete it | The iron rule in §4 of `spec/00-overview.md` |
 | 7 | Confirm you have not treated the "internal official constraints" from the section above as a bar of your own to meet | No need to copy them |
 
@@ -170,8 +170,8 @@ For the detail behind items 4–5 and 11–13, see the "Sources and known deviat
 
 The files and URLs actually read:
 
-- `spec/00-overview.md` (§4 source markers, §4.1 "official first"), `spec/70-checklist.md` (A 51 / B 13, detection method, reviewer notes), `spec/60-accessibility.md` (§3 contrast)
-- `rules/rules.json` (`counts.total` 64, `byLevel` 51/13, `byDetection` 36/19/9)
+- `spec/00-overview.md` (§4 source markers, §4.1 "official first"), `spec/70-checklist.md` (A 50 / B 22, detection method, reviewer notes), `spec/60-accessibility.md` (§3 contrast)
+- `rules/rules.json` (`counts.total` 72, `byLevel` 50/22, `byDetection` 38/25/9)
 - `website/verify.mjs` (the three check passes), `scripts/audit-demos.mjs` (interaction audit), `scripts/check-refs.mjs` (scan scope), `package.json` (`scripts.build`)
 - `docs/reference/README.md` (collection method and the two traps), `components/origins.json` (official / proposed / scenes)
 - `data/slots.json`, `data/raw/occupancy-2026-10-01.json`, `data/tokens.json`, `data/ui-inventory.json`, `data/ui-coverage.json`, `data/icons.json`

@@ -1,7 +1,7 @@
 ---
 source: guides/01-official-basis.md
-source-sha256: 54349881cd0d7e5f
-translated-at: 2026-10-05
+source-sha256: 9cc447dd92165b28
+translated-at: 2026-10-07
 ---
 # Official basis and where it applies
 
